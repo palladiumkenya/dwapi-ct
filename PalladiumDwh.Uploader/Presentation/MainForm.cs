@@ -52,7 +52,7 @@ namespace PalladiumDwh.Uploader.Presentation
 
             _managerController = new ManagerController();
             
-            _patientSender = new PatientSender();
+            _patientSender = new  PatientSender();
             _patientArtSender = new PatientArtSender();
             _patientBaselineSender = new PatientBaselineSender();
             _patientLabSender = new PatientLabSender();
