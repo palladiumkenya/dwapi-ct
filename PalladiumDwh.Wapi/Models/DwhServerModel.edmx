@@ -1,0 +1,961 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DwhServerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DataSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataSetName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Facility">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FacilityCode" Type="int" />
+          <Property Name="FacilityName" Type="varchar" MaxLength="100" />
+          <Property Name="DateLoaded" Type="datetime" />
+          <Property Name="UploadStatus" Type="int" />
+          <Property Name="DateUploaded" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PatientArtExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SiteCode" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="varchar" MaxLength="100" />
+          <Property Name="AgeEnrollment" Type="decimal" Precision="5" Scale="1" />
+          <Property Name="AgeARTStart" Type="decimal" Precision="5" Scale="1" />
+          <Property Name="AgeLastVisit" Type="decimal" Precision="5" Scale="1" />
+          <Property Name="FacilityName" Type="varchar" MaxLength="50" />
+          <Property Name="RegistrationDate" Type="datetime" />
+          <Property Name="PatientSource" Type="varchar" MaxLength="100" />
+          <Property Name="Gender" Type="varchar" MaxLength="100" />
+          <Property Name="StartARTDate" Type="datetime" />
+          <Property Name="PreviousARTStartDate" Type="datetime" />
+          <Property Name="PreviousARTRegimen" Type="varchar" MaxLength="50" />
+          <Property Name="StartARTAtThisFacility" Type="datetime" />
+          <Property Name="StartRegimen" Type="varchar" MaxLength="100" />
+          <Property Name="StartRegimenLine" Type="varchar" MaxLength="200" />
+          <Property Name="LastARTDate" Type="datetime" />
+          <Property Name="LastRegimen" Type="varchar" MaxLength="200" />
+          <Property Name="LastRegimenLine" Type="varchar" MaxLength="200" />
+          <Property Name="Duration" Type="numeric" Precision="24" Scale="0" />
+          <Property Name="ExpectedReturn" Type="datetime" />
+          <Property Name="LastVisit" Type="datetime" />
+          <Property Name="ExitReason" Type="varchar" MaxLength="100" />
+          <Property Name="ExitDate" Type="datetime" />
+          <Property Name="Emr" Type="varchar" MaxLength="50" />
+          <Property Name="Project" Type="varchar" MaxLength="50" />
+          <Property Name="Uploaded" Type="int" />
+        </EntityType>
+        <EntityType Name="PatientBaselinesExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="SiteCode" Type="int" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="varchar" MaxLength="100" />
+          <Property Name="eCD4" Type="int" />
+          <Property Name="eCD4Date" Type="datetime" />
+          <Property Name="eWHO" Type="int" />
+          <Property Name="eWHODate" Type="datetime" />
+          <Property Name="bCD4" Type="int" />
+          <Property Name="bCD4Date" Type="datetime" />
+          <Property Name="bWHO" Type="int" />
+          <Property Name="bWHODate" Type="datetime" />
+          <Property Name="lastWHO" Type="int" />
+          <Property Name="lastWHODate" Type="datetime" />
+          <Property Name="lastCD4" Type="int" />
+          <Property Name="lastCD4Date" Type="datetime" />
+          <Property Name="m12CD4" Type="int" />
+          <Property Name="m12CD4Date" Type="datetime" />
+          <Property Name="m6CD4" Type="int" />
+          <Property Name="m6CD4Date" Type="datetime" />
+          <Property Name="Emr" Type="varchar" MaxLength="50" />
+          <Property Name="Project" Type="varchar" MaxLength="50" />
+          <Property Name="Uploaded" Type="int" />
+        </EntityType>
+        <EntityType Name="PatientExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="SiteCode" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SiteCode" Type="int" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="varchar" MaxLength="100" />
+          <Property Name="FacilityName" Type="varchar" MaxLength="50" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="RegistrationDate" Type="datetime" />
+          <Property Name="RegistrationAtCCC" Type="datetime" />
+          <Property Name="RegistrationATPMTCT" Type="datetime" />
+          <Property Name="RegistrationAtTBClinic" Type="datetime" />
+          <Property Name="PatientSource" Type="varchar" MaxLength="100" />
+          <Property Name="Region" Type="varchar" MaxLength="50" />
+          <Property Name="District" Type="varchar" MaxLength="50" />
+          <Property Name="Village" Type="varchar" MaxLength="50" />
+          <Property Name="ContactRelation" Type="varchar" MaxLength="250" />
+          <Property Name="LastVisit" Type="datetime" />
+          <Property Name="MaritalStatus" Type="varchar" MaxLength="100" />
+          <Property Name="EducationLevel" Type="varchar" MaxLength="50" />
+          <Property Name="DateConfirmedHIVPositive" Type="datetime" />
+          <Property Name="PreviousARTExposure" Type="varchar" MaxLength="50" />
+          <Property Name="PreviousARTStartDate" Type="datetime" />
+          <Property Name="Emr" Type="varchar" MaxLength="50" />
+          <Property Name="Project" Type="varchar" MaxLength="50" />
+          <Property Name="Uploaded" Type="int" />
+        </EntityType>
+        <EntityType Name="PatientLaboratoryExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="SiteCode" Type="int" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="varchar" MaxLength="100" />
+          <Property Name="VisitId" Type="int" />
+          <Property Name="OrderedByDate" Type="datetime" />
+          <Property Name="ReportedByDate" Type="datetime" />
+          <Property Name="TestName" Type="varchar" MaxLength="200" />
+          <Property Name="TestResult" Type="varchar" MaxLength="200" />
+          <Property Name="Emr" Type="varchar" MaxLength="50" />
+          <Property Name="Project" Type="varchar" MaxLength="50" />
+          <Property Name="Uploaded" Type="int" />
+        </EntityType>
+        <EntityType Name="PatientPharmacyExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="SiteCode" Type="int" />
+          <Property Name="PatientCccNumber" Type="varchar" MaxLength="100" />
+          <Property Name="VisitID" Type="int" />
+          <Property Name="Drug" Type="varchar" MaxLength="100" />
+          <Property Name="DispenseDate" Type="datetime" />
+          <Property Name="Duration" Type="numeric" Precision="24" Scale="2" />
+          <Property Name="ExpectedReturn" Type="nchar" MaxLength="10" />
+          <Property Name="TreatmentType" Type="varchar" MaxLength="100" />
+          <Property Name="PeriodTaken" Type="varchar" MaxLength="100" />
+          <Property Name="ProphylaxisType" Type="varchar" MaxLength="100" />
+          <Property Name="Emr" Type="varchar" MaxLength="50" />
+          <Property Name="Project" Type="varchar" MaxLength="50" />
+          <Property Name="Uploaded" Type="int" />
+        </EntityType>
+        <EntityType Name="PatientStatusExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="SiteCode" Type="int" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="varchar" MaxLength="100" />
+          <Property Name="FacilityName" Type="varchar" MaxLength="50" />
+          <Property Name="ExitDescription" Type="varchar" MaxLength="100" />
+          <Property Name="ExitDate" Type="datetime" />
+          <Property Name="ExitReason" Type="varchar" MaxLength="100" />
+          <Property Name="Emr" Type="varchar" MaxLength="50" />
+          <Property Name="Project" Type="varchar" MaxLength="50" />
+          <Property Name="Uploaded" Type="int" />
+        </EntityType>
+        <EntityType Name="PatientVisitExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="SiteCode" Type="int" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="varchar" MaxLength="100" />
+          <Property Name="VisitID" Type="int" />
+          <Property Name="VisitDate" Type="datetime" />
+          <Property Name="Service" Type="varchar" MaxLength="50" />
+          <Property Name="VisitType" Type="varchar" MaxLength="50" />
+          <Property Name="WHOStage" Type="int" />
+          <Property Name="WABStage" Type="varchar" MaxLength="100" />
+          <Property Name="Pregnant" Type="varchar" MaxLength="20" />
+          <Property Name="LMP" Type="datetime" />
+          <Property Name="EDD" Type="datetime" />
+          <Property Name="Height" Type="numeric" Precision="18" Scale="1" />
+          <Property Name="Weight" Type="numeric" Precision="18" Scale="1" />
+          <Property Name="BP" Type="varchar" MaxLength="10" />
+          <Property Name="OI" Type="varchar" MaxLength="200" />
+          <Property Name="OIDate" Type="datetime" />
+          <Property Name="SubstitutionFirstlineRegimenDate" Type="datetime" />
+          <Property Name="SubstitutionFirstlineRegimenReason" Type="varchar(max)" />
+          <Property Name="SubstitutionSecondlineRegimenDate" Type="datetime" />
+          <Property Name="SubstitutionSecondlineRegimenReason" Type="varchar(max)" />
+          <Property Name="SecondlineRegimenChangeDate" Type="datetime" />
+          <Property Name="SecondlineRegimenChangeReason" Type="varchar(max)" />
+          <Property Name="Adherence" Type="varchar" MaxLength="200" />
+          <Property Name="AdherenceCategory" Type="varchar" MaxLength="200" />
+          <Property Name="FamilyPlanningMethod" Type="varchar" MaxLength="200" />
+          <Property Name="PwP" Type="varchar" MaxLength="200" />
+          <Property Name="GestationAge" Type="numeric" Precision="18" Scale="1" />
+          <Property Name="NextAppointmentDate" Type="datetime" />
+          <Property Name="Emr" Type="varchar" MaxLength="50" />
+          <Property Name="Project" Type="varchar" MaxLength="50" />
+          <Property Name="Uploaded" Type="int" />
+        </EntityType>
+        <EntityType Name="UploadErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ErrorDescription" Type="varchar(max)" />
+          <Property Name="FacilityId" Type="int" />
+        </EntityType>
+        <Association Name="FK_PatientArtExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="1" />
+          <End Role="PatientArtExtract" Type="Self.PatientArtExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientArtExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientBaselinesExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="1" />
+          <End Role="PatientBaselinesExtract" Type="Self.PatientBaselinesExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientBaselinesExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientLaboratoryExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="1" />
+          <End Role="PatientLaboratoryExtract" Type="Self.PatientLaboratoryExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientLaboratoryExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientPharmacyExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="0..1" />
+          <End Role="PatientPharmacyExtract" Type="Self.PatientPharmacyExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientPharmacyExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientStatusExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="1" />
+          <End Role="PatientStatusExtract" Type="Self.PatientStatusExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientStatusExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientVisitExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="1" />
+          <End Role="PatientVisitExtract" Type="Self.PatientVisitExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientVisitExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UploadErrorLog_Facility">
+          <End Role="Facility" Type="Self.Facility" Multiplicity="0..1" />
+          <End Role="UploadErrorLog" Type="Self.UploadErrorLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facility">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UploadErrorLog">
+              <PropertyRef Name="FacilityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DwhServerModelStoreContainer">
+          <EntitySet Name="DataSet" EntityType="Self.DataSet" Schema="dwh" store:Type="Tables" />
+          <EntitySet Name="Facility" EntityType="Self.Facility" Schema="dwh" store:Type="Tables" />
+          <EntitySet Name="PatientArtExtract" EntityType="Self.PatientArtExtract" Schema="dwh" store:Type="Tables" />
+          <EntitySet Name="PatientBaselinesExtract" EntityType="Self.PatientBaselinesExtract" Schema="dwh" store:Type="Tables" />
+          <EntitySet Name="PatientExtract" EntityType="Self.PatientExtract" Schema="dwh" store:Type="Tables" />
+          <EntitySet Name="PatientLaboratoryExtract" EntityType="Self.PatientLaboratoryExtract" Schema="dwh" store:Type="Tables" />
+          <EntitySet Name="PatientPharmacyExtract" EntityType="Self.PatientPharmacyExtract" Schema="dwh" store:Type="Tables" />
+          <EntitySet Name="PatientStatusExtract" EntityType="Self.PatientStatusExtract" Schema="dwh" store:Type="Tables" />
+          <EntitySet Name="PatientVisitExtract" EntityType="Self.PatientVisitExtract" Schema="dwh" store:Type="Tables" />
+          <EntitySet Name="UploadErrorLog" EntityType="Self.UploadErrorLog" Schema="dwh" store:Type="Tables" />
+          <AssociationSet Name="FK_PatientArtExtract_PatientExtract" Association="Self.FK_PatientArtExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtract" />
+            <End Role="PatientArtExtract" EntitySet="PatientArtExtract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientBaselinesExtract_PatientExtract" Association="Self.FK_PatientBaselinesExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtract" />
+            <End Role="PatientBaselinesExtract" EntitySet="PatientBaselinesExtract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientLaboratoryExtract_PatientExtract" Association="Self.FK_PatientLaboratoryExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtract" />
+            <End Role="PatientLaboratoryExtract" EntitySet="PatientLaboratoryExtract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientPharmacyExtract_PatientExtract" Association="Self.FK_PatientPharmacyExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtract" />
+            <End Role="PatientPharmacyExtract" EntitySet="PatientPharmacyExtract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientStatusExtract_PatientExtract" Association="Self.FK_PatientStatusExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtract" />
+            <End Role="PatientStatusExtract" EntitySet="PatientStatusExtract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientVisitExtract_PatientExtract" Association="Self.FK_PatientVisitExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtract" />
+            <End Role="PatientVisitExtract" EntitySet="PatientVisitExtract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UploadErrorLog_Facility" Association="Self.FK_UploadErrorLog_Facility">
+            <End Role="Facility" EntitySet="Facility" />
+            <End Role="UploadErrorLog" EntitySet="UploadErrorLog" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DwhServerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DataSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataSetName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Facility">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacilityCode" Type="Int32" />
+          <Property Name="FacilityName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateLoaded" Type="DateTime" Precision="3" />
+          <Property Name="UploadStatus" Type="Int32" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UploadErrorLogs" Relationship="Self.FK_UploadErrorLog_Facility" FromRole="Facility" ToRole="UploadErrorLog" />
+        </EntityType>
+        <EntityType Name="PatientArtExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteCode" Type="Int32" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AgeEnrollment" Type="Decimal" Precision="5" Scale="1" />
+          <Property Name="AgeARTStart" Type="Decimal" Precision="5" Scale="1" />
+          <Property Name="AgeLastVisit" Type="Decimal" Precision="5" Scale="1" />
+          <Property Name="FacilityName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <Property Name="PatientSource" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StartARTDate" Type="DateTime" Precision="3" />
+          <Property Name="PreviousARTStartDate" Type="DateTime" Precision="3" />
+          <Property Name="PreviousARTRegimen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartARTAtThisFacility" Type="DateTime" Precision="3" />
+          <Property Name="StartRegimen" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StartRegimenLine" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LastARTDate" Type="DateTime" Precision="3" />
+          <Property Name="LastRegimen" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LastRegimenLine" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="Decimal" Precision="24" Scale="0" />
+          <Property Name="ExpectedReturn" Type="DateTime" Precision="3" />
+          <Property Name="LastVisit" Type="DateTime" Precision="3" />
+          <Property Name="ExitReason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ExitDate" Type="DateTime" Precision="3" />
+          <Property Name="Emr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Uploaded" Type="Int32" />
+          <NavigationProperty Name="PatientExtract" Relationship="Self.FK_PatientArtExtract_PatientExtract" FromRole="PatientArtExtract" ToRole="PatientExtract" />
+        </EntityType>
+        <EntityType Name="PatientBaselinesExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="SiteCode" Type="Int32" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="eCD4" Type="Int32" />
+          <Property Name="eCD4Date" Type="DateTime" Precision="3" />
+          <Property Name="eWHO" Type="Int32" />
+          <Property Name="eWHODate" Type="DateTime" Precision="3" />
+          <Property Name="bCD4" Type="Int32" />
+          <Property Name="bCD4Date" Type="DateTime" Precision="3" />
+          <Property Name="bWHO" Type="Int32" />
+          <Property Name="bWHODate" Type="DateTime" Precision="3" />
+          <Property Name="lastWHO" Type="Int32" />
+          <Property Name="lastWHODate" Type="DateTime" Precision="3" />
+          <Property Name="lastCD4" Type="Int32" />
+          <Property Name="lastCD4Date" Type="DateTime" Precision="3" />
+          <Property Name="m12CD4" Type="Int32" />
+          <Property Name="m12CD4Date" Type="DateTime" Precision="3" />
+          <Property Name="m6CD4" Type="Int32" />
+          <Property Name="m6CD4Date" Type="DateTime" Precision="3" />
+          <Property Name="Emr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Uploaded" Type="Int32" />
+          <NavigationProperty Name="PatientExtract" Relationship="Self.FK_PatientBaselinesExtract_PatientExtract" FromRole="PatientBaselinesExtract" ToRole="PatientExtract" />
+        </EntityType>
+        <EntityType Name="PatientExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="SiteCode" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SiteCode" Type="Int32" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FacilityName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <Property Name="RegistrationAtCCC" Type="DateTime" Precision="3" />
+          <Property Name="RegistrationATPMTCT" Type="DateTime" Precision="3" />
+          <Property Name="RegistrationAtTBClinic" Type="DateTime" Precision="3" />
+          <Property Name="PatientSource" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Region" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Village" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactRelation" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LastVisit" Type="DateTime" Precision="3" />
+          <Property Name="MaritalStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EducationLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateConfirmedHIVPositive" Type="DateTime" Precision="3" />
+          <Property Name="PreviousARTExposure" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PreviousARTStartDate" Type="DateTime" Precision="3" />
+          <Property Name="Emr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Uploaded" Type="Int32" />
+          <NavigationProperty Name="PatientArtExtracts" Relationship="Self.FK_PatientArtExtract_PatientExtract" FromRole="PatientExtract" ToRole="PatientArtExtract" />
+          <NavigationProperty Name="PatientBaselinesExtracts" Relationship="Self.FK_PatientBaselinesExtract_PatientExtract" FromRole="PatientExtract" ToRole="PatientBaselinesExtract" />
+          <NavigationProperty Name="PatientLaboratoryExtracts" Relationship="Self.FK_PatientLaboratoryExtract_PatientExtract" FromRole="PatientExtract" ToRole="PatientLaboratoryExtract" />
+          <NavigationProperty Name="PatientPharmacyExtracts" Relationship="Self.FK_PatientPharmacyExtract_PatientExtract" FromRole="PatientExtract" ToRole="PatientPharmacyExtract" />
+          <NavigationProperty Name="PatientStatusExtracts" Relationship="Self.FK_PatientStatusExtract_PatientExtract" FromRole="PatientExtract" ToRole="PatientStatusExtract" />
+          <NavigationProperty Name="PatientVisitExtracts" Relationship="Self.FK_PatientVisitExtract_PatientExtract" FromRole="PatientExtract" ToRole="PatientVisitExtract" />
+        </EntityType>
+        <EntityType Name="PatientLaboratoryExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="SiteCode" Type="Int32" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VisitId" Type="Int32" />
+          <Property Name="OrderedByDate" Type="DateTime" Precision="3" />
+          <Property Name="ReportedByDate" Type="DateTime" Precision="3" />
+          <Property Name="TestName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TestResult" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Emr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Uploaded" Type="Int32" />
+          <NavigationProperty Name="PatientExtract" Relationship="Self.FK_PatientLaboratoryExtract_PatientExtract" FromRole="PatientLaboratoryExtract" ToRole="PatientExtract" />
+        </EntityType>
+        <EntityType Name="PatientPharmacyExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="SiteCode" Type="Int32" />
+          <Property Name="PatientCccNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VisitID" Type="Int32" />
+          <Property Name="Drug" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DispenseDate" Type="DateTime" Precision="3" />
+          <Property Name="Duration" Type="Decimal" Precision="24" Scale="2" />
+          <Property Name="ExpectedReturn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="TreatmentType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PeriodTaken" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProphylaxisType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Emr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Uploaded" Type="Int32" />
+          <NavigationProperty Name="PatientExtract" Relationship="Self.FK_PatientPharmacyExtract_PatientExtract" FromRole="PatientPharmacyExtract" ToRole="PatientExtract" />
+        </EntityType>
+        <EntityType Name="PatientStatusExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="SiteCode" Type="Int32" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FacilityName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExitDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ExitDate" Type="DateTime" Precision="3" />
+          <Property Name="ExitReason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Emr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Uploaded" Type="Int32" />
+          <NavigationProperty Name="PatientExtract" Relationship="Self.FK_PatientStatusExtract_PatientExtract" FromRole="PatientStatusExtract" ToRole="PatientExtract" />
+        </EntityType>
+        <EntityType Name="PatientVisitExtract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="SiteCode" Type="Int32" Nullable="false" />
+          <Property Name="PatientCccNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VisitID" Type="Int32" />
+          <Property Name="VisitDate" Type="DateTime" Precision="3" />
+          <Property Name="Service" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VisitType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WHOStage" Type="Int32" />
+          <Property Name="WABStage" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Pregnant" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LMP" Type="DateTime" Precision="3" />
+          <Property Name="EDD" Type="DateTime" Precision="3" />
+          <Property Name="Height" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="Weight" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="BP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OI" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="OIDate" Type="DateTime" Precision="3" />
+          <Property Name="SubstitutionFirstlineRegimenDate" Type="DateTime" Precision="3" />
+          <Property Name="SubstitutionFirstlineRegimenReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SubstitutionSecondlineRegimenDate" Type="DateTime" Precision="3" />
+          <Property Name="SubstitutionSecondlineRegimenReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SecondlineRegimenChangeDate" Type="DateTime" Precision="3" />
+          <Property Name="SecondlineRegimenChangeReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Adherence" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="AdherenceCategory" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FamilyPlanningMethod" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PwP" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="GestationAge" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="NextAppointmentDate" Type="DateTime" Precision="3" />
+          <Property Name="Emr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Uploaded" Type="Int32" />
+          <NavigationProperty Name="PatientExtract" Relationship="Self.FK_PatientVisitExtract_PatientExtract" FromRole="PatientVisitExtract" ToRole="PatientExtract" />
+        </EntityType>
+        <EntityType Name="UploadErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ErrorDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FacilityId" Type="Int32" />
+          <NavigationProperty Name="Facility" Relationship="Self.FK_UploadErrorLog_Facility" FromRole="UploadErrorLog" ToRole="Facility" />
+        </EntityType>
+        <Association Name="FK_UploadErrorLog_Facility">
+          <End Role="Facility" Type="Self.Facility" Multiplicity="0..1" />
+          <End Role="UploadErrorLog" Type="Self.UploadErrorLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facility">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UploadErrorLog">
+              <PropertyRef Name="FacilityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientArtExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="1" />
+          <End Role="PatientArtExtract" Type="Self.PatientArtExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientArtExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientBaselinesExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="1" />
+          <End Role="PatientBaselinesExtract" Type="Self.PatientBaselinesExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientBaselinesExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientLaboratoryExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="1" />
+          <End Role="PatientLaboratoryExtract" Type="Self.PatientLaboratoryExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientLaboratoryExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientPharmacyExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="0..1" />
+          <End Role="PatientPharmacyExtract" Type="Self.PatientPharmacyExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientPharmacyExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientStatusExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="1" />
+          <End Role="PatientStatusExtract" Type="Self.PatientStatusExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientStatusExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientVisitExtract_PatientExtract">
+          <End Role="PatientExtract" Type="Self.PatientExtract" Multiplicity="1" />
+          <End Role="PatientVisitExtract" Type="Self.PatientVisitExtract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientExtract">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="SiteCode" />
+            </Principal>
+            <Dependent Role="PatientVisitExtract">
+              <PropertyRef Name="PatientId" />
+              <PropertyRef Name="SiteCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DwhServerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DataSets" EntityType="Self.DataSet" />
+          <EntitySet Name="Facilities" EntityType="Self.Facility" />
+          <EntitySet Name="PatientArtExtracts" EntityType="Self.PatientArtExtract" />
+          <EntitySet Name="PatientBaselinesExtracts" EntityType="Self.PatientBaselinesExtract" />
+          <EntitySet Name="PatientExtracts" EntityType="Self.PatientExtract" />
+          <EntitySet Name="PatientLaboratoryExtracts" EntityType="Self.PatientLaboratoryExtract" />
+          <EntitySet Name="PatientPharmacyExtracts" EntityType="Self.PatientPharmacyExtract" />
+          <EntitySet Name="PatientStatusExtracts" EntityType="Self.PatientStatusExtract" />
+          <EntitySet Name="PatientVisitExtracts" EntityType="Self.PatientVisitExtract" />
+          <EntitySet Name="UploadErrorLogs" EntityType="Self.UploadErrorLog" />
+          <AssociationSet Name="FK_UploadErrorLog_Facility" Association="Self.FK_UploadErrorLog_Facility">
+            <End Role="Facility" EntitySet="Facilities" />
+            <End Role="UploadErrorLog" EntitySet="UploadErrorLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientArtExtract_PatientExtract" Association="Self.FK_PatientArtExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtracts" />
+            <End Role="PatientArtExtract" EntitySet="PatientArtExtracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientBaselinesExtract_PatientExtract" Association="Self.FK_PatientBaselinesExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtracts" />
+            <End Role="PatientBaselinesExtract" EntitySet="PatientBaselinesExtracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientLaboratoryExtract_PatientExtract" Association="Self.FK_PatientLaboratoryExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtracts" />
+            <End Role="PatientLaboratoryExtract" EntitySet="PatientLaboratoryExtracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientPharmacyExtract_PatientExtract" Association="Self.FK_PatientPharmacyExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtracts" />
+            <End Role="PatientPharmacyExtract" EntitySet="PatientPharmacyExtracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientStatusExtract_PatientExtract" Association="Self.FK_PatientStatusExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtracts" />
+            <End Role="PatientStatusExtract" EntitySet="PatientStatusExtracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientVisitExtract_PatientExtract" Association="Self.FK_PatientVisitExtract_PatientExtract">
+            <End Role="PatientExtract" EntitySet="PatientExtracts" />
+            <End Role="PatientVisitExtract" EntitySet="PatientVisitExtracts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DwhServerModelStoreContainer" CdmEntityContainer="DwhServerEntities">
+          <EntitySetMapping Name="DataSets">
+            <EntityTypeMapping TypeName="DwhServerModel.DataSet">
+              <MappingFragment StoreEntitySet="DataSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DataSetName" ColumnName="DataSetName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facilities">
+            <EntityTypeMapping TypeName="DwhServerModel.Facility">
+              <MappingFragment StoreEntitySet="Facility">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FacilityCode" ColumnName="FacilityCode" />
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+                <ScalarProperty Name="DateLoaded" ColumnName="DateLoaded" />
+                <ScalarProperty Name="UploadStatus" ColumnName="UploadStatus" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientArtExtracts">
+            <EntityTypeMapping TypeName="DwhServerModel.PatientArtExtract">
+              <MappingFragment StoreEntitySet="PatientArtExtract">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SiteCode" ColumnName="SiteCode" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="PatientCccNumber" ColumnName="PatientCccNumber" />
+                <ScalarProperty Name="AgeEnrollment" ColumnName="AgeEnrollment" />
+                <ScalarProperty Name="AgeARTStart" ColumnName="AgeARTStart" />
+                <ScalarProperty Name="AgeLastVisit" ColumnName="AgeLastVisit" />
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="PatientSource" ColumnName="PatientSource" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="StartARTDate" ColumnName="StartARTDate" />
+                <ScalarProperty Name="PreviousARTStartDate" ColumnName="PreviousARTStartDate" />
+                <ScalarProperty Name="PreviousARTRegimen" ColumnName="PreviousARTRegimen" />
+                <ScalarProperty Name="StartARTAtThisFacility" ColumnName="StartARTAtThisFacility" />
+                <ScalarProperty Name="StartRegimen" ColumnName="StartRegimen" />
+                <ScalarProperty Name="StartRegimenLine" ColumnName="StartRegimenLine" />
+                <ScalarProperty Name="LastARTDate" ColumnName="LastARTDate" />
+                <ScalarProperty Name="LastRegimen" ColumnName="LastRegimen" />
+                <ScalarProperty Name="LastRegimenLine" ColumnName="LastRegimenLine" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="ExpectedReturn" ColumnName="ExpectedReturn" />
+                <ScalarProperty Name="LastVisit" ColumnName="LastVisit" />
+                <ScalarProperty Name="ExitReason" ColumnName="ExitReason" />
+                <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
+                <ScalarProperty Name="Emr" ColumnName="Emr" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="Uploaded" ColumnName="Uploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientBaselinesExtracts">
+            <EntityTypeMapping TypeName="DwhServerModel.PatientBaselinesExtract">
+              <MappingFragment StoreEntitySet="PatientBaselinesExtract">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="SiteCode" ColumnName="SiteCode" />
+                <ScalarProperty Name="PatientCccNumber" ColumnName="PatientCccNumber" />
+                <ScalarProperty Name="eCD4" ColumnName="eCD4" />
+                <ScalarProperty Name="eCD4Date" ColumnName="eCD4Date" />
+                <ScalarProperty Name="eWHO" ColumnName="eWHO" />
+                <ScalarProperty Name="eWHODate" ColumnName="eWHODate" />
+                <ScalarProperty Name="bCD4" ColumnName="bCD4" />
+                <ScalarProperty Name="bCD4Date" ColumnName="bCD4Date" />
+                <ScalarProperty Name="bWHO" ColumnName="bWHO" />
+                <ScalarProperty Name="bWHODate" ColumnName="bWHODate" />
+                <ScalarProperty Name="lastWHO" ColumnName="lastWHO" />
+                <ScalarProperty Name="lastWHODate" ColumnName="lastWHODate" />
+                <ScalarProperty Name="lastCD4" ColumnName="lastCD4" />
+                <ScalarProperty Name="lastCD4Date" ColumnName="lastCD4Date" />
+                <ScalarProperty Name="m12CD4" ColumnName="m12CD4" />
+                <ScalarProperty Name="m12CD4Date" ColumnName="m12CD4Date" />
+                <ScalarProperty Name="m6CD4" ColumnName="m6CD4" />
+                <ScalarProperty Name="m6CD4Date" ColumnName="m6CD4Date" />
+                <ScalarProperty Name="Emr" ColumnName="Emr" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="Uploaded" ColumnName="Uploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientExtracts">
+            <EntityTypeMapping TypeName="DwhServerModel.PatientExtract">
+              <MappingFragment StoreEntitySet="PatientExtract">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SiteCode" ColumnName="SiteCode" />
+                <ScalarProperty Name="PatientCccNumber" ColumnName="PatientCccNumber" />
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="RegistrationAtCCC" ColumnName="RegistrationAtCCC" />
+                <ScalarProperty Name="RegistrationATPMTCT" ColumnName="RegistrationATPMTCT" />
+                <ScalarProperty Name="RegistrationAtTBClinic" ColumnName="RegistrationAtTBClinic" />
+                <ScalarProperty Name="PatientSource" ColumnName="PatientSource" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="Village" ColumnName="Village" />
+                <ScalarProperty Name="ContactRelation" ColumnName="ContactRelation" />
+                <ScalarProperty Name="LastVisit" ColumnName="LastVisit" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="EducationLevel" ColumnName="EducationLevel" />
+                <ScalarProperty Name="DateConfirmedHIVPositive" ColumnName="DateConfirmedHIVPositive" />
+                <ScalarProperty Name="PreviousARTExposure" ColumnName="PreviousARTExposure" />
+                <ScalarProperty Name="PreviousARTStartDate" ColumnName="PreviousARTStartDate" />
+                <ScalarProperty Name="Emr" ColumnName="Emr" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="Uploaded" ColumnName="Uploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientLaboratoryExtracts">
+            <EntityTypeMapping TypeName="DwhServerModel.PatientLaboratoryExtract">
+              <MappingFragment StoreEntitySet="PatientLaboratoryExtract">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="SiteCode" ColumnName="SiteCode" />
+                <ScalarProperty Name="PatientCccNumber" ColumnName="PatientCccNumber" />
+                <ScalarProperty Name="VisitId" ColumnName="VisitId" />
+                <ScalarProperty Name="OrderedByDate" ColumnName="OrderedByDate" />
+                <ScalarProperty Name="ReportedByDate" ColumnName="ReportedByDate" />
+                <ScalarProperty Name="TestName" ColumnName="TestName" />
+                <ScalarProperty Name="TestResult" ColumnName="TestResult" />
+                <ScalarProperty Name="Emr" ColumnName="Emr" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="Uploaded" ColumnName="Uploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientPharmacyExtracts">
+            <EntityTypeMapping TypeName="DwhServerModel.PatientPharmacyExtract">
+              <MappingFragment StoreEntitySet="PatientPharmacyExtract">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="SiteCode" ColumnName="SiteCode" />
+                <ScalarProperty Name="PatientCccNumber" ColumnName="PatientCccNumber" />
+                <ScalarProperty Name="VisitID" ColumnName="VisitID" />
+                <ScalarProperty Name="Drug" ColumnName="Drug" />
+                <ScalarProperty Name="DispenseDate" ColumnName="DispenseDate" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="ExpectedReturn" ColumnName="ExpectedReturn" />
+                <ScalarProperty Name="TreatmentType" ColumnName="TreatmentType" />
+                <ScalarProperty Name="PeriodTaken" ColumnName="PeriodTaken" />
+                <ScalarProperty Name="ProphylaxisType" ColumnName="ProphylaxisType" />
+                <ScalarProperty Name="Emr" ColumnName="Emr" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="Uploaded" ColumnName="Uploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientStatusExtracts">
+            <EntityTypeMapping TypeName="DwhServerModel.PatientStatusExtract">
+              <MappingFragment StoreEntitySet="PatientStatusExtract">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="SiteCode" ColumnName="SiteCode" />
+                <ScalarProperty Name="PatientCccNumber" ColumnName="PatientCccNumber" />
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+                <ScalarProperty Name="ExitDescription" ColumnName="ExitDescription" />
+                <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
+                <ScalarProperty Name="ExitReason" ColumnName="ExitReason" />
+                <ScalarProperty Name="Emr" ColumnName="Emr" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="Uploaded" ColumnName="Uploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientVisitExtracts">
+            <EntityTypeMapping TypeName="DwhServerModel.PatientVisitExtract">
+              <MappingFragment StoreEntitySet="PatientVisitExtract">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="SiteCode" ColumnName="SiteCode" />
+                <ScalarProperty Name="PatientCccNumber" ColumnName="PatientCccNumber" />
+                <ScalarProperty Name="VisitID" ColumnName="VisitID" />
+                <ScalarProperty Name="VisitDate" ColumnName="VisitDate" />
+                <ScalarProperty Name="Service" ColumnName="Service" />
+                <ScalarProperty Name="VisitType" ColumnName="VisitType" />
+                <ScalarProperty Name="WHOStage" ColumnName="WHOStage" />
+                <ScalarProperty Name="WABStage" ColumnName="WABStage" />
+                <ScalarProperty Name="Pregnant" ColumnName="Pregnant" />
+                <ScalarProperty Name="LMP" ColumnName="LMP" />
+                <ScalarProperty Name="EDD" ColumnName="EDD" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="BP" ColumnName="BP" />
+                <ScalarProperty Name="OI" ColumnName="OI" />
+                <ScalarProperty Name="OIDate" ColumnName="OIDate" />
+                <ScalarProperty Name="SubstitutionFirstlineRegimenDate" ColumnName="SubstitutionFirstlineRegimenDate" />
+                <ScalarProperty Name="SubstitutionFirstlineRegimenReason" ColumnName="SubstitutionFirstlineRegimenReason" />
+                <ScalarProperty Name="SubstitutionSecondlineRegimenDate" ColumnName="SubstitutionSecondlineRegimenDate" />
+                <ScalarProperty Name="SubstitutionSecondlineRegimenReason" ColumnName="SubstitutionSecondlineRegimenReason" />
+                <ScalarProperty Name="SecondlineRegimenChangeDate" ColumnName="SecondlineRegimenChangeDate" />
+                <ScalarProperty Name="SecondlineRegimenChangeReason" ColumnName="SecondlineRegimenChangeReason" />
+                <ScalarProperty Name="Adherence" ColumnName="Adherence" />
+                <ScalarProperty Name="AdherenceCategory" ColumnName="AdherenceCategory" />
+                <ScalarProperty Name="FamilyPlanningMethod" ColumnName="FamilyPlanningMethod" />
+                <ScalarProperty Name="PwP" ColumnName="PwP" />
+                <ScalarProperty Name="GestationAge" ColumnName="GestationAge" />
+                <ScalarProperty Name="NextAppointmentDate" ColumnName="NextAppointmentDate" />
+                <ScalarProperty Name="Emr" ColumnName="Emr" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="Uploaded" ColumnName="Uploaded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UploadErrorLogs">
+            <EntityTypeMapping TypeName="DwhServerModel.UploadErrorLog">
+              <MappingFragment StoreEntitySet="UploadErrorLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ErrorDescription" ColumnName="ErrorDescription" />
+                <ScalarProperty Name="FacilityId" ColumnName="FacilityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

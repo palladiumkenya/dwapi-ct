@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2e6933427f7c4cdbb6e2964bcd3fa253" Name="Diagram1" ZoomLevel="91">
+        <EntityTypeShape EntityType="DwhServerModel.DataSet" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DwhServerModel.Facility" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DwhServerModel.PatientArtExtract" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DwhServerModel.PatientBaselinesExtract" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DwhServerModel.PatientExtract" Width="1.5" PointX="0.75" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DwhServerModel.PatientLaboratoryExtract" Width="1.5" PointX="3" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DwhServerModel.PatientPharmacyExtract" Width="1.5" PointX="3" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DwhServerModel.PatientStatusExtract" Width="1.5" PointX="3" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DwhServerModel.PatientVisitExtract" Width="1.5" PointX="3" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DwhServerModel.UploadErrorLog" Width="1.5" PointX="8" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="DwhServerModel.FK_UploadErrorLog_Facility" ManuallyRouted="false" />
+        <AssociationConnector Association="DwhServerModel.FK_PatientArtExtract_PatientExtract" ManuallyRouted="false" />
+        <AssociationConnector Association="DwhServerModel.FK_PatientBaselinesExtract_PatientExtract" ManuallyRouted="false" />
+        <AssociationConnector Association="DwhServerModel.FK_PatientLaboratoryExtract_PatientExtract" ManuallyRouted="false" />
+        <AssociationConnector Association="DwhServerModel.FK_PatientPharmacyExtract_PatientExtract" ManuallyRouted="false" />
+        <AssociationConnector Association="DwhServerModel.FK_PatientStatusExtract_PatientExtract" ManuallyRouted="false" />
+        <AssociationConnector Association="DwhServerModel.FK_PatientVisitExtract_PatientExtract" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
