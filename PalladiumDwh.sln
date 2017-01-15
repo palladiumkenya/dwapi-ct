@@ -1,11 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.Wapi", "PalladiumDwh.Wapi\PalladiumDwh.Wapi.csproj", "{7BB008D7-F325-4D2B-A2B2-2E7FEA736051}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.Uploader", "PalladiumDwh.Uploader\PalladiumDwh.Uploader.csproj", "{23FA8247-47A3-4DC8-BF37-A97E96FEFB58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.Core", "PalladiumDwh.Core\PalladiumDwh.Core.csproj", "{59A12AB3-C0EC-4CFE-BCA0-959FAA563AEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.Shared", "PalladiumDwh.Shared\PalladiumDwh.Shared.csproj", "{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{44DD0DF7-9AB4-4E62-85CB-481ED2980190}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{D08B9570-DB7E-4961-82DF-25F0587AE9CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{5E35045E-B1D3-45C0-B4E3-521BD380893D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{91EBE02B-2447-4FE5-B176-B8EEE794AC6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.Shared.Tests", "PalladiumDwh.Shared.Tests\PalladiumDwh.Shared.Tests.csproj", "{3293A13D-AF57-4C99-99A3-9DC9B92F12C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +35,27 @@ Global
 		{23FA8247-47A3-4DC8-BF37-A97E96FEFB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23FA8247-47A3-4DC8-BF37-A97E96FEFB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23FA8247-47A3-4DC8-BF37-A97E96FEFB58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59A12AB3-C0EC-4CFE-BCA0-959FAA563AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A12AB3-C0EC-4CFE-BCA0-959FAA563AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A12AB3-C0EC-4CFE-BCA0-959FAA563AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59A12AB3-C0EC-4CFE-BCA0-959FAA563AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3293A13D-AF57-4C99-99A3-9DC9B92F12C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3293A13D-AF57-4C99-99A3-9DC9B92F12C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3293A13D-AF57-4C99-99A3-9DC9B92F12C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3293A13D-AF57-4C99-99A3-9DC9B92F12C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7BB008D7-F325-4D2B-A2B2-2E7FEA736051} = {5E35045E-B1D3-45C0-B4E3-521BD380893D}
+		{23FA8247-47A3-4DC8-BF37-A97E96FEFB58} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
+		{59A12AB3-C0EC-4CFE-BCA0-959FAA563AEB} = {44DD0DF7-9AB4-4E62-85CB-481ED2980190}
+		{50ED08E8-8FEA-4C87-B265-E39DAEA4B480} = {D08B9570-DB7E-4961-82DF-25F0587AE9CD}
+		{3293A13D-AF57-4C99-99A3-9DC9B92F12C2} = {D08B9570-DB7E-4961-82DF-25F0587AE9CD}
 	EndGlobalSection
 EndGlobal
