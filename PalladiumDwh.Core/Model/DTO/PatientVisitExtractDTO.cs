@@ -35,6 +35,40 @@ namespace PalladiumDwh.Core.Model.DTO
         public string Project { get; set; }
         public Guid PatientId { get; set; }
 
+        public PatientVisitExtractDTO(PatientVisitExtract patientVisitExtract)
+        {
+            VisitId = patientVisitExtract.VisitId;
+            VisitDate = patientVisitExtract.VisitDate;
+            Service = patientVisitExtract.Service;
+            VisitType =patientVisitExtract.VisitType;
+            WHOStage =patientVisitExtract.WHOStage;
+            WABStage =patientVisitExtract.WABStage;
+            Pregnant =patientVisitExtract.Pregnant;
+            LMP =patientVisitExtract.LMP;
+            EDD =patientVisitExtract.EDD;
+            Height =patientVisitExtract.Height;
+            Weight =patientVisitExtract.Weight;
+            BP =patientVisitExtract.BP;
+            OI =patientVisitExtract.OI;
+            OIDate =patientVisitExtract.OIDate;
+            SubstitutionFirstlineRegimenDate = patientVisitExtract.SubstitutionFirstlineRegimenDate;
+            SubstitutionFirstlineRegimenReason =patientVisitExtract.SubstitutionFirstlineRegimenReason;
+            SubstitutionSecondlineRegimenDate =patientVisitExtract.SubstitutionSecondlineRegimenDate;
+            SubstitutionSecondlineRegimenReason =patientVisitExtract.SubstitutionSecondlineRegimenReason;
+            SecondlineRegimenChangeDate =patientVisitExtract.SecondlineRegimenChangeDate;
+            SecondlineRegimenChangeReason =patientVisitExtract.SecondlineRegimenChangeReason;
+            Adherence =patientVisitExtract.Adherence;
+            AdherenceCategory =patientVisitExtract.AdherenceCategory;
+            FamilyPlanningMethod = patientVisitExtract.FamilyPlanningMethod;
+            PwP =patientVisitExtract.PwP;
+            GestationAge = patientVisitExtract.GestationAge;
+            NextAppointmentDate = patientVisitExtract.NextAppointmentDate;
+            Emr = patientVisitExtract.Emr;
+            Project = patientVisitExtract.Project;
+            PatientId = patientVisitExtract.PatientId;
+        }
+        
+
         public PatientVisitExtract GeneratePatientVisitExtract()
         {
             return new PatientVisitExtract(
