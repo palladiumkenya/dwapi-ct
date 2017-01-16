@@ -60,6 +60,11 @@
     <Compile Include="Data\Repository\PatientStatusRepository.cs" />
     <Compile Include="Data\Repository\PatientVisitRepository.cs" />
     <Compile Include="Data\Repository\Repository.cs" />
+    <Compile Include="Migrations\201701160913554_initial.cs" />
+    <Compile Include="Migrations\201701160913554_initial.Designer.cs">
+      <DependentUpon>201701160913554_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +81,11 @@
       <Name>PalladiumDwh.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201701160913554_initial.resx">
+      <DependentUpon>201701160913554_initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
