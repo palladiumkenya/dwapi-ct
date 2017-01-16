@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using PalladiumDwh.Core.Interfaces;
+﻿using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Model;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
