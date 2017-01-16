@@ -41,6 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IPatientArtExtractRepository.cs" />
+    <Compile Include="Interfaces\IPatientBaseLinesRepository.cs" />
+    <Compile Include="Interfaces\IPatientExtractRepository.cs" />
+    <Compile Include="Interfaces\IPatientLabRepository.cs" />
+    <Compile Include="Interfaces\IPatientPharmacyRepository.cs" />
+    <Compile Include="Interfaces\IPatientStatusRepository.cs" />
+    <Compile Include="Interfaces\IFacilityRepository.cs" />
+    <Compile Include="Interfaces\IPatientVisitRepository.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Model\Facility.cs" />
     <Compile Include="Model\PatientArtExtract.cs" />
     <Compile Include="Model\PatientBaselinesExtract.cs" />
@@ -57,9 +66,7 @@
       <Name>PalladiumDwh.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
