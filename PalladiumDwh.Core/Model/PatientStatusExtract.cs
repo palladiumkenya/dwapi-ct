@@ -11,5 +11,20 @@ namespace PalladiumDwh.Core.Model
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+
+        public PatientStatusExtract()
+        {
+           
+        }
+
+        public PatientStatusExtract(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId)
+        {
+            ExitDescription = exitDescription;
+            ExitDate = exitDate;
+            ExitReason = exitReason;
+            Emr = emr;
+            Project = project;
+            PatientId = patientId;
+        }
     }
 }

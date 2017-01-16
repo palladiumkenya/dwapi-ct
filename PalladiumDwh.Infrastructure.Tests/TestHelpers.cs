@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using FizzWare.NBuilder;
+using FizzWare.NBuilder.Extensions;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared;
 
@@ -16,6 +18,17 @@ namespace PalladiumDwh.Infrastructure.Tests
         public static IEnumerable<T> GetTestData<T>(int count) where T : Entity
         {
             return Builder<T>.CreateListOfSize(count).Build();
+        }
+        public static IEnumerable<PatientExtract> GetTestPatientVisitsData(Facility facility,int patientCount,int visitCount)
+        {
+            var patients=Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId=facility.Id;
+                var visits = Builder<PatientVisitExtract>.CreateListOfSize(visitCount).Build().ToList();
+                p.AddPatientVisitExtracts(visits);
+            }
+            return patients;
         }
     }
 }

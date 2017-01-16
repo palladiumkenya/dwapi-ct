@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IClearPatientRecords.cs" />
     <Compile Include="Interfaces\IPatientArtExtractRepository.cs" />
     <Compile Include="Interfaces\IPatientBaseLinesRepository.cs" />
     <Compile Include="Interfaces\IPatientExtractRepository.cs" />
@@ -50,6 +51,16 @@
     <Compile Include="Interfaces\IFacilityRepository.cs" />
     <Compile Include="Interfaces\IPatientVisitRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISyncService.cs" />
+    <Compile Include="Model\DTO\FacilityDTO.cs" />
+    <Compile Include="Model\DTO\PatientArtExtractDTO.cs" />
+    <Compile Include="Model\DTO\PatientBaselinesExtractDTO.cs" />
+    <Compile Include="Model\DTO\PatientExtractDTO.cs" />
+    <Compile Include="Model\DTO\PatientLaboratoryExtractDTO.cs" />
+    <Compile Include="Model\DTO\PatientPharmacyExtractDTO.cs" />
+    <Compile Include="Model\DTO\PatientProfile.cs" />
+    <Compile Include="Model\DTO\PatientStatusExtractDTO.cs" />
+    <Compile Include="Model\DTO\PatientVisitExtractDTO.cs" />
     <Compile Include="Model\Facility.cs" />
     <Compile Include="Model\PatientArtExtract.cs" />
     <Compile Include="Model\PatientBaselinesExtract.cs" />

@@ -1,9 +1,11 @@
-﻿using PalladiumDwh.Core.Model;
+﻿using System;
+using PalladiumDwh.Core.Model;
 
 namespace PalladiumDwh.Core.Interfaces
 {
   
-    public interface IPatientStatusRepository : IRepository<PatientStatusExtract>
+    public interface IPatientStatusRepository : IRepository<PatientStatusExtract>, IClearPatientRecords
     {
+        
     }
 }

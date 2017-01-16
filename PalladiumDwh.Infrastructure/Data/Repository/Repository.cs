@@ -43,10 +43,18 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         {
             DbSet.Remove(DbSet.Find(id));
         }
+
+        public virtual void DeleteBy(Expression<Func<TEntity, bool>> predicate)
+        {
+            IEnumerable<TEntity> results = DbSet.Where(predicate);
+            DbSet.RemoveRange(results);
+        }
+
         public virtual void Execute(string sql)
         {
             Context.Database.ExecuteSqlCommand(sql);
         }
+
 
         public virtual void CommitChanges()
         {

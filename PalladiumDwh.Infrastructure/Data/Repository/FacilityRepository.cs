@@ -1,4 +1,6 @@
-﻿using PalladiumDwh.Core.Interfaces;
+﻿using System;
+using System.Linq.Expressions;
+using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Model;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
@@ -10,5 +12,6 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         {
             _context = context;
         }
+
     }
 }

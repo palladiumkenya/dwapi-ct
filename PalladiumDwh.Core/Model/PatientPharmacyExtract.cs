@@ -17,6 +17,25 @@ namespace PalladiumDwh.Core.Model
         public string Project { get; set; }
         public int? Uploaded { get; set; }
         public Guid PatientId { get; set; }
-        public virtual PatientExtract PatientExtract { get; set; }
+
+        public PatientPharmacyExtract()
+        {
+        }
+
+        public PatientPharmacyExtract(int? visitId, string drug, DateTime? dispenseDate, decimal? duration, string expectedReturn, string treatmentType, string periodTaken, string prophylaxisType, string emr, string project, int? uploaded, Guid patientId)
+        {
+            VisitID = visitId;
+            Drug = drug;
+            DispenseDate = dispenseDate;
+            Duration = duration;
+            ExpectedReturn = expectedReturn;
+            TreatmentType = treatmentType;
+            PeriodTaken = periodTaken;
+            ProphylaxisType = prophylaxisType;
+            Emr = emr;
+            Project = project;
+            Uploaded = uploaded;
+            PatientId = patientId;
+        }
     }
 }

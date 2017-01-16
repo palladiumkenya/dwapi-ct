@@ -28,5 +28,35 @@ namespace PalladiumDwh.Core.Model
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+
+        public PatientArtExtract()
+        {
+        }
+
+        public PatientArtExtract(decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project, Guid patientId)
+        {
+            AgeEnrollment = ageEnrollment;
+            AgeARTStart = ageArtStart;
+            AgeLastVisit = ageLastVisit;
+            RegistrationDate = registrationDate;
+            PatientSource = patientSource;
+            StartARTDate = startArtDate;
+            PreviousARTStartDate = previousArtStartDate;
+            PreviousARTRegimen = previousArtRegimen;
+            StartARTAtThisFacility = startArtAtThisFacility;
+            StartRegimen = startRegimen;
+            StartRegimenLine = startRegimenLine;
+            LastARTDate = lastArtDate;
+            LastRegimen = lastRegimen;
+            LastRegimenLine = lastRegimenLine;
+            Duration = duration;
+            ExpectedReturn = expectedReturn;
+            LastVisit = lastVisit;
+            ExitReason = exitReason;
+            ExitDate = exitDate;
+            Emr = emr;
+            Project = project;
+            PatientId = patientId;
+        }
     }
 }

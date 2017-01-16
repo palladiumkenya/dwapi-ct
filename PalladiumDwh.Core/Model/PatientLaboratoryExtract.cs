@@ -13,5 +13,21 @@ namespace PalladiumDwh.Core.Model
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+
+        public PatientLaboratoryExtract()
+        {
+        }
+
+        public PatientLaboratoryExtract(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, string testResult, string emr, string project, Guid patientId)
+        {
+            VisitId = visitId;
+            OrderedByDate = orderedByDate;
+            ReportedByDate = reportedByDate;
+            TestName = testName;
+            TestResult = testResult;
+            Emr = emr;
+            Project = project;
+            PatientId = patientId;
+        }
     }
 }

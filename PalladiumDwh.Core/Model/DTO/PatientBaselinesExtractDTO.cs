@@ -1,9 +1,9 @@
 using System;
 using PalladiumDwh.Shared;
 
-namespace PalladiumDwh.Core.Model
+namespace PalladiumDwh.Core.Model.DTO
 {
-    public class PatientBaselinesExtract : Entity
+    public class PatientBaselinesExtractDTO
     {
         public int? eCD4 { get; set; }
         public DateTime? eCD4Date { get; set; }
@@ -25,13 +25,11 @@ namespace PalladiumDwh.Core.Model
         public string Project { get; set; }
         public Guid PatientId { get; set; }
 
-        public PatientBaselinesExtract()
+        /*
+        public PatientBaselinesExtractDTO(PatientBaselinesExtractDTO patientBaselinesExtract)
         {
-        }
-
-        public PatientBaselinesExtract(int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? bCd4, DateTime? bCd4Date, int? bWho, DateTime? bWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, string emr, string project, Guid patientId)
-        {
-            eCD4 = eCd4;
+            
+            eCD4 = patientBaselinesExtract.eCd4;
             eCD4Date = eCd4Date;
             eWHO = eWho;
             eWHODate = eWhoDate;
@@ -50,6 +48,13 @@ namespace PalladiumDwh.Core.Model
             Emr = emr;
             Project = project;
             PatientId = patientId;
+        }
+        */
+        public  PatientBaselinesExtract GeneratePatientBaselinesExtract()
+        {
+            return new PatientBaselinesExtract( 
+                eCD4 ,eCD4Date,eWHO ,eWHODate ,bCD4,bCD4Date,bWHO,bWHODate,lastWHO,
+                lastWHODate ,lastCD4 ,lastCD4Date ,m12CD4 ,m12CD4Date ,m6CD4 ,m6CD4Date ,Emr,Project,PatientId);
         }
     }
 }
