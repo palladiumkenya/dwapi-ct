@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\DataSet.cs" />
     <Compile Include="Model\Facility.cs" />
     <Compile Include="Model\PatientArtExtract.cs" />
     <Compile Include="Model\PatientBaselinesExtract.cs" />
@@ -49,7 +49,6 @@
     <Compile Include="Model\PatientPharmacyExtract.cs" />
     <Compile Include="Model\PatientStatusExtract.cs" />
     <Compile Include="Model\PatientVisitExtract.cs" />
-    <Compile Include="Model\UploadErrorLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

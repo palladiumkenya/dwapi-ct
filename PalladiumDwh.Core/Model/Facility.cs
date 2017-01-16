@@ -6,11 +6,8 @@ namespace PalladiumDwh.Core.Model
 {
     public class Facility : Entity
     {
-        public int? FacilityCode { get; set; }
-        public string FacilityName { get; set; }
-        public DateTime? DateLoaded { get; set; }
-        public int? UploadStatus { get; set; }
-        public DateTime? DateUploaded { get; set; }
-        public virtual ICollection<UploadErrorLog> UploadErrorLogs { get; set; }=new List<UploadErrorLog>();
+        public int Code { get; set; }
+        public string Name { get; set; }
+        public virtual ICollection<PatientExtract> PatientExtracts { get; set; } = new List<PatientExtract>();
     }
 }
