@@ -25,31 +25,31 @@ namespace PalladiumDwh.Core.Model.DTO
         public string Project { get; set; }
         public Guid PatientId { get; set; }
 
-        /*
+        
         public PatientBaselinesExtractDTO(PatientBaselinesExtractDTO patientBaselinesExtract)
         {
             
-            eCD4 = patientBaselinesExtract.eCd4;
-            eCD4Date = eCd4Date;
-            eWHO = eWho;
-            eWHODate = eWhoDate;
-            bCD4 = bCd4;
-            bCD4Date = bCd4Date;
-            bWHO = bWho;
-            bWHODate = bWhoDate;
-            lastWHO = lastWho;
-            lastWHODate = lastWhoDate;
-            lastCD4 = lastCd4;
-            lastCD4Date = lastCd4Date;
-            m12CD4 = m12Cd4;
-            m12CD4Date = m12Cd4Date;
-            m6CD4 = m6Cd4;
-            m6CD4Date = m6Cd4Date;
-            Emr = emr;
-            Project = project;
-            PatientId = patientId;
+            eCD4 = patientBaselinesExtract.eCD4;
+            eCD4Date = patientBaselinesExtract.eCD4Date;
+            eWHO = patientBaselinesExtract.eWHO;
+            eWHODate = patientBaselinesExtract.eWHODate;
+            bCD4 = patientBaselinesExtract.bCD4;
+            bCD4Date = patientBaselinesExtract.bCD4Date;
+            bWHO = patientBaselinesExtract.bWHO;
+            bWHODate = patientBaselinesExtract.bWHODate;
+            lastWHO = patientBaselinesExtract.lastWHO;
+            lastWHODate = patientBaselinesExtract.lastWHODate;
+            lastCD4 = patientBaselinesExtract.lastCD4;
+            lastCD4Date = patientBaselinesExtract.lastCD4Date;
+            m12CD4 = patientBaselinesExtract.m6CD4;
+            m12CD4Date = patientBaselinesExtract.m6CD4Date;
+            m6CD4 = patientBaselinesExtract.m6CD4;
+            m6CD4Date = patientBaselinesExtract.m6CD4Date;
+            Emr = patientBaselinesExtract.Emr;
+            Project = patientBaselinesExtract.Project;
+            PatientId = patientBaselinesExtract.PatientId;
         }
-        */
+        
         public  PatientBaselinesExtract GeneratePatientBaselinesExtract()
         {
             return new PatientBaselinesExtract( 

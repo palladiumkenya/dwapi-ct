@@ -14,6 +14,18 @@ namespace PalladiumDwh.Core.Model.DTO
         public string Project { get; set; }
         public Guid PatientId { get; set; }
 
+        public PatientLaboratoryExtractDTO(PatientLaboratoryExtract patientLaboratoryExtract)
+        {
+            VisitId = patientLaboratoryExtract.VisitId;
+            OrderedByDate = patientLaboratoryExtract.OrderedByDate;
+            ReportedByDate = patientLaboratoryExtract.ReportedByDate;
+            TestName = patientLaboratoryExtract.TestName;
+            TestResult = patientLaboratoryExtract.TestResult;
+            Emr = patientLaboratoryExtract.Emr;
+            Project = patientLaboratoryExtract.Project;
+            PatientId = patientLaboratoryExtract.PatientId;
+        }
+
         public PatientLaboratoryExtract GeneratePatientLaboratoryExtract()
         {
             return new PatientLaboratoryExtract(VisitId, OrderedByDate, ReportedByDate, TestName, TestResult, Emr, Project, PatientId);

@@ -18,6 +18,22 @@ namespace PalladiumDwh.Core.Model.DTO
         public int? Uploaded { get; set; }
         public Guid PatientId { get; set; }
 
+        public PatientPharmacyExtractDTO(PatientPharmacyExtract patientPharmacyExtract)
+        {
+            VisitID = patientPharmacyExtract.VisitID;
+            Drug = patientPharmacyExtract.Drug;
+            DispenseDate = patientPharmacyExtract.DispenseDate;
+            Duration = patientPharmacyExtract.Duration;
+            ExpectedReturn = patientPharmacyExtract.ExpectedReturn;
+            TreatmentType = patientPharmacyExtract.TreatmentType;
+            PeriodTaken = patientPharmacyExtract.PeriodTaken;
+            ProphylaxisType = patientPharmacyExtract.ProphylaxisType;
+            Emr = patientPharmacyExtract.Emr;
+            Project = patientPharmacyExtract.Project;
+            Uploaded = patientPharmacyExtract.Uploaded;
+            PatientId = patientPharmacyExtract.PatientId;
+        }
+
         public PatientPharmacyExtract GeneratePatientPharmacyExtract()
         {
             return new PatientPharmacyExtract(VisitID, Drug, DispenseDate, Duration, ExpectedReturn, TreatmentType,
