@@ -5,9 +5,6 @@ namespace PalladiumDwh.Core.Model
 {
     public class PatientBaselinesExtract : Entity
     {
-        public int PatientId { get; set; }
-        public int SiteCode { get; set; }
-        public string PatientCccNumber { get; set; }
         public int? eCD4 { get; set; }
         public DateTime? eCD4Date { get; set; }
         public int? eWHO { get; set; }
@@ -26,8 +23,6 @@ namespace PalladiumDwh.Core.Model
         public DateTime? m6CD4Date { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public int? Uploaded { get; set; }
-    
-        public virtual PatientExtract PatientExtract { get; set; }
+        public Guid PatientId { get; set; }
     }
 }
