@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using PalladiumDwh.Shared;
 
 namespace PalladiumDwh.Core.Model.DTO
@@ -25,9 +27,19 @@ namespace PalladiumDwh.Core.Model.DTO
             Project = patientLaboratoryExtract.Project;
             PatientId = patientLaboratoryExtract.PatientId;
         }
-
-        public PatientLaboratoryExtract GeneratePatientLaboratoryExtract()
+        public IEnumerable<PatientLaboratoryExtractDTO> GeneratePatientArtExtractDtOs(IEnumerable<PatientLaboratoryExtract> extracts)
         {
+            var laboratoryExtractDtos = new List<PatientLaboratoryExtractDTO>();
+            foreach (var e in extracts.ToList())
+            {
+                laboratoryExtractDtos.Add(new PatientLaboratoryExtractDTO(e));
+            }
+            return laboratoryExtractDtos;
+        }
+
+        public PatientLaboratoryExtract GeneratePatientLaboratoryExtract(Guid patientId)
+        {
+            PatientId = patientId;
             return new PatientLaboratoryExtract(VisitId, OrderedByDate, ReportedByDate, TestName, TestResult, Emr, Project, PatientId);
         }
     }

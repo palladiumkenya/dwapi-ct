@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using PalladiumDwh.Shared;
 
 namespace PalladiumDwh.Core.Model
@@ -8,6 +9,14 @@ namespace PalladiumDwh.Core.Model
     {
         public int Code { get; set; }
         public string Name { get; set; }
+
+        [NotMapped]
+        public override string Emr { get; set; }
+        [NotMapped]
+        public override string Project{ get; set; }
+        [NotMapped]
+        public override bool Voided { get; set; }
+
         public virtual ICollection<PatientExtract> PatientExtracts { get; set; } = new List<PatientExtract>();
 
         public Facility()

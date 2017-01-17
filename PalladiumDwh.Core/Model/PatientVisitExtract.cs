@@ -31,8 +31,6 @@ namespace PalladiumDwh.Core.Model
         public string PwP { get; set; }
         public decimal? GestationAge { get; set; }
         public DateTime? NextAppointmentDate { get; set; }
-        public string Emr { get; set; }
-        public string Project { get; set; }
         public Guid PatientId { get; set; }
 
         public PatientVisitExtract()

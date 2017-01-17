@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+using PalladiumDwh.Core.Model.DTO;
 
-namespace PalladiumDwh.Core.Model.DTO
+namespace PalladiumDwh.Core.Model.Profiles
 {
     public class PatientProfile
     {
@@ -26,6 +25,7 @@ namespace PalladiumDwh.Core.Model.DTO
         {
             _facilityInfo = Facility.GenerateFacility();
             _patientInfo = Demographic.GeneratePatient(_facilityInfo.Id);
+
         }
 
         /*

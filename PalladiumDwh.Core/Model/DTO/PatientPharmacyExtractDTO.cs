@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using PalladiumDwh.Shared;
 
 namespace PalladiumDwh.Core.Model.DTO
@@ -15,7 +17,6 @@ namespace PalladiumDwh.Core.Model.DTO
         public string ProphylaxisType { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public int? Uploaded { get; set; }
         public Guid PatientId { get; set; }
 
         public PatientPharmacyExtractDTO(PatientPharmacyExtract patientPharmacyExtract)
@@ -30,14 +31,23 @@ namespace PalladiumDwh.Core.Model.DTO
             ProphylaxisType = patientPharmacyExtract.ProphylaxisType;
             Emr = patientPharmacyExtract.Emr;
             Project = patientPharmacyExtract.Project;
-            Uploaded = patientPharmacyExtract.Uploaded;
+            
             PatientId = patientPharmacyExtract.PatientId;
         }
-
-        public PatientPharmacyExtract GeneratePatientPharmacyExtract()
+        public IEnumerable<PatientPharmacyExtractDTO> GeneratePatientArtExtractDtOs(IEnumerable<PatientPharmacyExtract> extracts)
         {
+            var pharmacyExtractDtos = new List<PatientPharmacyExtractDTO>();
+            foreach (var e in extracts.ToList())
+            {
+                pharmacyExtractDtos.Add(new PatientPharmacyExtractDTO(e));
+            }
+            return pharmacyExtractDtos;
+        }
+        public PatientPharmacyExtract GeneratePatientPharmacyExtract(Guid patientId)
+        {
+            PatientId = patientId;
             return new PatientPharmacyExtract(VisitID, Drug, DispenseDate, Duration, ExpectedReturn, TreatmentType,
-                PeriodTaken, ProphylaxisType, Emr, Project, Uploaded, PatientId);
+                PeriodTaken, ProphylaxisType, Emr, Project,  PatientId);
         }
     }
 }

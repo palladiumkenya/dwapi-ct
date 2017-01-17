@@ -7,6 +7,7 @@ namespace PalladiumDwh.Core.Model
 {
     public class PatientExtract:Entity
     {
+        public int PatientPID { get; set; }
         public string PatientCccNumber { get; set; }
         public string Gender { get; set; }
         public DateTime? DOB { get; set; }
@@ -25,9 +26,8 @@ namespace PalladiumDwh.Core.Model
         public DateTime? DateConfirmedHIVPositive { get; set; }
         public string PreviousARTExposure { get; set; }
         public DateTime? PreviousARTStartDate { get; set; }
-        public string Emr { get; set; }
-        public string Project { get; set; }
         public Guid FacilityId { get; set; }
+        
 
 
         public virtual ICollection<PatientArtExtract> PatientArtExtracts { get; set; }=new List<PatientArtExtract>();

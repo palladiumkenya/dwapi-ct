@@ -24,6 +24,12 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             //consider using DbSet.AsNoTracking() **
             return DbSet.Find(id);
         }
+
+        public TEntity Find(Expression<Func<TEntity, bool>> predicate)
+        {
+            return DbSet.Where(predicate).FirstOrDefault();
+        }
+
         public virtual void Insert(TEntity entity)
         {
             DbSet.Add(entity);

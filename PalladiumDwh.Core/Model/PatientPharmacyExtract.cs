@@ -13,16 +13,13 @@ namespace PalladiumDwh.Core.Model
         public string TreatmentType { get; set; }
         public string PeriodTaken { get; set; }
         public string ProphylaxisType { get; set; }
-        public string Emr { get; set; }
-        public string Project { get; set; }
-        public int? Uploaded { get; set; }
         public Guid PatientId { get; set; }
 
         public PatientPharmacyExtract()
         {
         }
 
-        public PatientPharmacyExtract(int? visitId, string drug, DateTime? dispenseDate, decimal? duration, string expectedReturn, string treatmentType, string periodTaken, string prophylaxisType, string emr, string project, int? uploaded, Guid patientId)
+        public PatientPharmacyExtract(int? visitId, string drug, DateTime? dispenseDate, decimal? duration, string expectedReturn, string treatmentType, string periodTaken, string prophylaxisType, string emr, string project, Guid patientId)
         {
             VisitID = visitId;
             Drug = drug;
@@ -34,7 +31,7 @@ namespace PalladiumDwh.Core.Model
             ProphylaxisType = prophylaxisType;
             Emr = emr;
             Project = project;
-            Uploaded = uploaded;
+            
             PatientId = patientId;
         }
     }

@@ -13,5 +13,9 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             _context = context;
         }
 
+        public Guid? GetFacilityIdBCode(int code)
+        {
+            return Find(x => x.Code==code)?.Id;
+        }
     }
 }

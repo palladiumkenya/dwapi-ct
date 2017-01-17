@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using PalladiumDwh.Shared;
 
 namespace PalladiumDwh.Core.Model.DTO
@@ -23,10 +25,13 @@ namespace PalladiumDwh.Core.Model.DTO
         public DateTime? m6CD4Date { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
+
+      
+
         public Guid PatientId { get; set; }
 
         
-        public PatientBaselinesExtractDTO(PatientBaselinesExtractDTO patientBaselinesExtract)
+        public PatientBaselinesExtractDTO(PatientBaselinesExtract patientBaselinesExtract)
         {
             
             eCD4 = patientBaselinesExtract.eCD4;
@@ -49,9 +54,19 @@ namespace PalladiumDwh.Core.Model.DTO
             Project = patientBaselinesExtract.Project;
             PatientId = patientBaselinesExtract.PatientId;
         }
-        
-        public  PatientBaselinesExtract GeneratePatientBaselinesExtract()
+
+        public IEnumerable<PatientBaselinesExtractDTO> GeneratePatientArtExtractDtOs(IEnumerable<PatientBaselinesExtract> extracts)
         {
+            var baselinesExtractDtos = new List<PatientBaselinesExtractDTO>();
+            foreach (var e in extracts.ToList())
+            {
+                baselinesExtractDtos.Add(new PatientBaselinesExtractDTO(e));
+            }
+            return baselinesExtractDtos;
+        }
+        public  PatientBaselinesExtract GeneratePatientBaselinesExtract(Guid patientId)
+        {
+            PatientId = patientId;
             return new PatientBaselinesExtract( 
                 eCD4 ,eCD4Date,eWHO ,eWHODate ,bCD4,bCD4Date,bWHO,bWHODate,lastWHO,
                 lastWHODate ,lastCD4 ,lastCD4Date ,m12CD4 ,m12CD4Date ,m6CD4 ,m6CD4Date ,Emr,Project,PatientId);
