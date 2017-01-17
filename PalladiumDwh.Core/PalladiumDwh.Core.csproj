@@ -58,6 +58,12 @@
     <Compile Include="Model\DTO\PatientExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientLaboratoryExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientPharmacyExtractDTO.cs" />
+    <Compile Include="Model\DTO\PatientLabProfile.cs" />
+    <Compile Include="Model\DTO\PatientBaselineProfile.cs" />
+    <Compile Include="Model\DTO\PatientPharmacyProfile.cs" />
+    <Compile Include="Model\DTO\PatientStatusProfile.cs" />
+    <Compile Include="Model\DTO\PatientARTProfile.cs" />
+    <Compile Include="Model\DTO\PatientVisitProfile.cs" />
     <Compile Include="Model\DTO\PatientProfile.cs" />
     <Compile Include="Model\DTO\PatientStatusExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientVisitExtractDTO.cs" />
