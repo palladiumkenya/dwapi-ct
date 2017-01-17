@@ -1,14 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Hosting;
+using System.Web.Http.Routing;
 using FizzWare.NBuilder;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared;
 
-namespace PalladiumDwh.Core.Tests
+namespace PalladiumDwh.DWapi.Tests
 {
     public static class TestHelpers
     {
+        public static void SetupControllerForTests(ApiController controller, string url, string action)
+        {
+            var config = new HttpConfiguration();
+            var request = new HttpRequestMessage(HttpMethod.Post, url);
+            var route = config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}");
+            var routeData = new HttpRouteData(route, new HttpRouteValueDictionary { { "controller", $"{action}" } });
+
+            controller.ControllerContext = new HttpControllerContext(config, routeData, request);
+            controller.Request = request;
+            controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
+        }
+
         public static void CreateTestData<T>(DbContext context, IEnumerable<T> entities) where T : Entity
         {
             context.Set<T>().AddRange(entities);

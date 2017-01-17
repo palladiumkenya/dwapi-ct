@@ -8,32 +8,35 @@ using System.Web.Http;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Model;
-using PalladiumDwh.Core.Model.Profiles;
 
 namespace PalladiumDwh.DWapi.Controllers
 {
-    public class PatientArtController : ApiController
+    public class FacilitiesController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly ISyncService _syncService;
 
-        public PatientArtController(ISyncService syncService)
+        public FacilitiesController(ISyncService syncService)
         {
             _syncService = syncService;
         }
 
-        public HttpResponseMessage Post([FromBody] PatientARTProfile patientProfile)
+        [HttpGet]
+        public HttpResponseMessage Get(int id)
         {
-            try
+            HttpResponseMessage response = null;
+            var facility = _syncService.GetFacility(id);
+
+            if (facility == null)
             {
-                _syncService.SyncArt(patientProfile);
-                return Request.CreateResponse(HttpStatusCode.OK, $"{patientProfile}");
+                response = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Facility not found!");
+
             }
-            catch (Exception ex)
+            else
             {
-                Log.Debug(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                response = Request.CreateResponse(HttpStatusCode.OK, facility);
             }
+            return response;
         }
     }
 }

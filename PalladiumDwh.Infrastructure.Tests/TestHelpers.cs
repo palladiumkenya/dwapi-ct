@@ -19,6 +19,16 @@ namespace PalladiumDwh.Infrastructure.Tests
         {
             return Builder<T>.CreateListOfSize(count).Build();
         }
+        public static IEnumerable<PatientExtract> GetTestPatientData(Facility facility, int patientCount, int visitCount)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+            }
+            return patients;
+        }
+
         public static IEnumerable<PatientExtract> GetTestPatientVisitsData(Facility facility,int patientCount,int visitCount)
         {
             var patients=Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();

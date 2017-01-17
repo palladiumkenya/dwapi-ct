@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PalladiumDwh.DWapi.Client.Model.DTO;
 
@@ -6,31 +7,28 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
 {
     public class PatientARTProfile
     {
-        private Facility _facilityInfo;
-        private PatientExtract _patientInfo;
-        private List<PatientArtExtract> _patientArtExtracts=new List<PatientArtExtract>();
-
         public FacilityDTO Facility { get; set; }
         public PatientExtractDTO Demographic { get; set; }
         public List<PatientArtExtractDTO> ArtExtracts { get; set; } = new List<PatientArtExtractDTO>();
 
-        public Facility FacilityInfo => _facilityInfo;
-        public PatientExtract PatientInfo => _patientInfo;
-        public List<PatientArtExtract> PatientArtExtracts => _patientArtExtracts;
+        public Facility FacilityInfo { get;  set; }
+        public PatientExtract PatientInfo { get;  set; }
+        public List<PatientArtExtract> PatientArtExtracts { get;  set; }
+
+       
 
         public void GeneratePatientRecord()
         {
-            _facilityInfo = Facility.GenerateFacility();
-            _patientInfo = Demographic.GeneratePatient(_facilityInfo.Id);
+            FacilityInfo = Facility.GenerateFacility();
+            PatientInfo = Demographic.GeneratePatient(FacilityInfo.Id);
         }
 
-        public void GenerateRecords()
+        public void GenerateRecords(Guid patientId)
         {
-            _patientArtExtracts = new List<PatientArtExtract>();
+            PatientInfo.Id = patientId;
+            PatientArtExtracts = new List<PatientArtExtract>();
             foreach (var e in ArtExtracts)
-            {
-                _patientArtExtracts.Add(e.GeneratePatientArtExtract(_patientInfo.Id));
-            }
+                PatientArtExtracts.Add(e.GeneratePatientArtExtract(PatientInfo.Id));
         }
 
         public static PatientARTProfile Create(Facility facility, PatientExtract patient)
@@ -47,7 +45,7 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
 
         public override string ToString()
         {
-            return $"{_patientInfo.Id}";
+            return $"{PatientInfo.Id}";
         }
     }
 }

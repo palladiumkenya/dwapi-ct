@@ -41,6 +41,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             {
                 Insert(patient);
                 CommitChanges();
+                patientId = patient.Id;
             }
             else
             {

@@ -146,5 +146,11 @@ namespace PalladiumDwh.Infrastructure.Tests
             Assert.IsNull(deletedfacility);
         } 
         */
+
+        [TearDown]
+        public void TearDown()
+        {
+            _context.Dispose();
+        }
     }
 }

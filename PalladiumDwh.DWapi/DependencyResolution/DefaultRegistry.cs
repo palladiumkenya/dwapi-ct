@@ -1,3 +1,4 @@
+using PalladiumDwh.Infrastructure.Data;
 using StructureMap;
 
 namespace PalladiumDwh.DWapi.DependencyResolution
@@ -10,10 +11,15 @@ namespace PalladiumDwh.DWapi.DependencyResolution
                 scan =>
                 {
                     scan.TheCallingAssembly();
+                    scan.Assembly("PalladiumDwh.Shared");
+                    scan.Assembly("PalladiumDwh.Core");
+                    scan.Assembly("PalladiumDwh.Infrastructure");
                     scan.WithDefaultConventions();
                     scan.With(new ControllerConvention());
                 });
-            //For<IExample>().Use<Example>();
+
+            For<DwapiCentralContext>().Use<DwapiCentralContext>()
+              .SelectConstructor(() => new DwapiCentralContext());
         }
     }
 }

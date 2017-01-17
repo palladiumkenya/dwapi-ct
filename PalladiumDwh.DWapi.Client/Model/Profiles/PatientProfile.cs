@@ -26,5 +26,14 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
             _facilityInfo = Facility.GenerateFacility();
             _patientInfo = Demographic.GeneratePatient(_facilityInfo.Id);
         }
+        public static PatientProfile Create(Facility facility, PatientExtract patient)
+        {
+            var patientProfile = new PatientProfile
+            {
+                Facility = new FacilityDTO(facility),
+                Demographic = new PatientExtractDTO(patient)
+            };
+            return patientProfile;
+        }
     }
 }

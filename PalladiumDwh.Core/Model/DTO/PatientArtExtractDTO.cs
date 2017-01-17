@@ -31,6 +31,36 @@ namespace PalladiumDwh.Core.Model.DTO
         public string Project { get; set; }
         public Guid PatientId { get; set; }
 
+        public PatientArtExtractDTO()
+        {
+        }
+
+        public PatientArtExtractDTO(decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project, Guid patientId)
+        {
+            AgeEnrollment = ageEnrollment;
+            AgeARTStart = ageArtStart;
+            AgeLastVisit = ageLastVisit;
+            RegistrationDate = registrationDate;
+            PatientSource = patientSource;
+            StartARTDate = startArtDate;
+            PreviousARTStartDate = previousArtStartDate;
+            PreviousARTRegimen = previousArtRegimen;
+            StartARTAtThisFacility = startArtAtThisFacility;
+            StartRegimen = startRegimen;
+            StartRegimenLine = startRegimenLine;
+            LastARTDate = lastArtDate;
+            LastRegimen = lastRegimen;
+            LastRegimenLine = lastRegimenLine;
+            Duration = duration;
+            ExpectedReturn = expectedReturn;
+            LastVisit = lastVisit;
+            ExitReason = exitReason;
+            ExitDate = exitDate;
+            Emr = emr;
+            Project = project;
+            PatientId = patientId;
+        }
+
         public PatientArtExtractDTO(PatientArtExtract patientArtExtract)
         {
             AgeEnrollment = patientArtExtract.AgeEnrollment;
@@ -57,10 +87,6 @@ namespace PalladiumDwh.Core.Model.DTO
             PatientId = patientArtExtract.PatientId;
         }
 
-        public PatientArtExtractDTO()
-        {
-        }
-
         public IEnumerable<PatientArtExtractDTO> GeneratePatientArtExtractDtOs(IEnumerable<PatientArtExtract> extracts)
         {
             var artExtracts = new List<PatientArtExtractDTO>();
@@ -78,8 +104,6 @@ namespace PalladiumDwh.Core.Model.DTO
                 AgeEnrollment, AgeARTStart, AgeLastVisit, RegistrationDate, PatientSource, StartARTDate,PreviousARTStartDate, 
                 PreviousARTRegimen, StartARTAtThisFacility,StartRegimen, StartRegimenLine, LastARTDate, LastRegimen, 
                 LastRegimenLine, Duration, ExpectedReturn,LastVisit, ExitReason, ExitDate, Emr, Project, PatientId);
-        }
-
-        
+        }       
     }
 }

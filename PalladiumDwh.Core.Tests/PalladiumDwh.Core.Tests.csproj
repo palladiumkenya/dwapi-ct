@@ -73,6 +73,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Model\PatientProfileTests.cs" />
     <Compile Include="Model\PatientARTProfileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SyncServiceTests.cs" />

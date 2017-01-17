@@ -27,7 +27,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             {
                 Insert(facility);
                 CommitChanges();
-
+                facilityId = facility.Id;
             }
             return facilityId;
         }

@@ -45,9 +45,8 @@ namespace PalladiumDwh.Core.Services
 
             if (!(patientId == Guid.Empty || null == patientId))
             {
-                profile.PatientInfo.Id = patientId.Value;
-                profile.GenerateRecords();
-                _patientArtExtractRepository.Sync(patientId.Value,profile.PatientArtExtracts);
+                profile.GenerateRecords(patientId.Value);
+                _patientArtExtractRepository.Sync(profile.PatientInfo.Id,profile.PatientArtExtracts);
             }
         }
 

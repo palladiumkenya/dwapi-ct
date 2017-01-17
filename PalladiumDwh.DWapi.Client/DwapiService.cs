@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace PalladiumDwh.DWapi.Client
         }
         public Facility Get(int id)
         {
-            var request = new RestRequest($"PatientArt/{id}", Method.GET);
+            var request = new RestRequest($"Facilities/{id}", Method.GET);
             request.JsonSerializer = new NewtonsoftJsonSerializer();
             request.RequestFormat = DataFormat.Json;
             request.OnBeforeDeserialization = restResponse => { restResponse.ContentType = "application/json"; };
@@ -29,7 +30,7 @@ namespace PalladiumDwh.DWapi.Client
             return JsonConvert.DeserializeObject<Facility>(response.Content);
         }
 
-        public Guid? Post(PatientARTProfile profile)
+        public bool Post(PatientARTProfile profile)
         {
             var request = new RestRequest("PatientArt/", Method.POST);
             request.JsonSerializer = new NewtonsoftJsonSerializer();
@@ -37,7 +38,57 @@ namespace PalladiumDwh.DWapi.Client
             request.AddBody(profile);
 
             var res = _client.Execute(request);
-            return new Guid(res.Content.ToString());
+            return (res.StatusCode == HttpStatusCode.OK);
+        }
+        public bool Post(PatientBaselineProfile profile)
+        {
+            var request = new RestRequest("PatientBaselines/", Method.POST);
+            request.JsonSerializer = new NewtonsoftJsonSerializer();
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(profile);
+
+            var res = _client.Execute(request);
+            return (res.StatusCode == HttpStatusCode.OK);
+        }
+        public bool Post(PatientLabProfile profile)
+        {
+            var request = new RestRequest("PatientLabs/", Method.POST);
+            request.JsonSerializer = new NewtonsoftJsonSerializer();
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(profile);
+
+            var res = _client.Execute(request);
+            return (res.StatusCode == HttpStatusCode.OK);
+        }
+        public bool Post(PatientPharmacyProfile profile)
+        {
+            var request = new RestRequest("PatientPharmacy/", Method.POST);
+            request.JsonSerializer = new NewtonsoftJsonSerializer();
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(profile);
+
+            var res = _client.Execute(request);
+            return (res.StatusCode == HttpStatusCode.OK);
+        }
+        public bool Post(PatientStatusProfile profile)
+        {
+            var request = new RestRequest("PatientStatus/", Method.POST);
+            request.JsonSerializer = new NewtonsoftJsonSerializer();
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(profile);
+
+            var res = _client.Execute(request);
+            return (res.StatusCode == HttpStatusCode.OK);
+        }
+        public bool Post(PatientVisitProfile profile)
+        {
+            var request = new RestRequest("PatientVisits/", Method.POST);
+            request.JsonSerializer = new NewtonsoftJsonSerializer();
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(profile);
+
+            var res = _client.Execute(request);
+            return (res.StatusCode == HttpStatusCode.OK);
         }
     }
 }

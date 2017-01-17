@@ -8,6 +8,10 @@ namespace PalladiumDwh.Core.Model.DTO
         public int Code { get; set; }
         public string Name { get; set; }
 
+        public FacilityDTO()
+        {
+        }
+
         public FacilityDTO(Facility facility)
         {
             Code = facility.Code;

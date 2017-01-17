@@ -26,6 +26,10 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
         public string Project { get; set; }
         public Guid FacilityId { get; set; }
 
+        public PatientExtractDTO()
+        {
+        }
+
         public PatientExtractDTO(PatientExtract patient)
         {
             PatientCccNumber = patient.PatientCccNumber;
@@ -53,6 +57,8 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
 
         public PatientExtract GeneratePatient(Guid facilityId)
         {
+            FacilityId = facilityId;
+
             return new PatientExtract(
                 PatientCccNumber, Gender, DOB, RegistrationDate, RegistrationAtCCC,RegistrationATPMTCT, RegistrationAtTBClinic, 
                 PatientSource, Region, District, Village, ContactRelation,LastVisit, MaritalStatus, EducationLevel, 

@@ -18,14 +18,30 @@ namespace PalladiumDwh.DWapi.Client.Tests
         {
             return Builder<T>.CreateListOfSize(count).Build();
         }
-        public static IEnumerable<PatientExtract> GetTestPatientARTData(Facility facility,int patientCount,int visitCount)
+
+        public static IEnumerable<PatientExtract> GetTestPatientData(Facility facility, int patientCount)
         {
-            var patients=Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
             foreach (var p in patients)
             {
-                p.FacilityId=facility.Id;
-                var artExtracts = Builder<PatientArtExtract>.CreateListOfSize(visitCount).Build().ToList();
-                p.AddPatientArtExtracts(artExtracts);
+                p.FacilityId = facility.Id;
+            }
+            return patients;
+        }
+
+        public static IEnumerable<PatientExtract> GetTestPatientWithExtracts(Facility facility, int patientCount, int count)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+                p.AddPatientArtExtracts(Builder<PatientArtExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddPatientBaselinesExtracts(Builder<PatientBaselinesExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddPatientLaboratoryExtracts(Builder<PatientLaboratoryExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddPatientPharmacyExtracts(Builder<PatientPharmacyExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddPatientStatusExtracts(Builder<PatientStatusExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddPatientVisitExtracts(Builder<PatientVisitExtract>.CreateListOfSize(count).Build().ToList());
+
             }
             return patients;
         }
