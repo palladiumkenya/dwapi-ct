@@ -53,7 +53,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         public virtual void DeleteBy(Expression<Func<TEntity, bool>> predicate)
         {
             var results = DbSet.Where(predicate).ToList();
-            if (null!= results)
+            if (results.Count>0)
             {
                 DbSet.RemoveRange(results);
             }

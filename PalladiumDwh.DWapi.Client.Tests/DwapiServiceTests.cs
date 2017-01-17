@@ -39,13 +39,15 @@ namespace PalladiumDwh.DWapi.Client.Tests
         public void should_Post()
         {
             var patient = _patientWithAllExtracts.First();
-
+            var prof=PatientBaselineProfile.Create(_newFacility, patient);
+            Console.WriteLine(
+                JsonConvert.SerializeObject(prof));
             //Assert.IsTrue(_dwapiService.Post(PatientARTProfile.Create(_newFacility, patient)));
-            Assert.IsTrue(_dwapiService.Post(PatientBaselineProfile.Create(_newFacility, patient)));
-            Assert.IsTrue(_dwapiService.Post(PatientLabProfile.Create(_newFacility, patient)));
-            Assert.IsTrue(_dwapiService.Post(PatientPharmacyProfile.Create(_newFacility, patient)));
-            Assert.IsTrue(_dwapiService.Post(PatientStatusProfile.Create(_newFacility, patient)));
-            Assert.IsTrue(_dwapiService.Post(PatientVisitProfile.Create(_newFacility, patient)));
+            Assert.IsTrue(_dwapiService.Post(prof));
+            //Assert.IsTrue(_dwapiService.Post(PatientLabProfile.Create(_newFacility, patient)));
+            //Assert.IsTrue(_dwapiService.Post(PatientPharmacyProfile.Create(_newFacility, patient)));
+            //Assert.IsTrue(_dwapiService.Post(PatientStatusProfile.Create(_newFacility, patient)));
+            //Assert.IsTrue(_dwapiService.Post(PatientVisitProfile.Create(_newFacility, patient)));
             
         }
     }
