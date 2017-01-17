@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DwhServerContext.cs" />
+    <Compile Include="Data\DwapiCentralContext.cs" />
     <Compile Include="Data\EFConvention\ForeignKeyNamingConvention.cs" />
     <Compile Include="Data\Repository\FacilityRepository.cs" />
     <Compile Include="Data\Repository\PatientArtExtractRepository.cs" />

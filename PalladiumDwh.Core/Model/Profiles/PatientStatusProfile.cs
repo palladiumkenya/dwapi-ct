@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PalladiumDwh.Core.Model.DTO;
 
 namespace PalladiumDwh.Core.Model.Profiles
@@ -7,6 +8,7 @@ namespace PalladiumDwh.Core.Model.Profiles
     {
         private Facility _facilityInfo;
         private PatientExtract _patientInfo;
+        private List<PatientStatusExtract> _patientStatusExtracts;
 
         public FacilityDTO Facility { get; set; }
         public PatientExtractDTO Demographic { get; set; }
@@ -14,20 +16,33 @@ namespace PalladiumDwh.Core.Model.Profiles
 
         public Facility FacilityInfo => _facilityInfo;
         public PatientExtract PatientInfo => _patientInfo;
+        public List<PatientStatusExtract> PatientStatusExtracts => _patientStatusExtracts;
 
         public void GeneratePatientRecord()
         {
             _facilityInfo = Facility.GenerateFacility();
             _patientInfo = Demographic.GeneratePatient(_facilityInfo.Id);
+        }
 
-
-            var extracts = new List<PatientStatusExtract>();
+        public void GenerateRecords()
+        {
+            _patientStatusExtracts = new List<PatientStatusExtract>();
             foreach (var e in StatusExtracts)
             {
-                extracts.Add(e.GeneratePatientStatusExtract(_patientInfo.Id));
+                _patientStatusExtracts.Add(e.GeneratePatientStatusExtract(_patientInfo.Id));
             }
-            _patientInfo.AddPatientStatusExtracts(extracts);
+        }
 
+        public static PatientStatusProfile Create(Facility facility, PatientExtract patient)
+        {
+            var patientProfile = new PatientStatusProfile
+            {
+                Facility = new FacilityDTO(facility),
+                Demographic = new PatientExtractDTO(patient),
+                StatusExtracts =
+                    new PatientStatusExtractDTO().GeneratePatientStatusExtractDtOs(patient.PatientStatusExtracts).ToList()
+            };
+            return patientProfile;
         }
     }
 }

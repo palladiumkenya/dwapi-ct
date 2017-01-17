@@ -8,5 +8,6 @@ namespace PalladiumDwh.Core.Interfaces
     {
         Guid? GetPatientBy(Guid facilityId, string patientNumber);
         Guid? GetPatientBy(Guid facilityId, int patientPID);
+        Guid? Sync(PatientExtract patient);
     }
 }

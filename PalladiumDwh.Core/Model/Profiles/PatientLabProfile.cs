@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PalladiumDwh.Core.Model.DTO;
 
 namespace PalladiumDwh.Core.Model.Profiles
@@ -7,6 +8,7 @@ namespace PalladiumDwh.Core.Model.Profiles
     {
         private Facility _facilityInfo;
         private PatientExtract _patientInfo;
+        private List<PatientLaboratoryExtract> _patientLaboratoryExtracts;
 
         public FacilityDTO Facility { get; set; }
         public PatientExtractDTO Demographic { get; set; }
@@ -15,17 +17,33 @@ namespace PalladiumDwh.Core.Model.Profiles
 
         public Facility FacilityInfo => _facilityInfo;
         public PatientExtract PatientInfo => _patientInfo;
+        public List<PatientLaboratoryExtract> PatientLaboratoryExtracts => _patientLaboratoryExtracts;
 
         public void GeneratePatientRecord()
         {
             _facilityInfo = Facility.GenerateFacility();
             _patientInfo = Demographic.GeneratePatient(_facilityInfo.Id);
-            var extracts = new List<PatientLaboratoryExtract>();
+        }
+
+        public void GenerateRecords()
+        {
+            _patientLaboratoryExtracts = new List<PatientLaboratoryExtract>();
             foreach (var e in LaboratoryExtracts)
             {
-                extracts.Add(e.GeneratePatientLaboratoryExtract(_patientInfo.Id));
+                _patientLaboratoryExtracts.Add(e.GeneratePatientLaboratoryExtract(_patientInfo.Id));
             }
-            _patientInfo.AddPatientLaboratoryExtracts(extracts);
+        }
+
+        public static PatientLabProfile Create(Facility facility, PatientExtract patient)
+        {
+            var patientProfile = new PatientLabProfile
+            {
+                Facility = new FacilityDTO(facility),
+                Demographic = new PatientExtractDTO(patient),
+                LaboratoryExtracts =
+                    new PatientLaboratoryExtractDTO().GenerateLaboratoryExtractDtOs(patient.PatientLaboratoryExtracts).ToList()
+            };
+            return patientProfile;
         }
     }
 }

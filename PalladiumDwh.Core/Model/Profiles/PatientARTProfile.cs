@@ -8,6 +8,7 @@ namespace PalladiumDwh.Core.Model.Profiles
     {
         private Facility _facilityInfo;
         private PatientExtract _patientInfo;
+        private List<PatientArtExtract> _patientArtExtracts;
 
         public FacilityDTO Facility { get; set; }
         public PatientExtractDTO Demographic { get; set; }
@@ -15,6 +16,7 @@ namespace PalladiumDwh.Core.Model.Profiles
 
         public Facility FacilityInfo => _facilityInfo;
         public PatientExtract PatientInfo => _patientInfo;
+        public List<PatientArtExtract> PatientArtExtracts => _patientArtExtracts;
 
         public void GeneratePatientRecord()
         {
@@ -22,14 +24,13 @@ namespace PalladiumDwh.Core.Model.Profiles
             _patientInfo = Demographic.GeneratePatient(_facilityInfo.Id);
         }
 
-        public void GenerateArtRecords()
+        public void GenerateRecords()
         {
-            var extracts = new List<PatientArtExtract>();
+            _patientArtExtracts = new List<PatientArtExtract>();
             foreach (var e in ArtExtracts)
             {
-                extracts.Add(e.GeneratePatientArtExtract(_patientInfo.Id));
+                _patientArtExtracts.Add(e.GeneratePatientArtExtract(_patientInfo.Id));
             }
-            _patientInfo.AddPatientArtExtracts(extracts);
         }
 
         public static PatientARTProfile Create(Facility facility, PatientExtract patient)
@@ -42,6 +43,11 @@ namespace PalladiumDwh.Core.Model.Profiles
                     new PatientArtExtractDTO().GeneratePatientArtExtractDtOs(patient.PatientArtExtracts).ToList()
             };
             return patientProfile;
+        }
+
+        public override string ToString()
+        {
+            return $"{_patientInfo.Id}";
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.Reflection;
+using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Model;
 
@@ -7,9 +9,10 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 {
     public class PatientExtractRepository : GenericRepository<PatientExtract>, IPatientExtractRepository
     {
-        private readonly DwhServerContext _context;
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly DwapiCentralContext _context;
 
-        public PatientExtractRepository(DwhServerContext context) : base(context)
+        public PatientExtractRepository(DwapiCentralContext context) : base(context)
         {
             _context = context;
         }
@@ -25,9 +28,26 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         public Guid? GetPatientBy(Guid facilityId, int patientPID)
         {
             return Find(
-               x => x.FacilityId == facilityId &&
-                    x.PatientPID == patientPID
-           )?.Id;
+                x => x.FacilityId == facilityId &&
+                     x.PatientPID == patientPID
+            )?.Id;
+        }
+
+        public Guid? Sync(PatientExtract patient)
+        {
+            var patientId = GetPatientBy(patient.FacilityId, patient.PatientPID);
+
+            if (patientId == Guid.Empty || null == patientId)
+            {
+                Insert(patient);
+                CommitChanges();
+            }
+            else
+            {
+                Update(patient);
+            }
+
+            return patientId;
         }
     }
 }

@@ -13,132 +13,125 @@ namespace PalladiumDwh.Core.Services
         private readonly IFacilityRepository _facilityRepository;
         private readonly IPatientExtractRepository _patientExtractRepository;
         private readonly IPatientArtExtractRepository _patientArtExtractRepository;
+        private readonly IPatientBaseLinesRepository _patientBaseLinesRepository;
+        private readonly IPatientLabRepository _patientLabRepository;
+        private readonly IPatientPharmacyRepository _patientPharmacyRepository;
+        private readonly IPatientStatusRepository _patientStatusRepository;
+        private readonly IPatientVisitRepository _patientVisitRepository;
 
-        public SyncService(IFacilityRepository facilityRepository, IPatientExtractRepository patientExtractRepository, IPatientArtExtractRepository patientArtExtractRepository)
+        public SyncService(IFacilityRepository facilityRepository, IPatientExtractRepository patientExtractRepository, IPatientArtExtractRepository patientArtExtractRepository, IPatientBaseLinesRepository patientBaseLinesRepository, IPatientLabRepository patientLabRepository, IPatientPharmacyRepository patientPharmacyRepository, IPatientStatusRepository patientStatusRepository, IPatientVisitRepository patientVisitRepository)
         {
             _facilityRepository = facilityRepository;
             _patientExtractRepository = patientExtractRepository;
             _patientArtExtractRepository = patientArtExtractRepository;
+            _patientBaseLinesRepository = patientBaseLinesRepository;
+            _patientLabRepository = patientLabRepository;
+            _patientPharmacyRepository = patientPharmacyRepository;
+            _patientStatusRepository = patientStatusRepository;
+            _patientVisitRepository = patientVisitRepository;
         }
 
-        public Guid? SyncCurrentPatient(Facility facility, PatientExtract patient)
+        
+
+        public Guid? SyncPatient(PatientProfile profile)
+        {
+            return SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+        }
+
+        public void SyncArt(PatientARTProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.PatientInfo.Id = patientId.Value;
+                profile.GenerateRecords();
+                _patientArtExtractRepository.Sync(patientId.Value,profile.PatientArtExtracts);
+            }
+        }
+
+        public void SyncBaseline(PatientBaselineProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.PatientInfo.Id = patientId.Value;
+                profile.GenerateRecords();
+                _patientBaseLinesRepository.Sync(patientId.Value, profile.PatientBaselinesExtracts);
+            }
+        }
+
+        public void SyncLab(PatientLabProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.PatientInfo.Id = patientId.Value;
+                profile.GenerateRecords();
+                _patientLabRepository.Sync(patientId.Value, profile.PatientLaboratoryExtracts);
+            }
+        }
+
+        public void SyncPharmacy(PatientPharmacyProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.PatientInfo.Id = patientId.Value;
+                profile.GenerateRecords();
+                _patientPharmacyRepository.Sync(patientId.Value, profile.PatientPharmacyExtracts);
+            }
+        }
+
+        public void SyncStatus(PatientStatusProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.PatientInfo.Id = patientId.Value;
+                profile.GenerateRecords();
+                _patientStatusRepository.Sync(patientId.Value, profile.PatientStatusExtracts);
+            }
+        }
+
+        public void SyncVisit(PatientVisitProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.PatientInfo.Id = patientId.Value;
+                profile.GenerateRecords();
+                _patientVisitRepository.Sync(patientId.Value, profile.PatientVisitExtracts);
+            }
+        }
+
+        public Facility GetFacility(int code)
+        {
+            return _facilityRepository.Find(x => x.Code == code);
+        }
+
+        private Guid? SyncCurrentPatient(Facility facility, PatientExtract patient)
         {
             Guid? syncPatientId = null;
-            
-            var facilityId = SyncFacility(facility);
+
+            var facilityId = _facilityRepository.Sync(facility);
             if (!(facilityId == Guid.Empty || null == facilityId))
             {
                 patient.FacilityId = facilityId.Value;
-
-                syncPatientId = SyncPatientDemographics(patient);
+                syncPatientId = _patientExtractRepository.Sync(patient);
             }
             return syncPatientId;
-        }
-
-        private Guid? SyncFacility(Facility facility)
-        {
-            Guid? facilityId = null;
-            
-            try
-            {
-                facilityId = _facilityRepository.GetFacilityIdBCode(facility.Code);
-            }
-            catch (Exception ex)
-            {
-                Log.Debug(ex);
-            }
-
-            if (facilityId == Guid.Empty || null == facilityId)
-            {
-                var newFacility = facility;
-
-                try
-                {
-                    _facilityRepository.Insert(newFacility);
-                    _facilityRepository.CommitChanges();
-                    facilityId = newFacility.Id;
-                }
-                catch (Exception ex)
-                {
-                    Log.Debug(ex);
-                }
-            }
-            return facilityId;
-        }
-
-        private Guid? SyncPatientDemographics(PatientExtract patient)
-        {
-            Guid? patientId = null;
-            try
-            {
-                patientId = _patientExtractRepository.GetPatientBy(patient.FacilityId, patient.PatientPID);
-            }
-            catch (Exception ex)
-            {
-                Log.Debug(ex);
-            }
-
-            if (patientId == Guid.Empty || null == patientId)
-            {
-                var newPatient = patient;
-                try
-                {
-                    _patientExtractRepository.Insert(newPatient);
-                    _patientExtractRepository.CommitChanges();
-                    patientId = newPatient.Id;
-                }
-                catch (Exception ex)
-                {
-                    Log.Debug(ex);
-                }
-            }
-            else
-            {
-                _patientExtractRepository.Update(patient);
-            }
-            
-            return patientId;
-        }
-
-        public void SyncArt(PatientARTProfile artProfile)
-        {
-            artProfile.GeneratePatientRecord();
-            var patientId = SyncCurrentPatient(artProfile.FacilityInfo, artProfile.PatientInfo);
-
-            if (patientId != Guid.Empty && null != patientId)
-            {
-                artProfile.PatientInfo.Id = patientId.Value;
-            }
-
-            _patientArtExtractRepository.Clear(artProfile.PatientInfo.Id);
-            _patientArtExtractRepository.CommitChanges();
-         //   _patientArtExtractRepository.Insert(artProfile.ArtExtracts);
-
-        }
-
-        public void SyncBaseline(PatientBaselineProfile baselineProfile)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SyncLab(PatientLabProfile labProfile)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SyncPharmacy(PatientPharmacyProfile patientPharmacyProfile)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SyncStatus(PatientStatusProfile patientStatusProfile)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SyncVisit(PatientVisitProfile patientVisitProfile)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

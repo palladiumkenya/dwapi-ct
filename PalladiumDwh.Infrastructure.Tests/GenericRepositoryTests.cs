@@ -12,7 +12,7 @@ namespace PalladiumDwh.Infrastructure.Tests
     [TestFixture]
     public class GenericRepositoryTests
     {
-        private DwhServerContext _context;
+        private DwapiCentralContext _context;
         private Facility _facilityA;
         private List<Facility> _facilities;
         private List<PatientExtract> _patients;
@@ -20,7 +20,7 @@ namespace PalladiumDwh.Infrastructure.Tests
         [SetUp]
         public void SetUp()
         {
-            _context = new DwhServerContext(Effort.DbConnectionFactory.CreateTransient(),true);
+            _context = new DwapiCentralContext(Effort.DbConnectionFactory.CreateTransient(),true);
             
 
             _facilities = TestHelpers.GetTestData<Facility>(5).ToList();
@@ -66,7 +66,7 @@ namespace PalladiumDwh.Infrastructure.Tests
         [Test]
         public void should_Insert_Range()
         {
-            _context = new DwhServerContext(Effort.DbConnectionFactory.CreateTransient(), true);
+            _context = new DwapiCentralContext(Effort.DbConnectionFactory.CreateTransient(), true);
             var newFacilityList = TestHelpers.GetTestData<Facility>(20);
             var repository = new FacilityRepository(_context);
 

@@ -23,7 +23,12 @@ namespace PalladiumDwh.Core.Model.DTO
             Project = patientStatusExtract.Project;
             PatientId = patientStatusExtract.PatientId;
         }
-        public IEnumerable<PatientStatusExtractDTO> GeneratePatientArtExtractDtOs(IEnumerable<PatientStatusExtract> extracts)
+
+        public PatientStatusExtractDTO()
+        {
+        }
+
+        public IEnumerable<PatientStatusExtractDTO> GeneratePatientStatusExtractDtOs(IEnumerable<PatientStatusExtract> extracts)
         {
             var statusExtractDtos = new List<PatientStatusExtractDTO>();
             foreach (var e in extracts.ToList())
