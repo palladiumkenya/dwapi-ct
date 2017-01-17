@@ -1,27 +1,19 @@
-using System.Reflection;
-using log4net;
-using StructureMap.Configuration.DSL;
-using StructureMap.Graph;
-using PalladiumDwh.Infrastructure.Data;
+using StructureMap;
 
-
-namespace PalladiumDwh.DWapi.DependencyResolution {
-
-    public class DefaultRegistry : Registry {
-
-
-        public DefaultRegistry() {
+namespace PalladiumDwh.DWapi.DependencyResolution
+{
+    public class DefaultRegistry : Registry
+    {
+        public DefaultRegistry()
+        {
             Scan(
-                scan => {
+                scan =>
+                {
                     scan.TheCallingAssembly();
-                    scan.Assembly("PalladiumDwh.Shared");
-                    scan.Assembly("PalladiumDwh.Core");
-                    scan.Assembly("PalladiumDwh.Infrastructure");
                     scan.WithDefaultConventions();
+                    scan.With(new ControllerConvention());
                 });
-            
-            For<DwapiCentralContext>().Use<DwapiCentralContext>()
-                .SelectConstructor(() => new DwapiCentralContext());
+            //For<IExample>().Use<Example>();
         }
     }
 }
