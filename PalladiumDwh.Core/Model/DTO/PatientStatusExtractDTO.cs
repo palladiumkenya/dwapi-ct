@@ -14,6 +14,20 @@ namespace PalladiumDwh.Core.Model.DTO
         public string Project { get; set; }
         public Guid PatientId { get; set; }
 
+        public PatientStatusExtractDTO()
+        {
+        }
+
+        public PatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId)
+        {
+            ExitDescription = exitDescription;
+            ExitDate = exitDate;
+            ExitReason = exitReason;
+            Emr = emr;
+            Project = project;
+            PatientId = patientId;
+        }
+
         public PatientStatusExtractDTO(PatientStatusExtract patientStatusExtract)
         {
             ExitDescription = patientStatusExtract.ExitDescription;
@@ -24,9 +38,7 @@ namespace PalladiumDwh.Core.Model.DTO
             PatientId = patientStatusExtract.PatientId;
         }
 
-        public PatientStatusExtractDTO()
-        {
-        }
+     
 
         public IEnumerable<PatientStatusExtractDTO> GeneratePatientStatusExtractDtOs(IEnumerable<PatientStatusExtract> extracts)
         {

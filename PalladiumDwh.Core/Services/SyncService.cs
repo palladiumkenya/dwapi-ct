@@ -57,8 +57,7 @@ namespace PalladiumDwh.Core.Services
 
             if (!(patientId == Guid.Empty || null == patientId))
             {
-                profile.PatientInfo.Id = patientId.Value;
-                profile.GenerateRecords();
+                profile.GenerateRecords(patientId.Value);
                 _patientBaseLinesRepository.Sync(patientId.Value, profile.PatientBaselinesExtracts);
             }
         }
@@ -70,8 +69,7 @@ namespace PalladiumDwh.Core.Services
 
             if (!(patientId == Guid.Empty || null == patientId))
             {
-                profile.PatientInfo.Id = patientId.Value;
-                profile.GenerateRecords();
+                profile.GenerateRecords(patientId.Value);
                 _patientLabRepository.Sync(patientId.Value, profile.PatientLaboratoryExtracts);
             }
         }
@@ -83,8 +81,7 @@ namespace PalladiumDwh.Core.Services
 
             if (!(patientId == Guid.Empty || null == patientId))
             {
-                profile.PatientInfo.Id = patientId.Value;
-                profile.GenerateRecords();
+                profile.GenerateRecords(patientId.Value);
                 _patientPharmacyRepository.Sync(patientId.Value, profile.PatientPharmacyExtracts);
             }
         }
@@ -96,8 +93,7 @@ namespace PalladiumDwh.Core.Services
 
             if (!(patientId == Guid.Empty || null == patientId))
             {
-                profile.PatientInfo.Id = patientId.Value;
-                profile.GenerateRecords();
+                profile.GenerateRecords(patientId.Value);
                 _patientStatusRepository.Sync(patientId.Value, profile.PatientStatusExtracts);
             }
         }
@@ -109,8 +105,7 @@ namespace PalladiumDwh.Core.Services
 
             if (!(patientId == Guid.Empty || null == patientId))
             {
-                profile.PatientInfo.Id = patientId.Value;
-                profile.GenerateRecords();
+                profile.GenerateRecords(patientId.Value);
                 _patientVisitRepository.Sync(patientId.Value, profile.PatientVisitExtracts);
             }
         }

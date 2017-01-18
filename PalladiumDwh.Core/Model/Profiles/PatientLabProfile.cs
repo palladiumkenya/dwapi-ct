@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PalladiumDwh.Core.Model.DTO;
 
@@ -6,32 +7,27 @@ namespace PalladiumDwh.Core.Model.Profiles
 {
     public class PatientLabProfile
     {
-        private Facility _facilityInfo;
-        private PatientExtract _patientInfo;
-        private List<PatientLaboratoryExtract> _patientLaboratoryExtracts;
-
         public FacilityDTO Facility { get; set; }
         public PatientExtractDTO Demographic { get; set; }
-        public List<PatientLaboratoryExtractDTO> LaboratoryExtracts { get; set; } = new List<PatientLaboratoryExtractDTO>();
+        public List<PatientLaboratoryExtractDTO> LaboratoryExtracts { get; set; } =new List<PatientLaboratoryExtractDTO>();
 
 
-        public Facility FacilityInfo => _facilityInfo;
-        public PatientExtract PatientInfo => _patientInfo;
-        public List<PatientLaboratoryExtract> PatientLaboratoryExtracts => _patientLaboratoryExtracts;
+        public Facility FacilityInfo { get; set; }
+        public PatientExtract PatientInfo { get; set; }
+        public List<PatientLaboratoryExtract> PatientLaboratoryExtracts { get;  set; }
 
         public void GeneratePatientRecord()
         {
-            _facilityInfo = Facility.GenerateFacility();
-            _patientInfo = Demographic.GeneratePatient(_facilityInfo.Id);
+            FacilityInfo = Facility.GenerateFacility();
+            PatientInfo = Demographic.GeneratePatient(FacilityInfo.Id);
         }
 
-        public void GenerateRecords()
+        public void GenerateRecords(Guid patientId)
         {
-            _patientLaboratoryExtracts = new List<PatientLaboratoryExtract>();
+            PatientInfo.Id = patientId;
+            PatientLaboratoryExtracts = new List<PatientLaboratoryExtract>();
             foreach (var e in LaboratoryExtracts)
-            {
-                _patientLaboratoryExtracts.Add(e.GeneratePatientLaboratoryExtract(_patientInfo.Id));
-            }
+                PatientLaboratoryExtracts.Add(e.GeneratePatientLaboratoryExtract(PatientInfo.Id));
         }
 
         public static PatientLabProfile Create(Facility facility, PatientExtract patient)
@@ -41,7 +37,8 @@ namespace PalladiumDwh.Core.Model.Profiles
                 Facility = new FacilityDTO(facility),
                 Demographic = new PatientExtractDTO(patient),
                 LaboratoryExtracts =
-                    new PatientLaboratoryExtractDTO().GenerateLaboratoryExtractDtOs(patient.PatientLaboratoryExtracts).ToList()
+                    new PatientLaboratoryExtractDTO().GenerateLaboratoryExtractDtOs(patient.PatientLaboratoryExtracts)
+                        .ToList()
             };
             return patientProfile;
         }

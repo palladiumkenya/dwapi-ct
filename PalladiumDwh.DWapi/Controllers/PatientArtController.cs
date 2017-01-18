@@ -31,7 +31,9 @@ namespace PalladiumDwh.DWapi.Controllers
             }
             catch (Exception ex)
             {
+                var body = Request.Content.ReadAsStringAsync().Result;
                 Log.Debug(ex);
+                Log.Debug(body);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }

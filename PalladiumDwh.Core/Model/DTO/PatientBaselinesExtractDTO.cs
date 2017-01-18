@@ -29,8 +29,33 @@ namespace PalladiumDwh.Core.Model.DTO
       
 
         public Guid PatientId { get; set; }
+        public PatientBaselinesExtractDTO()
+        {
+        }
 
-        
+        public PatientBaselinesExtractDTO(int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? bCd4, DateTime? bCd4Date, int? bWho, DateTime? bWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, string emr, string project, Guid patientId)
+        {
+            eCD4 = eCd4;
+            eCD4Date = eCd4Date;
+            eWHO = eWho;
+            eWHODate = eWhoDate;
+            bCD4 = bCd4;
+            bCD4Date = bCd4Date;
+            bWHO = bWho;
+            bWHODate = bWhoDate;
+            lastWHO = lastWho;
+            lastWHODate = lastWhoDate;
+            lastCD4 = lastCd4;
+            lastCD4Date = lastCd4Date;
+            m12CD4 = m12Cd4;
+            m12CD4Date = m12Cd4Date;
+            m6CD4 = m6Cd4;
+            m6CD4Date = m6Cd4Date;
+            Emr = emr;
+            Project = project;
+            PatientId = patientId;
+        }
+
         public PatientBaselinesExtractDTO(PatientBaselinesExtract patientBaselinesExtract)
         {
             
@@ -55,9 +80,7 @@ namespace PalladiumDwh.Core.Model.DTO
             PatientId = patientBaselinesExtract.PatientId;
         }
 
-        public PatientBaselinesExtractDTO()
-        {
-        }
+       
 
         public IEnumerable<PatientBaselinesExtractDTO> GeneratePatientBaselinesExtractDtOs(IEnumerable<PatientBaselinesExtract> extracts)
         {

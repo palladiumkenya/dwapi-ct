@@ -18,6 +18,25 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
         public string Project { get; set; }
         public Guid PatientId { get; set; }
 
+        public PatientPharmacyExtractDTO()
+        {
+        }
+
+        public PatientPharmacyExtractDTO(int? visitId, string drug, DateTime? dispenseDate, decimal? duration, string expectedReturn, string treatmentType, string periodTaken, string prophylaxisType, string emr, string project, Guid patientId)
+        {
+            VisitID = visitId;
+            Drug = drug;
+            DispenseDate = dispenseDate;
+            Duration = duration;
+            ExpectedReturn = expectedReturn;
+            TreatmentType = treatmentType;
+            PeriodTaken = periodTaken;
+            ProphylaxisType = prophylaxisType;
+            Emr = emr;
+            Project = project;
+            PatientId = patientId;
+        }
+
         public PatientPharmacyExtractDTO(PatientPharmacyExtract patientPharmacyExtract)
         {
             VisitID = patientPharmacyExtract.VisitID;
@@ -30,12 +49,8 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
             ProphylaxisType = patientPharmacyExtract.ProphylaxisType;
             Emr = patientPharmacyExtract.Emr;
             Project = patientPharmacyExtract.Project;
-            
-            PatientId = patientPharmacyExtract.PatientId;
-        }
 
-        public PatientPharmacyExtractDTO()
-        {
+            PatientId = patientPharmacyExtract.PatientId;
         }
 
         public IEnumerable<PatientPharmacyExtractDTO> GeneratePatientPharmacyExtractDtOs(IEnumerable<PatientPharmacyExtract> extracts)

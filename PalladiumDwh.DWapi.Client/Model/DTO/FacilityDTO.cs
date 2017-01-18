@@ -9,6 +9,12 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
         {
         }
 
+        public FacilityDTO(int code, string name)
+        {
+            Code = code;
+            Name = name;
+        }
+
         public FacilityDTO(Facility facility)
         {
             Code = facility.Code;

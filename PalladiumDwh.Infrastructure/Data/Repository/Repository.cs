@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
+using log4net;
+using log4net.Config;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {
-    public abstract  class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : Entity
+    public abstract class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
+        internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         internal DbContext Context;
         internal DbSet<TEntity> DbSet;
 
@@ -34,6 +39,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         {
             DbSet.Add(entity);
         }
+
         public virtual void Insert(IEnumerable<TEntity> entities)
         {
             DbSet.AddRange(entities);
@@ -52,10 +58,24 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
         public virtual void DeleteBy(Expression<Func<TEntity, bool>> predicate)
         {
-            var results = DbSet.Where(predicate).ToList();
-            if (results.Count>0)
+            try
             {
-                DbSet.RemoveRange(results);
+                Context.Configuration.AutoDetectChangesEnabled = false;
+                var results = DbSet.Where(predicate);
+                if (null != results.FirstOrDefault())
+                {
+                    DbSet.RemoveRange(results);
+                }
+                Context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex);
+                throw;
+            }
+            finally
+            {
+                Context.Configuration.AutoDetectChangesEnabled = true;
             }
         }
 

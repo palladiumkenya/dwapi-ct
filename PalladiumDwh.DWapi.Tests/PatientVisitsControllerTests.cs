@@ -35,7 +35,6 @@ namespace PalladiumDwh.DWapi.Tests
         private List<PatientExtract> _patientWithAllExtracts;
         private Facility _facility;
 
-
         [SetUp]
         public void SetUp()
         {
@@ -73,7 +72,6 @@ namespace PalladiumDwh.DWapi.Tests
             var savedPatient = _patientExtractRepository.Find(profile.PatientInfo.Id);
             Assert.IsNotNull(savedPatient);
             Assert.IsTrue(savedPatient.PatientVisitExtracts.Count > 0);
-
         }
 
         [TearDown]

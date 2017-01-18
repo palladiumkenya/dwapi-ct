@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PalladiumDwh.DWapi.Client.Model.DTO;
 
@@ -6,31 +7,26 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
 {
     public class PatientBaselineProfile
     {
-        private Facility _facilityInfo;
-        private PatientExtract _patientInfo;
-        private List<PatientBaselinesExtract> _patientBaselinesExtracts;
-
         public FacilityDTO Facility { get; set; }
         public PatientExtractDTO Demographic { get; set; }
         public List<PatientBaselinesExtractDTO> BaselinesExtracts { get; set; } = new List<PatientBaselinesExtractDTO>();
-        
-        public Facility FacilityInfo => _facilityInfo;
-        public PatientExtract PatientInfo => _patientInfo;
-        public List<PatientBaselinesExtract> PatientBaselinesExtracts => _patientBaselinesExtracts;
+
+        public Facility FacilityInfo { get; set; }
+        public PatientExtract PatientInfo { get; set; }
+        public List<PatientBaselinesExtract> PatientBaselinesExtracts { get; set; }
 
         public void GeneratePatientRecord()
         {
-            _facilityInfo = Facility.GenerateFacility();
-            _patientInfo = Demographic.GeneratePatient(_facilityInfo.Id);
+            FacilityInfo = Facility.GenerateFacility();
+            PatientInfo = Demographic.GeneratePatient(FacilityInfo.Id);
         }
 
-        public void GenerateRecords()
+        public void GenerateRecords(Guid patientId)
         {
-            _patientBaselinesExtracts = new List<PatientBaselinesExtract>();
+            PatientInfo.Id = patientId;
+            PatientBaselinesExtracts = new List<PatientBaselinesExtract>();
             foreach (var e in BaselinesExtracts)
-            {
-                _patientBaselinesExtracts.Add(e.GeneratePatientBaselinesExtract(_patientInfo.Id));
-            }
+                PatientBaselinesExtracts.Add(e.GeneratePatientBaselinesExtract(PatientInfo.Id));
         }
 
         public static PatientBaselineProfile Create(Facility facility, PatientExtract patient)
@@ -40,10 +36,10 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
                 Facility = new FacilityDTO(facility),
                 Demographic = new PatientExtractDTO(patient),
                 BaselinesExtracts =
-                    new PatientBaselinesExtractDTO().GeneratePatientBaselinesExtractDtOs(patient.PatientBaselinesExtracts).ToList()
+                    new PatientBaselinesExtractDTO().GeneratePatientBaselinesExtractDtOs(
+                        patient.PatientBaselinesExtracts).ToList()
             };
             return patientProfile;
         }
     }
 }
-

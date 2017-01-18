@@ -31,6 +31,18 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
         {
         }
 
+        public PatientLaboratoryExtractDTO(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, string testResult, string emr, string project, Guid patientId)
+        {
+            VisitId = visitId;
+            OrderedByDate = orderedByDate;
+            ReportedByDate = reportedByDate;
+            TestName = testName;
+            TestResult = testResult;
+            Emr = emr;
+            Project = project;
+            PatientId = patientId;
+        }
+
         public IEnumerable<PatientLaboratoryExtractDTO> GenerateLaboratoryExtractDtOs(IEnumerable<PatientLaboratoryExtract> extracts)
         {
             var laboratoryExtractDtos = new List<PatientLaboratoryExtractDTO>();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PalladiumDwh.Core.Model.DTO;
 
@@ -6,31 +7,26 @@ namespace PalladiumDwh.Core.Model.Profiles
 {
     public class PatientPharmacyProfile
     {
-        private Facility _facilityInfo;
-        private PatientExtract _patientInfo;
-        private List<PatientPharmacyExtract> _patientPharmacyExtracts;
-
         public FacilityDTO Facility { get; set; }
         public PatientExtractDTO Demographic { get; set; }
         public List<PatientPharmacyExtractDTO> PharmacyExtracts { get; set; } = new List<PatientPharmacyExtractDTO>();
 
-        public Facility FacilityInfo => _facilityInfo;
-        public PatientExtract PatientInfo => _patientInfo;
-        public List<PatientPharmacyExtract> PatientPharmacyExtracts => _patientPharmacyExtracts;
+        public Facility FacilityInfo { get;  set; }
+        public PatientExtract PatientInfo { get;  set; }
+        public List<PatientPharmacyExtract> PatientPharmacyExtracts { get;  set; }
 
         public void GeneratePatientRecord()
         {
-            _facilityInfo = Facility.GenerateFacility();
-            _patientInfo = Demographic.GeneratePatient(_facilityInfo.Id);
+            FacilityInfo = Facility.GenerateFacility();
+            PatientInfo = Demographic.GeneratePatient(FacilityInfo.Id);
         }
 
-        public void GenerateRecords()
+        public void GenerateRecords(Guid patientId)
         {
-            _patientPharmacyExtracts = new List<PatientPharmacyExtract>();
+            PatientInfo.Id = patientId;
+            PatientPharmacyExtracts = new List<PatientPharmacyExtract>();
             foreach (var e in PharmacyExtracts)
-            {
-                _patientPharmacyExtracts.Add(e.GeneratePatientPharmacyExtract(_patientInfo.Id));
-            }
+                PatientPharmacyExtracts.Add(e.GeneratePatientPharmacyExtract(PatientInfo.Id));
         }
 
 
@@ -41,7 +37,8 @@ namespace PalladiumDwh.Core.Model.Profiles
                 Facility = new FacilityDTO(facility),
                 Demographic = new PatientExtractDTO(patient),
                 PharmacyExtracts =
-                    new PatientPharmacyExtractDTO().GeneratePatientPharmacyExtractDtOs(patient.PatientPharmacyExtracts).ToList()
+                    new PatientPharmacyExtractDTO().GeneratePatientPharmacyExtractDtOs(patient.PatientPharmacyExtracts)
+                        .ToList()
             };
             return patientProfile;
         }

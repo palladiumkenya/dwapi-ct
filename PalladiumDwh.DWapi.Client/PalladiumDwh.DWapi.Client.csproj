@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDwapiService.cs" />
+    <Compile Include="DwapiService.cs" />
     <Compile Include="Model\DTO\FacilityDTO.cs" />
     <Compile Include="Model\DTO\PatientArtExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientBaselinesExtractDTO.cs" />
@@ -76,7 +77,6 @@
     <Compile Include="Model\Profiles\PatientProfile.cs" />
     <Compile Include="Model\Profiles\PatientStatusProfile.cs" />
     <Compile Include="Model\Profiles\PatientVisitProfile.cs" />
-    <Compile Include="DwapiService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

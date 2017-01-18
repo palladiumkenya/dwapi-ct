@@ -22,16 +22,13 @@ namespace PalladiumDwh.DWapi.Client.Tests
         {
             _dwapiService = new DwapiService("http://localhost/dwapi/api/");
             _newFacility = Builder<Facility>.CreateNew().Build();
-            _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility, 2, 10).ToList();
+            _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility, 2, 2).ToList();
         }
 
         [Test]
         public void should_Get_Facility()
         {
-            //PatientArt / 13784Code 15238   Neal Mississippi Facility
-
-             var facility = _dwapiService.Get(-1);
-
+            var facility = _dwapiService.Get(-1);
             Assert.IsNotNull(facility);
             Assert.AreEqual(-1, facility.Code);
         }
@@ -39,16 +36,33 @@ namespace PalladiumDwh.DWapi.Client.Tests
         public void should_Post()
         {
             var patient = _patientWithAllExtracts.First();
-            var prof=PatientBaselineProfile.Create(_newFacility, patient);
-            Console.WriteLine(
-                JsonConvert.SerializeObject(prof));
-            //Assert.IsTrue(_dwapiService.Post(PatientARTProfile.Create(_newFacility, patient)));
-            Assert.IsTrue(_dwapiService.Post(prof));
-            //Assert.IsTrue(_dwapiService.Post(PatientLabProfile.Create(_newFacility, patient)));
-            //Assert.IsTrue(_dwapiService.Post(PatientPharmacyProfile.Create(_newFacility, patient)));
-            //Assert.IsTrue(_dwapiService.Post(PatientStatusProfile.Create(_newFacility, patient)));
-            //Assert.IsTrue(_dwapiService.Post(PatientVisitProfile.Create(_newFacility, patient)));
-            
+
+            var artProfile = PatientARTProfile.Create(_newFacility, patient);
+            Console.WriteLine(JsonConvert.SerializeObject(artProfile));
+            Console.WriteLine(new string('-',10));
+            var baselineProfile = PatientBaselineProfile.Create(_newFacility, patient);
+            Console.WriteLine(JsonConvert.SerializeObject(baselineProfile));
+            Console.WriteLine(new string('-', 10));
+            var labProfile = PatientLabProfile.Create(_newFacility, patient);
+            Console.WriteLine(JsonConvert.SerializeObject(labProfile));
+            Console.WriteLine(new string('-', 10));
+            var pharmacyProfile = PatientPharmacyProfile.Create(_newFacility, patient);
+            Console.WriteLine(JsonConvert.SerializeObject(pharmacyProfile));
+            Console.WriteLine(new string('-', 10));
+            var statusProfile = PatientStatusProfile.Create(_newFacility, patient);
+            Console.WriteLine(JsonConvert.SerializeObject(statusProfile));
+            Console.WriteLine(new string('-', 10));
+            var visitProfile = PatientVisitProfile.Create(_newFacility, patient);
+            Console.WriteLine(JsonConvert.SerializeObject(visitProfile));
+            Console.WriteLine(new string('-', 10));
+
+            Assert.IsTrue(_dwapiService.Post(artProfile));
+            Assert.IsTrue(_dwapiService.Post(baselineProfile));
+            Assert.IsTrue(_dwapiService.Post(labProfile));
+            Assert.IsTrue(_dwapiService.Post(pharmacyProfile));
+            Assert.IsTrue(_dwapiService.Post(statusProfile));
+            Assert.IsTrue(_dwapiService.Post(visitProfile));
         }
+
     }
 }

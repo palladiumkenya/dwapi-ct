@@ -1,7 +1,10 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic;
 using System.Linq.Expressions;
+using EntityFramework.Extensions;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Model;
 
@@ -17,7 +20,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
         public void Clear(Guid patientId)
         {
-            DeleteBy(x=>x.PatientId==patientId);
+            DeleteBy(x => x.PatientId == patientId);
         }
 
         public void Sync(Guid patientId, IEnumerable<PatientArtExtract> extracts)

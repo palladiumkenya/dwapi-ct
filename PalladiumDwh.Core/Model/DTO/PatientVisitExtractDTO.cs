@@ -37,6 +37,43 @@ namespace PalladiumDwh.Core.Model.DTO
         public string Project { get; set; }
         public Guid PatientId { get; set; }
 
+        public PatientVisitExtractDTO()
+        {
+        }
+
+        public PatientVisitExtractDTO(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr, string project, Guid patientId)
+        {
+            VisitId = visitId;
+            VisitDate = visitDate;
+            Service = service;
+            VisitType = visitType;
+            WHOStage = whoStage;
+            WABStage = wabStage;
+            Pregnant = pregnant;
+            LMP = lmp;
+            EDD = edd;
+            Height = height;
+            Weight = weight;
+            BP = bp;
+            OI = oi;
+            OIDate = oiDate;
+            SubstitutionFirstlineRegimenDate = substitutionFirstlineRegimenDate;
+            SubstitutionFirstlineRegimenReason = substitutionFirstlineRegimenReason;
+            SubstitutionSecondlineRegimenDate = substitutionSecondlineRegimenDate;
+            SubstitutionSecondlineRegimenReason = substitutionSecondlineRegimenReason;
+            SecondlineRegimenChangeDate = secondlineRegimenChangeDate;
+            SecondlineRegimenChangeReason = secondlineRegimenChangeReason;
+            Adherence = adherence;
+            AdherenceCategory = adherenceCategory;
+            FamilyPlanningMethod = familyPlanningMethod;
+            PwP = pwP;
+            GestationAge = gestationAge;
+            NextAppointmentDate = nextAppointmentDate;
+            Emr = emr;
+            Project = project;
+            PatientId = patientId;
+        }
+
         public PatientVisitExtractDTO(PatientVisitExtract patientVisitExtract)
         {
             VisitId = patientVisitExtract.VisitId;
@@ -70,9 +107,7 @@ namespace PalladiumDwh.Core.Model.DTO
             PatientId = patientVisitExtract.PatientId;
         }
 
-        public PatientVisitExtractDTO()
-        {
-        }
+        
 
         public IEnumerable<PatientVisitExtractDTO> GeneratePatientVisitExtractDtOs(IEnumerable<PatientVisitExtract> extracts)
         {

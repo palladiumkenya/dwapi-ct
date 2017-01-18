@@ -32,6 +32,31 @@ namespace PalladiumDwh.Core.Model.DTO
         {
         }
 
+        public PatientExtractDTO(string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string emr, string project, Guid facilityId)
+        {
+            PatientCccNumber = patientCccNumber;
+            Gender = gender;
+            DOB = dob;
+            RegistrationDate = registrationDate;
+            RegistrationAtCCC = registrationAtCcc;
+            RegistrationATPMTCT = registrationAtpmtct;
+            RegistrationAtTBClinic = registrationAtTbClinic;
+            PatientSource = patientSource;
+            Region = region;
+            District = district;
+            Village = village;
+            ContactRelation = contactRelation;
+            LastVisit = lastVisit;
+            MaritalStatus = maritalStatus;
+            EducationLevel = educationLevel;
+            DateConfirmedHIVPositive = dateConfirmedHivPositive;
+            PreviousARTExposure = previousArtExposure;
+            PreviousARTStartDate = previousArtStartDate;
+            Emr = emr;
+            Project = project;
+            FacilityId = facilityId;
+        }
+
         public PatientExtractDTO(PatientExtract patient)
         {
             PatientCccNumber = patient.PatientCccNumber;
