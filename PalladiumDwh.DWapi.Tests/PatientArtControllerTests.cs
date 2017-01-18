@@ -1,63 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Messaging;
 using System.Net;
-using System.Net.Http;
+using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Core.Model.Profiles;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.DWapi.Controllers;
-using PalladiumDwh.Infrastructure.Data;
-using PalladiumDwh.Infrastructure.Data.Repository;
 
 namespace PalladiumDwh.DWapi.Tests
 {
     [TestFixture]
     public class PatientArtControllerTests
     {
+        private readonly string _queueName = $@".\private$\dw.emrpatient.concept";
         private static readonly string baseUrl = "http://localhost/api/PatientArt";
-
-        private ISyncService _syncService;
-        private DwapiCentralContext _context;
-        private List<Facility> _facilities;
-        private IFacilityRepository _facilityRepository;
-        private IPatientExtractRepository _patientExtractRepository;
-        private IPatientArtExtractRepository _patientArtExtractRepository;
-        private IPatientBaseLinesRepository _patientBaseLinesRepository;
-        private IPatientLabRepository _patientLabRepository;
-        private IPatientPharmacyRepository _patientPharmacyRepository;
-
-        private IPatientStatusRepository _patientStatusRepository;
-        private IPatientVisitRepository _patientVisitRepository;
 
         private PatientArtController _controller;
         private List<PatientExtract> _patientWithAllExtracts;
         private Facility _facility;
 
+        private IMessagingService _messagingService;
 
         [SetUp]
         public void SetUp()
         {
-            _context = new DwapiCentralContext(Effort.DbConnectionFactory.CreateTransient(), true);
-            _facilities = TestHelpers.GetTestData<Facility>(5).ToList();
-            TestHelpers.CreateTestData(_context, _facilities);
+            _messagingService=new MessagingService(_queueName);
 
-            _syncService = new SyncService(
-                _facilityRepository = new FacilityRepository(_context),
-                _patientExtractRepository = new PatientExtractRepository(_context),
-                _patientArtExtractRepository = new PatientArtExtractRepository(_context),
-                _patientBaseLinesRepository = new PatientBaseLinesRepository(_context),
-                _patientLabRepository = new PatientLabRepository(_context),
-                _patientPharmacyRepository = new PatientPharmacyRepository(_context),
-                _patientStatusRepository = new PatientStatusRepository(_context),
-                _patientVisitRepository = new PatientVisitRepository(_context)
-            );
-
-            _controller = new PatientArtController(_syncService);
+            _controller = new PatientArtController(_messagingService);
             TestHelpers.SetupControllerForTests(_controller, baseUrl, "PatientArt");
 
-            _facility = _facilities.First();
+            _facility = Builder<Facility>.CreateNew().Build();
             _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_facility, 2, 10).ToList();
         }
 
@@ -70,16 +46,17 @@ namespace PalladiumDwh.DWapi.Tests
             var result = _controller.Post(profile);
 
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
-            var savedPatient = _patientExtractRepository.Find(profile.PatientInfo.Id);
-            Assert.IsNotNull(savedPatient);
-            Assert.IsTrue(savedPatient.PatientArtExtracts.Count > 0);
-
+            var messageId = result.Content.ReadAsStringAsync().Result;
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(messageId));
+          
+            Console.WriteLine($"Message Id [{messageId}]");
         }
 
         [TearDown]
         public void TearDown()
         {
-            _context.Dispose();
+            var msmq = _messagingService.Queue as MessageQueue;
+            msmq.Purge();
         }
     }
 }

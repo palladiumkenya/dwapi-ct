@@ -15,19 +15,23 @@ namespace PalladiumDwh.DWapi.Controllers
     public class PatientArtController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly ISyncService _syncService;
+        
+        private readonly IMessagingService _messagingService;
 
-        public PatientArtController(ISyncService syncService)
+        public PatientArtController(IMessagingService messagingService)
         {
-            _syncService = syncService;
+     
+            _messagingService = messagingService;
+            _messagingService.Initialize();
         }
 
         public HttpResponseMessage Post([FromBody] PatientARTProfile patientProfile)
         {
             try
             {
-                _syncService.SyncArt(patientProfile);
-                return Request.CreateResponse(HttpStatusCode.OK, $"{patientProfile}");
+                patientProfile.GeneratePatientRecord();
+                var messageRef=_messagingService.Send(patientProfile);                
+                return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
             }
             catch (Exception ex)
             {

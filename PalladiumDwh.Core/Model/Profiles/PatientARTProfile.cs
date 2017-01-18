@@ -45,7 +45,7 @@ namespace PalladiumDwh.Core.Model.Profiles
 
         public override string ToString()
         {
-            return $"{PatientInfo.Id}";
+            return $"{FacilityInfo.Name} | {PatientInfo.PatientCccNumber}";
         }
     }
 }

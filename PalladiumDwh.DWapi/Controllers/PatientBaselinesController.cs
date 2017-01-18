@@ -9,6 +9,7 @@ using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Model.Profiles;
 
+
 namespace PalladiumDwh.DWapi.Controllers
 {
     public class PatientBaselinesController : ApiController
@@ -23,8 +24,14 @@ namespace PalladiumDwh.DWapi.Controllers
 
         public HttpResponseMessage Post([FromBody] PatientBaselineProfile patientProfile)
         {
+            
+            Log.Debug(Request.Content.ReadAsStringAsync().Result);
+
             try
             {
+                
+
+
                 _syncService.SyncBaseline(patientProfile);
                 return Request.CreateResponse(HttpStatusCode.OK, $"{patientProfile}");
             }
@@ -34,5 +41,6 @@ namespace PalladiumDwh.DWapi.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
+
     }
 }

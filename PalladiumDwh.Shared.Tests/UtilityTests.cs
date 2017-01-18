@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace PalladiumDwh.Shared.Tests
@@ -45,11 +46,60 @@ namespace PalladiumDwh.Shared.Tests
             Console.WriteLine("==========================================");
             Console.WriteLine("==========================================");
         }
+        [Test]
+        public void should_convert()
+        {
+            var test=new TestFacility("Joy Hospital",5);
+            Console.WriteLine(test.ToString());
+            Console.WriteLine("==========================================");
+
+            var liveMessage=new LiveMessage(test,test.GetType().ToString());
+            Assert.IsNotNull(liveMessage);
+            string jliveMessage = JsonConvert.SerializeObject(liveMessage);
+
+            Console.WriteLine(jliveMessage);
+            Console.WriteLine("==========================================");
+            var objs = JsonConvert.DeserializeObject<LiveMessage>(jliveMessage);
+
+            var readObj = objs.MessageItem;
+            var converted= Convert.ChangeType(readObj, typeof(TestFacility));
+
+            Assert.That(converted, Is.TypeOf<TestFacility>());
+            Console.WriteLine(converted);
+            
+
+            
+            //var readNew= Convert.ChangeType(objs.MessageItem, typeof(Type.GetType(liveMessage.MessageType)));
+            /*
+            Assert.IsNotNull(liveMessage);
+            Console.WriteLine(liveMessage.MessageItem.ToString());
+            Console.WriteLine(liveMessage.MessageType);
+
+            var type = Type.GetType(liveMessage.MessageType);
+            
+            var pObject = liveMessage.MessageItem;
+            */
+        }
     }
+
 
     class TestFacility : Entity
     {
         public string Name { get; set; }
         public int Number { get; set; }
+        public TestFacility()
+        {
+        }
+
+        public TestFacility(string name, int number)
+        {
+            Name = name;
+            Number = number;
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} ({Number})";
+        }
     }
 }

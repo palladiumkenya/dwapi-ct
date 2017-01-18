@@ -11,6 +11,7 @@ namespace PalladiumDwh.Core.Model.Profiles
         public PatientExtractDTO Demographic { get; set; }
         public List<PatientBaselinesExtractDTO> BaselinesExtracts { get; set; } = new List<PatientBaselinesExtractDTO>();
 
+
         public Facility FacilityInfo { get; set; }
         public PatientExtract PatientInfo { get; set; }
         public List<PatientBaselinesExtract> PatientBaselinesExtracts { get; set; }
@@ -40,6 +41,10 @@ namespace PalladiumDwh.Core.Model.Profiles
                         patient.PatientBaselinesExtracts).ToList()
             };
             return patientProfile;
+        }
+        public override string ToString()
+        {
+            return $"{PatientInfo.Id}";
         }
     }
 }

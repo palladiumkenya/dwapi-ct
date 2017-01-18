@@ -31,7 +31,11 @@ namespace PalladiumDwh.Core.Services
             _patientVisitRepository = patientVisitRepository;
         }
 
-        
+
+        public void Sync()
+        {
+            throw new NotImplementedException();
+        }
 
         public Guid? SyncPatient(PatientProfile profile)
         {

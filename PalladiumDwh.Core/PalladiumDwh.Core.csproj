@@ -34,9 +34,13 @@
       <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IClearPatientRecords.cs" />
+    <Compile Include="Interfaces\IMessagingReaderService.cs" />
+    <Compile Include="Interfaces\IMessagingService.cs" />
     <Compile Include="Interfaces\IPatientArtExtractRepository.cs" />
     <Compile Include="Interfaces\IPatientBaseLinesRepository.cs" />
     <Compile Include="Interfaces\IPatientExtractRepository.cs" />
@@ -80,6 +86,8 @@
     <Compile Include="Model\PatientStatusExtract.cs" />
     <Compile Include="Model\PatientVisitExtract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MessagingReaderService.cs" />
+    <Compile Include="Services\MessagingService.cs" />
     <Compile Include="Services\SyncService.cs" />
   </ItemGroup>
   <ItemGroup>

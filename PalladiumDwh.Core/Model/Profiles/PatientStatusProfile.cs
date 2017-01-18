@@ -41,5 +41,9 @@ namespace PalladiumDwh.Core.Model.Profiles
             };
             return patientProfile;
         }
+        public override string ToString()
+        {
+            return $"{PatientInfo.Id}";
+        }
     }
 }

@@ -1,3 +1,5 @@
+using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Core.Services;
 using PalladiumDwh.Infrastructure.Data;
 using StructureMap;
 
@@ -20,6 +22,10 @@ namespace PalladiumDwh.DWapi.DependencyResolution
 
             For<DwapiCentralContext>().Use<DwapiCentralContext>()
               .SelectConstructor(() => new DwapiCentralContext());
+
+            For<IMessagingService>().Use<MessagingService>()
+                .Ctor<string>(Properties.Settings.Default.QueueName);
+              
         }
     }
 }
