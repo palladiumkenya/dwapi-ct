@@ -25,7 +25,7 @@ namespace PalladiumDwh.DWapi.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".\\private$\\dw.emrpatient.concept")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\private$\\dwapi.emr.concept")]
         public string QueueName {
             get {
                 return ((string)(this["QueueName"]));

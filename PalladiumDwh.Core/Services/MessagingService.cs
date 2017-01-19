@@ -10,96 +10,43 @@ using PalladiumDwh.Shared;
 
 namespace PalladiumDwh.Core.Services
 {
-    public class MessagingService : IMessagingService
+    public abstract class MessagingService: IMessagingService
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-        private MessageQueue _queue;
+        internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly string _queueName;
 
-        public string QueueName => _queueName;
-        public object Queue => _queue;
+        public virtual string QueueName { get; private set; }
+        public virtual object Queue { get; private set; }
 
-        public MessagingService(string queueName)
+        protected MessagingService(string queueName)
         {
             _queueName = queueName;
         }
 
-        public void Initialize()
+        public void Initialize(string gateway = "")
         {
-          
+            
+            QueueName = string.IsNullOrWhiteSpace(gateway)? $"{_queueName}": $"{_queueName}.{gateway}";
+
             try
             {
-                if (!MessageQueue.Exists(_queueName))
+                if (!MessageQueue.Exists(QueueName))
                 {
-                    Log.Debug($"Initializing MessagingService [{_queueName}] ...");
-                    _queue = MessageQueue.Create(_queueName, true);
-                    Log.Debug($"MessagingService {_queueName} Initialized!");
+                    Log.Debug($"Initializing MessagingService [{QueueName}] ...");
+                    Queue = MessageQueue.Create(QueueName, true);
+                    Log.Debug($"MessagingService {QueueName} Initialized!");
                 }
                 else
                 {
-                    _queue = new MessageQueue(_queueName);
+                    Queue = new MessageQueue(QueueName);
                 }
             }
             catch (Exception ex)
             {
-                Log.Debug($"MessagingService error:!");
+                Log.Debug($"MessagingService:{QueueName} error:!");
                 Log.Debug(ex);
                 throw;
             }
-            
-        }
-
-        public string Send(object message)
-        {
-            string refId;
-
-            if (null == _queue)
-                Initialize();
-
-            var messageToSend = CreateMessage(message);
-
-            if (null != messageToSend && null != _queue)
-            {
-                try
-                {
-                    var tx = new MessageQueueTransaction();
-                    tx.Begin();
-                    _queue.Send(messageToSend, tx);
-                    tx.Commit();
-                    refId = messageToSend.Id;
-                }
-                catch (Exception ex)
-                {
-                    Log.Debug(ex);
-                    throw;
-                }
-            }
-            else
-            {
-                throw new Exception("Queue is not Initialized !");
-            }
-
-            return refId;
-        }
-
-        private Message CreateMessage(object message)
-        {
-            Message msmqMessage = null;
-            try
-            {
-                msmqMessage = new Message();
-                var jsonBody = JsonConvert.SerializeObject(new LiveMessage(message, message.GetType().ToString()));
-                msmqMessage.Label = $"{message}";
-                msmqMessage.BodyStream = new MemoryStream(Encoding.Default.GetBytes(jsonBody));
-            }
-            catch (Exception ex)
-            {
-                Log.Debug(ex);
-                throw;
-            }
-           
-            return msmqMessage;
         }
     }
 }

@@ -15,31 +15,37 @@ namespace PalladiumDwh.DWapi.Controllers
     public class PatientArtController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        
-        private readonly IMessagingService _messagingService;
+        private readonly string _gateway = typeof(PatientARTProfile).Name.ToLower();
+        private readonly IMessagingSenderService _messagingService;
 
-        public PatientArtController(IMessagingService messagingService)
+        public PatientArtController(IMessagingSenderService messagingService)
         {
-     
             _messagingService = messagingService;
-            _messagingService.Initialize();
+            _messagingService.Initialize(_gateway);
         }
 
         public HttpResponseMessage Post([FromBody] PatientARTProfile patientProfile)
         {
-            try
+            if (null != patientProfile)
             {
-                patientProfile.GeneratePatientRecord();
-                var messageRef=_messagingService.Send(patientProfile);                
-                return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
+                if (!patientProfile.IsValid())
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                        new HttpError("Invalid data,Please ensure its has Patient,Facility and atleast one (1) Extract"));
+                }
+                try
+                {
+                    patientProfile.GeneratePatientRecord();
+                    var messageRef = _messagingService.Send(patientProfile);
+                    return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
+                }
+                catch (Exception ex)
+                {
+                    Log.Debug(ex);
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                }
             }
-            catch (Exception ex)
-            {
-                var body = Request.Content.ReadAsStringAsync().Result;
-                Log.Debug(ex);
-                Log.Debug(body);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new PatientARTProfile().GetType().Name}' is null") );
         }
     }
 }

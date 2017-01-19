@@ -74,11 +74,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Model\PatientProfileTests.cs" />
-    <Compile Include="Model\PatientARTProfileTests.cs" />
+    <Compile Include="Model\DTO\FacilityDTOTests.cs" />
+    <Compile Include="Model\DTO\PatientExtractDTOTests.cs" />
+    <Compile Include="Model\Profiles\PatientProfileTests.cs" />
+    <Compile Include="Model\Profiles\PatientARTProfileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MessagingReaderServiceTests.cs" />
-    <Compile Include="Services\MessagingServiceTests.cs" />
+    <Compile Include="Services\MessagingSenderServiceTests.cs" />
     <Compile Include="Services\SyncServiceTests.cs" />
     <Compile Include="TestHelpers.cs" />
   </ItemGroup>

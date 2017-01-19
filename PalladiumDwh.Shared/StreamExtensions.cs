@@ -11,7 +11,6 @@ namespace PalladiumDwh.Shared
             var reader = new StreamReader(stream);
             return reader.ReadToEnd();
         }
-
         public static T ReadFromJson<T>(this Stream stream)
         {
             var json = stream.ReadToEnd();

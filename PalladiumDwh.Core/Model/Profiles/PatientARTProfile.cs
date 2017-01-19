@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using PalladiumDwh.Core.Model.DTO;
 
@@ -15,21 +16,6 @@ namespace PalladiumDwh.Core.Model.Profiles
         public PatientExtract PatientInfo { get;  set; }
         public List<PatientArtExtract> PatientArtExtracts { get;  set; }
 
-       
-
-        public void GeneratePatientRecord()
-        {
-            FacilityInfo = Facility.GenerateFacility();
-            PatientInfo = Demographic.GeneratePatient(FacilityInfo.Id);
-        }
-
-        public void GenerateRecords(Guid patientId)
-        {
-            PatientInfo.Id = patientId;
-            PatientArtExtracts = new List<PatientArtExtract>();
-            foreach (var e in ArtExtracts)
-                PatientArtExtracts.Add(e.GeneratePatientArtExtract(PatientInfo.Id));
-        }
 
         public static PatientARTProfile Create(Facility facility, PatientExtract patient)
         {
@@ -43,6 +29,35 @@ namespace PalladiumDwh.Core.Model.Profiles
             return patientProfile;
         }
 
+        public bool IsValid()
+        {
+            if (HasData())
+                return
+                    Facility.IsValid() &&
+                    Demographic.IsValid() &&
+                    ArtExtracts.Count > 0;
+            return false;
+        }
+
+        public bool HasData()
+        {
+          return  null != Facility && null != Demographic && null != ArtExtracts;
+        }
+      
+        public void GeneratePatientRecord()
+        {
+            FacilityInfo = Facility.GenerateFacility();
+            PatientInfo = Demographic.GeneratePatient(FacilityInfo.Id);
+        }
+
+        public void GenerateRecords(Guid patientId)
+        {
+            PatientInfo.Id = patientId;
+            PatientArtExtracts = new List<PatientArtExtract>();
+            foreach (var e in ArtExtracts)
+                PatientArtExtracts.Add(e.GeneratePatientArtExtract(PatientInfo.Id));
+        }
+        
         public override string ToString()
         {
             return $"{FacilityInfo.Name} | {PatientInfo.PatientCccNumber}";

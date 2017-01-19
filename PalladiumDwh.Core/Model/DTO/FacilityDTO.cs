@@ -28,5 +28,10 @@ namespace PalladiumDwh.Core.Model.DTO
         {
             return new Facility(Code ,Name);
         }
+
+        public bool IsValid()
+        {
+            return Code > 0;
+        }
     }
 }

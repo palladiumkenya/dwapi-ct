@@ -16,19 +16,20 @@ namespace PalladiumDwh.DWapi.Tests
     [TestFixture]
     public class PatientArtControllerTests
     {
-        private readonly string _queueName = $@".\private$\dw.emrpatient.concept";
+        private readonly string _queueName = $@".\private$\dwapi.emrpatient.concept";
+
         private static readonly string baseUrl = "http://localhost/api/PatientArt";
 
         private PatientArtController _controller;
         private List<PatientExtract> _patientWithAllExtracts;
         private Facility _facility;
 
-        private IMessagingService _messagingService;
+        private IMessagingSenderService _messagingService;
 
         [SetUp]
         public void SetUp()
         {
-            _messagingService=new MessagingService(_queueName);
+            _messagingService=new MessagingSenderService(_queueName);
 
             _controller = new PatientArtController(_messagingService);
             TestHelpers.SetupControllerForTests(_controller, baseUrl, "PatientArt");

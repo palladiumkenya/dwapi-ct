@@ -29,8 +29,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
             if (facility == null)
             {
-                response = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Facility not found!");
-
+                response = Request.CreateErrorResponse(HttpStatusCode.NotFound, $"Facility with Code:{id} not found!");
             }
             else
             {

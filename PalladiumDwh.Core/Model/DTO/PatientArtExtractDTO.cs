@@ -5,7 +5,16 @@ using PalladiumDwh.Shared;
 
 namespace PalladiumDwh.Core.Model.DTO
 {
-    public class PatientArtExtractDTO
+    public interface IPatientArtExtractDTO
+    {
+        string Emr { get; set; }
+        string Project { get; set; }
+        Guid PatientId { get; set; }
+        IEnumerable<PatientArtExtractDTO> GeneratePatientArtExtractDtOs(IEnumerable<PatientArtExtract> extracts);
+        PatientArtExtract GeneratePatientArtExtract(Guid patientId);
+    }
+
+    public class PatientArtExtractDTO : IPatientArtExtractDTO
     {
 
         public decimal? AgeEnrollment { get; set; }

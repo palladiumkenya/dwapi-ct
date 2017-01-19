@@ -17,9 +17,9 @@ namespace PalladiumDwh.Core.Tests.Services
     [TestFixture]
     public class MessagingReaderServiceTests
     {
-        private readonly string _queueName = $@".\private$\dw.emrpatient.concept";
+        private readonly string _queueName = $@".\private$\dwapi.emr.concept";
 
-        private IMessagingReaderService _messagingService;
+        private IMessagingReaderService _messagingReaderService;
         private Facility _newFacility;
         private List<PatientExtract> _patientWithAllExtracts;
 
@@ -58,33 +58,33 @@ namespace PalladiumDwh.Core.Tests.Services
             _newFacility = _facilities.Last();
             _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility, 2, 10).ToList();
 
-            _messagingService = new MessagingReaderService(_syncService, _queueName);
+            _messagingReaderService = new MessagingReaderService(_syncService, _queueName);
 
             var patient = _patientWithAllExtracts.First();
             _profile = PatientARTProfile.Create(_newFacility, patient);
             _profile.GeneratePatientRecord();
 
-            var sendService = new MessagingService(_queueName);
+            var sendService = new MessagingSenderService(_queueName);
             sendService.Send(_profile);
         }
 
         [Test]
         public void should_Initialize()
         {
-           _messagingService.Initialize();
-            var msmq = _messagingService.Queue as MessageQueue;
+           _messagingReaderService.Initialize();
+            var msmq = _messagingReaderService.Queue as MessageQueue;
 
             Assert.IsNotNull(msmq);
             Assert.AreEqual(msmq.Path,_queueName);
             Assert.IsTrue(msmq.Count() > 0);
-            Console.WriteLine(_messagingService.QueueName);
+            Console.WriteLine(_messagingReaderService.QueueName);
         }
 
         [Test]
         public void should_Read_Queue()
         {
-            _messagingService.Initialize();
-            _messagingService.Read();
+            _messagingReaderService.Initialize();
+            _messagingReaderService.Read();
 
             var savedPatient = _patientExtractRepository.Find(x=>x.PatientCccNumber==_profile.PatientInfo.PatientCccNumber);
             Assert.IsNotNull(savedPatient);
@@ -95,7 +95,7 @@ namespace PalladiumDwh.Core.Tests.Services
         public void TearDown()
         {
             _context.Dispose();
-            var msmq = _messagingService.Queue as MessageQueue;
+            var msmq = _messagingReaderService.Queue as MessageQueue;
             msmq.Purge();
         }
         

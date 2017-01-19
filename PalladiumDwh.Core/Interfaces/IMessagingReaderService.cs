@@ -1,11 +1,7 @@
 ﻿namespace PalladiumDwh.Core.Interfaces
 {
-    public interface IMessagingReaderService
+    public interface IMessagingReaderService:IMessagingService
     {
-        string QueueName { get; }
-        object Queue { get; }
-
-        void Initialize();
         void Read();
     }
 }

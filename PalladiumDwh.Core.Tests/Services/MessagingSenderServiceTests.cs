@@ -15,11 +15,11 @@ using PalladiumDwh.Shared;
 namespace PalladiumDwh.Core.Tests.Services
 {
     [TestFixture]
-    public class MessagingServiceTests
+    public class MessagingSenderServiceTests
     {
-        private readonly string _queueName = $@".\private$\dw.emrpatient.concept";
+        private readonly string _queueName = $@".\private$\dwapi.emr.concept";
 
-        private IMessagingService _messagingService;
+        private IMessagingSenderService _messagingSenderService;
         private Facility _newFacility;
         private List<PatientExtract> _patientWithAllExtracts;
 
@@ -29,32 +29,38 @@ namespace PalladiumDwh.Core.Tests.Services
             //_queueName += DateTime.Now.Millisecond.ToString();
             _newFacility = Builder<Facility>.CreateNew().Build();
             _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility, 2, 10).ToList();
-            _messagingService=new MessagingService(_queueName);
+            _messagingSenderService=new MessagingSenderService(_queueName);
         }
 
         [Test]
         public void should_Initialize()
         {
-           _messagingService.Initialize();
-            var msmq = _messagingService.Queue as MessageQueue;
+           _messagingSenderService.Initialize();
+            var msmq = _messagingSenderService.Queue as MessageQueue;
 
             Assert.IsNotNull(msmq);
             Assert.AreEqual(msmq.Path,_queueName);
-            Console.WriteLine(_messagingService.QueueName);
+            Console.WriteLine(_messagingSenderService.QueueName);
+
+            _messagingSenderService.Initialize("test");
+            msmq = _messagingSenderService.Queue as MessageQueue;
+            Assert.That(msmq.Path,Does.EndWith("test"));
+            Console.WriteLine(_messagingSenderService.QueueName);
         }
 
         [Test]
         public void should_Send_To_Queue()
         {
+            var gateway = typeof(PatientARTProfile).Name.ToLower();
             var patient = _patientWithAllExtracts.First();
             var profile = PatientARTProfile.Create(_newFacility, patient);
             profile.GeneratePatientRecord();
             profile.GenerateRecords(profile.PatientInfo.Id);
 
-            _messagingService.Initialize();
-            var messageId = _messagingService.Send(profile);
+            _messagingSenderService.Initialize(gateway);
+            var messageId = _messagingSenderService.Send(profile);
 
-            var msmq = _messagingService.Queue as MessageQueue;
+            var msmq = _messagingSenderService.Queue as MessageQueue;
             var message = msmq.GetAllMessages()
                 .FirstOrDefault(x => x.Id.ToLower() == messageId.ToLower());
 
@@ -67,9 +73,8 @@ namespace PalladiumDwh.Core.Tests.Services
         [TearDown]
         public void TearDown()
         {
-            var msmq = _messagingService.Queue as MessageQueue;
+            var msmq = _messagingSenderService.Queue as MessageQueue;
             msmq.Purge();
-        }
-        
+        }       
     }
 }

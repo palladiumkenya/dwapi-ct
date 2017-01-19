@@ -9,7 +9,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 {
     public class PatientExtractRepository : GenericRepository<PatientExtract>, IPatientExtractRepository
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        
         private readonly DwapiCentralContext _context;
 
         public PatientExtractRepository(DwapiCentralContext context) : base(context)

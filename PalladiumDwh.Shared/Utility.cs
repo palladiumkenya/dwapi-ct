@@ -37,5 +37,10 @@ namespace PalladiumDwh.Shared
 
             yield return chunk;
         }
+
+        public static string GetMessageType(Type type)
+        {
+            return $"{type.Name},{type.Assembly.GetName().Name}";
+        }
     }
 }

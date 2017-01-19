@@ -4,6 +4,8 @@ using System.Linq;
 using FizzWare.NBuilder;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using PalladiumDwh.Core.Model;
+using PalladiumDwh.Core.Model.Profiles;
 
 namespace PalladiumDwh.Shared.Tests
 {
@@ -24,6 +26,7 @@ namespace PalladiumDwh.Shared.Tests
         [TestCase(7, 1)]
         public void should_split_collection(int input, int expected)
         {
+
             var chuncks = _facilities.Split(input).ToList();
 
             Assert.That(chuncks.Count(), Is.EqualTo(expected));
@@ -45,40 +48,33 @@ namespace PalladiumDwh.Shared.Tests
             }
             Console.WriteLine("==========================================");
             Console.WriteLine("==========================================");
+
         }
         [Test]
-        public void should_convert()
+        public void should_Get_GatMessageType()
         {
-            var test=new TestFacility("Joy Hospital",5);
-            Console.WriteLine(test.ToString());
-            Console.WriteLine("==========================================");
+            var artProfile = PatientARTProfile.Create(new Facility(), new PatientExtract());
+            var name = Utility.GetMessageType(artProfile.GetType());
+            string[] names = name.Split(',');
 
-            var liveMessage=new LiveMessage(test,test.GetType().ToString());
-            Assert.IsNotNull(liveMessage);
-            string jliveMessage = JsonConvert.SerializeObject(liveMessage);
+            Assert.AreEqual(names[0], "PatientARTProfile");
+            Assert.AreEqual(names[1], "PalladiumDwh.Core");
+            Console.WriteLine(name);
+            var type = Type.GetType(name);
+            Assert.That(artProfile, Is.TypeOf<PatientARTProfile>());
+        }
+        [Test]
+        public void should_Convert_Message()
+        {
+            var artProfile = PatientARTProfile.Create(new Facility(), new PatientExtract());
+            var name = Utility.GetMessageType(artProfile.GetType());
+            string[] names = name.Split(',');
 
-            Console.WriteLine(jliveMessage);
-            Console.WriteLine("==========================================");
-            var objs = JsonConvert.DeserializeObject<LiveMessage>(jliveMessage);
-
-            var readObj = objs.MessageItem;
-            var converted= Convert.ChangeType(readObj, typeof(TestFacility));
-
-            Assert.That(converted, Is.TypeOf<TestFacility>());
-            Console.WriteLine(converted);
-            
-
-            
-            //var readNew= Convert.ChangeType(objs.MessageItem, typeof(Type.GetType(liveMessage.MessageType)));
-            /*
-            Assert.IsNotNull(liveMessage);
-            Console.WriteLine(liveMessage.MessageItem.ToString());
-            Console.WriteLine(liveMessage.MessageType);
-
-            var type = Type.GetType(liveMessage.MessageType);
-            
-            var pObject = liveMessage.MessageItem;
-            */
+            Assert.AreEqual(names[0], "PatientARTProfile");
+            Assert.AreEqual(names[1], "PalladiumDwh.Core");
+            Console.WriteLine(name);
+            var type = Type.GetType(name);
+            Assert.That(artProfile, Is.TypeOf<PatientARTProfile>());
         }
     }
 

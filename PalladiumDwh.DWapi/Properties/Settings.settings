@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="QueueName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">.\private$\dw.emrpatient.concept</Value>
+      <Value Profile="(Default)">.\private$\dwapi.emr.concept</Value>
     </Setting>
   </Settings>
 </SettingsFile>

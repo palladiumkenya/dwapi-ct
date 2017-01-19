@@ -24,7 +24,7 @@ namespace PalladiumDwh.DWapi.DependencyResolution
               .SelectConstructor(() => new DwapiCentralContext());
 
             For<IMessagingService>().Use<MessagingService>()
-                .Ctor<string>(Properties.Settings.Default.QueueName);
+                .Ctor<string>("queueName").Is(Properties.Settings.Default.QueueName);
               
         }
     }
