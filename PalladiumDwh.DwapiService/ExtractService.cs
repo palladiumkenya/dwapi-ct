@@ -9,6 +9,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
+using PalladiumDWh.DwapiService.JobManager;
 
 namespace PalladiumDWh.DwapiService
 {
@@ -23,13 +24,14 @@ namespace PalladiumDWh.DwapiService
         protected override void OnStart(string[] args)
         {
             Log.Debug("DWapiService starting...");
-            // TODO: Add code here to start your service.
+            SyncJobScheduler.Start();
         }
 
         protected override void OnStop()
         {
             Log.Debug("DWapiService stopping...");
-            // TODO: Add code here to perform any tear-down necessary to stop your service.
+            SyncJobScheduler.Start();
+            Log.Debug("DWapiService stopped!");
         }
     }
 }

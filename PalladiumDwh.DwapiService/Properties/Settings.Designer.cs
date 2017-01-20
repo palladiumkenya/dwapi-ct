@@ -40,5 +40,14 @@ namespace PalladiumDWh.DwapiService.Properties {
                 return ((int)(this["QueueBatch"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int QueuePoll {
+            get {
+                return ((int)(this["QueuePoll"]));
+            }
+        }
     }
 }

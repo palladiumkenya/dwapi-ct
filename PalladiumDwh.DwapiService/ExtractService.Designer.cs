@@ -28,8 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            // 
+            // ExtractService
+            // 
+            this.CanShutdown = true;
             this.ServiceName = "ExtractService";
+
         }
 
         #endregion

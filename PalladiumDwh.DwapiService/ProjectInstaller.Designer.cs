@@ -39,6 +39,8 @@
             // 
             // dwapiServiceInstaller
             // 
+            this.dwapiServiceInstaller.Description = "DWapi Service";
+            this.dwapiServiceInstaller.DisplayName = "DWapi Service";
             this.dwapiServiceInstaller.ServiceName = "DWapi Service";
             // 
             // ProjectInstaller
