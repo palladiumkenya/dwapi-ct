@@ -15,13 +15,12 @@ namespace PalladiumDwh.DWapi.Controllers
     public class PatientArtController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly string _gateway = typeof(PatientARTProfile).Name.ToLower();
         private readonly IMessagingSenderService _messagingService;
 
         public PatientArtController(IMessagingSenderService messagingService)
         {
             _messagingService = messagingService;
-            _messagingService.Initialize(_gateway);
+            _messagingService.Initialize(typeof(PatientARTProfile).Name.ToLower());
         }
 
         public HttpResponseMessage Post([FromBody] PatientARTProfile patientProfile)

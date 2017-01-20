@@ -60,7 +60,7 @@ namespace PalladiumDwh.Infrastructure.Tests
 
             _facilityRepository.Sync(newFacility);
 
-            var saved = _facilityRepository.Find(newFacility.Id);
+            var saved = _facilityRepository.Find(x=>x.Code==newFacility.Code);
             Assert.IsNotNull(saved);
             Assert.AreEqual(saved.Code, newFacility.Code);
             Assert.AreNotEqual(saved.Id, newFacility.Id);

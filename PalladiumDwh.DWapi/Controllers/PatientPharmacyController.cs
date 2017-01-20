@@ -14,25 +14,36 @@ namespace PalladiumDwh.DWapi.Controllers
     public class PatientPharmacyController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly ISyncService _syncService;
+        private readonly IMessagingSenderService _messagingService;
 
-        public PatientPharmacyController(ISyncService syncService)
+        public PatientPharmacyController(IMessagingSenderService messagingService)
         {
-            _syncService = syncService;
+            _messagingService = messagingService;
+            _messagingService.Initialize(typeof(PatientPharmacyProfile).Name.ToLower());
         }
 
         public HttpResponseMessage Post([FromBody] PatientPharmacyProfile patientProfile)
         {
-            try
+            if (null != patientProfile)
             {
-                _syncService.SyncPharmacy(patientProfile);
-                return Request.CreateResponse(HttpStatusCode.OK, $"{patientProfile}");
+                if (!patientProfile.IsValid())
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                        new HttpError("Invalid data,Please ensure its has Patient,Facility and atleast one (1) Extract"));
+                }
+                try
+                {
+                    patientProfile.GeneratePatientRecord();
+                    var messageRef = _messagingService.Send(patientProfile);
+                    return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
+                }
+                catch (Exception ex)
+                {
+                    Log.Debug(ex);
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                }
             }
-            catch (Exception ex)
-            {
-                Log.Debug(ex);
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
-            }
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new PatientPharmacyProfile().GetType().Name}' is null"));
         }
     }
 }

@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.DWapi.Client.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.DWapi.Tests", "PalladiumDwh.DWapi.Tests\PalladiumDwh.DWapi.Tests.csproj", "{F78E308A-9C01-4784-9945-CF4412173E9B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{DCD16F7E-3B0C-458B-A051-239C437A3576}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.DWapiService", "PalladiumDwh.DwapiService\PalladiumDwh.DWapiService.csproj", "{E7EF3F36-D069-49D3-B8F1-A341F00E678A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +89,10 @@ Global
 		{F78E308A-9C01-4784-9945-CF4412173E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F78E308A-9C01-4784-9945-CF4412173E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F78E308A-9C01-4784-9945-CF4412173E9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7EF3F36-D069-49D3-B8F1-A341F00E678A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7EF3F36-D069-49D3-B8F1-A341F00E678A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7EF3F36-D069-49D3-B8F1-A341F00E678A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7EF3F36-D069-49D3-B8F1-A341F00E678A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,5 +109,6 @@ Global
 		{94F5B02B-2DBA-4F7A-A4F1-C9AA2DE51E90} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{B1A248DA-8E41-4036-A7E9-F0C732975DE2} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{F78E308A-9C01-4784-9945-CF4412173E9B} = {5E35045E-B1D3-45C0-B4E3-521BD380893D}
+		{E7EF3F36-D069-49D3-B8F1-A341F00E678A} = {DCD16F7E-3B0C-458B-A051-239C437A3576}
 	EndGlobalSection
 EndGlobal

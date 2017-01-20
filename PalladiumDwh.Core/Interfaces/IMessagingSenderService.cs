@@ -2,6 +2,6 @@
 {
     public interface IMessagingSenderService:IMessagingService
     {
-        string Send(object message);
+        string Send(object message, string gateway = "");
     }
 }

@@ -23,9 +23,8 @@ namespace PalladiumDwh.DWapi.DependencyResolution
             For<DwapiCentralContext>().Use<DwapiCentralContext>()
               .SelectConstructor(() => new DwapiCentralContext());
 
-            For<IMessagingService>().Use<MessagingService>()
-                .Ctor<string>("queueName").Is(Properties.Settings.Default.QueueName);
-              
+            For<IMessagingSenderService>().Use<MessagingSenderService>()
+                .Ctor<string>("queueName").Is(Properties.Settings.Default.QueueName);              
         }
     }
 }

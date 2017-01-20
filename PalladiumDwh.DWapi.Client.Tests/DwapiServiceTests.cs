@@ -26,13 +26,6 @@ namespace PalladiumDwh.DWapi.Client.Tests
         }
 
         [Test]
-        public void should_Get_Facility()
-        {
-            var facility = _dwapiService.Get(-1);
-            Assert.IsNotNull(facility);
-            Assert.AreEqual(-1, facility.Code);
-        }
-        [Test]
         public void should_Post()
         {
             var patient = _patientWithAllExtracts.First();

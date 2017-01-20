@@ -2,6 +2,6 @@
 {
     public interface IMessagingReaderService:IMessagingService
     {
-        void Read();
+        void Read(string gateway="");
     }
 }

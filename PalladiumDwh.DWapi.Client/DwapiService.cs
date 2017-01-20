@@ -20,15 +20,6 @@ namespace PalladiumDwh.DWapi.Client
         {
             _client = new RestClient(url);
         }
-        public Facility Get(int id)
-        {
-            var request = new RestRequest($"Facilities/{id}", Method.GET);
-            request.JsonSerializer = new NewtonsoftJsonSerializer();
-            request.RequestFormat = DataFormat.Json;
-            request.OnBeforeDeserialization = restResponse => { restResponse.ContentType = "application/json"; };
-            var response = _client.Execute(request);
-            return JsonConvert.DeserializeObject<Facility>(response.Content);
-        }
 
         public bool Post(PatientARTProfile profile)
         {

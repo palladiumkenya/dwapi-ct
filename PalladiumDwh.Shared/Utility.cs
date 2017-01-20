@@ -40,7 +40,7 @@ namespace PalladiumDwh.Shared
 
         public static string GetMessageType(Type type)
         {
-            return $"{type.Name},{type.Assembly.GetName().Name}";
+            return $"{type.FullName}, {type.Assembly.GetName().Name}";
         }
     }
 }

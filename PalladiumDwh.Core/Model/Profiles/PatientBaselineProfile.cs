@@ -42,6 +42,20 @@ namespace PalladiumDwh.Core.Model.Profiles
             };
             return patientProfile;
         }
+        public bool IsValid()
+        {
+            if (HasData())
+                return
+                    Facility.IsValid() &&
+                    Demographic.IsValid() &&
+                    BaselinesExtracts.Count > 0;
+            return false;
+        }
+
+        public bool HasData()
+        {
+            return null != Facility && null != Demographic && null != BaselinesExtracts;
+        }
         public override string ToString()
         {
             return $"{PatientInfo.Id}";

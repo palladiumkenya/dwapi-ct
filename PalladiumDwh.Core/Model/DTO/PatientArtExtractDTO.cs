@@ -4,19 +4,9 @@ using System.Linq;
 using PalladiumDwh.Shared;
 
 namespace PalladiumDwh.Core.Model.DTO
-{
-    public interface IPatientArtExtractDTO
+{    
+    public class PatientArtExtractDTO
     {
-        string Emr { get; set; }
-        string Project { get; set; }
-        Guid PatientId { get; set; }
-        IEnumerable<PatientArtExtractDTO> GeneratePatientArtExtractDtOs(IEnumerable<PatientArtExtract> extracts);
-        PatientArtExtract GeneratePatientArtExtract(Guid patientId);
-    }
-
-    public class PatientArtExtractDTO : IPatientArtExtractDTO
-    {
-
         public decimal? AgeEnrollment { get; set; }
         public decimal? AgeARTStart { get; set; }
         public decimal? AgeLastVisit { get; set; }

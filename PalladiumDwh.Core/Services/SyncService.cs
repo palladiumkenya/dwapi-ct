@@ -32,9 +32,32 @@ namespace PalladiumDwh.Core.Services
         }
 
 
-        public void Sync()
+        public void Sync(object profile)
         {
-            throw new NotImplementedException();
+            if (profile.GetType() == typeof(PatientARTProfile))
+            {
+                SyncArt(profile as PatientARTProfile);
+            }
+            else if (profile.GetType() == typeof(PatientBaselineProfile))
+            {
+                SyncBaseline(profile as PatientBaselineProfile);
+            }
+            else if (profile.GetType() == typeof(PatientLabProfile))
+            {
+                SyncLab(profile as PatientLabProfile);
+            }
+            else if (profile.GetType() == typeof(PatientPharmacyProfile))
+            {
+                SyncPharmacy(profile as PatientPharmacyProfile);
+            }
+            else if (profile.GetType() == typeof(PatientStatusProfile))
+            {
+                SyncStatus(profile as PatientStatusProfile);
+            }
+            else if (profile.GetType() == typeof(PatientVisitProfile))
+            {
+                SyncVisit(profile as PatientVisitProfile);
+            }
         }
 
         public Guid? SyncPatient(PatientProfile profile)

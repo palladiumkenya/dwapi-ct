@@ -51,30 +51,32 @@ namespace PalladiumDwh.Shared.Tests
 
         }
         [Test]
-        public void should_Get_GatMessageType()
+        public void should_Get_MessageType()
         {
             var artProfile = PatientARTProfile.Create(new Facility(), new PatientExtract());
             var name = Utility.GetMessageType(artProfile.GetType());
             string[] names = name.Split(',');
 
-            Assert.AreEqual(names[0], "PatientARTProfile");
-            Assert.AreEqual(names[1], "PalladiumDwh.Core");
+            Assert.That(names[0],Does.EndWith("PatientARTProfile"));
+            Assert.AreEqual(names[1], " PalladiumDwh.Core");
+            
+            Type type = Type.GetType(name);
+            Assert.AreEqual(typeof(PatientARTProfile), type);
             Console.WriteLine(name);
-            var type = Type.GetType(name);
-            Assert.That(artProfile, Is.TypeOf<PatientARTProfile>());
         }
         [Test]
-        public void should_Convert_Message()
+        public void should_Convert_Using_MessageType()
         {
             var artProfile = PatientARTProfile.Create(new Facility(), new PatientExtract());
             var name = Utility.GetMessageType(artProfile.GetType());
-            string[] names = name.Split(',');
 
-            Assert.AreEqual(names[0], "PatientARTProfile");
-            Assert.AreEqual(names[1], "PalladiumDwh.Core");
-            Console.WriteLine(name);
+            var jsonProfile = JsonConvert.SerializeObject(artProfile);
+            Console.WriteLine(jsonProfile);
             var type = Type.GetType(name);
-            Assert.That(artProfile, Is.TypeOf<PatientARTProfile>());
+
+            var fromJson = JsonConvert.DeserializeObject(jsonProfile, type);
+
+            Assert.That(fromJson,Is.TypeOf<PatientARTProfile>());
         }
     }
 

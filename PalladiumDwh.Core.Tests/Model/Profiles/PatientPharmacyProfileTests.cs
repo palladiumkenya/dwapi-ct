@@ -9,7 +9,7 @@ using PalladiumDwh.Core.Model.Profiles;
 namespace PalladiumDwh.Core.Tests.Model.Profiles
 {
     [TestFixture]
-    public class PatientARTProfileTests
+    public class PatientPharmacyProfileTests
     {
 
         private List<PatientExtract> _patientExtracts;
@@ -23,15 +23,15 @@ namespace PalladiumDwh.Core.Tests.Model.Profiles
         }
 
         [Test]
-        public void should_Create_PatientARTProfile()
+        public void should_Create_PatientPharmacyProfile()
         {
             var patient = _patientExtracts.First();
-            var profile = PatientARTProfile.Create(_facility, patient);
+            var profile = PatientPharmacyProfile.Create(_facility, patient);
 
             Assert.IsNotNull(profile.Demographic);
             Assert.IsNotNull(profile.Facility);
-            Assert.That(profile.ArtExtracts.Count, Is.EqualTo(10));
-            Assert.IsNull(profile.PatientArtExtracts);
+            Assert.That(profile.PharmacyExtracts.Count, Is.EqualTo(10));
+            Assert.IsNull(profile.PatientPharmacyExtracts);
         }
 
         [Test]
@@ -39,30 +39,30 @@ namespace PalladiumDwh.Core.Tests.Model.Profiles
         {
             var patient = _patientExtracts.First();
 
-            
-            var profile = PatientARTProfile.Create(_facility, patient);
+
+            var profile = PatientPharmacyProfile.Create(_facility, patient);
             Assert.IsTrue(profile.IsValid());
 
-            var nullProfile = PatientARTProfile.Create(_facility, patient);
+            var nullProfile = PatientPharmacyProfile.Create(_facility, patient);
             nullProfile.Facility = null;
             nullProfile.Demographic = null;
-            nullProfile.ArtExtracts = null;
+            nullProfile.PharmacyExtracts = null;
             Assert.IsFalse(nullProfile.IsValid());
 
-            var noPatientProfile = PatientARTProfile.Create(_facility, patient);
+            var noPatientProfile = PatientPharmacyProfile.Create(_facility, patient);
             noPatientProfile.Demographic = null;
             Assert.IsFalse(noPatientProfile.IsValid());
 
-            var noFacilityProfile = PatientARTProfile.Create(_facility, patient);
+            var noFacilityProfile = PatientPharmacyProfile.Create(_facility, patient);
             noFacilityProfile.Facility = null;
             Assert.IsFalse(noFacilityProfile.IsValid());
 
-            var noExtractsProfile = PatientARTProfile.Create(_facility, patient);
-            noExtractsProfile.ArtExtracts = null;
+            var noExtractsProfile = PatientPharmacyProfile.Create(_facility, patient);
+            noExtractsProfile.PharmacyExtracts = null;
             Assert.IsFalse(noExtractsProfile.IsValid());
 
-            noExtractsProfile = PatientARTProfile.Create(_facility, patient);
-            noExtractsProfile.ArtExtracts = new List<PatientArtExtractDTO>();
+            noExtractsProfile = PatientPharmacyProfile.Create(_facility, patient);
+            noExtractsProfile.PharmacyExtracts = new List<PatientPharmacyExtractDTO>();
             Assert.IsFalse(noExtractsProfile.IsValid());
         }
 
@@ -70,27 +70,27 @@ namespace PalladiumDwh.Core.Tests.Model.Profiles
         public void should_GeneratePatientRecord()
         {
             var patient = _patientExtracts.First();
-            var profile = PatientARTProfile.Create(_facility, patient);
+            var profile = PatientPharmacyProfile.Create(_facility, patient);
 
             profile.GeneratePatientRecord();
 
             Assert.IsNotNull(profile.FacilityInfo);
             Assert.IsNotNull(profile.PatientInfo);
-            Assert.That(profile.ArtExtracts.Count, Is.EqualTo(10));
-            Assert.IsNull(profile.PatientArtExtracts);
+            Assert.That(profile.PharmacyExtracts.Count, Is.EqualTo(10));
+            Assert.IsNull(profile.PatientPharmacyExtracts);
         }
 
         [Test]
         public void should_GenerateRecords()
         {
             var patient = _patientExtracts.First();
-            var profile = PatientARTProfile.Create(_facility, patient);
+            var profile = PatientPharmacyProfile.Create(_facility, patient);
             profile.GeneratePatientRecord();
 
             profile.GenerateRecords(patient.Id);
 
-            Assert.That(profile.PatientArtExtracts.Count, Is.EqualTo(10));
-            Assert.AreEqual(profile.PatientInfo.Id, profile.PatientArtExtracts.First().PatientId);
+            Assert.That(profile.PatientPharmacyExtracts.Count, Is.EqualTo(10));
+            Assert.AreEqual(profile.PatientInfo.Id, profile.PatientPharmacyExtracts.First().PatientId);
         }
     }
 }

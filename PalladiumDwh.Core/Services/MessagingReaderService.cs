@@ -15,18 +15,18 @@ namespace PalladiumDwh.Core.Services
     public class MessagingReaderService : MessagingService, IMessagingReaderService
     {
         private readonly ISyncService _syncService;
-        private readonly int _batchSize;
+        private readonly int _queueBatch;
 
-        public MessagingReaderService(ISyncService syncService, string queueName, int batchSize = 50) : base(queueName)
+        public MessagingReaderService(ISyncService syncService, string queueName, int queueBatch = 50) : base(queueName)
         {
             _syncService = syncService;
-            _batchSize = batchSize;
+            _queueBatch = queueBatch;
         }
 
-        public void Read()
+        public void Read(string gateway)
         {
             if (null == Queue)
-                Initialize();
+                Initialize(gateway);
 
             var msmq = Queue as MessageQueue;
 
@@ -43,7 +43,7 @@ namespace PalladiumDwh.Core.Services
 
                 Log.Debug($"Queue has {messageIds.Count} !");
 
-                var batches = messageIds.Split(_batchSize).ToList();
+                var batches = messageIds.Split(_queueBatch).ToList();
                 var batchCount = batches.Count;
 
                 Log.Debug($"Queue will be processed in {batchCount} batches");
@@ -58,13 +58,8 @@ namespace PalladiumDwh.Core.Services
                         var msg = msmq.ReceiveById(m);
                         if (null != msg)
                         {
-
                             var patientProfile = msg.BodyStream.ReadFromJson(msg.Label);
-                            switch (patientProfile.GetType()==typeof(PatientARTProfile))
-                            {
-                            _syncService.SyncArt(patientProfile);   
-                        }
-                            
+                            _syncService.Sync(patientProfile);
                         }
                     }
                 }

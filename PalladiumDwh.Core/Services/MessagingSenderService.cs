@@ -16,12 +16,12 @@ namespace PalladiumDwh.Core.Services
         {
         }
 
-        public string Send(object message)
+        public string Send(object message, string gateway = "")
         {
             string refId;
 
             if (null == Queue)
-                Initialize();
+                Initialize(gateway);
 
             var msmq = Queue as MessageQueue;
 

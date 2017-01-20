@@ -7,7 +7,6 @@ namespace PalladiumDwh.DWapi.Client
 {
     public interface IDwapiService
     {
-        Facility Get(int id);
         bool Post(PatientARTProfile profile);
         bool Post(PatientBaselineProfile profile);
 

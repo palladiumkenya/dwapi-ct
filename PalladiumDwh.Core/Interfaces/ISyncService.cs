@@ -6,8 +6,7 @@ namespace PalladiumDwh.Core.Interfaces
 {
     public interface ISyncService
     {
-        void Sync();
-
+        void Sync(object profile);
         Guid? SyncPatient(PatientProfile profile);
         void SyncArt(PatientARTProfile profile);
         void SyncBaseline(PatientBaselineProfile baselineProfile);
