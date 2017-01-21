@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
+    <PublishUrl>E:\Workspace\palladium\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -58,7 +58,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
@@ -111,8 +111,11 @@
       <DependentUpon>ExtractService.cs</DependentUpon>
     </Compile>
     <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="JobManager\ProfileScheduler.cs" />
     <Compile Include="JobManager\SyncJob.cs" />
     <Compile Include="JobManager\SyncJobScheduler.cs" />
+    <Compile Include="JobManager\SyncPatientBaselineJob.cs" />
+    <Compile Include="JobManager\SyncPatientARTJob.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

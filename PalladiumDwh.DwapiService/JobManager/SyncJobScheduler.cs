@@ -24,12 +24,12 @@ namespace PalladiumDWh.DwapiService.JobManager
 
             // define the job and tie it to our HelloJob class
             IJobDetail job = JobBuilder.Create<SyncJob>()
-                .WithIdentity("dwapiEmrJ", "DWSJ01")
+                .WithIdentity("dwapi", "group1")
                 .Build();
 
             // Trigger the job to run now, and then every 40 seconds
             ITrigger trigger = TriggerBuilder.Create()
-              .WithIdentity("dwapiEmrT", "DWST01")
+              .WithIdentity("trigger1", "group1")
               .StartNow()
               .WithSimpleSchedule(x => x
                   .WithIntervalInSeconds(Properties.Settings.Default.QueuePoll)
