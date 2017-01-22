@@ -25,5 +25,10 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
         {
             return new Facility(Code ,Name);
         }
+
+        public bool IsValid()
+        {
+            return Code > 0;
+        }
     }
 }

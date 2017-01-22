@@ -40,22 +40,26 @@ namespace PalladiumDwh.Infrastructure.Tests
             var patientExtract = Builder<PatientExtract>.CreateNew().Build();
             patientExtract.PatientPID = DateTime.UtcNow.Millisecond;
             patientExtract.FacilityId = _facilityA.Id;
+            Console.WriteLine(patientExtract.PatientPID);
 
             _patientExtractRepository.Sync(patientExtract);
 
             var saved = _patientExtractRepository.Find(patientExtract.Id);
             Assert.IsNotNull(saved);
             Assert.AreEqual(saved.PatientPID, patientExtract.PatientPID);
+            Console.WriteLine(saved.PatientPID);
         }
 
         [Test]
         public void should_Sync_Exisitng()
         {
             var patientExtract = _patients.Last();
+            Console.WriteLine(patientExtract.PatientPID);
 
             var newPatientExtract = Builder<PatientExtract>.CreateNew().Build();
             newPatientExtract.PatientPID = patientExtract.PatientPID;
             newPatientExtract.FacilityId = patientExtract.FacilityId;
+            Console.WriteLine(newPatientExtract.PatientPID);
 
             _patientExtractRepository.Sync(newPatientExtract);
 
@@ -63,6 +67,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             Assert.IsNotNull(saved);
             Assert.AreEqual(saved.PatientPID, newPatientExtract.PatientPID);
             Assert.AreEqual(saved.Id, newPatientExtract.Id);
+            Console.WriteLine(saved.PatientPID);
         }
     }
 }

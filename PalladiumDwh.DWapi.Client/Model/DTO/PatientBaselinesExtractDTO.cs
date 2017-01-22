@@ -24,10 +24,8 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
         public DateTime? m6CD4Date { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-
-      
-
         public Guid PatientId { get; set; }
+
         public PatientBaselinesExtractDTO()
         {
         }

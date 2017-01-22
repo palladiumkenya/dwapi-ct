@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PalladiumDwh.Shared
 {
     public abstract class Entity
     {
+        [Key]
         public virtual Guid Id { get; set; }
         [Column(Order = 100)]
         public virtual string Emr { get; set; }

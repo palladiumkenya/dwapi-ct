@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace PalladiumDwh.DWapi.Client.Model.DTO
-{
+{    
     public class PatientArtExtractDTO
     {
-
         public decimal? AgeEnrollment { get; set; }
         public decimal? AgeARTStart { get; set; }
         public decimal? AgeLastVisit { get; set; }

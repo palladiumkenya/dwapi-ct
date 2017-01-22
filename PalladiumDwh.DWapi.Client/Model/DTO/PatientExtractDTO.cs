@@ -4,6 +4,7 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
 {
     public class PatientExtractDTO
     {
+        public int PatientPID { get; set; }
         public string PatientCccNumber { get; set; }
         public string Gender { get; set; }
         public DateTime? DOB { get; set; }
@@ -30,8 +31,13 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
         {
         }
 
-        public PatientExtractDTO(string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string emr, string project, Guid facilityId)
+        public PatientExtractDTO(int patientPID ,string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate,
+            DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic,
+            string patientSource, string region, string district, string village, string contactRelation,
+            DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive,
+            string previousArtExposure, DateTime? previousArtStartDate, string emr, string project, Guid facilityId)
         {
+            PatientPID = patientPID;
             PatientCccNumber = patientCccNumber;
             Gender = gender;
             DOB = dob;
@@ -57,6 +63,7 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
 
         public PatientExtractDTO(PatientExtract patient)
         {
+            PatientPID = patient.PatientPID;
             PatientCccNumber = patient.PatientCccNumber;
             Gender = patient.Gender;
             DOB = patient.DOB;
@@ -85,9 +92,16 @@ namespace PalladiumDwh.DWapi.Client.Model.DTO
             FacilityId = facilityId;
 
             return new PatientExtract(
-                PatientCccNumber, Gender, DOB, RegistrationDate, RegistrationAtCCC,RegistrationATPMTCT, RegistrationAtTBClinic, 
-                PatientSource, Region, District, Village, ContactRelation,LastVisit, MaritalStatus, EducationLevel, 
-                DateConfirmedHIVPositive, PreviousARTExposure,PreviousARTStartDate, Emr, Project, FacilityId);
+                PatientPID,
+                PatientCccNumber, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationATPMTCT,
+                RegistrationAtTBClinic,
+                PatientSource, Region, District, Village, ContactRelation, LastVisit, MaritalStatus, EducationLevel,
+                DateConfirmedHIVPositive, PreviousARTExposure, PreviousARTStartDate, Emr, Project, FacilityId);
+        }
+
+        public bool IsValid()
+        {
+            return !string.IsNullOrWhiteSpace(PatientCccNumber);
         }
     }
 }

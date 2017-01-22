@@ -2,7 +2,7 @@ using System.Reflection;
 using log4net;
 using StructureMap;
 
-namespace PalladiumDwh.DWapiService.DependencyResolution {
+namespace PalladiumDWh.DwapiService.DependencyResolution {
     public static class IoC {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public static IContainer Initialize() {

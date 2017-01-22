@@ -33,5 +33,9 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
             };
             return patientProfile;
         }
+        public override string ToString()
+        {
+            return $"{PatientInfo.Id}";
+        }
     }
 }

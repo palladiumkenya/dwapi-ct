@@ -111,11 +111,13 @@
       <DependentUpon>ExtractService.cs</DependentUpon>
     </Compile>
     <Compile Include="DependencyResolution\IoC.cs" />
-    <Compile Include="JobManager\ProfileScheduler.cs" />
-    <Compile Include="JobManager\SyncJob.cs" />
-    <Compile Include="JobManager\SyncJobScheduler.cs" />
-    <Compile Include="JobManager\SyncPatientBaselineJob.cs" />
-    <Compile Include="JobManager\SyncPatientARTJob.cs" />
+    <Compile Include="Scheduler\ProfileScheduler.cs" />
+    <Compile Include="Job\SyncPatientLabJob.cs" />
+    <Compile Include="Job\SyncPatientPharmacyJob.cs" />
+    <Compile Include="Job\SyncPatientStatusJob.cs" />
+    <Compile Include="Job\SyncPatientVisitJob.cs" />
+    <Compile Include="Job\SyncPatientBaselineJob.cs" />
+    <Compile Include="Job\SyncPatientARTJob.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

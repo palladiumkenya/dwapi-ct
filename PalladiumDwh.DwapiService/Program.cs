@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using log4net;
-using PalladiumDwh.DWapiService.DependencyResolution;
-using PalladiumDWh.DwapiService;
+using PalladiumDWh.DwapiService.DependencyResolution;
 using StructureMap;
 
-namespace PalladiumDwh.DWapiService
+namespace PalladiumDWh.DwapiService
 {
     static class Program
     {
         public static IContainer IOC;
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -24,12 +20,12 @@ namespace PalladiumDwh.DWapiService
             Log.Debug("Loading DWapiService...");
             IOC = IoC.Initialize();
 
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            var servicesToRun = new ServiceBase[]
             {
-                new ExtractService(), 
+                new ExtractService()
             };
-            ServiceBase.Run(ServicesToRun);
+
+            ServiceBase.Run(servicesToRun);
         }
     }
 }

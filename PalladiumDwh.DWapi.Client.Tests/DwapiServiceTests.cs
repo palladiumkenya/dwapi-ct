@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Messaging;
 using FizzWare.NBuilder;
 using Newtonsoft.Json;
 using NUnit.Framework.Internal;
@@ -16,45 +17,54 @@ namespace PalladiumDwh.DWapi.Client.Tests
         private IDwapiService _dwapiService;
         private Facility _newFacility;
         private List<PatientExtract> _patientWithAllExtracts;
+        private int patientCount = 5;
+        private int extractCount = 5;
 
         [SetUp]
         public void SetUp()
         {
             _dwapiService = new DwapiService("http://localhost/dwapi/api/");
             _newFacility = Builder<Facility>.CreateNew().Build();
-            _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility, 2, 2).ToList();
+            _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility,patientCount, extractCount).ToList();
+
+            /*
+            new MessageQueue($@".\private$\dwapi.emr.{typeof(PatientARTProfile).Name.ToLower()}").Purge();
+            new MessageQueue($@".\private$\dwapi.emr.{typeof(PatientBaselineProfile).Name.ToLower()}").Purge();
+            new MessageQueue($@".\private$\dwapi.emr.{typeof(PatientLabProfile).Name.ToLower()}").Purge();
+            new MessageQueue($@".\private$\dwapi.emr.{typeof(PatientPharmacyProfile).Name.ToLower()}").Purge();
+            new MessageQueue($@".\private$\dwapi.emr.{typeof(PatientStatusProfile).Name.ToLower()}").Purge();
+            new MessageQueue($@".\private$\dwapi.emr.{typeof(PatientVisitProfile).Name.ToLower()}").Purge();
+            */
+
         }
 
         [Test]
         public void should_Post()
         {
-            var patient = _patientWithAllExtracts.First();
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            
 
-            var artProfile = PatientARTProfile.Create(_newFacility, patient);
-            Console.WriteLine(JsonConvert.SerializeObject(artProfile));
-            Console.WriteLine(new string('-',10));
-            var baselineProfile = PatientBaselineProfile.Create(_newFacility, patient);
-            Console.WriteLine(JsonConvert.SerializeObject(baselineProfile));
-            Console.WriteLine(new string('-', 10));
-            var labProfile = PatientLabProfile.Create(_newFacility, patient);
-            Console.WriteLine(JsonConvert.SerializeObject(labProfile));
-            Console.WriteLine(new string('-', 10));
-            var pharmacyProfile = PatientPharmacyProfile.Create(_newFacility, patient);
-            Console.WriteLine(JsonConvert.SerializeObject(pharmacyProfile));
-            Console.WriteLine(new string('-', 10));
-            var statusProfile = PatientStatusProfile.Create(_newFacility, patient);
-            Console.WriteLine(JsonConvert.SerializeObject(statusProfile));
-            Console.WriteLine(new string('-', 10));
-            var visitProfile = PatientVisitProfile.Create(_newFacility, patient);
-            Console.WriteLine(JsonConvert.SerializeObject(visitProfile));
-            Console.WriteLine(new string('-', 10));
+            foreach (var patient in _patientWithAllExtracts)
+            {
+                var artProfile = PatientARTProfile.Create(_newFacility, patient);
+                var baselineProfile = PatientBaselineProfile.Create(_newFacility, patient);
+                var labProfile = PatientLabProfile.Create(_newFacility, patient);
+                var pharmacyProfile = PatientPharmacyProfile.Create(_newFacility, patient);
+                var statusProfile = PatientStatusProfile.Create(_newFacility, patient);
+                var visitProfile = PatientVisitProfile.Create(_newFacility, patient);
 
-            Assert.IsTrue(_dwapiService.Post(artProfile));
-            Assert.IsTrue(_dwapiService.Post(baselineProfile));
-            Assert.IsTrue(_dwapiService.Post(labProfile));
-            Assert.IsTrue(_dwapiService.Post(pharmacyProfile));
-            Assert.IsTrue(_dwapiService.Post(statusProfile));
-            Assert.IsTrue(_dwapiService.Post(visitProfile));
+                Assert.IsTrue(_dwapiService.Post(artProfile));
+                Assert.IsTrue(_dwapiService.Post(baselineProfile));
+                Assert.IsTrue(_dwapiService.Post(labProfile));
+                Assert.IsTrue(_dwapiService.Post(pharmacyProfile));
+                Assert.IsTrue(_dwapiService.Post(statusProfile));
+                Assert.IsTrue(_dwapiService.Post(visitProfile));
+            }
+
+            
+            watch.Stop();
+             var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine($"{patientCount} Patients with {extractCount} x 6 extracts each POST requested done in { elapsedMs} ms (  {elapsedMs/1000})");
         }
 
     }

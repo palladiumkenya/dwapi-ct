@@ -2,8 +2,9 @@ using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.Infrastructure.Data;
 using StructureMap;
+using StructureMap.Pipeline;
 
-namespace PalladiumDwh.DWapiService.DependencyResolution {
+namespace PalladiumDWh.DwapiService.DependencyResolution {
     public class DefaultRegistry : Registry {
 
         
@@ -21,11 +22,13 @@ namespace PalladiumDwh.DWapiService.DependencyResolution {
                });
 
             For<DwapiCentralContext>().Use<DwapiCentralContext>()
-              .SelectConstructor(() => new DwapiCentralContext());
+                .SelectConstructor(() => new DwapiCentralContext());
+
 
             For<IMessagingReaderService>().Use<MessagingReaderService>()
                 .Ctor<string>("queueName").Is(PalladiumDWh.DwapiService.Properties.Settings.Default.QueueName)
                 .Ctor<int>("queueBatch").Is(PalladiumDWh.DwapiService.Properties.Settings.Default.QueueBatch);
+            
 
         }
 

@@ -41,20 +41,21 @@ namespace PalladiumDwh.Core.Services
             {
                 var messageIds = msmq.GetAllMessages().Select(x => x.Id).ToList();
 
-                Log.Debug($"Queue has {messageIds.Count} !");
+                Log.Debug($"Queue {QueueName} has {messageIds.Count} !");
 
                 var batches = messageIds.Split(_queueBatch).ToList();
                 var batchCount = batches.Count;
 
-                Log.Debug($"Queue will be processed in {batchCount} batches");
+                Log.Debug($"Queue {QueueName} will be processed in {batchCount} batches");
 
                 int n = 0;
                 foreach (var batch in batches)
                 {
                     n++;
-                    Log.Debug($"processing {n} of {batchCount} batches...");
+                    Log.Debug($"processing {QueueName} {n} of {batchCount} batches...");
                     foreach (var m in batch.ToList())
                     {
+                        
                         var msg = msmq.ReceiveById(m);
                         if (null != msg)
                         {
@@ -64,10 +65,6 @@ namespace PalladiumDwh.Core.Services
                     }
                 }
                 Log.Debug(new string('*', 30));
-            }
-            else
-            {
-                Log.Debug("Nothing in queue!");
             }
         }
     }

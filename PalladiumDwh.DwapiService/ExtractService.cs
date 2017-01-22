@@ -10,20 +10,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using log4net;
-using PalladiumDWh.DwapiService.JobManager;
+using PalladiumDwh.Core.Interfaces;
+using PalladiumDWh.DwapiService.Scheduler;
 using Quartz;
 using Quartz.Impl;
+using StructureMap.Attributes;
 
 namespace PalladiumDWh.DwapiService
 {
     partial class ExtractService : ServiceBase
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private ProfileScheduler _profileScheduler;
+        private IProfileScheduler _profileScheduler;
+
         public ExtractService()
         {
             InitializeComponent();
-            _profileScheduler=new ProfileScheduler();
         }
 
 
@@ -33,9 +35,10 @@ namespace PalladiumDWh.DwapiService
 
             try
             {
+                _profileScheduler = Program.IOC.GetInstance<IProfileScheduler>();
                 _profileScheduler.Run();
             }
-            catch (SchedulerException se)
+            catch (Exception se)
             {
                 Log.Debug(se);
             }
@@ -49,12 +52,6 @@ namespace PalladiumDWh.DwapiService
             Log.Debug("DWapiService stopped!");
         }
     }
-    public class HelloJob : IJob
-    {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        public void Execute(IJobExecutionContext context)
-        {
-            Log.Debug("Greetings from HelloJob!");
-        }
-    }
+  
+    
 }

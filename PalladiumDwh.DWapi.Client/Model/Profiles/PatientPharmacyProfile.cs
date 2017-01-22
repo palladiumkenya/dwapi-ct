@@ -42,5 +42,23 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
             };
             return patientProfile;
         }
+        public bool IsValid()
+        {
+            if (HasData())
+                return
+                    Facility.IsValid() &&
+                    Demographic.IsValid() &&
+                    PharmacyExtracts.Count > 0;
+            return false;
+        }
+
+        public bool HasData()
+        {
+            return null != Facility && null != Demographic && null != PharmacyExtracts;
+        }
+        public override string ToString()
+        {
+            return $"{PatientInfo.Id}";
+        }
     }
 }

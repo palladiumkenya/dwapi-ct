@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201701170619143_AddedVoided.Designer.cs">
       <DependentUpon>201701170619143_AddedVoided.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701221347378_KeCols.cs" />
+    <Compile Include="Migrations\201701221347378_KeCols.Designer.cs">
+      <DependentUpon>201701221347378_KeCols.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701170619143_AddedVoided.resx">
       <DependentUpon>201701170619143_AddedVoided.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701221347378_KeCols.resx">
+      <DependentUpon>201701221347378_KeCols.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

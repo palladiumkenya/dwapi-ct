@@ -41,8 +41,9 @@ namespace PalladiumDwh.DWapi.Client.Model
           
         }
 
-        public PatientExtract(string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string emr, string project, Guid facilityId)
+        public PatientExtract(int patientPID, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string emr, string project, Guid facilityId)
         {
+            PatientPID = patientPID;
             PatientCccNumber = patientCccNumber;
             Gender = gender;
             DOB = dob;

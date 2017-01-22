@@ -15,21 +15,6 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
         public PatientExtract PatientInfo { get;  set; }
         public List<PatientArtExtract> PatientArtExtracts { get;  set; }
 
-       
-
-        public void GeneratePatientRecord()
-        {
-            FacilityInfo = Facility.GenerateFacility();
-            PatientInfo = Demographic.GeneratePatient(FacilityInfo.Id);
-        }
-
-        public void GenerateRecords(Guid patientId)
-        {
-            PatientInfo.Id = patientId;
-            PatientArtExtracts = new List<PatientArtExtract>();
-            foreach (var e in ArtExtracts)
-                PatientArtExtracts.Add(e.GeneratePatientArtExtract(PatientInfo.Id));
-        }
 
         public static PatientARTProfile Create(Facility facility, PatientExtract patient)
         {
@@ -43,9 +28,38 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
             return patientProfile;
         }
 
+        public bool IsValid()
+        {
+            if (HasData())
+                return
+                    Facility.IsValid() &&
+                    Demographic.IsValid() &&
+                    ArtExtracts.Count > 0;
+            return false;
+        }
+
+        public bool HasData()
+        {
+          return  null != Facility && null != Demographic && null != ArtExtracts;
+        }
+      
+        public void GeneratePatientRecord()
+        {
+            FacilityInfo = Facility.GenerateFacility();
+            PatientInfo = Demographic.GeneratePatient(FacilityInfo.Id);
+        }
+
+        public void GenerateRecords(Guid patientId)
+        {
+            PatientInfo.Id = patientId;
+            PatientArtExtracts = new List<PatientArtExtract>();
+            foreach (var e in ArtExtracts)
+                PatientArtExtracts.Add(e.GeneratePatientArtExtract(PatientInfo.Id));
+        }
+        
         public override string ToString()
         {
-            return $"{PatientInfo.Id}";
+            return $"{FacilityInfo.Name} | {PatientInfo.PatientCccNumber}";
         }
     }
 }

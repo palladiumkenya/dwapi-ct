@@ -11,6 +11,7 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
         public PatientExtractDTO Demographic { get; set; }
         public List<PatientBaselinesExtractDTO> BaselinesExtracts { get; set; } = new List<PatientBaselinesExtractDTO>();
 
+
         public Facility FacilityInfo { get; set; }
         public PatientExtract PatientInfo { get; set; }
         public List<PatientBaselinesExtract> PatientBaselinesExtracts { get; set; }
@@ -40,6 +41,24 @@ namespace PalladiumDwh.DWapi.Client.Model.Profiles
                         patient.PatientBaselinesExtracts).ToList()
             };
             return patientProfile;
+        }
+        public bool IsValid()
+        {
+            if (HasData())
+                return
+                    Facility.IsValid() &&
+                    Demographic.IsValid() &&
+                    BaselinesExtracts.Count > 0;
+            return false;
+        }
+
+        public bool HasData()
+        {
+            return null != Facility && null != Demographic && null != BaselinesExtracts;
+        }
+        public override string ToString()
+        {
+            return $"{PatientInfo.Id}";
         }
     }
 }

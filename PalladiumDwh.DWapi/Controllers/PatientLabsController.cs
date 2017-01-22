@@ -15,11 +15,11 @@ namespace PalladiumDwh.DWapi.Controllers
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IMessagingSenderService _messagingService;
-
+        private readonly string _gateway = typeof(PatientLabProfile).Name.ToLower();
         public PatientLabsController(IMessagingSenderService messagingService)
         {
             _messagingService = messagingService;
-            _messagingService.Initialize(typeof(PatientLabProfile).Name.ToLower());
+            _messagingService.Initialize(_gateway);
         }
         public HttpResponseMessage Post([FromBody] PatientLabProfile patientProfile)
         {
@@ -33,7 +33,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 try
                 {
                     patientProfile.GeneratePatientRecord();
-                    var messageRef = _messagingService.Send(patientProfile);
+                    var messageRef = _messagingService.Send(patientProfile,_gateway);
                     return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
                 }
                 catch (Exception ex)

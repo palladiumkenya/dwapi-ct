@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using FizzWare.NBuilder;
@@ -34,6 +35,7 @@ namespace PalladiumDwh.DWapi.Client.Tests
             var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
             foreach (var p in patients)
             {
+                p.PatientPID = p.PatientPID + DateTime.Now.Millisecond;
                 p.FacilityId = facility.Id;
                 p.AddPatientArtExtracts(Builder<PatientArtExtract>.CreateListOfSize(count).Build().ToList());
                 p.AddPatientBaselinesExtracts(Builder<PatientBaselinesExtract>.CreateListOfSize(count).Build().ToList());

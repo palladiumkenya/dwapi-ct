@@ -7,7 +7,13 @@ namespace PalladiumDwh.DWapi.Client.Model
     {
         public int Code { get; set; }
         public string Name { get; set; }
-        
+
+
+        public override string Emr { get; set; }
+
+        public override string Project{ get; set; }
+
+        public override bool Voided { get; set; }
 
         public virtual ICollection<PatientExtract> PatientExtracts { get; set; } = new List<PatientExtract>();
 

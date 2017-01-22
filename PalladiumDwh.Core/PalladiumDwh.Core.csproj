@@ -53,6 +53,7 @@
     <Compile Include="Interfaces\IMessagingReaderService.cs" />
     <Compile Include="Interfaces\IMessagingSenderService.cs" />
     <Compile Include="Interfaces\IMessagingService.cs" />
+    <Compile Include="Interfaces\IProfileScheduler.cs" />
     <Compile Include="Interfaces\IPatientArtExtractRepository.cs" />
     <Compile Include="Interfaces\IPatientBaseLinesRepository.cs" />
     <Compile Include="Interfaces\IPatientExtractRepository.cs" />
