@@ -14,6 +14,8 @@ namespace PalladiumDwh.DWapi.Client.Tests
     [TestFixture]
     public class DwapiServiceTests
     {
+        private readonly string url = "http://197.232.1.130:81/dwapi/api/";
+        //private readonly string url ="http://localhost/dwapi/api/";
         private IDwapiService _dwapiService;
         private Facility _newFacility;
         private List<PatientExtract> _patientWithAllExtracts;
@@ -23,7 +25,7 @@ namespace PalladiumDwh.DWapi.Client.Tests
         [SetUp]
         public void SetUp()
         {
-            _dwapiService = new DwapiService("http://localhost/dwapi/api/");
+            _dwapiService = new DwapiService(url);
             _newFacility = Builder<Facility>.CreateNew().Build();
             _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility,patientCount, extractCount).ToList();
 
