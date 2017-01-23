@@ -15,6 +15,9 @@ namespace PalladiumDwh.Shared.Model
         public virtual string Project { get; set; }
         [Column(Order = 102)]
         public virtual bool Voided { get; set; }
+        [Column(Order = 103)]
+        public virtual bool Processed { get; set; }
+
 
         protected Entity(Guid id)
         {

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{88D7047B-557B-45BC-A0D0-0874903C2C47}</ProjectGuid>
+    <ProjectGuid>{B7E99F1A-ECE6-44D7-BDF4-75A453B5FE43}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PalladiumDwh.DWapi.ClientReader</RootNamespace>
-    <AssemblyName>PalladiumDwh.DWapi.ClientReader</AssemblyName>
+    <RootNamespace>PalladiumDwh.ClientReader.Core</RootNamespace>
+    <AssemblyName>PalladiumDwh.ClientReader.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,7 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IPatientReader.cs" />
+    <Compile Include="Interfaces\IReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
+      <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
+      <Name>PalladiumDwh.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

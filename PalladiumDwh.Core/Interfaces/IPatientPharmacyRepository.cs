@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using PalladiumDwh.Shared.Interfaces;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Core.Interfaces

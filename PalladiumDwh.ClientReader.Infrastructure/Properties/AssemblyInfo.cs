@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PalladiumDwh.DWapi.ClientReader")]
+[assembly: AssemblyTitle("PalladiumDwh.ClientReader.Infrastructure")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PalladiumDwh.DWapi.ClientReader")]
+[assembly: AssemblyProduct("PalladiumDwh.ClientReader.Infrastructure")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("88d7047b-557b-45bc-a0d0-0874903c2c47")]
+[assembly: Guid("6dfa67bb-56b7-4695-98f3-b2ad83b09845")]
 
 // Version information for an assembly consists of the following four values:
 //

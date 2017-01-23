@@ -88,6 +88,10 @@
     <Compile Include="Migrations\201701230557452_SharedDataModel.Designer.cs">
       <DependentUpon>201701230557452_SharedDataModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701231221539_ProcessedColumn.cs" />
+    <Compile Include="Migrations\201701231221539_ProcessedColumn.Designer.cs">
+      <DependentUpon>201701231221539_ProcessedColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -124,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701230557452_SharedDataModel.resx">
       <DependentUpon>201701230557452_SharedDataModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701231221539_ProcessedColumn.resx">
+      <DependentUpon>201701231221539_ProcessedColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

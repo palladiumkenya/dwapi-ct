@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{59A12AB3-C0EC-4CFE-BCA0-959FAA563AEB}</ProjectGuid>
+    <ProjectGuid>{6DFA67BB-56B7-4695-98F3-B2AD83B09845}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PalladiumDwh.Core</RootNamespace>
-    <AssemblyName>PalladiumDwh.Core</AssemblyName>
+    <RootNamespace>PalladiumDwh.ClientReader.Infrastructure</RootNamespace>
+    <AssemblyName>PalladiumDwh.ClientReader.Infrastructure</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,17 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Messaging" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,34 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IClearPatientRecords.cs" />
-    <Compile Include="Interfaces\IMessagingReaderService.cs" />
-    <Compile Include="Interfaces\IMessagingSenderService.cs" />
-    <Compile Include="Interfaces\IMessagingService.cs" />
-    <Compile Include="Interfaces\IProfileScheduler.cs" />
-    <Compile Include="Interfaces\IPatientArtExtractRepository.cs" />
-    <Compile Include="Interfaces\IPatientBaseLinesRepository.cs" />
-    <Compile Include="Interfaces\IPatientExtractRepository.cs" />
-    <Compile Include="Interfaces\IPatientLabRepository.cs" />
-    <Compile Include="Interfaces\IPatientPharmacyRepository.cs" />
-    <Compile Include="Interfaces\IPatientStatusRepository.cs" />
-    <Compile Include="Interfaces\IFacilityRepository.cs" />
-    <Compile Include="Interfaces\IPatientVisitRepository.cs" />
-    <Compile Include="Interfaces\ISyncService.cs" />
+    <Compile Include="Data\PatientReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\MessagingReaderService.cs" />
-    <Compile Include="Services\MessagingSenderService.cs" />
-    <Compile Include="Services\MessagingService.cs" />
-    <Compile Include="Services\SyncService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
-      <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
-      <Name>PalladiumDwh.Shared</Name>
+    <ProjectReference Include="..\PalladiumDwh.ClientReader.Core\PalladiumDwh.ClientReader.Core.csproj">
+      <Project>{B7E99F1A-ECE6-44D7-BDF4-75A453B5FE43}</Project>
+      <Name>PalladiumDwh.ClientReader.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
