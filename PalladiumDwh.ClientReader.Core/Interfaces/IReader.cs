@@ -2,7 +2,7 @@
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
-    public interface IReader<out T>
+    public interface IReader<T> where T : class 
     {
         IEnumerable<T> Read();
     }
