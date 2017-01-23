@@ -1,12 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic;
-using System.Linq.Expressions;
-using EntityFramework.Extensions;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {

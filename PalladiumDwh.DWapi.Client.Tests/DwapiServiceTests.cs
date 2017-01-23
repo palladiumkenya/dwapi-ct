@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Messaging;
 using FizzWare.NBuilder;
-using Newtonsoft.Json;
-using NUnit.Framework.Internal;
 using NUnit.Framework;
-using PalladiumDwh.DWapi.Client.Model;
-using PalladiumDwh.DWapi.Client.Model.Profiles;
+using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.Profiles;
 
 namespace PalladiumDwh.DWapi.Client.Tests
 {

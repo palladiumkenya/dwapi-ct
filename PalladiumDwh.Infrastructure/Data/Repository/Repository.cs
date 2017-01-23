@@ -5,9 +5,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using log4net;
-using log4net.Config;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Shared;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {

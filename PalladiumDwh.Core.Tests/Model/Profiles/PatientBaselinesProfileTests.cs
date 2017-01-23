@@ -2,9 +2,9 @@
 using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
-using PalladiumDwh.Core.Model;
-using PalladiumDwh.Core.Model.DTO;
-using PalladiumDwh.Core.Model.Profiles;
+using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.DTO;
+using PalladiumDwh.Shared.Model.Profiles;
 
 namespace PalladiumDwh.Core.Tests.Model.Profiles
 {

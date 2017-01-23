@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using FizzWare.NBuilder;
-using PalladiumDwh.DWapi.Client.Model;
-using PalladiumDwh.Shared;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.DWapi.Client.Tests
 {

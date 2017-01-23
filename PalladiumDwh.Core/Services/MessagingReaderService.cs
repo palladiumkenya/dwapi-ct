@@ -1,13 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Messaging;
-using System.Reflection;
-using System.Text;
-using log4net;
-using Newtonsoft.Json;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model.Profiles;
 using PalladiumDwh.Shared;
 
 namespace PalladiumDwh.Core.Services

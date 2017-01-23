@@ -1,23 +1,22 @@
-﻿using System.Data;
-using System.Data.Common;
+﻿using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using PalladiumDwh.Core.Model;
 using PalladiumDwh.Infrastructure.Data.EFConvention;
+using PalladiumDwh.Shared.Data;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Infrastructure.Data
 {
-    public class DwapiCentralContext : DbContext
+    public class DwapiCentralContext : DwapiBaseContext
     {
-        public DwapiCentralContext() : base("name=DWAPICentral")
+
+        public DwapiCentralContext() : base("DWAPICentral")
         {
         }
 
         public DwapiCentralContext(DbConnection existingConnection, bool contextOwnsConnection) : base(existingConnection, contextOwnsConnection)
         {
         }
-
         public virtual DbSet<Facility> Facilities { get; set; }
         public virtual DbSet<PatientExtract> PatientExtracts { get; set; }
         public virtual DbSet<PatientArtExtract> PatientArtExtracts { get; set; }
@@ -29,14 +28,11 @@ namespace PalladiumDwh.Infrastructure.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Properties<string>().Configure(p => p.HasMaxLength(150));
-            modelBuilder.Conventions.AddBefore<ForeignKeyIndexConvention>(new ForeignKeyNamingConvention());
-
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Facility>()
-                  .HasMany(c => c.PatientExtracts)
-                  .WithRequired()
-                  .HasForeignKey(f => f.FacilityId);
+                .HasMany(c => c.PatientExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.FacilityId);
 
             modelBuilder.Entity<PatientExtract>()
                .HasMany(c => c.PatientArtExtracts)
@@ -67,7 +63,6 @@ namespace PalladiumDwh.Infrastructure.Data
                .HasMany(c => c.PatientVisitExtracts)
                .WithRequired()
                .HasForeignKey(f => f.PatientId);
-         
         }
     }
 }

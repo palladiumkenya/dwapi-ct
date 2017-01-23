@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq.Expressions;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {

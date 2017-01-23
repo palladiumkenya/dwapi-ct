@@ -84,6 +84,10 @@
     <Compile Include="Migrations\201701221347378_KeCols.Designer.cs">
       <DependentUpon>201701221347378_KeCols.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701230557452_SharedDataModel.cs" />
+    <Compile Include="Migrations\201701230557452_SharedDataModel.Designer.cs">
+      <DependentUpon>201701230557452_SharedDataModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -95,6 +99,10 @@
     <ProjectReference Include="..\PalladiumDwh.Core\PalladiumDwh.Core.csproj">
       <Project>{59A12AB3-C0EC-4CFE-BCA0-959FAA563AEB}</Project>
       <Name>PalladiumDwh.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalladiumDwh.Shared.Data\PalladiumDwh.Shared.Data.csproj">
+      <Project>{AE9E2E4A-0F4D-4CA1-9EBB-9EEC7AA209CC}</Project>
+      <Name>PalladiumDwh.Shared.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
       <Project>{50ed08e8-8fea-4c87-b265-e39daea4b480}</Project>
@@ -113,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701221347378_KeCols.resx">
       <DependentUpon>201701221347378_KeCols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701230557452_SharedDataModel.resx">
+      <DependentUpon>201701230557452_SharedDataModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

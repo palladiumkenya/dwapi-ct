@@ -4,8 +4,8 @@ using System.Linq;
 using FizzWare.NBuilder;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using PalladiumDwh.Core.Model;
-using PalladiumDwh.Core.Model.Profiles;
+using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.Profiles;
 
 namespace PalladiumDwh.Shared.Tests
 {
@@ -58,7 +58,7 @@ namespace PalladiumDwh.Shared.Tests
             string[] names = name.Split(',');
 
             Assert.That(names[0],Does.EndWith("PatientARTProfile"));
-            Assert.AreEqual(names[1], " PalladiumDwh.Core");
+            Assert.AreEqual(names[1], " PalladiumDwh.Shared");
             
             Type type = Type.GetType(name);
             Assert.AreEqual(typeof(PatientARTProfile), type);

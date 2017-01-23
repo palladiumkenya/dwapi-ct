@@ -2,7 +2,7 @@
 using System.Reflection;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model.Profiles;
+using PalladiumDwh.Shared.Model.Profiles;
 using Quartz;
 
 namespace PalladiumDWh.DwapiService.Job

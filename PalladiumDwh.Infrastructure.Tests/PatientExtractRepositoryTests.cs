@@ -4,9 +4,9 @@ using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model;
 using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Infrastructure.Data.Repository;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Infrastructure.Tests
 {

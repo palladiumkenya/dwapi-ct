@@ -1,5 +1,6 @@
 using System.Web.Http;
 using System.Web.Mvc;
+using PalladiumDwh.DWapi.Areas.HelpPage.App_Start;
 
 namespace PalladiumDwh.DWapi.Areas.HelpPage
 {

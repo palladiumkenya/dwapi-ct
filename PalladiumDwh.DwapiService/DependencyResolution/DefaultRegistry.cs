@@ -2,7 +2,6 @@ using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.Infrastructure.Data;
 using StructureMap;
-using StructureMap.Pipeline;
 
 namespace PalladiumDWh.DwapiService.DependencyResolution {
     public class DefaultRegistry : Registry {

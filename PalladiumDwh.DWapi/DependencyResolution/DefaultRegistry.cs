@@ -14,6 +14,7 @@ namespace PalladiumDwh.DWapi.DependencyResolution
                 {
                     scan.TheCallingAssembly();
                     scan.Assembly("PalladiumDwh.Shared");
+                    scan.Assembly("PalladiumDwh.Shared.Data");
                     scan.Assembly("PalladiumDwh.Core");
                     scan.Assembly("PalladiumDwh.Infrastructure");
                     scan.WithDefaultConventions();

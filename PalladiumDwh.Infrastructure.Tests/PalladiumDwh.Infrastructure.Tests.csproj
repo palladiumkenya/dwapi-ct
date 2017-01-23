@@ -76,7 +76,6 @@
     <Compile Include="FacilityRepositoryTests.cs" />
     <Compile Include="PatientExtractRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GenericRepositoryTests.cs" />
     <Compile Include="TestHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +93,10 @@
     <ProjectReference Include="..\PalladiumDwh.Infrastructure\PalladiumDwh.Infrastructure.csproj">
       <Project>{F6F71252-7E38-445D-BAE5-977B515B78AC}</Project>
       <Name>PalladiumDwh.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalladiumDwh.Shared.Data\PalladiumDwh.Shared.Data.csproj">
+      <Project>{AE9E2E4A-0F4D-4CA1-9EBB-9EEC7AA209CC}</Project>
+      <Name>PalladiumDwh.Shared.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
       <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>

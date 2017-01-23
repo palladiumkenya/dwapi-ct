@@ -1,11 +1,5 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using PalladiumDwh.DWapi.Client.Model;
-using PalladiumDwh.DWapi.Client.Model.Profiles;
+﻿using System.Net;
+using PalladiumDwh.Shared.Model.Profiles;
 using RestSharp;
 using RestSharp.Newtonsoft.Json;
 using RestRequest = RestSharp.RestRequest;

@@ -66,10 +66,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PalladiumDwh.Core\PalladiumDwh.Core.csproj">
-      <Project>{59a12ab3-c0ec-4cfe-bca0-959faa563aeb}</Project>
-      <Name>PalladiumDwh.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
       <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
       <Name>PalladiumDwh.Shared</Name>

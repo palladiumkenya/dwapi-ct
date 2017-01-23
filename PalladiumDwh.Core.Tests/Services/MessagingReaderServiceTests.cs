@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Linq;
-using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model;
-using PalladiumDwh.Core.Model.Profiles;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Infrastructure.Data.Repository;
 using System.Collections.Generic;
 using System.Messaging;
 using PalladiumDwh.Shared;
+using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.Profiles;
 
 namespace PalladiumDwh.Core.Tests.Services
 {

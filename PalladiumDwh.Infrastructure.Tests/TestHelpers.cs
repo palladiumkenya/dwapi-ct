@@ -2,9 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using FizzWare.NBuilder;
-using FizzWare.NBuilder.Extensions;
-using PalladiumDwh.Core.Model;
-using PalladiumDwh.Shared;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Infrastructure.Tests
 {

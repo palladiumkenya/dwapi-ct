@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using PalladiumDwh.DWapi.Client.Model;
-using PalladiumDwh.DWapi.Client.Model.Profiles;
+﻿using PalladiumDwh.Shared.Model.Profiles;
 
 namespace PalladiumDwh.DWapi.Client
 {

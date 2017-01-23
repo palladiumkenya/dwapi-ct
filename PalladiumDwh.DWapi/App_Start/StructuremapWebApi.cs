@@ -16,11 +16,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Web.Http;
+using PalladiumDwh.DWapi;
 using PalladiumDwh.DWapi.DependencyResolution;
 
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(PalladiumDwh.DWapi.App_Start.StructuremapWebApi), "Start")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(StructuremapWebApi), "Start")]
 
-namespace PalladiumDwh.DWapi.App_Start {
+namespace PalladiumDwh.DWapi {
     public static class StructuremapWebApi {
         public static void Start() {
 			var container = StructuremapMvc.StructureMapDependencyScope.Container;

@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.SqlServer.Management.Smo;
 using PalladiumDwh.Uploader.Controller;
-using PalladiumDwh.Uploader.Model;
 
 namespace PalladiumDwh.Uploader.Presentation
 {

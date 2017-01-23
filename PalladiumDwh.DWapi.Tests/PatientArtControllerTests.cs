@@ -6,10 +6,10 @@ using System.Net;
 using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model;
-using PalladiumDwh.Core.Model.Profiles;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.DWapi.Controllers;
+using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.Profiles;
 
 namespace PalladiumDwh.DWapi.Tests
 {

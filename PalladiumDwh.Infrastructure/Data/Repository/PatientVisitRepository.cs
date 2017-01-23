@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {

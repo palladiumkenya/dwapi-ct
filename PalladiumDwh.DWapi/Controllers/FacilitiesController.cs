@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Web.Http;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model;
 
 namespace PalladiumDwh.DWapi.Controllers
 {

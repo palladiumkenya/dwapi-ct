@@ -1,6 +1,6 @@
 using FizzWare.NBuilder;
 using NUnit.Framework;
-using PalladiumDwh.Core.Model.DTO;
+using PalladiumDwh.Shared.Model.DTO;
 
 namespace PalladiumDwh.Core.Tests.Model.DTO
 {

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http;
-using PalladiumDwh.DWapi.App_Start;
 
 namespace PalladiumDwh.DWapi
 {

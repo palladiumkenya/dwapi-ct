@@ -1,5 +1,4 @@
 using System.Web;
-using PalladiumDwh.DWapi.App_Start;
 using StructureMap.Web.Pipeline;
 
 namespace PalladiumDwh.DWapi.DependencyResolution

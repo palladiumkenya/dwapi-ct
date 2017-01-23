@@ -1,10 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using FizzWare.NBuilder;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using PalladiumDwh.Core.Model;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Shared.Tests
 {

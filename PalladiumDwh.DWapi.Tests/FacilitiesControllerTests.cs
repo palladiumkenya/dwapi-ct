@@ -2,18 +2,13 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Controllers;
-using System.Web.Http.Hosting;
-using System.Web.Http.Routing;
-using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.DWapi.Controllers;
 using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Infrastructure.Data.Repository;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.DWapi.Tests
 {

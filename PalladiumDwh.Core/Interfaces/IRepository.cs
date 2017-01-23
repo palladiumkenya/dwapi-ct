@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using PalladiumDwh.Shared;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Core.Interfaces
 {

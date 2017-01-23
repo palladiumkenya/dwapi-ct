@@ -300,6 +300,10 @@
       <Project>{F6F71252-7E38-445D-BAE5-977B515B78AC}</Project>
       <Name>PalladiumDwh.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PalladiumDwh.Shared.Data\PalladiumDwh.Shared.Data.csproj">
+      <Project>{ae9e2e4a-0f4d-4ca1-9ebb-9eec7aa209cc}</Project>
+      <Name>PalladiumDwh.Shared.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
       <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
       <Name>PalladiumDwh.Shared</Name>

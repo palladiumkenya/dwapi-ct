@@ -7,8 +7,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
 using System.Web.Http.Routing;
 using FizzWare.NBuilder;
-using PalladiumDwh.Core.Model;
-using PalladiumDwh.Shared;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.DWapi.Tests
 {

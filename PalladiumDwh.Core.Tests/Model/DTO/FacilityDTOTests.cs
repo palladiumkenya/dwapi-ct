@@ -1,8 +1,6 @@
-using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
-using PalladiumDwh.Core.Model.DTO;
-using PalladiumDwh.Core.Model.Profiles;
+using PalladiumDwh.Shared.Model.DTO;
 
 namespace PalladiumDwh.Core.Tests.Model.DTO
 {
@@ -21,7 +19,7 @@ namespace PalladiumDwh.Core.Tests.Model.DTO
         public void should_Check_IsValid()
         {
             Assert.IsTrue(_facility.IsValid());
-            var facility=new FacilityDTO(0,"ss");
+            var facility=new FacilityDTO(0,"ss","","");
             Assert.IsFalse(facility.IsValid());
         }
     }

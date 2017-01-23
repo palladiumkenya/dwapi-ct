@@ -13,6 +13,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using PalladiumDwh.DWapi.Areas.HelpPage.ModelDescriptions;
 using PalladiumDwh.DWapi.Areas.HelpPage.Models;
+using PalladiumDwh.DWapi.Areas.HelpPage.SampleGeneration;
 
 namespace PalladiumDwh.DWapi.Areas.HelpPage
 {
