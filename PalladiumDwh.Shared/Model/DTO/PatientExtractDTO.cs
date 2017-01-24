@@ -1,8 +1,10 @@
 using System;
+using System.Data;
+using PalladiumDwh.Shared.Interfaces;
 
 namespace PalladiumDwh.Shared.Model.DTO
 {
-    public class PatientExtractDTO
+    public class PatientExtractDTO : IPatientExtractDTO
     {
         public int PatientPID { get; set; }
         public string PatientCccNumber { get; set; }

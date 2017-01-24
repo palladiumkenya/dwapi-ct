@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FastMember;
 using FizzWare.NBuilder;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -78,6 +79,35 @@ namespace PalladiumDwh.Shared.Tests
 
             Assert.That(fromJson,Is.TypeOf<PatientARTProfile>());
         }
+        [Test]
+        public void should_getClass_names()
+        {
+           var facility=new TestFacility("Test",11);
+            var className = nameof(TestFacility);
+            var propName = nameof(TestFacility.Name);
+            var propNumber = nameof(TestFacility.Number);
+
+            Assert.AreEqual("TestFacility", className);
+            Assert.AreEqual("Name", propName);
+            Assert.AreEqual("Number", propNumber);
+            Console.WriteLine(className);
+            Console.WriteLine(propName);
+            Console.WriteLine(propNumber);
+
+        }
+        [Test]
+        public void should_SetVals()
+        {
+            var facility = new TestFacility("Test", 11);
+
+         
+
+            facility.SetVals("N",1);
+            Assert.AreEqual("N", facility.Name);
+            Assert.AreEqual(1, facility.Number);
+            
+            Console.WriteLine(facility);
+        }
     }
 
 
@@ -93,6 +123,13 @@ namespace PalladiumDwh.Shared.Tests
         {
             Name = name;
             Number = number;
+        }
+
+        public void SetVals(string name, int number)
+        {
+            var accessor = TypeAccessor.Create(GetType());
+            accessor[this,nameof(Name)] =name;
+            accessor[this, nameof(Number)] = number;
         }
 
         public override string ToString()

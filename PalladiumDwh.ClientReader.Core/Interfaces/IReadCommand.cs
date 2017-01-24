@@ -2,8 +2,8 @@
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
-    public interface IReader<T> where T : class 
+    public interface IReadCommand<T>
     {
-        IEnumerable<T> Read(string sqlQuery);
+        IEnumerable<T> Execute();
     }
 }

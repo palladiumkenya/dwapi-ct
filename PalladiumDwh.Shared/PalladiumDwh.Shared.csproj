@@ -50,7 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\QueryType.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IPatientExtractDTO.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\DTO\FacilityDTO.cs" />
     <Compile Include="Model\DTO\PatientArtExtractDTO.cs" />

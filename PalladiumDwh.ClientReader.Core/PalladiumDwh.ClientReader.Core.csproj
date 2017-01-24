@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,8 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IPatientReader.cs" />
-    <Compile Include="Interfaces\IReader.cs" />
+    <Compile Include="Interfaces\IExtractRow.cs" />
+    <Compile Include="Interfaces\IPatientExtractRow.cs" />
+    <Compile Include="Interfaces\IReadPatientExtractCommand.cs" />
+    <Compile Include="Interfaces\IReadCommand.cs" />
+    <Compile Include="Model\ExtractFieldMap.cs" />
+    <Compile Include="Model\PatientExtractRow.cs" />
+    <Compile Include="Model\ExtractMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -51,7 +60,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
