@@ -22,35 +22,41 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
         public void SetUp()
         {
          
-            _commandText = @"SELECT PatientID as PatientCccNumber
-                      ,PatientPK as PatientPID
-                      ,FacilityID
-                      ,SiteCode as FacilityCode
-                      ,FacilityName
-                      ,SatelliteName
-                      ,Gender
-                      ,DOB
-                      ,RegistrationDate
-                      ,RegistrationAtCCC
-                      ,RegistrationAtPMTCT
-                      ,RegistrationAtTBClinic
-                      ,PatientSource
-                      ,Region
-                      ,District
-                      ,Village
-                      ,ContactRelation
-                      ,LastVisit
-                      ,MaritalStatus
-                      ,EducationLevel
-                      ,DateConfirmedHIVPositive
-                      ,PreviousARTExposure
-                      ,PreviousARTStartDate
-                      ,StatusAtCCC
-                      ,StatusAtPMTCT
-                      ,StatusAtTBClinic
-	                  ,'IQCare' AS EMR
-	                  ,'Kenya HMIS II' AS Project
-                  FROM ";
+            _commandText = @"
+SELECT
+	 [PatientID]
+      ,[PatientPK]
+      ,a.[FacilityID]
+      ,a.[SiteCode]
+      ,a.[FacilityName]
+      ,[SatelliteName]
+      ,[Gender]
+      ,[DOB]
+      ,[RegistrationDate]
+      ,[RegistrationAtCCC]
+      ,[RegistrationAtPMTCT]
+      ,[RegistrationAtTBClinic]
+      ,[PatientSource]
+      ,[Region]
+      ,[District]
+      ,[Village]
+      ,[ContactRelation]
+      ,[LastVisit]
+      ,[MaritalStatus]
+      ,[EducationLevel]
+      ,[DateConfirmedHIVPositive]
+      ,[PreviousARTExposure]
+      ,[PreviousARTStartDate]
+      ,[StatusAtCCC]
+      ,[StatusAtPMTCT]
+      ,[StatusAtTBClinic]
+	  ,'IQCare' AS EMR
+	  ,'Kenya HMIS II' AS Project
+	  ,CAST(getdate() AS DATE) AS DateExtracted
+  FROM  
+	dbo.tmp_PatientMaster a
+  
+";
             
         }
 
@@ -59,7 +65,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
         {
             var connection = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
             _connection = new SqlConnection(connection);
-            _extractCommand = new ReadPatientExtractDbCommand(_connection, $"{_commandText} tmp_PatientMaster");
+            _extractCommand = new ReadPatientExtractDbCommand(_connection, $"{_commandText}");
 
             var list = _extractCommand.Execute().ToList();
             Assert.IsTrue(list.Count > 0);
@@ -67,6 +73,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
             Console.WriteLine($"Loaded {list.Count} records!");
 
         }
+        /*
         [Test]
         public void should_Execute_For_MySQL()
         {
@@ -91,7 +98,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
             Assert.IsTrue(list.Count > 0);
 
             Console.WriteLine($"Loaded {list.Count} records!");
-
         }
+        */
     }
 }

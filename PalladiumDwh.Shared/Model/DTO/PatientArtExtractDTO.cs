@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PalladiumDwh.Shared.Model.DTO
 {    
-    public class PatientArtExtractDTO
+    public class PatientArtExtractDTO 
     {
         public decimal? AgeEnrollment { get; set; }
         public decimal? AgeARTStart { get; set; }

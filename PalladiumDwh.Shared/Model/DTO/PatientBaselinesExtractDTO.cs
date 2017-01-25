@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PalladiumDwh.Shared.Model.DTO
 {
-    public class PatientBaselinesExtractDTO
+    public class PatientBaselinesExtractDTO 
     {
         public int? eCD4 { get; set; }
         public DateTime? eCD4Date { get; set; }

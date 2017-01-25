@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PalladiumDwh.Shared.Model.DTO
 {
-    public class PatientPharmacyExtractDTO
+    public class PatientPharmacyExtractDTO 
     {
         public int? VisitID { get; set; }
         public string Drug { get; set; }

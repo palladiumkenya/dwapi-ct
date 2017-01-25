@@ -66,6 +66,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Model\PatientArtExtractRowTests.cs" />
+    <Compile Include="Model\PatientBaselinesExtractRowTests.cs" />
+    <Compile Include="Model\PatientVisitExtractRowTests.cs" />
+    <Compile Include="Model\PatientLaboratoryExtractRowTests.cs" />
+    <Compile Include="Model\PatientPharmacyExtractRowTests.cs" />
+    <Compile Include="Model\PatientStatusExtractRowTests.cs" />
     <Compile Include="Model\PatientExtractRowTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

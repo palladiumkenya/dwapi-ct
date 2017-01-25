@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="Enums\QueryType.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\IPatientExtractDTO.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\DTO\FacilityDTO.cs" />
     <Compile Include="Model\DTO\PatientArtExtractDTO.cs" />
@@ -79,6 +78,7 @@
     <Compile Include="Model\Profiles\PatientVisitProfile.cs" />
     <Compile Include="MsmqEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkipLoadAttribute.cs" />
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>

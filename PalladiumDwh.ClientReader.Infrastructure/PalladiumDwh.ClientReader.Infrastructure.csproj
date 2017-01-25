@@ -61,6 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ExtractDbCommand.cs" />
+    <Compile Include="Data\ReadPatientArtExtractDbCommand.cs" />
+    <Compile Include="Data\ReadPatientBaselinesExtractDbCommand.cs" />
+    <Compile Include="Data\ReadPatientLaboratoryExtractDbCommand.cs" />
+    <Compile Include="Data\ReadPatientPharmacyExtractDbCommand.cs" />
+    <Compile Include="Data\ReadPatientStatusExtractDbCommand.cs" />
+    <Compile Include="Data\ReadPatientVisitExtractDbCommand.cs" />
     <Compile Include="Data\ReadPatientExtractDbCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

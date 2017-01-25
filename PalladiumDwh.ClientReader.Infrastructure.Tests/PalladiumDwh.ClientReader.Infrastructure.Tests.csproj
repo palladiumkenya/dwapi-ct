@@ -81,6 +81,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\ReadPatientBaselinesExtractDbCommandTests.cs" />
+    <Compile Include="Data\ReadPatientLaboratoryExtractDbCommandTests.cs" />
+    <Compile Include="Data\ReadPatientPharmacyExtractDbCommandTests.cs" />
+    <Compile Include="Data\ReadPatientStatusExtractDbCommandTests.cs" />
+    <Compile Include="Data\ReadPatientVisitExtractDbCommandTests.cs" />
+    <Compile Include="Data\ReadPatientArtExtractDbCommandTests.cs" />
     <Compile Include="Data\ReadPatientExtractDbCommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

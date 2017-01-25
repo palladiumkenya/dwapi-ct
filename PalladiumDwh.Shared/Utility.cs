@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
+using log4net;
 
 namespace PalladiumDwh.Shared
 {
-   public static class Utility
+    public static class Utility
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public static IEnumerable<IEnumerable<T>> Split<T>(this IEnumerable<T> fullBatch, int chunkSize)
         {
             if (chunkSize <= 0)
@@ -45,9 +47,39 @@ namespace PalladiumDwh.Shared
             return $"{type.FullName}, {type.Assembly.GetName().Name}";
         }
 
-      
+        public static object Get(this IDataRecord row, string fieldName, Type type)
+        {
+            int ordinal = -1;
+            try
+            {
+                ordinal = row.GetOrdinal(fieldName);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Log.Debug(ex);
+            }
+            if (ordinal > -1)
+            {
+                var value = row.IsDBNull(ordinal) ? GetDefault(type) : row.GetValue(ordinal);
+                return Convert.ChangeType(value, type);
+            }
+            return GetDefault(type);
+        }
 
-        public static T Get<T>(this IDataRecord row, string fieldName)
+        public static object GetDefault(Type type)
+        {
+            if (type.IsValueType)
+            {
+                if (type==typeof(DateTime))
+                    return new DateTime(1900, 1, 1);
+
+                return Activator.CreateInstance(type);
+
+            }
+            return null;
+        }
+
+        public static T Get<T>(this IDataRecord row, string fieldName) 
         {
             int ordinal = row.GetOrdinal(fieldName);
             return row.Get<T>(ordinal);
@@ -87,3 +119,4 @@ namespace PalladiumDwh.Shared
         }
     }
 }
+

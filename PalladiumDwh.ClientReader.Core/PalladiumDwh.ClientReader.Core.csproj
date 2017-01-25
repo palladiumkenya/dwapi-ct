@@ -34,6 +34,10 @@
       <HintPath>..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,12 +49,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IExtractRow.cs" />
+    <Compile Include="Interfaces\IPatientArtExtractRow.cs" />
+    <Compile Include="Interfaces\IPatientBaselinesExtractRow.cs" />
     <Compile Include="Interfaces\IPatientExtractRow.cs" />
+    <Compile Include="Interfaces\IPatientLaboratoryExtractRow.cs" />
+    <Compile Include="Interfaces\IPatientPharmacyExtractRow.cs" />
+    <Compile Include="Interfaces\IPatientStatusExtractRow.cs" />
+    <Compile Include="Interfaces\IPatientVisitExtractRow.cs" />
+    <Compile Include="Interfaces\IReadPatientArtExtractCommand.cs" />
+    <Compile Include="Interfaces\IReadPatientBaselinesExtractCommand.cs" />
+    <Compile Include="Interfaces\IReadPatientLaboratoryExtractCommand.cs" />
+    <Compile Include="Interfaces\IReadPatientPharmacyExtractCommand.cs" />
+    <Compile Include="Interfaces\IReadPatientStatusExtractCommand.cs" />
+    <Compile Include="Interfaces\IReadPatientVisitExtractCommand.cs" />
     <Compile Include="Interfaces\IReadPatientExtractCommand.cs" />
     <Compile Include="Interfaces\IReadCommand.cs" />
-    <Compile Include="Model\ExtractFieldMap.cs" />
+    <Compile Include="Model\ExtractRow.cs" />
+    <Compile Include="Model\PatientBaselinesExtractRow.cs" />
+    <Compile Include="Model\PatientArtExtractRow.cs" />
+    <Compile Include="Model\PatientLaboratoryExtractRow.cs" />
+    <Compile Include="Model\PatientPharmacyExtractRow.cs" />
+    <Compile Include="Model\PatientStatusExtractRow.cs" />
+    <Compile Include="Model\PatientVisitExtractRow.cs" />
     <Compile Include="Model\PatientExtractRow.cs" />
-    <Compile Include="Model\ExtractMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

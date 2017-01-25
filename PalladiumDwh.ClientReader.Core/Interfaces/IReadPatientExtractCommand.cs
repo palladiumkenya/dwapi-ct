@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using PalladiumDwh.ClientReader.Core.Model;
-using PalladiumDwh.Shared.Interfaces;
+﻿using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
-    public interface IReadPatientExtractCommand:IReadCommand<IPatientExtractRow>
+    public interface IReadPatientExtractCommand:IReadCommand<PatientExtractRow>
     {
     }
 }
