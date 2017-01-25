@@ -58,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DwapiCentralContext.cs" />
-    <Compile Include="Data\EFConvention\ForeignKeyNamingConvention.cs" />
     <Compile Include="Data\Repository\FacilityRepository.cs" />
     <Compile Include="Data\Repository\PatientArtExtractRepository.cs" />
     <Compile Include="Data\Repository\PatientBaseLinesRepository.cs" />
@@ -67,7 +66,6 @@
     <Compile Include="Data\Repository\PatientPharmacyRepository.cs" />
     <Compile Include="Data\Repository\PatientStatusRepository.cs" />
     <Compile Include="Data\Repository\PatientVisitRepository.cs" />
-    <Compile Include="Data\Repository\Repository.cs" />
     <Compile Include="Migrations\201701160913554_initial.cs" />
     <Compile Include="Migrations\201701160913554_initial.Designer.cs">
       <DependentUpon>201701160913554_initial.cs</DependentUpon>

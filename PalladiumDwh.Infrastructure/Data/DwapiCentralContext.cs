@@ -1,7 +1,5 @@
 ﻿using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using PalladiumDwh.Infrastructure.Data.EFConvention;
 using PalladiumDwh.Shared.Data;
 using PalladiumDwh.Shared.Model;
 
@@ -10,7 +8,7 @@ namespace PalladiumDwh.Infrastructure.Data
     public class DwapiCentralContext : DwapiBaseContext
     {
 
-        public DwapiCentralContext() : base("DWAPICentral")
+        public DwapiCentralContext() : base("name=DWAPICentral")
         {
         }
 

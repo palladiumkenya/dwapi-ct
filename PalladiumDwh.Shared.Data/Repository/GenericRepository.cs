@@ -23,6 +23,16 @@ namespace PalladiumDwh.Shared.Data.Repository
             DbSet = context.Set<TEntity>();
         }
 
+        public IEnumerable<TEntity> GetAll()
+        {
+            return DbSet.ToList();
+        }
+
+        public IEnumerable<TEntity> GetAllBy(Expression<Func<TEntity, bool>> predicate)
+        {
+            return DbSet.Where(predicate).ToList();
+        }
+
         public virtual TEntity Find(Guid id)
         {
             //consider using DbSet.AsNoTracking() **
@@ -88,5 +98,7 @@ namespace PalladiumDwh.Shared.Data.Repository
         {
             Context.SaveChanges();
         }
+
+       
     }
 }

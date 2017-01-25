@@ -47,6 +47,8 @@ namespace PalladiumDwh.Shared.Data.Tests.Repository
             
 
             _facilities = TestHelpers.GetTestData<Facility>(5).ToList();
+            _facilities.First().Name = "Maun Facility";
+            _facilities.Last().Name = "Hospital Maun";
             TestHelpers.CreateTestData(_context, _facilities);
 
             _facilityA = _facilities.First();
@@ -54,7 +56,33 @@ namespace PalladiumDwh.Shared.Data.Tests.Repository
             TestHelpers.CreateTestData(_context,_patients);
 
         }
+        [Test]
+        public void should_GetAll()
+        {
+            var repository = new TestFacilityRepository(_context);
 
+            var facilities = repository.GetAll().ToList();
+
+            Assert.IsTrue(facilities.Count>0);
+            foreach (var f in facilities)
+            {
+                Console.WriteLine(f);
+            }
+            
+        }
+        [Test]
+        public void should_GetAll_by_Expression()
+        {
+            var repository = new TestFacilityRepository(_context);
+
+            var facilities = repository.GetAllBy(x=>x.Name.ToLower().Contains("aun".ToLower())).ToList();
+
+            Assert.IsTrue(facilities.Count > 0);
+            foreach (var f in facilities)
+            {
+                Console.WriteLine(f);
+            }
+        }
         [Test]
         public void should_Find()
         {

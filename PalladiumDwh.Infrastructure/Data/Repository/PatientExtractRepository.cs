@@ -1,6 +1,7 @@
 ﻿
 using System;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository

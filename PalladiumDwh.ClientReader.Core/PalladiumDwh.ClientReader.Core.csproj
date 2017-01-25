@@ -48,22 +48,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IExtractRow.cs" />
-    <Compile Include="Interfaces\IPatientArtExtractRow.cs" />
-    <Compile Include="Interfaces\IPatientBaselinesExtractRow.cs" />
-    <Compile Include="Interfaces\IPatientExtractRow.cs" />
-    <Compile Include="Interfaces\IPatientLaboratoryExtractRow.cs" />
-    <Compile Include="Interfaces\IPatientPharmacyExtractRow.cs" />
-    <Compile Include="Interfaces\IPatientStatusExtractRow.cs" />
-    <Compile Include="Interfaces\IPatientVisitExtractRow.cs" />
-    <Compile Include="Interfaces\IReadPatientArtExtractCommand.cs" />
-    <Compile Include="Interfaces\IReadPatientBaselinesExtractCommand.cs" />
-    <Compile Include="Interfaces\IReadPatientLaboratoryExtractCommand.cs" />
-    <Compile Include="Interfaces\IReadPatientPharmacyExtractCommand.cs" />
-    <Compile Include="Interfaces\IReadPatientStatusExtractCommand.cs" />
-    <Compile Include="Interfaces\IReadPatientVisitExtractCommand.cs" />
-    <Compile Include="Interfaces\IReadPatientExtractCommand.cs" />
-    <Compile Include="Interfaces\IReadCommand.cs" />
+    <Compile Include="Interfaces\Extracts\IExtractRow.cs" />
+    <Compile Include="Interfaces\Repository\IFacilityRepository.cs" />
+    <Compile Include="Interfaces\Repository\IPatientArtExtractRepository.cs" />
+    <Compile Include="Interfaces\Extracts\IPatientArtExtractRow.cs" />
+    <Compile Include="Interfaces\Extracts\IPatientBaselinesExtractRow.cs" />
+    <Compile Include="Interfaces\Repository\IPatientBaseLinesRepository.cs" />
+    <Compile Include="Interfaces\Repository\IPatientExtractRepository.cs" />
+    <Compile Include="Interfaces\Extracts\IPatientExtractRow.cs" />
+    <Compile Include="Interfaces\Extracts\IPatientLaboratoryExtractRow.cs" />
+    <Compile Include="Interfaces\Repository\IPatientLabRepository.cs" />
+    <Compile Include="Interfaces\Extracts\IPatientPharmacyExtractRow.cs" />
+    <Compile Include="Interfaces\Repository\IPatientPharmacyRepository.cs" />
+    <Compile Include="Interfaces\Extracts\IPatientStatusExtractRow.cs" />
+    <Compile Include="Interfaces\Repository\IPatientStatusRepository.cs" />
+    <Compile Include="Interfaces\Extracts\IPatientVisitExtractRow.cs" />
+    <Compile Include="Interfaces\Repository\IPatientVisitRepository.cs" />
+    <Compile Include="Interfaces\Commands\IReadPatientArtExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IReadPatientBaselinesExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IReadPatientLaboratoryExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IReadPatientPharmacyExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IReadPatientStatusExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IReadPatientVisitExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IReadPatientExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IReadCommand.cs" />
+    <Compile Include="Interfaces\ISyncService.cs" />
     <Compile Include="Model\ExtractRow.cs" />
     <Compile Include="Model\PatientBaselinesExtractRow.cs" />
     <Compile Include="Model\PatientArtExtractRow.cs" />
@@ -73,6 +82,7 @@
     <Compile Include="Model\PatientVisitExtractRow.cs" />
     <Compile Include="Model\PatientExtractRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SyncService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">

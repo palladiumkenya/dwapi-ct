@@ -7,6 +7,8 @@ namespace PalladiumDwh.Shared.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : Entity
     {
+        IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> GetAllBy(Expression<Func<TEntity, bool>> predicate);
         TEntity Find(Guid id);
         TEntity Find(Expression<Func<TEntity, bool>> predicate);
         void Insert(TEntity entity);

@@ -50,9 +50,14 @@
       <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Npgsql, Version=3.1.9.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.3.1.9\lib\net451\Npgsql.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,20 +66,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\ExtractDbCommand.cs" />
-    <Compile Include="Data\ReadPatientArtExtractDbCommand.cs" />
-    <Compile Include="Data\ReadPatientBaselinesExtractDbCommand.cs" />
-    <Compile Include="Data\ReadPatientLaboratoryExtractDbCommand.cs" />
-    <Compile Include="Data\ReadPatientPharmacyExtractDbCommand.cs" />
-    <Compile Include="Data\ReadPatientStatusExtractDbCommand.cs" />
-    <Compile Include="Data\ReadPatientVisitExtractDbCommand.cs" />
-    <Compile Include="Data\ReadPatientExtractDbCommand.cs" />
+    <Compile Include="Data\DwapiRemoteContext.cs" />
+    <Compile Include="Data\Command\ExtractDbCommand.cs" />
+    <Compile Include="Data\FacilityRepository.cs" />
+    <Compile Include="Data\Command\ReadPatientArtExtractDbCommand.cs" />
+    <Compile Include="Data\Command\ReadPatientBaselinesExtractDbCommand.cs" />
+    <Compile Include="Data\Command\ReadPatientLaboratoryExtractDbCommand.cs" />
+    <Compile Include="Data\Command\ReadPatientPharmacyExtractDbCommand.cs" />
+    <Compile Include="Data\Command\ReadPatientStatusExtractDbCommand.cs" />
+    <Compile Include="Data\Command\ReadPatientVisitExtractDbCommand.cs" />
+    <Compile Include="Data\Command\ReadPatientExtractDbCommand.cs" />
+    <Compile Include="Data\PatientArtExtractRepository.cs" />
+    <Compile Include="Data\PatientBaseLinesRepository.cs" />
+    <Compile Include="Data\PatientExtractRepository.cs" />
+    <Compile Include="Data\PatientLabRepository.cs" />
+    <Compile Include="Data\PatientPharmacyRepository.cs" />
+    <Compile Include="Data\PatientStatusRepository.cs" />
+    <Compile Include="Data\PatientVisitRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PalladiumDwh.ClientReader.Core\PalladiumDwh.ClientReader.Core.csproj">
       <Project>{B7E99F1A-ECE6-44D7-BDF4-75A453B5FE43}</Project>
       <Name>PalladiumDwh.ClientReader.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalladiumDwh.Shared.Data\PalladiumDwh.Shared.Data.csproj">
+      <Project>{AE9E2E4A-0F4D-4CA1-9EBB-9EEC7AA209CC}</Project>
+      <Name>PalladiumDwh.Shared.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
       <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
