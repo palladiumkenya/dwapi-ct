@@ -1,59 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using MySql.Data.MySqlClient;
-using Npgsql;
 using NUnit.Framework;
-using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
-using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
-namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
+namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
-    public class ReadPatientArtExtractDbCommandTests
+    public class ReadPatientLaboratoryExtractDbCommandTests
     {
         private IDbConnection _connection;
         private string _commandText;
-        private IReadPatientArtExtractCommand _extractCommand;
+        private IReadPatientLaboratoryExtractCommand _extractCommand;
 
         [SetUp]
         public void SetUp()
         {
             _commandText = @"
-SELECT a.[PatientPK]
-      ,a.[PatientID]
-       ,c.[FacilityID]
-      ,c.[SiteCode]
-      ,a.[FacilityName]
-      ,a.[DOB]
-      ,a.[AgeEnrollment]
-      ,a.[AgeARTStart]
-      ,a.[AgeLastVisit]
-      ,a.[RegistrationDate]
-      ,a.[PatientSource]
-      ,a.[Gender]
-      ,[StartARTDate]
-      ,a.[PreviousARTStartDate]
-      ,[PreviousARTRegimen]
-      ,[StartARTAtThisFacility]
-      ,[StartRegimen]
-      ,[StartRegimenLine]
-      ,[LastARTDate]
-      ,[LastRegimen]
-      ,[LastRegimenLine]
-      ,[Duration]
-      ,[ExpectedReturn]
-      ,[Provider]
-      ,a.[LastVisit]
-      ,[ExitReason]
-      ,[ExitDate]
-	  ,CAST(getdate() AS DATE) AS DateExtracted
-  FROM dbo.[tmp_ARTPatients] a
-  INNER JOIN dbo.[tmp_PatientMaster] c ON a.PatientPK=c.PatientPK
+
+
+Select tmp_PatientMaster.PatientID,
+  tmp_Labs.PatientPK,
+	tmp_PatientMaster.[FacilityID],
+	tmp_PatientMaster.[SiteCode],
+  tmp_PatientMaster.FacilityName,
+  tmp_PatientMaster.SatelliteName,
+  tmp_Labs.VisitID,
+  tmp_Labs.OrderedbyDate,
+  tmp_Labs.ReportedbyDate,
+  tmp_Labs.TestName,
+  tmp_Labs.EnrollmentTest,
+  tmp_Labs.TestResult
+  ,CAST(getdate() AS DATE) AS DateExtracted
+From tmp_Labs
+  inner Join tmp_PatientMaster    On tmp_Labs.PatientPK = tmp_PatientMaster.PatientPK
 ";
         }
 
@@ -62,7 +44,7 @@ SELECT a.[PatientPK]
         {
             var connection = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
             _connection = new SqlConnection(connection);
-            _extractCommand = new ReadPatientArtExtractDbCommand(_connection, $"{_commandText}");
+            _extractCommand = new ReadPatientLaboratoryExtractDbCommand(_connection, $"{_commandText}");
 
             var list = _extractCommand.Execute().ToList();
             Assert.IsTrue(list.Count > 0);

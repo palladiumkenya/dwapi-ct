@@ -1,49 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using MySql.Data.MySqlClient;
-using Npgsql;
 using NUnit.Framework;
-using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
-using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
-namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
+namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
-    public class ReadPatientPharmacyExtractDbCommandTests
+    public class ReadPatientStatusExtractDbCommandTests
     {
         private IDbConnection _connection;
         private string _commandText;
-        private IReadPatientPharmacyExtractCommand _extractCommand;
+        private IReadPatientStatusExtractCommand _extractCommand;
 
         [SetUp]
         public void SetUp()
         {
             _commandText = @"
-Select 
-  tmp_PatientMaster.PatientID,
-  tmp_PatientMaster.FacilityID,
-  tmp_PatientMaster.[SiteCode],
-  tmp_Pharmacy.PatientPK,
-  tmp_Pharmacy.VisitID,
-  tmp_Pharmacy.Drug,
-  tmp_Pharmacy.Provider,
-  tmp_Pharmacy.DispenseDate,
-  tmp_Pharmacy.Duration,
-  tmp_Pharmacy.ExpectedReturn,
-  tmp_Pharmacy.TreatmentType,
-  tmp_Pharmacy.RegimenLine,
-  tmp_Pharmacy.PeriodTaken,
-  tmp_Pharmacy.ProphylaxisType,
-  CAST(getdate() AS DATE) AS DateExtracted
-From 
-	tmp_Pharmacy  INNER JOIN  
-	tmp_PatientMaster On tmp_Pharmacy.PatientPK =    tmp_PatientMaster.PatientPK
-  ";
+Select tmp_PatientMaster.PatientID,
+tmp_LastStatus.PatientPK,
+ tmp_PatientMaster.[SiteCode],
+  tmp_PatientMaster.FacilityName,
+  tmp_LastStatus.ExitDescription,
+  tmp_LastStatus.ExitDate,
+  tmp_LastStatus.ExitReason
+ ,CAST(getdate() AS DATE) AS DateExtracted
+  
+From tmp_LastStatus
+ INNER JOIN  tmp_PatientMaster On tmp_LastStatus.PatientPK =  tmp_PatientMaster.PatientPK
+  
+";
         }
 
         [Test]
@@ -51,7 +39,7 @@ From
         {
             var connection = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
             _connection = new SqlConnection(connection);
-            _extractCommand = new ReadPatientPharmacyExtractDbCommand(_connection, $"{_commandText}");
+            _extractCommand = new ReadPatientStatusExtractDbCommand(_connection, $"{_commandText}");
 
             var list = _extractCommand.Execute().ToList();
             Assert.IsTrue(list.Count > 0);

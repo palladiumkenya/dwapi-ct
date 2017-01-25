@@ -1,47 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using MySql.Data.MySqlClient;
-using Npgsql;
 using NUnit.Framework;
-using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
-using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
-namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
+namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
-    public class ReadPatientLaboratoryExtractDbCommandTests
+    public class ReadPatientVisitExtractDbCommandTests
     {
         private IDbConnection _connection;
         private string _commandText;
-        private IReadPatientLaboratoryExtractCommand _extractCommand;
+        private IReadPatientVisitExtractCommand _extractCommand;
 
         [SetUp]
         public void SetUp()
         {
             _commandText = @"
 
-
-Select tmp_PatientMaster.PatientID,
-  tmp_Labs.PatientPK,
-	tmp_PatientMaster.[FacilityID],
-	tmp_PatientMaster.[SiteCode],
+SELECT 
+  REPLACE(tmp_PatientMaster.PatientID, ' ', '') AS PatientID ,
   tmp_PatientMaster.FacilityName,
-  tmp_PatientMaster.SatelliteName,
-  tmp_Labs.VisitID,
-  tmp_Labs.OrderedbyDate,
-  tmp_Labs.ReportedbyDate,
-  tmp_Labs.TestName,
-  tmp_Labs.EnrollmentTest,
-  tmp_Labs.TestResult
-  ,CAST(getdate() AS DATE) AS DateExtracted
-From tmp_Labs
-  inner Join tmp_PatientMaster    On tmp_Labs.PatientPK = tmp_PatientMaster.PatientPK
-";
+  tmp_PatientMaster.[SiteCode],
+  tmp_ClinicalEncounters.PatientPK,
+  tmp_ClinicalEncounters.VisitID,
+  tmp_ClinicalEncounters.VisitDate,
+  tmp_ClinicalEncounters.Service,
+  tmp_ClinicalEncounters.VisitType,
+  tmp_ClinicalEncounters.WHOStage,
+  tmp_ClinicalEncounters.WABStage,
+  tmp_ClinicalEncounters.Pregnant,
+  tmp_ClinicalEncounters.LMP,
+  tmp_ClinicalEncounters.EDD,
+  tmp_ClinicalEncounters.Height,
+  tmp_ClinicalEncounters.Weight,
+  tmp_ClinicalEncounters.BP,
+  tmp_ClinicalEncounters.OI,
+  tmp_ClinicalEncounters.OIDate,
+  tmp_ClinicalEncounters.Adherence,
+  tmp_ClinicalEncounters.AdherenceCategory,
+  NULL as SubstitutionFirstlineRegimenDate,
+  NULL as SubstitutionFirstlineRegimenReason,
+  NULL as SubstitutionSecondlineRegimenDate,
+  NULL as SubstitutionSecondlineRegimenReason,
+  NULL as SecondlineRegimenChangeDate,
+  NULL as SecondlineRegimenChangeReason,
+  tmp_ClinicalEncounters.FamilyPlanningMethod,
+  tmp_ClinicalEncounters.PwP,
+  tmp_ClinicalEncounters.GestationAge,
+  tmp_ClinicalEncounters.NextAppointmentDate,
+  CAST(getdate() AS DATE) AS DateExtracted
+From tmp_ClinicalEncounters
+  INNER JOIN tmp_PatientMaster On tmp_PatientMaster.PatientPK = tmp_ClinicalEncounters.PatientPK
+ ";
         }
 
         [Test]
@@ -49,7 +62,7 @@ From tmp_Labs
         {
             var connection = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
             _connection = new SqlConnection(connection);
-            _extractCommand = new ReadPatientLaboratoryExtractDbCommand(_connection, $"{_commandText}");
+            _extractCommand = new ReadPatientVisitExtractDbCommand(_connection, $"{_commandText}");
 
             var list = _extractCommand.Execute().ToList();
             Assert.IsTrue(list.Count > 0);

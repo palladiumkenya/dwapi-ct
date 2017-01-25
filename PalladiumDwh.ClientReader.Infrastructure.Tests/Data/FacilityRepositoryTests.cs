@@ -27,43 +27,42 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
         }
 
         [Test]
-        public void should_GetFacilityIdBCode()
+        public void should_Clear_all()
         {
-            var id = _facilityRepository.GetFacilityIdBCode(_facilities.First().Code);
+            _facilityRepository.Clear();
 
-            Assert.IsNotNull(id);
-            Assert.IsTrue(id != Guid.Empty);
+            var facilities = _facilityRepository.GetAll();
+
+            Assert.That(facilities,Is.Empty);
         }
 
         [Test]
-        public void should_Sync_New()
+        public void should_Clear_By_all_inlist()
         {
-            var newFacility = Builder<Facility>.CreateNew().Build();
-            newFacility.Code = DateTime.UtcNow.Millisecond;
+            
+            var twoFacilityCodes = _facilities.Take(2).Select(x=>x.Code).ToList();
 
-            _facilityRepository.Sync(newFacility);
+            _facilityRepository.ClearBy(twoFacilityCodes);
 
-            var saved = _facilityRepository.Find(newFacility.Id);
-            Assert.IsNotNull(saved);
-            Assert.AreEqual(saved.Code,newFacility.Code);
-            Assert.AreEqual(saved.Name, newFacility.Name);
+            var deletedFacilities = _facilityRepository.GetAll().Where(x => (twoFacilityCodes.Contains(x.Code)));
+
+
+            Assert.That(deletedFacilities, Is.Empty);
         }
-
         [Test]
-        public void should_Sync_Exisitng()
+        public void should_Sync()
         {
-            var facility = _facilities.Last();
+            var newFacilities = Builder<Facility>.CreateListOfSize(3).Build().ToList();
+            var newIds = newFacilities.Select(x => x.Id).ToList();
 
-            var newFacility = Builder<Facility>.CreateNew().Build();
-            newFacility.Code = facility.Code;
-            newFacility.Name = "Maun Kisumu";
-            _facilityRepository.Sync(newFacility);
+            _facilityRepository.Sync(newFacilities);
 
-            var saved = _facilityRepository.Find(x=>x.Code==newFacility.Code);
-            Assert.IsNotNull(saved);
-            Assert.AreEqual(saved.Code, newFacility.Code);
-            Assert.AreEqual("Maun Kisumu", newFacility.Name);
-            Assert.AreNotEqual(saved.Id, newFacility.Id);
+            
+
+            var savedNew = _facilityRepository.GetAll().Where(x => newIds.Contains(x.Id)).ToList();
+
+
+            Assert.IsTrue(savedNew.Count>0);
         }
     }
 }

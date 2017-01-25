@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;
@@ -15,38 +17,20 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             _context = context;
         }
 
-        public Guid? GetPatientBy(Guid facilityId, string patientNumber)
+        public Guid? GetPatientBy(Guid facilityId, int patientPk)
         {
             return Find(
                 x => x.FacilityId == facilityId &&
-                     x.PatientCccNumber.ToLower() == patientNumber.ToLower()
+                     x.PatientPID == patientPk
             )?.Id;
         }
 
-        public Guid? GetPatientBy(Guid facilityId, int patientPID)
+        public IEnumerable<PatientExtract> Sync(IEnumerable<PatientExtract> patientExtracts)
         {
-            return Find(
-                x => x.FacilityId == facilityId &&
-                     x.PatientPID == patientPID
-            )?.Id;
-        }
-
-        public Guid? Sync(PatientExtract patient)
-        {
-            var patientId = GetPatientBy(patient.FacilityId, patient.PatientPID);
-
-            if (patientId == Guid.Empty || null == patientId)
-            {
-                Insert(patient);
-                CommitChanges();
-                patientId = patient.Id;
-            }
-            else
-            {
-                Update(patient);
-            }
-
-            return patientId;
+            var toSave = patientExtracts.ToList();
+            Insert(toSave);
+            CommitChanges();
+            return toSave;
         }
     }
 }

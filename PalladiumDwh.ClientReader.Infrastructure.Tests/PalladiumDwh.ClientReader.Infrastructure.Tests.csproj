@@ -90,14 +90,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\PatientExtractRepositoryTests.cs" />
     <Compile Include="Data\FacilityRepositoryTests.cs" />
-    <Compile Include="Data\ReadPatientBaselinesExtractDbCommandTests.cs" />
-    <Compile Include="Data\ReadPatientLaboratoryExtractDbCommandTests.cs" />
-    <Compile Include="Data\ReadPatientPharmacyExtractDbCommandTests.cs" />
-    <Compile Include="Data\ReadPatientStatusExtractDbCommandTests.cs" />
-    <Compile Include="Data\ReadPatientVisitExtractDbCommandTests.cs" />
-    <Compile Include="Data\ReadPatientArtExtractDbCommandTests.cs" />
-    <Compile Include="Data\ReadPatientExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\ReadPatientBaselinesExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\ReadPatientLaboratoryExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\ReadPatientPharmacyExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\ReadPatientStatusExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\ReadPatientVisitExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\ReadPatientArtExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\ReadPatientExtractDbCommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers.cs" />
   </ItemGroup>
