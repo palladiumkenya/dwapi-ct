@@ -1,16 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using log4net;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Profiles;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
-    public class SyncService:ISyncService
+    public class SyncService : ISyncService
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly IReadPatientExtractCommand _readPatientExtractCommand;
+
         private readonly IFacilityRepository _facilityRepository;
         private readonly IPatientExtractRepository _patientExtractRepository;
         private readonly IPatientArtExtractRepository _patientArtExtractRepository;
@@ -19,9 +24,21 @@ namespace PalladiumDwh.ClientReader.Core.Services
         private readonly IPatientPharmacyRepository _patientPharmacyRepository;
         private readonly IPatientStatusRepository _patientStatusRepository;
         private readonly IPatientVisitRepository _patientVisitRepository;
+        private readonly bool _portableMode = false;
 
-        public SyncService(IFacilityRepository facilityRepository, IPatientExtractRepository patientExtractRepository, IPatientArtExtractRepository patientArtExtractRepository, IPatientBaseLinesRepository patientBaseLinesRepository, IPatientLabRepository patientLabRepository, IPatientPharmacyRepository patientPharmacyRepository, IPatientStatusRepository patientStatusRepository, IPatientVisitRepository patientVisitRepository)
+
+        public SyncService(bool portableMode,
+
+            IReadPatientExtractCommand readPatientExtractCommand,
+            IFacilityRepository facilityRepository, IPatientExtractRepository patientExtractRepository,
+            IPatientArtExtractRepository patientArtExtractRepository,
+            IPatientBaseLinesRepository patientBaseLinesRepository, IPatientLabRepository patientLabRepository,
+            IPatientPharmacyRepository patientPharmacyRepository, IPatientStatusRepository patientStatusRepository,
+            IPatientVisitRepository patientVisitRepository)
         {
+            _portableMode = portableMode;
+            _readPatientExtractCommand = readPatientExtractCommand;
+
             _facilityRepository = facilityRepository;
             _patientExtractRepository = patientExtractRepository;
             _patientArtExtractRepository = patientArtExtractRepository;
@@ -33,127 +50,58 @@ namespace PalladiumDwh.ClientReader.Core.Services
         }
 
 
-        public void Sync(object profile)
+        public IEnumerable<Facility> SyncFacilities(IList<Facility> facilities)
         {
-            if (profile.GetType() == typeof(PatientARTProfile))
+            if (_portableMode)
             {
-                SyncArt(profile as PatientARTProfile);
+                var codes = facilities.Select(x => x.Code).ToList();
+                _facilityRepository.ClearBy(codes);
             }
-            else if (profile.GetType() == typeof(PatientBaselineProfile))
+            else
             {
-                SyncBaseline(profile as PatientBaselineProfile);
+                _facilityRepository.Clear();
             }
-            else if (profile.GetType() == typeof(PatientLabProfile))
-            {
-                SyncLab(profile as PatientLabProfile);
-            }
-            else if (profile.GetType() == typeof(PatientPharmacyProfile))
-            {
-                SyncPharmacy(profile as PatientPharmacyProfile);
-            }
-            else if (profile.GetType() == typeof(PatientStatusProfile))
-            {
-                SyncStatus(profile as PatientStatusProfile);
-            }
-            else if (profile.GetType() == typeof(PatientVisitProfile))
-            {
-                SyncVisit(profile as PatientVisitProfile);
-            }
+
+            return _facilityRepository.Sync(facilities.ToList());
         }
 
-        public Guid? SyncPatient(PatientProfile profile)
-        {
-            return SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
-        }
 
-        public void SyncArt(PatientARTProfile profile)
+        public void SyncPatients()
         {
-            profile.GeneratePatientRecord();
-            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+            var facilities = new List<Facility>();
 
-            if (!(patientId == Guid.Empty || null == patientId))
+            var patients = _readPatientExtractCommand.Execute().ToList();
+
+            if (patients.Count > 0)
             {
-                profile.GenerateRecords(patientId.Value);
-                _patientArtExtractRepository.Sync(profile.PatientInfo.Id,profile.PatientArtExtracts);
+
+                var peAllfacilities =
+                    patients.Select(x => new {x.SiteCode, x.FacilityName, x.Emr, x.Project}).Distinct().ToList();
+
+                var peFacilities = peAllfacilities.Select(x => x.SiteCode).Distinct();
+                foreach (var fcode in peFacilities)
+                {
+
+                    facilities.Add(new Facility(
+                        fcode,
+                        peAllfacilities.FirstOrDefault(x => x.SiteCode == fcode)?.FacilityName,
+                        peAllfacilities.FirstOrDefault(x => x.SiteCode == fcode)?.Emr,
+                        peAllfacilities.FirstOrDefault(x => x.SiteCode == fcode)?.Project
+
+                    ));
+                }
+
+                var syncedFacilities= SyncFacilities(facilities);
+
+                foreach (var p in patients)
+                {
+                    p.FacilityId=
+                }
             }
-        }
 
-        public void SyncBaseline(PatientBaselineProfile profile)
-        {
-            profile.GeneratePatientRecord();
-            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
 
-            if (!(patientId == Guid.Empty || null == patientId))
-            {
-                profile.GenerateRecords(patientId.Value);
-                _patientBaseLinesRepository.Sync(patientId.Value, profile.PatientBaselinesExtracts);
-            }
-        }
 
-        public void SyncLab(PatientLabProfile profile)
-        {
-            profile.GeneratePatientRecord();
-            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
 
-            if (!(patientId == Guid.Empty || null == patientId))
-            {
-                profile.GenerateRecords(patientId.Value);
-                _patientLabRepository.Sync(patientId.Value, profile.PatientLaboratoryExtracts);
-            }
-        }
-
-        public void SyncPharmacy(PatientPharmacyProfile profile)
-        {
-            profile.GeneratePatientRecord();
-            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
-
-            if (!(patientId == Guid.Empty || null == patientId))
-            {
-                profile.GenerateRecords(patientId.Value);
-                _patientPharmacyRepository.Sync(patientId.Value, profile.PatientPharmacyExtracts);
-            }
-        }
-
-        public void SyncStatus(PatientStatusProfile profile)
-        {
-            profile.GeneratePatientRecord();
-            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
-
-            if (!(patientId == Guid.Empty || null == patientId))
-            {
-                profile.GenerateRecords(patientId.Value);
-                _patientStatusRepository.Sync(patientId.Value, profile.PatientStatusExtracts);
-            }
-        }
-
-        public void SyncVisit(PatientVisitProfile profile)
-        {
-            profile.GeneratePatientRecord();
-            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
-
-            if (!(patientId == Guid.Empty || null == patientId))
-            {
-                profile.GenerateRecords(patientId.Value);
-                _patientVisitRepository.Sync(patientId.Value, profile.PatientVisitExtracts);
-            }
-        }
-
-        public Facility GetFacility(int code)
-        {
-            return _facilityRepository.Find(x => x.Code == code);
-        }
-
-        private Guid? SyncCurrentPatient(Facility facility, PatientExtract patient)
-        {
-            Guid? syncPatientId = null;
-
-            var facilityId = _facilityRepository.Sync(facility);
-            if (!(facilityId == Guid.Empty || null == facilityId))
-            {
-                patient.FacilityId = facilityId.Value;
-                syncPatientId = _patientExtractRepository.Sync(patient);
-            }
-            return syncPatientId;
         }
     }
 }

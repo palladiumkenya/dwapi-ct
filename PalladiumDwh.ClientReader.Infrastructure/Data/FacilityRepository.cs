@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.Shared.Data.Repository;
@@ -15,26 +17,27 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             _context = context;
         }
 
-        public Guid? GetFacilityIdBCode(int code)
+        public void Clear()
         {
-            return Find(x => x.Code == code)?.Id;
+            var facilitys = GetAll();
+            _context.Facilities.RemoveRange(facilitys);
+            _context.SaveChanges();
         }
 
-        public Guid? Sync(Facility facility)
+        public void ClearBy(IList<int> facilityCodes)
         {
-            var facilityId = GetFacilityIdBCode(facility.Code);
+            var deleteList = GetAll()
+                .Where(x => facilityCodes.Contains(x.Code));
 
-            if (facilityId == Guid.Empty || null == facilityId)
-            {
-                Insert(facility);
-                CommitChanges();
-                facilityId = facility.Id;
-            }
-            else
-            {
-                Update(facility);
-            }
-            return facilityId;
+            _context.Facilities.RemoveRange(deleteList);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<Facility> Sync(IList<Facility> facilities)
+        {
+            Insert(facilities);
+            CommitChanges();
+            return facilities;
         }
     }
 }

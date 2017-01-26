@@ -13,16 +13,6 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
         {
             _context = context;
         }
-
-        public void Clear(Guid patientId)
-        {
-            DeleteBy(x => x.PatientId == patientId);
-        }
-        public void Sync(Guid patientId, IEnumerable<PatientPharmacyExtract> extracts)
-        {
-            Clear(patientId);
-            Insert(extracts);
-            CommitChanges();
-        }
+        
     }
 }

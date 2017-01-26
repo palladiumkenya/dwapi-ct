@@ -1,42 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using MySql.Data.MySqlClient;
-using Npgsql;
 using NUnit.Framework;
-using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
-using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
-namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
+namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
-    public class ReadPatientStatusExtractDbCommandTests
+    public class ReadPatientExtractDbCommandTests
     {
         private IDbConnection _connection;
         private string _commandText;
-        private IReadPatientStatusExtractCommand _extractCommand;
+        private IReadPatientExtractCommand _extractCommand;
 
         [SetUp]
         public void SetUp()
         {
+         
             _commandText = @"
-Select tmp_PatientMaster.PatientID,
-tmp_LastStatus.PatientPK,
- tmp_PatientMaster.[SiteCode],
-  tmp_PatientMaster.FacilityName,
-  tmp_LastStatus.ExitDescription,
-  tmp_LastStatus.ExitDate,
-  tmp_LastStatus.ExitReason
- ,CAST(getdate() AS DATE) AS DateExtracted
-  
-From tmp_LastStatus
- INNER JOIN  tmp_PatientMaster On tmp_LastStatus.PatientPK =  tmp_PatientMaster.PatientPK
+SELECT
+	 [PatientID]
+      ,[PatientPK]
+      ,a.[FacilityID]
+      ,a.[SiteCode]
+      ,a.[FacilityName]
+      ,[SatelliteName]
+      ,[Gender]
+      ,[DOB]
+      ,[RegistrationDate]
+      ,[RegistrationAtCCC]
+      ,[RegistrationAtPMTCT]
+      ,[RegistrationAtTBClinic]
+      ,[PatientSource]
+      ,[Region]
+      ,[District]
+      ,[Village]
+      ,[ContactRelation]
+      ,[LastVisit]
+      ,[MaritalStatus]
+      ,[EducationLevel]
+      ,[DateConfirmedHIVPositive]
+      ,[PreviousARTExposure]
+      ,[PreviousARTStartDate]
+      ,[StatusAtCCC]
+      ,[StatusAtPMTCT]
+      ,[StatusAtTBClinic]
+	  ,'IQCare' AS EMR
+	  ,'Kenya HMIS II' AS Project
+	  ,CAST(getdate() AS DATE) AS DateExtracted
+  FROM  
+	dbo.tmp_PatientMaster a
   
 ";
+            
         }
 
         [Test]
@@ -44,12 +62,13 @@ From tmp_LastStatus
         {
             var connection = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
             _connection = new SqlConnection(connection);
-            _extractCommand = new ReadPatientStatusExtractDbCommand(_connection, $"{_commandText}");
+            _extractCommand = new ReadPatientExtractDbCommand(_connection, $"{_commandText}");
 
             var list = _extractCommand.Execute().ToList();
             Assert.IsTrue(list.Count > 0);
 
             Console.WriteLine($"Loaded {list.Count} records!");
+
         }
         /*
         [Test]

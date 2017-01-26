@@ -1,65 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using MySql.Data.MySqlClient;
-using Npgsql;
 using NUnit.Framework;
-using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
-using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
-namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
+namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
-    public class ReadPatientExtractDbCommandTests
+    public class ReadPatientPharmacyExtractDbCommandTests
     {
         private IDbConnection _connection;
         private string _commandText;
-        private IReadPatientExtractCommand _extractCommand;
+        private IReadPatientPharmacyExtractCommand _extractCommand;
 
         [SetUp]
         public void SetUp()
         {
-         
             _commandText = @"
-SELECT
-	 [PatientID]
-      ,[PatientPK]
-      ,a.[FacilityID]
-      ,a.[SiteCode]
-      ,a.[FacilityName]
-      ,[SatelliteName]
-      ,[Gender]
-      ,[DOB]
-      ,[RegistrationDate]
-      ,[RegistrationAtCCC]
-      ,[RegistrationAtPMTCT]
-      ,[RegistrationAtTBClinic]
-      ,[PatientSource]
-      ,[Region]
-      ,[District]
-      ,[Village]
-      ,[ContactRelation]
-      ,[LastVisit]
-      ,[MaritalStatus]
-      ,[EducationLevel]
-      ,[DateConfirmedHIVPositive]
-      ,[PreviousARTExposure]
-      ,[PreviousARTStartDate]
-      ,[StatusAtCCC]
-      ,[StatusAtPMTCT]
-      ,[StatusAtTBClinic]
-	  ,'IQCare' AS EMR
-	  ,'Kenya HMIS II' AS Project
-	  ,CAST(getdate() AS DATE) AS DateExtracted
-  FROM  
-	dbo.tmp_PatientMaster a
-  
-";
-            
+Select 
+  tmp_PatientMaster.PatientID,
+  tmp_PatientMaster.FacilityID,
+  tmp_PatientMaster.[SiteCode],
+  tmp_Pharmacy.PatientPK,
+  tmp_Pharmacy.VisitID,
+  tmp_Pharmacy.Drug,
+  tmp_Pharmacy.Provider,
+  tmp_Pharmacy.DispenseDate,
+  tmp_Pharmacy.Duration,
+  tmp_Pharmacy.ExpectedReturn,
+  tmp_Pharmacy.TreatmentType,
+  tmp_Pharmacy.RegimenLine,
+  tmp_Pharmacy.PeriodTaken,
+  tmp_Pharmacy.ProphylaxisType,
+  CAST(getdate() AS DATE) AS DateExtracted
+From 
+	tmp_Pharmacy  INNER JOIN  
+	tmp_PatientMaster On tmp_Pharmacy.PatientPK =    tmp_PatientMaster.PatientPK
+  ";
         }
 
         [Test]
@@ -67,13 +46,12 @@ SELECT
         {
             var connection = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
             _connection = new SqlConnection(connection);
-            _extractCommand = new ReadPatientExtractDbCommand(_connection, $"{_commandText}");
+            _extractCommand = new ReadPatientPharmacyExtractDbCommand(_connection, $"{_commandText}");
 
             var list = _extractCommand.Execute().ToList();
             Assert.IsTrue(list.Count > 0);
 
             Console.WriteLine($"Loaded {list.Count} records!");
-
         }
         /*
         [Test]

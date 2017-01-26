@@ -5,8 +5,8 @@ using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
 {
-    public interface IPatientVisitRepository : IRepository<PatientVisitExtract>, IClearPatientRecords
+    public interface IPatientVisitRepository : IRepository<PatientVisitExtract>
     {
-        void Sync(Guid patientIdValue, IEnumerable<PatientVisitExtract> profilePatientVisitExtracts);
+        
     }
 }

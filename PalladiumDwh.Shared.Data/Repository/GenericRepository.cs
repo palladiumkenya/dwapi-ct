@@ -25,7 +25,7 @@ namespace PalladiumDwh.Shared.Data.Repository
 
         public IEnumerable<TEntity> GetAll()
         {
-            return DbSet.ToList();
+            return DbSet;
         }
 
         public IEnumerable<TEntity> GetAllBy(Expression<Func<TEntity, bool>> predicate)

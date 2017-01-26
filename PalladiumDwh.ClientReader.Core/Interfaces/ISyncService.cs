@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Profiles;
 
@@ -6,14 +7,14 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
     public interface ISyncService
     {
-        void Sync(object profile);
-        Guid? SyncPatient(PatientProfile profile);
-        void SyncArt(PatientARTProfile profile);
-        void SyncBaseline(PatientBaselineProfile baselineProfile);
-        void SyncLab(PatientLabProfile labProfile);
-        void SyncPharmacy(PatientPharmacyProfile patientPharmacyProfile);
-        void SyncStatus(PatientStatusProfile patientStatusProfile);
-        void SyncVisit(PatientVisitProfile patientVisitProfile);
-        Facility GetFacility(int code);
+        void SyncPatients();
+        /*
+        void SyncPatientsArt(IEnumerable<PatientArtExtract> patientArtExtracts);
+        void SyncPatientsBaselines(IEnumerable<PatientBaselinesExtract> patientBaselinesExtracts);
+        void SyncPatientsLaboratory(IEnumerable<PatientLaboratoryExtract> patientLaboratoryExtracts);
+        void SyncPatientsPharmacy(IEnumerable<PatientPharmacyExtract> patientPharmacyExtracts);
+        void SyncPatientsVisit(IEnumerable<PatientVisitExtract> patientVisitExtracts);
+        void SyncPatientsExtracts(IEnumerable<PatientStatusExtract> patientStatusExtracts);
+        */
     }
 }
