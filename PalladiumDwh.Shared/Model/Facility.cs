@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Shared.Model
 {

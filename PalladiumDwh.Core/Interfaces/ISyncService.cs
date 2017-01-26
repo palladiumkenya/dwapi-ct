@@ -1,6 +1,6 @@
 ﻿using System;
 using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.Profiles;
+using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.Core.Interfaces
 {

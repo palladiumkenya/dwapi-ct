@@ -83,6 +83,11 @@
     <Compile Include="Data\PatientPharmacyRepository.cs" />
     <Compile Include="Data\PatientStatusRepository.cs" />
     <Compile Include="Data\PatientVisitRepository.cs" />
+    <Compile Include="Migrations\201701260931137_Initial.cs" />
+    <Compile Include="Migrations\201701260931137_Initial.Designer.cs">
+      <DependentUpon>201701260931137_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +110,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201701260931137_Initial.resx">
+      <DependentUpon>201701260931137_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

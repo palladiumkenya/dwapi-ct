@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using log4net;
@@ -7,7 +6,6 @@ using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.Profiles;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
@@ -93,10 +91,10 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
                 var syncedFacilities= SyncFacilities(facilities);
 
-                foreach (var p in patients)
-                {
-                    p.FacilityId=
-                }
+//                foreach (var p in patients)
+//                {
+//                    p.FacilityId=
+//                }
             }
 
 

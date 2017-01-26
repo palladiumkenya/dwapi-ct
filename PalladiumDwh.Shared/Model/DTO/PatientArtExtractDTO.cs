@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PalladiumDwh.Shared.Interfaces.DTOs;
+using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Shared.Model.DTO
 {    

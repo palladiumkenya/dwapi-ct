@@ -1,15 +1,5 @@
 using System;
-using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using FastMember;
-using PalladiumDwh.ClientReader.Core.Interfaces;
-using PalladiumDwh.ClientReader.Core.Interfaces.Extracts;
-using PalladiumDwh.Shared.Interfaces;
-using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.DTO;
-using PalladiumDwh.Shared;
+using PalladiumDwh.ClientReader.Core.Interfaces.ExtractRows;
 
 namespace PalladiumDwh.ClientReader.Core.Model
 {

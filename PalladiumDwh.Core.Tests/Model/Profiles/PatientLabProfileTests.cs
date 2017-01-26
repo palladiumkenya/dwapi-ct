@@ -4,7 +4,8 @@ using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.DTO;
-using PalladiumDwh.Shared.Model.Profiles;
+using PalladiumDwh.Shared.Model.Extract;
+using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.Core.Tests.Model.Profiles
 {
@@ -31,7 +32,7 @@ namespace PalladiumDwh.Core.Tests.Model.Profiles
             Assert.IsNotNull(artProfile.Demographic);
             Assert.IsNotNull(artProfile.Facility);
             Assert.That(artProfile.LaboratoryExtracts.Count, Is.EqualTo(10));
-            Assert.IsNull(artProfile.PatientLaboratoryExtracts);
+            Assert.IsNull(artProfile.Extracts);
         }
 
         [Test]
@@ -77,7 +78,7 @@ namespace PalladiumDwh.Core.Tests.Model.Profiles
             Assert.IsNotNull(artProfile.FacilityInfo);
             Assert.IsNotNull(artProfile.PatientInfo);
             Assert.That(artProfile.LaboratoryExtracts.Count, Is.EqualTo(10));
-            Assert.IsNull(artProfile.PatientLaboratoryExtracts);
+            Assert.IsNull(artProfile.Extracts);
         }
 
         [Test]
@@ -89,8 +90,8 @@ namespace PalladiumDwh.Core.Tests.Model.Profiles
 
             artProfile.GenerateRecords(patient.Id);
 
-            Assert.That(artProfile.PatientLaboratoryExtracts.Count, Is.EqualTo(10));
-            Assert.AreEqual(artProfile.PatientInfo.Id, artProfile.PatientLaboratoryExtracts.First().PatientId);
+            Assert.That(artProfile.Extracts.Count, Is.EqualTo(10));
+            Assert.AreEqual(artProfile.PatientInfo.Id, artProfile.Extracts.First().PatientId);
         }
     }
 }

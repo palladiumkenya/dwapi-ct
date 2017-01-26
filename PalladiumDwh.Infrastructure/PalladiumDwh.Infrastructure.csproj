@@ -90,6 +90,10 @@
     <Compile Include="Migrations\201701231221539_ProcessedColumn.Designer.cs">
       <DependentUpon>201701231221539_ProcessedColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701260926055_NewCols.cs" />
+    <Compile Include="Migrations\201701260926055_NewCols.Designer.cs">
+      <DependentUpon>201701260926055_NewCols.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -129,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701231221539_ProcessedColumn.resx">
       <DependentUpon>201701231221539_ProcessedColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260926055_NewCols.resx">
+      <DependentUpon>201701260926055_NewCols.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

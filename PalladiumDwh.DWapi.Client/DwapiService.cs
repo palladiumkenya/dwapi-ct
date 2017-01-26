@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using PalladiumDwh.Shared.Model.Profiles;
+using PalladiumDwh.Shared.Model.Profile;
 using RestSharp;
 using RestSharp.Newtonsoft.Json;
 using RestRequest = RestSharp.RestRequest;

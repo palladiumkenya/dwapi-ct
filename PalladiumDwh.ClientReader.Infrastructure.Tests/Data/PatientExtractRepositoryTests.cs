@@ -7,6 +7,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
 {

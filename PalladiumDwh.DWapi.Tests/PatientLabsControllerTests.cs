@@ -9,7 +9,8 @@ using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.DWapi.Controllers;
 using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.Profiles;
+using PalladiumDwh.Shared.Model.Extract;
+using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Tests
 {

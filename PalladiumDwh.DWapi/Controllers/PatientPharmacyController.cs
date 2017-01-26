@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Web.Http;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Shared.Model.Profiles;
+using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Controllers
 {

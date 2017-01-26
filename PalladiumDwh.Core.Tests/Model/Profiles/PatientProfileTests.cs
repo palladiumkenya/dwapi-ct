@@ -3,7 +3,8 @@ using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.Profiles;
+using PalladiumDwh.Shared.Model.Extract;
+using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.Core.Tests.Model.Profiles
 {

@@ -9,7 +9,8 @@ using System.Collections.Generic;
 using System.Messaging;
 using PalladiumDwh.Shared;
 using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.Profiles;
+using PalladiumDwh.Shared.Model.Extract;
+using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.Core.Tests.Services
 {

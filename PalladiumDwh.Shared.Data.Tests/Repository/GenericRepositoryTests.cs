@@ -6,6 +6,7 @@ using System.Linq;
 using NUnit.Framework;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Shared.Data.Tests.Repository
 {

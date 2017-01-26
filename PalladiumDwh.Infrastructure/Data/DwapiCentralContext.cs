@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using PalladiumDwh.Shared.Data;
 using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Infrastructure.Data
 {

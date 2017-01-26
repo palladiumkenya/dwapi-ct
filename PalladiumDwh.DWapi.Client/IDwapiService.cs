@@ -1,4 +1,4 @@
-﻿using PalladiumDwh.Shared.Model.Profiles;
+﻿using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Client
 {

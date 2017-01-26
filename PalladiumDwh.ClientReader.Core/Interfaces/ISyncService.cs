@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.Profiles;
-
-namespace PalladiumDwh.ClientReader.Core.Interfaces
+﻿namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
     public interface ISyncService
     {

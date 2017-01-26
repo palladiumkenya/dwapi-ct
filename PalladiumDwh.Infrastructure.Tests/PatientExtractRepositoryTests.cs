@@ -7,6 +7,7 @@ using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Infrastructure.Data.Repository;
 using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Infrastructure.Tests
 {

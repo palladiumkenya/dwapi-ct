@@ -8,7 +8,8 @@ using PalladiumDwh.Core.Services;
 using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Infrastructure.Data.Repository;
 using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.Profiles;
+using PalladiumDwh.Shared.Model.Extract;
+using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.Core.Tests.Services
 {

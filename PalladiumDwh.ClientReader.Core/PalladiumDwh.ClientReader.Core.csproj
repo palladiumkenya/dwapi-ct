@@ -48,21 +48,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\Extracts\IExtractRow.cs" />
+    <Compile Include="Interfaces\ExtractRows\IExtractRow.cs" />
+    <Compile Include="Interfaces\ExtractRows\IPatientArtExtractRow.cs" />
+    <Compile Include="Interfaces\ExtractRows\IPatientBaselinesExtractRow.cs" />
+    <Compile Include="Interfaces\ExtractRows\IPatientExtractRow.cs" />
+    <Compile Include="Interfaces\ExtractRows\IPatientLaboratoryExtractRow.cs" />
+    <Compile Include="Interfaces\ExtractRows\IPatientPharmacyExtractRow.cs" />
+    <Compile Include="Interfaces\ExtractRows\IPatientStatusExtractRow.cs" />
+    <Compile Include="Interfaces\ExtractRows\IPatientVisitExtractRow.cs" />
     <Compile Include="Interfaces\Repository\IFacilityRepository.cs" />
     <Compile Include="Interfaces\Repository\IPatientArtExtractRepository.cs" />
-    <Compile Include="Interfaces\Extracts\IPatientArtExtractRow.cs" />
-    <Compile Include="Interfaces\Extracts\IPatientBaselinesExtractRow.cs" />
     <Compile Include="Interfaces\Repository\IPatientBaseLinesRepository.cs" />
     <Compile Include="Interfaces\Repository\IPatientExtractRepository.cs" />
-    <Compile Include="Interfaces\Extracts\IPatientExtractRow.cs" />
-    <Compile Include="Interfaces\Extracts\IPatientLaboratoryExtractRow.cs" />
     <Compile Include="Interfaces\Repository\IPatientLabRepository.cs" />
-    <Compile Include="Interfaces\Extracts\IPatientPharmacyExtractRow.cs" />
     <Compile Include="Interfaces\Repository\IPatientPharmacyRepository.cs" />
-    <Compile Include="Interfaces\Extracts\IPatientStatusExtractRow.cs" />
     <Compile Include="Interfaces\Repository\IPatientStatusRepository.cs" />
-    <Compile Include="Interfaces\Extracts\IPatientVisitExtractRow.cs" />
     <Compile Include="Interfaces\Repository\IPatientVisitRepository.cs" />
     <Compile Include="Interfaces\Commands\IReadPatientArtExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\IReadPatientBaselinesExtractCommand.cs" />
@@ -93,6 +93,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
