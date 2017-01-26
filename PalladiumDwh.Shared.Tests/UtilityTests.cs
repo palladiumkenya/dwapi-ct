@@ -5,6 +5,7 @@ using FastMember;
 using FizzWare.NBuilder;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 using PalladiumDwh.Shared.Model.Profile;

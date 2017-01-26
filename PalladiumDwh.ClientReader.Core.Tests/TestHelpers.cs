@@ -2,6 +2,8 @@
 using System.Data.Entity;
 using System.Linq;
 using FizzWare.NBuilder;
+using PalladiumDwh.ClientReader.Core.Interfaces.ExtractRows;
+using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
@@ -45,5 +47,17 @@ namespace PalladiumDwh.ClientReader.Core.Tests
             }
             return patients;
         }
+
+        public static IEnumerable<TR> GetTestPatientRowExtracts<TR>(PatientExtract patient, int count) where TR:IExtractRow
+        {
+            var extracts = Builder<TR>.CreateListOfSize(count).Build().ToList();
+            foreach (var e in extracts)
+            {
+                e.PatientPK = patient.PatientPID;
+                e.PatientID = patient.PatientCccNumber;
+            }
+            return extracts;
+        }
+
     }
 }

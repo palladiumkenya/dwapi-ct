@@ -1,7 +1,12 @@
-﻿namespace PalladiumDwh.ClientReader.Core.Interfaces
+﻿using System.Collections.Generic;
+using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.Shared.Model;
+
+namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
     public interface ISyncService
     {
+        IEnumerable<Facility> SyncFacilities(IEnumerable<PatientExtractRow> patientExtractRows);
         void SyncPatients();
         /*
         void SyncPatientsArt(IEnumerable<PatientArtExtract> patientArtExtracts);

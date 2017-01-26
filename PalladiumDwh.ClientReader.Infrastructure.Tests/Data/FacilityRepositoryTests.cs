@@ -35,20 +35,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
 
             Assert.That(facilities,Is.Empty);
         }
-
-        [Test]
-        public void should_Clear_By_all_inlist()
-        {
-            
-            var twoFacilityCodes = _facilities.Take(2).Select(x=>x.Code).ToList();
-
-            _facilityRepository.ClearBy(twoFacilityCodes);
-
-            var deletedFacilities = _facilityRepository.GetAll().Where(x => (twoFacilityCodes.Contains(x.Code)));
-
-
-            Assert.That(deletedFacilities, Is.Empty);
-        }
+       
         [Test]
         public void should_Sync()
         {

@@ -8,6 +8,7 @@ using PalladiumDwh.Infrastructure.Data.Repository;
 using System.Collections.Generic;
 using System.Messaging;
 using PalladiumDwh.Shared;
+using PalladiumDwh.Shared.Extentions;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 using PalladiumDwh.Shared.Model.Profile;

@@ -24,15 +24,6 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             _context.SaveChanges();
         }
 
-        public void ClearBy(IList<int> facilityCodes)
-        {
-            var deleteList = GetAll()
-                .Where(x => facilityCodes.Contains(x.Code));
-
-            _context.Facilities.RemoveRange(deleteList);
-            _context.SaveChanges();
-        }
-
         public IEnumerable<Facility> Sync(IList<Facility> facilities)
         {
             Insert(facilities);

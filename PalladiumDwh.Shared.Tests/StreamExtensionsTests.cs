@@ -3,6 +3,8 @@ using System.Text;
 using FizzWare.NBuilder;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using PalladiumDwh.Shared.Custom;
+using PalladiumDwh.Shared.Extentions;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Shared.Tests

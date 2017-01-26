@@ -7,7 +7,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
     public interface IFacilityRepository : IRepository<Facility>
     {
         void Clear();
-        void ClearBy(IList<int> facilityCodes);
         IEnumerable<Facility> Sync(IList<Facility> facilities);      
     }
 }

@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\QueryType.cs" />
     <Compile Include="Interfaces\IClearPatientRecords.cs" />
     <Compile Include="Interfaces\IPatient.cs" />
     <Compile Include="Interfaces\IBaseline.cs" />
@@ -110,11 +109,11 @@
     <Compile Include="Model\Profile\PatientProfile.cs" />
     <Compile Include="Model\Profile\PatientStatusProfile.cs" />
     <Compile Include="Model\Profile\PatientVisitProfile.cs" />
-    <Compile Include="MsmqEx.cs" />
+    <Compile Include="Extentions\MessageQueueExtentions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SkipLoadAttribute.cs" />
-    <Compile Include="StreamExtensions.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="Custom\SkipLoadAttribute.cs" />
+    <Compile Include="Extentions\StreamExtensions.cs" />
+    <Compile Include="Custom\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

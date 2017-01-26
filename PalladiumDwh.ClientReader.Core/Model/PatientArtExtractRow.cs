@@ -17,6 +17,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public decimal? AgeARTStart { get; set; }
         public decimal? AgeLastVisit { get; set; }
         public DateTime? RegistrationDate { get; set; }
+        public string PatientSource { get; set; }
         public string Gender { get; set; }
         public DateTime? StartARTDate { get; set; }
         public DateTime? PreviousARTStartDate { get; set; }

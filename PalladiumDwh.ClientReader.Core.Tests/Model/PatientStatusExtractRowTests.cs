@@ -6,6 +6,7 @@ using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.Shared;
+using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Tests.Model
 {

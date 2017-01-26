@@ -5,6 +5,7 @@ using System.Text;
 using Newtonsoft.Json;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared;
+using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.Core.Services
 {

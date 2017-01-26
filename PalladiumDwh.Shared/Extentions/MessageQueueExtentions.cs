@@ -1,8 +1,8 @@
 ﻿using System.Messaging;
 
-namespace PalladiumDwh.Shared
+namespace PalladiumDwh.Shared.Extentions
 {
-  public  static class MsmqEx
+  public  static class MessageQueueExtentions
     {
         public static int Count(this MessageQueue queue)
         {

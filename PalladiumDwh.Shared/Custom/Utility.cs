@@ -4,7 +4,7 @@ using System.Data;
 using System.Reflection;
 using log4net;
 
-namespace PalladiumDwh.Shared
+namespace PalladiumDwh.Shared.Custom
 {
     public static class Utility
     {

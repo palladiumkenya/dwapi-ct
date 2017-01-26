@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace PalladiumDwh.Shared
+namespace PalladiumDwh.Shared.Extentions
 {
     public static class StreamExtensions
     {

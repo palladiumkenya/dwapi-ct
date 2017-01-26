@@ -9,6 +9,7 @@ namespace PalladiumDwh.Shared.Interfaces
         decimal? AgeARTStart { get; set; }
         decimal? AgeLastVisit { get; set; }
         DateTime? RegistrationDate { get; set; }
+        string PatientSource { get; set; }
         string Gender { get; set; }
         DateTime? StartARTDate { get; set; }
         DateTime? PreviousARTStartDate { get; set; }
@@ -25,5 +26,6 @@ namespace PalladiumDwh.Shared.Interfaces
         DateTime? LastVisit { get; set; }
         string ExitReason { get; set; }
         DateTime? ExitDate { get; set; }
+       
     }
 }
