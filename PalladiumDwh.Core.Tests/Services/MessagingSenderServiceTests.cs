@@ -6,7 +6,6 @@ using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Services;
 using System.Collections.Generic;
 using System.Messaging;
-using PalladiumDwh.Shared;
 using PalladiumDwh.Shared.Extentions;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;

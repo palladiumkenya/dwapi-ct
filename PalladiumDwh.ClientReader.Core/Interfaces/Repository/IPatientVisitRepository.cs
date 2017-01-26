@@ -1,5 +1,4 @@
 ﻿using PalladiumDwh.Shared.Interfaces;
-using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
 

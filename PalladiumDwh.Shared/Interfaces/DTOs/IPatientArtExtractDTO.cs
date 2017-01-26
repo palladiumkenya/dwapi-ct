@@ -1,5 +1,4 @@
 using System;
-using PalladiumDwh.Shared.Model.DTO;
 
 namespace PalladiumDwh.Shared.Interfaces.DTOs
 {

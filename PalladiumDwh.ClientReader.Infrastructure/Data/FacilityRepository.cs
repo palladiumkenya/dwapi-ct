@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using PalladiumDwh.ClientReader.Core.Interfaces;
+﻿using System.Collections.Generic;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;

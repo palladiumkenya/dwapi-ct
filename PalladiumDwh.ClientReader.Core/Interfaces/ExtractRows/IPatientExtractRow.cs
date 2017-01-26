@@ -1,5 +1,4 @@
-﻿using System;
-using PalladiumDwh.Shared.Interfaces;
+﻿using PalladiumDwh.Shared.Interfaces;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.ExtractRows
 {

@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using PalladiumDwh.Shared.Data.EFConvention;
-using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Shared.Data
 {

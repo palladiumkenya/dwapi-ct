@@ -3,7 +3,6 @@ using System.Data.Entity;
 using System.Linq;
 using FizzWare.NBuilder;
 using PalladiumDwh.ClientReader.Core.Interfaces.ExtractRows;
-using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 

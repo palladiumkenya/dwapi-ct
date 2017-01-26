@@ -1,6 +1,4 @@
 using System;
-using System.Data;
-using PalladiumDwh.Shared.Interfaces;
 using PalladiumDwh.Shared.Interfaces.DTOs;
 using PalladiumDwh.Shared.Model.Extract;
 

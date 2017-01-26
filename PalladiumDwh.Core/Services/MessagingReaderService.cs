@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Messaging;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Shared;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Extentions;
 

@@ -1,7 +1,6 @@
 using System;
 using System.Data;
 using PalladiumDwh.ClientReader.Core.Interfaces.ExtractRows;
-using PalladiumDwh.Shared;
 using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Model
