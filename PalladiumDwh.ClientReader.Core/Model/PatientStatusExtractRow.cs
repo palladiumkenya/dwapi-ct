@@ -15,17 +15,16 @@ namespace PalladiumDwh.ClientReader.Core.Model
 {
     public class PatientStatusExtractRow : ExtractRow, IPatientStatusExtractRow
     {
-        public int PatientPK { get; set; }
-        public string PatientID { get; set; }
-        public int FacilityId { get; set; }
-        public int SiteCode { get; set; }
-        public string FacilityName { get; set; }
-        public string ExitDescription { get; set; }
-        public DateTime ExitDate { get; set; }
-        public string ExitReason { get; set; }
+        
+
         public override string ToString()
         {
             return $"{SiteCode}-{PatientID}";
         }
+
+        public string FacilityName { get; set; }
+        public string ExitDescription { get; set; }
+        public DateTime? ExitDate { get; set; }
+        public string ExitReason { get; set; }
     }
 }

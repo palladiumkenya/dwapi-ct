@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PalladiumDwh.Shared.Model.DTO
 {
-    public class PatientVisitExtractDTO 
+    public class PatientVisitExtractDTO : IPatientVisitExtractDTO
     {
         public int? VisitId { get; set; }
         public DateTime? VisitDate { get; set; }
@@ -125,8 +125,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 SubstitutionFirstlineRegimenDate, SubstitutionFirstlineRegimenReason, SubstitutionSecondlineRegimenDate,
                 SubstitutionSecondlineRegimenReason, SecondlineRegimenChangeDate,
                 SecondlineRegimenChangeReason, Adherence, AdherenceCategory, FamilyPlanningMethod, PwP, GestationAge,
-                NextAppointmentDate, Emr, Project, PatientId
-            );
+                NextAppointmentDate, PatientId,Emr, Project);
         }
     }
 }

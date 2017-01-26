@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PalladiumDwh.Shared.Model
 {
-    public class PatientExtract:Entity
+    public class PatientExtract:Entity, IPatientExtract
     {
         public int PatientPID { get; set; }
         public string PatientCccNumber { get; set; }
@@ -25,9 +25,10 @@ namespace PalladiumDwh.Shared.Model
         public DateTime? DateConfirmedHIVPositive { get; set; }
         public string PreviousARTExposure { get; set; }
         public DateTime? PreviousARTStartDate { get; set; }
+        public string StatusAtCCC { get; set; }
+        public string StatusAtPMTCT { get; set; }
+        public string StatusAtTBClinic { get; set; }
         public Guid FacilityId { get; set; }
-        
-
 
         public virtual ICollection<PatientArtExtract> PatientArtExtracts { get; set; }=new List<PatientArtExtract>();
         public virtual ICollection<PatientBaselinesExtract> PatientBaselinesExtracts { get; set; }=new List<PatientBaselinesExtract>();
@@ -41,9 +42,9 @@ namespace PalladiumDwh.Shared.Model
           
         }
 
-        public PatientExtract(int patientPID, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string emr, string project, Guid facilityId)
+        public PatientExtract(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, Guid facilityId,string emr,string project)
         {
-            PatientPID = patientPID;
+            PatientPID = patientPid;
             PatientCccNumber = patientCccNumber;
             Gender = gender;
             DOB = dob;
@@ -62,9 +63,12 @@ namespace PalladiumDwh.Shared.Model
             DateConfirmedHIVPositive = dateConfirmedHivPositive;
             PreviousARTExposure = previousArtExposure;
             PreviousARTStartDate = previousArtStartDate;
+            StatusAtCCC = statusAtCcc;
+            StatusAtPMTCT = statusAtPmtct;
+            StatusAtTBClinic = statusAtTbClinic;
+            FacilityId = facilityId;
             Emr = emr;
             Project = project;
-            FacilityId = facilityId;
         }
 
         public void AddPatientArtExtracts(IEnumerable<PatientArtExtract> extracts)

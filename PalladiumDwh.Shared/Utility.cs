@@ -49,19 +49,20 @@ namespace PalladiumDwh.Shared
 
         public static object Get(this IDataRecord row, string fieldName, Type type)
         {
-            int ordinal = -1;
             try
             {
-                ordinal = row.GetOrdinal(fieldName);
+                int ordinal = row.GetOrdinal(fieldName);
+                var value = row.IsDBNull(ordinal) ? GetDefault(type) : row.GetValue(ordinal);
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                {
+                    if (null == value)
+                        return null;
+                }
+                return Convert.ChangeType(value, Nullable.GetUnderlyingType(type) ?? type);
             }
             catch (IndexOutOfRangeException ex)
             {
                 Log.Debug(ex);
-            }
-            if (ordinal > -1)
-            {
-                var value = row.IsDBNull(ordinal) ? GetDefault(type) : row.GetValue(ordinal);
-                return Convert.ChangeType(value, type);
             }
             return GetDefault(type);
         }
@@ -70,11 +71,7 @@ namespace PalladiumDwh.Shared
         {
             if (type.IsValueType)
             {
-                if (type==typeof(DateTime))
-                    return new DateTime(1900, 1, 1);
-
                 return Activator.CreateInstance(type);
-
             }
             return null;
         }

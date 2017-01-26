@@ -52,7 +52,22 @@
   <ItemGroup>
     <Compile Include="Enums\QueryType.cs" />
     <Compile Include="Interfaces\IClearPatientRecords.cs" />
+    <Compile Include="Interfaces\IPatient.cs" />
+    <Compile Include="Interfaces\IBaseline.cs" />
+    <Compile Include="Interfaces\IArt.cs" />
+    <Compile Include="Interfaces\ILaboratory.cs" />
+    <Compile Include="Interfaces\IPatientVisitExtractRow.cs" />
+    <Compile Include="Interfaces\IPharmacy.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IStatus.cs" />
+    <Compile Include="Model\DTO\IPatientArtExtractDTO.cs" />
+    <Compile Include="Model\DTO\IPatientBaselinesExtractDTO.cs" />
+    <Compile Include="Model\DTO\IPatientExtractDTO.cs" />
+    <Compile Include="Model\DTO\IPatientLaboratoryExtractDTO.cs" />
+    <Compile Include="Model\DTO\IPatientPharmacyExtractDTO.cs" />
+    <Compile Include="Model\DTO\IPatientStatusExtractDTO.cs" />
+    <Compile Include="Model\DTO\IExtractDTO.cs" />
+    <Compile Include="Model\DTO\IPatientVisitExtractDTO.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\DTO\FacilityDTO.cs" />
     <Compile Include="Model\DTO\PatientArtExtractDTO.cs" />
@@ -63,6 +78,14 @@
     <Compile Include="Model\DTO\PatientStatusExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientVisitExtractDTO.cs" />
     <Compile Include="Model\Facility.cs" />
+    <Compile Include="Model\IExtract.cs" />
+    <Compile Include="Model\IPatientArtExtract.cs" />
+    <Compile Include="Model\IPatientBaselinesExtract.cs" />
+    <Compile Include="Model\IPatientExtract.cs" />
+    <Compile Include="Model\IPatientLaboratoryExtract.cs" />
+    <Compile Include="Model\IPatientPharmacyExtract.cs" />
+    <Compile Include="Model\IPatientStatusExtract.cs" />
+    <Compile Include="Model\IPatientVisitExtract.cs" />
     <Compile Include="Model\PatientArtExtract.cs" />
     <Compile Include="Model\PatientBaselinesExtract.cs" />
     <Compile Include="Model\PatientExtract.cs" />

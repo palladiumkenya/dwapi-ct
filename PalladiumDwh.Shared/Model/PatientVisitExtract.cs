@@ -2,7 +2,7 @@ using System;
 
 namespace PalladiumDwh.Shared.Model
 {
-    public class PatientVisitExtract:Entity
+    public class PatientVisitExtract:Entity, IPatientVisitExtract
     {
         public int? VisitId { get; set; }
         public DateTime? VisitDate { get; set; }
@@ -36,7 +36,7 @@ namespace PalladiumDwh.Shared.Model
         {
         }
 
-        public PatientVisitExtract(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr, string project, Guid patientId)
+        public PatientVisitExtract(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, Guid patientId, string emr, string project)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -64,9 +64,9 @@ namespace PalladiumDwh.Shared.Model
             PwP = pwP;
             GestationAge = gestationAge;
             NextAppointmentDate = nextAppointmentDate;
+            PatientId = patientId;
             Emr = emr;
             Project = project;
-            PatientId = patientId;
         }
     }
 }

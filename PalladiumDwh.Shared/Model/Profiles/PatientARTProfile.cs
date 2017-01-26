@@ -5,7 +5,7 @@ using PalladiumDwh.Shared.Model.DTO;
 
 namespace PalladiumDwh.Shared.Model.Profiles
 {
-    public class PatientARTProfile
+    public class PatientARTProfile 
     {
         public FacilityDTO Facility { get; set; }
         public PatientExtractDTO Demographic { get; set; }

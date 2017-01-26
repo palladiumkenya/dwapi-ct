@@ -37,14 +37,14 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
         }
         [Test]
         public void Should_Handle_Nulls_On_Load()
-        {
-            
+        {           
             var datatable = _list.ToDataTable();
             
             foreach (DataRow row in datatable.Rows)
             {
                 row[nameof(PatientLaboratoryExtractRow.ReportedByDate)] = DBNull.Value;
             }
+
             datatable.AcceptChanges();
 
             var reader = datatable.CreateDataReader();
@@ -53,9 +53,8 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
             Assert.IsTrue(reader.Read());
             extract.Load(reader);
 
-            Assert.AreEqual(1900, extract.ReportedByDate.Year);
-            Console.WriteLine($"{extract.ReportedByDate:yyyy MMMM dd}");
+            Assert.IsNull(extract.ReportedByDate);
+            
         }
-    }
-    
+    }   
 }

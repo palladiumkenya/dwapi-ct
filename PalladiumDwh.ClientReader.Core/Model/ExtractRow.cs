@@ -15,6 +15,11 @@ namespace PalladiumDwh.ClientReader.Core.Model
 {
     public abstract class ExtractRow : IExtractRow
     {
+        public int PatientPK { get; set; }
+        public string PatientID { get; set; }
+        public int? FacilityId { get; set; }
+        public int SiteCode { get; set; }
+
         [SkipLoad]
         public  DateTime DateExtracted { get; set; }
 

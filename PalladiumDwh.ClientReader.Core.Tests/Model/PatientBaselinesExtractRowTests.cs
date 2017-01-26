@@ -54,8 +54,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
             Assert.IsTrue(reader.Read());
             extract.Load(reader);
 
-            Assert.AreEqual(1900, extract.bCD4Date.Year);
-            Console.WriteLine($"{extract.bCD4Date:yyyy MMMM dd}");
+            Assert.IsNull(extract.bCD4Date);
         }
     }
     

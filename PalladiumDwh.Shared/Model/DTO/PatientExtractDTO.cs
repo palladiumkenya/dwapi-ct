@@ -4,7 +4,7 @@ using PalladiumDwh.Shared.Interfaces;
 
 namespace PalladiumDwh.Shared.Model.DTO
 {
-    public class PatientExtractDTO 
+    public class PatientExtractDTO : IPatientExtractDTO
     {
         public int PatientPID { get; set; }
         public string PatientCccNumber { get; set; }
@@ -25,21 +25,21 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? DateConfirmedHIVPositive { get; set; }
         public string PreviousARTExposure { get; set; }
         public DateTime? PreviousARTStartDate { get; set; }
+        public string StatusAtCCC { get; set; }
+        public string StatusAtPMTCT { get; set; }
+        public string StatusAtTBClinic { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid FacilityId { get; set; }
 
         public PatientExtractDTO()
         {
+
         }
 
-        public PatientExtractDTO(int patientPID ,string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate,
-            DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic,
-            string patientSource, string region, string district, string village, string contactRelation,
-            DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive,
-            string previousArtExposure, DateTime? previousArtStartDate, string emr, string project, Guid facilityId)
+        public PatientExtractDTO(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project, Guid facilityId)
         {
-            PatientPID = patientPID;
+            PatientPID = patientPid;
             PatientCccNumber = patientCccNumber;
             Gender = gender;
             DOB = dob;
@@ -58,9 +58,12 @@ namespace PalladiumDwh.Shared.Model.DTO
             DateConfirmedHIVPositive = dateConfirmedHivPositive;
             PreviousARTExposure = previousArtExposure;
             PreviousARTStartDate = previousArtStartDate;
+            StatusAtCCC = statusAtCcc;
+            StatusAtPMTCT = statusAtPmtct;
+            StatusAtTBClinic = statusAtTbClinic;
+            FacilityId = facilityId;
             Emr = emr;
             Project = project;
-            FacilityId = facilityId;
         }
 
         public PatientExtractDTO(PatientExtract patient)
@@ -84,9 +87,12 @@ namespace PalladiumDwh.Shared.Model.DTO
             DateConfirmedHIVPositive = patient.DateConfirmedHIVPositive;
             PreviousARTExposure = patient.PreviousARTExposure;
             PreviousARTStartDate = patient.PreviousARTStartDate;
+            StatusAtCCC=patient.StatusAtCCC;
+            StatusAtPMTCT=patient.StatusAtPMTCT;
+            StatusAtTBClinic =patient.StatusAtTBClinic;
+            FacilityId = patient.FacilityId;
             Emr = patient.Emr;
             Project = patient.Project;
-            FacilityId = patient.FacilityId;
         }
 
         public PatientExtract GeneratePatient(Guid facilityId)
@@ -95,15 +101,39 @@ namespace PalladiumDwh.Shared.Model.DTO
 
             return new PatientExtract(
                 PatientPID,
-                PatientCccNumber, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationATPMTCT,
+                PatientCccNumber, 
+                Gender, 
+                DOB, 
+                RegistrationDate, 
+                RegistrationAtCCC, 
+                RegistrationATPMTCT,
                 RegistrationAtTBClinic,
-                PatientSource, Region, District, Village, ContactRelation, LastVisit, MaritalStatus, EducationLevel,
-                DateConfirmedHIVPositive, PreviousARTExposure, PreviousARTStartDate, Emr, Project, FacilityId);
+                PatientSource, 
+                Region, 
+                District, 
+                Village, 
+                ContactRelation, 
+                LastVisit, 
+                MaritalStatus, 
+                EducationLevel,
+                DateConfirmedHIVPositive, 
+                PreviousARTExposure, 
+                PreviousARTStartDate, 
+                StatusAtCCC, 
+                StatusAtPMTCT,
+                StatusAtTBClinic, 
+                FacilityId,
+                Emr, 
+                Project
+            );
         }
 
         public bool IsValid()
         {
             return !string.IsNullOrWhiteSpace(PatientCccNumber);
         }
+
+     
+      
     }
 }

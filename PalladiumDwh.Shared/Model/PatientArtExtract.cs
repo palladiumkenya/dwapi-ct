@@ -2,13 +2,14 @@ using System;
 
 namespace PalladiumDwh.Shared.Model
 {
-    public class PatientArtExtract:Entity
+    public class PatientArtExtract:Entity, IPatientArtExtract
     {
-        
+        public DateTime? DOB { get; set; }
         public decimal? AgeEnrollment { get; set; }
         public decimal? AgeARTStart { get; set; }
         public decimal? AgeLastVisit { get; set; }       
         public DateTime? RegistrationDate { get; set; }
+        public string Gender { get; set; }
         public string PatientSource { get; set; }
         public DateTime? StartARTDate { get; set; }
         public DateTime? PreviousARTStartDate { get; set; }
@@ -21,6 +22,7 @@ namespace PalladiumDwh.Shared.Model
         public string LastRegimenLine { get; set; }
         public decimal? Duration { get; set; }
         public DateTime? ExpectedReturn { get; set; }
+        public string Provider { get; set; }
         public DateTime? LastVisit { get; set; }
         public string ExitReason { get; set; }
         public DateTime? ExitDate { get; set; }
@@ -30,12 +32,14 @@ namespace PalladiumDwh.Shared.Model
         {
         }
 
-        public PatientArtExtract(decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project, Guid patientId)
+        public PatientArtExtract(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, Guid patientId, string emr, string project)
         {
+            DOB = dob;
             AgeEnrollment = ageEnrollment;
             AgeARTStart = ageArtStart;
             AgeLastVisit = ageLastVisit;
             RegistrationDate = registrationDate;
+            Gender = gender;
             PatientSource = patientSource;
             StartARTDate = startArtDate;
             PreviousARTStartDate = previousArtStartDate;
@@ -48,12 +52,13 @@ namespace PalladiumDwh.Shared.Model
             LastRegimenLine = lastRegimenLine;
             Duration = duration;
             ExpectedReturn = expectedReturn;
+            Provider = provider;
             LastVisit = lastVisit;
             ExitReason = exitReason;
             ExitDate = exitDate;
+            PatientId = patientId;
             Emr = emr;
             Project = project;
-            PatientId = patientId;
         }
     }
 }

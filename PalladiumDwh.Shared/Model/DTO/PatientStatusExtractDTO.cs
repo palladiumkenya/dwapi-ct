@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PalladiumDwh.Shared.Model.DTO
 {
-    public class PatientStatusExtractDTO 
+    public class PatientStatusExtractDTO : IPatientStatusExtractDTO
     {
         public string ExitDescription { get; set; }
         public DateTime? ExitDate { get; set; }
@@ -52,7 +52,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public PatientStatusExtract GeneratePatientStatusExtract(Guid patientId)
         {
             PatientId = patientId;
-            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, Emr, Project, PatientId);
+            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
         }
     }
 }

@@ -1,16 +1,10 @@
 using System;
+using PalladiumDwh.Shared.Interfaces;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Extracts
 {
-    public interface IPatientStatusExtractRow:IExtractRow
+    public interface IPatientStatusExtractRow:IExtractRow,IStatus
     {
-        int PatientPK { get; set; }
-        string PatientID { get; set; }
-        int FacilityId { get; set; }
-        int SiteCode { get; set; }
         string FacilityName { get; set; }
-        string ExitDescription { get; set; }
-        DateTime ExitDate { get; set; }
-        string ExitReason { get; set; }
     }
 }
