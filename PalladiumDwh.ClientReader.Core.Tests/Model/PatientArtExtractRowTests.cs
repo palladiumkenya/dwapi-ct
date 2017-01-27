@@ -55,6 +55,15 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
 
             Assert.IsNull(extract.DOB);
         }
+        [Test]
+        public void Should_GetAddAction()
+        {
+
+            var sqlInsert = _row.GetAddAction();
+            Assert.That(sqlInsert,Does.StartWith(" INSERT INTO TempPatientArtExtract"));
+            Console.WriteLine(sqlInsert);
+
+        }
     }
     
 }

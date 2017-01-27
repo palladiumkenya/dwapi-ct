@@ -6,24 +6,25 @@ using System.Reflection;
 using log4net;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Model.Source;
+using Dapper;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
-    public abstract class LoadExtractDbCommand<T> : ILoadExtractCommand<T> where T : TempExtract
+    public abstract class   LoadExtractDbCommand<T> : ILoadExtractCommand<T> where T : TempExtract
     {
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         internal readonly IDbConnection SourceConnection;
         internal readonly IDbConnection CleintConnection;
         internal readonly string CommandText;
+        internal readonly int BatchSize;
 
-
-        protected LoadExtractDbCommand(IDbConnection sourceConnection, IDbConnection clientConnection,
-            string commandText)
+        protected LoadExtractDbCommand(IDbConnection sourceConnection, IDbConnection clientConnection,string commandText,int batchSize=100)
         {
             SourceConnection = sourceConnection;
             CleintConnection = clientConnection;
             CommandText = commandText;
+            BatchSize = batchSize;
         }
 
         public virtual void Execute()
@@ -40,28 +41,60 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                     command.CommandText = CommandText;
                     using (var reader = command.ExecuteReader())
                     {
-
                         if (null != reader)
                         {
-                            int batch = 0;
-                            var extractList = new List<T>();
+                            var extracts = new List<T>();
+                            int count = 0;
+                            var extract = (T)Activator.CreateInstance(typeof(T));
+                            string action = extract.GetAddAction();
+
                             while (reader.Read())
                             {
-                                batch++;
-                                var extract = (T) Activator.CreateInstance(typeof(T));
+                                count++;
+                                extract = (T)Activator.CreateInstance(typeof(T));
                                 extract.Load(reader);
-                                extractList.Add(extract);
-                                if (batch == 100)
+                                if (BatchSize == 0)
                                 {
-                                    //Insert
-                                    LoadData(extractList);
-                                    extractList = new List<T>();
-                                    batch = 0;
+                                    if (CleintConnection.State != ConnectionState.Open)
+                                    {
+                                        CleintConnection.Open();
+                                    }
+                                    CleintConnection.Execute(action, extract);
                                 }
+                                else
+                                {
+                                    extracts.Add(extract);
+
+                                    if (count == BatchSize && BatchSize > 0)
+                                    {
+                                        if (CleintConnection.State != ConnectionState.Open)
+                                        {
+                                            CleintConnection.Open();
+                                        }
+
+                                        var tx = CleintConnection.BeginTransaction();
+                                        CleintConnection.Execute(action, extracts, tx);
+                                        tx.Commit();
+                                        extracts = new List<T>();
+                                        count = 0;
+                                    }
+                                }
+
+                            }
+
+                            if (extracts.Count > 0)
+                            {
+                                if (CleintConnection.State != ConnectionState.Open)
+                                {
+                                    CleintConnection.Open();
+                                }
+                                var tx = CleintConnection.BeginTransaction();
+                                CleintConnection.Execute(action, extracts,tx);
+                                tx.Commit();
                             }
                         }
                     }
-                    ;
+                    
                 }
 
             }

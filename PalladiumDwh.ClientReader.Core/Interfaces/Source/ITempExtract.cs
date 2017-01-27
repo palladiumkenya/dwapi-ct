@@ -12,5 +12,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Source
         int SiteCode { get; set; }
         DateTime DateExtracted { get; set; }
         void Load(IDataReader reader);
+        string GetAddAction();
     }
 }

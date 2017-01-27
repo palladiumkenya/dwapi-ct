@@ -111,7 +111,7 @@
     <Compile Include="Model\Profile\PatientVisitProfile.cs" />
     <Compile Include="Extentions\MessageQueueExtentions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Custom\SkipLoadAttribute.cs" />
+    <Compile Include="Custom\DoNotReadAttribute.cs" />
     <Compile Include="Extentions\StreamExtensions.cs" />
     <Compile Include="Custom\Utility.cs" />
   </ItemGroup>

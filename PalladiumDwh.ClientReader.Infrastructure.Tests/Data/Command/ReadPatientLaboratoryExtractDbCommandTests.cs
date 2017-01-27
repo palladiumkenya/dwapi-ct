@@ -5,73 +5,62 @@ using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
     public class ReadPatientLaboratoryExtractDbCommandTests
     {
-        private IDbConnection _connection;
+        private DwapiRemoteContext _context;
+        private IDbConnection _sourceConnection, _clientConnection;
         private string _commandText;
         private ILoadPatientLaboratoryExtractCommand _extractCommand;
 
         [SetUp]
         public void SetUp()
         {
+            _context = new DwapiRemoteContext();
             _commandText = @"
+                SELECT        
+	                tmp_PatientMaster.PatientID, tmp_Labs.PatientPK, tmp_PatientMaster.FacilityID, tmp_PatientMaster.SiteCode, tmp_PatientMaster.FacilityName, tmp_PatientMaster.SatelliteName, tmp_Labs.VisitID, 
+	                tmp_Labs.OrderedbyDate, tmp_Labs.ReportedbyDate, tmp_Labs.TestName, tmp_Labs.EnrollmentTest, tmp_Labs.TestResult, CAST(GETDATE() AS DATE) AS DateExtracted
+                FROM           
+	                tmp_Labs INNER JOIN
+	                tmp_PatientMaster ON tmp_Labs.PatientPK = tmp_PatientMaster.PatientPK
+            ";
+            _sourceConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString);
+            _clientConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DWAPIRemote"].ConnectionString);
 
+            _extractCommand = new LoadPatientLaboratoryExtractDbCommand(_sourceConnection, _clientConnection, $"{_commandText}", 10246);
 
-Select tmp_PatientMaster.PatientID,
-  tmp_Labs.PatientPK,
-	tmp_PatientMaster.[FacilityID],
-	tmp_PatientMaster.[SiteCode],
-  tmp_PatientMaster.FacilityName,
-  tmp_PatientMaster.SatelliteName,
-  tmp_Labs.VisitID,
-  tmp_Labs.OrderedbyDate,
-  tmp_Labs.ReportedbyDate,
-  tmp_Labs.TestName,
-  tmp_Labs.EnrollmentTest,
-  tmp_Labs.TestResult
-  ,CAST(getdate() AS DATE) AS DateExtracted
-From tmp_Labs
-  inner Join tmp_PatientMaster    On tmp_Labs.PatientPK = tmp_PatientMaster.PatientPK
-
-
-";
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientLaboratoryExtract");
+            _context.SaveChanges();
         }
 
         [Test]
-        public void should_Execute_For_MSSQL()
+        public void should_Execute_For_MSSQ0L()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            _extractCommand.Execute();
+            watch.Stop();
+            var records = _context.Database
+                .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientLaboratoryExtract")
+                .Single();
 
-        }
-        /*
-        [Test]
-        public void should_Execute_For_MySQL()
-        {
-            var connection = ConfigurationManager.ConnectionStrings["MySQLEMRDatabase"].ConnectionString;
-            _connection = new MySqlConnection(connection);
-            _extractCommand = new LoadPatientExtractDbCommand(_connection, $"{_commandText} tmp_PatientMaster");
+            Assert.IsTrue(records > 0);
 
-            var list = _extractCommand.Execute().ToList();
-            Assert.IsTrue(list.Count > 0);
-
-            Console.WriteLine($"Loaded {list.Count} records!");
             
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine($"Loaded {records} records! in {elapsedMs}ms ({elapsedMs / 1000}s)");
+
         }
-        [Test]
-        public void should_Execute_For_Postgress()
+
+        [TearDown]
+        public void TearDown()
         {
-            var connection = ConfigurationManager.ConnectionStrings["PostgreSQLEMRDatabase"].ConnectionString;
-            _connection = new NpgsqlConnection(connection);
-            _extractCommand = new LoadPatientExtractDbCommand(_connection, $"{_commandText} tmp_patientmaster".ToLower());
-
-            var list = _extractCommand.Execute().ToList();
-            Assert.IsTrue(list.Count > 0);
-
-            Console.WriteLine($"Loaded {list.Count} records!");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientLaboratoryExtract");
+            _context.SaveChanges();
         }
-        */
     }
 }

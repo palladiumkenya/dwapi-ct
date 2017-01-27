@@ -110,6 +110,32 @@ namespace PalladiumDwh.Shared.Tests
             
             Console.WriteLine(facility);
         }
+        [Test]
+        public void should_GetColumns_From_List()
+        {
+            var list = Builder<TestFacility>.CreateListOfSize(3).Build().ToList();
+
+            var names = list.Select(x => x.Name).ToList();
+
+
+            var namesJoined = Utility.GetColumns(names);
+
+            Assert.That(namesJoined,Does.Contain(","));
+            Console.WriteLine(namesJoined);
+       
+
+        }
+        [Test]
+        public void should_GetParameters_From_List()
+        {
+            var list = Builder<TestFacility>.CreateListOfSize(3).Build().ToList();
+
+            var names = list.Select(x => x.Name).ToList();
+
+            var namesJoined = Utility.GetParameters(names);
+            Assert.That(namesJoined, Does.StartWith("@"));
+            Console.WriteLine(namesJoined);
+        }
     }
 
 

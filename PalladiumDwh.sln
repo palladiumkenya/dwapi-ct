@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientReader.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientReader.Infrastructure.Tests", "PalladiumDwh.ClientReader.Infrastructure.Tests\PalladiumDwh.ClientReader.Infrastructure.Tests.csproj", "{59D7021E-700A-4811-A687-046C89416112}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientReader.Core.Tests", "PalladiumDwh.ClientReader.Core.Tests\PalladiumDwh.ClientReader.Core.Tests.csproj", "{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{59D7021E-700A-4811-A687-046C89416112}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59D7021E-700A-4811-A687-046C89416112}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59D7021E-700A-4811-A687-046C89416112}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,5 +133,6 @@ Global
 		{B7E99F1A-ECE6-44D7-BDF4-75A453B5FE43} = {8CDF104B-1AFF-4D16-9C74-CEF8EAFB50DE}
 		{6DFA67BB-56B7-4695-98F3-B2AD83B09845} = {8CDF104B-1AFF-4D16-9C74-CEF8EAFB50DE}
 		{59D7021E-700A-4811-A687-046C89416112} = {8CDF104B-1AFF-4D16-9C74-CEF8EAFB50DE}
+		{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1} = {8CDF104B-1AFF-4D16-9C74-CEF8EAFB50DE}
 	EndGlobalSection
 EndGlobal

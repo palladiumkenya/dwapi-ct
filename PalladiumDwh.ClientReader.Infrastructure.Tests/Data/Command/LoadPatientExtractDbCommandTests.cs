@@ -23,7 +23,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         {
             _context=new DwapiRemoteContext();
             _commandText = @"
-            SELECT TOP 5     
+            SELECT  
 	            PatientID, PatientPK, FacilityID, SiteCode, FacilityName, SatelliteName, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationAtPMTCT, RegistrationAtTBClinic, PatientSource, Region, District, Village, 
 	            ContactRelation, LastVisit, MaritalStatus, EducationLevel, DateConfirmedHIVPositive, PreviousARTExposure, PreviousARTStartDate, StatusAtCCC, StatusAtPMTCT, StatusAtTBClinic, 'IQCare' AS EMR, 
 	            'Kenya HMIS II' AS Project, CAST(GETDATE() AS DATE) AS DateExtracted,newid() as ID
@@ -42,14 +42,18 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         [Test]
         public void should_Execute_For_MSSQL()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             _extractCommand.Execute();
+            watch.Stop();
             var records = _context.Database
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientExtract")
                 .Single();
             
-            Assert.IsTrue(records==5);
+            Assert.IsTrue(records>0);
 
-            Console.WriteLine($"Loaded {records} records!");
+            
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine($"Loaded {records} records! in {elapsedMs}ms ({elapsedMs/1000}s)");
 
         }
 

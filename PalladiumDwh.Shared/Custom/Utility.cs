@@ -87,6 +87,14 @@ namespace PalladiumDwh.Shared.Custom
             var value = row.IsDBNull(ordinal) ? default(T) : row.GetValue(ordinal);
             return (T)Convert.ChangeType(value, typeof(T));
         }
+        public static string GetColumns(List<string> columnList)
+        {
+            return  string.Join(",", columnList.ToArray());
+        }
+        public static string GetParameters(List<string> columnList)
+        {
+            return $"@{string.Join(",@", columnList.ToArray())}";
+        }
         public static DataTable ToDataTable<T>(this List<T> items)
         {
             var tb = new DataTable(typeof(T).Name);
