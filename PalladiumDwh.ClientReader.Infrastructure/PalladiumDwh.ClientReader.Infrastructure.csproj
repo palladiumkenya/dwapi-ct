@@ -46,6 +46,10 @@
       <HintPath>..\packages\NBuilder.4.0.0\lib\net40\FizzWare.NBuilder.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
       <Private>True</Private>
@@ -66,26 +70,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DbReadAllCommand.cs" />
     <Compile Include="Data\DwapiRemoteContext.cs" />
-    <Compile Include="Data\Command\ExtractDbCommand.cs" />
-    <Compile Include="Data\FacilityRepository.cs" />
-    <Compile Include="Data\Command\ReadPatientArtExtractDbCommand.cs" />
-    <Compile Include="Data\Command\ReadPatientBaselinesExtractDbCommand.cs" />
-    <Compile Include="Data\Command\ReadPatientLaboratoryExtractDbCommand.cs" />
-    <Compile Include="Data\Command\ReadPatientPharmacyExtractDbCommand.cs" />
-    <Compile Include="Data\Command\ReadPatientStatusExtractDbCommand.cs" />
-    <Compile Include="Data\Command\ReadPatientVisitExtractDbCommand.cs" />
-    <Compile Include="Data\Command\ReadPatientExtractDbCommand.cs" />
-    <Compile Include="Data\PatientArtExtractRepository.cs" />
-    <Compile Include="Data\PatientBaseLinesRepository.cs" />
-    <Compile Include="Data\PatientExtractRepository.cs" />
-    <Compile Include="Data\PatientLabRepository.cs" />
-    <Compile Include="Data\PatientPharmacyRepository.cs" />
-    <Compile Include="Data\PatientStatusRepository.cs" />
-    <Compile Include="Data\PatientVisitRepository.cs" />
-    <Compile Include="Migrations\201701260931137_Initial.cs" />
-    <Compile Include="Migrations\201701260931137_Initial.Designer.cs">
-      <DependentUpon>201701260931137_Initial.cs</DependentUpon>
+    <Compile Include="Data\Command\LoadExtractDbCommand.cs" />
+    <Compile Include="Data\Command\LoadPatientArtExtractDbCommand.cs" />
+    <Compile Include="Data\Command\LoadPatientBaselinesExtractDbCommand.cs" />
+    <Compile Include="Data\Command\LoadPatientLaboratoryExtractDbCommand.cs" />
+    <Compile Include="Data\Command\LoadPatientPharmacyExtractDbCommand.cs" />
+    <Compile Include="Data\Command\LoadPatientStatusExtractDbCommand.cs" />
+    <Compile Include="Data\Command\LoadPatientVisitExtractDbCommand.cs" />
+    <Compile Include="Data\Command\LoadPatientExtractDbCommand.cs" />
+    <Compile Include="Migrations\201701271252203_InitialReview.cs" />
+    <Compile Include="Migrations\201701271252203_InitialReview.Designer.cs">
+      <DependentUpon>201701271252203_InitialReview.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,14 +103,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="database.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701260931137_Initial.resx">
-      <DependentUpon>201701260931137_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701271252203_InitialReview.resx">
+      <DependentUpon>201701271252203_InitialReview.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

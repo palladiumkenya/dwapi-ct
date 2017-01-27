@@ -1,8 +1,8 @@
 ﻿using System.Data.Common;
 using System.Data.Entity;
+using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.Shared.Data;
-using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data
 {
@@ -16,52 +16,59 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
         public DwapiRemoteContext(DbConnection existingConnection, bool contextOwnsConnection) : base(existingConnection, contextOwnsConnection)
         {
         }
-        public virtual DbSet<Facility> Facilities { get; set; }
-        public virtual DbSet<PatientExtract> PatientExtracts { get; set; }
-        public virtual DbSet<PatientArtExtract> PatientArtExtracts { get; set; }
-        public virtual DbSet<PatientBaselinesExtract> PatientBaselinesExtracts { get; set; }
-        public virtual DbSet<PatientLaboratoryExtract> PatientLaboratoryExtracts { get; set; }
-        public virtual DbSet<PatientPharmacyExtract> PatientPharmacyExtracts { get; set; }
-        public virtual DbSet<PatientStatusExtract> PatientStatusExtracts { get; set; }
-        public virtual DbSet<PatientVisitExtract> PatientVisitExtracts { get; set; }
+
+        
+        public virtual DbSet<TempPatientExtract> TempPatientExtracts { get; set; }
+        public virtual DbSet<TempPatientArtExtract> TempPatientArtExtracts { get; set; }
+        public virtual DbSet<TempPatientBaselinesExtract> TempPatientBaselinesExtracts { get; set; }
+        public virtual DbSet<TempPatientLaboratoryExtract> TempPatientLaboratoryExtracts { get; set; }
+        public virtual DbSet<TempPatientPharmacyExtract> TempPatientPharmacyExtracts { get; set; }
+        public virtual DbSet<TempPatientStatusExtract> TempPatientStatusExtracts { get; set; }
+        public virtual DbSet<TempPatientVisitExtract> TempPatientVisitExtracts { get; set; }
+
+        public virtual DbSet<ClientFacility> ClientFacilities { get; set; }
+
+        public virtual DbSet<ClientPatientExtract> ClientPatientExtracts { get; set; }
+        public virtual DbSet<ClientPatientArtExtract> ClientPatientArtExtracts { get; set; }
+        public virtual DbSet<ClientPatientBaselinesExtract> ClientPatientBaselinesExtracts { get; set; }
+        public virtual DbSet<ClientPatientLaboratoryExtract> ClientPatientLaboratoryExtracts { get; set; }
+        public virtual DbSet<ClientPatientPharmacyExtract> ClientPatientPharmacyExtracts { get; set; }
+        public virtual DbSet<ClientPatientStatusExtract> ClientPatientStatusExtracts { get; set; }
+        public virtual DbSet<ClientPatientVisitExtract> ClientPatientVisitExtracts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Facility>()
-                .HasMany(c => c.PatientExtracts)
-                .WithRequired()
-                .HasForeignKey(f => f.FacilityId);
-
-            modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientArtExtracts)
+          
+            modelBuilder.Entity<ClientPatientExtract>()
+               .HasMany(c => c.ClientPatientArtExtracts)
                .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+               .HasForeignKey(f =>new { f.PatientPK,f.SiteCode});
 
-            modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientBaselinesExtracts)
+            modelBuilder.Entity<ClientPatientExtract>()
+               .HasMany(c => c.ClientPatientBaselinesExtracts)
                .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+               .HasForeignKey(f => new { f.PatientPK, f.SiteCode });
 
-            modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientLaboratoryExtracts)
+            modelBuilder.Entity<ClientPatientExtract>()
+               .HasMany(c => c.ClientPatientLaboratoryExtracts)
                .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+               .HasForeignKey(f => new { f.PatientPK, f.SiteCode });
 
-            modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientPharmacyExtracts)
+            modelBuilder.Entity<ClientPatientExtract>()
+               .HasMany(c => c.ClientPatientPharmacyExtracts)
                .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+               .HasForeignKey(f => new { f.PatientPK, f.SiteCode });
 
-            modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientStatusExtracts)
+            modelBuilder.Entity<ClientPatientExtract>()
+               .HasMany(c => c.ClientPatientStatusExtracts)
                .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+               .HasForeignKey(f => new { f.PatientPK, f.SiteCode });
 
-            modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientVisitExtracts)
+            modelBuilder.Entity<ClientPatientExtract>()
+               .HasMany(c => c.ClientPatientVisitExtracts)
                .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+               .HasForeignKey(f => new { f.PatientPK, f.SiteCode });
         }
     }
 }

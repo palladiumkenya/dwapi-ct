@@ -13,12 +13,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
     {
         private IDbConnection _connection;
         private string _commandText;
-        private IReadPatientArtExtractCommand _extractCommand;
+        private ILoadPatientArtExtractCommand _extractCommand;
 
         [SetUp]
         public void SetUp()
         {
             _commandText = @"
+
 SELECT a.[PatientPK]
       ,a.[PatientID]
        ,c.[FacilityID]
@@ -49,6 +50,8 @@ SELECT a.[PatientPK]
 	  ,CAST(getdate() AS DATE) AS DateExtracted
   FROM dbo.[tmp_ARTPatients] a
   INNER JOIN dbo.[tmp_PatientMaster] c ON a.PatientPK=c.PatientPK
+
+
 ";
         }
 
@@ -57,7 +60,7 @@ SELECT a.[PatientPK]
         {
             var connection = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
             _connection = new SqlConnection(connection);
-            _extractCommand = new ReadPatientArtExtractDbCommand(_connection, $"{_commandText}");
+            _extractCommand = new LoadPatientArtExtractDbCommand(_connection, $"{_commandText}");
 
             var list = _extractCommand.Execute().ToList();
             Assert.IsTrue(list.Count > 0);
@@ -70,7 +73,7 @@ SELECT a.[PatientPK]
         {
             var connection = ConfigurationManager.ConnectionStrings["MySQLEMRDatabase"].ConnectionString;
             _connection = new MySqlConnection(connection);
-            _extractCommand = new ReadPatientExtractDbCommand(_connection, $"{_commandText} tmp_PatientMaster");
+            _extractCommand = new LoadPatientExtractDbCommand(_connection, $"{_commandText} tmp_PatientMaster");
 
             var list = _extractCommand.Execute().ToList();
             Assert.IsTrue(list.Count > 0);
@@ -83,7 +86,7 @@ SELECT a.[PatientPK]
         {
             var connection = ConfigurationManager.ConnectionStrings["PostgreSQLEMRDatabase"].ConnectionString;
             _connection = new NpgsqlConnection(connection);
-            _extractCommand = new ReadPatientExtractDbCommand(_connection, $"{_commandText} tmp_patientmaster".ToLower());
+            _extractCommand = new LoadPatientExtractDbCommand(_connection, $"{_commandText} tmp_patientmaster".ToLower());
 
             var list = _extractCommand.Execute().ToList();
             Assert.IsTrue(list.Count > 0);

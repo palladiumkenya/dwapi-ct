@@ -90,15 +90,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Data\PatientExtractRepositoryTests.cs" />
-    <Compile Include="Data\FacilityRepositoryTests.cs" />
+    <Compile Include="Data\Command\ReadPatientArtExtractDbCommandTests.cs" />
     <Compile Include="Data\Command\ReadPatientBaselinesExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\ReadPatientExtractDbCommandTests.cs" />
     <Compile Include="Data\Command\ReadPatientLaboratoryExtractDbCommandTests.cs" />
     <Compile Include="Data\Command\ReadPatientPharmacyExtractDbCommandTests.cs" />
     <Compile Include="Data\Command\ReadPatientStatusExtractDbCommandTests.cs" />
     <Compile Include="Data\Command\ReadPatientVisitExtractDbCommandTests.cs" />
-    <Compile Include="Data\Command\ReadPatientArtExtractDbCommandTests.cs" />
-    <Compile Include="Data\Command\ReadPatientExtractDbCommandTests.cs" />
+    <Compile Include="Data\DbReadAllCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers.cs" />
   </ItemGroup>
@@ -117,10 +116,6 @@
     <ProjectReference Include="..\PalladiumDwh.ClientReader.Infrastructure\PalladiumDwh.ClientReader.Infrastructure.csproj">
       <Project>{6DFA67BB-56B7-4695-98F3-B2AD83B09845}</Project>
       <Name>PalladiumDwh.ClientReader.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PalladiumDwh.Shared.Data\PalladiumDwh.Shared.Data.csproj">
-      <Project>{AE9E2E4A-0F4D-4CA1-9EBB-9EEC7AA209CC}</Project>
-      <Name>PalladiumDwh.Shared.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
       <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>

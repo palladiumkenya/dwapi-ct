@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
-using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Tests.Model
@@ -12,13 +12,13 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
     [TestFixture]
     public class PatientArtExtractRowTests
     {
-        private List<PatientArtExtractRow> _list;
-        PatientArtExtractRow _row;
+        private List<TempPatientArtExtract> _list;
+        TempPatientArtExtract _row;
 
         [SetUp]
         public void SetUp()
         {
-            _list = Builder<PatientArtExtractRow>.CreateListOfSize(1)
+            _list = Builder<TempPatientArtExtract>.CreateListOfSize(1)
                 .Build().ToList();
             _row = _list.First();
         }
@@ -28,7 +28,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
         {
             var datatable = _list.ToDataTable();
             var reader = datatable.CreateDataReader();
-            var extract=new PatientArtExtractRow();
+            var extract=new TempPatientArtExtract();
             
             Assert.IsTrue(reader.Read());
             extract.Load(reader);
@@ -43,12 +43,12 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
             
             foreach (DataRow row in datatable.Rows)
             {
-                row[nameof(PatientArtExtractRow.DOB)] = DBNull.Value;
+                row[nameof(TempPatientArtExtract.DOB)] = DBNull.Value;
             }
             datatable.AcceptChanges();
 
             var reader = datatable.CreateDataReader();
-            var extract = new PatientArtExtractRow();
+            var extract = new TempPatientArtExtract();
 
             Assert.IsTrue(reader.Read());
             extract.Load(reader);

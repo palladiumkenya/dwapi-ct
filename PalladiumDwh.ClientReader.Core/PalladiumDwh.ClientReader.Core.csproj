@@ -39,6 +39,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,54 +49,64 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\ExtractRows\IExtractRow.cs" />
-    <Compile Include="Interfaces\ExtractRows\IPatientArtExtractRow.cs" />
-    <Compile Include="Interfaces\ExtractRows\IPatientBaselinesExtractRow.cs" />
-    <Compile Include="Interfaces\ExtractRows\IPatientExtractRow.cs" />
-    <Compile Include="Interfaces\ExtractRows\IPatientLaboratoryExtractRow.cs" />
-    <Compile Include="Interfaces\ExtractRows\IPatientPharmacyExtractRow.cs" />
-    <Compile Include="Interfaces\ExtractRows\IPatientStatusExtractRow.cs" />
-    <Compile Include="Interfaces\ExtractRows\IPatientVisitExtractRow.cs" />
-    <Compile Include="Interfaces\IReadExtracts.cs" />
-    <Compile Include="Interfaces\Repository\IFacilityRepository.cs" />
-    <Compile Include="Interfaces\Repository\IPatientArtExtractRepository.cs" />
-    <Compile Include="Interfaces\Repository\IPatientBaseLinesRepository.cs" />
-    <Compile Include="Interfaces\Repository\IPatientExtractRepository.cs" />
-    <Compile Include="Interfaces\Repository\IPatientLabRepository.cs" />
-    <Compile Include="Interfaces\Repository\IPatientPharmacyRepository.cs" />
-    <Compile Include="Interfaces\Repository\IPatientStatusRepository.cs" />
-    <Compile Include="Interfaces\Repository\IPatientVisitRepository.cs" />
-    <Compile Include="Interfaces\Commands\IReadPatientArtExtractCommand.cs" />
-    <Compile Include="Interfaces\Commands\IReadPatientBaselinesExtractCommand.cs" />
-    <Compile Include="Interfaces\Commands\IReadPatientLaboratoryExtractCommand.cs" />
-    <Compile Include="Interfaces\Commands\IReadPatientPharmacyExtractCommand.cs" />
-    <Compile Include="Interfaces\Commands\IReadPatientStatusExtractCommand.cs" />
-    <Compile Include="Interfaces\Commands\IReadPatientVisitExtractCommand.cs" />
-    <Compile Include="Interfaces\Commands\IReadPatientExtractCommand.cs" />
-    <Compile Include="Interfaces\Commands\IReadCommand.cs" />
+    <Compile Include="Interfaces\IClientPatientArtExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientBaselinesExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientLaboratoryExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientPharmacyExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientStatusExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientVisitExtract.cs" />
+    <Compile Include="Interfaces\IClientExtract.cs" />
+    <Compile Include="Interfaces\IReadAllCommand.cs" />
+    <Compile Include="Interfaces\IReader.cs" />
+    <Compile Include="Interfaces\IReadExtractService.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
-    <Compile Include="Model\ExtractRow.cs" />
-    <Compile Include="Model\PatientBaselinesExtractRow.cs" />
-    <Compile Include="Model\PatientArtExtractRow.cs" />
-    <Compile Include="Model\PatientLaboratoryExtractRow.cs" />
-    <Compile Include="Model\PatientPharmacyExtractRow.cs" />
-    <Compile Include="Model\PatientStatusExtractRow.cs" />
-    <Compile Include="Model\PatientVisitExtractRow.cs" />
-    <Compile Include="Model\PatientExtractRow.cs" />
-    <Compile Include="Model\ReadExtracts.cs" />
+    <Compile Include="Interfaces\Repository\IRepository.cs" />
+    <Compile Include="Interfaces\Source\ITempExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientArtExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientBaselinesExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientLaboratoryExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientPharmacyExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientStatusExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientVisitExtract.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientArtExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientBaselinesExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientLaboratoryExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientPharmacyExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientStatusExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientVisitExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadExtractCommand.cs" />
+    <Compile Include="Model\ClientExtract.cs" />
+    <Compile Include="Model\Source\TempExtract.cs" />
+    <Compile Include="Model\ClientPatientArtExtract.cs" />
+    <Compile Include="Model\ClientPatientBaselinesExtract.cs" />
+    <Compile Include="Model\ClientPatientExtract.cs" />
+    <Compile Include="Model\ClientPatientLaboratoryExtract.cs" />
+    <Compile Include="Model\ClientPatientPharmacyExtract.cs" />
+    <Compile Include="Model\ClientPatientStatusExtract.cs" />
+    <Compile Include="Model\ClientPatientVisitExtract.cs" />
+    <Compile Include="Model\ClientFacility.cs" />
+    <Compile Include="Model\Source\TempPatientBaselinesExtract.cs" />
+    <Compile Include="Model\Source\TempPatientArtExtract.cs" />
+    <Compile Include="Model\Source\TempPatientLaboratoryExtract.cs" />
+    <Compile Include="Model\Source\TempPatientPharmacyExtract.cs" />
+    <Compile Include="Model\Source\TempPatientStatusExtract.cs" />
+    <Compile Include="Model\Source\TempPatientVisitExtract.cs" />
+    <Compile Include="Model\Source\TempPatientExtract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SyncService.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
       <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
       <Name>PalladiumDwh.Shared</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

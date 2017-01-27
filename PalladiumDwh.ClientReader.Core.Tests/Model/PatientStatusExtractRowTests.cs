@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
-using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Tests.Model
@@ -12,13 +12,13 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
     [TestFixture]
     public class PatientStatusExtractRowTests
     {
-        private List<PatientStatusExtractRow> _list;
-        PatientStatusExtractRow _row;
+        private List<TempPatientStatusExtract> _list;
+        TempPatientStatusExtract _row;
 
         [SetUp]
         public void SetUp()
         {
-            _list = Builder<PatientStatusExtractRow>.CreateListOfSize(1)
+            _list = Builder<TempPatientStatusExtract>.CreateListOfSize(1)
                 .Build().ToList();
             _row = _list.First();
         }
@@ -28,7 +28,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
         {
             var datatable = _list.ToDataTable();
             var reader = datatable.CreateDataReader();
-            var extract=new PatientStatusExtractRow();
+            var extract=new TempPatientStatusExtract();
             
             Assert.IsTrue(reader.Read());
             extract.Load(reader);
@@ -44,12 +44,12 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
             
             foreach (DataRow row in datatable.Rows)
             {
-                row[nameof(PatientStatusExtractRow.ExitDate)] = DBNull.Value;
+                row[nameof(TempPatientStatusExtract.ExitDate)] = DBNull.Value;
             }
             datatable.AcceptChanges();
 
             var reader = datatable.CreateDataReader();
-            var extract = new PatientStatusExtractRow();
+            var extract = new TempPatientStatusExtract();
 
             Assert.IsTrue(reader.Read());
             extract.Load(reader);

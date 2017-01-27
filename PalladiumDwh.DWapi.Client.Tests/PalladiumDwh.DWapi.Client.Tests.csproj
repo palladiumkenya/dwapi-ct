@@ -85,10 +85,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PalladiumDwh.DWapi.Client\PalladiumDwh.DWapi.Client.csproj">
-      <Project>{94f5b02b-2dba-4f7a-a4f1-c9aa2de51e90}</Project>
-      <Name>PalladiumDwh.DWapi.Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
       <Project>{50ed08e8-8fea-4c87-b265-e39daea4b480}</Project>
       <Name>PalladiumDwh.Shared</Name>

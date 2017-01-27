@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
-using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Tests.Model
@@ -12,13 +12,13 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
     [TestFixture]
     public class PatientPharmacyExtractRowTests
     {
-        private List<PatientPharmacyExtractRow> _list;
-        PatientPharmacyExtractRow _row;
+        private List<TempPatientPharmacyExtract> _list;
+        TempPatientPharmacyExtract _row;
 
         [SetUp]
         public void SetUp()
         {
-            _list = Builder<PatientPharmacyExtractRow>.CreateListOfSize(1)
+            _list = Builder<TempPatientPharmacyExtract>.CreateListOfSize(1)
                 .Build().ToList();
             
             _row = _list.First();
@@ -29,7 +29,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
         {
             var datatable = _list.ToDataTable();
             var reader = datatable.CreateDataReader();
-            var extract=new PatientPharmacyExtractRow();
+            var extract=new TempPatientPharmacyExtract();
             
             Assert.IsTrue(reader.Read());
             extract.Load(reader);
@@ -45,12 +45,12 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Model
             
             foreach (DataRow row in datatable.Rows)
             {
-                row[nameof(PatientPharmacyExtractRow.DispenseDate)] = DBNull.Value;
+                row[nameof(TempPatientPharmacyExtract.DispenseDate)] = DBNull.Value;
             }
             datatable.AcceptChanges();
 
             var reader = datatable.CreateDataReader();
-            var extract = new PatientPharmacyExtractRow();
+            var extract = new TempPatientPharmacyExtract();
 
             Assert.IsTrue(reader.Read());
             extract.Load(reader);
