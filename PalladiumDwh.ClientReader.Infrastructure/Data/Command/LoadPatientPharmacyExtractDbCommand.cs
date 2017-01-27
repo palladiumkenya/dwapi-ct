@@ -6,7 +6,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
   public  class LoadPatientPharmacyExtractDbCommand : LoadExtractDbCommand<TempPatientPharmacyExtract>, ILoadPatientPharmacyExtractCommand
   {
-      public LoadPatientPharmacyExtractDbCommand(IDbConnection sourceConnection, string commandText) : base(sourceConnection, commandText)
+      public LoadPatientPharmacyExtractDbCommand(IDbConnection sourceConnection, IDbConnection clientConnection, string commandText) : base(sourceConnection, clientConnection, commandText)
       {
       }
   }

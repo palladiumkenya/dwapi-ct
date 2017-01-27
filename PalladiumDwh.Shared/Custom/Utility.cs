@@ -62,7 +62,7 @@ namespace PalladiumDwh.Shared.Custom
             }
             catch (IndexOutOfRangeException ex)
             {
-                Log.Debug(ex);
+                Log.Debug($"Column NOT found:{fieldName}");
             }
             return GetDefault(type);
         }

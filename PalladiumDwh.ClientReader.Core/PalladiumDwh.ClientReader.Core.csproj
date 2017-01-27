@@ -57,8 +57,6 @@
     <Compile Include="Interfaces\IClientPatientStatusExtract.cs" />
     <Compile Include="Interfaces\IClientPatientVisitExtract.cs" />
     <Compile Include="Interfaces\IClientExtract.cs" />
-    <Compile Include="Interfaces\IReadAllCommand.cs" />
-    <Compile Include="Interfaces\IReader.cs" />
     <Compile Include="Interfaces\IReadExtractService.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />

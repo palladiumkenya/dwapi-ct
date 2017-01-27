@@ -66,14 +66,7 @@ From tmp_PatientMaster
         [Test]
         public void should_Execute_For_MSSQL()
         {
-            var connection = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
-            _connection = new SqlConnection(connection);
-            _extractCommand = new LoadPatientBaselinesExtractDbCommand(_connection, $"{_commandText}");
-
-            var list = _extractCommand.Execute().ToList();
-            Assert.IsTrue(list.Count > 0);
-
-            Console.WriteLine($"Loaded {list.Count} records!");
+           
         }
         /*
         [Test]

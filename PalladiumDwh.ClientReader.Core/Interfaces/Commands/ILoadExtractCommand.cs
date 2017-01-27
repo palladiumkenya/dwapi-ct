@@ -5,6 +5,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
 {
     public interface ILoadExtractCommand<T> where T: TempExtract
     {
-        IEnumerable<T> Execute();
+        void Execute();
     }
 }
