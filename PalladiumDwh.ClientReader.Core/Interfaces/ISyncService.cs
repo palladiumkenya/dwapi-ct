@@ -6,7 +6,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
     public interface ISyncService
     {
-        void SyncFacilities(IEnumerable<Facility> facilities);
+        
         void SyncPatients(IEnumerable<PatientExtract> patients);
         void SyncPatientsArt(IEnumerable<PatientArtExtract> patientArtExtracts);
         void SyncPatientsBaselines(IEnumerable<PatientBaselinesExtract> patientBaselinesExtracts);

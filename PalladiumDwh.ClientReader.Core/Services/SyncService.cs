@@ -12,11 +12,6 @@ namespace PalladiumDwh.ClientReader.Core.Services
         private readonly ILoadPatientExtractCommand _extractCommand;
         private readonly ILoadPatientArtExtractCommand _artExtractCommand;
 
-        public void SyncFacilities(IEnumerable<Facility> facilities)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void SyncPatients(IEnumerable<PatientExtract> patients)
         {
             throw new System.NotImplementedException();

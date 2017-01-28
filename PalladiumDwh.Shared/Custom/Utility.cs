@@ -60,9 +60,16 @@ namespace PalladiumDwh.Shared.Custom
                 }
                 return Convert.ChangeType(value, Nullable.GetUnderlyingType(type) ?? type);
             }
-            catch (IndexOutOfRangeException ex)
+            catch (Exception ex)
             {
-                Log.Debug($"Column NOT found:{fieldName}");
+                if (ex is IndexOutOfRangeException)
+                {
+                    Log.Debug($"Column NOT found:{fieldName}");
+                }
+                else
+                {
+                    Log.Debug(ex);                    
+                }
             }
             return GetDefault(type);
         }

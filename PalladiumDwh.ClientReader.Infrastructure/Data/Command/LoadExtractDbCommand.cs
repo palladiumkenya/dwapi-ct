@@ -51,32 +51,35 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             while (reader.Read())
                             {
                                 count++;
-                                extract = (T)Activator.CreateInstance(typeof(T));
+                                extract = (T) Activator.CreateInstance(typeof(T));
                                 extract.Load(reader);
-                                if (BatchSize == 0)
+                                if (!extract.HasError)
                                 {
-                                    if (CleintConnection.State != ConnectionState.Open)
-                                    {
-                                        CleintConnection.Open();
-                                    }
-                                    CleintConnection.Execute(action, extract);
-                                }
-                                else
-                                {
-                                    extracts.Add(extract);
-
-                                    if (count == BatchSize && BatchSize > 0)
+                                    if (BatchSize == 0)
                                     {
                                         if (CleintConnection.State != ConnectionState.Open)
                                         {
                                             CleintConnection.Open();
                                         }
+                                        CleintConnection.Execute(action, extract);
+                                    }
+                                    else
+                                    {
+                                        extracts.Add(extract);
 
-                                        var tx = CleintConnection.BeginTransaction();
-                                        CleintConnection.Execute(action, extracts, tx);
-                                        tx.Commit();
-                                        extracts = new List<T>();
-                                        count = 0;
+                                        if (count == BatchSize && BatchSize > 0)
+                                        {
+                                            if (CleintConnection.State != ConnectionState.Open)
+                                            {
+                                                CleintConnection.Open();
+                                            }
+
+                                            var tx = CleintConnection.BeginTransaction();
+                                            CleintConnection.Execute(action, extracts, tx);
+                                            tx.Commit();
+                                            extracts = new List<T>();
+                                            count = 0;
+                                        }
                                     }
                                 }
 
