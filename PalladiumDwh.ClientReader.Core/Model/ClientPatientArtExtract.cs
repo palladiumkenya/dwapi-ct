@@ -2,18 +2,20 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model
 {
     [Table("PatientArtExtract")]
-    public class ClientPatientArtExtract: ClientExtract, IClientPatientArtExtract
+    public class ClientPatientArtExtract : ClientExtract, IClientPatientArtExtract
     {
         [Key]
-        public override Guid UId { get; set; }
+        public override Guid Id { get; set; }
+
         public DateTime? DOB { get; set; }
         public decimal? AgeEnrollment { get; set; }
         public decimal? AgeARTStart { get; set; }
-        public decimal? AgeLastVisit { get; set; }       
+        public decimal? AgeLastVisit { get; set; }
         public DateTime? RegistrationDate { get; set; }
         public string Gender { get; set; }
         public string PatientSource { get; set; }
@@ -37,7 +39,12 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientArtExtract(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project)
+        public ClientPatientArtExtract(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart,
+            decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource,
+            DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen,
+            DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate,
+            string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider,
+            DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project)
         {
             DOB = dob;
             AgeEnrollment = ageEnrollment;
@@ -64,5 +71,36 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Emr = emr;
             Project = project;
         }
+
+        public ClientPatientArtExtract(TempPatientArtExtract extract)
+        {
+            DOB = extract.DOB;
+            AgeEnrollment = extract.AgeEnrollment;
+            AgeARTStart = extract.AgeARTStart;
+            AgeLastVisit = extract.AgeLastVisit;
+            RegistrationDate = extract.RegistrationDate;
+            Gender = extract.Gender;
+            PatientSource = extract.PatientSource;
+            StartARTDate = extract.StartARTDate;
+            PreviousARTStartDate = extract.PreviousARTStartDate;
+            PreviousARTRegimen = extract.PreviousARTRegimen;
+            StartARTAtThisFacility = extract.StartARTAtThisFacility;
+            StartRegimen = extract.StartRegimen;
+            StartRegimenLine = extract.StartRegimenLine;
+            LastARTDate = extract.LastARTDate;
+            LastRegimen = extract.LastRegimen;
+            LastRegimenLine = extract.LastRegimenLine;
+            Duration = extract.Duration;
+            ExpectedReturn = extract.ExpectedReturn;
+            Provider = extract.Provider;
+            LastVisit = extract.LastVisit;
+            ExitReason = extract.ExitReason;
+            ExitDate = extract.ExitDate;
+
+            //:TODO add to ART
+            //Emr = extract.Emr;
+            //Project = extract.Project;
+        }
+
     }
 }

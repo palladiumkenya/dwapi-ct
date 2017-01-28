@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model
 {
@@ -9,7 +10,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
     public  class ClientPatientLaboratoryExtract: ClientExtract, IClientPatientLaboratoryExtract
     {
         [Key]
-        public override Guid UId { get; set; }
+        public override Guid Id { get; set; }
         public int? VisitId { get; set; }
         public DateTime? OrderedByDate { get; set; }
         public DateTime? ReportedByDate { get; set; }
@@ -31,6 +32,20 @@ namespace PalladiumDwh.ClientReader.Core.Model
             TestResult = testResult;
             Emr = emr;
             Project = project;
+        }
+
+        public ClientPatientLaboratoryExtract(TempPatientLaboratoryExtract extract)
+        {
+            VisitId = extract.VisitId;
+            OrderedByDate = extract.OrderedByDate;
+            ReportedByDate = extract.ReportedByDate;
+            TestName = extract.TestName;
+            EnrollmentTest = extract.EnrollmentTest;
+            TestResult = extract.TestResult;
+            //:TODO Add to Lab
+            //Emr = extract.Emr;
+            //Project = extract.Project;
+
         }
     }
 }

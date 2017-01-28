@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
       <Private>True</Private>
@@ -63,9 +67,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Command\LoadPatientVisitExtractDbCommand - Copy.cs" />
     <Compile Include="Data\DwapiRemoteContext.cs" />
     <Compile Include="Data\Command\LoadExtractDbCommand.cs" />
     <Compile Include="Data\Command\LoadPatientArtExtractDbCommand.cs" />
@@ -83,9 +90,15 @@
     <Compile Include="Data\Command\LoadPatientStatusExtractDbCommand.cs" />
     <Compile Include="Data\Command\LoadPatientVisitExtractDbCommand.cs" />
     <Compile Include="Data\Command\LoadPatientExtractDbCommand.cs" />
+    <Compile Include="Data\Command\EFLoadExtractDbCommand.cs" />
+    <Compile Include="Data\SyncRepository.cs" />
     <Compile Include="Migrations\201701271252203_InitialReview.cs" />
     <Compile Include="Migrations\201701271252203_InitialReview.Designer.cs">
       <DependentUpon>201701271252203_InitialReview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701282124500_ClientReview.cs" />
+    <Compile Include="Migrations\201701282124500_ClientReview.Designer.cs">
+      <DependentUpon>201701282124500_ClientReview.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +124,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701271252203_InitialReview.resx">
       <DependentUpon>201701271252203_InitialReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701282124500_ClientReview.resx">
+      <DependentUpon>201701282124500_ClientReview.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

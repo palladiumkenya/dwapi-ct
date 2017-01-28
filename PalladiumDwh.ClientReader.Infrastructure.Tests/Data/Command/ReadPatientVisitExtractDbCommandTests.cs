@@ -21,9 +21,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         public void SetUp()
         {
             _context = new DwapiRemoteContext();
+            //_context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract");
+            _context.Configuration.AutoDetectChangesEnabled = false;
+
             _commandText = @"
 
-                SELECT        
+                SELECT       
 	                REPLACE(tmp_PatientMaster.PatientID, ' ', '') AS PatientID, tmp_PatientMaster.FacilityName, tmp_PatientMaster.SiteCode, tmp_ClinicalEncounters.PatientPK, tmp_ClinicalEncounters.VisitID, 
 	                tmp_ClinicalEncounters.VisitDate, tmp_ClinicalEncounters.Service, tmp_ClinicalEncounters.VisitType, tmp_ClinicalEncounters.WHOStage, tmp_ClinicalEncounters.WABStage, tmp_ClinicalEncounters.Pregnant, 
 	                tmp_ClinicalEncounters.LMP, tmp_ClinicalEncounters.EDD, tmp_ClinicalEncounters.Height, tmp_ClinicalEncounters.Weight, tmp_ClinicalEncounters.BP, tmp_ClinicalEncounters.OI, 
@@ -38,10 +41,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
             _sourceConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString);
             _clientConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DWAPIRemote"].ConnectionString);
 
-            _extractCommand = new LoadPatientVisitExtractDbCommand(_sourceConnection, _clientConnection, $"{_commandText}", -1);
-
-            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract");
-            _context.Configuration.AutoDetectChangesEnabled = false;
+            //_extractCommand = new LoadPatientVisitExtractDbCommand(_sourceConnection, _clientConnection, $"{_commandText}", 500);
+            _extractCommand = new EFLoadPatientVisitExtractDbCommand(_sourceConnection, _context, $"{_commandText}");
+            
         }
 
         [Test]

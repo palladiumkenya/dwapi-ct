@@ -60,6 +60,7 @@
     <Compile Include="Interfaces\IReadExtractService.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
+    <Compile Include="Interfaces\Repository\ISyncRepository.cs" />
     <Compile Include="Interfaces\Source\ITempExtract.cs" />
     <Compile Include="Interfaces\Source\ITempPatientArtExtract.cs" />
     <Compile Include="Interfaces\Source\ITempPatientBaselinesExtract.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model
 {
@@ -47,8 +48,10 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientExtract(string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project)
+        public ClientPatientExtract(int patientPk, int siteCode, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project)
         {
+            PatientPK = patientPk;
+            SiteCode = siteCode;
             Gender = gender;
             DOB = dob;
             RegistrationDate = registrationDate;
@@ -72,5 +75,34 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Emr = emr;
             Project = project;
         }
+        
+        public ClientPatientExtract(TempPatientExtract extract)
+        {
+            PatientPK = extract.PatientPK;
+            SiteCode = extract.SiteCode;
+            Gender = extract.Gender;
+            DOB = extract.DOB;
+            RegistrationDate = extract.RegistrationDate;
+            RegistrationAtCCC = extract.RegistrationAtCCC;
+            RegistrationATPMTCT = extract.RegistrationATPMTCT;
+            RegistrationAtTBClinic = extract.RegistrationAtTBClinic;
+            PatientSource = extract.PatientSource;
+            Region = extract.Region;
+            District = extract.District;
+            Village = extract.Village;
+            ContactRelation = extract.ContactRelation;
+            LastVisit = extract.LastVisit;
+            MaritalStatus = extract.MaritalStatus;
+            EducationLevel = extract.EducationLevel;
+            DateConfirmedHIVPositive = extract.DateConfirmedHIVPositive;
+            PreviousARTExposure = extract.PreviousARTExposure;
+            PreviousARTStartDate = extract.PreviousARTStartDate;
+            StatusAtCCC = extract.StatusAtCCC;
+            StatusAtPMTCT = extract.StatusAtPMTCT;
+            StatusAtTBClinic = extract.StatusAtTBClinic;
+            Emr = extract.Emr;
+            Project = extract.Project;
+        }
+
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model
 {
@@ -9,7 +10,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
     public class ClientPatientPharmacyExtract: ClientExtract, IClientPatientPharmacyExtract
     {
         [Key]
-        public override Guid UId { get; set; }
+        public override Guid Id { get; set; }
         public int? VisitID { get; set; }
         public string Drug { get; set; }
         public string Provider { get; set; }
@@ -39,6 +40,24 @@ namespace PalladiumDwh.ClientReader.Core.Model
             ProphylaxisType = prophylaxisType;
             Emr = emr;
             Project = project;
+        }
+
+        public ClientPatientPharmacyExtract(TempPatientPharmacyExtract extract)
+        {
+            VisitID = extract.VisitID;
+            Drug = extract.Drug;
+            Provider = extract.Provider;
+            DispenseDate = extract.DispenseDate;
+            Duration = extract.Duration;
+            ExpectedReturn = extract.ExpectedReturn;
+            TreatmentType = extract.TreatmentType;
+            RegimenLine = extract.RegimenLine;
+            PeriodTaken = extract.PeriodTaken;
+            ProphylaxisType = extract.ProphylaxisType;
+            //TODO Add to Pharmacy
+            //Emr = extract.Emr;
+            //Project = extract.Project;
+
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model
 {
@@ -9,7 +10,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
     public class ClientPatientVisitExtract: ClientExtract, IClientPatientVisitExtract
     {
         [Key]
-        public override Guid UId { get; set; }
+        public override Guid Id { get; set; }
         public int? VisitId { get; set; }
         public DateTime? VisitDate { get; set; }
         public string Service { get; set; }
@@ -71,6 +72,39 @@ namespace PalladiumDwh.ClientReader.Core.Model
             NextAppointmentDate = nextAppointmentDate;
             Emr = emr;
             Project = project;
+        }
+
+        public ClientPatientVisitExtract(TempPatientVisitExtract extract)
+        {
+            VisitId = extract.VisitId;
+            VisitDate = extract.VisitDate;
+            Service = extract.Service;
+            VisitType = extract.VisitType;
+            WHOStage = extract.WHOStage;
+            WABStage = extract.WABStage;
+            Pregnant = extract.Pregnant;
+            LMP = extract.LMP;
+            EDD = extract.EDD;
+            Height = extract.Height;
+            Weight = extract.Weight;
+            BP = extract.BP;
+            OI = extract.OI;
+            OIDate = extract.OIDate;
+            SubstitutionFirstlineRegimenDate = extract.SubstitutionFirstlineRegimenDate;
+            SubstitutionFirstlineRegimenReason = extract.SubstitutionFirstlineRegimenReason;
+            SubstitutionSecondlineRegimenDate = extract.SubstitutionSecondlineRegimenDate;
+            SubstitutionSecondlineRegimenReason = extract.SubstitutionSecondlineRegimenReason;
+            SecondlineRegimenChangeDate = extract.SecondlineRegimenChangeDate;
+            SecondlineRegimenChangeReason = extract.SecondlineRegimenChangeReason;
+            Adherence = extract.Adherence;
+            AdherenceCategory = extract.AdherenceCategory;
+            FamilyPlanningMethod = extract.FamilyPlanningMethod;
+            PwP = extract.PwP;
+            GestationAge = extract.GestationAge;
+            NextAppointmentDate = extract.NextAppointmentDate;
+            //TODO add to Visit
+            //Emr = extract.Emr;
+            //Project = extract.Project;
         }
     }
 }

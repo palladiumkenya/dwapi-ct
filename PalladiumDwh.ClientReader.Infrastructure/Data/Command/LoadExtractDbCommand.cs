@@ -10,7 +10,7 @@ using Dapper;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
-    public abstract class   LoadExtractDbCommand<T> : ILoadExtractCommand<T> where T : TempExtract
+    public abstract class LoadExtractDbCommand<T> : ILoadExtractCommand<T> where T : TempExtract
     {
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -18,8 +18,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         internal readonly IDbConnection CleintConnection;
         internal readonly string CommandText;
         internal readonly int BatchSize;
-
-        protected LoadExtractDbCommand(IDbConnection sourceConnection, IDbConnection clientConnection,string commandText,int batchSize=100)
+        protected LoadExtractDbCommand(IDbConnection sourceConnection, IDbConnection clientConnection,
+            string commandText, int batchSize = 100)
         {
             SourceConnection = sourceConnection;
             CleintConnection = clientConnection;
@@ -45,11 +45,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                         {
                             var extracts = new List<T>();
                             int count = 0;
-                            var extract = (T)Activator.CreateInstance(typeof(T));
+                            var extract = (T) Activator.CreateInstance(typeof(T));
                             string action = extract.GetAddAction();
 
                             while (reader.Read())
                             {
+
                                 count++;
                                 extract = (T) Activator.CreateInstance(typeof(T));
                                 extract.Load(reader);
@@ -69,6 +70,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                                         if (count == BatchSize && BatchSize > 0)
                                         {
+                                            
                                             if (CleintConnection.State != ConnectionState.Open)
                                             {
                                                 CleintConnection.Open();
@@ -77,6 +79,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                             var tx = CleintConnection.BeginTransaction();
                                             CleintConnection.Execute(action, extracts, tx);
                                             tx.Commit();
+                                        
                                             extracts = new List<T>();
                                             count = 0;
                                         }
@@ -87,17 +90,19 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                             if (extracts.Count > 0)
                             {
+                                
                                 if (CleintConnection.State != ConnectionState.Open)
                                 {
                                     CleintConnection.Open();
                                 }
                                 var tx = CleintConnection.BeginTransaction();
-                                CleintConnection.Execute(action, extracts,tx);
+                                CleintConnection.Execute(action, extracts, tx);
                                 tx.Commit();
+                                
                             }
                         }
                     }
-                    
+
                 }
 
             }

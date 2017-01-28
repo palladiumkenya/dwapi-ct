@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model
 {
@@ -9,7 +10,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
     public class ClientPatientBaselinesExtract : ClientExtract, IClientPatientBaselinesExtract
     {
         [Key]
-        public override Guid UId { get; set; }
+        public override Guid Id { get; set; }
         public int? bCD4 { get; set; }
         public DateTime? bCD4Date { get; set; }
         public int? bWAB { get; set; }
@@ -63,6 +64,36 @@ namespace PalladiumDwh.ClientReader.Core.Model
             m6CD4Date = m6Cd4Date;
             Emr = emr;
             Project = project;
+        }
+
+        public ClientPatientBaselinesExtract(TempPatientBaselinesExtract extract)
+        {
+            bCD4 = extract.bCD4;
+            bCD4Date = extract.bCD4Date;
+            bWAB = extract.bWAB;
+            bWABDate = extract.bWABDate;
+            bWHO = extract.bWHO;
+            bWHODate = extract.bWHODate;
+            eWAB = extract.eWAB;
+            eWABDate = extract.eWABDate;
+            eCD4 = extract.eCD4;
+            eCD4Date = extract.eCD4Date;
+            eWHO = extract.eWHO;
+            eWHODate = extract.eWHODate;
+            lastWHO = extract.lastWHO;
+            lastWHODate = extract.lastWHODate;
+            lastCD4 = extract.lastCD4;
+            lastCD4Date = extract.lastCD4Date;
+            lastWAB = extract.lastWAB;
+            lastWABDate = extract.lastWABDate;
+            m12CD4 = extract.m12CD4;
+            m12CD4Date = extract.m12CD4Date;
+            m6CD4 = extract.m6CD4;
+            m6CD4Date = extract.m6CD4Date;
+            //:TODO add to Baselines
+            //Emr = extract.Emr;
+            //Project = extract.Project;
+
         }
     }
 }

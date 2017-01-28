@@ -36,5 +36,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         {
             return $"{SiteCode}-{PatientID}";
         }
+        
     }
 }

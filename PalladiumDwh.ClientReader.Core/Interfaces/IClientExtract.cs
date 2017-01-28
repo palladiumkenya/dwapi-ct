@@ -9,6 +9,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         string Emr { get; set; }
         string Project { get; set; }
         bool Processed { get; set; }
-        Guid UId { get; set; }
+        Guid Id { get; set; }
     }
 }
