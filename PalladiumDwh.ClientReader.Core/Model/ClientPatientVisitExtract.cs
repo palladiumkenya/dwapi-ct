@@ -102,9 +102,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             PwP = extract.PwP;
             GestationAge = extract.GestationAge;
             NextAppointmentDate = extract.NextAppointmentDate;
-            //TODO add to Visit
-            //Emr = extract.Emr;
-            //Project = extract.Project;
+            Emr = extract.Emr;
+            Project = extract.Project;
         }
     }
 }

@@ -80,7 +80,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Command\LoadPatientVisitExtractDbCommand - Copy.cs" />
+    <Compile Include="Data\Command\SyncPatientArtExtractDbCommand.cs" />
+    <Compile Include="Data\Command\SyncPatientBaselinesExtractDbCommand.cs" />
+    <Compile Include="Data\Command\SyncPatientLaboratoryExtractDbCommand.cs" />
+    <Compile Include="Data\Command\SyncPatientPharmacyExtractDbCommand.cs" />
+    <Compile Include="Data\Command\SyncPatientStatusExtractDbCommand.cs" />
+    <Compile Include="Data\Command\SyncPatientVisitExtractDbCommand.cs" />
+    <Compile Include="Data\Command\SyncPatientExtractDbCommand.cs" />
     <Compile Include="Data\DwapiRemoteContext.cs" />
     <Compile Include="Data\Command\LoadExtractDbCommand.cs" />
     <Compile Include="Data\Command\LoadPatientArtExtractDbCommand.cs" />
@@ -91,7 +97,7 @@
     <Compile Include="Data\Command\LoadPatientVisitExtractDbCommand.cs" />
     <Compile Include="Data\Command\LoadPatientExtractDbCommand.cs" />
     <Compile Include="Data\Command\EFLoadExtractDbCommand.cs" />
-    <Compile Include="Data\SyncRepository.cs" />
+    <Compile Include="Data\Command\SyncCommand.cs" />
     <Compile Include="Migrations\201701271252203_InitialReview.cs" />
     <Compile Include="Migrations\201701271252203_InitialReview.Designer.cs">
       <DependentUpon>201701271252203_InitialReview.cs</DependentUpon>
@@ -99,6 +105,14 @@
     <Compile Include="Migrations\201701282124500_ClientReview.cs" />
     <Compile Include="Migrations\201701282124500_ClientReview.Designer.cs">
       <DependentUpon>201701282124500_ClientReview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701282252129_ClientReviewMOre.cs" />
+    <Compile Include="Migrations\201701282252129_ClientReviewMOre.Designer.cs">
+      <DependentUpon>201701282252129_ClientReviewMOre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701291351500_AddProjectInfo.cs" />
+    <Compile Include="Migrations\201701291351500_AddProjectInfo.Designer.cs">
+      <DependentUpon>201701291351500_AddProjectInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,6 +141,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701282124500_ClientReview.resx">
       <DependentUpon>201701282124500_ClientReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701282252129_ClientReviewMOre.resx">
+      <DependentUpon>201701282252129_ClientReviewMOre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701291351500_AddProjectInfo.resx">
+      <DependentUpon>201701291351500_AddProjectInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

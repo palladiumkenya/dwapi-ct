@@ -10,32 +10,26 @@ using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
-    public class ReadPatientPharmacyExtractDbCommandTests
+    public class LoadPatientPharmacyExtractDbCommandTests
     {
         private DwapiRemoteContext _context;
         private IDbConnection _sourceConnection, _clientConnection;
         private string _commandText;
         private ILoadPatientPharmacyExtractCommand _extractCommand;
+        private int top = 5;
 
         [SetUp]
         public void SetUp()
         {
             _context = new DwapiRemoteContext();
-            _commandText = @"
-                SELECT TOP 5
-	                tmp_PatientMaster.PatientID, tmp_PatientMaster.FacilityID, tmp_PatientMaster.SiteCode, tmp_Pharmacy.PatientPK, tmp_Pharmacy.VisitID, tmp_Pharmacy.Drug, tmp_Pharmacy.Provider, 
-	                tmp_Pharmacy.DispenseDate, tmp_Pharmacy.Duration, tmp_Pharmacy.ExpectedReturn, tmp_Pharmacy.TreatmentType, tmp_Pharmacy.RegimenLine, tmp_Pharmacy.PeriodTaken, 
-	                tmp_Pharmacy.ProphylaxisType, CAST(GETDATE() AS DATE) AS DateExtracted
-                FROM            
-	                tmp_Pharmacy INNER JOIN
-                    tmp_PatientMaster ON tmp_Pharmacy.PatientPK = tmp_PatientMaster.PatientPK  ";
+            _commandText = TestHelpers.GetPatientsPharmacySql(top);
             _sourceConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString);
             _clientConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DWAPIRemote"].ConnectionString);
 
             _extractCommand = new LoadPatientPharmacyExtractDbCommand(_sourceConnection, _clientConnection, $"{_commandText}");
 
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientPharmacyExtract");
-            _context.SaveChanges();
+         
         }
 
         [Test]
@@ -46,7 +40,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientPharmacyExtract")
                 .Single();
 
-            Assert.IsTrue(records == 5);
+            Assert.IsTrue(records >0);
 
             Console.WriteLine($"Loaded {records} records!");
 

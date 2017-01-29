@@ -14,6 +14,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         }
 
         public string FacilityName { get; set; }
+        public string Emr { get; set; }
+        public string Project { get; set; }
         public string ExitDescription { get; set; }
         public DateTime? ExitDate { get; set; }
         public string ExitReason { get; set; }

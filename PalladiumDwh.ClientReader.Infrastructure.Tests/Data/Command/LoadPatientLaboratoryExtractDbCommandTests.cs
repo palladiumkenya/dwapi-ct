@@ -10,32 +10,26 @@ using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
-    public class ReadPatientLaboratoryExtractDbCommandTests
+    public class LoadPatientLaboratoryExtractDbCommandTests
     {
         private DwapiRemoteContext _context;
         private IDbConnection _sourceConnection, _clientConnection;
         private string _commandText;
         private ILoadPatientLaboratoryExtractCommand _extractCommand;
+        private int top = 5;
 
         [SetUp]
         public void SetUp()
         {
             _context = new DwapiRemoteContext();
-            _commandText = @"
-                SELECT        
-	                tmp_PatientMaster.PatientID, tmp_Labs.PatientPK, tmp_PatientMaster.FacilityID, tmp_PatientMaster.SiteCode, tmp_PatientMaster.FacilityName, tmp_PatientMaster.SatelliteName, tmp_Labs.VisitID, 
-	                tmp_Labs.OrderedbyDate, tmp_Labs.ReportedbyDate, tmp_Labs.TestName, tmp_Labs.EnrollmentTest, tmp_Labs.TestResult, CAST(GETDATE() AS DATE) AS DateExtracted
-                FROM           
-	                tmp_Labs INNER JOIN
-	                tmp_PatientMaster ON tmp_Labs.PatientPK = tmp_PatientMaster.PatientPK
-            ";
+            _commandText =TestHelpers.GetPatientLabsSql(top);
             _sourceConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString);
             _clientConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DWAPIRemote"].ConnectionString);
 
             _extractCommand = new LoadPatientLaboratoryExtractDbCommand(_sourceConnection, _clientConnection, $"{_commandText}", 10246);
 
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientLaboratoryExtract");
-            _context.SaveChanges();
+            
         }
 
         [Test]
@@ -48,7 +42,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientLaboratoryExtract")
                 .Single();
 
-            Assert.IsTrue(records > 0);
+            Assert.IsTrue(records >0);
 
             
             var elapsedMs = watch.ElapsedMilliseconds;

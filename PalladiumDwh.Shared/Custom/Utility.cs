@@ -98,6 +98,10 @@ namespace PalladiumDwh.Shared.Custom
         {
             return  string.Join(",", columnList.ToArray());
         }
+        public static string GetColumns(List<string> columnList,string alias)
+        {
+            return $"{alias}.{string.Join($",{alias}.", columnList.ToArray())}";
+        }
         public static string GetParameters(List<string> columnList)
         {
             return $"@{string.Join(",@", columnList.ToArray())}";

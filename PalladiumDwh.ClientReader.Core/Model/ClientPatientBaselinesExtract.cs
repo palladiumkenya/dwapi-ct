@@ -90,9 +90,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             m12CD4Date = extract.m12CD4Date;
             m6CD4 = extract.m6CD4;
             m6CD4Date = extract.m6CD4Date;
-            //:TODO add to Baselines
-            //Emr = extract.Emr;
-            //Project = extract.Project;
+            Emr = extract.Emr;
+            Project = extract.Project;
 
         }
     }

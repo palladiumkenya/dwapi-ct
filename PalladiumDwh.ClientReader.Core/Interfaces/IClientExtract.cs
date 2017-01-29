@@ -8,7 +8,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         int SiteCode { get; set; }
         string Emr { get; set; }
         string Project { get; set; }
-        bool Processed { get; set; }
+        bool? Processed { get; set; }
         Guid Id { get; set; }
     }
 }

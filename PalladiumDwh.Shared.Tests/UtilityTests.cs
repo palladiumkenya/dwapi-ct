@@ -126,6 +126,18 @@ namespace PalladiumDwh.Shared.Tests
 
         }
         [Test]
+        public void should_GetColumns_with_alias_From_List()
+        {
+            var list = Builder<TestFacility>.CreateListOfSize(3).Build().ToList();
+
+            var names = list.Select(x => x.Name).ToList();
+
+            var namesJoined = Utility.GetColumns(names,"xx");
+            Assert.That(namesJoined, Does.StartWith("xx."));
+            Console.WriteLine(namesJoined);
+
+        }
+        [Test]
         public void should_GetParameters_From_List()
         {
             var list = Builder<TestFacility>.CreateListOfSize(3).Build().ToList();

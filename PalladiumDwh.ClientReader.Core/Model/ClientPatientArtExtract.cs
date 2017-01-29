@@ -96,10 +96,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             LastVisit = extract.LastVisit;
             ExitReason = extract.ExitReason;
             ExitDate = extract.ExitDate;
-
-            //:TODO add to ART
-            //Emr = extract.Emr;
-            //Project = extract.Project;
+            Emr = extract.Emr;
+            Project = extract.Project;
         }
 
     }

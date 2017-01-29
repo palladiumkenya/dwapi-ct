@@ -33,10 +33,11 @@ namespace PalladiumDwh.ClientReader.Core.Model
             ExitDescription = extract.ExitDescription;
             ExitDate = extract.ExitDate;
             ExitReason = extract.ExitReason;
-            //TODO add to Status
-            //Emr = extract.Emr;
-            //Project = extract.Project;
+            Emr = extract.Emr;
+            Project = extract.Project;
 
         }
+
+     
     }
 }

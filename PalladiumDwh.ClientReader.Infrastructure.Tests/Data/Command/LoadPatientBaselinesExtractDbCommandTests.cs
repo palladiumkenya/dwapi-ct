@@ -10,50 +10,46 @@ using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
-    public class LoadPatientExtractDbCommandTests
+    public class LoadPatientBaselinesExtractDbCommandTests
     {
         private DwapiRemoteContext _context;
         private IDbConnection _sourceConnection, _clientConnection;
         private string _commandText;
-        private ILoadPatientExtractCommand _extractCommand;
+        private ILoadPatientBaselinesExtractCommand _extractCommand;
         private int top = 5;
-
         [SetUp]
         public void SetUp()
         {
-            _context=new DwapiRemoteContext();
-            _commandText = TestHelpers.GetPatientsSql(top);
+            _context = new DwapiRemoteContext();
+            _commandText = TestHelpers.GetPatientBaselinesSql(top);
+
             _sourceConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString);
             _clientConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DWAPIRemote"].ConnectionString);
 
-            _extractCommand = new LoadPatientExtractDbCommand(_sourceConnection,_clientConnection, $"{_commandText}");
+            _extractCommand = new LoadPatientBaselinesExtractDbCommand(_sourceConnection, _clientConnection, $"{_commandText}");
 
-            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientExtract");
-           
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientBaselinesExtract");
+            
         }
 
         [Test]
         public void should_Execute_For_MSSQL()
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
             _extractCommand.Execute();
-            watch.Stop();
             var records = _context.Database
-                .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientExtract")
+                .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientBaselinesExtract")
                 .Single();
-            
-            Assert.IsTrue(records>0);
 
-            
-            var elapsedMs = watch.ElapsedMilliseconds;
-            Console.WriteLine($"Loaded {records} records! in {elapsedMs}ms ({elapsedMs/1000}s)");
+            Assert.IsTrue(records >0);
+
+            Console.WriteLine($"Loaded {records} records!");
 
         }
 
         [TearDown]
         public void TearDown()
         {
-            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientBaselinesExtract");
             _context.SaveChanges();
         }
     }

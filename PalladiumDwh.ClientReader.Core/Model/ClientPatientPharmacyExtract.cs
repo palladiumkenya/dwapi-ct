@@ -54,9 +54,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             RegimenLine = extract.RegimenLine;
             PeriodTaken = extract.PeriodTaken;
             ProphylaxisType = extract.ProphylaxisType;
-            //TODO Add to Pharmacy
-            //Emr = extract.Emr;
-            //Project = extract.Project;
+            Emr = extract.Emr;
+            Project = extract.Project;
 
         }
     }

@@ -94,13 +94,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Data\Command\ReadPatientArtExtractDbCommandTests.cs" />
-    <Compile Include="Data\Command\ReadPatientBaselinesExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\LoadPatientArtExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\LoadPatientBaselinesExtractDbCommandTests.cs" />
     <Compile Include="Data\Command\LoadPatientExtractDbCommandTests.cs" />
-    <Compile Include="Data\Command\ReadPatientLaboratoryExtractDbCommandTests.cs" />
-    <Compile Include="Data\Command\ReadPatientPharmacyExtractDbCommandTests.cs" />
-    <Compile Include="Data\Command\ReadPatientStatusExtractDbCommandTests.cs" />
-    <Compile Include="Data\Command\ReadPatientVisitExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\LoadPatientLaboratoryExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\LoadPatientPharmacyExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\LoadPatientStatusExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\LoadPatientVisitExtractDbCommandTests.cs" />
+    <Compile Include="Data\Command\SyncPatientArtExtractCommandTests.cs" />
+    <Compile Include="Data\Command\SyncPatientBaselinesExtractCommandTests.cs" />
+    <Compile Include="Data\Command\SyncPatientPharamcyExtractCommandTests.cs" />
+    <Compile Include="Data\Command\SyncPatientLaboratoryExtractCommandTests.cs" />
+    <Compile Include="Data\Command\SyncPatientStatusExtractCommandTests.cs" />
+    <Compile Include="Data\Command\SyncPatientVisitExtractCommandTests.cs" />
+    <Compile Include="Data\Command\SyncPatientExtractCommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers.cs" />
   </ItemGroup>
@@ -131,6 +138,9 @@
       <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
       <Name>PalladiumDwh.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

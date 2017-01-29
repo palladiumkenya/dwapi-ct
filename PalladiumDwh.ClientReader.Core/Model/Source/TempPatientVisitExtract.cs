@@ -15,6 +15,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         }
 
         public string FacilityName { get; set; }
+        public string Emr { get; set; }
+        public string Project { get; set; }
         public int? VisitId { get; set; }
         public DateTime? VisitDate { get; set; }
         public string Service { get; set; }

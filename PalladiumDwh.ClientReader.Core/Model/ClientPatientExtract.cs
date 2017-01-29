@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Model.Source;
+using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Model
 {
@@ -36,13 +37,20 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string StatusAtPMTCT { get; set; }
         public string StatusAtTBClinic { get; set; }
         
-
+        [DoNotRead]
         public virtual ICollection<ClientPatientArtExtract> ClientPatientArtExtracts { get; set; }=new List<ClientPatientArtExtract>();
+        [DoNotRead]
         public virtual ICollection<ClientPatientBaselinesExtract> ClientPatientBaselinesExtracts { get; set; }=new List<ClientPatientBaselinesExtract>();
+        [DoNotRead]
         public virtual ICollection<ClientPatientLaboratoryExtract> ClientPatientLaboratoryExtracts { get; set; }=new List<ClientPatientLaboratoryExtract>();
+        [DoNotRead]
         public virtual ICollection<ClientPatientPharmacyExtract> ClientPatientPharmacyExtracts { get; set; }=new List<ClientPatientPharmacyExtract>();
+        [DoNotRead]
         public virtual ICollection<ClientPatientStatusExtract> ClientPatientStatusExtracts { get; set; }=new List<ClientPatientStatusExtract>();
+        [DoNotRead]
         public virtual ICollection<ClientPatientVisitExtract> ClientPatientVisitExtracts { get; set; }=new List<ClientPatientVisitExtract>();
+        [DoNotRead]
+        public override bool? Processed { get; set; }
 
         public ClientPatientExtract()
         {
@@ -104,5 +112,19 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = extract.Project;
         }
 
+        public override string GetAddAction(string source, bool lookup = true)
+        {
+            string sql = $@"
+            (SELECT      
+	            p.*
+            FROM            
+	            {source} AS p INNER JOIN
+	            (SELECT Id, ROW_NUMBER() OVER (PARTITION BY PatientPK,Sitecode ORDER BY PatientPK,Sitecode) AS RW
+	            FROM {source}) AS i ON p.Id = i.Id
+            WHERE        
+	            (i.RW = 1))xx
+            ";
+            return base.GetAddAction(sql, false);
+        }
     }
 }

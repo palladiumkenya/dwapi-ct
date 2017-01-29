@@ -42,9 +42,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             TestName = extract.TestName;
             EnrollmentTest = extract.EnrollmentTest;
             TestResult = extract.TestResult;
-            //:TODO Add to Lab
-            //Emr = extract.Emr;
-            //Project = extract.Project;
+            Emr = extract.Emr;
+            Project = extract.Project;
 
         }
     }

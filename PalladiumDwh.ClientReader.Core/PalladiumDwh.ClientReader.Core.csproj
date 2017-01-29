@@ -49,6 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\Commands\ISyncPatientVisitExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientStatusExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientPharmacyExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientLaboratoryExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientArtExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientBaselinesExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientExtractCommand.cs" />
     <Compile Include="Interfaces\IClientPatientArtExtract.cs" />
     <Compile Include="Interfaces\IClientPatientBaselinesExtract.cs" />
     <Compile Include="Interfaces\IClientPatientExtract.cs" />
@@ -58,9 +65,8 @@
     <Compile Include="Interfaces\IClientPatientVisitExtract.cs" />
     <Compile Include="Interfaces\IClientExtract.cs" />
     <Compile Include="Interfaces\IReadExtractService.cs" />
-    <Compile Include="Interfaces\ISyncService.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
-    <Compile Include="Interfaces\Repository\ISyncRepository.cs" />
+    <Compile Include="Interfaces\Commands\ISyncCommand.cs" />
     <Compile Include="Interfaces\Source\ITempExtract.cs" />
     <Compile Include="Interfaces\Source\ITempPatientArtExtract.cs" />
     <Compile Include="Interfaces\Source\ITempPatientBaselinesExtract.cs" />
@@ -95,7 +101,6 @@
     <Compile Include="Model\Source\TempPatientVisitExtract.cs" />
     <Compile Include="Model\Source\TempPatientExtract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\SyncService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

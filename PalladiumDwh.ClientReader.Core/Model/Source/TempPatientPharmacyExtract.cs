@@ -24,5 +24,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string RegimenLine { get; set; }
         public string PeriodTaken { get; set; }
         public string ProphylaxisType { get; set; }
+        public string Emr { get; set; }
+        public string Project { get; set; }
     }
 }
