@@ -1,158 +1,175 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
-using FizzWare.NBuilder;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using PalladiumDwh.ClientReader.Core.Interfaces;
-using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
+using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
-using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.Profiles;
+using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
 namespace PalladiumDwh.ClientReader.Core.Tests.Services
 {
     [TestFixture]
     public class SyncServiceTests
     {
+        private readonly string _cn = ConfigurationManager.ConnectionStrings["DWAPIRemote"].ConnectionString;
+        private readonly string _srcCn = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
+
         private ISyncService _syncService;
-        private Facility _newFacility;
+
         private DwapiRemoteContext _context;
-        private List<Facility> _facilities;
-        private IFacilityRepository _facilityRepository;
-        private IPatientExtractRepository _patientExtractRepository;
-        private IPatientArtExtractRepository _patientArtExtractRepository;
-        private IPatientBaseLinesRepository _patientBaseLinesRepository;
-        private IPatientLabRepository _patientLabRepository;
-        private IPatientPharmacyRepository _patientPharmacyRepository;
 
-        private IPatientStatusRepository _patientStatusRepository;
-        private IPatientVisitRepository _patientVisitRepository;
-        private List<PatientExtract> _patientWithAllExtracts;
+        private ILoadPatientExtractCommand _loadPatientExtractCommand;
+        private ILoadPatientArtExtractCommand _loadPatientArtExtractCommand;
+        private ILoadPatientBaselinesExtractCommand _loadPatientBaselinesExtractCommand;
+        private ILoadPatientLaboratoryExtractCommand _loadPatientLaboratoryExtractCommand;
+        private ILoadPatientPharmacyExtractCommand _loadPatientPharmacyExtractCommand;
+        private ILoadPatientStatusExtractCommand _loadPatientStatusExtractCommand;
+        private ILoadPatientVisitExtractCommand _loadPatientVisitExtractCommand;
 
+        private ISyncPatientExtractCommand _syncPatientExtractCommand;
+        private ISyncPatientArtExtractCommand _syncPatientArtExtractCommand;
+        private ISyncPatientBaselinesExtractCommand _syncPatientBaselinesExtractCommand;
+        private ISyncPatientLaboratoryExtractCommand _syncPatientLaboratoryExtractCommand;
+        private ISyncPatientPharmacyExtractCommand _syncPatientPharmacyExtractCommand;
+        private ISyncPatientVisitExtractCommand _syncPatientVisitExtractCommand;
+        private ISyncPatientStatusExtractCommand _syncPatientStatusExtractCommand;
+        private int top = 10;
 
         [SetUp]
-        public void SetUp()
+        public void should_SetUp()
         {
-            _context = new DwapiRemoteContext(Effort.DbConnectionFactory.CreateTransient(), true);
-            _facilities = TestHelpers.GetTestData<Facility>(5).ToList();
-            TestHelpers.CreateTestData(_context, _facilities);
+
+            _loadPatientExtractCommand = new LoadPatientExtractDbCommand(new SqlConnection(_srcCn),
+                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+            _loadPatientArtExtractCommand = new LoadPatientArtExtractDbCommand(new SqlConnection(_srcCn),
+                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+            _loadPatientBaselinesExtractCommand = new LoadPatientBaselinesExtractDbCommand(new SqlConnection(_srcCn),
+                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+            _loadPatientLaboratoryExtractCommand = new LoadPatientLaboratoryExtractDbCommand(new SqlConnection(_srcCn),
+                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+            _loadPatientPharmacyExtractCommand = new LoadPatientPharmacyExtractDbCommand(new SqlConnection(_srcCn),
+                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+            _loadPatientVisitExtractCommand = new LoadPatientVisitExtractDbCommand(new SqlConnection(_srcCn),
+                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+            _loadPatientStatusExtractCommand = new LoadPatientStatusExtractDbCommand(new SqlConnection(_srcCn),
+                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+
+            _syncPatientExtractCommand = new SyncPatientExtractDbCommand(_cn);
+            _syncPatientArtExtractCommand = new SyncPatientArtExtractDbCommand(_cn);
+            _syncPatientBaselinesExtractCommand = new SyncPatientBaselinesExtractDbCommand(_cn);
+            _syncPatientLaboratoryExtractCommand = new SyncPatientLaboratoryExtractDbCommand(_cn);
+            _syncPatientPharmacyExtractCommand = new SyncPatientPharmacyExtractDbCommand(_cn);
+            _syncPatientVisitExtractCommand = new SyncPatientVisitExtractDbCommand(_cn);
+            _syncPatientStatusExtractCommand = new SyncPatientStatusExtractDbCommand(_cn);
 
             _syncService = new SyncService(
-                _facilityRepository = new FacilityRepository(_context),
-                _patientExtractRepository = new PatientExtractRepository(_context),
-                _patientArtExtractRepository = new PatientArtExtractRepository(_context),
-                _patientBaseLinesRepository = new PatientBaseLinesRepository(_context),
-                _patientLabRepository = new PatientLabRepository(_context),
-                _patientPharmacyRepository = new PatientPharmacyRepository(_context),
-                _patientStatusRepository = new PatientStatusRepository(_context),
-                _patientVisitRepository = new PatientVisitRepository(_context)
-            );
+                _loadPatientExtractCommand, _loadPatientArtExtractCommand, _loadPatientBaselinesExtractCommand,
+                _loadPatientLaboratoryExtractCommand, _loadPatientPharmacyExtractCommand,
+                _loadPatientStatusExtractCommand, _loadPatientVisitExtractCommand,
+                _syncPatientExtractCommand, _syncPatientArtExtractCommand, _syncPatientBaselinesExtractCommand,
+                _syncPatientLaboratoryExtractCommand, _syncPatientPharmacyExtractCommand,
+                _syncPatientVisitExtractCommand, _syncPatientStatusExtractCommand);
 
-            _newFacility = Builder<Facility>.CreateNew().Build();
-            _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility, 2, 10).ToList();
+
+            _context = new DwapiRemoteContext();
+
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientExtract;DELETE FROM  PatientExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientArtExtract;DELETE FROM  PatientArtExtract");
+            _context.Database.ExecuteSqlCommand(
+                "DELETE FROM TempPatientBaselinesExtract;DELETE FROM  PatientBaselinesExtract");
+            _context.Database.ExecuteSqlCommand(
+                "DELETE FROM TempPatientLaboratoryExtract;DELETE FROM  PatientLaboratoryExtract");
+            _context.Database.ExecuteSqlCommand(
+                "DELETE FROM TempPatientPharmacyExtract;DELETE FROM  PatientPharmacyExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract;DELETE FROM  PatientVisitExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract");
+
+
         }
 
         [Test]
-        public void should_Get_Facility()
+        public void should_SyncPatients()
         {
-            var facility = _syncService.GetFacility(_facilities.First().Code);
-            Assert.IsNotNull(facility);
+            _syncService.SyncPatients();
+
+            var extracts = _context.ClientPatientExtracts.Count();
+            Assert.IsTrue(extracts > 0);
         }
 
         [Test]
-        public void should_Sync_Patient()
+        public void should_SynPatientsArt()
         {
-            var _patientExtracts = TestHelpers.GetTestPatientData(_newFacility, 2).ToList();
-            var patient = _patientExtracts.First();
-            var patientProfile = PatientProfile.Create(_newFacility, patient);
-            patientProfile.GeneratePatientRecord();
+            _syncService.SyncPatients();
+            _syncService.SynPatientsArt();
 
-            var id=_syncService.SyncPatient(patientProfile);
-            Assert.IsNotNull(id);
-            Assert.IsTrue(id!=Guid.Empty);
-
-            var savedPatient = _patientExtractRepository.Find(id.Value);
-            Assert.IsNotNull(savedPatient);
-
-            var facility = _facilityRepository.Find(savedPatient.FacilityId);
-            Assert.IsNotNull(facility);
-            Assert.AreEqual(_newFacility.Code,facility.Code);       
+            var extracts = _context.ClientPatientArtExtracts.Count();
+            Assert.IsTrue(extracts > 0);
         }
 
         [Test]
-        public void should_SynArt()
+        public void should_SynPatientsBaselines()
         {
-            var patient = _patientWithAllExtracts.First();
-            var profile = PatientARTProfile.Create(_newFacility, patient);
+            _syncService.SyncPatients();
+            _syncService.SynPatientsBaselines();
 
-            _syncService.SyncArt(profile);
-
-            var savedPatient = _patientExtractRepository.Find(profile.PatientInfo.Id);
-            Assert.IsNotNull(savedPatient);
-            Assert.IsTrue(savedPatient.PatientArtExtracts.Count>0);
+            var extracts = _context.ClientPatientBaselinesExtracts.Count();
+            Assert.IsTrue(extracts > 0);
         }
 
-        
         [Test]
-        public void should_SynBaseline()
+        public void should_SynPatientsLab()
         {
-            var patient = _patientWithAllExtracts.First();
-            var profile = PatientBaselineProfile.Create(_newFacility, patient);
+            _syncService.SyncPatients();
+            _syncService.SynPatientsStatus();
 
-            _syncService.SyncBaseline(profile);
-
-            var savedPatient = _patientExtractRepository.Find(profile.PatientInfo.Id);
-            Assert.IsNotNull(savedPatient);
-            Assert.IsTrue(savedPatient.PatientBaselinesExtracts.Count > 0);
+            var extracts = _context.ClientPatientStatusExtracts.Count();
+            Assert.IsTrue(extracts > 0);
         }
+
         [Test]
-        public void should_SynLab()
+        public void should_SynPatientsPharmacy()
         {
-            var patient = _patientWithAllExtracts.First();
-            var profile = PatientLabProfile.Create(_newFacility, patient);
+            _syncService.SyncPatients();
+            _syncService.SynPatientsPharmacy();
 
-            _syncService.SyncLab(profile);
-
-            var savedPatient = _patientExtractRepository.Find(profile.PatientInfo.Id);
-            Assert.IsNotNull(savedPatient);
-            Assert.IsTrue(savedPatient.PatientLaboratoryExtracts.Count > 0);
+            var extracts = _context.ClientPatientPharmacyExtracts.Count();
+            Assert.IsTrue(extracts > 0);
         }
+
         [Test]
-        public void should_SyncPharmacy()
+        public void should_SynPatientsStatus()
         {
-            var patient = _patientWithAllExtracts.First();
-            var profile = PatientPharmacyProfile.Create(_newFacility, patient);
+            _syncService.SyncPatients();
+            _syncService.SynPatientsStatus();
 
-            _syncService.SyncPharmacy(profile);
-
-            var savedPatient = _patientExtractRepository.Find(profile.PatientInfo.Id);
-            Assert.IsNotNull(savedPatient);
-            Assert.IsTrue(savedPatient.PatientPharmacyExtracts.Count > 0);
+            var extracts = _context.ClientPatientStatusExtracts.Count();
+            Assert.IsTrue(extracts > 0);
         }
+
+
         [Test]
-        public void should_SyncStatus()
+        public void should_SynPatientsVisits()
         {
-            var patient = _patientWithAllExtracts.First();
-            var profile = PatientStatusProfile.Create(_newFacility, patient);
+            _syncService.SyncPatients();
+            _syncService.SynPatientsVisits();
 
-            _syncService.SyncStatus(profile);
-
-            var savedPatient = _patientExtractRepository.Find(profile.PatientInfo.Id);
-            Assert.IsNotNull(savedPatient);
-            Assert.IsTrue(savedPatient.PatientStatusExtracts.Count > 0);
+            var extracts = _context.ClientPatientVisitExtracts.Count();
+            Assert.IsTrue(extracts > 0);
         }
-        [Test]
-        public void should_SyncVisits()
+
+        [TearDown]
+        public void TearDown()
         {
-            var patient = _patientWithAllExtracts.First();
-            var profile = PatientVisitProfile.Create(_newFacility, patient);
-
-            _syncService.SyncVisit(profile);
-
-            var savedPatient = _patientExtractRepository.Find(profile.PatientInfo.Id);
-            Assert.IsNotNull(savedPatient);
-            Assert.IsTrue(savedPatient.PatientVisitExtracts.Count > 0);
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientExtract;DELETE FROM  PatientExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientArtExtract;DELETE FROM  PatientArtExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientBaselinesExtract;DELETE FROM  PatientBaselinesExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientLaboratoryExtract;DELETE FROM  PatientLaboratoryExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientPharmacyExtract;DELETE FROM  PatientPharmacyExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract;DELETE FROM  PatientVisitExtract");
         }
     }
 }
