@@ -2,6 +2,7 @@
 {
     public interface ISyncService
     {
+        void SyncAll();
         void SyncPatients();
         void SynPatientsArt();
         void SynPatientsBaselines();

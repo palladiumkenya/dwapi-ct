@@ -4,7 +4,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
-    public class SyncService:ISyncService
+    public class SyncService : ISyncService
     {
         private readonly ILoadPatientExtractCommand _loadPatientExtractCommand;
         private readonly ILoadPatientArtExtractCommand _loadPatientArtExtractCommand;
@@ -22,7 +22,20 @@ namespace PalladiumDwh.ClientReader.Core.Services
         private readonly ISyncPatientVisitExtractCommand _syncPatientVisitExtractCommand;
         private readonly ISyncPatientStatusExtractCommand _syncPatientStatusExtractCommand;
 
-        public SyncService(ILoadPatientExtractCommand loadPatientExtractCommand, ILoadPatientArtExtractCommand loadPatientArtExtractCommand, ILoadPatientBaselinesExtractCommand loadPatientBaselinesExtractCommand, ILoadPatientLaboratoryExtractCommand loadPatientLaboratoryExtractCommand, ILoadPatientPharmacyExtractCommand loadPatientPharmacyExtractCommand, ILoadPatientStatusExtractCommand loadPatientStatusExtractCommand, ILoadPatientVisitExtractCommand loadPatientVisitExtractCommand, ISyncPatientExtractCommand syncPatientExtractCommand, ISyncPatientArtExtractCommand syncPatientArtExtractCommand, ISyncPatientBaselinesExtractCommand syncPatientBaselinesExtractCommand, ISyncPatientLaboratoryExtractCommand syncPatientLaboratoryExtractCommand, ISyncPatientPharmacyExtractCommand syncPatientPharmacyExtractCommand, ISyncPatientVisitExtractCommand syncPatientVisitExtractCommand, ISyncPatientStatusExtractCommand syncPatientStatusExtractCommand)
+        public SyncService(ILoadPatientExtractCommand loadPatientExtractCommand,
+            ILoadPatientArtExtractCommand loadPatientArtExtractCommand,
+            ILoadPatientBaselinesExtractCommand loadPatientBaselinesExtractCommand,
+            ILoadPatientLaboratoryExtractCommand loadPatientLaboratoryExtractCommand,
+            ILoadPatientPharmacyExtractCommand loadPatientPharmacyExtractCommand,
+            ILoadPatientStatusExtractCommand loadPatientStatusExtractCommand,
+            ILoadPatientVisitExtractCommand loadPatientVisitExtractCommand,
+            ISyncPatientExtractCommand syncPatientExtractCommand,
+            ISyncPatientArtExtractCommand syncPatientArtExtractCommand,
+            ISyncPatientBaselinesExtractCommand syncPatientBaselinesExtractCommand,
+            ISyncPatientLaboratoryExtractCommand syncPatientLaboratoryExtractCommand,
+            ISyncPatientPharmacyExtractCommand syncPatientPharmacyExtractCommand,
+            ISyncPatientVisitExtractCommand syncPatientVisitExtractCommand,
+            ISyncPatientStatusExtractCommand syncPatientStatusExtractCommand)
         {
             _loadPatientExtractCommand = loadPatientExtractCommand;
             _loadPatientArtExtractCommand = loadPatientArtExtractCommand;
@@ -41,6 +54,14 @@ namespace PalladiumDwh.ClientReader.Core.Services
             _syncPatientStatusExtractCommand = syncPatientStatusExtractCommand;
         }
 
+
+        public void SyncAll()
+        {
+            SyncPatients();SynPatientsArt();SynPatientsBaselines();
+            SynPatientsLab();SynPatientsPharmacy();SynPatientsVisits();
+            SynPatientsStatus();
+
+        }
 
         public void SyncPatients()
         {
@@ -68,19 +89,19 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         public void SynPatientsPharmacy()
         {
-         _loadPatientPharmacyExtractCommand.Execute();
+            _loadPatientPharmacyExtractCommand.Execute();
             _syncPatientPharmacyExtractCommand.Execute();
         }
 
         public void SynPatientsLab()
         {
-         _loadPatientLaboratoryExtractCommand.Execute();
+            _loadPatientLaboratoryExtractCommand.Execute();
             _syncPatientLaboratoryExtractCommand.Execute();
         }
 
         public void SynPatientsVisits()
         {
-            _loadPatientExtractCommand.Execute();
+            _loadPatientVisitExtractCommand.Execute();
             _syncPatientVisitExtractCommand.Execute();
         }
     }

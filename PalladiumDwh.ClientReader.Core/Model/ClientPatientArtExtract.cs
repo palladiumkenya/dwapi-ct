@@ -11,7 +11,6 @@ namespace PalladiumDwh.ClientReader.Core.Model
     {
         [Key]
         public override Guid Id { get; set; }
-
         public DateTime? DOB { get; set; }
         public decimal? AgeEnrollment { get; set; }
         public decimal? AgeARTStart { get; set; }

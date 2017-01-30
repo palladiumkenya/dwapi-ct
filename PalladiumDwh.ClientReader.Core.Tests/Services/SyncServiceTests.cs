@@ -37,6 +37,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         private ISyncPatientVisitExtractCommand _syncPatientVisitExtractCommand;
         private ISyncPatientStatusExtractCommand _syncPatientStatusExtractCommand;
         private int top = 10;
+        private int topExtracts = -1;
 
         [SetUp]
         public void should_SetUp()
@@ -45,17 +46,17 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _loadPatientExtractCommand = new LoadPatientExtractDbCommand(new SqlConnection(_srcCn),
                 new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
             _loadPatientArtExtractCommand = new LoadPatientArtExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+                new SqlConnection(_cn), TestHelpers.GetPatientsArtSql(top));
             _loadPatientBaselinesExtractCommand = new LoadPatientBaselinesExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+                new SqlConnection(_cn), TestHelpers.GetPatientBaselinesSql(top));
             _loadPatientLaboratoryExtractCommand = new LoadPatientLaboratoryExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+                new SqlConnection(_cn), TestHelpers.GetPatientLabsSql(top));
             _loadPatientPharmacyExtractCommand = new LoadPatientPharmacyExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+                new SqlConnection(_cn), TestHelpers.GetPatientsPharmacySql(top));
             _loadPatientVisitExtractCommand = new LoadPatientVisitExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+                new SqlConnection(_cn), TestHelpers.GetPatientVisitsSql(top));
             _loadPatientStatusExtractCommand = new LoadPatientStatusExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
+                new SqlConnection(_cn), TestHelpers.GetPatientStatusSql(top));
 
             _syncPatientExtractCommand = new SyncPatientExtractDbCommand(_cn);
             _syncPatientArtExtractCommand = new SyncPatientArtExtractDbCommand(_cn);
@@ -78,16 +79,28 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
 
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientExtract;DELETE FROM  PatientExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientArtExtract;DELETE FROM  PatientArtExtract");
-            _context.Database.ExecuteSqlCommand(
-                "DELETE FROM TempPatientBaselinesExtract;DELETE FROM  PatientBaselinesExtract");
-            _context.Database.ExecuteSqlCommand(
-                "DELETE FROM TempPatientLaboratoryExtract;DELETE FROM  PatientLaboratoryExtract");
-            _context.Database.ExecuteSqlCommand(
-                "DELETE FROM TempPatientPharmacyExtract;DELETE FROM  PatientPharmacyExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientBaselinesExtract;DELETE FROM  PatientBaselinesExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientLaboratoryExtract;DELETE FROM  PatientLaboratoryExtract");
+            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientPharmacyExtract;DELETE FROM  PatientPharmacyExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract;DELETE FROM  PatientVisitExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract");
 
+        }
 
+        [Test]
+        public void should_SyncAll()
+        {
+            _syncService.SyncAll();
+
+            
+            Assert.IsTrue(_context.ClientPatientExtracts.ToList().Count > 0);
+            Assert.IsTrue(_context.ClientPatientArtExtracts.ToList().Count > 0);
+            Assert.IsTrue(_context.ClientPatientBaselinesExtracts.ToList().Count > 0);
+            Assert.IsTrue(_context.ClientPatientLaboratoryExtracts.ToList().Count > 0);
+            Assert.IsTrue(_context.ClientPatientPharmacyExtracts.ToList().Count > 0);
+            Assert.IsTrue(_context.ClientPatientVisitExtracts.ToList().Count > 0);
+            Assert.IsTrue(_context.ClientPatientStatusExtracts.ToList().Count > 0);
+            
         }
 
         [Test]
@@ -163,6 +176,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         [TearDown]
         public void TearDown()
         {
+            
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientExtract;DELETE FROM  PatientExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientArtExtract;DELETE FROM  PatientArtExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientBaselinesExtract;DELETE FROM  PatientBaselinesExtract");
@@ -170,6 +184,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientPharmacyExtract;DELETE FROM  PatientPharmacyExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract;DELETE FROM  PatientVisitExtract");
+
         }
     }
 }

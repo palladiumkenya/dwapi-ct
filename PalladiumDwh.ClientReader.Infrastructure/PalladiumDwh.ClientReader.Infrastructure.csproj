@@ -80,6 +80,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Csv\Command\LoadExtractCsvCommand.cs" />
+    <Compile Include="Csv\Command\LoadPatientExtractCsvCommand.cs" />
     <Compile Include="Data\Command\SyncPatientArtExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncPatientBaselinesExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncPatientLaboratoryExtractDbCommand.cs" />
@@ -118,6 +120,10 @@
     <Compile Include="Migrations\201701300609371_AddedPatientID.Designer.cs">
       <DependentUpon>201701300609371_AddedPatientID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701301204099_ColumnsOrder.cs" />
+    <Compile Include="Migrations\201701301204099_ColumnsOrder.Designer.cs">
+      <DependentUpon>201701301204099_ColumnsOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -154,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701300609371_AddedPatientID.resx">
       <DependentUpon>201701300609371_AddedPatientID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701301204099_ColumnsOrder.resx">
+      <DependentUpon>201701301204099_ColumnsOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
