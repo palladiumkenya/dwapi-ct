@@ -114,6 +114,10 @@
     <Compile Include="Migrations\201701291351500_AddProjectInfo.Designer.cs">
       <DependentUpon>201701291351500_AddProjectInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701300609371_AddedPatientID.cs" />
+    <Compile Include="Migrations\201701300609371_AddedPatientID.Designer.cs">
+      <DependentUpon>201701300609371_AddedPatientID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -147,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701291351500_AddProjectInfo.resx">
       <DependentUpon>201701291351500_AddProjectInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701300609371_AddedPatientID.resx">
+      <DependentUpon>201701300609371_AddedPatientID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

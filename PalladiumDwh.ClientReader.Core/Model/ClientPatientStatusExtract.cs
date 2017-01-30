@@ -19,8 +19,11 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientStatusExtract(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project)
+        public ClientPatientStatusExtract(int patientPk, string patientId, int siteCode, string exitDescription, DateTime? exitDate, string exitReason, string emr, string project)
         {
+            PatientPK = patientPk;
+            PatientID = patientId;
+            SiteCode = siteCode;
             ExitDescription = exitDescription;
             ExitDate = exitDate;
             ExitReason = exitReason;
@@ -30,6 +33,9 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         public ClientPatientStatusExtract(TempPatientStatusExtract extract)
         {
+            PatientPK = extract.PatientPK;
+            PatientID = extract.PatientID;
+            SiteCode = extract.SiteCode;
             ExitDescription = extract.ExitDescription;
             ExitDate = extract.ExitDate;
             ExitReason = extract.ExitReason;

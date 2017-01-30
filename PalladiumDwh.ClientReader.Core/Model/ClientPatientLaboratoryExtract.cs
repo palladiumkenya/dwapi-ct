@@ -22,8 +22,11 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientLaboratoryExtract(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, string emr, string project)
+        public ClientPatientLaboratoryExtract(int patientPk, string patientId, int siteCode, int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, string emr, string project)
         {
+            PatientPK = patientPk;
+            PatientID = patientId;
+            SiteCode = siteCode;
             VisitId = visitId;
             OrderedByDate = orderedByDate;
             ReportedByDate = reportedByDate;
@@ -36,6 +39,9 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         public ClientPatientLaboratoryExtract(TempPatientLaboratoryExtract extract)
         {
+            PatientPK = extract.PatientPK;
+            PatientID = extract.PatientID;
+            SiteCode = extract.SiteCode;
             VisitId = extract.VisitId;
             OrderedByDate = extract.OrderedByDate;
             ReportedByDate = extract.ReportedByDate;

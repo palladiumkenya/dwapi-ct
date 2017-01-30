@@ -12,6 +12,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
     public abstract class ClientExtract : IClientExtract
     {
         public virtual int PatientPK { get; set; }
+        public string PatientID { get; set; }
         public virtual int SiteCode { get; set; }
 
         [Column(Order = 100)]

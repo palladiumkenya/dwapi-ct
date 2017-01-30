@@ -39,13 +39,16 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientArtExtract(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart,
+        public ClientPatientArtExtract(int patientPk, string patientId, int siteCode,DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart,
             decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource,
             DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen,
             DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate,
             string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider,
             DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project)
         {
+            PatientPK = patientPk;
+            PatientID = patientId;
+            SiteCode = siteCode;
             DOB = dob;
             AgeEnrollment = ageEnrollment;
             AgeARTStart = ageArtStart;
@@ -74,6 +77,9 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         public ClientPatientArtExtract(TempPatientArtExtract extract)
         {
+            PatientPK = extract.PatientPK;
+            PatientID = extract.PatientID;
+            SiteCode = extract.SiteCode;
             DOB = extract.DOB;
             AgeEnrollment = extract.AgeEnrollment;
             AgeARTStart = extract.AgeARTStart;

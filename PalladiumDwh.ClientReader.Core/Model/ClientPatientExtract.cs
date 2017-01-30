@@ -56,9 +56,10 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientExtract(int patientPk, int siteCode, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project)
+        public ClientPatientExtract(int patientPk, string patientId, int siteCode, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project)
         {
             PatientPK = patientPk;
+            PatientID = patientId;
             SiteCode = siteCode;
             Gender = gender;
             DOB = dob;
@@ -87,6 +88,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public ClientPatientExtract(TempPatientExtract extract)
         {
             PatientPK = extract.PatientPK;
+            PatientID = extract.PatientID;
             SiteCode = extract.SiteCode;
             Gender = extract.Gender;
             DOB = extract.DOB;
