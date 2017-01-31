@@ -90,12 +90,13 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Tests.Data
             var savedPatient = _repository.GetAll().FirstOrDefault(x=>x.Id==patient.Id);
             Assert.IsNotNull(savedPatient);
             Assert.IsTrue(savedPatient.Processed);
+            _context.Database.ExecuteSqlCommand("Delete from PatientExtract;");
         }
 
         [TearDown]
         public void TearDown()
         {
-            _context.Database.ExecuteSqlCommand("Delete from PatientExtract;");
+           
             _context.Dispose();
             _context = null;
         }
