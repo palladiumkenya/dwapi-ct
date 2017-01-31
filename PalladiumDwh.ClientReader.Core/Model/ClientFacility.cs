@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
+using PalladiumDwh.Shared.Custom;
 
 
 namespace PalladiumDwh.ClientReader.Core.Model
@@ -29,6 +32,30 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public override string ToString()
         {
             return $"{Name} ({Code})";
+        }
+
+        public string GetAddAction(string source)
+        {
+            StringBuilder scb = new StringBuilder();
+            List<string> columns = new List<string>();
+            foreach (var p in GetType().GetProperties())
+            {
+                if (
+                    !(Attribute.IsDefined(p, typeof(NotMappedAttribute)) ||
+                      p.GetCustomAttributes(typeof(DoNotReadAttribute), false).Length > 0))
+                    columns.Add(p.Name);
+            }
+
+            if (columns.Count > 1)
+            {
+                string destination = GetType().Name.Replace("Client", "");
+
+                scb.Append($" INSERT INTO {destination} "); //ART
+                scb.Append($" ({Utility.GetColumns(columns)}) ");
+                scb.Append($" SELECT  FROM {source}"); //TEMPART
+                
+            }
+            return scb.ToString();
         }
     }
 }

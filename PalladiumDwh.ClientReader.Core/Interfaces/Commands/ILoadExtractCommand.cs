@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using PalladiumDwh.ClientReader.Core.Model.Source;
+﻿using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
 {

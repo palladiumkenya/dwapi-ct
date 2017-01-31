@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
-using System.Linq;
 using System.Text;
 using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 using PalladiumDwh.Shared.Custom;

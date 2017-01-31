@@ -90,6 +90,7 @@
     <Compile Include="Csv\Command\LoadPatientVisitExtractCsvCommand.cs" />
     <Compile Include="Data\Command\SyncPatientArtExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncPatientBaselinesExtractDbCommand.cs" />
+    <Compile Include="Data\Command\SyncFacilityDbCommand.cs" />
     <Compile Include="Data\Command\SyncPatientLaboratoryExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncPatientPharmacyExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncPatientStatusExtractDbCommand.cs" />

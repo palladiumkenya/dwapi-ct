@@ -1,7 +1,5 @@
 using System;
-using System.ComponentModel;
 using PalladiumDwh.ClientReader.Core.Interfaces.Source;
-using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Model.Source
 {

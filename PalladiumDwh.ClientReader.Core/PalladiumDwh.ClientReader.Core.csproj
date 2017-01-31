@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\Commands\ILoadCsvExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncFacilityCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientVisitExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientStatusExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientPharmacyExtractCommand.cs" />
@@ -61,6 +62,14 @@
     <Compile Include="Interfaces\Commands\ISyncPatientArtExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientBaselinesExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientExtractCommand.cs" />
+    <Compile Include="Interfaces\DTOs\IClientExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientArtExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientBaselinesExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientLaboratoryExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientPharmacyExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientStatusExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientVisitExtractDTO.cs" />
     <Compile Include="Interfaces\IClientPatientArtExtract.cs" />
     <Compile Include="Interfaces\IClientPatientBaselinesExtract.cs" />
     <Compile Include="Interfaces\IClientPatientExtract.cs" />
@@ -71,6 +80,13 @@
     <Compile Include="Interfaces\IClientExtract.cs" />
     <Compile Include="Interfaces\IReadExtractService.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
+    <Compile Include="Interfaces\Profiles\IClientExtractProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientARTProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientBaselineProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientLabProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientPharmacyProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientStatusProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientVisitProfile.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
     <Compile Include="Interfaces\Commands\ISyncCommand.cs" />
     <Compile Include="Interfaces\Source\ITempExtract.cs" />
@@ -90,6 +106,21 @@
     <Compile Include="Interfaces\Commands\ILoadPatientExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ILoadExtractCommand.cs" />
     <Compile Include="Model\ClientExtract.cs" />
+    <Compile Include="Model\DTO\ClientFacilityDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientArtExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientBaselinesExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientLaboratoryExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientPharmacyExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientStatusExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientVisitExtractDTO.cs" />
+    <Compile Include="Model\Profile\ClientExtractProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientARTProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientBaselineProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientLabProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientPharmacyProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientStatusProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientVisitProfile.cs" />
     <Compile Include="Model\Source\Map\TempExtractMap.cs" />
     <Compile Include="Model\Source\TempExtract.cs" />
     <Compile Include="Model\ClientPatientArtExtract.cs" />

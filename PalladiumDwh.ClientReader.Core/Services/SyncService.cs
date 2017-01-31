@@ -1,5 +1,4 @@
-﻿using System;
-using PalladiumDwh.ClientReader.Core.Interfaces;
+﻿using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 
 namespace PalladiumDwh.ClientReader.Core.Services

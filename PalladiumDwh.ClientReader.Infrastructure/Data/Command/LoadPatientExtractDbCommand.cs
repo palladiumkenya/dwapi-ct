@@ -8,6 +8,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
   {
       public LoadPatientExtractDbCommand(IDbConnection sourceConnection, IDbConnection clientConnection, string commandText, int batchSize = 100) : base(sourceConnection, clientConnection, commandText, batchSize)
       {
+            
       }
   }
 }

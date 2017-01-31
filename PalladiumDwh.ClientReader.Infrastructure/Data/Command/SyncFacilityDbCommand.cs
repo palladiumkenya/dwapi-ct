@@ -1,0 +1,38 @@
+﻿using System.Data;
+using System.Data.Entity;
+using System.Data.SqlClient;
+using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Core.Model.Source;
+
+namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
+{
+  public  class SyncFacilityDbCommand :  ISyncFacilityCommand
+  {
+      private readonly string  _connectionString;
+
+      public SyncFacilityDbCommand(string connectionString)
+      {
+            _connectionString = connectionString;
+        }
+
+      public void Execute()
+      {
+            var extract = new ClientFacility();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = extract.GetAddAction(nameof(ClientPatientExtract));
+                    command.ExecuteNonQuery();
+                }
+
+            }
+        }
+  }
+}
