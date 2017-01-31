@@ -128,5 +128,60 @@ namespace PalladiumDwh.ClientReader.Core.Model
             ";
             return base.GetAddAction(sql, false);
         }
+
+        public void AddPatientArtExtracts(IEnumerable<ClientPatientArtExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientPK = PatientPK;
+                e.SiteCode = SiteCode;
+                ClientPatientArtExtracts.Add(e);
+            }
+        }
+        public void AddPatientBaselinesExtracts(IEnumerable<ClientPatientBaselinesExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientPK = PatientPK;
+                e.SiteCode = SiteCode;
+                ClientPatientBaselinesExtracts.Add(e);
+            }
+        }
+        public void AddPatientLaboratoryExtracts(IEnumerable<ClientPatientLaboratoryExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientPK = PatientPK;
+                e.SiteCode = SiteCode;
+                ClientPatientLaboratoryExtracts.Add(e);
+            }
+        }
+        public void AddPatientPharmacyExtracts(IEnumerable<ClientPatientPharmacyExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientPK = PatientPK;
+                e.SiteCode = SiteCode;
+                ClientPatientPharmacyExtracts.Add(e);
+            }
+        }
+        public void AddPatientStatusExtracts(IEnumerable<ClientPatientStatusExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientPK = PatientPK;
+                e.SiteCode = SiteCode;
+                ClientPatientStatusExtracts.Add(e);
+            }
+        }
+        public void AddPatientVisitExtracts(IEnumerable<ClientPatientVisitExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientPK = PatientPK;
+                e.SiteCode = SiteCode;
+                ClientPatientVisitExtracts.Add(e);
+            }
+        }
     }
 }
