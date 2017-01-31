@@ -34,6 +34,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
             DateExtracted=DateTime.Now;
         }
 
+        //TODO Create default converter in Shared Project
         public virtual void Load(IDataReader reader)
         {
             HasError = false;

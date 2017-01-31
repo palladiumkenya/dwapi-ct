@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using FizzWare.NBuilder;
+using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
@@ -57,6 +59,14 @@ namespace PalladiumDwh.ClientReader.Core.Tests
             }
             return extracts;
         }
+
+        public static string GetCsv(string name)
+        {
+            string path = TestContext.CurrentContext.TestDirectory;
+            var files = Directory.GetFiles(path, "*.csv", SearchOption.AllDirectories);
+            return files.FirstOrDefault(x => x.Contains(name));
+        }
+
         public static string GetPatientsSql(int top = -1)
         {
             string selecttop = top > 0 ? $"TOP {top} " : "";

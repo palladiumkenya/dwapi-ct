@@ -98,6 +98,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Csv\Command\LoadPatientBaselinesExtractCsvCommandTests.cs" />
+    <Compile Include="Csv\Command\LoadPatientLaboratoryExtractCsvCommandTests.cs" />
+    <Compile Include="Csv\Command\LoadPatientPharmacyExtractCsvCommandTests.cs" />
+    <Compile Include="Csv\Command\LoadPatientStatusExtractCsvCommandTests.cs" />
+    <Compile Include="Csv\Command\LoadPatientVisitExtractCsvCommandTests.cs" />
+    <Compile Include="Csv\Command\LoadPatientArtExtractCsvCommandTests.cs" />
     <Compile Include="Csv\Command\LoadPatientExtractCsvCommandTests.cs" />
     <Compile Include="Data\Command\LoadPatientArtExtractDbCommandTests.cs" />
     <Compile Include="Data\Command\LoadPatientBaselinesExtractDbCommandTests.cs" />
@@ -127,9 +133,9 @@
     <None Include="Extracts\_ARTPatientExtract Lunga Lunga 13053.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Extracts\_PatientExtract Lunga Lunga 13053.csv">
+    <None Include="Extracts\_PatientExtract Lunga Lunga 13053.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <None Include="Extracts\_PatientLaboratoryExtract Lunga Lunga 13053.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

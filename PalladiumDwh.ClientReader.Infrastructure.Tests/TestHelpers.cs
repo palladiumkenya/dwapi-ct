@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using FizzWare.NBuilder;
+using NUnit.Framework;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
@@ -55,6 +57,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests
 
             }
             return patients;
+        }
+
+        public static string GetCsv(string name)
+        {
+            string path = TestContext.CurrentContext.TestDirectory;
+            var files = Directory.GetFiles(path, "*.csv", SearchOption.AllDirectories);
+            return files.FirstOrDefault(x => x.Contains(name));
         }
 
         public static string GetPatientsSql(int top=-1)

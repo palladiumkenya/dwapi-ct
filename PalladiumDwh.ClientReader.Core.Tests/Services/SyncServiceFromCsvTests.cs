@@ -6,13 +6,14 @@ using NUnit.Framework.Internal;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Services;
+using PalladiumDwh.ClientReader.Infrastructure.Csv.Command;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 
 namespace PalladiumDwh.ClientReader.Core.Tests.Services
 {
     [TestFixture]
-    public class SyncServiceTests
+    public class SyncServiceFromCsvTests
     {
         private readonly string _cn = ConfigurationManager.ConnectionStrings["DWAPIRemote"].ConnectionString;
         private readonly string _srcCn = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
@@ -43,20 +44,13 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         public void should_SetUp()
         {
 
-            _loadPatientExtractCommand = new LoadPatientExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientsSql(top));
-            _loadPatientArtExtractCommand = new LoadPatientArtExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientsArtSql(top));
-            _loadPatientBaselinesExtractCommand = new LoadPatientBaselinesExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientBaselinesSql(top));
-            _loadPatientLaboratoryExtractCommand = new LoadPatientLaboratoryExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientLabsSql(top));
-            _loadPatientPharmacyExtractCommand = new LoadPatientPharmacyExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientsPharmacySql(top));
-            _loadPatientVisitExtractCommand = new LoadPatientVisitExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientVisitsSql(top));
-            _loadPatientStatusExtractCommand = new LoadPatientStatusExtractDbCommand(new SqlConnection(_srcCn),
-                new SqlConnection(_cn), TestHelpers.GetPatientStatusSql(top));
+            _loadPatientExtractCommand = new LoadPatientExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientExtract"));
+            _loadPatientArtExtractCommand = new LoadPatientArtExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("ARTPatientExtract"));
+            _loadPatientBaselinesExtractCommand = new LoadPatientBaselinesExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientWABWHOCD4Extract"));
+            _loadPatientLaboratoryExtractCommand = new LoadPatientLaboratoryExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientLaboratoryExtract"));
+            _loadPatientPharmacyExtractCommand = new LoadPatientPharmacyExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientPharmacyExtract"));
+            _loadPatientVisitExtractCommand = new LoadPatientVisitExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientVisitExtract"));
+            _loadPatientStatusExtractCommand = new LoadPatientStatusExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientStatusExtract"));
 
             _syncPatientExtractCommand = new SyncPatientExtractDbCommand(_cn);
             _syncPatientArtExtractCommand = new SyncPatientArtExtractDbCommand(_cn);
@@ -102,7 +96,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             Assert.IsTrue(_context.ClientPatientStatusExtracts.ToList().Count > 0);
             
         }
-        
+
         [Test]
         public void should_SyncPatients()
         {

@@ -93,6 +93,7 @@
     <Compile Include="Model\PatientStatusExtractRowTests.cs" />
     <Compile Include="Model\PatientExtractRowTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SyncServiceFromCsvTests.cs" />
     <Compile Include="Services\SyncServiceTests.cs" />
     <Compile Include="TestHelpers.cs" />
   </ItemGroup>
@@ -101,6 +102,27 @@
     <Content Include="database.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Extracts\_ARTPatientExtract Lunga Lunga 13053.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Extracts\_PatientExtract Lunga Lunga 13053.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Extracts\_PatientLaboratoryExtract Lunga Lunga 13053.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Extracts\_PatientPharmacyExtract Lunga Lunga 13053.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Extracts\_PatientStatusExtract Lunga Lunga 13053.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Extracts\_PatientVisitExtract Lunga Lunga 13053.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Extracts\_PatientWABWHOCD4Extract Lunga Lunga 13053.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

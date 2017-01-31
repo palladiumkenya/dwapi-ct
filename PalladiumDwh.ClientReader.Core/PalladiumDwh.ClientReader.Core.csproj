@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
       <Private>True</Private>
@@ -49,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\Commands\ILoadCsvExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientVisitExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientStatusExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientPharmacyExtractCommand.cs" />
@@ -85,6 +90,7 @@
     <Compile Include="Interfaces\Commands\ILoadPatientExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ILoadExtractCommand.cs" />
     <Compile Include="Model\ClientExtract.cs" />
+    <Compile Include="Model\Source\Map\TempExtractMap.cs" />
     <Compile Include="Model\Source\TempExtract.cs" />
     <Compile Include="Model\ClientPatientArtExtract.cs" />
     <Compile Include="Model\ClientPatientBaselinesExtract.cs" />

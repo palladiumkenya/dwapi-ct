@@ -81,7 +81,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Csv\Command\LoadExtractCsvCommand.cs" />
+    <Compile Include="Csv\Command\LoadPatientArtExtractCsvCommand.cs" />
+    <Compile Include="Csv\Command\LoadPatientBaselinesExtractCsvCommand.cs" />
     <Compile Include="Csv\Command\LoadPatientExtractCsvCommand.cs" />
+    <Compile Include="Csv\Command\LoadPatientLaboratoryExtractCsvCommand.cs" />
+    <Compile Include="Csv\Command\LoadPatientPharmacyExtractCsvCommand.cs" />
+    <Compile Include="Csv\Command\LoadPatientStatusExtractCsvCommand.cs" />
+    <Compile Include="Csv\Command\LoadPatientVisitExtractCsvCommand.cs" />
     <Compile Include="Data\Command\SyncPatientArtExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncPatientBaselinesExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncPatientLaboratoryExtractDbCommand.cs" />

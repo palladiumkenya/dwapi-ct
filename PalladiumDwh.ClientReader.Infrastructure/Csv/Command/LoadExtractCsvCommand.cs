@@ -4,21 +4,24 @@ using System.Data;
 using System.IO;
 using System.Reflection;
 using CsvHelper;
+using CsvHelper.Configuration;
 using Dapper;
 using log4net;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Model.Source;
+using PalladiumDwh.ClientReader.Core.Model.Source.Map;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
 {
-    public abstract class LoadExtractCsvCommand<T> : ILoadExtractCommand<T> where T : TempExtract
+    public abstract class LoadExtractCsvCommand<T> : ILoadCsvExtractCommand<T> where T : TempExtract
     {
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         internal readonly IDbConnection CleintConnection;
         internal readonly string CommandText;
         internal readonly int BatchSize;
-        protected LoadExtractCsvCommand(IDbConnection clientConnection,string commandText, int batchSize = 100)
+
+        protected LoadExtractCsvCommand(IDbConnection clientConnection, string commandText, int batchSize = 100)
         {
             CleintConnection = clientConnection;
             CommandText = commandText;
@@ -27,81 +30,105 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
 
         public virtual void Execute()
         {
-                    
-                    using (TextReader txtReader =File.OpenText(CommandText))
+
+            using (TextReader txtReader = File.OpenText(CommandText))
+            {
+
+                var reader = new CsvReader(txtReader, GetConfig());
+                reader.Configuration.RegisterClassMap(TempExtractMap.GetMap<T>());
+
+                if (null != reader)
+                {
+                    var extracts = new List<T>();
+                    int count = 0;
+                    var extract = (T) Activator.CreateInstance(typeof(T));
+                    string action = extract.GetAddAction();
+
+                    while (reader.Read())
                     {
 
-                        var reader = new CsvReader(txtReader);
-                        if (null != reader)
+                        count++;
+                        try
                         {
-                            var extracts = new List<T>();
-                            int count = 0;
-                            var extract = (T) Activator.CreateInstance(typeof(T));
-                            string action = extract.GetAddAction();
-
-                            while (reader.Read())
+                            extract = reader.GetRecord<T>();
+                            //extract.Load(reader);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Debug(string.Join("^", reader.CurrentRecord));
+                            Log.Debug(ex);
+                            try
                             {
-
-                                count++;
-                                extract = reader.GetRecord<T>();
-                                
-                                if (!extract.HasError)
-                                {
-                                    if (BatchSize == 0)
-                                    {
-                                        if (CleintConnection.State != ConnectionState.Open)
-                                        {
-                                            CleintConnection.Open();
-                                        }
-                                        CleintConnection.Execute(action, extract);
-                                    }
-                                    else
-                                    {
-                                        extracts.Add(extract);
-
-                                        if (count == BatchSize && BatchSize > 0)
-                                        {
-                                            
-                                            if (CleintConnection.State != ConnectionState.Open)
-                                            {
-                                                CleintConnection.Open();
-                                            }
-
-                                            var tx = CleintConnection.BeginTransaction();
-                                            CleintConnection.Execute(action, extracts, tx);
-                                            tx.Commit();
-                                        
-                                            extracts = new List<T>();
-                                            count = 0;
-                                        }
-                                    }
-                                }
-
+                                Log.Debug(ex.Data["CsvHelper"]);
                             }
-
-                            if (extracts.Count > 0)
+                            catch
                             {
-                                
+                            }
+                            //extract.HasError = true;
+                        }
+
+
+                        if (!extract.HasError)
+                        {
+                            if (BatchSize == 0)
+                            {
                                 if (CleintConnection.State != ConnectionState.Open)
                                 {
                                     CleintConnection.Open();
                                 }
-                                var tx = CleintConnection.BeginTransaction();
-                                CleintConnection.Execute(action, extracts, tx);
-                                tx.Commit();
-                                
+                                CleintConnection.Execute(action, extract);
+                            }
+                            else
+                            {
+                                extracts.Add(extract);
+
+                                if (count == BatchSize && BatchSize > 0)
+                                {
+
+                                    if (CleintConnection.State != ConnectionState.Open)
+                                    {
+                                        CleintConnection.Open();
+                                    }
+
+                                    var tx = CleintConnection.BeginTransaction();
+                                    CleintConnection.Execute(action, extracts, tx);
+                                    tx.Commit();
+
+                                    extracts = new List<T>();
+                                    count = 0;
+                                }
                             }
                         }
+
                     }
 
-                
+                    if (extracts.Count > 0)
+                    {
 
-            
+                        if (CleintConnection.State != ConnectionState.Open)
+                        {
+                            CleintConnection.Open();
+                        }
+                        var tx = CleintConnection.BeginTransaction();
+                        CleintConnection.Execute(action, extracts, tx);
+                        tx.Commit();
+
+                    }
+                }
+            }
         }
 
-        private void LoadData(List<T> extracts)
+        private CsvConfiguration GetConfig()
         {
-
+            return new CsvConfiguration()
+            {
+                IsHeaderCaseSensitive = false,
+                WillThrowOnMissingField = false,
+                SkipEmptyRecords = true,
+                IgnoreHeaderWhiteSpace = true,
+                TrimFields = true,
+                TrimHeaders = true
+            };
 
         }
     }
