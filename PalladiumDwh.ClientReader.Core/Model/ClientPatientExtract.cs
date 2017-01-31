@@ -16,6 +16,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public override int PatientPK { get; set; }
         [Key, Column(Order = 2)]
         public override int SiteCode { get; set; }
+        public string FacilityName { get; set; }
         public string Gender { get; set; }
         public DateTime? DOB { get; set; }
         public DateTime? RegistrationDate { get; set; }
@@ -56,11 +57,12 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientExtract(int patientPk, string patientId, int siteCode, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project)
+        public ClientPatientExtract(int patientPk, string patientId, int siteCode, string facilityName,string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project)
         {
             PatientPK = patientPk;
             PatientID = patientId;
             SiteCode = siteCode;
+            FacilityName = facilityName;
             Gender = gender;
             DOB = dob;
             RegistrationDate = registrationDate;
@@ -90,6 +92,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             PatientPK = extract.PatientPK;
             PatientID = extract.PatientID;
             SiteCode = extract.SiteCode;
+            FacilityName = extract.FacilityName;
             Gender = extract.Gender;
             DOB = extract.DOB;
             RegistrationDate = extract.RegistrationDate;
@@ -114,6 +117,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = extract.Project;
         }
 
+       
+
         public override string GetAddAction(string source, bool lookup = true)
         {
             string sql = $@"
@@ -128,6 +133,37 @@ namespace PalladiumDwh.ClientReader.Core.Model
             ";
             return base.GetAddAction(sql, false);
         }
+
+        public bool HasArt()
+        {
+            return ClientPatientArtExtracts.Count > 0;
+        }
+        public bool HasBaselines()
+        {
+            return ClientPatientBaselinesExtracts.Count > 0;
+        }
+        public bool HasLabs()
+        {
+            return ClientPatientLaboratoryExtracts.Count > 0;
+        }
+        public bool HasPharmacy()
+        {
+            return ClientPatientPharmacyExtracts.Count > 0;
+        }
+        public bool HasVisits()
+        {
+            return ClientPatientVisitExtracts.Count > 0;
+        }
+        public bool HasStatus()
+        {
+            return ClientPatientStatusExtracts.Count > 0;
+        }
+
+        public bool IsComplete()
+        {
+            return HasArt() && HasBaselines() && HasLabs() && HasPharmacy() && HasVisits() && HasStatus();
+        }
+
 
         public void AddPatientArtExtracts(IEnumerable<ClientPatientArtExtract> extracts)
         {
@@ -183,5 +219,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
                 ClientPatientVisitExtracts.Add(e);
             }
         }
+
+        
     }
 }

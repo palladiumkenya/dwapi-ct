@@ -70,9 +70,32 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Tests.Data
             
         }
 
+        [Test]
+        public void should_Update_Processed()
+        {
+            _context=new DwapiRemoteContext();
+            _repository = new ClientPatientRepository(_context);
+            TestHelpers.CreateTestData(_context, _patients);
+
+            var patient = _repository.GetAll().First();
+            Assert.IsNotNull(patient);
+            Assert.IsFalse(patient.Processed);
+
+            patient.Processed = true;
+
+            _repository.UpdateProcessd(patient);
+
+            _context = new DwapiRemoteContext();
+            _repository = new ClientPatientRepository(_context);
+            var savedPatient = _repository.GetAll().FirstOrDefault(x=>x.Id==patient.Id);
+            Assert.IsNotNull(savedPatient);
+            Assert.IsTrue(savedPatient.Processed);
+        }
+
         [TearDown]
         public void TearDown()
         {
+            _context.Database.ExecuteSqlCommand("Delete from PatientExtract;");
             _context.Dispose();
             _context = null;
         }

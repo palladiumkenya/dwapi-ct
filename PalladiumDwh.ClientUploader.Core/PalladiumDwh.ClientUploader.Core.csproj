@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\IClientPatientRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISendPatientProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

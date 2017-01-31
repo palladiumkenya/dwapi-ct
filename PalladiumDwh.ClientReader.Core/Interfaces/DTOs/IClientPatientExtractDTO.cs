@@ -7,6 +7,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.DTOs
     {
         int PatientPID { get; set; }
         string PatientCccNumber { get; set; }
+        string facilityName { get; set; }
         Guid FacilityId { get; set; }
     }
 }

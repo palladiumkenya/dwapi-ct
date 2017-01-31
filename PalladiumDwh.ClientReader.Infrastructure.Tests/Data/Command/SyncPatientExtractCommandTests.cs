@@ -50,7 +50,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         [TearDown]
         public void TearDown()
         {
-            _context.Database.ExecuteSqlCommand("DELETE FROM PatientExtract;DELETE FROM TempPatientExtract");
+            //_context.Database.ExecuteSqlCommand("DELETE FROM PatientExtract;DELETE FROM TempPatientExtract");
         }
     }
 }

@@ -7,6 +7,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
     {
         public int PatientPID { get; set; }
         public string PatientCccNumber { get; set; }
+        public string facilityName { get; set; }
         public string Gender { get; set; }
         public DateTime? DOB { get; set; }
         public DateTime? RegistrationDate { get; set; }

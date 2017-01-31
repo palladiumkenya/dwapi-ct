@@ -16,7 +16,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             _connectionString = connectionString;
         }
 
-        public void Execute()
+        public virtual void Execute()
         {
             var extract = (TD)Activator.CreateInstance(typeof(TD));
             using (var connection = new SqlConnection(_connectionString))

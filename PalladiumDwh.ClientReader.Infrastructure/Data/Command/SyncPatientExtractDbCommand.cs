@@ -10,6 +10,18 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
   {
       public SyncPatientExtractDbCommand(string connectionString) : base(connectionString)
       {
+            
       }
-  }
+
+        //TODO Sync Facilities
+      public override void Execute()
+      {
+          base.Execute();
+            /*
+             * SELECT [SiteCode],max([Emr])Emr,max([Project])Project,max([FacilityName])FacilityName
+  FROM [DWAPIRemote].[dbo].[PatientExtract]
+  group by [SiteCode],[Emr],[Project],[FacilityName]
+             */
+        }
+    }
 }
