@@ -46,9 +46,11 @@
   <ItemGroup>
     <Compile Include="Interfaces\IClientPatientRepository.cs" />
     <Compile Include="Interfaces\IProfileManager.cs" />
+    <Compile Include="Interfaces\IPushProfileService.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProfileManager.cs" />
+    <Compile Include="Services\PushProfileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PalladiumDwh.ClientReader.Core\PalladiumDwh.ClientReader.Core.csproj">
@@ -63,9 +65,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

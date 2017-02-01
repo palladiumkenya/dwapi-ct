@@ -8,5 +8,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Profiles
     {
         ClientFacilityDTO Facility { get; set; }
         ClientPatientExtractDTO Demographic { get; set; }
+        string EndPoint { get; set; }
     }
 }
