@@ -5,6 +5,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.DTOs
 {
     public interface IClientPatientPharmacyExtractDTO: IClientExtractDTO,IPharmacy
     {
-        Guid PatientId { get; set; }
+        
     }
 }

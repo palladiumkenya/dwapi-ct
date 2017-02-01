@@ -9,7 +9,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Profile
     public class ClientPatientBaselineProfile :ClientExtractProfile , IClientPatientBaselineProfile
     {
         public List<ClientPatientBaselinesExtractDTO> BaselinesExtracts { get; set; } = new List<ClientPatientBaselinesExtractDTO>();
-
+        public override string EndPoint { get; set; } = "PatientBaseline";
 
 
         public static ClientPatientBaselineProfile Create(ClientFacility facility, ClientPatientExtract patient)

@@ -7,7 +7,9 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
 {
     public class ClientPatientBaselinesExtractDTO : IClientPatientBaselinesExtractDTO
     {
-
+        public int PatientPID { get; set; }
+        public string PatientCccNumber { get; set; }
+        public int FacilityId { get; set; }
         public int? bCD4 { get; set; }
         public DateTime? bCD4Date { get; set; }
         public int? bWAB { get; set; }
@@ -32,14 +34,17 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public DateTime? m6CD4Date { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public Guid PatientId { get; set; }
+        
 
         public ClientPatientBaselinesExtractDTO()
         {
         }
 
-        public ClientPatientBaselinesExtractDTO(int? bCd4, DateTime? bCd4Date, int? bWab, DateTime? bWabDate, int? bWho, DateTime? bWhoDate, int? eWab, DateTime? eWabDate, int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? lastWab, DateTime? lastWabDate, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, string emr, string project, Guid patientId)
+        public ClientPatientBaselinesExtractDTO(int patientPid, string patientCccNumber, int facilityId, int? bCd4, DateTime? bCd4Date, int? bWab, DateTime? bWabDate, int? bWho, DateTime? bWhoDate, int? eWab, DateTime? eWabDate, int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? lastWab, DateTime? lastWabDate, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, string emr, string project)
         {
+            PatientPID = patientPid;
+            PatientCccNumber = patientCccNumber;
+            FacilityId = facilityId;
             bCD4 = bCd4;
             bCD4Date = bCd4Date;
             bWAB = bWab;
@@ -64,41 +69,40 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             m6CD4Date = m6Cd4Date;
             Emr = emr;
             Project = project;
-            PatientId = patientId;
         }
 
-        public ClientPatientBaselinesExtractDTO(ClientPatientBaselinesExtract patientBaselinesExtract)
+
+        public ClientPatientBaselinesExtractDTO(ClientPatientBaselinesExtract extract)
         {
-
-            bCD4 = patientBaselinesExtract.bCD4;
-            bCD4Date = patientBaselinesExtract.bCD4Date;
-            bWAB = patientBaselinesExtract.bWAB;
-            bWABDate = patientBaselinesExtract.bWABDate;
-            bWHO = patientBaselinesExtract.bWHO;
-            bWHODate = patientBaselinesExtract.bWHODate;
-            eWAB = patientBaselinesExtract.eWAB;
-            eWABDate = patientBaselinesExtract.eWABDate;
-            eCD4 = patientBaselinesExtract.eCD4;
-            eCD4Date = patientBaselinesExtract.eCD4Date;
-            eWHO = patientBaselinesExtract.eWHO;
-            eWHODate = patientBaselinesExtract.eWHODate;
-            lastWHO = patientBaselinesExtract.lastWHO;
-            lastWHODate = patientBaselinesExtract.lastWHODate;
-            lastCD4 = patientBaselinesExtract.lastCD4;
-            lastCD4Date = patientBaselinesExtract.lastCD4Date;
-            lastWAB = patientBaselinesExtract.lastWAB;
-            lastWABDate = patientBaselinesExtract.lastWABDate;
-            m12CD4 = patientBaselinesExtract.m12CD4;
-            m12CD4Date = patientBaselinesExtract.m12CD4Date;
-            m6CD4 = patientBaselinesExtract.m6CD4;
-            m6CD4Date = patientBaselinesExtract.m6CD4Date;
-            Emr = patientBaselinesExtract.Emr;
-            Project = patientBaselinesExtract.Project;
-            //PatientId = patientBaselinesExtract.PatientId;
+            PatientPID = extract.PatientPK; //TODO PatientPID = extract.PatientPK;
+            PatientCccNumber = extract.PatientID; //TODO PatientCccNumber = extract.PatientID;
+            FacilityId = extract.SiteCode; //TODO FacilityId = extract.SiteCode
+            bCD4 = extract.bCD4;
+            bCD4Date = extract.bCD4Date;
+            bWAB = extract.bWAB;
+            bWABDate = extract.bWABDate;
+            bWHO = extract.bWHO;
+            bWHODate = extract.bWHODate;
+            eWAB = extract.eWAB;
+            eWABDate = extract.eWABDate;
+            eCD4 = extract.eCD4;
+            eCD4Date = extract.eCD4Date;
+            eWHO = extract.eWHO;
+            eWHODate = extract.eWHODate;
+            lastWHO = extract.lastWHO;
+            lastWHODate = extract.lastWHODate;
+            lastCD4 = extract.lastCD4;
+            lastCD4Date = extract.lastCD4Date;
+            lastWAB = extract.lastWAB;
+            lastWABDate = extract.lastWABDate;
+            m12CD4 = extract.m12CD4;
+            m12CD4Date = extract.m12CD4Date;
+            m6CD4 = extract.m6CD4;
+            m6CD4Date = extract.m6CD4Date;
+            Emr = extract.Emr;
+            Project = extract.Project;
 
         }
-
-
 
         public IEnumerable<ClientPatientBaselinesExtractDTO> GeneratePatientBaselinesExtractDtOs(IEnumerable<ClientPatientBaselinesExtract> extracts)
         {
@@ -108,13 +112,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
                 baselinesExtractDtos.Add(new ClientPatientBaselinesExtractDTO(e));
             }
             return baselinesExtractDtos;
-        }
-        public ClientPatientBaselinesExtract GeneratePatientBaselinesExtract(Guid patientId)
-        {
-            PatientId = patientId;
-            return new ClientPatientBaselinesExtract();
-//                (bCD4,bCD4Date,bWAB,bWABDate,bWHO,bWHODate,eWAB,eWABDate,eCD4,eCD4Date,eWHO,eWHODate,
-//                lastWHO,lastWHODate,lastCD4,lastCD4Date,lastWAB,lastWABDate,m12CD4,m12CD4Date,m6CD4,m6CD4Date,PatientId,Emr,Project);
         }
     }
 }

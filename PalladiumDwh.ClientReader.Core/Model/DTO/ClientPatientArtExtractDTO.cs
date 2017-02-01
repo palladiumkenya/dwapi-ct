@@ -7,13 +7,18 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
 {    
     public class ClientPatientArtExtractDTO : IClientPatientArtExtractDTO
     {
+        public int PatientPID { get; set; }
+        public string PatientCccNumber { get; set; }
+        public int FacilityId { get; set; }
+        public string Emr { get; set; }
+        public string Project { get; set; }
         public DateTime? DOB { get; set; }
         public decimal? AgeEnrollment { get; set; }
         public decimal? AgeARTStart { get; set; }
         public decimal? AgeLastVisit { get; set; }
         public DateTime? RegistrationDate { get; set; }
-        public string Gender { get; set; }
         public string PatientSource { get; set; }
+        public string Gender { get; set; }
         public DateTime? StartARTDate { get; set; }
         public DateTime? PreviousARTStartDate { get; set; }
         public string PreviousARTRegimen { get; set; }
@@ -29,23 +34,25 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public DateTime? LastVisit { get; set; }
         public string ExitReason { get; set; }
         public DateTime? ExitDate { get; set; }
-        public string Emr { get; set; }
-        public string Project { get; set; }
-        public Guid PatientId { get; set; }
 
         public ClientPatientArtExtractDTO()
         {
         }
 
-        public ClientPatientArtExtractDTO(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project, Guid patientId)
+        public ClientPatientArtExtractDTO(int patientPid, string patientCccNumber, int facilityId, string emr, string project, DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string patientSource, string gender, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate)
         {
+            PatientPID = patientPid;
+            PatientCccNumber = patientCccNumber;
+            FacilityId = facilityId;
+            Emr = emr;
+            Project = project;
             DOB = dob;
             AgeEnrollment = ageEnrollment;
             AgeARTStart = ageArtStart;
             AgeLastVisit = ageLastVisit;
             RegistrationDate = registrationDate;
-            Gender = gender;
             PatientSource = patientSource;
+            Gender = gender;
             StartARTDate = startArtDate;
             PreviousARTStartDate = previousArtStartDate;
             PreviousARTRegimen = previousArtRegimen;
@@ -61,37 +68,38 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             LastVisit = lastVisit;
             ExitReason = exitReason;
             ExitDate = exitDate;
-            Emr = emr;
-            Project = project;
-            PatientId = patientId;
         }
 
-        public ClientPatientArtExtractDTO(ClientPatientArtExtract patientArtExtract)
+        public ClientPatientArtExtractDTO(ClientPatientArtExtract extract)
         {
-            DOB = patientArtExtract.DOB;
-            AgeEnrollment = patientArtExtract.AgeEnrollment;
-            AgeARTStart = patientArtExtract.AgeARTStart;
-            AgeLastVisit = patientArtExtract.AgeLastVisit;
-            RegistrationDate = patientArtExtract.RegistrationDate;
-            Gender = patientArtExtract.Gender;
-            PatientSource = patientArtExtract.PatientSource;
-            StartARTDate = patientArtExtract.StartARTDate;
-            PreviousARTStartDate = patientArtExtract.PreviousARTStartDate;
-            PreviousARTRegimen = patientArtExtract.PreviousARTRegimen;
-            StartARTAtThisFacility = patientArtExtract.StartARTAtThisFacility;
-            StartRegimen = patientArtExtract.StartRegimen;
-            StartRegimenLine = patientArtExtract.StartRegimenLine;
-            LastARTDate = patientArtExtract.LastARTDate;
-            LastRegimen = patientArtExtract.LastRegimen;
-            LastRegimenLine = patientArtExtract.LastRegimenLine;
-            Duration = patientArtExtract.Duration;
-            ExpectedReturn = patientArtExtract.ExpectedReturn;
-            LastVisit = patientArtExtract.LastVisit;
-            ExitReason = patientArtExtract.ExitReason;
-            ExitDate = patientArtExtract.ExitDate;
-            Emr = patientArtExtract.Emr;
-            Project = patientArtExtract.Project;
-            //PatientId = patientArtExtract.PatientId;
+            PatientPID = extract.PatientPK; //TODO PatientPID = extract.PatientPK;
+            PatientCccNumber = extract.PatientID; //TODO PatientCccNumber = extract.PatientID;
+            FacilityId = extract.SiteCode; //TODO FacilityId = extract.SiteCode
+            Emr = extract.Emr;
+            Project = extract.Project;
+            DOB = extract.DOB;
+            AgeEnrollment = extract.AgeEnrollment;
+            AgeARTStart = extract.AgeARTStart;
+            AgeLastVisit = extract.AgeLastVisit;
+            RegistrationDate = extract.RegistrationDate;
+            PatientSource = extract.PatientSource;
+            Gender = extract.Gender;
+            StartARTDate = extract.StartARTDate;
+            PreviousARTStartDate = extract.PreviousARTStartDate;
+            PreviousARTRegimen = extract.PreviousARTRegimen;
+            StartARTAtThisFacility = extract.StartARTAtThisFacility;
+            StartRegimen = extract.StartRegimen;
+            StartRegimenLine = extract.StartRegimenLine;
+            LastARTDate = extract.LastARTDate;
+            LastRegimen = extract.LastRegimen;
+            LastRegimenLine = extract.LastRegimenLine;
+            Duration = extract.Duration;
+            ExpectedReturn = extract.ExpectedReturn;
+            Provider = extract.Provider;
+            LastVisit = extract.LastVisit;
+            ExitReason = extract.ExitReason;
+            ExitDate = extract.ExitDate;
+
         }
 
         public IEnumerable<ClientPatientArtExtractDTO> GeneratePatientArtExtractDtOs(IEnumerable<ClientPatientArtExtract> extracts)
@@ -103,16 +111,5 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             }
             return artExtracts;
         }
-        public ClientPatientArtExtract GeneratePatientArtExtract(Guid patientId)
-        {
-            PatientId = patientId;
-
-            return new ClientPatientArtExtract();
-
-//                DOB,
-//                AgeEnrollment, AgeARTStart, AgeLastVisit, RegistrationDate,Gender, PatientSource, StartARTDate,PreviousARTStartDate, 
-//                PreviousARTRegimen, StartARTAtThisFacility,StartRegimen, StartRegimenLine, LastARTDate, LastRegimen, 
-//                LastRegimenLine, Duration, ExpectedReturn,Provider,LastVisit, ExitReason, ExitDate, PatientId,Emr, Project );
-        }       
     }
 }

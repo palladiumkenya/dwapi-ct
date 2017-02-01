@@ -7,7 +7,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
     {
         public int PatientPID { get; set; }
         public string PatientCccNumber { get; set; }
-        public string facilityName { get; set; }
+        public string FacilityName { get; set; }
         public string Gender { get; set; }
         public DateTime? DOB { get; set; }
         public DateTime? RegistrationDate { get; set; }
@@ -30,74 +30,40 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string StatusAtTBClinic { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public Guid FacilityId { get; set; }
+        public int FacilityId { get; set; }
 
         public ClientPatientExtractDTO()
         {
-
         }
 
-        public ClientPatientExtractDTO(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project, Guid facilityId)
+        public ClientPatientExtractDTO(ClientPatientExtract extract)
         {
-            PatientPID = patientPid;
-            PatientCccNumber = patientCccNumber;
-            Gender = gender;
-            DOB = dob;
-            RegistrationDate = registrationDate;
-            RegistrationAtCCC = registrationAtCcc;
-            RegistrationATPMTCT = registrationAtpmtct;
-            RegistrationAtTBClinic = registrationAtTbClinic;
-            PatientSource = patientSource;
-            Region = region;
-            District = district;
-            Village = village;
-            ContactRelation = contactRelation;
-            LastVisit = lastVisit;
-            MaritalStatus = maritalStatus;
-            EducationLevel = educationLevel;
-            DateConfirmedHIVPositive = dateConfirmedHivPositive;
-            PreviousARTExposure = previousArtExposure;
-            PreviousARTStartDate = previousArtStartDate;
-            StatusAtCCC = statusAtCcc;
-            StatusAtPMTCT = statusAtPmtct;
-            StatusAtTBClinic = statusAtTbClinic;
-            FacilityId = facilityId;
-            Emr = emr;
-            Project = project;
-        }
-
-        public ClientPatientExtractDTO(ClientPatientExtract patient)
-        {
-            //PatientPID = patient.PatientPID;
-            //PatientCccNumber = patient.PatientCccNumber;
-            Gender = patient.Gender;
-            DOB = patient.DOB;
-            RegistrationDate = patient.RegistrationDate;
-            RegistrationAtCCC = patient.RegistrationAtCCC;
-            RegistrationATPMTCT = patient.RegistrationATPMTCT;
-            RegistrationAtTBClinic = patient.RegistrationAtTBClinic;
-            PatientSource = patient.PatientSource;
-            Region = patient.Region;
-            District = patient.District;
-            Village = patient.Village;
-            ContactRelation = patient.ContactRelation;
-            LastVisit = patient.LastVisit;
-            MaritalStatus = patient.MaritalStatus;
-            EducationLevel = patient.EducationLevel;
-            DateConfirmedHIVPositive = patient.DateConfirmedHIVPositive;
-            PreviousARTExposure = patient.PreviousARTExposure;
-            PreviousARTStartDate = patient.PreviousARTStartDate;
-            StatusAtCCC=patient.StatusAtCCC;
-            StatusAtPMTCT=patient.StatusAtPMTCT;
-            StatusAtTBClinic =patient.StatusAtTBClinic;
-            //FacilityId = patient.FacilityId;
-            Emr = patient.Emr;
-            Project = patient.Project;
-        }
-
-        public bool IsValid()
-        {
-            return !string.IsNullOrWhiteSpace(PatientCccNumber);
+            PatientPID = extract.PatientPK;//TODO PatientPID = extract.PatientPK
+            PatientCccNumber = extract.PatientID;//TODO PatientCccNumber = extract.PatientID
+            FacilityName = extract.FacilityName;
+            Gender = extract.Gender;
+            DOB = extract.DOB;
+            RegistrationDate = extract.RegistrationDate;
+            RegistrationAtCCC = extract.RegistrationAtCCC;
+            RegistrationATPMTCT = extract.RegistrationATPMTCT;
+            RegistrationAtTBClinic = extract.RegistrationAtTBClinic;
+            PatientSource = extract.PatientSource;
+            Region = extract.Region;
+            District = extract.District;
+            Village = extract.Village;
+            ContactRelation = extract.ContactRelation;
+            LastVisit = extract.LastVisit;
+            MaritalStatus = extract.MaritalStatus;
+            EducationLevel = extract.EducationLevel;
+            DateConfirmedHIVPositive = extract.DateConfirmedHIVPositive;
+            PreviousARTExposure = extract.PreviousARTExposure;
+            PreviousARTStartDate = extract.PreviousARTStartDate;
+            StatusAtCCC = extract.StatusAtCCC;
+            StatusAtPMTCT = extract.StatusAtPMTCT;
+            StatusAtTBClinic = extract.StatusAtTBClinic;
+            Emr = extract.Emr;
+            Project = extract.Project;
+            FacilityId = extract.SiteCode; //TODO FacilityId = extract.SiteCode
         }
     }
 }

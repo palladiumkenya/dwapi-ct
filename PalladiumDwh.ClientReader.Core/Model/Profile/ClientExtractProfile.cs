@@ -9,5 +9,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.Profile
     {
         public ClientFacilityDTO Facility { get; set; }
         public ClientPatientExtractDTO Demographic { get; set; }
+        public virtual string EndPoint { get; set; }
     }
 }

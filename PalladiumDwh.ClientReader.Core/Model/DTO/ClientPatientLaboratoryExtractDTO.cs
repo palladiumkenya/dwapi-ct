@@ -15,7 +15,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string TestResult { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public Guid PatientId { get; set; }
+        
 
         public ClientPatientLaboratoryExtractDTO()
         {
