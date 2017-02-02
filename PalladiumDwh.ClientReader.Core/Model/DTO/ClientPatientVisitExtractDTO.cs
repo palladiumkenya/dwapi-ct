@@ -33,15 +33,18 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string PwP { get; set; }
         public decimal? GestationAge { get; set; }
         public DateTime? NextAppointmentDate { get; set; }
+        public int PatientPID { get; set; }
+        public string PatientCccNumber { get; set; }
+        public int FacilityId { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public Guid PatientId { get; set; }
+        
 
         public ClientPatientVisitExtractDTO()
         {
         }
 
-        public ClientPatientVisitExtractDTO(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr, string project, Guid patientId)
+        public ClientPatientVisitExtractDTO(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, int patientPid, string patientCccNumber, int facilityId, string emr, string project)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -69,45 +72,51 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             PwP = pwP;
             GestationAge = gestationAge;
             NextAppointmentDate = nextAppointmentDate;
+            PatientPID = patientPid;
+            PatientCccNumber = patientCccNumber;
+            FacilityId = facilityId;
             Emr = emr;
             Project = project;
-            PatientId = patientId;
         }
 
-        public ClientPatientVisitExtractDTO(ClientPatientVisitExtract patientVisitExtract)
+        public ClientPatientVisitExtractDTO(ClientPatientVisitExtract extract)
         {
-            VisitId = patientVisitExtract.VisitId;
-            VisitDate = patientVisitExtract.VisitDate;
-            Service = patientVisitExtract.Service;
-            VisitType =patientVisitExtract.VisitType;
-            WHOStage =patientVisitExtract.WHOStage;
-            WABStage =patientVisitExtract.WABStage;
-            Pregnant =patientVisitExtract.Pregnant;
-            LMP =patientVisitExtract.LMP;
-            EDD =patientVisitExtract.EDD;
-            Height =patientVisitExtract.Height;
-            Weight =patientVisitExtract.Weight;
-            BP =patientVisitExtract.BP;
-            OI =patientVisitExtract.OI;
-            OIDate =patientVisitExtract.OIDate;
-            SubstitutionFirstlineRegimenDate = patientVisitExtract.SubstitutionFirstlineRegimenDate;
-            SubstitutionFirstlineRegimenReason =patientVisitExtract.SubstitutionFirstlineRegimenReason;
-            SubstitutionSecondlineRegimenDate =patientVisitExtract.SubstitutionSecondlineRegimenDate;
-            SubstitutionSecondlineRegimenReason =patientVisitExtract.SubstitutionSecondlineRegimenReason;
-            SecondlineRegimenChangeDate =patientVisitExtract.SecondlineRegimenChangeDate;
-            SecondlineRegimenChangeReason =patientVisitExtract.SecondlineRegimenChangeReason;
-            Adherence =patientVisitExtract.Adherence;
-            AdherenceCategory =patientVisitExtract.AdherenceCategory;
-            FamilyPlanningMethod = patientVisitExtract.FamilyPlanningMethod;
-            PwP =patientVisitExtract.PwP;
-            GestationAge = patientVisitExtract.GestationAge;
-            NextAppointmentDate = patientVisitExtract.NextAppointmentDate;
-            Emr = patientVisitExtract.Emr;
-            Project = patientVisitExtract.Project;
-//            PatientId = patientVisitExtract.PatientId;
+            PatientPID = extract.PatientPK; //TODO PatientPID = extract.PatientPK;
+            PatientCccNumber = extract.PatientID; //TODO PatientCccNumber = extract.PatientID;
+            FacilityId = extract.SiteCode; //TODO FacilityId = extract.SiteCode
+            VisitId = extract.VisitId;
+            VisitDate = extract.VisitDate;
+            Service = extract.Service;
+            VisitType = extract.VisitType;
+            WHOStage = extract.WHOStage;
+            WABStage = extract.WABStage;
+            Pregnant = extract.Pregnant;
+            LMP = extract.LMP;
+            EDD = extract.EDD;
+            Height = extract.Height;
+            Weight = extract.Weight;
+            BP = extract.BP;
+            OI = extract.OI;
+            OIDate = extract.OIDate;
+            SubstitutionFirstlineRegimenDate = extract.SubstitutionFirstlineRegimenDate;
+            SubstitutionFirstlineRegimenReason = extract.SubstitutionFirstlineRegimenReason;
+            SubstitutionSecondlineRegimenDate = extract.SubstitutionSecondlineRegimenDate;
+            SubstitutionSecondlineRegimenReason = extract.SubstitutionSecondlineRegimenReason;
+            SecondlineRegimenChangeDate = extract.SecondlineRegimenChangeDate;
+            SecondlineRegimenChangeReason = extract.SecondlineRegimenChangeReason;
+            Adherence = extract.Adherence;
+            AdherenceCategory = extract.AdherenceCategory;
+            FamilyPlanningMethod = extract.FamilyPlanningMethod;
+            PwP = extract.PwP;
+            GestationAge = extract.GestationAge;
+            NextAppointmentDate = extract.NextAppointmentDate;
+            
+            Emr = extract.Emr;
+            Project = extract.Project;
+
         }
 
-        
+
 
         public IEnumerable<ClientPatientVisitExtractDTO> GeneratePatientVisitExtractDtOs(IEnumerable<ClientPatientVisitExtract> extracts)
         {
@@ -117,17 +126,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
                 visitExtractDtos.Add(new ClientPatientVisitExtractDTO(e));
             }
             return visitExtractDtos;
-        }
-        public ClientPatientVisitExtract GeneratePatientVisitExtract(Guid patientId)
-        {
-            PatientId = patientId;
-            return new ClientPatientVisitExtract();
-
-//                VisitId, VisitDate, Service,VisitType,WHOStage,WABStage, Pregnant, LMP, EDD, Height, Weight, BP, OI, OIDate,
-//                SubstitutionFirstlineRegimenDate, SubstitutionFirstlineRegimenReason, SubstitutionSecondlineRegimenDate,
-//                SubstitutionSecondlineRegimenReason, SecondlineRegimenChangeDate,
-//                SecondlineRegimenChangeReason, Adherence, AdherenceCategory, FamilyPlanningMethod, PwP, GestationAge,
-//                NextAppointmentDate, PatientId,Emr, Project);
         }
     }
 }

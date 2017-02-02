@@ -17,15 +17,18 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string RegimenLine { get; set; }
         public string PeriodTaken { get; set; }
         public string ProphylaxisType { get; set; }
+        public int PatientPID { get; set; }
+        public string PatientCccNumber { get; set; }
+        public int FacilityId { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public Guid PatientId { get; set; }
+        
 
         public ClientPatientPharmacyExtractDTO()
         {
         }
 
-        public ClientPatientPharmacyExtractDTO(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, string emr, string project, Guid patientId)
+        public ClientPatientPharmacyExtractDTO(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, int patientPid, string patientCccNumber, int facilityId, string emr, string project)
         {
             VisitID = visitId;
             Drug = drug;
@@ -37,27 +40,32 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             RegimenLine = regimenLine;
             PeriodTaken = periodTaken;
             ProphylaxisType = prophylaxisType;
+            PatientPID = patientPid;
+            PatientCccNumber = patientCccNumber;
+            FacilityId = facilityId;
             Emr = emr;
             Project = project;
-            PatientId = patientId;
         }
 
-        public ClientPatientPharmacyExtractDTO(ClientPatientPharmacyExtract patientPharmacyExtract)
+        public ClientPatientPharmacyExtractDTO(ClientPatientPharmacyExtract extract)
         {
-            VisitID = patientPharmacyExtract.VisitID;
-            Drug = patientPharmacyExtract.Drug;
-            Provider = patientPharmacyExtract.Provider;
-            DispenseDate = patientPharmacyExtract.DispenseDate;
-            Duration = patientPharmacyExtract.Duration;
-            ExpectedReturn = patientPharmacyExtract.ExpectedReturn;
-            TreatmentType = patientPharmacyExtract.TreatmentType;
-            PeriodTaken = patientPharmacyExtract.PeriodTaken;
-            RegimenLine = patientPharmacyExtract.RegimenLine;
-            PeriodTaken = patientPharmacyExtract.PeriodTaken;
-            ProphylaxisType = patientPharmacyExtract.ProphylaxisType;
-            Emr = patientPharmacyExtract.Emr;
-            Project = patientPharmacyExtract.Project;
-            //PatientId = patientPharmacyExtract.PatientId;
+            PatientPID = extract.PatientPK; //TODO PatientPID = extract.PatientPK;
+            PatientCccNumber = extract.PatientID; //TODO PatientCccNumber = extract.PatientID;
+            FacilityId = extract.SiteCode; //TODO FacilityId = extract.SiteCode
+            VisitID = extract.VisitID;
+            Drug = extract.Drug;
+            Provider = extract.Provider;
+            DispenseDate = extract.DispenseDate;
+            Duration = extract.Duration;
+            ExpectedReturn = extract.ExpectedReturn;
+            TreatmentType = extract.TreatmentType;
+            RegimenLine = extract.RegimenLine;
+            PeriodTaken = extract.PeriodTaken;
+            ProphylaxisType = extract.ProphylaxisType;
+            
+            Emr = extract.Emr;
+            Project = extract.Project;
+
         }
 
         public IEnumerable<ClientPatientPharmacyExtractDTO> GeneratePatientPharmacyExtractDtOs(IEnumerable<ClientPatientPharmacyExtract> extracts)
@@ -69,13 +77,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             }
             return pharmacyExtractDtos;
         }
-        public ClientPatientPharmacyExtract GeneratePatientPharmacyExtract(Guid patientId)
-        {
-            PatientId = patientId;
-            return new ClientPatientPharmacyExtract();
-//                VisitID, Drug,Provider, DispenseDate, Duration, ExpectedReturn, TreatmentType,
-//                RegimenLine,
-//                PeriodTaken, ProphylaxisType, PatientId,Emr, Project);
-        }
+        
     }
 }

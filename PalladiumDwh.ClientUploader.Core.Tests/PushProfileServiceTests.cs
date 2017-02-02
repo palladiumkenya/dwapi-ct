@@ -32,11 +32,13 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
         [Test]
         public void Should_Push()
         {
-            var extractProfile = _profiles.OfType<ClientPatientARTProfile>().First();
-            Assert.IsNotNull(extractProfile);
+            foreach (var extractProfile in _profiles)
+            {
+                var status = _service.PushAsync(extractProfile).Result;
+                Assert.IsTrue(status.IsSuccessStatusCode);
+                Console.WriteLine($"{extractProfile.GetType().Name} | {status.Content.ReadAsStringAsync().Result}");
 
-            var status = _service.PushAsync(extractProfile).Result;
-            Assert.IsTrue(status.IsSuccessStatusCode);
+            }
         }
     }
 }

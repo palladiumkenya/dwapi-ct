@@ -10,35 +10,42 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string ExitDescription { get; set; }
         public DateTime? ExitDate { get; set; }
         public string ExitReason { get; set; }
+        public int PatientPID { get; set; }
+        public string PatientCccNumber { get; set; }
+        public int FacilityId { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public Guid PatientId { get; set; }
+        
 
         public ClientPatientStatusExtractDTO()
         {
         }
 
-        public ClientPatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId)
+        public ClientPatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, int patientPid, string patientCccNumber, int facilityId, string emr, string project)
         {
             ExitDescription = exitDescription;
             ExitDate = exitDate;
             ExitReason = exitReason;
+            PatientPID = patientPid;
+            PatientCccNumber = patientCccNumber;
+            FacilityId = facilityId;
             Emr = emr;
             Project = project;
-            PatientId = patientId;
         }
 
-        public ClientPatientStatusExtractDTO(ClientPatientStatusExtract patientStatusExtract)
+        public ClientPatientStatusExtractDTO(ClientPatientStatusExtract extract)
         {
-            ExitDescription = patientStatusExtract.ExitDescription;
-            ExitDate = patientStatusExtract.ExitDate;
-            ExitReason = patientStatusExtract.ExitReason;
-            Emr = patientStatusExtract.Emr;
-            Project = patientStatusExtract.Project;
-            //PatientId = patientStatusExtract.PatientId;
+            PatientPID = extract.PatientPK; //TODO PatientPID = extract.PatientPK;
+            PatientCccNumber = extract.PatientID; //TODO PatientCccNumber = extract.PatientID;
+            FacilityId = extract.SiteCode; //TODO FacilityId = extract.SiteCode
+            ExitDescription = extract.ExitDescription;
+            ExitDate = extract.ExitDate;
+            ExitReason = extract.ExitReason;
+            Emr = extract.Emr;
+            Project = extract.Project;
         }
 
-     
+
 
         public IEnumerable<ClientPatientStatusExtractDTO> GeneratePatientStatusExtractDtOs(IEnumerable<ClientPatientStatusExtract> extracts)
         {
@@ -49,12 +56,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             }
             return statusExtractDtos;
         }
-
-        public ClientPatientStatusExtract GeneratePatientStatusExtract(Guid patientId)
-        {
-            PatientId = patientId;
-            return new ClientPatientStatusExtract();
-//                ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
-        }
+        
     }
 }
