@@ -1,8 +1,15 @@
+using System;
+using System.Diagnostics;
+using System.Reflection;
+using EntityFramework.Seeder;
+using PalladiumDwh.ClientReader.Core.Model;
+
 namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<PalladiumDwh.ClientReader.Infrastructure.Data.DwapiRemoteContext>
+    internal sealed class Configuration :
+        DbMigrationsConfiguration<PalladiumDwh.ClientReader.Infrastructure.Data.DwapiRemoteContext>
     {
         public Configuration()
         {
@@ -11,18 +18,22 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
 
         protected override void Seed(PalladiumDwh.ClientReader.Infrastructure.Data.DwapiRemoteContext context)
         {
-            //  This method will be called after migrating to the latest version.
+   
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            Seeder.Configuration.Delimiter = "|";
+            Seeder.Configuration.TrimFields = true;
+            Seeder.Configuration.TrimHeaders = true;
+            
+
+
+
+            context.Projects.SeedFromResource("PalladiumDwh.ClientReader.Infrastructure.Seed.Project.csv", c => c.Code);
+            context.SaveChanges();
+            context.Emrs.SeedFromResource("PalladiumDwh.ClientReader.Infrastructure.Seed.EMR.csv", c =>new {c.Name,c.Version,c.ProjectId});
+            context.SaveChanges();
+            context.ExtractSettings.SeedFromResource("PalladiumDwh.ClientReader.Infrastructure.Seed.ExtractSetting.csv", c => new {c.Name,c.EmrId});
+            context.SaveChanges();
+         
         }
     }
 }

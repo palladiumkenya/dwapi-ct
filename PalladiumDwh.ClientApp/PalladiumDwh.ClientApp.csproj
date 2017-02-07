@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Info.cs" />
     <Compile Include="Presenters\FeedBackPresenter.cs" />
     <Compile Include="Presenters\IFeedBackPresenter.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
@@ -59,6 +60,18 @@
     </Compile>
     <Compile Include="Views\IFeedBackView.cs" />
     <Compile Include="Views\IView.cs" />
+    <Compile Include="Views\Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Options.Designer.cs">
+      <DependentUpon>Options.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Uploader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Uploader.Designer.cs">
+      <DependentUpon>Uploader.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\InfoControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -76,6 +89,12 @@
     </Compile>
     <EmbeddedResource Include="Views\FeedBack.resx">
       <DependentUpon>FeedBack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Options.resx">
+      <DependentUpon>Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Uploader.resx">
+      <DependentUpon>Uploader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\InfoControl.resx">
       <DependentUpon>InfoControl.cs</DependentUpon>

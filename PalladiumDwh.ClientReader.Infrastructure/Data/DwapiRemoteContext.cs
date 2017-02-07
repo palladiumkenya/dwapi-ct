@@ -17,7 +17,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
         {
         }
 
-        
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<EMR> Emrs { get; set; }
+        public virtual DbSet<ExtractSetting> ExtractSettings { get; set; }
+
+
         public virtual DbSet<TempPatientExtract> TempPatientExtracts { get; set; }
         public virtual DbSet<TempPatientArtExtract> TempPatientArtExtracts { get; set; }
         public virtual DbSet<TempPatientBaselinesExtract> TempPatientBaselinesExtracts { get; set; }
@@ -39,7 +43,18 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-          
+
+            modelBuilder.Entity<Project>()
+            .HasMany(c => c.Emrs)
+            .WithRequired()
+            .HasForeignKey(f => new { f.ProjectId });
+
+            modelBuilder.Entity<EMR>()
+           .HasMany(c => c.ExtractSettings)
+           .WithRequired()
+           .HasForeignKey(f => new { f.EmrId });
+
+     
             modelBuilder.Entity<ClientPatientExtract>()
                .HasMany(c => c.ClientPatientArtExtracts)
                .WithRequired()

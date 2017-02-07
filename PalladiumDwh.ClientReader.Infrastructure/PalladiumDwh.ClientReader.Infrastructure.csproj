@@ -42,6 +42,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework.Seeder.EF6, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Seeder.EF6.0.4.0\lib\EntityFramework.Seeder.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
@@ -135,6 +139,18 @@
     <Compile Include="Migrations\201701311708571_AddFacilityName.Designer.cs">
       <DependentUpon>201701311708571_AddFacilityName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702071118231_ExtractsSetting.cs" />
+    <Compile Include="Migrations\201702071118231_ExtractsSetting.Designer.cs">
+      <DependentUpon>201702071118231_ExtractsSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702071127297_ExtractSettingsReview.cs" />
+    <Compile Include="Migrations\201702071127297_ExtractSettingsReview.Designer.cs">
+      <DependentUpon>201702071127297_ExtractSettingsReview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702071153425_ExtractSettingSQLCol.cs" />
+    <Compile Include="Migrations\201702071153425_ExtractSettingSQLCol.Designer.cs">
+      <DependentUpon>201702071153425_ExtractSettingSQLCol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -154,7 +170,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EmbeddedResource Include="Migrations\201702071118231_ExtractsSetting.resx">
+      <DependentUpon>201702071118231_ExtractsSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702071127297_ExtractSettingsReview.resx">
+      <DependentUpon>201702071127297_ExtractSettingsReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702071153425_ExtractSettingSQLCol.resx">
+      <DependentUpon>201702071153425_ExtractSettingSQLCol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Seed\EMR.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Seed\ExtractSetting.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Seed\Project.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701271252203_InitialReview.resx">
@@ -179,6 +213,7 @@
       <DependentUpon>201701311708571_AddFacilityName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
