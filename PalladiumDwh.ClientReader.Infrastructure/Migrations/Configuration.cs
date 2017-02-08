@@ -1,8 +1,4 @@
-using System;
-using System.Diagnostics;
-using System.Reflection;
 using EntityFramework.Seeder;
-using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
 {

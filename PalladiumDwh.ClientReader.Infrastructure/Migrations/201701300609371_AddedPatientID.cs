@@ -1,6 +1,5 @@
 namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class AddedPatientID : DbMigration

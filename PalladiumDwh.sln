@@ -55,8 +55,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientUploader
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientApp", "PalladiumDwh.ClientApp\PalladiumDwh.ClientApp.csproj", "{937CEB6E-CC7D-4A14-A7F6-30055E087275}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.Uploader", "PalladiumDwh.Uploader\PalladiumDwh.Uploader.csproj", "{23FA8247-47A3-4DC8-BF37-A97E96FEFB58}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,10 +141,6 @@ Global
 		{937CEB6E-CC7D-4A14-A7F6-30055E087275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{937CEB6E-CC7D-4A14-A7F6-30055E087275}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{937CEB6E-CC7D-4A14-A7F6-30055E087275}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23FA8247-47A3-4DC8-BF37-A97E96FEFB58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23FA8247-47A3-4DC8-BF37-A97E96FEFB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23FA8247-47A3-4DC8-BF37-A97E96FEFB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23FA8247-47A3-4DC8-BF37-A97E96FEFB58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -172,6 +166,5 @@ Global
 		{EA397F5A-646B-4CB3-A0A6-2DC48BAE13D3} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{B4BECF3B-F4C8-43ED-91AC-048658E28CB3} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{937CEB6E-CC7D-4A14-A7F6-30055E087275} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
-		{23FA8247-47A3-4DC8-BF37-A97E96FEFB58} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 	EndGlobalSection
 EndGlobal

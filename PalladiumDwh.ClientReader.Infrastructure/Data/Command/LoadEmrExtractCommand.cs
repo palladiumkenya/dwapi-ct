@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Linq;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using Dapper;
-using MySql.Data.MySqlClient;
-using Npgsql;
 using PalladiumDwh.ClientReader.Core.Model;
-using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {

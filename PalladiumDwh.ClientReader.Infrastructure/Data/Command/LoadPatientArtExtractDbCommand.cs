@@ -1,5 +1,4 @@
-﻿using System.Data;
-using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+﻿using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 
