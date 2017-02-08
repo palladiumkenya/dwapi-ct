@@ -1,12 +1,13 @@
 ﻿using System.Data;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
-  public  class LoadPatientPharmacyExtractDbCommand : LoadExtractDbCommand<TempPatientPharmacyExtract>, ILoadPatientPharmacyExtractCommand
+  public  class LoadPatientPharmacyExtractDbCommand : LoadEmrExtractCommand<TempPatientPharmacyExtract>, ILoadPatientPharmacyExtractCommand
   {
-      public LoadPatientPharmacyExtractDbCommand(IDbConnection sourceConnection, IDbConnection clientConnection, string commandText, int batchSize = 100) : base(sourceConnection, clientConnection, commandText, batchSize)
+      public LoadPatientPharmacyExtractDbCommand(IEMRRepository emrRepository, int batchSize = 100) : base(emrRepository, batchSize)
       {
       }
   }

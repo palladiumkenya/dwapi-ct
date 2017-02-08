@@ -87,7 +87,10 @@
     <Compile Include="Interfaces\Profiles\IClientPatientPharmacyProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientStatusProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientVisitProfile.cs" />
-    <Compile Include="Interfaces\Repository\IRepository.cs" />
+    <Compile Include="Interfaces\Repository\IExtractSettingRepository.cs" />
+    <Compile Include="Interfaces\Repository\IEMRRepository.cs" />
+    <Compile Include="Interfaces\Repository\IProjectRepository.cs" />
+    <Compile Include="Interfaces\Repository\IClientRepository.cs" />
     <Compile Include="Interfaces\Commands\ISyncCommand.cs" />
     <Compile Include="Interfaces\Source\ITempExtract.cs" />
     <Compile Include="Interfaces\Source\ITempPatientArtExtract.cs" />

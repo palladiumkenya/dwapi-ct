@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.Common;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
+using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
@@ -12,7 +16,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests
 {
     public static class TestHelpers
     {
-        public static void CreateTestData<T>(DbContext context, IEnumerable<T> entities) where T : Entity
+        public static void CreateTestData<T>(DbContext context, IEnumerable<T> entities) where T : class 
         {
             context.Set<T>().AddRange(entities);
             context.SaveChanges();
@@ -21,6 +25,26 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests
         {
             return Builder<T>.CreateListOfSize(count).Build();
         }
+
+        public static IEnumerable<EMR> GetEMRTestProjectData(Project project,int emrCount, int extractSettingCount)
+        {
+            var emrs = Builder<EMR>.CreateListOfSize(emrCount).Build().ToList();
+            foreach (var emr in emrs)
+            {
+                emr.ProjectId = project.Id;
+                var extractSettings = Builder<ExtractSetting>.CreateListOfSize(extractSettingCount).Build().ToList();
+                foreach (var e in extractSettings)
+                {
+                    e.IsActive = true;
+                    emr.AddExtractSetting(e);
+                }
+                
+                emr.IsDefault=false;
+            }
+            emrs.First().IsDefault = true;
+            return emrs;
+        }
+
         public static IEnumerable<PatientExtract> GetTestPatientData(Facility facility, int patientCount, int visitCount)
         {
             var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
@@ -59,11 +83,29 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests
             return patients;
         }
 
+        public static void RefershConnect(string key = "EMRDatabase")
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
+            connectionStringsSection.ConnectionStrings[key].ConnectionString = GetConnection(key).ConnectionString;
+            config.Save();
+            ConfigurationManager.RefreshSection("connectionStrings");
+        }
         public static string GetCsv(string name)
         {
             string path = TestContext.CurrentContext.TestDirectory;
             var files = Directory.GetFiles(path, "*.csv", SearchOption.AllDirectories);
             return files.FirstOrDefault(x => x.Contains(name));
+        }
+
+        public static DbConnection GetConnection(string key= "EMRDatabase")
+        {
+            string path = TestContext.CurrentContext.TestDirectory;
+            path=path.EndsWith(@"\")?path:$@"{path}\";
+            var cn = ConfigurationManager.ConnectionStrings[key];
+            var connectionString = cn.ConnectionString.Replace($"AttachDbFilename=",$"AttachDbFilename={path}");
+
+           return new SqlConnection(connectionString);
         }
 
         public static string GetPatientsSql(int top=-1)

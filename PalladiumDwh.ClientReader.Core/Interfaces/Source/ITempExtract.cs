@@ -15,5 +15,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Source
         void Load(IDataReader reader);
         bool IsValid();
         string GetAddAction();
+        
     }
 }

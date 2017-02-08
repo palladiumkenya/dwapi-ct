@@ -5,7 +5,7 @@ using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
 {
-    public interface IRepository<TEntity>
+    public interface IClientRepository<TEntity>
     {
         IEnumerable<TEntity> GetAll();
         void Insert(TEntity entity);

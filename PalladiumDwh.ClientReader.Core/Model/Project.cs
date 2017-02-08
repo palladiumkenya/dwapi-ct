@@ -8,7 +8,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public Guid Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public ICollection<EMR> Emrs { get; set; }=new List<EMR>();
+        public virtual ICollection<EMR> Emrs { get; set; }=new List<EMR>();
 
         public Project()
         {
@@ -25,6 +25,18 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
             emr.ProjectId = Id;
             Emrs.Add(emr);
+        }
+        public void AddEMR(List<EMR> emrs)
+        {
+            foreach (var e in emrs)
+            {
+               AddEMR(e);
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} ({Code})";
         }
     }
 }

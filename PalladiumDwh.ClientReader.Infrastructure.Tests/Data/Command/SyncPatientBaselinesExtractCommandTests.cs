@@ -4,10 +4,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
-using PalladiumDwh.ClientReader.Core.Model;
-using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
+using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
@@ -27,7 +26,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
             _context.Database.ExecuteSqlCommand("DELETE FROM PatientBaselinesExtract;DELETE FROM TempPatientBaselinesExtract");
 
             _context.Database.ExecuteSqlCommand("DELETE FROM PatientExtract;DELETE FROM TempPatientExtract");
-            var extractCommand = new LoadPatientExtractDbCommand(new SqlConnection(_srcConnectionString), new SqlConnection(_connectionString), TestHelpers.GetPatientsSql(top));
+            var extractCommand = new LoadPatientExtractDbCommand(new EMRRepository(_context));
             extractCommand.Execute();
             var syncPatientsCommand = new SyncPatientExtractDbCommand(_connectionString);
             syncPatientsCommand.Execute();
@@ -36,7 +35,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         [Test]
         public void should_sync_patient_baselines()
         {
-            var extractCommand = new LoadPatientBaselinesExtractDbCommand(new SqlConnection(_srcConnectionString), new SqlConnection(_connectionString), TestHelpers.GetPatientBaselinesSql(top));
+            var extractCommand = new LoadPatientBaselinesExtractDbCommand(new EMRRepository(_context));
             extractCommand.Execute();
             var watch = System.Diagnostics.Stopwatch.StartNew();
 

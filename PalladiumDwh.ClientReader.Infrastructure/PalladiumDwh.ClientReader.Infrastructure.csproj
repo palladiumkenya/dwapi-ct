@@ -73,6 +73,7 @@
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Transactions" />
@@ -92,6 +93,7 @@
     <Compile Include="Csv\Command\LoadPatientPharmacyExtractCsvCommand.cs" />
     <Compile Include="Csv\Command\LoadPatientStatusExtractCsvCommand.cs" />
     <Compile Include="Csv\Command\LoadPatientVisitExtractCsvCommand.cs" />
+    <Compile Include="Data\Command\LoadEmrExtractCommand.cs" />
     <Compile Include="Data\Command\SyncPatientArtExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncPatientBaselinesExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncFacilityDbCommand.cs" />
@@ -101,7 +103,6 @@
     <Compile Include="Data\Command\SyncPatientVisitExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncPatientExtractDbCommand.cs" />
     <Compile Include="Data\DwapiRemoteContext.cs" />
-    <Compile Include="Data\Command\LoadExtractDbCommand.cs" />
     <Compile Include="Data\Command\LoadPatientArtExtractDbCommand.cs" />
     <Compile Include="Data\Command\LoadPatientBaselinesExtractDbCommand.cs" />
     <Compile Include="Data\Command\LoadPatientLaboratoryExtractDbCommand.cs" />
@@ -109,8 +110,11 @@
     <Compile Include="Data\Command\LoadPatientStatusExtractDbCommand.cs" />
     <Compile Include="Data\Command\LoadPatientVisitExtractDbCommand.cs" />
     <Compile Include="Data\Command\LoadPatientExtractDbCommand.cs" />
-    <Compile Include="Data\Command\EFLoadExtractDbCommand.cs" />
     <Compile Include="Data\Command\SyncCommand.cs" />
+    <Compile Include="Data\Repository\ProjectRepository.cs" />
+    <Compile Include="Data\Repository\ExtractSettingRepository.cs" />
+    <Compile Include="Data\Repository\ClientRepository.cs" />
+    <Compile Include="Data\Repository\EMRRepository.cs" />
     <Compile Include="Migrations\201701271252203_InitialReview.cs" />
     <Compile Include="Migrations\201701271252203_InitialReview.Designer.cs">
       <DependentUpon>201701271252203_InitialReview.cs</DependentUpon>
@@ -151,6 +155,14 @@
     <Compile Include="Migrations\201702071153425_ExtractSettingSQLCol.Designer.cs">
       <DependentUpon>201702071153425_ExtractSettingSQLCol.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702080540471_EmrSettings.cs" />
+    <Compile Include="Migrations\201702080540471_EmrSettings.Designer.cs">
+      <DependentUpon>201702080540471_EmrSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702080717134_EmrDestination.cs" />
+    <Compile Include="Migrations\201702080717134_EmrDestination.Designer.cs">
+      <DependentUpon>201702080717134_EmrDestination.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -178,6 +190,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702071153425_ExtractSettingSQLCol.resx">
       <DependentUpon>201702071153425_ExtractSettingSQLCol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702080540471_EmrSettings.resx">
+      <DependentUpon>201702080540471_EmrSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702080717134_EmrDestination.resx">
+      <DependentUpon>201702080717134_EmrDestination.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

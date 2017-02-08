@@ -7,28 +7,21 @@ using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
+using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
     public class LoadPatientVisitExtractDbCommandTests
     {
         private DwapiRemoteContext _context;
-        private IDbConnection _sourceConnection, _clientConnection;
-        private string _commandText;
         private ILoadPatientVisitExtractCommand _extractCommand;
-        private int top = 5;
 
         [SetUp]
         public void SetUp()
         {
             _context = new DwapiRemoteContext();
-            _commandText = TestHelpers.GetPatientVisitsSql(top);
-
-            _sourceConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString);
-            _clientConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DWAPIRemote"].ConnectionString);
-
-            _extractCommand = new LoadPatientVisitExtractDbCommand(_sourceConnection, _clientConnection,
-                $"{_commandText}");
+          
+            _extractCommand = new LoadPatientVisitExtractDbCommand(new EMRRepository(_context));
 
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract");
             

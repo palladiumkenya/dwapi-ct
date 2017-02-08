@@ -1,11 +1,11 @@
-Id|Name|ExtractCsv|ExtractSql|EmrId
+Id|Name|ExtractCsv|ExtractSql|Destination|IsActive|EmrId
 329bfbf4-d404-4dfd-88eb-6fb398c64249|PatientExtract|PatientExtract|"
 SELECT 
 	PatientID, PatientPK, FacilityID, SiteCode, FacilityName, SatelliteName, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationAtPMTCT, RegistrationAtTBClinic, PatientSource, Region, District, Village, 
 	ContactRelation, LastVisit, MaritalStatus, EducationLevel, DateConfirmedHIVPositive, PreviousARTExposure, PreviousARTStartDate, StatusAtCCC, StatusAtPMTCT, StatusAtTBClinic, 'IQCare' AS EMR, 
 	'Kenya HMIS II' AS Project, CAST(GETDATE() AS DATE) AS DateExtracted,newid() as ID
 FROM            
-	tmp_PatientMaster AS a"|7a772052-b911-4211-a04c-139617306a65
+	tmp_PatientMaster AS a"|TempPatientExtract|1|7a772052-b911-4211-a04c-139617306a65
 
 d6d1accc-9f2f-4d1d-91f3-3d79a4ea444e|ARTPatientExtract|ARTPatientExtract|"
 SELECT   
@@ -14,7 +14,7 @@ SELECT
 	a.ExitDate, CAST(GETDATE() AS DATE) AS DateExtracted
 FROM            
 	tmp_ARTPatients AS a INNER JOIN
-	tmp_PatientMaster AS c ON a.PatientPK = c.PatientPK"|7a772052-b911-4211-a04c-139617306a65
+	tmp_PatientMaster AS c ON a.PatientPK = c.PatientPK"|TempPatientArtExtract|1|7a772052-b911-4211-a04c-139617306a65
 
 c12ba69b-6553-4c35-b67d-d2437c4a0a06|PatientLaboratoryExtract|PatientLaboratoryExtract|"
 SELECT   
@@ -22,7 +22,7 @@ SELECT
 	tmp_Labs.OrderedbyDate, tmp_Labs.ReportedbyDate, tmp_Labs.TestName, tmp_Labs.EnrollmentTest, tmp_Labs.TestResult, CAST(GETDATE() AS DATE) AS DateExtracted
 FROM           
 	tmp_Labs INNER JOIN
-	tmp_PatientMaster ON tmp_Labs.PatientPK = tmp_PatientMaster.PatientPK"|7a772052-b911-4211-a04c-139617306a65
+	tmp_PatientMaster ON tmp_Labs.PatientPK = tmp_PatientMaster.PatientPK"|TempPatientLaboratoryExtract|1|7a772052-b911-4211-a04c-139617306a65
 
 eeaf06aa-85de-4bfd-bda9-cf129ce26102|PatientPharmacyExtract|PatientPharmacyExtract|"
 SELECT   
@@ -31,7 +31,7 @@ SELECT
 	tmp_Pharmacy.ProphylaxisType, CAST(GETDATE() AS DATE) AS DateExtracted
 FROM            
 	tmp_Pharmacy INNER JOIN
-    tmp_PatientMaster ON tmp_Pharmacy.PatientPK = tmp_PatientMaster.PatientPK"|7a772052-b911-4211-a04c-139617306a65
+    tmp_PatientMaster ON tmp_Pharmacy.PatientPK = tmp_PatientMaster.PatientPK"|TempPatientPharmacyExtract|1|7a772052-b911-4211-a04c-139617306a65
 
 c6f7d34c-4a74-42e0-bca0-2f33ad15a275|PatientStatusExtract|PatientStatusExtract|"
 SELECT   
@@ -39,7 +39,7 @@ SELECT
 	CAST(GETDATE() AS DATE) AS DateExtracted
 FROM            
 	tmp_LastStatus INNER JOIN
-	tmp_PatientMaster ON tmp_LastStatus.PatientPK = tmp_PatientMaster.PatientPK"|7a772052-b911-4211-a04c-139617306a65
+	tmp_PatientMaster ON tmp_LastStatus.PatientPK = tmp_PatientMaster.PatientPK"|TempPatientStatusExtract|1|7a772052-b911-4211-a04c-139617306a65
 
 d11c9d84-e4c0-4c69-a750-8d0947e0fa51|PatientVisitExtract|PatientVisitExtract|"
 SELECT   
@@ -52,7 +52,7 @@ SELECT
 	AS DateExtracted
 FROM            
 	tmp_ClinicalEncounters INNER JOIN
-	tmp_PatientMaster ON tmp_PatientMaster.PatientPK = tmp_ClinicalEncounters.PatientPK"|7a772052-b911-4211-a04c-139617306a65
+	tmp_PatientMaster ON tmp_PatientMaster.PatientPK = tmp_ClinicalEncounters.PatientPK"|TempPatientVisitExtract|1|7a772052-b911-4211-a04c-139617306a65
 
 0a445c94-032a-4ee0-9310-70e4179fc7ed|PatientWABWHOCD4Extract|PatientWABWHOCD4Extract|"
 SELECT
@@ -72,4 +72,4 @@ FROM
     IQC_eCD4 ON tmp_PatientMaster.PatientPK = IQC_eCD4.PatientPK LEFT OUTER JOIN
     IQC_lastWHO ON tmp_PatientMaster.PatientPK = IQC_lastWHO.PatientPK LEFT OUTER JOIN
     IQC_m12CD4 ON tmp_PatientMaster.PatientPK = IQC_m12CD4.PatientPK LEFT OUTER JOIN
-    IQC_m6CD4 ON tmp_PatientMaster.PatientPK = IQC_m6CD4.PatientPK"|7a772052-b911-4211-a04c-139617306a65
+    IQC_m6CD4 ON tmp_PatientMaster.PatientPK = IQC_m6CD4.PatientPK"|TempPatientBaselinesExtract|1|7a772052-b911-4211-a04c-139617306a65
