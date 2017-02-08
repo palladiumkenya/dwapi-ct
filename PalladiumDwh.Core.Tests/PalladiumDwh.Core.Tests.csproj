@@ -88,6 +88,7 @@
     <Compile Include="Services\MessagingSenderServiceTests.cs" />
     <Compile Include="Services\SyncServiceTests.cs" />
     <Compile Include="TestHelpers.cs" />
+    <Compile Include="TestInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
