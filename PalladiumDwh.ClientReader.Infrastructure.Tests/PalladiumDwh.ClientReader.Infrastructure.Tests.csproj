@@ -208,6 +208,7 @@
     <Compile Include="Data\Command\SyncPatientStatusExtractCommandTests.cs" />
     <Compile Include="Data\Command\SyncPatientVisitExtractCommandTests.cs" />
     <Compile Include="Data\Command\SyncPatientExtractCommandTests.cs" />
+    <Compile Include="Data\Repository\ProjectRepositoryTests.cs" />
     <Compile Include="Data\Repository\EMRRepositoryTests.cs" />
     <Compile Include="Data\Repository\ClientRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

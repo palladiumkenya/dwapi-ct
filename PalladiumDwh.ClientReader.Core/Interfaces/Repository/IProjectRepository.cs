@@ -5,6 +5,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
 {
     public interface IProjectRepository: IClientRepository<Project>
     {
-      
+        Project GetActiveProject();
     }
 }

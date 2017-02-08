@@ -1,8 +1,33 @@
-﻿namespace PalladiumDwh.ClientApp.Model
+﻿using System.Collections.Generic;
+using PalladiumDwh.ClientReader.Core.Model;
+
+namespace PalladiumDwh.ClientApp.Model
 {
-    public class Info
+    public class EmrViewModel
     {
-        public string Header { get; set; }
-        public string Description { get; set; }
+        public string ProjectName { get; set; }
+        public EMR Emr { get; set; }
+
+        public EmrViewModel()
+        {
+        }
+
+        public EmrViewModel(Project project, EMR emr)
+        {
+            ProjectName = project.Name;
+            Emr = emr;
+        }
+
+        public static List<EmrViewModel> CreateList(Project project)
+        {
+            var list = new List<EmrViewModel>();
+
+            foreach (var emr in project.Emrs)
+            {
+                list.Add(new EmrViewModel(project,emr));
+            }
+            
+            return list;
+        }
     }
 }

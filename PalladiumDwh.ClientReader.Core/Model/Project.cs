@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PalladiumDwh.ClientReader.Core.Model
 {
@@ -32,6 +33,11 @@ namespace PalladiumDwh.ClientReader.Core.Model
             {
                AddEMR(e);
             }
+        }
+
+        public EMR GetDefaultEmr()
+        {
+            return Emrs.FirstOrDefault(x => x.IsDefault);
         }
 
         public override string ToString()
