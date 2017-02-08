@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.infoControlFeedBack = new PalladiumDwh.ClientApp.Views.UserControls.InfoControl();
+            
             this.stripStatus = new System.Windows.Forms.StatusStrip();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBarStatus = new System.Windows.Forms.ToolStripProgressBar();
@@ -49,11 +49,7 @@
             // 
             // infoControlFeedBack
             // 
-            this.infoControlFeedBack.Dock = System.Windows.Forms.DockStyle.Top;
-            this.infoControlFeedBack.Location = new System.Drawing.Point(0, 0);
-            this.infoControlFeedBack.Name = "infoControlFeedBack";
-            this.infoControlFeedBack.Size = new System.Drawing.Size(386, 79);
-            this.infoControlFeedBack.TabIndex = 0;
+            
             // 
             // stripStatus
             // 
@@ -180,7 +176,6 @@
             this.ClientSize = new System.Drawing.Size(386, 391);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.stripStatus);
-            this.Controls.Add(this.infoControlFeedBack);
             this.Name = "FeedBack";
             this.Text = "FeedBack";
             this.stripStatus.ResumeLayout(false);
@@ -195,7 +190,7 @@
 
         #endregion
 
-        private UserControls.InfoControl infoControlFeedBack;
+        
         private System.Windows.Forms.StatusStrip stripStatus;
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
         private System.Windows.Forms.ToolStripProgressBar progressBarStatus;

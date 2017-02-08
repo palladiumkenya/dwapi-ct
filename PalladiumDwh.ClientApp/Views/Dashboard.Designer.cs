@@ -100,7 +100,7 @@
             this.helpToolStripMenuItem});
             this.menuStripDashboard.Location = new System.Drawing.Point(0, 0);
             this.menuStripDashboard.Name = "menuStripDashboard";
-            this.menuStripDashboard.Size = new System.Drawing.Size(1447, 24);
+            this.menuStripDashboard.Size = new System.Drawing.Size(984, 24);
             this.menuStripDashboard.TabIndex = 0;
             this.menuStripDashboard.Text = "menuStripDashboard";
             // 
@@ -172,9 +172,9 @@
             this.statusStripDashboard.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelDashboard,
             this.toolStripProgressBarDashboard});
-            this.statusStripDashboard.Location = new System.Drawing.Point(0, 950);
+            this.statusStripDashboard.Location = new System.Drawing.Point(0, 639);
             this.statusStripDashboard.Name = "statusStripDashboard";
-            this.statusStripDashboard.Size = new System.Drawing.Size(1447, 22);
+            this.statusStripDashboard.Size = new System.Drawing.Size(984, 22);
             this.statusStripDashboard.TabIndex = 1;
             this.statusStripDashboard.Text = "statusStrip1";
             // 
@@ -193,23 +193,22 @@
             // 
             // panelTop
             // 
+            this.panelTop.BackColor = System.Drawing.Color.White;
             this.panelTop.Controls.Add(this.panelTopH);
             this.panelTop.Controls.Add(this.textBoxEMRVersion);
             this.panelTop.Controls.Add(this.labelVersion);
             this.panelTop.Controls.Add(this.textBoxEMR);
             this.panelTop.Controls.Add(this.labelEMR);
-            this.panelTop.Controls.Add(this.textBoxProject);
-            this.panelTop.Controls.Add(this.labelProject);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 24);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1447, 101);
+            this.panelTop.Size = new System.Drawing.Size(984, 64);
             this.panelTop.TabIndex = 2;
             // 
             // labelProject
             // 
             this.labelProject.AutoSize = true;
-            this.labelProject.Location = new System.Drawing.Point(56, 57);
+            this.labelProject.Location = new System.Drawing.Point(690, 9);
             this.labelProject.Name = "labelProject";
             this.labelProject.Size = new System.Drawing.Size(40, 13);
             this.labelProject.TabIndex = 0;
@@ -217,7 +216,7 @@
             // 
             // textBoxProject
             // 
-            this.textBoxProject.Location = new System.Drawing.Point(102, 54);
+            this.textBoxProject.Location = new System.Drawing.Point(736, 6);
             this.textBoxProject.Name = "textBoxProject";
             this.textBoxProject.ReadOnly = true;
             this.textBoxProject.Size = new System.Drawing.Size(245, 20);
@@ -225,16 +224,16 @@
             // 
             // textBoxEMR
             // 
-            this.textBoxEMR.Location = new System.Drawing.Point(427, 54);
+            this.textBoxEMR.Location = new System.Drawing.Point(72, 36);
             this.textBoxEMR.Name = "textBoxEMR";
             this.textBoxEMR.ReadOnly = true;
-            this.textBoxEMR.Size = new System.Drawing.Size(245, 20);
+            this.textBoxEMR.Size = new System.Drawing.Size(158, 20);
             this.textBoxEMR.TabIndex = 3;
             // 
             // labelEMR
             // 
             this.labelEMR.AutoSize = true;
-            this.labelEMR.Location = new System.Drawing.Point(381, 57);
+            this.labelEMR.Location = new System.Drawing.Point(26, 40);
             this.labelEMR.Name = "labelEMR";
             this.labelEMR.Size = new System.Drawing.Size(31, 13);
             this.labelEMR.TabIndex = 2;
@@ -242,34 +241,37 @@
             // 
             // textBoxEMRVersion
             // 
-            this.textBoxEMRVersion.Location = new System.Drawing.Point(768, 54);
+            this.textBoxEMRVersion.Location = new System.Drawing.Point(281, 36);
             this.textBoxEMRVersion.Name = "textBoxEMRVersion";
             this.textBoxEMRVersion.ReadOnly = true;
-            this.textBoxEMRVersion.Size = new System.Drawing.Size(245, 20);
+            this.textBoxEMRVersion.Size = new System.Drawing.Size(64, 20);
             this.textBoxEMRVersion.TabIndex = 5;
             // 
             // labelVersion
             // 
             this.labelVersion.AutoSize = true;
-            this.labelVersion.Location = new System.Drawing.Point(693, 57);
+            this.labelVersion.Location = new System.Drawing.Point(234, 40);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(69, 13);
+            this.labelVersion.Size = new System.Drawing.Size(41, 13);
             this.labelVersion.TabIndex = 4;
-            this.labelVersion.Text = "EMR Version";
+            this.labelVersion.Text = "version";
             // 
             // panelTopH
             // 
+            this.panelTopH.BackColor = System.Drawing.Color.Gainsboro;
             this.panelTopH.Controls.Add(this.labelTopH);
+            this.panelTopH.Controls.Add(this.textBoxProject);
+            this.panelTopH.Controls.Add(this.labelProject);
             this.panelTopH.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTopH.Location = new System.Drawing.Point(0, 0);
             this.panelTopH.Name = "panelTopH";
-            this.panelTopH.Size = new System.Drawing.Size(1447, 32);
+            this.panelTopH.Size = new System.Drawing.Size(984, 32);
             this.panelTopH.TabIndex = 6;
             // 
             // labelTopH
             // 
             this.labelTopH.AutoSize = true;
-            this.labelTopH.Location = new System.Drawing.Point(12, 9);
+            this.labelTopH.Location = new System.Drawing.Point(7, 9);
             this.labelTopH.Name = "labelTopH";
             this.labelTopH.Size = new System.Drawing.Size(86, 13);
             this.labelTopH.TabIndex = 5;
@@ -277,14 +279,15 @@
             // 
             // panelExtract
             // 
+            this.panelExtract.BackColor = System.Drawing.Color.White;
             this.panelExtract.Controls.Add(this.panelExtractData);
             this.panelExtract.Controls.Add(this.panelExtractDataStatus);
             this.panelExtract.Controls.Add(this.panelExtractAction);
             this.panelExtract.Controls.Add(this.panelExtractDataTop);
             this.panelExtract.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelExtract.Location = new System.Drawing.Point(0, 125);
+            this.panelExtract.Location = new System.Drawing.Point(0, 88);
             this.panelExtract.Name = "panelExtract";
-            this.panelExtract.Size = new System.Drawing.Size(1447, 274);
+            this.panelExtract.Size = new System.Drawing.Size(984, 245);
             this.panelExtract.TabIndex = 3;
             // 
             // panelExtractAction
@@ -296,12 +299,12 @@
             this.panelExtractAction.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelExtractAction.Location = new System.Drawing.Point(0, 33);
             this.panelExtractAction.Name = "panelExtractAction";
-            this.panelExtractAction.Size = new System.Drawing.Size(1447, 39);
+            this.panelExtractAction.Size = new System.Drawing.Size(984, 39);
             this.panelExtractAction.TabIndex = 0;
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(59, 10);
+            this.buttonLoad.Location = new System.Drawing.Point(29, 8);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(140, 23);
             this.buttonLoad.TabIndex = 0;
@@ -310,7 +313,7 @@
             // 
             // buttonLoadCsv
             // 
-            this.buttonLoadCsv.Location = new System.Drawing.Point(205, 10);
+            this.buttonLoadCsv.Location = new System.Drawing.Point(175, 8);
             this.buttonLoadCsv.Name = "buttonLoadCsv";
             this.buttonLoadCsv.Size = new System.Drawing.Size(140, 23);
             this.buttonLoadCsv.TabIndex = 1;
@@ -319,7 +322,7 @@
             // 
             // buttonExport
             // 
-            this.buttonExport.Location = new System.Drawing.Point(351, 10);
+            this.buttonExport.Location = new System.Drawing.Point(321, 8);
             this.buttonExport.Name = "buttonExport";
             this.buttonExport.Size = new System.Drawing.Size(140, 23);
             this.buttonExport.TabIndex = 2;
@@ -328,7 +331,7 @@
             // 
             // buttonSend
             // 
-            this.buttonSend.Location = new System.Drawing.Point(497, 10);
+            this.buttonSend.Location = new System.Drawing.Point(467, 8);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(140, 23);
             this.buttonSend.TabIndex = 3;
@@ -338,34 +341,36 @@
             // panelExtractDataStatus
             // 
             this.panelExtractDataStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelExtractDataStatus.Location = new System.Drawing.Point(0, 243);
+            this.panelExtractDataStatus.Location = new System.Drawing.Point(0, 235);
             this.panelExtractDataStatus.Name = "panelExtractDataStatus";
-            this.panelExtractDataStatus.Size = new System.Drawing.Size(1447, 31);
+            this.panelExtractDataStatus.Size = new System.Drawing.Size(984, 10);
             this.panelExtractDataStatus.TabIndex = 3;
             // 
             // panelExtractDetail
             // 
+            this.panelExtractDetail.BackColor = System.Drawing.Color.White;
             this.panelExtractDetail.Controls.Add(this.panelExtractDataDetail);
             this.panelExtractDetail.Controls.Add(this.panelExtractDataDetailTop);
             this.panelExtractDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelExtractDetail.Location = new System.Drawing.Point(0, 399);
+            this.panelExtractDetail.Location = new System.Drawing.Point(0, 333);
             this.panelExtractDetail.Name = "panelExtractDetail";
-            this.panelExtractDetail.Size = new System.Drawing.Size(1447, 551);
+            this.panelExtractDetail.Size = new System.Drawing.Size(984, 306);
             this.panelExtractDetail.TabIndex = 5;
             // 
             // panelExtractDataDetailTop
             // 
+            this.panelExtractDataDetailTop.BackColor = System.Drawing.Color.Gainsboro;
             this.panelExtractDataDetailTop.Controls.Add(this.labelExtractDataDetail);
             this.panelExtractDataDetailTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelExtractDataDetailTop.Location = new System.Drawing.Point(0, 0);
             this.panelExtractDataDetailTop.Name = "panelExtractDataDetailTop";
-            this.panelExtractDataDetailTop.Size = new System.Drawing.Size(1447, 47);
+            this.panelExtractDataDetailTop.Size = new System.Drawing.Size(984, 35);
             this.panelExtractDataDetailTop.TabIndex = 0;
             // 
             // labelExtractDataDetail
             // 
             this.labelExtractDataDetail.AutoSize = true;
-            this.labelExtractDataDetail.Location = new System.Drawing.Point(15, 16);
+            this.labelExtractDataDetail.Location = new System.Drawing.Point(15, 10);
             this.labelExtractDataDetail.Name = "labelExtractDataDetail";
             this.labelExtractDataDetail.Size = new System.Drawing.Size(75, 13);
             this.labelExtractDataDetail.TabIndex = 0;
@@ -373,17 +378,18 @@
             // 
             // panelExtractDataTop
             // 
+            this.panelExtractDataTop.BackColor = System.Drawing.Color.Gainsboro;
             this.panelExtractDataTop.Controls.Add(this.labelExtractData);
             this.panelExtractDataTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelExtractDataTop.Location = new System.Drawing.Point(0, 0);
             this.panelExtractDataTop.Name = "panelExtractDataTop";
-            this.panelExtractDataTop.Size = new System.Drawing.Size(1447, 33);
+            this.panelExtractDataTop.Size = new System.Drawing.Size(984, 33);
             this.panelExtractDataTop.TabIndex = 5;
             // 
             // labelExtractData
             // 
             this.labelExtractData.AutoSize = true;
-            this.labelExtractData.Location = new System.Drawing.Point(15, 11);
+            this.labelExtractData.Location = new System.Drawing.Point(7, 11);
             this.labelExtractData.Name = "labelExtractData";
             this.labelExtractData.Size = new System.Drawing.Size(45, 13);
             this.labelExtractData.TabIndex = 6;
@@ -395,7 +401,7 @@
             this.panelExtractData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelExtractData.Location = new System.Drawing.Point(0, 72);
             this.panelExtractData.Name = "panelExtractData";
-            this.panelExtractData.Size = new System.Drawing.Size(1447, 171);
+            this.panelExtractData.Size = new System.Drawing.Size(984, 163);
             this.panelExtractData.TabIndex = 7;
             // 
             // listViewExtract
@@ -404,7 +410,7 @@
             this.columnHeaderExtract,
             this.columnHeaderTotal,
             this.columnHeaderStatus});
-            this.listViewExtract.Location = new System.Drawing.Point(59, 6);
+            this.listViewExtract.Location = new System.Drawing.Point(10, 6);
             this.listViewExtract.Name = "listViewExtract";
             this.listViewExtract.Size = new System.Drawing.Size(611, 154);
             this.listViewExtract.TabIndex = 0;
@@ -430,9 +436,9 @@
             // 
             this.panelExtractDataDetail.Controls.Add(this.splitContainer1);
             this.panelExtractDataDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelExtractDataDetail.Location = new System.Drawing.Point(0, 47);
+            this.panelExtractDataDetail.Location = new System.Drawing.Point(0, 35);
             this.panelExtractDataDetail.Name = "panelExtractDataDetail";
-            this.panelExtractDataDetail.Size = new System.Drawing.Size(1447, 504);
+            this.panelExtractDataDetail.Size = new System.Drawing.Size(984, 271);
             this.panelExtractDataDetail.TabIndex = 2;
             // 
             // splitContainer1
@@ -449,17 +455,18 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.checkedListBoxSummary);
             this.splitContainer1.Panel2.Controls.Add(this.panelSummaryTop);
-            this.splitContainer1.Size = new System.Drawing.Size(1447, 504);
-            this.splitContainer1.SplitterDistance = 1124;
+            this.splitContainer1.Size = new System.Drawing.Size(984, 271);
+            this.splitContainer1.SplitterDistance = 764;
             this.splitContainer1.TabIndex = 0;
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1124, 504);
+            this.dataGridView1.Size = new System.Drawing.Size(764, 271);
             this.dataGridView1.TabIndex = 0;
             // 
             // panelSummaryTop
@@ -468,7 +475,7 @@
             this.panelSummaryTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSummaryTop.Location = new System.Drawing.Point(0, 0);
             this.panelSummaryTop.Name = "panelSummaryTop";
-            this.panelSummaryTop.Size = new System.Drawing.Size(319, 32);
+            this.panelSummaryTop.Size = new System.Drawing.Size(216, 32);
             this.panelSummaryTop.TabIndex = 7;
             // 
             // labelSummary
@@ -486,14 +493,14 @@
             this.checkedListBoxSummary.FormattingEnabled = true;
             this.checkedListBoxSummary.Location = new System.Drawing.Point(0, 32);
             this.checkedListBoxSummary.Name = "checkedListBoxSummary";
-            this.checkedListBoxSummary.Size = new System.Drawing.Size(319, 472);
+            this.checkedListBoxSummary.Size = new System.Drawing.Size(216, 239);
             this.checkedListBoxSummary.TabIndex = 8;
             // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1447, 972);
+            this.ClientSize = new System.Drawing.Size(984, 661);
             this.Controls.Add(this.panelExtractDetail);
             this.Controls.Add(this.panelExtract);
             this.Controls.Add(this.panelTop);

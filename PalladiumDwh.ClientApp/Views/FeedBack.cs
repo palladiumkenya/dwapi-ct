@@ -31,17 +31,9 @@ namespace PalladiumDwh.ClientApp.Views
             set { Text = value; }
         }
 
-        public string Header
-        {
-            get { return infoControlFeedBack.Header; }
-            set { infoControlFeedBack.Header = value; }
-        }
+        public string Header { get; set; }
 
-        public string HeaderDescription
-        {
-            get { return infoControlFeedBack.HeaderDescription; }
-            set { infoControlFeedBack.HeaderDescription = value; }
-        }
+        public string HeaderDescription { get; set; }
 
         public IFeedBackPresenter Presenter { get; set; }
 
