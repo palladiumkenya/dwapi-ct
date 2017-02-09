@@ -22,9 +22,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Repository
 
         [SetUp]
         public void SetUp()
-
         {
-            
+            Effort.Provider.EffortProviderConfiguration.RegisterProvider();
+
             _context = new DwapiRemoteContext(Effort.DbConnectionFactory.CreateTransient(), true);
 
             var projects = Builder<Project>.CreateListOfSize(1).Build() as List<Project>;

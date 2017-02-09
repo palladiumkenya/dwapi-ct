@@ -9,8 +9,12 @@ namespace PalladiumDwh.ClientApp.Views
         string SubOptionTitle { get; set; }
         List<EmrViewModel> Emrs { get; set; }
         EmrViewModel SelectedEmr { get; }
+        bool CanMarkDefault { get; set; }
         string Id { get; set; }
         
          string Info { get; set; }
+        void SetupDefaults();
+        bool ConfirmAction(string action,string actionTilte);
+        void CloseView();
     }
 }

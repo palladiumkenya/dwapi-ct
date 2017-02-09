@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Linq;
+using System.Runtime.InteropServices;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Views;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
@@ -8,7 +11,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 {
     public class OptionPresenter:IOptionPresenter
     {
-        private readonly IProjectRepository _projectRepository;
+        private IProjectRepository _projectRepository;
         private readonly IEMRRepository _emrRepository;
         
         public IOptionView View { get; }
@@ -25,34 +28,49 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.Title = "Options";
             View.Header = "Setup connection to EMR Extracts datasources";
             View.SubOptionTitle = "Choose Default EMR Source";
+            View.Id = View.Info = string.Empty;
         }
 
         public void Load()
         {
             var list=new List<EmrViewModel>();
-            var projects = _projectRepository.GetAll();
+
+            _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
+            var projects = _projectRepository.GetAll().ToList();
             foreach (var p in projects)
             {
                 list.AddRange(EmrViewModel.CreateList(p));
             }
             View.Emrs = list;
+            View.CanMarkDefault = View.Emrs.Count > 0;
         }
 
         public void SetAsDefault()
         {
-            var emr = View.SelectedEmr.Emr;
+            if (null == View.SelectedEmr)
+                return;
 
-            _emrRepository.Update(emr);
-            _emrRepository.CommitChanges();
-
+            if (View.ConfirmAction($"Are you sure you want to Change the default EMR to {View.Info}", "Set Default EMR"))
+            {
+                var emrId = View.SelectedEmr.Id;
+                _emrRepository.SetEmrAsDefault(emrId);
+                _emrRepository.CommitChanges();
+                _projectRepository.CommitChanges();
+            }
             Load();
         }
 
         public void ShowSelected()
         {
+            View.CanMarkDefault = false;
+            View.Id = View.Info = string.Empty;
             var emr = View.SelectedEmr;
-            View.Id = emr.Emr.Id.ToString();
-            View.Info = "";
+            if (null != emr)
+            {
+                View.CanMarkDefault = true;
+                View.Id = emr.Id.ToString();
+                View.Info = $"{emr.EMR} (v {emr.Version})";
+            }
         }
     }
 }

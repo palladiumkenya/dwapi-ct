@@ -19,10 +19,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Repository
         private EMR _emr;
         private IEMRRepository _emrRepository;
         private ExtractSetting _extractSetting;
+        
 
         [SetUp]
         public void SetUp()
         {
+            Effort.Provider.EffortProviderConfiguration.RegisterProvider();
             _context = new DwapiRemoteContext(Effort.DbConnectionFactory.CreateTransient(), true);
 
             var projects = Builder<Project>.CreateListOfSize(1).Build() as List<Project>;
@@ -34,6 +36,26 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Repository
             _emrRepository = new EMRRepository(_context);
         }
 
+        [Test]
+        public void should_SetDefaultEMR()
+        {
+            var emrs = _emrRepository.GetAll().ToList();
+            var emrDefault = emrs.First(x => x.IsDefault);
+            Assert.IsNotNull(emrDefault);
+
+            var emrtoUpdate = emrs.First(x => x.IsDefault==false);
+            _emrRepository.SetEmrAsDefault(emrtoUpdate.Id);
+            _emrRepository.CommitChanges();
+
+            _emrRepository=new EMRRepository(_context);
+            var savedEmrs = _emrRepository.GetAll().ToList();
+
+            var noDefualt = savedEmrs.Where(x => x.IsDefault).ToList().Count;
+            var defaultEmr=savedEmrs.First(x => x.IsDefault);
+            
+            Assert.IsTrue(noDefualt==1);
+            Assert.AreEqual(emrtoUpdate.Id,defaultEmr.Id);
+        }
         [Test]
         public void should_GetDefaultEMR()
         {

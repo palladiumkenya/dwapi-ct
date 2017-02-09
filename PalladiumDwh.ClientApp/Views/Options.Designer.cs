@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("EMR Setup");
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("EMR Setup");
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOk = new System.Windows.Forms.Button();
@@ -36,14 +36,14 @@
             this.listViewOptions = new System.Windows.Forms.ListView();
             this.panelOptionMain = new System.Windows.Forms.Panel();
             this.panelSubOptionMain = new System.Windows.Forms.Panel();
+            this.labelExtractInfo = new System.Windows.Forms.Label();
+            this.labelId = new System.Windows.Forms.Label();
             this.dataGridViewOptions = new System.Windows.Forms.DataGridView();
             this.buttonSetDefault = new System.Windows.Forms.Button();
             this.panelSubOptionHeader = new System.Windows.Forms.Panel();
             this.labelSubOptionTitle = new System.Windows.Forms.Label();
             this.panelOptionInfo = new System.Windows.Forms.Panel();
             this.labelHeader = new System.Windows.Forms.Label();
-            this.labelId = new System.Windows.Forms.Label();
-            this.labelExtractInfo = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerOptions)).BeginInit();
             this.splitContainerOptions.Panel1.SuspendLayout();
@@ -74,6 +74,7 @@
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // buttonOk
             // 
@@ -83,6 +84,7 @@
             this.buttonOk.TabIndex = 0;
             this.buttonOk.Text = "OK";
             this.buttonOk.UseVisualStyleBackColor = true;
+            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
             // splitContainerOptions
             // 
@@ -107,7 +109,7 @@
             // 
             this.listViewOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewOptions.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3});
+            listViewItem12});
             this.listViewOptions.Location = new System.Drawing.Point(3, 5);
             this.listViewOptions.Name = "listViewOptions";
             this.listViewOptions.Size = new System.Drawing.Size(170, 419);
@@ -137,12 +139,37 @@
             this.panelSubOptionMain.Size = new System.Drawing.Size(504, 350);
             this.panelSubOptionMain.TabIndex = 2;
             // 
+            // labelExtractInfo
+            // 
+            this.labelExtractInfo.AutoSize = true;
+            this.labelExtractInfo.Location = new System.Drawing.Point(157, 262);
+            this.labelExtractInfo.Name = "labelExtractInfo";
+            this.labelExtractInfo.Size = new System.Drawing.Size(67, 13);
+            this.labelExtractInfo.TabIndex = 4;
+            this.labelExtractInfo.Text = "emr (version)";
+            // 
+            // labelId
+            // 
+            this.labelId.AutoSize = true;
+            this.labelId.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelId.ForeColor = System.Drawing.Color.Gray;
+            this.labelId.Location = new System.Drawing.Point(351, 262);
+            this.labelId.Name = "labelId";
+            this.labelId.Size = new System.Drawing.Size(16, 13);
+            this.labelId.TabIndex = 3;
+            this.labelId.Text = "Id";
+            // 
             // dataGridViewOptions
             // 
             this.dataGridViewOptions.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewOptions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridViewOptions.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dataGridViewOptions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewOptions.Location = new System.Drawing.Point(10, 6);
             this.dataGridViewOptions.Name = "dataGridViewOptions";
+            this.dataGridViewOptions.ReadOnly = true;
+            this.dataGridViewOptions.RowHeadersVisible = false;
+            this.dataGridViewOptions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewOptions.Size = new System.Drawing.Size(482, 240);
             this.dataGridViewOptions.TabIndex = 2;
             this.dataGridViewOptions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewOptions_CellContentClick);
@@ -150,12 +177,13 @@
             // 
             // buttonSetDefault
             // 
-            this.buttonSetDefault.Location = new System.Drawing.Point(27, 252);
+            this.buttonSetDefault.Location = new System.Drawing.Point(11, 257);
             this.buttonSetDefault.Name = "buttonSetDefault";
             this.buttonSetDefault.Size = new System.Drawing.Size(140, 23);
             this.buttonSetDefault.TabIndex = 1;
             this.buttonSetDefault.Text = "Set as &Default";
             this.buttonSetDefault.UseVisualStyleBackColor = true;
+            this.buttonSetDefault.Click += new System.EventHandler(this.buttonSetDefault_Click);
             // 
             // panelSubOptionHeader
             // 
@@ -192,24 +220,6 @@
             this.labelHeader.Size = new System.Drawing.Size(232, 13);
             this.labelHeader.TabIndex = 0;
             this.labelHeader.Text = "Setup connection to EMR Extracts datasources";
-            // 
-            // labelId
-            // 
-            this.labelId.AutoSize = true;
-            this.labelId.Location = new System.Drawing.Point(173, 257);
-            this.labelId.Name = "labelId";
-            this.labelId.Size = new System.Drawing.Size(16, 13);
-            this.labelId.TabIndex = 3;
-            this.labelId.Text = "Id";
-            // 
-            // labelExtractInfo
-            // 
-            this.labelExtractInfo.AutoSize = true;
-            this.labelExtractInfo.Location = new System.Drawing.Point(173, 280);
-            this.labelExtractInfo.Name = "labelExtractInfo";
-            this.labelExtractInfo.Size = new System.Drawing.Size(12, 13);
-            this.labelExtractInfo.TabIndex = 4;
-            this.labelExtractInfo.Text = "x";
             // 
             // Options
             // 

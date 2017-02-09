@@ -28,6 +28,10 @@ namespace PalladiumDwh.ClientReader.Core.Model
             ProjectId = projectId;
         }
 
+
+
+
+
         public void AddExtractSetting(ExtractSetting setting)
         {
             if (ExtractSettings.Any(c => c.Name.ToLower() == setting.Name.ToLower()))

@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -14,6 +15,23 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
     {
         public EMRRepository(DwapiRemoteContext context) : base(context)
         {
+        }
+
+        public void SetEmrAsDefault(Guid id)
+        {
+            var currentEmr = Context.Emrs.Find(id);
+
+            if (null != currentEmr)
+            {
+                var alldefualt = Context.Emrs.Where(x => x.IsDefault).ToList();
+                foreach (var d in alldefualt)
+                {
+                    d.IsDefault = false;
+                    Update(d);
+                }
+                currentEmr.IsDefault = true;
+                Update(currentEmr);
+            }
         }
 
         public IDbConnection GetConnection()

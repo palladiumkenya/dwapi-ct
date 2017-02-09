@@ -48,6 +48,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
             Context.Database.ExecuteSqlCommand(sql);
         }
 
+        public virtual void Refresh()
+        {
+         
+        }
+
 
         public virtual void CommitChanges()
         {

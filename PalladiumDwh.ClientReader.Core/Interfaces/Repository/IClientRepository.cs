@@ -12,6 +12,8 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
         void Update(TEntity entity);
         void Delete(Guid id);
         void Execute(string sql);
+        void Refresh();
         void CommitChanges();
+
     }
 }
