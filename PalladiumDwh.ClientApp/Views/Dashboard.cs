@@ -27,7 +27,8 @@ namespace PalladiumDwh.ClientApp.Views
         private readonly IClientPatientRepository _clientPatientRepository;
         private readonly IProfileManager _profileManager;
         private readonly IPushProfileService _pushService;
-
+        private List<string> _eventSummaries = new List<string>();
+        private List<string> _allEventSummaries=new List<string>();
 
         public Dashboard()
         {
@@ -158,6 +159,18 @@ namespace PalladiumDwh.ClientApp.Views
 
         }
 
+        public List<string> EventSummaries
+        {
+            get { return _eventSummaries; }
+            set
+            {
+                _eventSummaries = value;
+                LoadEventSummary(_eventSummaries);
+            }
+        }
+
+       
+
         public event EventHandler<EmrExtractLoadedEvent> EmrExtractLoaded;
         public event EventHandler<CsvExtractLoadedEvent> CsvExtractLoaded;
         public event EventHandler<ExtractExportedEvent> ExtractExported;
@@ -204,7 +217,8 @@ namespace PalladiumDwh.ClientApp.Views
             }
         }
 
-        
+      
+
 
         private void LoadExtracts(List<ExtractsViewModel> extracts)
         {
@@ -238,6 +252,13 @@ namespace PalladiumDwh.ClientApp.Views
             ExtractSent?.Invoke(this, e);
         }
         #endregion
+
+        private void LoadEventSummary(List<string> eventSummaries)
+        {
+            _allEventSummaries.AddRange(eventSummaries);
+            listBoxEventsSummary.DataSource = null;
+            listBoxEventsSummary.DataSource = _allEventSummaries;
+        }
 
         public bool ConfirmAction(string action, string actionTilte)
         {

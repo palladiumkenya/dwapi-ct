@@ -17,6 +17,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 {
     public class DashboardPresenter : IDashboardPresenter
     {
+        
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private IProjectRepository _projectRepository;
@@ -24,7 +25,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         private readonly IClientPatientRepository _clientPatientRepository;
         private readonly IProfileManager _profileManager;
         private readonly IPushProfileService _pushService;
-
+        private long timeTaken = 0;
 
         private EmrViewModel _emrmodel;
         private IEnumerable<ClientPatientExtract> _clientPatientExtracts;
@@ -110,6 +111,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             foreach (var extract in extracts.OrderBy(x => x.Rank))
             {
+                
                 count++;
                 var vm = new ExtractsViewModel(extract) {Status = "loading..."};
                 View.UpdateStatus(vm);
@@ -126,7 +128,12 @@ namespace PalladiumDwh.ClientApp.Presenters
             }
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
-            UpdateUi($"Load Completed ({count} of {total}) Time: {elapsedMs * 0.001} s !");
+            timeTaken += elapsedMs;
+            var msg = $"Load Completed ({count} of {total}) Extracts Time: {elapsedMs*0.001} s !";
+            UpdateUi(msg);
+            
+            this.View.EventSummaries=new List<string>() {msg};
+
             LoadExtractDetail();
         }
 
@@ -198,7 +205,12 @@ namespace PalladiumDwh.ClientApp.Presenters
             }
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
-            UpdateUi($"Send Completed ({count} of {total}) Time: {elapsedMs*0.001} s !");
+            timeTaken += elapsedMs;
+            var msg = $"Send Completed ({count} of {total}) Time: {elapsedMs*0.001} s !";
+            UpdateUi(msg);
+            
+
+            this.View.EventSummaries = new List<string>() { msg ,$"Total time taken: {timeTaken * 0.001} s" };
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
         }
 

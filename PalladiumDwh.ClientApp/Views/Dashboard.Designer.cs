@@ -75,6 +75,8 @@
             this.labelSummary = new System.Windows.Forms.Label();
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
+            this.listBoxEventsSummary = new System.Windows.Forms.ListBox();
+            this.labelEventSummary = new System.Windows.Forms.Label();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -185,7 +187,7 @@
             // toolStripStatusLabelDashboard
             // 
             this.toolStripStatusLabelDashboard.Name = "toolStripStatusLabelDashboard";
-            this.toolStripStatusLabelDashboard.Size = new System.Drawing.Size(836, 17);
+            this.toolStripStatusLabelDashboard.Size = new System.Drawing.Size(867, 17);
             this.toolStripStatusLabelDashboard.Spring = true;
             this.toolStripStatusLabelDashboard.Text = "Ready";
             this.toolStripStatusLabelDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -296,6 +298,8 @@
             // 
             // panelExtractData
             // 
+            this.panelExtractData.Controls.Add(this.labelEventSummary);
+            this.panelExtractData.Controls.Add(this.listBoxEventsSummary);
             this.panelExtractData.Controls.Add(this.labelId);
             this.panelExtractData.Controls.Add(this.listViewExtract);
             this.panelExtractData.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -313,6 +317,7 @@
             this.labelId.Size = new System.Drawing.Size(16, 13);
             this.labelId.TabIndex = 1;
             this.labelId.Text = "Id";
+            this.labelId.Visible = false;
             // 
             // listViewExtract
             // 
@@ -525,6 +530,23 @@
             this.labelExtractDataDetail.TabIndex = 0;
             this.labelExtractDataDetail.Text = "Extract Details";
             // 
+            // listBoxEventsSummary
+            // 
+            this.listBoxEventsSummary.FormattingEnabled = true;
+            this.listBoxEventsSummary.Location = new System.Drawing.Point(630, 25);
+            this.listBoxEventsSummary.Name = "listBoxEventsSummary";
+            this.listBoxEventsSummary.Size = new System.Drawing.Size(351, 134);
+            this.listBoxEventsSummary.TabIndex = 2;
+            // 
+            // labelEventSummary
+            // 
+            this.labelEventSummary.AutoSize = true;
+            this.labelEventSummary.Location = new System.Drawing.Point(765, 6);
+            this.labelEventSummary.Name = "labelEventSummary";
+            this.labelEventSummary.Size = new System.Drawing.Size(86, 13);
+            this.labelEventSummary.TabIndex = 6;
+            this.labelEventSummary.Text = "Events Summary";
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -618,5 +640,7 @@
         private System.Windows.Forms.ColumnHeader columnHeaderTotal;
         private System.Windows.Forms.ColumnHeader columnHeaderStatus;
         private System.Windows.Forms.ColumnHeader columnHeaderId;
+        private System.Windows.Forms.ListBox listBoxEventsSummary;
+        private System.Windows.Forms.Label labelEventSummary;
     }
 }

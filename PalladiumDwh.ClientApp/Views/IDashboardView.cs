@@ -35,7 +35,7 @@ namespace PalladiumDwh.ClientApp.Views
         void ClearExtracts();
         void UpdateStatus(ExtractsViewModel viewModel);
         #endregion
-
+        List<string> EventSummaries { get; set; }
         string Status { get; set; }
         bool ConfirmAction(string action, string actionTilte);
         void CloseView(); 
