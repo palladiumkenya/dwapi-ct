@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using PalladiumDwh.ClientApp.Views;
+using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientApp.Presenters
 {
@@ -12,7 +14,8 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         #region Extracts
         void InitializeExtracts();
-        void LoadExtracts();
+        void LoadExtractSettings();
+        void LoadExtracts(List<ExtractSetting> extracts);
         void ShowSelectedExtract();
 
         #endregion

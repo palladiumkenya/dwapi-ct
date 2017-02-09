@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
@@ -38,15 +39,15 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
             var emr = _emrRepository.GetDefault();
 
-            if (null == emr)throw new Exception($"No Default EMR Setup !");
+            if (null == emr) throw new Exception($"No Default EMR Setup !");
 
             _extractSetting = emr.GetActiveExtractSetting($"{extractName}");
 
-            if (null == _extractSetting)throw new Exception($"No Extract Setting found for {emr}");
+            if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
 
             commandText = _extractSetting.ExtractSql;
 
-            if(string.IsNullOrWhiteSpace(commandText))throw new Exception($"No sql command found for {extractName}");
+            if (string.IsNullOrWhiteSpace(commandText)) throw new Exception($"No sql command found for {extractName}");
 
             using (_emrConnection)
             {
@@ -63,6 +64,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                         if (null != reader)
                         {
                             var extracts = new List<T>();
+                            int totalcount = 0;
                             int count = 0;
                             int loaded = 0;
                             var extract = (T) Activator.CreateInstance(typeof(T));
@@ -70,17 +72,18 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                             while (reader.Read())
                             {
-
+                                totalcount++;
                                 count++;
-                                _summary.Total = count;
-                                 extract = (T) Activator.CreateInstance(typeof(T));
+                                
+                                extract = (T) Activator.CreateInstance(typeof(T));
                                 extract.Load(reader);
                                 if (!extract.HasError)
                                 {
                                     loaded++;
-                                    _summary.Loaded = loaded;
+
                                     if (_batchSize == 0)
                                     {
+
                                         if (_connection.State != ConnectionState.Open)
                                         {
                                             _connection.Open();
@@ -123,12 +126,24 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                 tx.Commit();
 
                             }
+
+                            _summary.Loaded = loaded;
+                            _summary.Total = totalcount;
                         }
                     }
 
                 }
 
             }
+        }
+
+        public virtual async Task<LoadSummary> ExecuteAsync()
+        {
+            return await Task.Run(() =>
+            {
+                Execute();
+                return Summary;
+            });
         }
     }
 }

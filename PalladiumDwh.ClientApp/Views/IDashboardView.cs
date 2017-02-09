@@ -36,6 +36,7 @@ namespace PalladiumDwh.ClientApp.Views
         void UpdateStatus(ExtractsViewModel viewModel);
         #endregion
 
+        string Status { get; set; }
         bool ConfirmAction(string action, string actionTilte);
         void CloseView(); 
     }

@@ -47,9 +47,10 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Data
 
         }
 
+        //TODO: select unprocessed extracts only
         public IEnumerable<ClientPatientExtract> GetAll(bool processed)
         {
-           return GetAll().Where(x => x.Processed == processed);
+           return GetAll().Where(x => x.Processed == processed||x.Processed==null);
         }
 
         public void UpdateProcessd(ClientPatientExtract patient,string profileExtract)

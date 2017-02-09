@@ -126,10 +126,37 @@ namespace PalladiumDwh.ClientApp.Views
             set { labelId.Text = value; }
         }
 
-        public bool CanLoadEmr { get; set; }
-        public bool CanLoadCsv { get; set; }
-        public bool CanExport { get; set; }
-        public bool CanSend { get; set; }
+        public bool CanLoadEmr
+        {
+            get { return buttonLoad.Enabled; }
+            set { buttonLoad.Enabled = value; }
+        }
+
+        public bool CanLoadCsv
+        {
+            get { return buttonLoadCsv.Enabled; }
+            set { buttonLoadCsv.Enabled = value; }
+        }
+
+        public bool CanExport
+        {
+            get { return buttonExport.Enabled; }
+            set { buttonExport.Enabled = value; }
+        }
+
+        public bool CanSend
+        {
+            get { return buttonSend.Enabled; }
+            set { buttonSend.Enabled = value; }
+        }
+
+
+        public string Status
+        {
+            get { return toolStripStatusLabelDashboard.Text; }
+            set { toolStripStatusLabelDashboard.Text = value; }
+
+        }
 
         public event EventHandler<EmrExtractLoadedEvent> EmrExtractLoaded;
         public event EventHandler<CsvExtractLoadedEvent> CsvExtractLoaded;
@@ -141,7 +168,7 @@ namespace PalladiumDwh.ClientApp.Views
         private void Dashboard_Load(object sender, EventArgs e)
         {
             Presenter.LoadEmrInfo();
-            Presenter.LoadExtracts();
+            Presenter.LoadExtractSettings();
         }
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -149,7 +176,7 @@ namespace PalladiumDwh.ClientApp.Views
             var options = new Options();
             options.ShowDialog(this);
             Presenter.LoadEmrInfo();
-            Presenter.LoadExtracts();
+            Presenter.LoadExtractSettings();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -177,6 +204,8 @@ namespace PalladiumDwh.ClientApp.Views
             }
         }
 
+        
+
         private void LoadExtracts(List<ExtractsViewModel> extracts)
         {
             ClearExtracts();
@@ -192,7 +221,7 @@ namespace PalladiumDwh.ClientApp.Views
             }
         }
 
-        protected virtual void OnEmrExtractLoaded(EmrExtractLoadedEvent e)
+        protected virtual  void OnEmrExtractLoaded(EmrExtractLoadedEvent e)
         {
             EmrExtractLoaded?.Invoke(this, e);
         }
@@ -225,7 +254,7 @@ namespace PalladiumDwh.ClientApp.Views
             Presenter.ShowSelectedExtract();
         }
 
-        private void buttonLoad_Click(object sender, EventArgs e)
+        private  void buttonLoad_Click(object sender, EventArgs e)
         {
             OnEmrExtractLoaded(new EmrExtractLoadedEvent(ExtractSettings));
         }

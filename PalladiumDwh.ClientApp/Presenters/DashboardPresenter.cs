@@ -84,7 +84,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ClearExtracts();
         }
 
-        public void LoadExtracts()
+        public void LoadExtractSettings()
         {
             var extracts = _emrmodel
                 .ExtractSettings
@@ -95,6 +95,39 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.CanLoadEmr = View.CanLoadCsv = View.CanExport = View.CanSend = View.ExtractSettings.Count > 0;
 
 
+        }
+
+        //TODO: consider Parallel processing
+        public async void LoadExtracts(List<ExtractSetting> extracts)
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            View.Status = "loading...";
+            int total = extracts.Count;
+            int count = 0;
+
+            await _syncService.InitializeAsync();
+
+            foreach (var extract in extracts.OrderBy(x => x.Rank))
+            {
+                count++;
+                var vm = new ExtractsViewModel(extract) {Status = "loading..."};
+                View.UpdateStatus(vm);
+
+                View.Status = $"loading {count}/{total} ({extract.Display}) ...";
+                var summary = await _syncService.SyncAsync(extract.Destination);
+
+                vm = new ExtractsViewModel(extract)
+                {
+                    Total = summary.SyncSummary.Total,
+                    Status = summary.ToString()
+                };
+                View.UpdateStatus(vm);
+            }
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            UpdateUi($"Load Completed ({count} of {total}) Time: {elapsedMs * 0.001} s !");
+            LoadExtractDetail();
         }
 
         public void ShowSelectedExtract()
@@ -109,24 +142,9 @@ namespace PalladiumDwh.ClientApp.Presenters
         }
 
 
-        private void View_EmrExtractLoaded(object sender, Events.EmrExtractLoadedEvent e)
+        private  void View_EmrExtractLoaded(object sender, Events.EmrExtractLoadedEvent e)
         {
-
-            _syncService.Initialize();
-
-
-            foreach (var extract in e.Extracts.OrderBy(x => x.Rank))
-            {
-                var summary = _syncService.Sync(extract.Destination);
-                var vm = new ExtractsViewModel(extract)
-                {
-                    Total = summary.SyncSummary.Total,
-                    Status = summary.ToString()
-                };
-                View.UpdateStatus(vm);
-            }
-
-            LoadExtractDetail();
+           LoadExtracts(e.Extracts);
         }
 
         private void View_ExtractSent(object sender, Events.ExtractSentEvent e)
@@ -152,22 +170,41 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public void LoadExtractDetail()
         {
-            _clientPatientExtracts = _clientPatientRepository.GetAll();
+           // _clientPatientExtracts = _clientPatientRepository.GetAll();
 
         }
 
+        //TODO: consider Parallel processing
         public async void SendExtracts()
         {
-            foreach (var p in _clientPatientRepository.GetAll(false))
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            View.Status="sending...";
+            View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
+
+            var list = _clientPatientRepository.GetAll(false).ToList();
+            var total = list.Count();
+            int count = 0;
+            foreach (var p in list)
             {
+                count++;
+                
                 var extractsToSend = _profileManager.Generate(p);
-                Log.Debug($"sending:{p}");
                 foreach (var e in extractsToSend)
                 {
                     var result = await _pushService.PushAsync(e);
-                    Log.Debug($"   >sent:{p} {e.GetType().Name} |{result}");
+                    UpdateUi($"sending Patient Profile {count} of {total}");
                 }
             }
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            UpdateUi($"Send Completed ({count} of {total}) Time: {elapsedMs*0.001} s !");
+            View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
+        }
+
+        private void UpdateUi(string message)
+        {
+            View.Status = $"{message}";
         }
 
         #endregion

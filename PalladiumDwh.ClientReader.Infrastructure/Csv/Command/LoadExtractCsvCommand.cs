@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Dapper;
@@ -126,6 +127,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                     }
                 }
             }
+        }
+
+        public Task<LoadSummary> ExecuteAsync()
+        {
+            throw new NotImplementedException();
         }
 
         private CsvConfiguration GetConfig()

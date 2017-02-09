@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
@@ -40,6 +41,15 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                 }
 
             }
+        }
+
+        public virtual async  Task<SyncSummary> ExecuteAsync()
+        {
+            return await Task.Run(() =>
+            {
+                Execute();
+                return Summary;
+            });
         }
     }
 }

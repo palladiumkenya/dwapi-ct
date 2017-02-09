@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 
@@ -39,6 +40,14 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        public virtual async Task ExecuteAsync()
+        {
+             await Task.Run(() =>
+            {
+                Execute();
+            });
         }
     }
 }
