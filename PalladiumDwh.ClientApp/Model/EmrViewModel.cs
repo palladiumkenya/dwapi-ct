@@ -12,6 +12,8 @@ namespace PalladiumDwh.ClientApp.Model
         public string Version { get; set; }
         public bool IsDefault { get; set; }
         public Guid Id { get; set; }
+        public List<ExtractSetting> ExtractSettings { get; set; }=new List<ExtractSetting>();
+
         public EmrViewModel()
         {
         }
@@ -23,11 +25,16 @@ namespace PalladiumDwh.ClientApp.Model
             Version = emr.Version;
             IsDefault = emr.IsDefault;
             Id = emr.Id;
+            ExtractSettings.AddRange(emr.ExtractSettings);            
         }
 
         public EMR GetEmr()
         {
             return new EMR();
+        }
+        public static EmrViewModel Create(Project project)
+        {
+            return new EmrViewModel(project, project.GetDefaultEmr());
         }
         public static List<EmrViewModel> CreateList(Project project)
         {
@@ -39,8 +46,6 @@ namespace PalladiumDwh.ClientApp.Model
             }
             
             return list;
-        }
-
-       
+        }       
     }
 }

@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\ExtractStatus.cs" />
     <Compile Include="Interfaces\Commands\ILoadCsvExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncFacilityCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientVisitExtractCommand.cs" />

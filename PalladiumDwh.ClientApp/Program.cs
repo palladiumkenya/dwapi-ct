@@ -27,7 +27,7 @@ namespace PalladiumDwh.ClientApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new Options());
+            Application.Run(new Dashboard());
         }
     }
 }

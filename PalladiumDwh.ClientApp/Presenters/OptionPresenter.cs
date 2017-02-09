@@ -20,7 +20,9 @@ namespace PalladiumDwh.ClientApp.Presenters
         {
             _projectRepository = projectRepository;
             _emrRepository = emrRepository;
+            view.Presenter = this;
             View = view;
+            
         }
 
         public void Initialize()

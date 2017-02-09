@@ -65,9 +65,12 @@
   <ItemGroup>
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
-    <Compile Include="Model\Info.cs" />
+    <Compile Include="Model\ExtractsViewModel.cs" />
+    <Compile Include="Model\EmrViewModel.cs" />
+    <Compile Include="Presenters\DashboardPresenter.cs" />
     <Compile Include="Presenters\FeedBackPresenter.cs" />
     <Compile Include="Presenters\IFeedBackPresenter.cs" />
+    <Compile Include="Presenters\IDashboardPresenter.cs" />
     <Compile Include="Presenters\IOptionPresenter.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
     <Compile Include="Presenters\OptionPresenter.cs" />
@@ -86,6 +89,7 @@
       <DependentUpon>FeedBack.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IFeedBackView.cs" />
+    <Compile Include="Views\IDashboardView.cs" />
     <Compile Include="Views\IOptionView.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\Options.cs">

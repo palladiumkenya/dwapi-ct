@@ -181,6 +181,14 @@
     <Compile Include="Migrations\201702080717134_EmrDestination.Designer.cs">
       <DependentUpon>201702080717134_EmrDestination.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702090715592_ExtractSettingsDisplay.cs" />
+    <Compile Include="Migrations\201702090715592_ExtractSettingsDisplay.Designer.cs">
+      <DependentUpon>201702090715592_ExtractSettingsDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702090737026_ExtractSettingsRank.cs" />
+    <Compile Include="Migrations\201702090737026_ExtractSettingsRank.Designer.cs">
+      <DependentUpon>201702090737026_ExtractSettingsRank.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -214,6 +222,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702080717134_EmrDestination.resx">
       <DependentUpon>201702080717134_EmrDestination.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702090715592_ExtractSettingsDisplay.resx">
+      <DependentUpon>201702090715592_ExtractSettingsDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702090737026_ExtractSettingsRank.resx">
+      <DependentUpon>201702090737026_ExtractSettingsRank.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
