@@ -21,7 +21,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         public void SetUp()
         {
             _context = new DwapiRemoteContext();
-            _extractCommand = new LoadPatientPharmacyExtractDbCommand(new EMRRepository(_context));
+            _extractCommand = new LoadPatientPharmacyExtractCommand(new EMRRepository(_context));
 
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientPharmacyExtract");
          

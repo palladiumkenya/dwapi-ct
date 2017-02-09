@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 
@@ -9,27 +10,33 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
     public class SyncCommand<TS,TD> : ISyncCommand<TS, TD> where TS:TempExtract where TD:ClientExtract
     {
-        private readonly string _connectionString;
+        private readonly IEMRRepository _emrRepository;
+        private readonly IDbConnection _connection;
+        private SyncSummary _summary;
 
-        public SyncCommand(string connectionString)
+        public SyncCommand(IEMRRepository emrRepository)
         {
-            _connectionString = connectionString;
+            _emrRepository = emrRepository;
+            _connection = _emrRepository.GetConnection();
         }
+
+        public SyncSummary Summary => _summary;
 
         public virtual void Execute()
         {
+            _summary=new SyncSummary();
             var extract = (TD)Activator.CreateInstance(typeof(TD));
-            using (var connection = new SqlConnection(_connectionString))
+            using (_connection)
             {
-                if (connection.State != ConnectionState.Open)
+                if (_connection.State != ConnectionState.Open)
                 {
-                    connection.Open();
+                    _connection.Open();
                 }
 
-                using (var command = connection.CreateCommand())
+                using (var command = _connection.CreateCommand())
                 {
                     command.CommandText = extract.GetAddAction(typeof(TS).Name);
-                    command.ExecuteNonQuery();
+                   _summary.Total= command.ExecuteNonQuery();
                 }
 
             }

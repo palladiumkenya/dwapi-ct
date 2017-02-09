@@ -4,9 +4,9 @@ using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
-  public  class LoadPatientExtractDbCommand: LoadEmrExtractCommand<TempPatientExtract>, ILoadPatientExtractCommand
+  public  class LoadPatientVisitExtractCommand : LoadExtractCommand<TempPatientVisitExtract>, ILoadPatientVisitExtractCommand
   {
-      public LoadPatientExtractDbCommand(IEMRRepository emrRepository, int batchSize = 100) : base(emrRepository, batchSize)
+      public LoadPatientVisitExtractCommand(IEMRRepository emrRepository, int batchSize = 100) : base(emrRepository, batchSize)
       {
       }
   }

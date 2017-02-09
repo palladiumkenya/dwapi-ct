@@ -1,4 +1,5 @@
 using PalladiumDwh.ClientApp.Views;
+using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using StructureMap;
 
@@ -25,10 +26,9 @@ namespace PalladiumDwh.ClientApp.DependencyResolution {
                    scan.WithDefaultConventions();
                });
 
+
             For<DwapiRemoteContext>().Use<DwapiRemoteContext>()
                 .SelectConstructor(() => new DwapiRemoteContext());
-
-            
 
         }
 

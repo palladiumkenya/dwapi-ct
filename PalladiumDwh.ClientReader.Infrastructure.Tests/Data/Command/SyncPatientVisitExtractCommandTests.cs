@@ -25,20 +25,20 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
             _context.Database.ExecuteSqlCommand("DELETE FROM PatientVisitExtract;DELETE FROM TempPatientVisitExtract");
 
             _context.Database.ExecuteSqlCommand("DELETE FROM PatientExtract;DELETE FROM TempPatientExtract");
-            var extractCommand = new LoadPatientExtractDbCommand(new EMRRepository(_context));
+            var extractCommand = new LoadPatientExtractCommand(new EMRRepository(_context));
             extractCommand.Execute();
-            var syncPatientsCommand = new SyncPatientExtractDbCommand(_connectionString);
+            var syncPatientsCommand = new SyncPatientExtractCommand(new EMRRepository(_context));
             syncPatientsCommand.Execute();
         }
 
         [Test]
         public void should_sync_patients()
         {
-            var extractCommand = new LoadPatientVisitExtractDbCommand(new EMRRepository(_context));
+            var extractCommand = new LoadPatientVisitExtractCommand(new EMRRepository(_context));
             extractCommand.Execute();
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            _syncCommand = new SyncPatientVisitExtractDbCommand(_connectionString);
+            _syncCommand = new SyncPatientVisitExtractCommand(new EMRRepository(_context));
             _syncCommand.Execute();
 
             watch.Stop();

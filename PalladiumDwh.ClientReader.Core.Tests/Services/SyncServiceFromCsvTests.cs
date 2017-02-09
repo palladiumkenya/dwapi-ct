@@ -9,6 +9,8 @@ using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientReader.Infrastructure.Csv.Command;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
+using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
+
 
 namespace PalladiumDwh.ClientReader.Core.Tests.Services
 {
@@ -22,6 +24,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
 
         private DwapiRemoteContext _context;
 
+        private IClearExtractsCommand _clearExtractsCommand;
         private ILoadPatientExtractCommand _loadPatientExtractCommand;
         private ILoadPatientArtExtractCommand _loadPatientArtExtractCommand;
         private ILoadPatientBaselinesExtractCommand _loadPatientBaselinesExtractCommand;
@@ -33,7 +36,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         private ISyncPatientExtractCommand _syncPatientExtractCommand;
         private ISyncPatientArtExtractCommand _syncPatientArtExtractCommand;
         private ISyncPatientBaselinesExtractCommand _syncPatientBaselinesExtractCommand;
-        private ISyncPatientLaboratoryExtractCommand _syncPatientLaboratoryExtractCommand;
+        private Interfaces.Commands.ISyncPatientLaboratoryExtractCommand _syncPatientLaboratoryExtractCommand;
         private ISyncPatientPharmacyExtractCommand _syncPatientPharmacyExtractCommand;
         private ISyncPatientVisitExtractCommand _syncPatientVisitExtractCommand;
         private ISyncPatientStatusExtractCommand _syncPatientStatusExtractCommand;
@@ -43,7 +46,9 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         [SetUp]
         public void should_SetUp()
         {
+            _context = new DwapiRemoteContext();
 
+            _clearExtractsCommand = new ClearExtractsCommand(new EMRRepository(_context));
             _loadPatientExtractCommand = new LoadPatientExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientExtract"));
             _loadPatientArtExtractCommand = new LoadPatientArtExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("ARTPatientExtract"));
             _loadPatientBaselinesExtractCommand = new LoadPatientBaselinesExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientWABWHOCD4Extract"));
@@ -52,15 +57,16 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _loadPatientVisitExtractCommand = new LoadPatientVisitExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientVisitExtract"));
             _loadPatientStatusExtractCommand = new LoadPatientStatusExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientStatusExtract"));
 
-            _syncPatientExtractCommand = new SyncPatientExtractDbCommand(_cn);
-            _syncPatientArtExtractCommand = new SyncPatientArtExtractDbCommand(_cn);
-            _syncPatientBaselinesExtractCommand = new SyncPatientBaselinesExtractDbCommand(_cn);
-            _syncPatientLaboratoryExtractCommand = new SyncPatientLaboratoryExtractDbCommand(_cn);
-            _syncPatientPharmacyExtractCommand = new SyncPatientPharmacyExtractDbCommand(_cn);
-            _syncPatientVisitExtractCommand = new SyncPatientVisitExtractDbCommand(_cn);
-            _syncPatientStatusExtractCommand = new SyncPatientStatusExtractDbCommand(_cn);
+            _syncPatientExtractCommand = new SyncPatientExtractCommand(new EMRRepository(_context));
+            _syncPatientArtExtractCommand = new SyncPatientArtExtractCommand(new EMRRepository(_context));
+            _syncPatientBaselinesExtractCommand = new SyncPatientBaselinesExtractCommand(new EMRRepository(_context));
+            _syncPatientLaboratoryExtractCommand = new SyncPatientLaboratoryExtractCommand(new EMRRepository(_context));
+            _syncPatientPharmacyExtractCommand = new SyncPatientPharmacyExtractCommand(new EMRRepository(_context));
+            _syncPatientVisitExtractCommand = new SyncPatientVisitExtractCommand(new EMRRepository(_context));
+            _syncPatientStatusExtractCommand = new SyncPatientStatusExtractCommand(new EMRRepository(_context));
 
             _syncService = new SyncService(
+                _clearExtractsCommand,
                 _loadPatientExtractCommand, _loadPatientArtExtractCommand, _loadPatientBaselinesExtractCommand,
                 _loadPatientLaboratoryExtractCommand, _loadPatientPharmacyExtractCommand,
                 _loadPatientStatusExtractCommand, _loadPatientVisitExtractCommand,
@@ -69,7 +75,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
                 _syncPatientVisitExtractCommand, _syncPatientStatusExtractCommand);
 
 
-            _context = new DwapiRemoteContext();
+            
 
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientExtract;DELETE FROM  PatientExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientArtExtract;DELETE FROM  PatientArtExtract");

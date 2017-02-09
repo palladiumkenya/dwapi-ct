@@ -8,18 +8,20 @@ using CsvHelper.Configuration;
 using Dapper;
 using log4net;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.ClientReader.Core.Model.Source.Map;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
 {
-    public abstract class LoadExtractCsvCommand<T> : ILoadCsvExtractCommand<T> where T : TempExtract
+    public abstract class LoadExtractCsvCommand<T> : ILoadExtractCommand<T> where T : TempExtract
     {
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         internal readonly IDbConnection CleintConnection;
         internal readonly string CommandText;
         internal readonly int BatchSize;
+        private  LoadSummary _summary;
 
         protected LoadExtractCsvCommand(IDbConnection clientConnection, string commandText, int batchSize = 100)
         {
@@ -28,8 +30,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
             BatchSize = batchSize;
         }
 
+        public LoadSummary Summary => _summary;
+
         public virtual void Execute()
         {
+            _summary = new LoadSummary();
 
             using (TextReader txtReader = File.OpenText(CommandText))
             {
@@ -41,6 +46,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                 {
                     var extracts = new List<T>();
                     int count = 0;
+                    int loaded = 0;
                     var extract = (T) Activator.CreateInstance(typeof(T));
                     string action = extract.GetAddAction();
 
@@ -48,10 +54,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                     {
 
                         count++;
+                        _summary.Total = count;
                         try
                         {
                             extract = reader.GetRecord<T>();
                             //extract.Load(reader);
+
                         }
                         catch (Exception ex)
                         {
@@ -70,6 +78,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
 
                         if (!extract.HasError)
                         {
+                            loaded++;
+                            _summary.Loaded = loaded;
                             if (BatchSize == 0)
                             {
                                 if (CleintConnection.State != ConnectionState.Open)

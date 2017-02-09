@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using PalladiumDwh.ClientApp.Events;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Presenters;
+using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientApp.Views
 {
@@ -15,10 +18,22 @@ namespace PalladiumDwh.ClientApp.Views
         #endregion
 
         #region Extracts
+        List<ExtractSetting> ExtractSettings { get; set; }
         List<ExtractsViewModel> Extracts { get; set; }
         ExtractsViewModel SelectedExtract { get;  }
         string Id { get; set; }
+        bool CanLoadEmr { get; set; }
+        bool CanLoadCsv { get; set; }
+        bool CanExport { get; set; }
+        bool CanSend { get; set; }
+
+        event EventHandler<EmrExtractLoadedEvent> EmrExtractLoaded;
+        event EventHandler<CsvExtractLoadedEvent> CsvExtractLoaded;
+        event EventHandler<ExtractExportedEvent> ExtractExported;
+        event EventHandler<ExtractSentEvent> ExtractSent;
+
         void ClearExtracts();
+        void UpdateStatus(ExtractsViewModel viewModel);
         #endregion
 
         bool ConfirmAction(string action, string actionTilte);

@@ -23,7 +23,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         {
             _context = new DwapiRemoteContext();
           
-            _extractCommand = new LoadPatientLaboratoryExtractDbCommand(new EMRRepository(_context));
+            _extractCommand = new LoadPatientLaboratoryExtractCommand(new EMRRepository(_context));
 
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientLaboratoryExtract");
             

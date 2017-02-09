@@ -29,11 +29,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         [Test]
         public void should_sync_patients()
         {
-            var extractCommand = new LoadPatientExtractDbCommand(new EMRRepository(_context));
+            var extractCommand = new LoadPatientExtractCommand(new EMRRepository(_context));
             extractCommand.Execute();
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            _syncCommand = new SyncPatientExtractDbCommand(_cn);
+            _syncCommand = new SyncPatientExtractCommand(new EMRRepository(_context));
             _syncCommand.Execute();
 
             watch.Stop();
@@ -42,7 +42,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
                 .Single();
             Assert.IsTrue(tempRecords>0);
             var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine(_syncCommand.Summary);
             Console.WriteLine($"Loaded {tempRecords} Temp records! in {elapsedMs}ms ({elapsedMs / 1000}s)");
+
         }
 
   

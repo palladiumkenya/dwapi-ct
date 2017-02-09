@@ -26,9 +26,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
             _context.Database.ExecuteSqlCommand("DELETE FROM PatientArtExtract;DELETE FROM TempPatientArtExtract");
 
             _context.Database.ExecuteSqlCommand("DELETE FROM PatientExtract;DELETE FROM TempPatientExtract");
-            var extractCommand = new LoadPatientExtractDbCommand(new EMRRepository(_context));
+            var extractCommand = new LoadPatientExtractCommand(new EMRRepository(_context));
             extractCommand.Execute();
-            var syncPatientsCommand = new SyncPatientExtractDbCommand(_connectionString);
+            var syncPatientsCommand = new SyncPatientExtractCommand(new EMRRepository(_context));
             syncPatientsCommand.Execute();
           
         }
@@ -36,11 +36,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         [Test]
         public void should_sync_patients_art()
         {
-            var extractCommand = new LoadPatientArtExtractDbCommand(new EMRRepository(_context));
+            var extractCommand = new LoadPatientArtExtractCommand(new EMRRepository(_context));
             extractCommand.Execute();
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            _syncCommand = new SyncPatientArtExtractDbCommand(_connectionString);
+            _syncCommand = new SyncPatientArtExtractCommand(new EMRRepository(_context));
             _syncCommand.Execute();
 
             watch.Stop();

@@ -7,22 +7,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalladiumDwh.ClientApp.Events;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Presenters;
+using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
+using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientApp.Views
 {
     public partial class Dashboard : Form,IDashboardView
     {
-        private IProjectRepository _projectRepository;
         private List<ExtractsViewModel> _extracts=new List<ExtractsViewModel>();
+        private readonly IProjectRepository _projectRepository;
+        private readonly ISyncService _syncService;
+
 
         public Dashboard()
         {
             InitializeComponent();
+
+            
             _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
-            Presenter = new DashboardPresenter(_projectRepository, this);
+            _syncService = Program.IOC.GetInstance<ISyncService>();
+            
+            Presenter = new DashboardPresenter(this, _projectRepository, _syncService);
+
             Presenter.Initialize();
             Presenter.InitializeEmrInfo();
             Presenter.InitializeExtracts();
@@ -63,9 +74,13 @@ namespace PalladiumDwh.ClientApp.Views
             set { textBoxProject.Text = value; }
 
         }
+
+
+
         #endregion
 
         #region Extracts
+        public List<ExtractSetting> ExtractSettings { get; set; }
 
         public List<ExtractsViewModel> Extracts
         {
@@ -102,6 +117,16 @@ namespace PalladiumDwh.ClientApp.Views
             set { labelId.Text = value; }
         }
 
+        public bool CanLoadEmr { get; set; }
+        public bool CanLoadCsv { get; set; }
+        public bool CanExport { get; set; }
+        public bool CanSend { get; set; }
+
+        public event EventHandler<EmrExtractLoadedEvent> EmrExtractLoaded;
+        public event EventHandler<CsvExtractLoadedEvent> CsvExtractLoaded;
+        public event EventHandler<ExtractExportedEvent> ExtractExported;
+        public event EventHandler<ExtractSentEvent> ExtractSent;
+
         #endregion
 
         private void Dashboard_Load(object sender, EventArgs e)
@@ -112,7 +137,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var options=new Options();
+            var options = new Options();
             options.ShowDialog(this);
             Presenter.LoadEmrInfo();
             Presenter.LoadExtracts();
@@ -128,7 +153,21 @@ namespace PalladiumDwh.ClientApp.Views
         {
             listViewExtract.Items.Clear();
         }
-        
+
+        public void UpdateStatus(ExtractsViewModel viewModel)
+        {
+            foreach (ListViewItem item in listViewExtract.Items)
+            {
+                var extractId = item.SubItems[3];
+                if (extractId.Text.ToLower() == viewModel.Id.ToString().ToLower())
+                {
+                    listViewExtract.Items[item.Index].SubItems[1].Text = viewModel.Total.ToString();
+                    listViewExtract.Items[item.Index].SubItems[2].Text = viewModel.Status;
+                    break;
+                }
+            }
+        }
+
         private void LoadExtracts(List<ExtractsViewModel> extracts)
         {
             ClearExtracts();
@@ -142,6 +181,23 @@ namespace PalladiumDwh.ClientApp.Views
                 item.SubItems.Add(e.Id.ToString());
                 listViewExtract.Items.Add(item);
             }
+        }
+
+        protected virtual void OnEmrExtractLoaded(EmrExtractLoadedEvent e)
+        {
+            EmrExtractLoaded?.Invoke(this, e);
+        }
+        protected virtual void OnCsvExtractLoaded(CsvExtractLoadedEvent e)
+        {
+            CsvExtractLoaded?.Invoke(this, e);
+        }
+        protected virtual void OnExtractExported(ExtractExportedEvent e)
+        {
+            ExtractExported?.Invoke(this, e);
+        }
+        protected virtual void OnExtractSent(ExtractSentEvent e)
+        {
+            ExtractSent?.Invoke(this, e);
         }
         #endregion
 
@@ -158,6 +214,26 @@ namespace PalladiumDwh.ClientApp.Views
         private void listViewExtract_SelectedIndexChanged(object sender, EventArgs e)
         {
             Presenter.ShowSelectedExtract();
+        }
+
+        private void buttonLoad_Click(object sender, EventArgs e)
+        {
+            OnEmrExtractLoaded(new EmrExtractLoadedEvent(ExtractSettings));
+        }
+
+        private void buttonLoadCsv_Click(object sender, EventArgs e)
+        {
+            OnCsvExtractLoaded(new CsvExtractLoadedEvent(ExtractSettings));
+        }
+
+        private void buttonExport_Click(object sender, EventArgs e)
+        {
+            OnExtractExported(new ExtractExportedEvent(ExtractSettings));
+        }
+
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+            OnExtractSent(new ExtractSentEvent(ExtractSettings));
         }
     }
 }

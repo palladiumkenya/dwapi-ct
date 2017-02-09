@@ -5,11 +5,11 @@ using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
-  public  class SyncFacilityDbCommand :  ISyncFacilityCommand
+  public  class SyncFacilityCommand :  ISyncFacilityCommand
   {
       private readonly string  _connectionString;
 
-      public SyncFacilityDbCommand(string connectionString)
+      public SyncFacilityCommand(string connectionString)
       {
             _connectionString = connectionString;
         }
@@ -27,7 +27,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = extract.GetAddAction(nameof(ClientPatientExtract));
-                    command.ExecuteNonQuery();
+                   command.ExecuteNonQuery();
                 }
 
             }

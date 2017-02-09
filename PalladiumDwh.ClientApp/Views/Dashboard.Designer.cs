@@ -342,6 +342,7 @@
             this.buttonSend.TabIndex = 3;
             this.buttonSend.Text = "Send to Data Warehouse";
             this.buttonSend.UseVisualStyleBackColor = true;
+            this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
             // buttonExport
             // 
@@ -351,6 +352,7 @@
             this.buttonExport.TabIndex = 2;
             this.buttonExport.Text = "Export";
             this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
             // buttonLoadCsv
             // 
@@ -360,6 +362,7 @@
             this.buttonLoadCsv.TabIndex = 1;
             this.buttonLoadCsv.Text = "Load from CSV";
             this.buttonLoadCsv.UseVisualStyleBackColor = true;
+            this.buttonLoadCsv.Click += new System.EventHandler(this.buttonLoadCsv_Click);
             // 
             // buttonLoad
             // 
@@ -369,6 +372,7 @@
             this.buttonLoad.TabIndex = 0;
             this.buttonLoad.Text = "Load from EMR";
             this.buttonLoad.UseVisualStyleBackColor = true;
+            this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
             // 
             // panelExtractDataTop
             // 

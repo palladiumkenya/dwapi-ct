@@ -9,7 +9,7 @@ using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
-    public class LoadEmrExtractCommand<T> : ILoadExtractCommand<T> where T : TempExtract
+    public class LoadExtractCommand<T> : ILoadExtractCommand<T> where T : TempExtract
     {
 
         private readonly IEMRRepository _emrRepository;
@@ -17,8 +17,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         private readonly IDbConnection _emrConnection;
         private readonly int _batchSize;
         private ExtractSetting _extractSetting;
+        private LoadSummary _summary;
 
-        public LoadEmrExtractCommand(IEMRRepository emrRepository, int batchSize = 100)
+        public LoadExtractCommand(IEMRRepository emrRepository, int batchSize = 100)
         {
             _emrRepository = emrRepository;
             _batchSize = batchSize;
@@ -26,8 +27,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             _emrConnection = _emrRepository.GetEmrConnection();
         }
 
-        public void Execute()
+        public LoadSummary Summary => _summary;
+
+        public virtual void Execute()
         {
+            _summary = new LoadSummary();
+
             string extractName = typeof(T).Name;
             string commandText = string.Empty;
 
@@ -59,6 +64,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                         {
                             var extracts = new List<T>();
                             int count = 0;
+                            int loaded = 0;
                             var extract = (T) Activator.CreateInstance(typeof(T));
                             string action = extract.GetAddAction();
 
@@ -66,10 +72,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             {
 
                                 count++;
-                                extract = (T) Activator.CreateInstance(typeof(T));
+                                _summary.Total = count;
+                                 extract = (T) Activator.CreateInstance(typeof(T));
                                 extract.Load(reader);
                                 if (!extract.HasError)
                                 {
+                                    loaded++;
+                                    _summary.Loaded = loaded;
                                     if (_batchSize == 0)
                                     {
                                         if (_connection.State != ConnectionState.Open)

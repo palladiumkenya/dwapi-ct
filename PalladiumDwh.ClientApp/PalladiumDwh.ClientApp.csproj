@@ -65,6 +65,10 @@
   <ItemGroup>
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="Events\ExtractExportedEvent.cs" />
+    <Compile Include="Events\CsvExtractLoadedEvent.cs" />
+    <Compile Include="Events\EmrExtractLoadedEvent.cs" />
+    <Compile Include="Events\ExtractSentEvent.cs" />
     <Compile Include="Model\ExtractsViewModel.cs" />
     <Compile Include="Model\EmrViewModel.cs" />
     <Compile Include="Presenters\DashboardPresenter.cs" />

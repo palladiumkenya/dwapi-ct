@@ -5,6 +5,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
 {
     public interface ISyncCommand<TSource,TDestination> where TSource : TempExtract where TDestination : ClientExtract
     {
+        SyncSummary Summary { get; }
         void Execute();
     }
 }

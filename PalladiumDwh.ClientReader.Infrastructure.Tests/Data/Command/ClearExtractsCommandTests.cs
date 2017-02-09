@@ -11,18 +11,17 @@ using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
-    public class LoadPatientArtExtractDbCommandTests
+    public class ClearExtractsCommandTests
     {
         private DwapiRemoteContext _context;
-        private ILoadPatientArtExtractCommand _extractCommand;
+        private IClearExtractsCommand _extractCommand;
         
 
         [SetUp]
         public void SetUp()
         {
             _context = new DwapiRemoteContext();
-            _extractCommand = new LoadPatientArtExtractCommand(new EMRRepository(_context));
-            _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientArtExtract");
+            _extractCommand = new ClearExtractsCommand(new EMRRepository(_context));
         }
 
       
@@ -34,7 +33,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientArtExtract")
                 .Single();
 
-            Assert.IsTrue(records >0);
+            Assert.IsTrue(records ==0);
 
             Console.WriteLine($"Loaded {records} records!");
 

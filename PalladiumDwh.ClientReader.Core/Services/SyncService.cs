@@ -1,10 +1,13 @@
 ﻿using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
     public class SyncService : ISyncService
     {
+        private readonly IClearExtractsCommand _clearExtractsCommand;
         private readonly ILoadPatientExtractCommand _loadPatientExtractCommand;
         private readonly ILoadPatientArtExtractCommand _loadPatientArtExtractCommand;
         private readonly ILoadPatientBaselinesExtractCommand _loadPatientBaselinesExtractCommand;
@@ -20,8 +23,10 @@ namespace PalladiumDwh.ClientReader.Core.Services
         private readonly ISyncPatientPharmacyExtractCommand _syncPatientPharmacyExtractCommand;
         private readonly ISyncPatientVisitExtractCommand _syncPatientVisitExtractCommand;
         private readonly ISyncPatientStatusExtractCommand _syncPatientStatusExtractCommand;
+        private SyncSummary _summary;
 
-        public SyncService(ILoadPatientExtractCommand loadPatientExtractCommand,
+        public SyncService(IClearExtractsCommand clearExtractsCommand, 
+            ILoadPatientExtractCommand loadPatientExtractCommand,
             ILoadPatientArtExtractCommand loadPatientArtExtractCommand,
             ILoadPatientBaselinesExtractCommand loadPatientBaselinesExtractCommand,
             ILoadPatientLaboratoryExtractCommand loadPatientLaboratoryExtractCommand,
@@ -36,6 +41,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             ISyncPatientVisitExtractCommand syncPatientVisitExtractCommand,
             ISyncPatientStatusExtractCommand syncPatientStatusExtractCommand)
         {
+            _clearExtractsCommand = clearExtractsCommand;
             _loadPatientExtractCommand = loadPatientExtractCommand;
             _loadPatientArtExtractCommand = loadPatientArtExtractCommand;
             _loadPatientBaselinesExtractCommand = loadPatientBaselinesExtractCommand;
@@ -54,8 +60,84 @@ namespace PalladiumDwh.ClientReader.Core.Services
         }
 
 
+        public void Initialize()
+        {
+            _clearExtractsCommand.Execute();
+        }
+
+        public RunSummary Sync(string extract)
+        {
+            var summary=new RunSummary();
+
+            if (extract == nameof(TempPatientExtract))
+            {
+                _loadPatientExtractCommand.Execute();
+                summary.LoadSummary = _loadPatientExtractCommand.Summary;
+                _syncPatientExtractCommand.Execute();
+                summary.SyncSummary = _syncPatientExtractCommand.Summary;
+            }
+
+
+            if (extract == nameof(TempPatientArtExtract))
+            {
+                _loadPatientArtExtractCommand.Execute();
+                summary.LoadSummary = _loadPatientArtExtractCommand.Summary;
+                _syncPatientArtExtractCommand.Execute();
+                summary.SyncSummary = _syncPatientArtExtractCommand.Summary;
+            }
+
+
+            if (extract == nameof(TempPatientBaselinesExtract))
+            {
+                _loadPatientBaselinesExtractCommand.Execute();
+                summary.LoadSummary = _loadPatientBaselinesExtractCommand.Summary;
+                _syncPatientBaselinesExtractCommand.Execute();
+                summary.SyncSummary = _syncPatientBaselinesExtractCommand.Summary;
+            }
+
+            if (extract == nameof(TempPatientStatusExtract))
+            {
+                _loadPatientStatusExtractCommand.Execute();
+                summary.LoadSummary = _loadPatientStatusExtractCommand.Summary;
+                _syncPatientStatusExtractCommand.Execute();
+                summary.SyncSummary = _syncPatientStatusExtractCommand.Summary;
+            }
+
+
+
+
+            if (extract == nameof(TempPatientVisitExtract))
+            {
+                _loadPatientVisitExtractCommand.Execute();
+                summary.LoadSummary = _loadPatientVisitExtractCommand.Summary;
+                _syncPatientVisitExtractCommand.Execute();
+                summary.SyncSummary = _syncPatientVisitExtractCommand.Summary;
+            }
+
+
+            if (extract == nameof(TempPatientLaboratoryExtract))
+            {
+                _loadPatientLaboratoryExtractCommand.Execute();
+                summary.LoadSummary = _loadPatientLaboratoryExtractCommand.Summary;
+                _syncPatientLaboratoryExtractCommand.Execute();
+                summary.SyncSummary = _syncPatientLaboratoryExtractCommand.Summary;
+            }
+
+
+            if (extract == nameof(TempPatientPharmacyExtract))
+            {
+                _loadPatientPharmacyExtractCommand.Execute();
+                summary.LoadSummary = _loadPatientPharmacyExtractCommand.Summary;
+                _syncPatientPharmacyExtractCommand.Execute();
+                summary.SyncSummary = _syncPatientPharmacyExtractCommand.Summary;
+            }
+
+            return summary;
+        }
+
         public void SyncAll()
         {
+            _clearExtractsCommand.Execute();
             SyncPatients();SynPatientsArt();SynPatientsBaselines();
             SynPatientsLab();SynPatientsPharmacy();SynPatientsVisits();
             SynPatientsStatus();
@@ -67,6 +149,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             _loadPatientExtractCommand.Execute();
             _syncPatientExtractCommand.Execute();
         }
+
 
         public void SynPatientsArt()
         {
