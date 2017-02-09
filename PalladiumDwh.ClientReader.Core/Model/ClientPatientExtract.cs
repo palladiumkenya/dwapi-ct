@@ -220,6 +220,9 @@ namespace PalladiumDwh.ClientReader.Core.Model
             }
         }
 
-        
+        public override string ToString()
+        {
+            return $"{PatientID}";
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using PalladiumDwh.ClientApp.Views;
+﻿using System.Threading.Tasks;
+using PalladiumDwh.ClientApp.Views;
 
 namespace PalladiumDwh.ClientApp.Presenters
 {
@@ -13,6 +14,12 @@ namespace PalladiumDwh.ClientApp.Presenters
         void InitializeExtracts();
         void LoadExtracts();
         void ShowSelectedExtract();
+
+        #endregion
+
+        #region Extracts Detail
+        void LoadExtractDetail();
+        void SendExtracts();
 
         #endregion
     }

@@ -21,6 +21,7 @@ namespace PalladiumDwh.Core.Tests.Services
         private IMessagingSenderService _messagingSenderService;
         private Facility _newFacility;
         private List<PatientExtract> _patientWithAllExtracts;
+        private List<string> _allGateways;
 
         [SetUp]
         public void SetUp()
@@ -28,22 +29,23 @@ namespace PalladiumDwh.Core.Tests.Services
             //_queueName += DateTime.Now.Millisecond.ToString();
             _newFacility = Builder<Facility>.CreateNew().Build();
             _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility, 2, 10).ToList();
-            _messagingSenderService=new MessagingSenderService(_queueName);
+            _messagingSenderService = new MessagingSenderService(_queueName);
+
         }
 
         [Test]
         public void should_Initialize()
         {
-           _messagingSenderService.Initialize();
+            _messagingSenderService.Initialize();
             var msmq = _messagingSenderService.Queue as MessageQueue;
 
             Assert.IsNotNull(msmq);
-            Assert.AreEqual(msmq.Path,_queueName);
+            Assert.AreEqual(msmq.Path, _queueName);
             Console.WriteLine(_messagingSenderService.QueueName);
 
             _messagingSenderService.Initialize("test");
             msmq = _messagingSenderService.Queue as MessageQueue;
-            Assert.That(msmq.Path,Does.EndWith("test"));
+            Assert.That(msmq.Path, Does.EndWith("test"));
             Console.WriteLine(_messagingSenderService.QueueName);
         }
 
@@ -69,11 +71,82 @@ namespace PalladiumDwh.Core.Tests.Services
             Console.WriteLine($"{prof}  Message Id [{messageId}]");
         }
 
+        [TestCase(@".\private$\dwapi.emr.")]
+        [TestCase(@".\private$\dwapi.emr.concept.")]
+        public void should_GetMessageCount(string name)
+        {
+            
+            _allGateways = TestHelpers.GetGateways(name);
+            foreach (var gateway in _allGateways)
+            {
+                _messagingSenderService = new MessagingSenderService(gateway);_messagingSenderService.Initialize();
+                var count = _messagingSenderService.GetNumberOfMessages(gateway);
+                Assert.IsTrue(count > -1);
+                Console.WriteLine($"{gateway}:{count}");
+            }
+        }
+
+        [TestCase(@".\private$\dwapi.emr.")]
+        [TestCase(@".\private$\dwapi.emr.concept.")]
+        public void should_GetJounralMessageCount(string name)
+        {
+            _allGateways = TestHelpers.GetGateways(name);
+            foreach (var gateway in _allGateways)
+            {
+                _messagingSenderService = new MessagingSenderService(gateway); _messagingSenderService.Initialize();
+                var count = _messagingSenderService.GetNumberOfMessages(gateway,true);
+                Assert.IsTrue(count > -1);
+                Console.WriteLine($@"{gateway}\Journal$:{count}");
+            }
+        }
+        [TestCase(@".\private$\dwapi.emr.")]
+        [TestCase(@".\private$\dwapi.emr.concept.")]
+        public void should_Purge_Queues(string name)
+        {
+            _allGateways = TestHelpers.GetGateways(name);
+            foreach (var gateway in _allGateways)
+            {
+                _messagingSenderService = new MessagingSenderService(gateway); _messagingSenderService.Initialize();
+                _messagingSenderService.Purge(gateway);
+
+                var count = _messagingSenderService.GetNumberOfMessages(gateway);
+                Assert.IsTrue(count == 0);
+                Console.WriteLine($@"{gateway}:{count}");
+            }
+        }
+
+        [TestCase(@".\private$\dwapi.emr.")]
+        [TestCase(@".\private$\dwapi.emr.concept.")]
+        public void should_Purge_JournalQueues(string name)
+        {
+            _allGateways = TestHelpers.GetGateways(name);
+            foreach (var gateway in _allGateways)
+            {
+                _messagingSenderService = new MessagingSenderService(gateway); _messagingSenderService.Initialize();
+                _messagingSenderService.Purge(gateway,true);
+
+                var count = _messagingSenderService.GetNumberOfMessages(gateway, true);
+                Assert.IsTrue(count == 0);
+                Console.WriteLine($@"{gateway}\Journal$:{count}");
+            }
+        }
+
+
+
         [TearDown]
         public void TearDown()
         {
-            var msmq = _messagingSenderService.Queue as MessageQueue;
-            msmq.Purge();
+            try
+            {
+                var msmq = _messagingSenderService.Queue as MessageQueue;
+                msmq.Purge();
+            }
+            catch 
+            {
+                
+                
+            }
+            
         }       
     }
 }

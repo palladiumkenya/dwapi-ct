@@ -83,13 +83,17 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Tests.Data
 
             patient.Processed = true;
 
-            _repository.UpdateProcessd(patient);
+            _repository.UpdateProcessd(patient, "PatientArtExtract");
 
             _context = new DwapiRemoteContext();
             _repository = new ClientPatientRepository(_context);
             var savedPatient = _repository.GetAll().FirstOrDefault(x=>x.Id==patient.Id);
             Assert.IsNotNull(savedPatient);
             Assert.IsTrue(savedPatient.Processed);
+
+            var artExtraacts = savedPatient.ClientPatientArtExtracts.Where(x => x.Processed == false).ToList();
+            Assert.That(artExtraacts.Count,Is.EqualTo(0));
+
             _context.Database.ExecuteSqlCommand("Delete from PatientExtract;");
         }
 

@@ -9,6 +9,10 @@ namespace PalladiumDwh.ClientUploader.Core
 {
     public class ProfileManager:IProfileManager
     {
+        public ProfileManager()
+        {
+        }
+
         public IEnumerable<IClientExtractProfile> Generate(ClientPatientExtract patient)
         {
             var list = new List<IClientExtractProfile>();

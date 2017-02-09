@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
 using PalladiumDwh.ClientReader.Core.Model;
@@ -12,12 +13,14 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
             var patients = Builder<ClientPatientExtract>.CreateListOfSize(patientCount).Build().ToList();
             foreach (var p in patients)
             {
-                p.AddPatientArtExtracts(Builder<ClientPatientArtExtract>.CreateListOfSize(count).Build().ToList());
-                p.AddPatientBaselinesExtracts(Builder<ClientPatientBaselinesExtract>.CreateListOfSize(count).Build().ToList());
-                p.AddPatientLaboratoryExtracts(Builder<ClientPatientLaboratoryExtract>.CreateListOfSize(count).Build().ToList());
-                p.AddPatientPharmacyExtracts(Builder<ClientPatientPharmacyExtract>.CreateListOfSize(count).Build().ToList());
-                p.AddPatientStatusExtracts(Builder<ClientPatientStatusExtract>.CreateListOfSize(count).Build().ToList());
-                p.AddPatientVisitExtracts(Builder<ClientPatientVisitExtract>.CreateListOfSize(count).Build().ToList());
+                p.Id = Guid.NewGuid();
+                p.Processed = false;
+                p.AddPatientArtExtracts(Builder<ClientPatientArtExtract>.CreateListOfSize(count).All().With(x=>x.Processed=false).Build().ToList());
+                p.AddPatientBaselinesExtracts(Builder<ClientPatientBaselinesExtract>.CreateListOfSize(count).All().With(x => x.Processed = false).Build().ToList());
+                p.AddPatientLaboratoryExtracts(Builder<ClientPatientLaboratoryExtract>.CreateListOfSize(count).All().With(x => x.Processed = false).Build().ToList());
+                p.AddPatientPharmacyExtracts(Builder<ClientPatientPharmacyExtract>.CreateListOfSize(count).All().With(x => x.Processed = false).Build().ToList());
+                p.AddPatientStatusExtracts(Builder<ClientPatientStatusExtract>.CreateListOfSize(count).All().With(x => x.Processed = false).Build().ToList());
+                p.AddPatientVisitExtracts(Builder<ClientPatientVisitExtract>.CreateListOfSize(count).All().With(x => x.Processed = false).Build().ToList());
             }
             return patients;
         }

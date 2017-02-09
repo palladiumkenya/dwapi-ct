@@ -64,7 +64,7 @@ namespace PalladiumDwh.Shared.Custom
             {
                 if (ex is IndexOutOfRangeException)
                 {
-                    Log.Debug($"Column NOT found:{fieldName}");
+                    //Log.Debug($"Column NOT found:{fieldName}");
                 }
                 else
                 {

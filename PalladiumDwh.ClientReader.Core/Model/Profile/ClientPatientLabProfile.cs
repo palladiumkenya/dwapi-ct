@@ -10,6 +10,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Profile
     {
         public List<ClientPatientLaboratoryExtractDTO> LaboratoryExtracts { get; set; } =new List<ClientPatientLaboratoryExtractDTO>();
         public override string EndPoint { get; set; } = "PatientLabs";
+        public override string Source { get; set; } = "PatientLaboratoryExtract";
         public static ClientPatientLabProfile Create(ClientFacility facility, ClientPatientExtract patient)
         {
             var patientProfile = new ClientPatientLabProfile

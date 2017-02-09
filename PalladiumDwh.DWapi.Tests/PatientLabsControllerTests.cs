@@ -17,7 +17,7 @@ namespace PalladiumDwh.DWapi.Tests
     [TestFixture]
     public class PatientLabsControllerTests
     {
-        private readonly string _queueName = $@".\private$\dwapi.emrpatient.concept";
+        private readonly string _queueName = $@".\private$\dwapi.emr.concept";
 
         private static readonly string baseUrl = "http://localhost/api/PatientArt";
 

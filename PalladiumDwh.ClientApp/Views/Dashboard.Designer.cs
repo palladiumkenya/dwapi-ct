@@ -53,6 +53,11 @@
             this.panelExtract = new System.Windows.Forms.Panel();
             this.panelExtractData = new System.Windows.Forms.Panel();
             this.labelId = new System.Windows.Forms.Label();
+            this.listViewExtract = new System.Windows.Forms.ListView();
+            this.columnHeaderExtract = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panelExtractDataStatus = new System.Windows.Forms.Panel();
             this.panelExtractAction = new System.Windows.Forms.Panel();
             this.buttonSend = new System.Windows.Forms.Button();
@@ -64,17 +69,12 @@
             this.panelExtractDetail = new System.Windows.Forms.Panel();
             this.panelExtractDataDetail = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewExtractDetail = new System.Windows.Forms.DataGridView();
             this.checkedListBoxSummary = new System.Windows.Forms.CheckedListBox();
             this.panelSummaryTop = new System.Windows.Forms.Panel();
             this.labelSummary = new System.Windows.Forms.Label();
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
-            this.columnHeaderExtract = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listViewExtract = new System.Windows.Forms.ListView();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -89,7 +89,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractDetail)).BeginInit();
             this.panelSummaryTop.SuspendLayout();
             this.panelExtractDataDetailTop.SuspendLayout();
             this.SuspendLayout();
@@ -314,6 +314,44 @@
             this.labelId.TabIndex = 1;
             this.labelId.Text = "Id";
             // 
+            // listViewExtract
+            // 
+            this.listViewExtract.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderExtract,
+            this.columnHeaderTotal,
+            this.columnHeaderStatus,
+            this.columnHeaderId});
+            this.listViewExtract.FullRowSelect = true;
+            this.listViewExtract.HideSelection = false;
+            this.listViewExtract.Location = new System.Drawing.Point(10, 6);
+            this.listViewExtract.MultiSelect = false;
+            this.listViewExtract.Name = "listViewExtract";
+            this.listViewExtract.Size = new System.Drawing.Size(611, 154);
+            this.listViewExtract.TabIndex = 0;
+            this.listViewExtract.UseCompatibleStateImageBehavior = false;
+            this.listViewExtract.View = System.Windows.Forms.View.Details;
+            this.listViewExtract.SelectedIndexChanged += new System.EventHandler(this.listViewExtract_SelectedIndexChanged);
+            // 
+            // columnHeaderExtract
+            // 
+            this.columnHeaderExtract.Text = "Extract";
+            this.columnHeaderExtract.Width = 138;
+            // 
+            // columnHeaderTotal
+            // 
+            this.columnHeaderTotal.Text = "Total Records";
+            this.columnHeaderTotal.Width = 83;
+            // 
+            // columnHeaderStatus
+            // 
+            this.columnHeaderStatus.Text = "Status";
+            this.columnHeaderStatus.Width = 304;
+            // 
+            // columnHeaderId
+            // 
+            this.columnHeaderId.Text = "Id";
+            this.columnHeaderId.Width = 0;
+            // 
             // panelExtractDataStatus
             // 
             this.panelExtractDataStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -421,7 +459,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.dataGridView1);
+            this.splitContainer1.Panel1.Controls.Add(this.dataGridViewExtractDetail);
             // 
             // splitContainer1.Panel2
             // 
@@ -431,15 +469,15 @@
             this.splitContainer1.SplitterDistance = 764;
             this.splitContainer1.TabIndex = 0;
             // 
-            // dataGridView1
+            // dataGridViewExtractDetail
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(764, 271);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridViewExtractDetail.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewExtractDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewExtractDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewExtractDetail.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewExtractDetail.Name = "dataGridViewExtractDetail";
+            this.dataGridViewExtractDetail.Size = new System.Drawing.Size(764, 271);
+            this.dataGridViewExtractDetail.TabIndex = 0;
             // 
             // checkedListBoxSummary
             // 
@@ -487,44 +525,6 @@
             this.labelExtractDataDetail.TabIndex = 0;
             this.labelExtractDataDetail.Text = "Extract Details";
             // 
-            // columnHeaderExtract
-            // 
-            this.columnHeaderExtract.Text = "Extract";
-            this.columnHeaderExtract.Width = 138;
-            // 
-            // columnHeaderTotal
-            // 
-            this.columnHeaderTotal.Text = "Total Records";
-            this.columnHeaderTotal.Width = 83;
-            // 
-            // columnHeaderStatus
-            // 
-            this.columnHeaderStatus.Text = "Status";
-            this.columnHeaderStatus.Width = 304;
-            // 
-            // columnHeaderId
-            // 
-            this.columnHeaderId.Text = "Id";
-            this.columnHeaderId.Width = 0;
-            // 
-            // listViewExtract
-            // 
-            this.listViewExtract.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderExtract,
-            this.columnHeaderTotal,
-            this.columnHeaderStatus,
-            this.columnHeaderId});
-            this.listViewExtract.FullRowSelect = true;
-            this.listViewExtract.HideSelection = false;
-            this.listViewExtract.Location = new System.Drawing.Point(10, 6);
-            this.listViewExtract.MultiSelect = false;
-            this.listViewExtract.Name = "listViewExtract";
-            this.listViewExtract.Size = new System.Drawing.Size(611, 154);
-            this.listViewExtract.TabIndex = 0;
-            this.listViewExtract.UseCompatibleStateImageBehavior = false;
-            this.listViewExtract.View = System.Windows.Forms.View.Details;
-            this.listViewExtract.SelectedIndexChanged += new System.EventHandler(this.listViewExtract_SelectedIndexChanged);
-            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -559,7 +559,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractDetail)).EndInit();
             this.panelSummaryTop.ResumeLayout(false);
             this.panelSummaryTop.PerformLayout();
             this.panelExtractDataDetailTop.ResumeLayout(false);
@@ -606,7 +606,7 @@
         private System.Windows.Forms.Panel panelExtractDetail;
         private System.Windows.Forms.Panel panelExtractDataDetail;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridViewExtractDetail;
         private System.Windows.Forms.CheckedListBox checkedListBoxSummary;
         private System.Windows.Forms.Panel panelSummaryTop;
         private System.Windows.Forms.Label labelSummary;

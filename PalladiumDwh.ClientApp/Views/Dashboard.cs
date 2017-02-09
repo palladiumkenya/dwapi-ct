@@ -14,14 +14,19 @@ using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientUploader.Core.Interfaces;
 
 namespace PalladiumDwh.ClientApp.Views
 {
     public partial class Dashboard : Form,IDashboardView
     {
         private List<ExtractsViewModel> _extracts=new List<ExtractsViewModel>();
+
         private readonly IProjectRepository _projectRepository;
         private readonly ISyncService _syncService;
+        private readonly IClientPatientRepository _clientPatientRepository;
+        private readonly IProfileManager _profileManager;
+        private readonly IPushProfileService _pushService;
 
 
         public Dashboard()
@@ -31,8 +36,12 @@ namespace PalladiumDwh.ClientApp.Views
             
             _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
             _syncService = Program.IOC.GetInstance<ISyncService>();
-            
-            Presenter = new DashboardPresenter(this, _projectRepository, _syncService);
+
+            _clientPatientRepository = Program.IOC.GetInstance<IClientPatientRepository>();
+            _profileManager = Program.IOC.GetInstance<IProfileManager>();
+            _pushService = Program.IOC.GetInstance<IPushProfileService>();
+
+            Presenter = new DashboardPresenter(this, _projectRepository, _syncService,_clientPatientRepository,_profileManager,_pushService);
 
             Presenter.Initialize();
             Presenter.InitializeEmrInfo();
@@ -233,7 +242,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
-            OnExtractSent(new ExtractSentEvent(ExtractSettings));
+            OnExtractSent(new ExtractSentEvent());
         }
     }
 }

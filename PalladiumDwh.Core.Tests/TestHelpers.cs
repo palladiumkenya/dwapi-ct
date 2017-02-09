@@ -4,6 +4,7 @@ using System.Linq;
 using FizzWare.NBuilder;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
+using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.Core.Tests
 {
@@ -44,6 +45,22 @@ namespace PalladiumDwh.Core.Tests
 
             }
             return patients;
+        }
+
+        public static List<string> GetGateways(string queueName)
+        {
+            
+
+            var gateways = new List<string>
+            {
+                $"{queueName}{typeof(PatientARTProfile).Name.ToLower()}",
+                $"{queueName}{typeof(PatientBaselineProfile).Name.ToLower()}",
+                $"{queueName}{typeof(PatientLabProfile).Name.ToLower()}",
+                $"{queueName}{typeof(PatientPharmacyProfile).Name.ToLower()}",
+                $"{queueName}{typeof(PatientVisitProfile).Name.ToLower()}",
+                $"{queueName}{typeof(PatientStatusProfile).Name.ToLower()}"
+            };
+            return gateways;
         }
     }
 }

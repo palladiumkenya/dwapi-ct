@@ -47,9 +47,16 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Data
 
         }
 
-        public void UpdateProcessd(ClientPatientExtract patient)
+        public IEnumerable<ClientPatientExtract> GetAll(bool processed)
         {
-            string query = $"UPDATE PatientExtract SET Processed = @Processed WHERE PatientPK = @PatientPK AND SiteCode=@SiteCode";
+           return GetAll().Where(x => x.Processed == processed);
+        }
+
+        public void UpdateProcessd(ClientPatientExtract patient,string profileExtract)
+        {
+            string query = $"UPDATE PatientExtract SET Processed = 1 WHERE PatientPK = @PatientPK AND SiteCode=@SiteCode AND (Processed=0 or Processed Is Null);";
+            if(!string.IsNullOrWhiteSpace(profileExtract))
+                query += $"UPDATE {profileExtract} SET Processed = 1 WHERE PatientPK = @PatientPK AND SiteCode=@SiteCode AND (Processed=0 or Processed Is Null);";
             var count = this.db.Execute(query, patient);
         }
     }
