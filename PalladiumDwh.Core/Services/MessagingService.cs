@@ -69,6 +69,7 @@ namespace PalladiumDwh.Core.Services
 
         public int GetNumberOfMessages(string gateway, bool isJournal=false)
         {
+            
             if (isJournal)
                 gateway= $@"{gateway}\Journal$";
 
