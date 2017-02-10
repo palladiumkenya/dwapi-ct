@@ -21,7 +21,7 @@ namespace PalladiumDwh.ClientApp
         [STAThread]
         static void Main()
         {
-            Log.Debug("Loading DWapiService...");
+            Log.Debug("Loading DWapi...");
             IOC = IoC.Initialize();
 
             Application.EnableVisualStyles();
