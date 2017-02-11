@@ -38,6 +38,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
         {
             return new SqlConnection(Context.Database.Connection.ConnectionString);
         }
+
         public IDbConnection GetEmrConnection()
         {
             DbConnection connection = null;

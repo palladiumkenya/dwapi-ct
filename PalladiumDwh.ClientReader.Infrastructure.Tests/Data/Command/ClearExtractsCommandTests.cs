@@ -26,17 +26,38 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 
       
         [Test]
-        public void should_Execute_For_MSSQL()
+        public void should_Execute()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             _extractCommand.Execute();
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            var records = _context.Database
+                .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientArtExtract")
+                .Single();h
+
+            Assert.IsTrue(records ==0);
+
+            Console.WriteLine($"Deleted {records} records in  {elapsedMs*0.001} s!");
+
+        }
+
+        [Test]
+        public void should_Execute_Async()
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            _extractCommand.Execute();
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
             var records = _context.Database
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientArtExtract")
                 .Single();
 
-            Assert.IsTrue(records ==0);
+            Assert.IsTrue(records == 0);
 
             Console.WriteLine($"Loaded {records} records!");
-
+            Console.WriteLine($"Deleted {records} records ASYNC in  {elapsedMs * 0.001} s!");
         }
 
         [TearDown]
