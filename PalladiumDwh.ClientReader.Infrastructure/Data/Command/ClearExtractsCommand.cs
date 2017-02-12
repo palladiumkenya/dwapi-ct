@@ -2,25 +2,34 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient.Authentication;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
+using PalladiumDwh.ClientReader.Core.Model.Source;
+using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
     public class ClearExtractsCommand : IClearExtractsCommand
     {
-        private readonly IEMRRepository emrRepository;
-        private SqlConnection _connection;
+        private readonly IEMRRepository _emrRepository;
+        private readonly SqlConnection _connection;
+        private IProgress<int> _progress;
+        private int _progressValue;
+        private int _taskCount;
 
         public ClearExtractsCommand(IEMRRepository emrRepository)
         {
-            this.emrRepository = emrRepository;
+            _emrRepository = emrRepository;
             _connection = emrRepository.GetConnection() as SqlConnection;
         }
 
-        public void Execute()
+        public int Execute()
         {
+            int totalCount;
             using (_connection)
             {
                 if (_connection.State != ConnectionState.Open)
@@ -39,54 +48,75 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                         DELETE FROM TempPatientVisitExtract;DELETE FROM  PatientVisitExtract;
                         DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract;
                                 ";
-                    command.ExecuteNonQuery();
+                    totalCount = command.ExecuteNonQuery();
                 }
             }
+            return totalCount;
         }
 
-        public async Task ExecuteAsync()
+        private Task<int> TruncateCommand(string extract)
         {
+            _progressValue++;
+           var count= GetCommand(extract, "TRUNCATE TABLE").ExecuteNonQueryAsync();
+            _progress.Report(_progressValue);
+            return count;
+        }
+
+        private Task<int> DeleteCommand(string extract)
+        {
+            _progressValue++;
+           var count=GetCommand(extract, "DELETE FROM").ExecuteNonQueryAsync();
+            _progress.Report(_progressValue);
+            return count;
+        }
+
+        private SqlCommand GetCommand(string extract, string action)
+        {
+            var command = _connection.CreateCommand();
+            command.CommandTimeout = 0;
+            command.CommandText = $@" {action} {extract}; ";
+            return command;
+        }
+
+        public async Task<int> ExecuteAsync(IProgress<int> progress)
+        {
+            _progressValue = 1;
+            _progress = progress;
+            int totalCount;
+
             using (_connection)
             {
-                await _connection.OpenAsync();
+                if (_connection.State != ConnectionState.Open)
+                {
+                    _connection.Open();
+                }
+
                 var command = _connection.CreateCommand();
                 command.CommandTimeout = 0;
-                Parallel.Invoke(
-                    async () =>
-                    {
-                        command.CommandText = $"DELETE FROM TempPatientArtExtract;DELETE FROM  PatientArtExtract;";
-                        await command.ExecuteNonQueryAsync();
-                    },
-                    async () =>
-                    {
-                        command.CommandText =$"DELETE FROM TempPatientBaselinesExtract;DELETE FROM  PatientBaselinesExtract;";
-                        await command.ExecuteNonQueryAsync();
-                    },
-                    async () =>
-                    {
-                        command.CommandText = $"DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract;";
-                        await command.ExecuteNonQueryAsync();
-                    },
-                    async () =>
-                    {
-                        command.CommandText =$"DELETE FROM TempPatientPharmacyExtract;DELETE FROM  PatientPharmacyExtract;";
-                        await command.ExecuteNonQueryAsync();
-                    },
-                    async () =>
-                    {
-                        command.CommandText =$"DELETE FROM TempPatientLaboratoryExtract;DELETE FROM  PatientLaboratoryExtract;";
-                        await command.ExecuteNonQueryAsync();
-                    },
-                    async () =>
-                    {
-                        command.CommandText = $"DELETE FROM TempPatientVisitExtract;DELETE FROM  PatientVisitExtract;";
-                        await command.ExecuteNonQueryAsync();
-                    }
+
+                var count = await Task.WhenAll(
+                    TruncateCommand(nameof(TempPatientExtract)),
+                    TruncateCommand(nameof(TempPatientArtExtract)), TruncateCommand(nameof(TempPatientArtExtract)),
+                    TruncateCommand(nameof(TempPatientBaselinesExtract)),
+                    TruncateCommand(nameof(PatientBaselinesExtract)),
+                    TruncateCommand(nameof(TempPatientStatusExtract)), TruncateCommand(nameof(PatientStatusExtract)),
+                    TruncateCommand(nameof(TempPatientLaboratoryExtract)),
+                    TruncateCommand(nameof(PatientLaboratoryExtract)),
+                    TruncateCommand(nameof(TempPatientPharmacyExtract)), TruncateCommand(nameof(PatientPharmacyExtract)),
+                    TruncateCommand(nameof(TempPatientVisitExtract)), TruncateCommand(nameof(PatientVisitExtract))
                 );
 
-                command.CommandText = $"DELETE FROM PatientExtract ";
-                await command.ExecuteNonQueryAsync();
+                
+                totalCount = await DeleteCommand(nameof(PatientExtract));
             }
+
+            return totalCount;
+        }
+
+        private void ShowPercentage(int progress)
+        {
+            decimal status = (progress/_taskCount)*100;
+            _progress.Report((int) status);
         }
     }
 }

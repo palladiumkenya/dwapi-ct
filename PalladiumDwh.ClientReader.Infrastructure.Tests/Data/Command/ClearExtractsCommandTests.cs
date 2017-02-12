@@ -34,7 +34,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
             var elapsedMs = watch.ElapsedMilliseconds;
             var records = _context.Database
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientArtExtract")
-                .Single();h
+                .Single();
 
             Assert.IsTrue(records ==0);
 
@@ -46,18 +46,17 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         public void should_Execute_Async()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            _extractCommand.Execute();
+            var deletedrecords=_extractCommand.ExecuteAsync().Result;
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
             var records = _context.Database
-                .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientArtExtract")
+                .SqlQuery<int>("SELECT (SELECT COUNT(Id) as NumOfTempRecords FROM TempPatientArtExtract)+(SELECT COUNT(Id) as NumOfRecords FROM PatientArtExtract)")
                 .Single();
 
             Assert.IsTrue(records == 0);
-
-            Console.WriteLine($"Loaded {records} records!");
-            Console.WriteLine($"Deleted {records} records ASYNC in  {elapsedMs * 0.001} s!");
+            Assert.IsTrue(deletedrecords > -1);
+            Console.WriteLine($"Deleted {deletedrecords} records ASYNC in  {elapsedMs * 0.001} s!");
         }
 
         [TearDown]
