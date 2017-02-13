@@ -8,6 +8,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
     public interface IClearExtractsCommand
     {
         int Execute();
-        Task<int> ExecuteAsync(IProgress<int> progress);
+        Task<int> ExecuteAsync();
     }
 }

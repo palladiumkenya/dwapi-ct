@@ -78,10 +78,10 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             return command;
         }
 
-        public async Task<int> ExecuteAsync(IProgress<int> progress)
+        public async Task<int> ExecuteAsync()
         {
             _progressValue = 1;
-            _progress = progress;
+            
             int totalCount;
 
             using (_connection)
