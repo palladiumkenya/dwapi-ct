@@ -7,8 +7,8 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
     {
         void Initialize();
         Task InitializeAsync();
-        RunSummary Sync(string extract);
-        Task<RunSummary> SyncAsync(string extract);
+        RunSummary Sync(ExtractSetting extract);
+        Task<RunSummary> SyncAsync(ExtractSetting extract);
         void SyncAll();
         void SyncPatients();
         void SynPatientsArt();

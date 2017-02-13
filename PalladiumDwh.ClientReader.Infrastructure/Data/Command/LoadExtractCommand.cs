@@ -74,7 +74,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             {
                                 totalcount++;
                                 count++;
-                                
+
                                 extract = (T) Activator.CreateInstance(typeof(T));
                                 extract.Load(reader);
                                 if (!extract.HasError)
@@ -145,5 +145,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                 return Summary;
             });
         }
+
     }
+
+
 }

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using NUnit.Framework.Internal;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
@@ -100,9 +101,9 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         public void should_Sync(string extract)
         {
             _syncService.Initialize();
-            _syncService.Sync(nameof(TempPatientExtract));
+            _syncService.Sync(new ExtractSetting(nameof(TempPatientExtract)));
 
-            var summary=_syncService.Sync(extract);
+            var summary=_syncService.Sync(new ExtractSetting(extract));
             Assert.IsTrue(summary.LoadSummary.Total > 0);
             Assert.IsTrue(summary.LoadSummary.Loaded> 0);
             Assert.IsTrue(summary.SyncSummary.Total > 0);

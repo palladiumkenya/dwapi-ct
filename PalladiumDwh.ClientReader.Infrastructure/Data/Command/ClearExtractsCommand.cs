@@ -34,7 +34,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             {
                 if (_connection.State != ConnectionState.Open)
                 {
-                    _connection.Open();
+                    _connection.Open(); 
                 }
 
                 using (var command = _connection.CreateCommand())
@@ -57,16 +57,16 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         private Task<int> TruncateCommand(string extract)
         {
             _progressValue++;
-           var count= GetCommand(extract, "TRUNCATE TABLE").ExecuteNonQueryAsync();
-            _progress.Report(_progressValue);
+            var count = GetCommand(extract, "TRUNCATE TABLE").ExecuteNonQueryAsync();
+            ShowPercentage(_progressValue);
             return count;
         }
 
         private Task<int> DeleteCommand(string extract)
         {
             _progressValue++;
-           var count=GetCommand(extract, "DELETE FROM").ExecuteNonQueryAsync();
-            _progress.Report(_progressValue);
+            var count = GetCommand(extract, "DELETE FROM").ExecuteNonQueryAsync();
+            ShowPercentage(_progressValue);
             return count;
         }
 
@@ -81,14 +81,14 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         public async Task<int> ExecuteAsync()
         {
             _progressValue = 1;
-            
+
             int totalCount;
 
             using (_connection)
             {
                 if (_connection.State != ConnectionState.Open)
                 {
-                    _connection.Open();
+                    await _connection.OpenAsync();
                 }
 
                 var command = _connection.CreateCommand();
@@ -106,7 +106,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                     TruncateCommand(nameof(TempPatientVisitExtract)), TruncateCommand(nameof(PatientVisitExtract))
                 );
 
-                
+
                 totalCount = await DeleteCommand(nameof(PatientExtract));
             }
 
@@ -115,7 +115,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
         private void ShowPercentage(int progress)
         {
-            decimal status = (progress/_taskCount)*100;
+            if (null == _progress)
+                return;
+            decimal status = (progress / _taskCount) * 100;
             _progress.Report((int) status);
         }
     }

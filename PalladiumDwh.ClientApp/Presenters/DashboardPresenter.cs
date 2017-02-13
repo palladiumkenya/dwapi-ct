@@ -102,22 +102,26 @@ namespace PalladiumDwh.ClientApp.Presenters
         public async void LoadExtracts(List<ExtractSetting> extracts)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-
+            View.CanLoadEmr = false;
             View.Status = "loading...";
             int total = extracts.Count;
             int count = 0;
 
+            //clear db
             await _syncService.InitializeAsync();
 
-            foreach (var extract in extracts.OrderBy(x => x.Rank))
+            //Patient Extract
+            var priorityExtracts = extracts.Where(x => x.IsPriority).OrderBy(x => x.Rank);
+
+            foreach (var extract in priorityExtracts)
             {
-                
                 count++;
-                var vm = new ExtractsViewModel(extract) {Status = "loading..."};
+                var vm = new ExtractsViewModel(extract) { Status = "loading..." };
                 View.UpdateStatus(vm);
 
-                View.Status = $"loading {count}/{total} ({extract.Display}) ...";
-                var summary = await _syncService.SyncAsync(extract.Destination);
+                //View.Status = $"loading {count}/{total} ({extract.Display}) ...";
+                View.Status = $"loading...";
+                var summary = await _syncService.SyncAsync(extract);
 
                 vm = new ExtractsViewModel(extract)
                 {
@@ -126,6 +130,32 @@ namespace PalladiumDwh.ClientApp.Presenters
                 };
                 View.UpdateStatus(vm);
             }
+
+
+            //Other Extracts
+            var otherExtracts = extracts.Where(x => x.IsPriority == false).OrderBy(x => x.Rank);
+
+            var tasks =new List<Task>();
+
+            foreach (var extract in otherExtracts)
+            {
+                count++;
+                var vm = new ExtractsViewModel(extract) {Status = "loading..."};
+                View.UpdateStatus(vm);
+
+                tasks.Add(GetTask(_syncService,extract));
+            }
+
+            
+
+            await Task.WhenAll(tasks.ToArray());
+
+      
+
+
+
+
+
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
             timeTaken += elapsedMs;
@@ -134,7 +164,22 @@ namespace PalladiumDwh.ClientApp.Presenters
             
             this.View.EventSummaries=new List<string>() {msg};
 
+            View.CanLoadEmr = true;
             LoadExtractDetail();
+        }
+
+        private async Task<RunSummary> GetTask(ISyncService service, ExtractSetting extractSetting)
+        {
+            var summary=await service.SyncAsync(extractSetting);
+
+            var vm = new ExtractsViewModel(summary.ExtractSetting)
+            {
+                Total = summary.SyncSummary.Total,
+                Status = summary.ToString()
+            };
+            View.UpdateStatus(vm);
+
+            return summary;
         }
 
         public void ShowSelectedExtract()

@@ -71,11 +71,11 @@ namespace PalladiumDwh.ClientReader.Core.Services
             await _clearExtractsCommand.ExecuteAsync();
         }
 
-        public RunSummary Sync(string extract)
+        public RunSummary Sync(ExtractSetting extract)
         {
-            var summary=new RunSummary();
+            var summary = new RunSummary {ExtractSetting = extract};
 
-            if (extract == nameof(TempPatientExtract))
+            if (extract.Destination == nameof(TempPatientExtract))
             {
                 _loadPatientExtractCommand.Execute();
                 summary.LoadSummary = _loadPatientExtractCommand.Summary;
@@ -84,7 +84,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             }
 
 
-            if (extract == nameof(TempPatientArtExtract))
+            if (extract.Destination == nameof(TempPatientArtExtract))
             {
                 _loadPatientArtExtractCommand.Execute();
                 summary.LoadSummary = _loadPatientArtExtractCommand.Summary;
@@ -93,7 +93,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             }
 
 
-            if (extract == nameof(TempPatientBaselinesExtract))
+            if (extract.Destination == nameof(TempPatientBaselinesExtract))
             {
                 _loadPatientBaselinesExtractCommand.Execute();
                 summary.LoadSummary = _loadPatientBaselinesExtractCommand.Summary;
@@ -101,7 +101,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 summary.SyncSummary = _syncPatientBaselinesExtractCommand.Summary;
             }
 
-            if (extract == nameof(TempPatientStatusExtract))
+            if (extract.Destination == nameof(TempPatientStatusExtract))
             {
                 _loadPatientStatusExtractCommand.Execute();
                 summary.LoadSummary = _loadPatientStatusExtractCommand.Summary;
@@ -112,7 +112,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
 
 
-            if (extract == nameof(TempPatientVisitExtract))
+            if (extract.Destination == nameof(TempPatientVisitExtract))
             {
                 _loadPatientVisitExtractCommand.Execute();
                 summary.LoadSummary = _loadPatientVisitExtractCommand.Summary;
@@ -121,7 +121,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             }
 
 
-            if (extract == nameof(TempPatientLaboratoryExtract))
+            if (extract.Destination == nameof(TempPatientLaboratoryExtract))
             {
                 _loadPatientLaboratoryExtractCommand.Execute();
                 summary.LoadSummary = _loadPatientLaboratoryExtractCommand.Summary;
@@ -130,7 +130,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             }
 
 
-            if (extract == nameof(TempPatientPharmacyExtract))
+            if (extract.Destination == nameof(TempPatientPharmacyExtract))
             {
                 _loadPatientPharmacyExtractCommand.Execute();
                 summary.LoadSummary = _loadPatientPharmacyExtractCommand.Summary;
@@ -141,32 +141,32 @@ namespace PalladiumDwh.ClientReader.Core.Services
             return summary;
         }
 
-        public async Task<RunSummary> SyncAsync(string extract)
+        public async Task<RunSummary> SyncAsync(ExtractSetting extract)
         {
 
-            var summary = new RunSummary();
+            var summary = new RunSummary { ExtractSetting = extract };
 
-            if (extract == nameof(TempPatientExtract))
+            if (extract.Destination == nameof(TempPatientExtract))
             {
                 summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
                 summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
             }
 
 
-            if (extract == nameof(TempPatientArtExtract))
+            if (extract.Destination == nameof(TempPatientArtExtract))
             {
                 summary.LoadSummary = await _loadPatientArtExtractCommand.ExecuteAsync();
                 summary.SyncSummary = await _syncPatientArtExtractCommand.ExecuteAsync();
             }
 
 
-            if (extract == nameof(TempPatientBaselinesExtract))
+            if (extract.Destination == nameof(TempPatientBaselinesExtract))
             {
                 summary.LoadSummary = await _loadPatientBaselinesExtractCommand.ExecuteAsync();
                 summary.SyncSummary = await _syncPatientBaselinesExtractCommand.ExecuteAsync();
             }
 
-            if (extract == nameof(TempPatientStatusExtract))
+            if (extract.Destination == nameof(TempPatientStatusExtract))
             {
                 summary.LoadSummary = await _loadPatientStatusExtractCommand.ExecuteAsync();
                 summary.SyncSummary = await _syncPatientStatusExtractCommand.ExecuteAsync();
@@ -174,21 +174,21 @@ namespace PalladiumDwh.ClientReader.Core.Services
             }
 
 
-            if (extract == nameof(TempPatientVisitExtract))
+            if (extract.Destination == nameof(TempPatientVisitExtract))
             {
                 summary.LoadSummary = await _loadPatientVisitExtractCommand.ExecuteAsync();
                 summary.SyncSummary = await _syncPatientVisitExtractCommand.ExecuteAsync();
             }
 
 
-            if (extract == nameof(TempPatientLaboratoryExtract))
+            if (extract.Destination == nameof(TempPatientLaboratoryExtract))
             {
                 summary.LoadSummary = await _loadPatientLaboratoryExtractCommand.ExecuteAsync();
                 summary.SyncSummary = await _syncPatientLaboratoryExtractCommand.ExecuteAsync();
             }
 
 
-            if (extract == nameof(TempPatientPharmacyExtract))
+            if (extract.Destination == nameof(TempPatientPharmacyExtract))
             {
                 summary.LoadSummary = await _loadPatientPharmacyExtractCommand.ExecuteAsync();
                 summary.SyncSummary = await _syncPatientPharmacyExtractCommand.ExecuteAsync();

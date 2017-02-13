@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201702090737026_ExtractSettingsRank.Designer.cs">
       <DependentUpon>201702090737026_ExtractSettingsRank.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702131225273_ExtractSettingPriority.cs" />
+    <Compile Include="Migrations\201702131225273_ExtractSettingPriority.Designer.cs">
+      <DependentUpon>201702131225273_ExtractSettingPriority.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -229,6 +233,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702090737026_ExtractSettingsRank.resx">
       <DependentUpon>201702090737026_ExtractSettingsRank.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702131225273_ExtractSettingPriority.resx">
+      <DependentUpon>201702131225273_ExtractSettingPriority.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

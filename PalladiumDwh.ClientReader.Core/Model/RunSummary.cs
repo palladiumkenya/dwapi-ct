@@ -1,12 +1,16 @@
-﻿namespace PalladiumDwh.ClientReader.Core.Model
+﻿using System;
+
+namespace PalladiumDwh.ClientReader.Core.Model
 {
     public class RunSummary
     {
+        public ExtractSetting ExtractSetting { get; set; }
         public LoadSummary LoadSummary { get; set; }
         public SyncSummary SyncSummary { get; set; }
 
         public RunSummary()
         {
+            
             LoadSummary=new LoadSummary();
             SyncSummary=new SyncSummary();
         }

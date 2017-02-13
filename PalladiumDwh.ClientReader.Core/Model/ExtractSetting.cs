@@ -14,6 +14,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string Destination { get; set; }
         public decimal Rank { get; set; }
         public bool IsActive { get; set; }
+        public bool IsPriority { get; set; }
         public Guid EmrId { get; set; }
 
         public ExtractSetting()
@@ -21,7 +22,17 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Id = Guid.NewGuid();
         }
 
-        public ExtractSetting(string name, string display, string extractCsv, string extractSql, string destination, decimal rank, bool isActive, Guid emrId)
+        public ExtractSetting(Type type) : this()
+        {
+            Destination = type.Name;
+        }
+
+        public ExtractSetting(string destination) : this()
+        {
+            Destination = destination;
+        }
+
+        public ExtractSetting(string name, string display, string extractCsv, string extractSql, string destination, decimal rank, bool isActive, Guid emrId):this()
         {
             Name = name;
             Display = display;

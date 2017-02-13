@@ -52,6 +52,8 @@
             this.labelEMR = new System.Windows.Forms.Label();
             this.panelExtract = new System.Windows.Forms.Panel();
             this.panelExtractData = new System.Windows.Forms.Panel();
+            this.labelEventSummary = new System.Windows.Forms.Label();
+            this.listBoxEventsSummary = new System.Windows.Forms.ListBox();
             this.labelId = new System.Windows.Forms.Label();
             this.listViewExtract = new System.Windows.Forms.ListView();
             this.columnHeaderExtract = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -75,8 +77,6 @@
             this.labelSummary = new System.Windows.Forms.Label();
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
-            this.listBoxEventsSummary = new System.Windows.Forms.ListBox();
-            this.labelEventSummary = new System.Windows.Forms.Label();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -308,6 +308,23 @@
             this.panelExtractData.Size = new System.Drawing.Size(984, 163);
             this.panelExtractData.TabIndex = 7;
             // 
+            // labelEventSummary
+            // 
+            this.labelEventSummary.AutoSize = true;
+            this.labelEventSummary.Location = new System.Drawing.Point(765, 6);
+            this.labelEventSummary.Name = "labelEventSummary";
+            this.labelEventSummary.Size = new System.Drawing.Size(86, 13);
+            this.labelEventSummary.TabIndex = 6;
+            this.labelEventSummary.Text = "Events Summary";
+            // 
+            // listBoxEventsSummary
+            // 
+            this.listBoxEventsSummary.FormattingEnabled = true;
+            this.listBoxEventsSummary.Location = new System.Drawing.Point(630, 25);
+            this.listBoxEventsSummary.Name = "listBoxEventsSummary";
+            this.listBoxEventsSummary.Size = new System.Drawing.Size(351, 134);
+            this.listBoxEventsSummary.TabIndex = 2;
+            // 
             // labelId
             // 
             this.labelId.AutoSize = true;
@@ -529,23 +546,6 @@
             this.labelExtractDataDetail.Size = new System.Drawing.Size(75, 13);
             this.labelExtractDataDetail.TabIndex = 0;
             this.labelExtractDataDetail.Text = "Extract Details";
-            // 
-            // listBoxEventsSummary
-            // 
-            this.listBoxEventsSummary.FormattingEnabled = true;
-            this.listBoxEventsSummary.Location = new System.Drawing.Point(630, 25);
-            this.listBoxEventsSummary.Name = "listBoxEventsSummary";
-            this.listBoxEventsSummary.Size = new System.Drawing.Size(351, 134);
-            this.listBoxEventsSummary.TabIndex = 2;
-            // 
-            // labelEventSummary
-            // 
-            this.labelEventSummary.AutoSize = true;
-            this.labelEventSummary.Location = new System.Drawing.Point(765, 6);
-            this.labelEventSummary.Name = "labelEventSummary";
-            this.labelEventSummary.Size = new System.Drawing.Size(86, 13);
-            this.labelEventSummary.TabIndex = 6;
-            this.labelEventSummary.Text = "Events Summary";
             // 
             // Dashboard
             // 
