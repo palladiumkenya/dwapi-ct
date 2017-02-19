@@ -39,14 +39,15 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                 using (var command = _connection.CreateCommand())
                 {
-                    command.CommandText = @"
-                        DELETE FROM TempPatientExtract;DELETE FROM  PatientExtract
-                        DELETE FROM TempPatientArtExtract;DELETE FROM  PatientArtExtract;
-                        DELETE FROM TempPatientBaselinesExtract;DELETE FROM  PatientBaselinesExtract;
-                        DELETE FROM TempPatientLaboratoryExtract;DELETE FROM  PatientLaboratoryExtract;
-                        DELETE FROM TempPatientPharmacyExtract;DELETE FROM  PatientPharmacyExtract;
-                        DELETE FROM TempPatientVisitExtract;DELETE FROM  PatientVisitExtract;
-                        DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract;
+                    command.CommandText = @"                        
+                        TRUNCATE TABLE TempPatientArtExtract;TRUNCATE TABLE PatientArtExtract;
+                        TRUNCATE TABLE TempPatientBaselinesExtract;TRUNCATE TABLE PatientBaselinesExtract;
+                        TRUNCATE TABLE TempPatientLaboratoryExtract;TRUNCATE TABLE PatientLaboratoryExtract;
+                        TRUNCATE TABLE TempPatientPharmacyExtract;TRUNCATE TABLE PatientPharmacyExtract;
+                        TRUNCATE TABLE TempPatientVisitExtract;TRUNCATE TABLE PatientVisitExtract;
+                        TRUNCATE TABLE TempPatientStatusExtract;TRUNCATE TABLE PatientStatusExtract;
+                        TRUNCATE TABLE TempPatientExtract;
+                        DELETE FROM PatientExtract;
                                 ";
                     totalCount = command.ExecuteNonQuery();
                 }

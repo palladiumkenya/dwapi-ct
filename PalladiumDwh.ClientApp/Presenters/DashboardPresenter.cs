@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Security;
 using System.Threading.Tasks;
 using log4net;
+using PalladiumDwh.ClientApp.DependencyResolution;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Views;
 using PalladiumDwh.ClientReader.Core.Interfaces;
@@ -56,6 +57,8 @@ namespace PalladiumDwh.ClientApp.Presenters
         public void Initialize()
         {
             View.Title = "Dashboard";
+            View.CanExport = View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
+            View.Status = "Starting ,please wait ...";
         }
 
         #region EMR Information
@@ -94,16 +97,17 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ExtractSettings = extracts;
             View.Extracts = ExtractsViewModel.CreateList(extracts);
             View.CanLoadEmr = View.CanLoadCsv = View.CanExport = View.CanSend = View.ExtractSettings.Count > 0;
-
-
+            View.CanExport = View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
+            View.Status = "Ready";
         }
 
         //TODO: consider Parallel processing
         public async void LoadExtracts(List<ExtractSetting> extracts)
         {
+            
             var watch = System.Diagnostics.Stopwatch.StartNew();
             View.CanLoadEmr = false;
-            View.Status = "loading...";
+            View.Status = "initializing loading...";
             int total = extracts.Count;
             int count = 0;
 
@@ -115,13 +119,14 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             foreach (var extract in priorityExtracts)
             {
+                var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
                 count++;
                 var vm = new ExtractsViewModel(extract) { Status = "loading..." };
                 View.UpdateStatus(vm);
 
                 //View.Status = $"loading {count}/{total} ({extract.Display}) ...";
                 View.Status = $"loading...";
-                var summary = await _syncService.SyncAsync(extract);
+                var summary = await _syncService.SyncAsync(extract, progressIndicator);
 
                 vm = new ExtractsViewModel(extract)
                 {
@@ -139,22 +144,14 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             foreach (var extract in otherExtracts)
             {
+                var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
                 count++;
                 var vm = new ExtractsViewModel(extract) {Status = "loading..."};
-                View.UpdateStatus(vm);
-
+                View.UpdateStatus(vm);               
                 tasks.Add(GetTask(_syncService,extract));
             }
-
-            
-
+                        
             await Task.WhenAll(tasks.ToArray());
-
-      
-
-
-
-
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
@@ -166,11 +163,23 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             View.CanLoadEmr = true;
             LoadExtractDetail();
+            View.ShowReady();
+        }
+
+        private void ReportProgress(ProcessStatus processStatus)
+        {
+            var vm = new ExtractsViewModel(processStatus.ExtractSetting)
+            {
+                Total =processStatus.Progress,
+                Status = $"loaded {processStatus.Progress}"
+            };
+            View.UpdateStatus(vm);
         }
 
         private async Task<RunSummary> GetTask(ISyncService service, ExtractSetting extractSetting)
         {
-            var summary=await service.SyncAsync(extractSetting);
+            var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
+            var summary=await service.SyncAsync(extractSetting, progressIndicator);
 
             var vm = new ExtractsViewModel(summary.ExtractSetting)
             {
@@ -193,10 +202,10 @@ namespace PalladiumDwh.ClientApp.Presenters
             }
         }
 
-
         private  void View_EmrExtractLoaded(object sender, Events.EmrExtractLoadedEvent e)
         {
-           LoadExtracts(e.Extracts);
+            View.ShowPleaseWait();
+            LoadExtracts(e.Extracts);
         }
 
         private void View_ExtractSent(object sender, Events.ExtractSentEvent e)

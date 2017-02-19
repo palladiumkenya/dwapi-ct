@@ -10,6 +10,7 @@ namespace PalladiumDwh.ClientApp.Views
 {
     public interface IDashboardView:IView<IDashboardPresenter>
     {
+        
         #region EMR Information
         string EMRInfoTitle { get; set; }
         string EMR { get; set; }
@@ -38,6 +39,9 @@ namespace PalladiumDwh.ClientApp.Views
         List<string> EventSummaries { get; set; }
         string Status { get; set; }
         bool ConfirmAction(string action, string actionTilte);
-        void CloseView(); 
+        void CloseView();
+        void UpdateProgress(int i);
+        void ShowPleaseWait();
+        void ShowReady();
     }
 }

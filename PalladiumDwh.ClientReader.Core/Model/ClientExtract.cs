@@ -22,7 +22,12 @@ namespace PalladiumDwh.ClientReader.Core.Model
         [DoNotRead]
         [Column(Order = 102)]
         public virtual bool? Processed { get; set; }
-
+        [DoNotRead]
+        public virtual string QueueId { get; set; }
+        [DoNotRead]
+        public virtual string Status { get; set; }
+        [DoNotRead]
+        public virtual DateTime? StatusDate { get; set; }
 
         protected ClientExtract()
         {

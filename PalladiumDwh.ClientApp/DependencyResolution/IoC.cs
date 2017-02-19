@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Threading.Tasks;
 using log4net;
 using StructureMap;
 
@@ -14,6 +15,10 @@ namespace PalladiumDwh.ClientApp.DependencyResolution
             if (Properties.Settings.Default.devMode)
                 Log.Debug(container.WhatDoIHave());
             return container;
+        }
+        public static Task<IContainer> InitializeAsync()
+        {
+            return Task.Run(() => Initialize());
         }
     }
 }

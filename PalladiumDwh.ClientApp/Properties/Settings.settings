@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PalladiumDwh.ClientApp.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="dwapiUrl" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost/dwapi/api/</Value>
-    </Setting>
     <Setting Name="devMode" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="dwapiUrl" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost/dwapi/api</Value>
     </Setting>
   </Settings>
 </SettingsFile>

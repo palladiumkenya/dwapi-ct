@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Text;
+using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 using PalladiumDwh.Shared.Custom;
 
@@ -45,6 +46,15 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
             HasError = !IsValid();
         }
 
+        public Task LoadAsync(IDataReader reader)
+        {
+            var t = Task.Run(() =>
+            {
+                Load(reader);
+            });
+            return t;
+        }
+
         public virtual bool IsValid()
         {
             return PatientPK > 0 &&
@@ -72,6 +82,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
             return scb.ToString();
         }
 
-     
+      
     }
 }

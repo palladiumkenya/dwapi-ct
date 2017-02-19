@@ -1,11 +1,13 @@
 ﻿
 
+using System.Threading.Tasks;
 using PalladiumDwh.ClientApp.Presenters;
 
 namespace PalladiumDwh.ClientApp.Views
 {
     public interface IView<T>
     {
+        Task StartUp();
         string Title { get; set; }
         string Header { get; set; }
         string HeaderDescription { get; set; }

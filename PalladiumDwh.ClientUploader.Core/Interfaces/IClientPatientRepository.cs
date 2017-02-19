@@ -6,6 +6,6 @@ namespace PalladiumDwh.ClientUploader.Core.Interfaces
     public interface IClientPatientRepository:IRepository<ClientPatientExtract>
     {
         IEnumerable<ClientPatientExtract> GetAll(bool processed);
-        void UpdateProcessd(ClientPatientExtract patient,string profileExtract);
+        void UpdatePush(ClientPatientExtract patient,string profileExtract,PushResponse response);
     }
 }

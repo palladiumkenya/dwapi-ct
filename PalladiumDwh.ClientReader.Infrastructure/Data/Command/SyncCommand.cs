@@ -12,13 +12,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
     public class SyncCommand<TS,TD> : ISyncCommand<TS, TD> where TS:TempExtract where TD:ClientExtract
     {
         private readonly IEMRRepository _emrRepository;
-        private readonly IDbConnection _connection;
+        private readonly SqlConnection _connection;
         private SyncSummary _summary;
 
         public SyncCommand(IEMRRepository emrRepository)
         {
             _emrRepository = emrRepository;
-            _connection = _emrRepository.GetConnection();
+            _connection = _emrRepository.GetConnection() as SqlConnection;
         }
 
         public SyncSummary Summary => _summary;
@@ -45,11 +45,26 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
         public virtual async  Task<SyncSummary> ExecuteAsync()
         {
-            return await Task.Run(() =>
+            _summary = new SyncSummary();
+            var extract = (TD)Activator.CreateInstance(typeof(TD));
+            using (_connection)
             {
-                Execute();
-                return Summary;
-            });
+                if (_connection.State != ConnectionState.Open)
+                {
+                    await _connection.OpenAsync();
+                }
+
+                using (var command = _connection.CreateCommand())
+                {
+                    //var tx = _connection.BeginTransaction();
+                    command.CommandText = extract.GetAddAction(typeof(TS).Name);
+                    _summary.Total =await  command.ExecuteNonQueryAsync();
+                    //tx.Commit();
+                }
+
+            }
+
+            return _summary;
         }
     }
 }

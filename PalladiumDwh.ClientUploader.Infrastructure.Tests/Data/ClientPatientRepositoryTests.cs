@@ -83,7 +83,7 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Tests.Data
 
             patient.Processed = true;
 
-            _repository.UpdateProcessd(patient, "PatientArtExtract");
+            _repository.UpdatePush(patient, "PatientArtExtract",null);
 
             _context = new DwapiRemoteContext();
             _repository = new ClientPatientRepository(_context);

@@ -4,9 +4,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PalladiumDwh.ClientApp.DependencyResolution;
 using PalladiumDwh.ClientApp.Events;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Presenters;
@@ -22,31 +25,18 @@ namespace PalladiumDwh.ClientApp.Views
     {
         private List<ExtractsViewModel> _extracts=new List<ExtractsViewModel>();
 
-        private readonly IProjectRepository _projectRepository;
-        private readonly ISyncService _syncService;
-        private readonly IClientPatientRepository _clientPatientRepository;
-        private readonly IProfileManager _profileManager;
-        private readonly IPushProfileService _pushService;
+        private  IProjectRepository _projectRepository;
+        private  ISyncService _syncService;
+        private  IClientPatientRepository _clientPatientRepository;
+        private  IProfileManager _profileManager;
+        private  IPushProfileService _pushService;
         private List<string> _eventSummaries = new List<string>();
         private List<string> _allEventSummaries=new List<string>();
 
         public Dashboard()
         {
             InitializeComponent();
-
-            
-            _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
-            _syncService = Program.IOC.GetInstance<ISyncService>();
-
-            _clientPatientRepository = Program.IOC.GetInstance<IClientPatientRepository>();
-            _profileManager = Program.IOC.GetInstance<IProfileManager>();
-            _pushService = Program.IOC.GetInstance<IPushProfileService>();
-
-            Presenter = new DashboardPresenter(this, _projectRepository, _syncService,_clientPatientRepository,_profileManager,_pushService);
-
-            Presenter.Initialize();
-            Presenter.InitializeEmrInfo();
-            Presenter.InitializeExtracts();
+         
         }
         public IDashboardPresenter Presenter { get; set; }
 
@@ -178,10 +168,15 @@ namespace PalladiumDwh.ClientApp.Views
 
         #endregion
 
-        private void Dashboard_Load(object sender, EventArgs e)
+        private async void Dashboard_Load(object sender, EventArgs e)
         {
-            Presenter.LoadEmrInfo();
-            Presenter.LoadExtractSettings();
+            Cursor.Current = Cursors.WaitCursor;
+            toolStripProgressBarDashboard.Style=ProgressBarStyle.Marquee;
+            //toolStripProgressBarDashboard.MarqueeAnimationSpeed = 10;
+            
+            await StartUp();
+            toolStripProgressBarDashboard.Style = ProgressBarStyle.Continuous;
+            Cursor.Current = Cursors.Default;
         }
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -205,6 +200,17 @@ namespace PalladiumDwh.ClientApp.Views
 
         public void UpdateStatus(ExtractsViewModel viewModel)
         {
+            
+            var lvitem= listViewExtract.FindItemWithText(viewModel.Id.ToString());
+            if (null != lvitem)
+            {
+                //listViewExtract.BeginUpdate();
+                lvitem.SubItems[1].Text = viewModel.Total.ToString();
+                lvitem.SubItems[2].Text = viewModel.Status;
+                //listViewExtract.EndUpdate();
+            }
+
+            /*
             foreach (ListViewItem item in listViewExtract.Items)
             {
                 var extractId = item.SubItems[3];
@@ -215,6 +221,7 @@ namespace PalladiumDwh.ClientApp.Views
                     break;
                 }
             }
+            */
         }
 
       
@@ -233,6 +240,8 @@ namespace PalladiumDwh.ClientApp.Views
                 item.SubItems.Add(e.Id.ToString());
                 listViewExtract.Items.Add(item);
             }
+            listViewExtract.VirtualListSize = listViewExtract.Items.Count;
+            //listViewExtract.VirtualMode = true;
         }
 
         protected virtual  void OnEmrExtractLoaded(EmrExtractLoadedEvent e)
@@ -293,6 +302,40 @@ namespace PalladiumDwh.ClientApp.Views
         private void buttonSend_Click(object sender, EventArgs e)
         {
             OnExtractSent(new ExtractSentEvent());
+        }
+
+        public void UpdateProgress(int i)
+        {
+            
+        }
+
+        public async Task StartUp()
+        {
+            Program.IOC = await IoC.InitializeAsync();
+            _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
+            _syncService = Program.IOC.GetInstance<ISyncService>();
+            _clientPatientRepository = Program.IOC.GetInstance<IClientPatientRepository>();
+            _profileManager = Program.IOC.GetInstance<IProfileManager>();
+            _pushService = Program.IOC.GetInstance<IPushProfileService>();
+
+            Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository, _profileManager, _pushService);
+            Presenter.Initialize();
+            Presenter.InitializeEmrInfo();
+            Presenter.InitializeExtracts();
+            Presenter.LoadEmrInfo();
+            Presenter.LoadExtractSettings();
+        }
+
+        public void ShowPleaseWait()
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            toolStripProgressBarDashboard.Style = ProgressBarStyle.Marquee;
+        }
+
+        public void ShowReady()
+        {
+            toolStripProgressBarDashboard.Style = ProgressBarStyle.Continuous;
+            Cursor.Current = Cursors.Default;
         }
     }
 }

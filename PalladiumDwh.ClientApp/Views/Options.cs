@@ -141,5 +141,10 @@ namespace PalladiumDwh.ClientApp.Views
         {
             CloseView();
         }
+
+        public Task StartUp()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

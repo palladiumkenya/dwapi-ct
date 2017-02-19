@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Model;
@@ -141,34 +142,34 @@ namespace PalladiumDwh.ClientReader.Core.Services
             return summary;
         }
 
-        public async Task<RunSummary> SyncAsync(ExtractSetting extract)
+        public async Task<RunSummary> SyncAsync(ExtractSetting extract, Progress<ProcessStatus> progressPercent = null)
         {
 
             var summary = new RunSummary { ExtractSetting = extract };
 
             if (extract.Destination == nameof(TempPatientExtract))
             {
-                summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
+                summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
             }
 
 
             if (extract.Destination == nameof(TempPatientArtExtract))
             {
-                summary.LoadSummary = await _loadPatientArtExtractCommand.ExecuteAsync();
+                summary.LoadSummary = await _loadPatientArtExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientArtExtractCommand.ExecuteAsync();
             }
 
 
             if (extract.Destination == nameof(TempPatientBaselinesExtract))
             {
-                summary.LoadSummary = await _loadPatientBaselinesExtractCommand.ExecuteAsync();
+                summary.LoadSummary = await _loadPatientBaselinesExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientBaselinesExtractCommand.ExecuteAsync();
             }
 
             if (extract.Destination == nameof(TempPatientStatusExtract))
             {
-                summary.LoadSummary = await _loadPatientStatusExtractCommand.ExecuteAsync();
+                summary.LoadSummary = await _loadPatientStatusExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientStatusExtractCommand.ExecuteAsync();
 
             }
@@ -176,21 +177,21 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
             if (extract.Destination == nameof(TempPatientVisitExtract))
             {
-                summary.LoadSummary = await _loadPatientVisitExtractCommand.ExecuteAsync();
+                summary.LoadSummary = await _loadPatientVisitExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientVisitExtractCommand.ExecuteAsync();
             }
 
 
             if (extract.Destination == nameof(TempPatientLaboratoryExtract))
             {
-                summary.LoadSummary = await _loadPatientLaboratoryExtractCommand.ExecuteAsync();
+                summary.LoadSummary = await _loadPatientLaboratoryExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientLaboratoryExtractCommand.ExecuteAsync();
             }
 
 
             if (extract.Destination == nameof(TempPatientPharmacyExtract))
             {
-                summary.LoadSummary = await _loadPatientPharmacyExtractCommand.ExecuteAsync();
+                summary.LoadSummary = await _loadPatientPharmacyExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientPharmacyExtractCommand.ExecuteAsync();
             }
 

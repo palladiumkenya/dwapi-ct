@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Source
 {
@@ -13,6 +14,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Source
         DateTime DateExtracted { get; set; }
         bool HasError { get; set; }
         void Load(IDataReader reader);
+        Task LoadAsync(IDataReader reader);
         bool IsValid();
         string GetAddAction();
         

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces
@@ -8,7 +9,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         void Initialize();
         Task InitializeAsync();
         RunSummary Sync(ExtractSetting extract);
-        Task<RunSummary> SyncAsync(ExtractSetting extract);
+        Task<RunSummary> SyncAsync(ExtractSetting extract, Progress<ProcessStatus> progressPercent = null);
         void SyncAll();
         void SyncPatients();
         void SynPatientsArt();

@@ -129,7 +129,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
             }
         }
 
-        public Task<LoadSummary> ExecuteAsync()
+        public Task<LoadSummary> ExecuteAsync(Progress<ProcessStatus> progressPercent = null)
         {
             throw new NotImplementedException();
         }

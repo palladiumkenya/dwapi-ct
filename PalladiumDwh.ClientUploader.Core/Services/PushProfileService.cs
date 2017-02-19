@@ -39,7 +39,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
             string content = await response.Content.ReadAsStringAsync();
 
             
-            var respone=new PushResponse(profile, content, true);
+            var respone=new PushResponse(profile, content, "Sent",true);
             UpdateExtract(respone,profile.Source);
             return respone;
         }
@@ -48,7 +48,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
         private void UpdateExtract(PushResponse response,string source)
         {
             if (response.IsSuccess)
-                _repository.UpdateProcessd(new ClientPatientExtract(){PatientPK = response.PatientPK,SiteCode = response.SiteCode},source);
+                _repository.UpdatePush(new ClientPatientExtract(){PatientPK = response.PatientPK,SiteCode = response.SiteCode},source,response);
         }
 
     }

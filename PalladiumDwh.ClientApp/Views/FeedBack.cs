@@ -62,6 +62,9 @@ namespace PalladiumDwh.ClientApp.Views
             set { checkBoxSendLogs.Checked = value; }
         }
 
-      
+        public Task StartUp()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

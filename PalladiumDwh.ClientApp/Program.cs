@@ -22,11 +22,11 @@ namespace PalladiumDwh.ClientApp
         static void Main()
         {
             Log.Debug("Loading DWapi...");
-            IOC = IoC.Initialize();
+            
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            
             Application.Run(new Dashboard());
         }
     }

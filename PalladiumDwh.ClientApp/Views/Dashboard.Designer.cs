@@ -187,7 +187,7 @@
             // toolStripStatusLabelDashboard
             // 
             this.toolStripStatusLabelDashboard.Name = "toolStripStatusLabelDashboard";
-            this.toolStripStatusLabelDashboard.Size = new System.Drawing.Size(867, 17);
+            this.toolStripStatusLabelDashboard.Size = new System.Drawing.Size(836, 17);
             this.toolStripStatusLabelDashboard.Spring = true;
             this.toolStripStatusLabelDashboard.Text = "Ready";
             this.toolStripStatusLabelDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -195,7 +195,7 @@
             // toolStripProgressBarDashboard
             // 
             this.toolStripProgressBarDashboard.Name = "toolStripProgressBarDashboard";
-            this.toolStripProgressBarDashboard.Size = new System.Drawing.Size(100, 16);
+            this.toolStripProgressBarDashboard.Size = new System.Drawing.Size(200, 16);
             // 
             // panelTop
             // 
@@ -338,6 +338,7 @@
             // 
             // listViewExtract
             // 
+            this.listViewExtract.AutoArrange = false;
             this.listViewExtract.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderExtract,
             this.columnHeaderTotal,
@@ -559,7 +560,9 @@
             this.Controls.Add(this.menuStripDashboard);
             this.MainMenuStrip = this.menuStripDashboard;
             this.Name = "Dashboard";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dashboard";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Dashboard_Load);
             this.menuStripDashboard.ResumeLayout(false);
             this.menuStripDashboard.PerformLayout();
