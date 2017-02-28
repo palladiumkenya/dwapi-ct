@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B7E99F1A-ECE6-44D7-BDF4-75A453B5FE43}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PalladiumDwh.ClientReader.Core</RootNamespace>
+    <AssemblyName>PalladiumDwh.ClientReader.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interfaces\Commands\ILoadCsvExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IClearExtractsCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncFacilityCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientVisitExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientStatusExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientPharmacyExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientLaboratoryExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientArtExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientBaselinesExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ISyncPatientExtractCommand.cs" />
+    <Compile Include="Interfaces\DTOs\IClientExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientArtExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientBaselinesExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientLaboratoryExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientPharmacyExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientStatusExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IClientPatientVisitExtractDTO.cs" />
+    <Compile Include="Interfaces\IClientPatientArtExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientBaselinesExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientLaboratoryExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientPharmacyExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientStatusExtract.cs" />
+    <Compile Include="Interfaces\IClientPatientVisitExtract.cs" />
+    <Compile Include="Interfaces\IClientExtract.cs" />
+    <Compile Include="Interfaces\IReadExtractService.cs" />
+    <Compile Include="Interfaces\ISyncService.cs" />
+    <Compile Include="Interfaces\Profiles\IClientExtractProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientARTProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientBaselineProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientLabProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientPharmacyProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientStatusProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IClientPatientVisitProfile.cs" />
+    <Compile Include="Interfaces\Repository\IExtractSettingRepository.cs" />
+    <Compile Include="Interfaces\Repository\IEMRRepository.cs" />
+    <Compile Include="Interfaces\Repository\IProjectRepository.cs" />
+    <Compile Include="Interfaces\Repository\IClientRepository.cs" />
+    <Compile Include="Interfaces\Commands\ISyncCommand.cs" />
+    <Compile Include="Interfaces\Source\ITempExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientArtExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientBaselinesExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientLaboratoryExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientPharmacyExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientStatusExtract.cs" />
+    <Compile Include="Interfaces\Source\ITempPatientVisitExtract.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientArtExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientBaselinesExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientLaboratoryExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientPharmacyExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientStatusExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientVisitExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadExtractCommand.cs" />
+    <Compile Include="Model\ClientExtract.cs" />
+    <Compile Include="Model\DTO\ClientFacilityDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientArtExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientBaselinesExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientLaboratoryExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientPharmacyExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientStatusExtractDTO.cs" />
+    <Compile Include="Model\DTO\ClientPatientVisitExtractDTO.cs" />
+    <Compile Include="Model\ExtractSetting.cs" />
+    <Compile Include="Model\EMR.cs" />
+    <Compile Include="Model\ProcessStatus.cs" />
+    <Compile Include="Model\PushResponse.cs" />
+    <Compile Include="Model\RunSummary.cs" />
+    <Compile Include="Model\SyncSummary.cs" />
+    <Compile Include="Model\Project.cs" />
+    <Compile Include="Model\Profile\ClientExtractProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientARTProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientBaselineProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientLabProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientPharmacyProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientStatusProfile.cs" />
+    <Compile Include="Model\Profile\ClientPatientVisitProfile.cs" />
+    <Compile Include="Model\Source\Map\TempExtractMap.cs" />
+    <Compile Include="Model\Source\TempExtract.cs" />
+    <Compile Include="Model\ClientPatientArtExtract.cs" />
+    <Compile Include="Model\ClientPatientBaselinesExtract.cs" />
+    <Compile Include="Model\ClientPatientExtract.cs" />
+    <Compile Include="Model\ClientPatientLaboratoryExtract.cs" />
+    <Compile Include="Model\ClientPatientPharmacyExtract.cs" />
+    <Compile Include="Model\ClientPatientStatusExtract.cs" />
+    <Compile Include="Model\ClientPatientVisitExtract.cs" />
+    <Compile Include="Model\ClientFacility.cs" />
+    <Compile Include="Model\Source\TempPatientBaselinesExtract.cs" />
+    <Compile Include="Model\Source\TempPatientArtExtract.cs" />
+    <Compile Include="Model\Source\TempPatientLaboratoryExtract.cs" />
+    <Compile Include="Model\Source\TempPatientPharmacyExtract.cs" />
+    <Compile Include="Model\Source\TempPatientStatusExtract.cs" />
+    <Compile Include="Model\Source\TempPatientVisitExtract.cs" />
+    <Compile Include="Model\Source\TempPatientExtract.cs" />
+    <Compile Include="Model\LoadSummary.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SyncService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
+      <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
+      <Name>PalladiumDwh.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

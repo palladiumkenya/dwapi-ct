@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using log4net;
@@ -46,7 +40,7 @@ namespace PalladiumDwh.Uploader.Presentation
        
         public MainForm()
         {
-          
+          //TODO : Complete member initialization
             // TODO: Complete member initialization
             InitializeComponent();
 

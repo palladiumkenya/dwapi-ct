@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows.Forms;
 using PalladiumDwh.Uploader.Model;
-using PalladiumDwh.Uploader.Repository;
 
 namespace PalladiumDwh.Uploader.Controller
 {

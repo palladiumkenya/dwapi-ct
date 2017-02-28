@@ -1,0 +1,14 @@
+﻿@model System.Collections.Generic.List<PalladiumDwh.DWapi.Models.Queues>
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Message Queues Status</h2>
+@foreach (var q in Model)
+{
+    <p>@q.Name | @q.Messages | @q.JournalMessages </p>
+}
+
+<hr />
+@Html.ActionLink("Purge All","PurgeAll")

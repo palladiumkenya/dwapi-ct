@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects.DataClasses;
-using System.Linq;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
-
-using PalladiumDwh.Uploader.Model;
+﻿using PalladiumDwh.Uploader.Model;
 
 namespace PalladiumDwh.Uploader.Repository
 {

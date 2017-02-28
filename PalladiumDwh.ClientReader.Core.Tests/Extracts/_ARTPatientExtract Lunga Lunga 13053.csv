@@ -1,0 +1,5 @@
+PatientPK,PatientID,FacilityID,SiteCode,FacilityName,DOB,AgeEnrollment,AgeARTStart,AgeLastVisit,RegistrationDate,PatientSource,Gender,StartARTDate,PreviousARTStartDate,PreviousARTRegimen,StartARTAtThisFacility,StartRegimen,StartRegimenLine,LastARTDate,LastRegimen,LastRegimenLine,Duration,ExpectedReturn,Provider,LastVisit,ExitReason,ExitDate
+2,254-13053-0-174941465,13053,13053,Lunga Lunga Health Center,1977-08-08 00:00:00.000,35.2,35.2,39.3,2012-10-31 00:00:00.000,VCT,Male,2012-10-31 00:00:00.000,NULL,NULL,2012-10-31 00:00:00.000,3TC/NVP/TDF,First line,2016-11-09 00:00:00.000,3TC/NVP/TDF,First line substitute,90.00,2017-02-07 00:00:00.000,Government,2016-11-09 00:00:00.000,NULL,NULL
+5,254-13053-0-1469,13053,13053,Lunga Lunga Health Center,1988-12-02 00:00:00.000,23.9,25.9,28.0,2012-11-07 00:00:00.000,VCT,Female,2014-10-29 00:00:00.000,NULL,NULL,2014-10-29 00:00:00.000,3TC/EFV/TDF,First line,2016-12-07 00:00:00.000,3TC/EFV/TDF,First line,60.00,2017-02-05 00:00:00.000,Government,2016-12-07 00:00:00.000,NULL,NULL
+
+
