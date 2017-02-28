@@ -10,6 +10,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+
+            SetSqlGenerator("MySql.Data.MySqlClient", new MySql.Data.Entity.MySqlMigrationSqlGenerator()); //it will generate MySql commands instead of SqlServer commands.
+
+            SetHistoryContextFactory("MySql.Data.MySqlClient", (conn, schema) => new MySqlHistoryContext(conn, schema)); //here s the thing.
+
+
         }
 
         protected override void Seed(PalladiumDwh.ClientReader.Infrastructure.Data.DwapiRemoteContext context)

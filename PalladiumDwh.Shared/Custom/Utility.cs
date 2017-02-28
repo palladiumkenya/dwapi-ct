@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Messaging;
 using System.Reflection;
+using System.Text;
 using log4net;
+using Newtonsoft.Json;
 
 namespace PalladiumDwh.Shared.Custom
 {
@@ -42,6 +46,25 @@ namespace PalladiumDwh.Shared.Custom
             yield return chunk;
         }
 
+        public static Message CreateMessage(object message)
+        {
+            Message msmqMessage;
+
+            try
+            {
+                msmqMessage = new Message();
+                msmqMessage.Label = Utility.GetMessageType(message.GetType());
+                var jsonBody = JsonConvert.SerializeObject(message);
+                msmqMessage.BodyStream = new MemoryStream(Encoding.Default.GetBytes(jsonBody));
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex);
+                throw;
+            }
+
+            return msmqMessage;
+        }
         public static string GetMessageType(Type type)
         {
             return $"{type.FullName}, {type.Assembly.GetName().Name}";

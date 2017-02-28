@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using log4net;
 using PalladiumDwh.Shared.Interfaces;
 using PalladiumDwh.Shared.Model;
@@ -87,6 +88,30 @@ namespace PalladiumDwh.Shared.Data.Repository
                 Context.Configuration.AutoDetectChangesEnabled = true;
             }
         }
+        public async Task<int> DeleteByAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            int result = -1;
+            try
+            {
+                Context.Configuration.AutoDetectChangesEnabled = false;
+                var results = DbSet.Where(predicate);
+                if (null != results.FirstOrDefault())
+                {
+                    DbSet.RemoveRange(results);
+                }
+                result = await Context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex);
+                throw;
+            }
+            finally
+            {
+                Context.Configuration.AutoDetectChangesEnabled = true;
+            }
+            return result;
+        }
 
         public virtual void Execute(string sql)
         {
@@ -99,6 +124,11 @@ namespace PalladiumDwh.Shared.Data.Repository
             Context.SaveChanges();
         }
 
-       
+        public Task<int> CommitChangesAsync()
+        {
+            return  Context.SaveChangesAsync();
+        }
+
+    
     }
 }

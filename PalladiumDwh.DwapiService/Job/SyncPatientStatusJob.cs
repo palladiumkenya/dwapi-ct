@@ -19,8 +19,7 @@ namespace PalladiumDWh.DwapiService.Job
            // Log.Debug($"Execting {profile} Job...");
             try
             {
-                var schedulerContext = context.Scheduler.Context;
-                var reader = (IMessagingReaderService)schedulerContext.Get("myKey");
+                var reader = Program.IOC.GetInstance<IMessagingReaderService>();
                 reader.Initialize(profile);
                 reader.Read(profile);
             }

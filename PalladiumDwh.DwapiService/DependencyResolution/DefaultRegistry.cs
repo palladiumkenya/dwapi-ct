@@ -25,8 +25,8 @@ namespace PalladiumDWh.DwapiService.DependencyResolution {
 
 
             For<IMessagingReaderService>().Use<MessagingReaderService>()
-                .Ctor<string>("queueName").Is(PalladiumDWh.DwapiService.Properties.Settings.Default.QueueName)
-                .Ctor<int>("queueBatch").Is(PalladiumDWh.DwapiService.Properties.Settings.Default.QueueBatch);
+                .Ctor<string>("queueName").Is(Properties.Settings.Default.QueueName)
+                .Ctor<int>("queueBatch").Is(Properties.Settings.Default.QueueBatch);
             
 
         }

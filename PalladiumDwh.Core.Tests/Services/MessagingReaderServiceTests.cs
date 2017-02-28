@@ -7,6 +7,7 @@ using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Infrastructure.Data.Repository;
 using System.Collections.Generic;
 using System.Messaging;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Extentions;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
@@ -90,13 +91,49 @@ namespace PalladiumDwh.Core.Tests.Services
             Assert.IsNotNull(savedPatient);
             Assert.IsTrue(savedPatient.PatientArtExtracts.Count > 0);
         }
+        [Test]
+        public void should_Move_To_Backlog_Queue()
+        {
+            var message=Utility.CreateMessage(_profile);
 
+            _messagingReaderService.Initialize();
+            _messagingReaderService.MoveToBacklog(message);
+
+            var msmq = new MessageQueue(_messagingReaderService.BacklogQueueName);
+            Assert.IsNotNull(msmq);
+            Assert.IsTrue(msmq.Count() > 0);
+            Console.WriteLine(_messagingReaderService.BacklogQueueName);
+        }
+        [Test]
+        public void should_Move_To_Backlog_Queue_On_Error()
+        {
+            var patient = _patientWithAllExtracts.Last();
+            _profile = PatientARTProfile.Create(_newFacility, patient);
+            _profile.GeneratePatientRecord();
+            foreach (var e in _profile.ArtExtracts)
+            {
+                e.LastRegimen = new string('A', 151);
+            }
+            var sendService = new MessagingSenderService(_queueName);
+            sendService.Send(_profile);
+
+            _messagingReaderService.Initialize();
+            _messagingReaderService.Read();
+
+            var msmq = new MessageQueue(_messagingReaderService.BacklogQueueName);
+            Assert.IsNotNull(msmq);
+            Assert.IsTrue(msmq.Count() > 0);
+            Console.WriteLine(_messagingReaderService.BacklogQueueName);
+        }
+        
         [TearDown]
         public void TearDown()
         {
             _context.Dispose();
             var msmq = _messagingReaderService.Queue as MessageQueue;
             msmq.Purge();
+            var msmqBacklog = _messagingReaderService.BacklogQueue as MessageQueue;
+            msmqBacklog.Purge();
         }
         
     }

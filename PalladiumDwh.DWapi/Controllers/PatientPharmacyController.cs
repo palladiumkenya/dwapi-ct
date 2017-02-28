@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Http;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
@@ -20,7 +21,7 @@ namespace PalladiumDwh.DWapi.Controllers
             _messagingService.Initialize(_gateway);
         }
 
-        public HttpResponseMessage Post([FromBody] PatientPharmacyProfile patientProfile)
+        public async Task<HttpResponseMessage> Post([FromBody] PatientPharmacyProfile patientProfile)
         {
             if (null != patientProfile)
             {
@@ -32,7 +33,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 try
                 {
                     patientProfile.GeneratePatientRecord();
-                    var messageRef = _messagingService.Send(patientProfile, _gateway);
+                    var messageRef = await _messagingService.SendAsync(patientProfile, _gateway);
                     return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
                 }
                 catch (Exception ex)

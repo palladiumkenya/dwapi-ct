@@ -11,20 +11,12 @@ namespace PalladiumDWh.DwapiService.Scheduler
 
     public class ProfileScheduler : IProfileScheduler
     {
-        private readonly IMessagingReaderService _messagingReaderService;
         private IScheduler _scheduler;
-
-        public ProfileScheduler(IMessagingReaderService messagingReaderService)
-        {
-            _messagingReaderService = messagingReaderService;
-        }
-
+        
         public void Run()
         {
             _scheduler = StdSchedulerFactory.GetDefaultScheduler();
             _scheduler.Start();
-
-            _scheduler.Context.Put("myKey", _messagingReaderService);
 
             var jobs = new List<Type>
             {
@@ -71,7 +63,5 @@ namespace PalladiumDWh.DwapiService.Scheduler
         {
             _scheduler.Shutdown(true);
         }
-    }
-
-  
+    } 
 }

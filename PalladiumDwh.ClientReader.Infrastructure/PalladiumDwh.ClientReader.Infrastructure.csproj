@@ -78,6 +78,10 @@
       <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Npgsql, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.3.2.0\lib\net451\Npgsql.dll</HintPath>
       <Private>True</Private>
@@ -134,71 +138,12 @@
     <Compile Include="Data\Repository\ExtractSettingRepository.cs" />
     <Compile Include="Data\Repository\ClientRepository.cs" />
     <Compile Include="Data\Repository\EMRRepository.cs" />
-    <Compile Include="Migrations\201701271252203_InitialReview.cs" />
-    <Compile Include="Migrations\201701271252203_InitialReview.Designer.cs">
-      <DependentUpon>201701271252203_InitialReview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701282124500_ClientReview.cs" />
-    <Compile Include="Migrations\201701282124500_ClientReview.Designer.cs">
-      <DependentUpon>201701282124500_ClientReview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701282252129_ClientReviewMOre.cs" />
-    <Compile Include="Migrations\201701282252129_ClientReviewMOre.Designer.cs">
-      <DependentUpon>201701282252129_ClientReviewMOre.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701291351500_AddProjectInfo.cs" />
-    <Compile Include="Migrations\201701291351500_AddProjectInfo.Designer.cs">
-      <DependentUpon>201701291351500_AddProjectInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701300609371_AddedPatientID.cs" />
-    <Compile Include="Migrations\201701300609371_AddedPatientID.Designer.cs">
-      <DependentUpon>201701300609371_AddedPatientID.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701301204099_ColumnsOrder.cs" />
-    <Compile Include="Migrations\201701301204099_ColumnsOrder.Designer.cs">
-      <DependentUpon>201701301204099_ColumnsOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701311708571_AddFacilityName.cs" />
-    <Compile Include="Migrations\201701311708571_AddFacilityName.Designer.cs">
-      <DependentUpon>201701311708571_AddFacilityName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702071118231_ExtractsSetting.cs" />
-    <Compile Include="Migrations\201702071118231_ExtractsSetting.Designer.cs">
-      <DependentUpon>201702071118231_ExtractsSetting.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702071127297_ExtractSettingsReview.cs" />
-    <Compile Include="Migrations\201702071127297_ExtractSettingsReview.Designer.cs">
-      <DependentUpon>201702071127297_ExtractSettingsReview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702071153425_ExtractSettingSQLCol.cs" />
-    <Compile Include="Migrations\201702071153425_ExtractSettingSQLCol.Designer.cs">
-      <DependentUpon>201702071153425_ExtractSettingSQLCol.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702080540471_EmrSettings.cs" />
-    <Compile Include="Migrations\201702080540471_EmrSettings.Designer.cs">
-      <DependentUpon>201702080540471_EmrSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702080717134_EmrDestination.cs" />
-    <Compile Include="Migrations\201702080717134_EmrDestination.Designer.cs">
-      <DependentUpon>201702080717134_EmrDestination.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702090715592_ExtractSettingsDisplay.cs" />
-    <Compile Include="Migrations\201702090715592_ExtractSettingsDisplay.Designer.cs">
-      <DependentUpon>201702090715592_ExtractSettingsDisplay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702090737026_ExtractSettingsRank.cs" />
-    <Compile Include="Migrations\201702090737026_ExtractSettingsRank.Designer.cs">
-      <DependentUpon>201702090737026_ExtractSettingsRank.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702131225273_ExtractSettingPriority.cs" />
-    <Compile Include="Migrations\201702131225273_ExtractSettingPriority.Designer.cs">
-      <DependentUpon>201702131225273_ExtractSettingPriority.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702131436354_ExtractQueueStatus.cs" />
-    <Compile Include="Migrations\201702131436354_ExtractQueueStatus.Designer.cs">
-      <DependentUpon>201702131436354_ExtractQueueStatus.cs</DependentUpon>
+    <Compile Include="Migrations\201702230813417_MysqlInitial.cs" />
+    <Compile Include="Migrations\201702230813417_MysqlInitial.Designer.cs">
+      <DependentUpon>201702230813417_MysqlInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -217,32 +162,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EmbeddedResource Include="Migrations\201702071118231_ExtractsSetting.resx">
-      <DependentUpon>201702071118231_ExtractsSetting.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702071127297_ExtractSettingsReview.resx">
-      <DependentUpon>201702071127297_ExtractSettingsReview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702071153425_ExtractSettingSQLCol.resx">
-      <DependentUpon>201702071153425_ExtractSettingSQLCol.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702080540471_EmrSettings.resx">
-      <DependentUpon>201702080540471_EmrSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702080717134_EmrDestination.resx">
-      <DependentUpon>201702080717134_EmrDestination.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702090715592_ExtractSettingsDisplay.resx">
-      <DependentUpon>201702090715592_ExtractSettingsDisplay.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702090737026_ExtractSettingsRank.resx">
-      <DependentUpon>201702090737026_ExtractSettingsRank.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702131225273_ExtractSettingPriority.resx">
-      <DependentUpon>201702131225273_ExtractSettingPriority.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702131436354_ExtractQueueStatus.resx">
-      <DependentUpon>201702131436354_ExtractQueueStatus.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702230813417_MysqlInitial.resx">
+      <DependentUpon>201702230813417_MysqlInitial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -253,29 +174,6 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="Seed\Project.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701271252203_InitialReview.resx">
-      <DependentUpon>201701271252203_InitialReview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701282124500_ClientReview.resx">
-      <DependentUpon>201701282124500_ClientReview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701282252129_ClientReviewMOre.resx">
-      <DependentUpon>201701282252129_ClientReviewMOre.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701291351500_AddProjectInfo.resx">
-      <DependentUpon>201701291351500_AddProjectInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701300609371_AddedPatientID.resx">
-      <DependentUpon>201701300609371_AddedPatientID.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701301204099_ColumnsOrder.resx">
-      <DependentUpon>201701301204099_ColumnsOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701311708571_AddFacilityName.resx">
-      <DependentUpon>201701311708571_AddFacilityName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

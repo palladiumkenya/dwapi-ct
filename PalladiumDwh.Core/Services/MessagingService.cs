@@ -14,7 +14,9 @@ namespace PalladiumDwh.Core.Services
         private readonly string _queueName;
 
         public virtual string QueueName { get; private set; }
+        public string BacklogQueueName { get; private set; }
         public virtual object Queue { get; private set; }
+        public virtual object BacklogQueue { get; private set; }
 
         protected MessagingService(string queueName)
         {
@@ -25,19 +27,11 @@ namespace PalladiumDwh.Core.Services
         {
 
             QueueName = string.IsNullOrWhiteSpace(gateway) ? $"{_queueName}" : $"{_queueName}.{gateway}";
+            BacklogQueueName =  $"{QueueName}.backlog";
 
             try
             {
-                if (!MessageQueue.Exists(QueueName))
-                {
-                    Log.Debug($"Initializing MessagingService [{QueueName}] ...");
-                    Queue = MessageQueue.Create(QueueName, true);
-                    Log.Debug($"MessagingService {QueueName} Initialized!");
-                }
-                else
-                {
-                    Queue = new MessageQueue(QueueName);
-                }
+                Queue = GetQueue(QueueName);
             }
             catch (Exception ex)
             {
@@ -45,6 +39,34 @@ namespace PalladiumDwh.Core.Services
                 Log.Debug(ex);
                 throw;
             }
+            try
+            {
+                BacklogQueue = GetQueue(BacklogQueueName);
+            }
+            catch (Exception ex)
+            {
+                Log.Debug($"MessagingService:{BacklogQueueName} error:!");
+                Log.Debug(ex);
+                throw;
+            }
+        }
+
+        private MessageQueue GetQueue(string queueName)
+        {
+            MessageQueue queue;
+
+            if (!MessageQueue.Exists(queueName))
+            {
+                Log.Debug($"Initializing MessagingService [{queueName}] ...");
+                queue = MessageQueue.Create(queueName, true);
+                Log.Debug($"MessagingService {queueName} Initialized!");
+            }
+            else
+            {
+                queue = new MessageQueue(queueName);
+            }
+
+            return queue;
         }
 
         public void Purge(string gateway,bool withJournal=false)
@@ -79,6 +101,14 @@ namespace PalladiumDwh.Core.Services
                 return queue.Count();
             }
             return -1;
+        }
+
+        public void Delete(string gateway)
+        {
+            if (MessageQueue.Exists(gateway))
+            {
+                MessageQueue.Delete(gateway);
+            }
         }
     }
 }

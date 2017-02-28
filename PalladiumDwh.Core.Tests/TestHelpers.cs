@@ -49,10 +49,10 @@ namespace PalladiumDwh.Core.Tests
 
         public static List<string> GetGateways(string queueName)
         {
-            
-
             var gateways = new List<string>
             {
+                queueName.Substring(0, queueName.Length - 1),
+                
                 $"{queueName}{typeof(PatientARTProfile).Name.ToLower()}",
                 $"{queueName}{typeof(PatientBaselineProfile).Name.ToLower()}",
                 $"{queueName}{typeof(PatientLabProfile).Name.ToLower()}",
@@ -60,6 +60,18 @@ namespace PalladiumDwh.Core.Tests
                 $"{queueName}{typeof(PatientVisitProfile).Name.ToLower()}",
                 $"{queueName}{typeof(PatientStatusProfile).Name.ToLower()}"
             };
+            return gateways;
+        }
+
+        public static List<string> GetAllGateways(string queueName)
+        {
+            var gateways = new List<string>();
+
+            foreach (var g in GetGateways(queueName))
+            {
+                gateways.Add($"{g}");
+                gateways.Add($"{g}.backlog");
+            }
             return gateways;
         }
     }

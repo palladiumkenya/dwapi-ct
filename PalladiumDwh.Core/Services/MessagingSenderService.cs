@@ -2,6 +2,7 @@
 using System.IO;
 using System.Messaging;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
@@ -49,24 +50,14 @@ namespace PalladiumDwh.Core.Services
             return refId;
         }
 
-        private Message CreateMessage(object message)
+        public Message CreateMessage(object message)
         {
-            Message msmqMessage;
+            return Utility.CreateMessage(message);
+        }
 
-            try
-            {
-                msmqMessage = new Message();
-                msmqMessage.Label = Utility.GetMessageType(message.GetType());
-                var jsonBody = JsonConvert.SerializeObject(message);
-                msmqMessage.BodyStream = new MemoryStream(Encoding.Default.GetBytes(jsonBody));
-            }
-            catch (Exception ex)
-            {
-                Log.Debug(ex);
-                throw;
-            }
-           
-            return msmqMessage;
+        public Task<string> SendAsync(object message, string gateway = "")
+        {
+            return Task.Run(() => Send(message, gateway));
         }
     }
 }

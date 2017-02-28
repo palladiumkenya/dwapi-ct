@@ -45,7 +45,7 @@ namespace PalladiumDwh.DWapi.Tests
             var patient = _patientWithAllExtracts.First();
             var profile = PatientARTProfile.Create(_facility, patient);
 
-            var result = _controller.Post(profile);
+            var result = _controller.Post(profile).Result;
 
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
             var messageId = result.Content.ReadAsStringAsync().Result;

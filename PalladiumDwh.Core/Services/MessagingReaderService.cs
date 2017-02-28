@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Messaging;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
@@ -49,16 +50,38 @@ namespace PalladiumDwh.Core.Services
                     Log.Debug($"processing {QueueName} {n} of {batchCount} batches...");
                     foreach (var m in batch.ToList())
                     {
-                        
+
                         var msg = msmq.ReceiveById(m);
                         if (null != msg)
                         {
-                            var patientProfile = msg.BodyStream.ReadFromJson(msg.Label);
-                            _syncService.Sync(patientProfile);
+                            try
+                            {
+                                var patientProfile = msg.BodyStream.ReadFromJson(msg.Label);
+                                _syncService.Sync(patientProfile);
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Debug(e);
+                                MoveToBacklog(msg);
+                            }
+
                         }
                     }
                 }
                 Log.Debug(new string('*', 30));
+            }
+        }
+
+        public void MoveToBacklog(object message)
+        {
+            var msmq=BacklogQueue as MessageQueue;
+
+            if (null != message && null != msmq)
+            {
+                var tx = new MessageQueueTransaction();
+                tx.Begin();
+                msmq.Send(message, tx);
+                tx.Commit();
             }
         }
     }
