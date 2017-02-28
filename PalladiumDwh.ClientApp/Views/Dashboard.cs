@@ -318,12 +318,17 @@ namespace PalladiumDwh.ClientApp.Views
             _profileManager = Program.IOC.GetInstance<IProfileManager>();
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
 
-            Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository, _profileManager, _pushService);
-            Presenter.Initialize();
-            Presenter.InitializeEmrInfo();
-            Presenter.InitializeExtracts();
-            Presenter.LoadEmrInfo();
-            Presenter.LoadExtractSettings();
+            
+                Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository,
+                    _profileManager, _pushService);
+                Presenter.Initialize();
+                Presenter.InitializeEmrInfo();
+                Presenter.InitializeExtracts();
+
+                await Presenter.LoadEmrInfoAsync();
+
+                Presenter.LoadExtractSettings();
+            
         }
 
         public void ShowPleaseWait()

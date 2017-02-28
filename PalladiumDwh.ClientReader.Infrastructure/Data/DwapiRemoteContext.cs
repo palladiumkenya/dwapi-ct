@@ -11,6 +11,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         public DwapiRemoteContext() : base("name=DWAPIRemote")
         {
+            Database.SetInitializer(new DwapiRemoteDbInitializer());
         }
 
         public DwapiRemoteContext(DbConnection existingConnection, bool contextOwnsConnection) : base(existingConnection, contextOwnsConnection)

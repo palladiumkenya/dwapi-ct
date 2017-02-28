@@ -79,6 +79,17 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.Project = _emrmodel.Project;
         }
 
+        public async Task LoadEmrInfoAsync()
+        {
+            _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
+            var project = await _projectRepository.GetActiveProjectAsync();
+            _emrmodel = EmrViewModel.Create(project);
+
+            View.EMR = _emrmodel.EMR;
+            View.Version = _emrmodel.Version;
+            View.Project = _emrmodel.Project;
+        }
+
         #endregion
 
         #region Extracts

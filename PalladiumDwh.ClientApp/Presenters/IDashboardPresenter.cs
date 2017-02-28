@@ -11,6 +11,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         #region EMR Information
         void InitializeEmrInfo();
         void LoadEmrInfo();
+        Task LoadEmrInfoAsync();
         #endregion
 
         #region Extracts
