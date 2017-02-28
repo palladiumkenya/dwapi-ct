@@ -16,7 +16,8 @@ namespace PalladiumDwh.Core.Tests.Services
     [TestFixture]
     public class MessagingSenderServiceTests
     {
-        private readonly string _queueName = $@".\private$\dwapi.emr.concept";
+        //dwapi.emr.concept
+        private readonly string _queueName = $@".\private$\dwapi.emr";
 
         private IMessagingSenderService _messagingSenderService;
         private Facility _newFacility;
@@ -29,7 +30,6 @@ namespace PalladiumDwh.Core.Tests.Services
             _newFacility = Builder<Facility>.CreateNew().Build();
             _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility, 2, 10).ToList();
             _messagingSenderService = new MessagingSenderService(_queueName);
-
         }
 
         [Test,Order(1)]
@@ -52,6 +52,7 @@ namespace PalladiumDwh.Core.Tests.Services
             MessageQueue.Delete(msmq.Path);
             MessageQueue.Delete(msmqB.Path);
         }
+
         [Test,Order(2)]
         public void should_Initialize_With_Gateway()
         {
@@ -72,6 +73,7 @@ namespace PalladiumDwh.Core.Tests.Services
             MessageQueue.Delete(msmq.Path);
             MessageQueue.Delete(msmqB.Path);
         }
+
         [Test, Order(3)]
         public void should_Send_To_Queue()
         {
@@ -93,6 +95,7 @@ namespace PalladiumDwh.Core.Tests.Services
             var prof = message.BodyStream.ReadFromJson<PatientARTProfile>();
             Console.WriteLine($"{prof}  Message Id [{messageId}]");
         }
+
         [Test, Order(3)]
         public void should_Send_Async_To_Queue()
         {
@@ -114,9 +117,10 @@ namespace PalladiumDwh.Core.Tests.Services
             var prof = message.BodyStream.ReadFromJson<PatientARTProfile>();
             Console.WriteLine($"{prof}  Message Id [{messageId}]");
         }
+
         [Order(5)]
         [TestCase(@".\private$\dwapi.emr.")]
-        [TestCase(@".\private$\dwapi.emr.concept.")]
+        //[TestCase(@".\private$\dwapi.emr.concept.")]
         public void should_GetMessageCount(string name)
         {
             
@@ -131,7 +135,7 @@ namespace PalladiumDwh.Core.Tests.Services
         }
         [Order(6)]
         [TestCase(@".\private$\dwapi.emr.")]
-        [TestCase(@".\private$\dwapi.emr.concept.")]
+        //[TestCase(@".\private$\dwapi.emr.concept.")]
         public void should_GetBacklogMessageCount(string name)
         {
 
@@ -147,7 +151,7 @@ namespace PalladiumDwh.Core.Tests.Services
         }
         [Order(7)]
         [TestCase(@".\private$\dwapi.emr.")]
-        [TestCase(@".\private$\dwapi.emr.concept.")]
+        //[TestCase(@".\private$\dwapi.emr.concept.")]
         public void should_GetJounralMessageCount(string name)
         {
             _allGateways = TestHelpers.GetGateways(name);
@@ -161,7 +165,7 @@ namespace PalladiumDwh.Core.Tests.Services
         }
         [Order(8)]
         [TestCase(@".\private$\dwapi.emr.")]
-        [TestCase(@".\private$\dwapi.emr.concept.")]
+        //[TestCase(@".\private$\dwapi.emr.concept.")]
         public void should_Purge_Queues(string name)
         {
             _allGateways = TestHelpers.GetGateways(name);
@@ -177,7 +181,7 @@ namespace PalladiumDwh.Core.Tests.Services
         }
         [Order(9)]
         [TestCase(@".\private$\dwapi.emr.")]
-        [TestCase(@".\private$\dwapi.emr.concept.")]
+        //[TestCase(@".\private$\dwapi.emr.concept.")]
         public void should_Purge_BaclkogQueues(string name)
         {
             _allGateways = TestHelpers.GetGateways(name);
@@ -193,7 +197,7 @@ namespace PalladiumDwh.Core.Tests.Services
         }
         [Order(10)]
         [TestCase(@".\private$\dwapi.emr.")]
-        [TestCase(@".\private$\dwapi.emr.concept.")]
+        //[TestCase(@".\private$\dwapi.emr.concept.")]
         public void should_Purge_JournalQueues(string name)
         {
             _allGateways = TestHelpers.GetGateways(name);
@@ -208,8 +212,8 @@ namespace PalladiumDwh.Core.Tests.Services
             }
         }
 
-        //[Order(11)]
-        //[TestCase(@".\private$\dwapi.emr.")]
+        [Order(11)]
+        [TestCase(@".\private$\dwapi.emr.")]
         //[TestCase(@".\private$\dwapi.emr.concept.")]
         public void should_Delete_All_Queues(string name)
         {
