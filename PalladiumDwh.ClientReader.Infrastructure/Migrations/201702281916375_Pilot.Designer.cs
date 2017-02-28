@@ -7,13 +7,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class MysqlInitial : IMigrationMetadata
+    public sealed partial class Pilot : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(MysqlInitial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Pilot));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702230813417_MysqlInitial"; }
+            get { return "201702281916375_Pilot"; }
         }
         
         string IMigrationMetadata.Source

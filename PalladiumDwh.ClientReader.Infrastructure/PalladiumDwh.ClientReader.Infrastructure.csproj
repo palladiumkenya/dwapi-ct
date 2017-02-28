@@ -134,15 +134,17 @@
     <Compile Include="Data\Command\LoadPatientVisitExtractCommand.cs" />
     <Compile Include="Data\Command\LoadPatientExtractCommand.cs" />
     <Compile Include="Data\Command\SyncCommand.cs" />
+    <Compile Include="Data\DWAPIRemoteDBInitializer .cs" />
     <Compile Include="Data\Repository\ProjectRepository.cs" />
     <Compile Include="Data\Repository\ExtractSettingRepository.cs" />
     <Compile Include="Data\Repository\ClientRepository.cs" />
     <Compile Include="Data\Repository\EMRRepository.cs" />
-    <Compile Include="Migrations\201702230813417_MysqlInitial.cs" />
-    <Compile Include="Migrations\201702230813417_MysqlInitial.Designer.cs">
-      <DependentUpon>201702230813417_MysqlInitial.cs</DependentUpon>
+    <Compile Include="Migrations\201702281916375_Pilot.cs" />
+    <Compile Include="Migrations\201702281916375_Pilot.Designer.cs">
+      <DependentUpon>201702281916375_Pilot.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,8 +164,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EmbeddedResource Include="Migrations\201702230813417_MysqlInitial.resx">
-      <DependentUpon>201702230813417_MysqlInitial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702281916375_Pilot.resx">
+      <DependentUpon>201702281916375_Pilot.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

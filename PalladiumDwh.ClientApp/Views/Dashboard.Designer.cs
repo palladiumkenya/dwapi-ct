@@ -187,9 +187,9 @@
             // toolStripStatusLabelDashboard
             // 
             this.toolStripStatusLabelDashboard.Name = "toolStripStatusLabelDashboard";
-            this.toolStripStatusLabelDashboard.Size = new System.Drawing.Size(836, 17);
+            this.toolStripStatusLabelDashboard.Size = new System.Drawing.Size(736, 17);
             this.toolStripStatusLabelDashboard.Spring = true;
-            this.toolStripStatusLabelDashboard.Text = "Ready";
+            this.toolStripStatusLabelDashboard.Text = "Loading...";
             this.toolStripStatusLabelDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStripProgressBarDashboard
