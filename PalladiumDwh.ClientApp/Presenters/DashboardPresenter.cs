@@ -13,6 +13,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
+using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientApp.Presenters
 {
@@ -219,9 +220,9 @@ namespace PalladiumDwh.ClientApp.Presenters
             LoadExtracts(e.Extracts);
         }
 
-        private void View_ExtractSent(object sender, Events.ExtractSentEvent e)
+        private async void View_ExtractSent(object sender, Events.ExtractSentEvent e)
         {
-            SendExtracts();
+            await SendExtractsInParallel();
         }
 
         private void View_ExtractExported(object sender, Events.ExtractExportedEvent e)
@@ -257,6 +258,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             var list = _clientPatientRepository.GetAll(false).ToList();
             var total = list.Count();
             int count = 0;
+            
             foreach (var p in list)
             {
                 count++;
@@ -282,6 +284,44 @@ namespace PalladiumDwh.ClientApp.Presenters
         private void UpdateUi(string message)
         {
             View.Status = $"{message}";
+        }
+
+        public async Task SendExtractsInParallel()
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            View.Status = "sending...";
+            View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
+
+            var list = _clientPatientRepository.GetAll(false).ToList();
+            var total = list.Count();
+            int count = 0;
+
+            foreach (var p in list)
+            {
+                var tasks=new List<Task>();
+
+                count++;
+                var extractsToSend = _profileManager.Generate(p);
+                foreach (var e in extractsToSend)
+                {
+
+                    tasks.Add( _pushService.PushAsync(e));
+
+                    
+                }
+                UpdateUi($"sending Patient Profile {count} of {total}");
+                await Task.WhenAll(tasks.ToArray());
+            }
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            timeTaken += elapsedMs;
+            var msg = $"Send Completed ({count} of {total}) Time: {elapsedMs * 0.001} s !";
+            UpdateUi(msg);
+
+
+            this.View.EventSummaries = new List<string>() { msg, $"Total time taken: {timeTaken * 0.001} s" };
+            View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
         }
 
         #endregion
