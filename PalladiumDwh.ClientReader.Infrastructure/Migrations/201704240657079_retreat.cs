@@ -3,7 +3,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Pilot : DbMigration
+    public partial class retreat : DbMigration
     {
         public override void Up()
         {

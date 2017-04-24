@@ -139,13 +139,9 @@
     <Compile Include="Data\Repository\ExtractSettingRepository.cs" />
     <Compile Include="Data\Repository\ClientRepository.cs" />
     <Compile Include="Data\Repository\EMRRepository.cs" />
-    <Compile Include="Migrations\201702281916375_Pilot.cs" />
-    <Compile Include="Migrations\201702281916375_Pilot.Designer.cs">
-      <DependentUpon>201702281916375_Pilot.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703080644239_mysql.cs" />
-    <Compile Include="Migrations\201703080644239_mysql.Designer.cs">
-      <DependentUpon>201703080644239_mysql.cs</DependentUpon>
+    <Compile Include="Migrations\201704240657079_retreat.cs" />
+    <Compile Include="Migrations\201704240657079_retreat.Designer.cs">
+      <DependentUpon>201704240657079_retreat.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
@@ -168,11 +164,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EmbeddedResource Include="Migrations\201702281916375_Pilot.resx">
-      <DependentUpon>201702281916375_Pilot.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703080644239_mysql.resx">
-      <DependentUpon>201703080644239_mysql.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704240657079_retreat.resx">
+      <DependentUpon>201704240657079_retreat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
