@@ -143,6 +143,10 @@
     <Compile Include="Migrations\201702281916375_Pilot.Designer.cs">
       <DependentUpon>201702281916375_Pilot.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703080644239_mysql.cs" />
+    <Compile Include="Migrations\201703080644239_mysql.Designer.cs">
+      <DependentUpon>201703080644239_mysql.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -166,6 +170,9 @@
     <None Include="App.config" />
     <EmbeddedResource Include="Migrations\201702281916375_Pilot.resx">
       <DependentUpon>201702281916375_Pilot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703080644239_mysql.resx">
+      <DependentUpon>201703080644239_mysql.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

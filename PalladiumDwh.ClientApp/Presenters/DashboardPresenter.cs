@@ -223,6 +223,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         private async void View_ExtractSent(object sender, Events.ExtractSentEvent e)
         {
             await SendExtractsInParallel();
+             //SendExtracts();
         }
 
         private void View_ExtractExported(object sender, Events.ExtractExportedEvent e)
@@ -280,12 +281,6 @@ namespace PalladiumDwh.ClientApp.Presenters
             this.View.EventSummaries = new List<string>() { msg ,$"Total time taken: {timeTaken * 0.001} s" };
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
         }
-
-        private void UpdateUi(string message)
-        {
-            View.Status = $"{message}";
-        }
-
         public async Task SendExtractsInParallel()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -299,16 +294,16 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             foreach (var p in list)
             {
-                var tasks=new List<Task>();
+                var tasks = new List<Task>();
 
                 count++;
                 var extractsToSend = _profileManager.Generate(p);
                 foreach (var e in extractsToSend)
                 {
 
-                    tasks.Add( _pushService.PushAsync(e));
+                    tasks.Add(_pushService.PushAsync(e));
 
-                    
+
                 }
                 UpdateUi($"sending Patient Profile {count} of {total}");
                 await Task.WhenAll(tasks.ToArray());
@@ -323,6 +318,12 @@ namespace PalladiumDwh.ClientApp.Presenters
             this.View.EventSummaries = new List<string>() { msg, $"Total time taken: {timeTaken * 0.001} s" };
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
         }
+        private void UpdateUi(string message)
+        {
+            View.Status = $"{message}";
+        }
+
+        
 
         #endregion
     }

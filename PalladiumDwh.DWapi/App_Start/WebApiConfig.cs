@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using System.Net.Http.Extensions.Compression.Core.Compressors;
 using System.Web.Http;
+using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
 
 namespace PalladiumDwh.DWapi
 {
@@ -22,6 +24,7 @@ namespace PalladiumDwh.DWapi
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+            //config.MessageHandlers.Add( new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
 
             StructuremapWebApi.Start();
         }
