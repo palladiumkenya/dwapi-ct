@@ -9,6 +9,7 @@ using MySql.Data.MySqlClient.Authentication;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
+using PalladiumDwh.ClientReader.Core.Model.Source.Error;
 using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
@@ -57,6 +58,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
         private Task<int> TruncateCommand(string extract)
         {
+            //TODO:Handle Truncate Errors
             _progressValue++;
             var count = GetCommand(extract, "TRUNCATE TABLE").ExecuteNonQueryAsync();
             ShowPercentage(_progressValue);
@@ -65,6 +67,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
         private Task<int> DeleteCommand(string extract)
         {
+            //TODO:Handle Delete Errors
             _progressValue++;
             var count = GetCommand(extract, "DELETE FROM").ExecuteNonQueryAsync();
             ShowPercentage(_progressValue);
@@ -96,15 +99,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                 command.CommandTimeout = 0;
 
                 var count = await Task.WhenAll(
-                    TruncateCommand(nameof(TempPatientExtract)),
-                    TruncateCommand(nameof(TempPatientArtExtract)), TruncateCommand(nameof(TempPatientArtExtract)),
-                    TruncateCommand(nameof(TempPatientBaselinesExtract)),
-                    TruncateCommand(nameof(PatientBaselinesExtract)),
-                    TruncateCommand(nameof(TempPatientStatusExtract)), TruncateCommand(nameof(PatientStatusExtract)),
-                    TruncateCommand(nameof(TempPatientLaboratoryExtract)),
-                    TruncateCommand(nameof(PatientLaboratoryExtract)),
-                    TruncateCommand(nameof(TempPatientPharmacyExtract)), TruncateCommand(nameof(PatientPharmacyExtract)),
-                    TruncateCommand(nameof(TempPatientVisitExtract)), TruncateCommand(nameof(PatientVisitExtract))
+                    TruncateCommand(nameof(TempPatientExtract)), TruncateCommand(nameof(TempPatientExtractError)),
+                    TruncateCommand(nameof(TempPatientArtExtract)), TruncateCommand(nameof(TempPatientArtExtractError)), TruncateCommand(nameof(PatientArtExtract)),
+                    TruncateCommand(nameof(TempPatientBaselinesExtract)), TruncateCommand(nameof(TempPatientBaselinesExtractError)), TruncateCommand(nameof(PatientBaselinesExtract)),
+                    TruncateCommand(nameof(TempPatientStatusExtract)), TruncateCommand(nameof(TempPatientStatusExtractError)), TruncateCommand(nameof(PatientStatusExtract)),
+                    TruncateCommand(nameof(TempPatientLaboratoryExtract)), TruncateCommand(nameof(TempPatientLaboratoryExtractError)), TruncateCommand(nameof(PatientLaboratoryExtract)),
+                    TruncateCommand(nameof(TempPatientPharmacyExtract)), TruncateCommand(nameof(TempPatientPharmacyExtractError)), TruncateCommand(nameof(PatientPharmacyExtract)),
+                    TruncateCommand(nameof(TempPatientVisitExtract)), TruncateCommand(nameof(TempPatientVisitExtractError)), TruncateCommand(nameof(PatientVisitExtract))
                 );
 
 

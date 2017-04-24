@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
+using PalladiumDwh.ClientReader.Core.Model.Source.Error;
 using PalladiumDwh.Shared.Data;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data
@@ -30,6 +31,14 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
         public virtual DbSet<TempPatientPharmacyExtract> TempPatientPharmacyExtracts { get; set; }
         public virtual DbSet<TempPatientStatusExtract> TempPatientStatusExtracts { get; set; }
         public virtual DbSet<TempPatientVisitExtract> TempPatientVisitExtracts { get; set; }
+
+        public virtual DbSet<TempPatientExtractError> TempPatientExtractErrors { get; set; }
+        public virtual DbSet<TempPatientArtExtractError> TempPatientArtExtractErrors { get; set; }
+        public virtual DbSet<TempPatientBaselinesExtractError> TempPatientBaselinesExtractErrors { get; set; }
+        public virtual DbSet<TempPatientLaboratoryExtractError> TempPatientLaboratoryExtractErrors { get; set; }
+        public virtual DbSet<TempPatientPharmacyExtractError> TempPatientPharmacyExtractErrors { get; set; }
+        public virtual DbSet<TempPatientStatusExtractError> TempPatientStatusExtractErrors { get; set; }
+        public virtual DbSet<TempPatientVisitExtractError> TempPatientVisitExtractErrors { get; set; }
 
         public virtual DbSet<ClientFacility> ClientFacilities { get; set; }
 

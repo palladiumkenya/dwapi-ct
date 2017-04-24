@@ -189,6 +189,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             int loaded = 0;
                             var extract = new T();
                             string action = extract.GetAddAction();
+                            string errorAction = extract.GetAddErrorAction();
 
                             while (reader.Read())
                             {
@@ -213,8 +214,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                             await _connection.OpenAsync();
                                         }
                                         var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                        loaded += await _connection.ExecuteAsync(action, extract,tx,0);
-                                        tx.Commit();                                        
+                                        loaded += await _connection.ExecuteAsync(action, extract, tx, 0);
+                                        tx.Commit();
                                     }
                                     else
                                     {
@@ -225,16 +226,27 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                                             if (_connection.State != ConnectionState.Open)
                                             {
-                                              await  _connection.OpenAsync();
+                                                await _connection.OpenAsync();
                                             }
 
                                             var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                            loaded += await _connection.ExecuteAsync(action, extracts, tx,0);
+                                            loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
                                             tx.Commit();
                                             extracts = new List<T>();
                                             count = 0;
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    //TODO:Move to Error Summary
+                                    if (_connection.State != ConnectionState.Open)
+                                    {
+                                        await _connection.OpenAsync();
+                                    }
+                                    var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
+                                    await _connection.ExecuteAsync(errorAction, extract, tx, 0);
+                                    tx.Commit();
                                 }
 
                             }

@@ -143,6 +143,10 @@
     <Compile Include="Migrations\201704240657079_retreat.Designer.cs">
       <DependentUpon>201704240657079_retreat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704240950470_tempExtractErrors.cs" />
+    <Compile Include="Migrations\201704240950470_tempExtractErrors.Designer.cs">
+      <DependentUpon>201704240950470_tempExtractErrors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -166,6 +170,9 @@
     <None Include="App.config" />
     <EmbeddedResource Include="Migrations\201704240657079_retreat.resx">
       <DependentUpon>201704240657079_retreat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704240950470_tempExtractErrors.resx">
+      <DependentUpon>201704240950470_tempExtractErrors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

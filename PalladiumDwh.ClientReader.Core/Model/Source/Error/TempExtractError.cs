@@ -5,15 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
-using PalladiumDwh.ClientReader.Core.Interfaces.Source;
+using PalladiumDwh.ClientReader.Core.Interfaces.Source.Error;
 using PalladiumDwh.Shared.Custom;
 
-namespace PalladiumDwh.ClientReader.Core.Model.Source
+namespace PalladiumDwh.ClientReader.Core.Model.Source.Error
 {
-    public abstract class TempExtract : ITempExtract
+    public abstract class TempExtractError : ITempExtractError
     {
-       
-        
         [Key]
         [DoNotRead]
         public Guid Id { get; set; }
@@ -28,10 +26,10 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         [NotMapped]
         public bool HasError { get; set; }
 
-        protected TempExtract()
+        protected TempExtractError()
         {
             Id=Guid.NewGuid();
-            DateExtracted=DateTime.Now;
+            DateExtracted = DateTime.Now;
         }
 
         //TODO Create default converter in Shared Project
@@ -83,24 +81,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
             return scb.ToString();
         }
 
-        public virtual string GetAddErrorAction()
-        {
-            StringBuilder scb = new StringBuilder();
-            List<string> columns = new List<string>();
-            foreach (var p in GetType().GetProperties())
-            {
-                if (!Attribute.IsDefined(p, typeof(NotMappedAttribute)))
-                    columns.Add(p.Name);
-            }
-
-            if (columns.Count > 1)
-            {
-                scb.Append($" INSERT INTO {GetType().Name}Error ");
-                scb.Append($" ({Utility.GetColumns(columns)}) ");
-                scb.Append($" VALUES({Utility.GetParameters(columns)}) ");
-            }
-
-            return scb.ToString();
-        }
+      
     }
 }
