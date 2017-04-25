@@ -134,7 +134,9 @@ namespace PalladiumDwh.ClientApp.Presenters
         //TODO: consider Parallel processing
         public async void LoadExtracts(List<ExtractSetting> extracts)
         {
-            
+            string logMessages = "Loading EMR extracts";
+            Log.Debug($"{logMessages}...");
+
             var watch = System.Diagnostics.Stopwatch.StartNew();
             View.CanLoadEmr = false;
             View.Status = "initializing loading...";
@@ -142,6 +144,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             int count = 0;
 
             //clear db
+            Log.Debug($"{logMessages} [Clearing database]...");
             await _syncService.InitializeAsync();
 
             //Patient Extract
@@ -149,6 +152,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             foreach (var extract in priorityExtracts)
             {
+                Log.Debug($"{logMessages} [{extract}]...");
                 var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
                 count++;
                 var vm = new ExtractsViewModel(extract) { Status = "loading..." };
@@ -164,6 +168,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                     Status = summary.ToString()
                 };
                 View.UpdateStatus(vm);
+                Log.Debug($"{logMessages} [{extract}] Complete");
             }
 
 
@@ -174,6 +179,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             foreach (var extract in otherExtracts)
             {
+                Log.Debug($"{logMessages} [{extract}]...");
                 var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
                 count++;
                 var vm = new ExtractsViewModel(extract) {Status = "loading..."};
@@ -188,7 +194,9 @@ namespace PalladiumDwh.ClientApp.Presenters
             timeTaken += elapsedMs;
             var msg = $"Load Completed ({count} of {total}) Extracts Time: {elapsedMs*0.001} s !";
             UpdateUi(msg);
-            
+
+            Log.Debug($"{msg}");
+
             this.View.EventSummaries=new List<string>() {msg};
 
             View.CanLoadEmr = true;
