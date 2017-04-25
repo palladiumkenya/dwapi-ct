@@ -25,6 +25,9 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         [DoNotRead]
         public  DateTime DateExtracted { get; set; }
         [DoNotRead]
+        public bool CheckError { get; set; }
+
+        [DoNotRead]
         [NotMapped]
         public bool HasError { get; set; }
 

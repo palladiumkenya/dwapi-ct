@@ -12,6 +12,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Source
         int? FacilityId { get; set; }
         int SiteCode { get; set; }
         DateTime DateExtracted { get; set; }
+        bool CheckError { get; set; }
         bool HasError { get; set; }
         void Load(IDataReader reader);
         Task LoadAsync(IDataReader reader);

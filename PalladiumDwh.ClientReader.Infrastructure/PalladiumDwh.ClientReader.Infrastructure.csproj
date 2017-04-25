@@ -116,6 +116,7 @@
     <Compile Include="Csv\Command\LoadPatientStatusExtractCsvCommand.cs" />
     <Compile Include="Csv\Command\LoadPatientVisitExtractCsvCommand.cs" />
     <Compile Include="Data\Command\ClearExtractsCommand.cs" />
+    <Compile Include="Data\Command\ValidateExtractCommand.cs" />
     <Compile Include="Data\Command\LoadExtractCommand.cs" />
     <Compile Include="Data\Command\SyncPatientArtExtractCommand.cs" />
     <Compile Include="Data\Command\SyncPatientBaselinesExtractCommand.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Data\Command\LoadPatientExtractCommand.cs" />
     <Compile Include="Data\Command\SyncCommand.cs" />
     <Compile Include="Data\DWAPIRemoteDBInitializer .cs" />
+    <Compile Include="Data\Repository\ValidatorRepository.cs" />
     <Compile Include="Data\Repository\ProjectRepository.cs" />
     <Compile Include="Data\Repository\ExtractSettingRepository.cs" />
     <Compile Include="Data\Repository\ClientRepository.cs" />
@@ -146,6 +148,14 @@
     <Compile Include="Migrations\201704240950470_tempExtractErrors.cs" />
     <Compile Include="Migrations\201704240950470_tempExtractErrors.Designer.cs">
       <DependentUpon>201704240950470_tempExtractErrors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704251333120_validations.cs" />
+    <Compile Include="Migrations\201704251333120_validations.Designer.cs">
+      <DependentUpon>201704251333120_validations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704251416047_addcheckerorrFlag.cs" />
+    <Compile Include="Migrations\201704251416047_addcheckerorrFlag.Designer.cs">
+      <DependentUpon>201704251416047_addcheckerorrFlag.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
@@ -174,6 +184,12 @@
     <EmbeddedResource Include="Migrations\201704240950470_tempExtractErrors.resx">
       <DependentUpon>201704240950470_tempExtractErrors.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251333120_validations.resx">
+      <DependentUpon>201704251333120_validations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251416047_addcheckerorrFlag.resx">
+      <DependentUpon>201704251416047_addcheckerorrFlag.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -182,6 +198,9 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <EmbeddedResource Include="Seed\Project.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Seed\Validator.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\Commands\ILoadCsvExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\IClearExtractsCommand.cs" />
+    <Compile Include="Interfaces\Commands\IValidateExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncFacilityCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientVisitExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientStatusExtractCommand.cs" />
@@ -81,6 +82,8 @@
     <Compile Include="Interfaces\IClientExtract.cs" />
     <Compile Include="Interfaces\IReadExtractService.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
+    <Compile Include="Interfaces\IValidationSummary.cs" />
+    <Compile Include="Interfaces\IValidator.cs" />
     <Compile Include="Interfaces\Profiles\IClientExtractProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientARTProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientBaselineProfile.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Interfaces\Profiles\IClientPatientVisitProfile.cs" />
     <Compile Include="Interfaces\Repository\IExtractSettingRepository.cs" />
     <Compile Include="Interfaces\Repository\IEMRRepository.cs" />
+    <Compile Include="Interfaces\Repository\IValidatorRepository.cs" />
     <Compile Include="Interfaces\Repository\IProjectRepository.cs" />
     <Compile Include="Interfaces\Repository\IClientRepository.cs" />
     <Compile Include="Interfaces\Commands\ISyncCommand.cs" />
@@ -166,6 +170,9 @@
     <Compile Include="Model\Source\TempPatientVisitExtract.cs" />
     <Compile Include="Model\Source\TempPatientExtract.cs" />
     <Compile Include="Model\LoadSummary.cs" />
+    <Compile Include="Model\ValidationSummary.cs" />
+    <Compile Include="Model\ValidationError.cs" />
+    <Compile Include="Model\Validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SyncService.cs" />
   </ItemGroup>

@@ -57,6 +57,7 @@
     <Compile Include="Custom\DecimalConverter.cs" />
     <Compile Include="Custom\IntConverter.cs" />
     <Compile Include="Custom\DateConverter.cs" />
+    <Compile Include="Custom\LiveGuid.cs" />
     <Compile Include="Custom\NullDateConverter.cs" />
     <Compile Include="Custom\NullDecimalConverter.cs" />
     <Compile Include="Custom\NullIntConverter.cs" />
