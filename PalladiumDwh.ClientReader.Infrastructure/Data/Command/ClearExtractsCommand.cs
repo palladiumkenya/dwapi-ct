@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using log4net;
 using MySql.Data.MySqlClient.Authentication;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
@@ -16,6 +18,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
     public class ClearExtractsCommand : IClearExtractsCommand
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private readonly IEMRRepository _emrRepository;
         private readonly SqlConnection _connection;
         private IProgress<int> _progress;
@@ -84,6 +88,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
         public async Task<int> ExecuteAsync()
         {
+            Log.Debug($"Executing ClearExtracts command...");
+
             _progressValue = 1;
 
             int totalCount;

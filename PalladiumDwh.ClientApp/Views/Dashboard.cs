@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 using PalladiumDwh.ClientApp.DependencyResolution;
 using PalladiumDwh.ClientApp.Events;
 using PalladiumDwh.ClientApp.Model;
@@ -23,6 +25,8 @@ namespace PalladiumDwh.ClientApp.Views
 {
     public partial class Dashboard : Form,IDashboardView
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private List<ExtractsViewModel> _extracts=new List<ExtractsViewModel>();
 
         private  IProjectRepository _projectRepository;
@@ -178,8 +182,21 @@ namespace PalladiumDwh.ClientApp.Views
             Cursor.Current = Cursors.WaitCursor;
             toolStripProgressBarDashboard.Style=ProgressBarStyle.Marquee;
             //toolStripProgressBarDashboard.MarqueeAnimationSpeed = 10;
-            
-            await StartUp();
+
+            try
+            {
+                await StartUp();
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex);
+                Status = "Startup failure!";
+                ShowErrorMessage($"Startup failure! \n {ex.Message}");
+
+            }
+
+
+
             toolStripProgressBarDashboard.Style = ProgressBarStyle.Continuous;
             Cursor.Current = Cursors.Default;
         }
@@ -323,17 +340,17 @@ namespace PalladiumDwh.ClientApp.Views
             _profileManager = Program.IOC.GetInstance<IProfileManager>();
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
 
-            
-                Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository,
-                    _profileManager, _pushService);
-                Presenter.Initialize();
-                Presenter.InitializeEmrInfo();
-                Presenter.InitializeExtracts();
 
-                await Presenter.LoadEmrInfoAsync();
+            Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository,
+                _profileManager, _pushService);
+            Presenter.Initialize();
+            Presenter.InitializeEmrInfo();
+            Presenter.InitializeExtracts();
 
-                Presenter.LoadExtractSettings();
-            
+            await Presenter.LoadEmrInfoAsync();
+
+            Presenter.LoadExtractSettings();
+
         }
 
         public void ShowPleaseWait()

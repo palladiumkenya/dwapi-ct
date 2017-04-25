@@ -145,7 +145,20 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             //clear db
             Log.Debug($"{logMessages} [Clearing database]...");
-            await _syncService.InitializeAsync();
+            try
+            {
+                await _syncService.InitializeAsync();
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+                string errorMessage = "Error clearing data!";
+                View.ShowErrorMessage($"{errorMessage},{e.Message}");
+                View.Status = "Error clearing data!";
+                View.CanLoadEmr = true;
+                return;                
+            }
+            
 
             //Patient Extract
             var priorityExtracts = extracts.Where(x => x.IsPriority).OrderBy(x => x.Rank);
@@ -155,17 +168,28 @@ namespace PalladiumDwh.ClientApp.Presenters
                 Log.Debug($"{logMessages} [{extract}]...");
                 var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
                 count++;
-                var vm = new ExtractsViewModel(extract) { Status = "loading..." };
+                var vm = new ExtractsViewModel(extract) {Status = "loading..."};
                 View.UpdateStatus(vm);
 
                 //View.Status = $"loading {count}/{total} ({extract.Display}) ...";
                 View.Status = $"loading...";
-                var summary = await _syncService.SyncAsync(extract, progressIndicator);
+
+                RunSummary summary = null;
+
+                try
+                {
+                    summary = await _syncService.SyncAsync(extract, progressIndicator);
+                }
+                catch (Exception e)
+                {
+                    View.ShowErrorMessage(e.Message);
+                    View.Status = "Error loading data! Check logs for details";
+                }
 
                 vm = new ExtractsViewModel(extract)
                 {
-                    Total = summary.SyncSummary.Total,
-                    Status = summary.ToString()
+                    Total = (null == summary ? 0 : summary.SyncSummary.Total),
+                    Status = (null == summary ? "Error loading !" : summary.ToString())
                 };
                 View.UpdateStatus(vm);
                 Log.Debug($"{logMessages} [{extract}] Complete");
@@ -216,13 +240,26 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         private async Task<RunSummary> GetTask(ISyncService service, ExtractSetting extractSetting)
         {
-            var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
-            var summary=await service.SyncAsync(extractSetting, progressIndicator);
+            RunSummary summary = null;
 
-            var vm = new ExtractsViewModel(summary.ExtractSetting)
+            var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
+
+            try
             {
-                Total = summary.SyncSummary.Total,
-                Status = summary.ToString()
+                summary = await service.SyncAsync(extractSetting, progressIndicator);
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+                View.ShowErrorMessage(e.Message);
+                View.Status = "Error loading data! Check logs for details";
+            }
+
+
+            var vm = new ExtractsViewModel(extractSetting)
+            {
+                Total = (null == summary ? 0 : summary.SyncSummary.Total),
+                Status = (null == summary ? "Error loading !": summary.ToString())
             };
             View.UpdateStatus(vm);
 

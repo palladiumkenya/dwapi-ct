@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using Dapper;
+using log4net;
 using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
     public class LoadExtractCommand<T> : ILoadExtractCommand<T> where T : TempExtract, new()
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IEMRRepository _emrRepository;
         private readonly SqlConnection _connection;
@@ -146,11 +149,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         {
             _progress = progressPercent;
             _summary = new LoadSummary();
-            
-            
 
-            string extractName = typeof(T).Name;
-            string commandText = string.Empty;
+            var extractName = typeof(T).Name;
+            var commandText = string.Empty;
+
+            Log.Debug($"Executing load {extractName} command...");
 
             var emr = _emrRepository.GetDefault();
 
@@ -177,7 +180,18 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                 {
                     command.CommandText = commandText;
 
-                    var reader = await GetTask(command);
+                    IDataReader reader;
+
+                    try
+                    {
+                         reader = await GetTask(command);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Debug(e);
+                        throw;
+                    }
+                    
 
                     using (reader)
                     {
@@ -208,14 +222,21 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                                     if (_batchSize == 0)
                                     {
-
-                                        if (_connection.State != ConnectionState.Open)
+                                        try
                                         {
-                                            await _connection.OpenAsync();
+                                            if (_connection.State != ConnectionState.Open)
+                                            {
+                                                await _connection.OpenAsync();
+                                            }
+                                            var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
+                                            loaded += await _connection.ExecuteAsync(action, extract, tx, 0);
+                                            tx.Commit();
                                         }
-                                        var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                        loaded += await _connection.ExecuteAsync(action, extract, tx, 0);
-                                        tx.Commit();
+                                        catch (Exception e)
+                                        {
+                                            Log.Debug(e);
+                                            throw;
+                                        }
                                     }
                                     else
                                     {
@@ -223,15 +244,21 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                                         if (count == _batchSize && _batchSize > 0)
                                         {
-
-                                            if (_connection.State != ConnectionState.Open)
+                                            try
                                             {
-                                                await _connection.OpenAsync();
+                                                if (_connection.State != ConnectionState.Open)
+                                                {
+                                                    await _connection.OpenAsync();
+                                                }
+                                                var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
+                                                loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
+                                                tx.Commit();
                                             }
-
-                                            var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                            loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
-                                            tx.Commit();
+                                            catch (Exception e)
+                                            {
+                                                Log.Debug(e);
+                                                throw;
+                                            }
                                             extracts = new List<T>();
                                             count = 0;
                                         }
@@ -240,28 +267,43 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                 else
                                 {
                                     //TODO:Move to Error Summary
-                                    if (_connection.State != ConnectionState.Open)
+                                    try
                                     {
-                                        await _connection.OpenAsync();
+                                        if (_connection.State != ConnectionState.Open)
+                                        {
+                                            await _connection.OpenAsync();
+                                        }
+                                        var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
+                                        await _connection.ExecuteAsync(errorAction, extract, tx, 0);
+                                        tx.Commit();
                                     }
-                                    var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                    await _connection.ExecuteAsync(errorAction, extract, tx, 0);
-                                    tx.Commit();
+                                    catch (Exception e)
+                                    {
+                                        Log.Debug(e);
+                                        throw;
+                                    }
+                                  
                                 }
 
                             }
 
                             if (extracts.Count > 0)
                             {
-
-                                if (_connection.State != ConnectionState.Open)
+                                try
                                 {
-                                    await _connection.OpenAsync();
+                                    if (_connection.State != ConnectionState.Open)
+                                    {
+                                        await _connection.OpenAsync();
+                                    }
+                                    var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
+                                    loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
+                                    tx.Commit();
                                 }
-                                var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                loaded += await _connection.ExecuteAsync(action, extracts, tx,0);
-                                tx.Commit();
-
+                                catch (Exception e)
+                                {
+                                    Log.Debug(e);
+                                    throw;
+                                }
                             }
 
                             _summary.Loaded = loaded;
