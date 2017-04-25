@@ -39,6 +39,11 @@ namespace PalladiumDwh.ClientApp.Views
          
         }
         public IDashboardPresenter Presenter { get; set; }
+        public void ShowErrorMessage(string message)
+        {
+            MessageBox.Show(message, this.Text,
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
 
         public string Title
         {

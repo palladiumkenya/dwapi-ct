@@ -82,8 +82,23 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public async Task LoadEmrInfoAsync()
         {
+            Log.Debug("Loading default EMR...");
             _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
-            var project = await _projectRepository.GetActiveProjectAsync();
+            Project project = null;
+            try
+            {
+                project = await _projectRepository.GetActiveProjectAsync();
+            }
+            catch (Exception e)
+            {
+                View.ShowErrorMessage(e.Message);
+                View.Status = e.Message;
+            }
+            
+            if(null==project)
+                return;
+            
+
             _emrmodel = EmrViewModel.Create(project);
 
             View.EMR = _emrmodel.EMR;
@@ -102,6 +117,9 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public void LoadExtractSettings()
         {
+            if (null == _emrmodel)
+                return;
+
             var extracts = _emrmodel
                 .ExtractSettings
                 .OrderBy(x => x.Rank)

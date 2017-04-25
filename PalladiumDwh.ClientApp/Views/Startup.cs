@@ -40,6 +40,10 @@ namespace PalladiumDwh.ClientApp.Views
         public string Header { get; set; }
         public string HeaderDescription { get; set; }
         public IStartupPresenter Presenter { get; set; }
+        public void ShowErrorMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
 
         public string Status
         {

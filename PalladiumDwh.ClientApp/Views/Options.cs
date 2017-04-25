@@ -29,6 +29,10 @@ namespace PalladiumDwh.ClientApp.Views
         }
 
         public IOptionPresenter Presenter { get; set; }
+        public void ShowErrorMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
 
         public string Title
         {

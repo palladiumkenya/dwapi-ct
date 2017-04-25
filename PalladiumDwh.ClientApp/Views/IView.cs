@@ -12,5 +12,6 @@ namespace PalladiumDwh.ClientApp.Views
         string Header { get; set; }
         string HeaderDescription { get; set; }
         T Presenter { get; set; }
+        void ShowErrorMessage(string message);
     }
 }

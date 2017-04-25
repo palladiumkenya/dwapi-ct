@@ -36,6 +36,10 @@ namespace PalladiumDwh.ClientApp.Views
         public string HeaderDescription { get; set; }
 
         public IFeedBackPresenter Presenter { get; set; }
+        public void ShowErrorMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
 
 
         public int Phone
