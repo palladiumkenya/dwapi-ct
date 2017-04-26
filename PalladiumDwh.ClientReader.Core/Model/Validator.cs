@@ -28,19 +28,40 @@ namespace PalladiumDwh.ClientReader.Core.Model
             if (Type.ToLower() != "Complex".ToLower())
             {
                 selectSql =
-                    $"SELECT NEWID() as Id,'{Id}',Id as RecordId,GETDATE() as DateGenerated  FROM {Extract} WHERE {Logic}";
+                    $@" 
+                        SELECT 
+                            NEWID() as Id,'{Id}',Id as RecordId,GETDATE() as DateGenerated  
+                        FROM 
+                            {Extract} 
+                        WHERE 
+                            {Logic}
+                    ";
             }
 
             var sql = $"{GenerateInsert()} " +
-                      $"{selectSql}";
+                      $"{selectSql} " +
+                      $"{GenerateUpdateError()} ";
 
             return sql;
         }
 
         private string GenerateInsert()
         {
-            return $"INSERT INTO ValidationError" +
-                   $"    (Id,ValidatorId,RecordId,DateGenerated) ";
+            return $@" 
+                    INSERT INTO ValidationError
+                        (Id,ValidatorId,RecordId,DateGenerated) ";
+        }
+
+        private string GenerateUpdateError()
+        {
+            return $@"
+                    UPDATE 
+                        {Extract} 
+                    SET 
+                        CheckError=1 
+                    WHERE 
+                        Id IN (SELECT RecordId FROM ValidationError  where ValidatorId='{Id}')";
+
         }
     }
 }

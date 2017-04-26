@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
@@ -10,6 +11,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
     public class SyncService : ISyncService
     {
         private readonly IClearExtractsCommand _clearExtractsCommand;
+
         private readonly ILoadPatientExtractCommand _loadPatientExtractCommand;
         private readonly ILoadPatientArtExtractCommand _loadPatientArtExtractCommand;
         private readonly ILoadPatientBaselinesExtractCommand _loadPatientBaselinesExtractCommand;
@@ -18,6 +20,14 @@ namespace PalladiumDwh.ClientReader.Core.Services
         private readonly ILoadPatientStatusExtractCommand _loadPatientStatusExtractCommand;
         private readonly ILoadPatientVisitExtractCommand _loadPatientVisitExtractCommand;
 
+        private readonly IValidatePatientExtractCommand _validatePatientExtractCommand;
+        private readonly IValidatePatientArtExtractCommand _validatePatientArtExtractCommand;
+        private readonly IValidatePatientBaselinesExtractCommand _validatePatientBaselinesExtractCommand;
+        private readonly IValidatePatientLaboratoryExtractCommand _validatePatientLaboratoryExtractCommand;
+        private readonly IValidatePatientPharmacyExtractCommand _validatePatientPharmacyExtractCommand;
+        private readonly IValidatePatientStatusExtractCommand _validatePatientStatusExtractCommand;
+        private readonly IValidatePatientVisitExtractCommand _validatePatientVisitExtractCommand;
+
         private readonly ISyncPatientExtractCommand _syncPatientExtractCommand;
         private readonly ISyncPatientArtExtractCommand _syncPatientArtExtractCommand;
         private readonly ISyncPatientBaselinesExtractCommand _syncPatientBaselinesExtractCommand;
@@ -25,9 +35,10 @@ namespace PalladiumDwh.ClientReader.Core.Services
         private readonly ISyncPatientPharmacyExtractCommand _syncPatientPharmacyExtractCommand;
         private readonly ISyncPatientVisitExtractCommand _syncPatientVisitExtractCommand;
         private readonly ISyncPatientStatusExtractCommand _syncPatientStatusExtractCommand;
+
         private SyncSummary _summary;
 
-        public SyncService(IClearExtractsCommand clearExtractsCommand, 
+        public SyncService(IClearExtractsCommand clearExtractsCommand,
             ILoadPatientExtractCommand loadPatientExtractCommand,
             ILoadPatientArtExtractCommand loadPatientArtExtractCommand,
             ILoadPatientBaselinesExtractCommand loadPatientBaselinesExtractCommand,
@@ -35,6 +46,13 @@ namespace PalladiumDwh.ClientReader.Core.Services
             ILoadPatientPharmacyExtractCommand loadPatientPharmacyExtractCommand,
             ILoadPatientStatusExtractCommand loadPatientStatusExtractCommand,
             ILoadPatientVisitExtractCommand loadPatientVisitExtractCommand,
+            IValidatePatientExtractCommand validatePatientExtractCommand,
+            IValidatePatientArtExtractCommand validatePatientArtExtractCommand,
+            IValidatePatientBaselinesExtractCommand validatePatientBaselinesExtractCommand,
+            IValidatePatientLaboratoryExtractCommand validatePatientLaboratoryExtractCommand,
+            IValidatePatientPharmacyExtractCommand validatePatientPharmacyExtractCommand,
+            IValidatePatientStatusExtractCommand validatePatientStatusExtractCommand,
+            IValidatePatientVisitExtractCommand validatePatientVisitExtractCommand,
             ISyncPatientExtractCommand syncPatientExtractCommand,
             ISyncPatientArtExtractCommand syncPatientArtExtractCommand,
             ISyncPatientBaselinesExtractCommand syncPatientBaselinesExtractCommand,
@@ -44,6 +62,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             ISyncPatientStatusExtractCommand syncPatientStatusExtractCommand)
         {
             _clearExtractsCommand = clearExtractsCommand;
+
             _loadPatientExtractCommand = loadPatientExtractCommand;
             _loadPatientArtExtractCommand = loadPatientArtExtractCommand;
             _loadPatientBaselinesExtractCommand = loadPatientBaselinesExtractCommand;
@@ -51,6 +70,14 @@ namespace PalladiumDwh.ClientReader.Core.Services
             _loadPatientPharmacyExtractCommand = loadPatientPharmacyExtractCommand;
             _loadPatientStatusExtractCommand = loadPatientStatusExtractCommand;
             _loadPatientVisitExtractCommand = loadPatientVisitExtractCommand;
+
+            _validatePatientExtractCommand = validatePatientExtractCommand;
+            _validatePatientArtExtractCommand = validatePatientArtExtractCommand;
+            _validatePatientBaselinesExtractCommand = validatePatientBaselinesExtractCommand;
+            _validatePatientLaboratoryExtractCommand = validatePatientLaboratoryExtractCommand;
+            _validatePatientPharmacyExtractCommand = validatePatientPharmacyExtractCommand;
+            _validatePatientStatusExtractCommand = validatePatientStatusExtractCommand;
+            _validatePatientVisitExtractCommand = validatePatientVisitExtractCommand;
 
             _syncPatientExtractCommand = syncPatientExtractCommand;
             _syncPatientArtExtractCommand = syncPatientArtExtractCommand;
@@ -60,7 +87,6 @@ namespace PalladiumDwh.ClientReader.Core.Services
             _syncPatientVisitExtractCommand = syncPatientVisitExtractCommand;
             _syncPatientStatusExtractCommand = syncPatientStatusExtractCommand;
         }
-
 
         public void Initialize()
         {
@@ -145,11 +171,12 @@ namespace PalladiumDwh.ClientReader.Core.Services
         public async Task<RunSummary> SyncAsync(ExtractSetting extract, Progress<ProcessStatus> progressPercent = null)
         {
 
-            var summary = new RunSummary { ExtractSetting = extract };
+            var summary = new RunSummary {ExtractSetting = extract};
 
             if (extract.Destination == nameof(TempPatientExtract))
             {
                 summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync(progressPercent);
+                summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
             }
 
@@ -157,6 +184,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             if (extract.Destination == nameof(TempPatientArtExtract))
             {
                 summary.LoadSummary = await _loadPatientArtExtractCommand.ExecuteAsync(progressPercent);
+                summary.ValidationSummary = await _validatePatientArtExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientArtExtractCommand.ExecuteAsync();
             }
 
@@ -164,12 +192,14 @@ namespace PalladiumDwh.ClientReader.Core.Services
             if (extract.Destination == nameof(TempPatientBaselinesExtract))
             {
                 summary.LoadSummary = await _loadPatientBaselinesExtractCommand.ExecuteAsync(progressPercent);
+                summary.ValidationSummary = await _validatePatientBaselinesExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientBaselinesExtractCommand.ExecuteAsync();
             }
 
             if (extract.Destination == nameof(TempPatientStatusExtract))
             {
                 summary.LoadSummary = await _loadPatientStatusExtractCommand.ExecuteAsync(progressPercent);
+                summary.ValidationSummary = await _validatePatientStatusExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientStatusExtractCommand.ExecuteAsync();
 
             }
@@ -178,6 +208,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             if (extract.Destination == nameof(TempPatientVisitExtract))
             {
                 summary.LoadSummary = await _loadPatientVisitExtractCommand.ExecuteAsync(progressPercent);
+                summary.ValidationSummary = await _validatePatientVisitExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientVisitExtractCommand.ExecuteAsync();
             }
 
@@ -185,6 +216,8 @@ namespace PalladiumDwh.ClientReader.Core.Services
             if (extract.Destination == nameof(TempPatientLaboratoryExtract))
             {
                 summary.LoadSummary = await _loadPatientLaboratoryExtractCommand.ExecuteAsync(progressPercent);
+                summary.ValidationSummary =
+                    await _validatePatientLaboratoryExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientLaboratoryExtractCommand.ExecuteAsync();
             }
 
@@ -192,10 +225,9 @@ namespace PalladiumDwh.ClientReader.Core.Services
             if (extract.Destination == nameof(TempPatientPharmacyExtract))
             {
                 summary.LoadSummary = await _loadPatientPharmacyExtractCommand.ExecuteAsync(progressPercent);
+                summary.ValidationSummary = await _validatePatientPharmacyExtractCommand.ExecuteAsync(progressPercent);
                 summary.SyncSummary = await _syncPatientPharmacyExtractCommand.ExecuteAsync();
             }
-
-
 
             return summary;
         }
@@ -203,8 +235,12 @@ namespace PalladiumDwh.ClientReader.Core.Services
         public void SyncAll()
         {
             _clearExtractsCommand.Execute();
-            SyncPatients();SynPatientsArt();SynPatientsBaselines();
-            SynPatientsLab();SynPatientsPharmacy();SynPatientsVisits();
+            SyncPatients();
+            SynPatientsArt();
+            SynPatientsBaselines();
+            SynPatientsLab();
+            SynPatientsPharmacy();
+            SynPatientsVisits();
             SynPatientsStatus();
 
         }
@@ -250,6 +286,83 @@ namespace PalladiumDwh.ClientReader.Core.Services
         {
             _loadPatientVisitExtractCommand.Execute();
             _syncPatientVisitExtractCommand.Execute();
+        }
+
+        public async Task<RunSummary> SyncPatientsAsync()
+        {
+            var summary = new RunSummary();
+
+            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
+            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
+            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+
+            return summary;
+        }
+
+        public async Task<RunSummary> SynPatientsArtAsync()
+        {
+            var summary = new RunSummary();
+
+            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
+            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
+            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+
+            return summary;
+        }
+
+        public async Task<RunSummary> SynPatientsBaselinesAsync()
+        {
+            var summary = new RunSummary();
+
+            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
+            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
+            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+
+            return summary;
+        }
+
+        public async Task<RunSummary> SynPatientsStatusAsync()
+        {
+            var summary = new RunSummary();
+
+            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
+            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
+            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+
+            return summary;
+        }
+
+        public async Task<RunSummary> SynPatientsPharmacyAsync()
+        {
+            var summary = new RunSummary();
+
+            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
+            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
+            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+
+            return summary;
+        }
+
+        public async Task<RunSummary> SynPatientsLabAsync()
+        {
+            var summary = new RunSummary();
+
+            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
+            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
+            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+
+            return summary;
+        }
+
+        public async Task<RunSummary> SynPatientsVisitsAsync()
+        {
+            var summary = new RunSummary();
+
+            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
+            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
+            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+
+            return summary;
         }
     }
 }

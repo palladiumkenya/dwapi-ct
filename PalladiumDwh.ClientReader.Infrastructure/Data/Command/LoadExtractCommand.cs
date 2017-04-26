@@ -40,7 +40,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         public virtual void Execute()
         {
             _summary = new LoadSummary();
-              
+
             string extractName = typeof(T).Name;
             string commandText = string.Empty;
 
@@ -84,40 +84,39 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                                 extract = new T();
                                 extract.Load(reader);
-                                if (!extract.HasError)
-                                {
-                                    loaded++;
 
-                                    if (_batchSize == 0)
+                                loaded++;
+
+                                if (_batchSize == 0)
+                                {
+
+                                    if (_connection.State != ConnectionState.Open)
+                                    {
+                                        _connection.Open();
+                                    }
+                                    _connection.Execute(action, extract);
+                                }
+                                else
+                                {
+                                    extracts.Add(extract);
+
+                                    if (count == _batchSize && _batchSize > 0)
                                     {
 
                                         if (_connection.State != ConnectionState.Open)
                                         {
                                             _connection.Open();
                                         }
-                                        _connection.Execute(action, extract);
-                                    }
-                                    else
-                                    {
-                                        extracts.Add(extract);
 
-                                        if (count == _batchSize && _batchSize > 0)
-                                        {
+                                        var tx = _connection.BeginTransaction();
+                                        _connection.Execute(action, extracts, tx);
+                                        tx.Commit();
 
-                                            if (_connection.State != ConnectionState.Open)
-                                            {
-                                                _connection.Open();
-                                            }
-
-                                            var tx = _connection.BeginTransaction();
-                                            _connection.Execute(action, extracts, tx);
-                                            tx.Commit();
-
-                                            extracts = new List<T>();
-                                            count = 0;
-                                        }
+                                        extracts = new List<T>();
+                                        count = 0;
                                     }
                                 }
+
 
                             }
 
@@ -159,7 +158,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             if (null == emr) throw new Exception($"No Default EMR Setup !");
 
             _extractSetting = emr.GetActiveExtractSetting($"{extractName}");
-            
+
             if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
 
             commandText = _extractSetting.ExtractSql;
@@ -183,14 +182,14 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                     try
                     {
-                         reader = await GetTask(command);
+                        reader = await GetTask(command);
                     }
                     catch (Exception e)
                     {
                         Log.Debug(e);
                         throw;
                     }
-                    
+
 
                     using (reader)
                     {
@@ -202,7 +201,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             int loaded = 0;
                             var extract = new T();
                             string action = extract.GetAddAction();
-                            string errorAction = extract.GetAddErrorAction();
+                            
 
                             while (reader.Read())
                             {
@@ -215,11 +214,31 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                 extract = new T();
                                 await extract.LoadAsync(reader);
 
-                                if (!extract.HasError)
-                                {
-                                    //loaded++;
+                                //loaded++;
 
-                                    if (_batchSize == 0)
+                                if (_batchSize == 0)
+                                {
+                                    try
+                                    {
+                                        if (_connection.State != ConnectionState.Open)
+                                        {
+                                            await _connection.OpenAsync();
+                                        }
+                                        var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
+                                        loaded += await _connection.ExecuteAsync(action, extract, tx, 0);
+                                        tx.Commit();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Log.Debug(e);
+                                        throw;
+                                    }
+                                }
+                                else
+                                {
+                                    extracts.Add(extract);
+
+                                    if (count == _batchSize && _batchSize > 0)
                                     {
                                         try
                                         {
@@ -228,7 +247,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                                 await _connection.OpenAsync();
                                             }
                                             var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                            loaded += await _connection.ExecuteAsync(action, extract, tx, 0);
+                                            loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
                                             tx.Commit();
                                         }
                                         catch (Exception e)
@@ -236,53 +255,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                             Log.Debug(e);
                                             throw;
                                         }
+                                        extracts = new List<T>();
+                                        count = 0;
                                     }
-                                    else
-                                    {
-                                        extracts.Add(extract);
+                                }
 
-                                        if (count == _batchSize && _batchSize > 0)
-                                        {
-                                            try
-                                            {
-                                                if (_connection.State != ConnectionState.Open)
-                                                {
-                                                    await _connection.OpenAsync();
-                                                }
-                                                var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                                loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
-                                                tx.Commit();
-                                            }
-                                            catch (Exception e)
-                                            {
-                                                Log.Debug(e);
-                                                throw;
-                                            }
-                                            extracts = new List<T>();
-                                            count = 0;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    //TODO:Move to Error Summary
-                                    try
-                                    {
-                                        if (_connection.State != ConnectionState.Open)
-                                        {
-                                            await _connection.OpenAsync();
-                                        }
-                                        var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                        await _connection.ExecuteAsync(errorAction, extract, tx, 0);
-                                        tx.Commit();
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Log.Debug(e);
-                                        throw;
-                                    }
-                                  
-                                }
 
                             }
 
@@ -315,6 +292,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             }
             return _summary;
         }
+
         private void ShowPercentage(int progress)
         {
             if (null == _progress)

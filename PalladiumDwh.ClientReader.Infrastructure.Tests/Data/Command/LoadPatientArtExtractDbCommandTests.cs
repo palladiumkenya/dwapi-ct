@@ -14,8 +14,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
     public class LoadPatientArtExtractDbCommandTests
     {
         private DwapiRemoteContext _context;
-        private ILoadPatientArtExtractCommand _extractCommand;
-        
+        private ILoadPatientArtExtractCommand _extractCommand;       
 
         [SetUp]
         public void SetUp()
@@ -27,7 +26,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 
       
         [Test]
-        public void should_Execute_For_MSSQL()
+        public void should_Execute_Load_PatientArtExtract_DbCommand()
         {
             _extractCommand.Execute();
             var records = _context.Database

@@ -11,7 +11,7 @@ using MySql.Data.MySqlClient.Authentication;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
-using PalladiumDwh.ClientReader.Core.Model.Source.Error;
+
 using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
@@ -39,7 +39,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             {
                 if (_connection.State != ConnectionState.Open)
                 {
-                    _connection.Open(); 
+                    _connection.Open();
                 }
 
                 using (var command = _connection.CreateCommand())
@@ -105,13 +105,16 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                 command.CommandTimeout = 0;
 
                 var count = await Task.WhenAll(
-                    TruncateCommand(nameof(TempPatientExtract)), TruncateCommand(nameof(TempPatientExtractError)),
-                    TruncateCommand(nameof(TempPatientArtExtract)), TruncateCommand(nameof(TempPatientArtExtractError)), TruncateCommand(nameof(PatientArtExtract)),
-                    TruncateCommand(nameof(TempPatientBaselinesExtract)), TruncateCommand(nameof(TempPatientBaselinesExtractError)), TruncateCommand(nameof(PatientBaselinesExtract)),
-                    TruncateCommand(nameof(TempPatientStatusExtract)), TruncateCommand(nameof(TempPatientStatusExtractError)), TruncateCommand(nameof(PatientStatusExtract)),
-                    TruncateCommand(nameof(TempPatientLaboratoryExtract)), TruncateCommand(nameof(TempPatientLaboratoryExtractError)), TruncateCommand(nameof(PatientLaboratoryExtract)),
-                    TruncateCommand(nameof(TempPatientPharmacyExtract)), TruncateCommand(nameof(TempPatientPharmacyExtractError)), TruncateCommand(nameof(PatientPharmacyExtract)),
-                    TruncateCommand(nameof(TempPatientVisitExtract)), TruncateCommand(nameof(TempPatientVisitExtractError)), TruncateCommand(nameof(PatientVisitExtract))
+                    TruncateCommand(nameof(TempPatientExtract)),
+                    TruncateCommand(nameof(TempPatientArtExtract)), TruncateCommand(nameof(PatientArtExtract)),
+                    TruncateCommand(nameof(TempPatientBaselinesExtract)),
+                    TruncateCommand(nameof(PatientBaselinesExtract)),
+                    TruncateCommand(nameof(TempPatientStatusExtract)), TruncateCommand(nameof(PatientStatusExtract)),
+                    TruncateCommand(nameof(TempPatientLaboratoryExtract)),
+                    TruncateCommand(nameof(PatientLaboratoryExtract)),
+                    TruncateCommand(nameof(TempPatientPharmacyExtract)),
+                    TruncateCommand(nameof(PatientPharmacyExtract)),
+                    TruncateCommand(nameof(TempPatientVisitExtract)), TruncateCommand(nameof(PatientVisitExtract))
                 );
 
 

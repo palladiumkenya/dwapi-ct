@@ -130,6 +130,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
 	            FROM {source}) AS i ON p.Id = i.Id
             WHERE        
 	            (i.RW = 1))xx
+            WHERE xx.CheckError = 0
             ";
             return base.GetAddAction(sql, false);
         }

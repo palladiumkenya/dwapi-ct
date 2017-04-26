@@ -27,7 +27,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 
       
         [Test]
-        public void should_Execute_For_MSSQL()
+        public void should_Execute_Validate_PatientArtExtract_DbCommand()
         {
             var result = new LoadPatientExtractCommand(new EMRRepository(_context)).ExecuteAsync().Result;
             _context.Database.ExecuteSqlCommand("UPDATE TempPatientArtExtract SET Gender=NULL,DOB=NULL;");
@@ -36,11 +36,17 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 
             var summary = _extractCommand.ExecuteAsync().Result;
             watch.Stop();
-            var records = _context.Database
+            var errorRecords = _context.Database
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM ValidationError")
                 .Single();
 
+            var records = _context.Database
+                .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientArtExtract WHERE CheckError=1")
+                .Single();
+
             Assert.IsTrue(records > 0);
+            Assert.IsTrue(errorRecords > 0);
+            
 
             var elapsedMs = watch.ElapsedMilliseconds;
             Console.WriteLine($"Validated {records} records! in {elapsedMs}ms ({elapsedMs / 1000}s)");

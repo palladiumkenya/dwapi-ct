@@ -35,6 +35,14 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         private ILoadPatientStatusExtractCommand _loadPatientStatusExtractCommand;
         private ILoadPatientVisitExtractCommand _loadPatientVisitExtractCommand;
 
+        private IValidatePatientExtractCommand _validatePatientExtractCommand;
+        private IValidatePatientArtExtractCommand _validatePatientArtExtractCommand;
+        private IValidatePatientBaselinesExtractCommand _validatePatientBaselinesExtractCommand;
+        private IValidatePatientLaboratoryExtractCommand _validatePatientLaboratoryExtractCommand;
+        private IValidatePatientPharmacyExtractCommand _validatePatientPharmacyExtractCommand;
+        private IValidatePatientStatusExtractCommand _validatePatientStatusExtractCommand;
+        private IValidatePatientVisitExtractCommand _validatePatientVisitExtractCommand;
+
         private ISyncPatientExtractCommand _syncPatientExtractCommand;
         private ISyncPatientArtExtractCommand _syncPatientArtExtractCommand;
         private ISyncPatientBaselinesExtractCommand _syncPatientBaselinesExtractCommand;
@@ -50,6 +58,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         {
             _context = new DwapiRemoteContext();
             _clearExtractsCommand=new ClearExtractsCommand(new EMRRepository(_context));
+
             _loadPatientExtractCommand = new LoadPatientExtractCommand(new EMRRepository(_context));
             _loadPatientArtExtractCommand = new LoadPatientArtExtractCommand(new EMRRepository(_context));
             _loadPatientBaselinesExtractCommand = new LoadPatientBaselinesExtractCommand(new EMRRepository(_context));
@@ -57,6 +66,14 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _loadPatientPharmacyExtractCommand = new LoadPatientPharmacyExtractCommand(new EMRRepository(_context));
             _loadPatientVisitExtractCommand = new LoadPatientVisitExtractCommand(new EMRRepository(_context));
             _loadPatientStatusExtractCommand = new LoadPatientStatusExtractCommand(new EMRRepository(_context));
+
+            _validatePatientExtractCommand = new ValidatePatientExtractCommand(new EMRRepository(_context),new ValidatorRepository(_context));
+            _validatePatientArtExtractCommand = new ValidatePatientArtExtractCommand(new EMRRepository(_context), new ValidatorRepository(_context));
+            _validatePatientBaselinesExtractCommand = new ValidatePatientBaselinesExtractCommand(new EMRRepository(_context), new ValidatorRepository(_context));
+            _validatePatientLaboratoryExtractCommand = new ValidatePatientLaboratoryExtractCommand(new EMRRepository(_context), new ValidatorRepository(_context));
+            _validatePatientPharmacyExtractCommand = new ValidatePatientPharmacyExtractCommand(new EMRRepository(_context), new ValidatorRepository(_context));
+            _validatePatientVisitExtractCommand = new ValidatePatientVisitExtractCommand(new EMRRepository(_context), new ValidatorRepository(_context));
+            _validatePatientStatusExtractCommand = new ValidatePatientStatusExtractCommand(new EMRRepository(_context), new ValidatorRepository(_context));
 
             _syncPatientExtractCommand = new SyncPatientExtractCommand(new EMRRepository(_context));
             _syncPatientArtExtractCommand = new SyncPatientArtExtractCommand(new EMRRepository(_context));
@@ -68,13 +85,9 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
 
             _syncService = new SyncService(
                 _clearExtractsCommand,
-                _loadPatientExtractCommand, _loadPatientArtExtractCommand, _loadPatientBaselinesExtractCommand,
-                _loadPatientLaboratoryExtractCommand, _loadPatientPharmacyExtractCommand,
-                _loadPatientStatusExtractCommand, _loadPatientVisitExtractCommand,
-                _syncPatientExtractCommand, _syncPatientArtExtractCommand, _syncPatientBaselinesExtractCommand,
-                _syncPatientLaboratoryExtractCommand, _syncPatientPharmacyExtractCommand,
-                _syncPatientVisitExtractCommand, _syncPatientStatusExtractCommand);
-
+                _loadPatientExtractCommand, _loadPatientArtExtractCommand, _loadPatientBaselinesExtractCommand,_loadPatientLaboratoryExtractCommand, _loadPatientPharmacyExtractCommand,_loadPatientStatusExtractCommand, _loadPatientVisitExtractCommand,
+                _validatePatientExtractCommand,_validatePatientArtExtractCommand,_validatePatientBaselinesExtractCommand,_validatePatientLaboratoryExtractCommand,_validatePatientPharmacyExtractCommand,_validatePatientStatusExtractCommand,_validatePatientVisitExtractCommand,_syncPatientExtractCommand, _syncPatientArtExtractCommand, 
+                _syncPatientBaselinesExtractCommand,_syncPatientLaboratoryExtractCommand, _syncPatientPharmacyExtractCommand,_syncPatientVisitExtractCommand, _syncPatientStatusExtractCommand);
 
             
 
@@ -134,6 +147,15 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _syncService.SyncPatients();
 
              var extracts = _context.ClientPatientExtracts.Count();
+            Assert.IsTrue(extracts > 0);
+        }
+
+        [Test]
+        public void should_SyncPatientsAsync()
+        {
+            var summary = _syncService.SyncPatientsAsync().Result;
+
+            var extracts = _context.ClientPatientExtracts.Count();
             Assert.IsTrue(extracts > 0);
         }
 

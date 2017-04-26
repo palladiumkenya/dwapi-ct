@@ -29,7 +29,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         }
 
         [Test]
-        public void should_Execute_For_MSSQL()
+        public void should_Execute_Load_PatientStatusExtract_DbCommand()
         {
             _extractCommand.Execute();
             var records = _context.Database

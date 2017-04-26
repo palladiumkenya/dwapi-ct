@@ -30,7 +30,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         }
 
         [Test]
-        public void should_Execute_For_MSSQ0L()
+        public void should_Execute_Load_PatientLaboratoryExtract_DbCommand()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             _extractCommand.Execute();

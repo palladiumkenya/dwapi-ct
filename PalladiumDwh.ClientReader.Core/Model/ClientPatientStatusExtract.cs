@@ -41,9 +41,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             ExitReason = extract.ExitReason;
             Emr = extract.Emr;
             Project = extract.Project;
-
         }
-
-     
+    
     }
 }

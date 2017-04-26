@@ -18,5 +18,13 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         void SynPatientsPharmacy();
         void SynPatientsLab();
         void SynPatientsVisits();
+
+        Task<RunSummary> SyncPatientsAsync();
+        Task<RunSummary> SynPatientsArtAsync();
+        Task<RunSummary> SynPatientsBaselinesAsync();
+        Task<RunSummary> SynPatientsStatusAsync();
+        Task<RunSummary> SynPatientsPharmacyAsync();
+        Task<RunSummary> SynPatientsLabAsync();
+        Task<RunSummary> SynPatientsVisitsAsync();
     }
 }

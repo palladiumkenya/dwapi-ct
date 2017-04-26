@@ -57,12 +57,14 @@ namespace PalladiumDwh.ClientReader.Core.Model
                     scb.Append($" SELECT {Utility.GetColumns(columns, "s")} FROM {source} s"); //TEMPART
                     scb.Append($" INNER JOIN PatientExtract p ON ");
                     scb.Append($" s.PatientPK = p.PatientPK AND ");
-                    scb.Append($" s.SiteCode = p.SiteCode");
+                    scb.Append($" s.SiteCode = p.SiteCode ");
+                    scb.Append($" WHERE s.CheckError = 0");
+
                 }
                 else
                 {
                     scb.Append($" ({Utility.GetColumns(columns)}) ");
-                    scb.Append($" SELECT {Utility.GetColumns(columns)} FROM {source}"); //TEMPART
+                    scb.Append($" SELECT {Utility.GetColumns(columns)} FROM {source} "); //TEMPART
                 }
             }
             return scb.ToString();

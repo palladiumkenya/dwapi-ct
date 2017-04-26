@@ -26,7 +26,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 
       
         [Test]
-        public void should_Execute()
+        public void should_Execute_ClearExtracts_Command()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             _extractCommand.Execute();
@@ -43,7 +43,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         }
 
         [Test]
-        public void should_Execute_Async()
+        public void should_Execute_ClearExtracts_Command_Async()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var deletedrecords=_extractCommand.ExecuteAsync().Result;

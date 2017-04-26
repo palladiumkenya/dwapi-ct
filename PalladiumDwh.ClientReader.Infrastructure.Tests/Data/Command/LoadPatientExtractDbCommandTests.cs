@@ -13,11 +13,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
     public class LoadPatientExtractDbCommandTests
     {
-        private DwapiRemoteContext _context;
-        
+        private DwapiRemoteContext _context;       
         private ILoadPatientExtractCommand _extractCommand;
         
-
         [SetUp]
         public void SetUp()
         {
@@ -27,7 +25,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         }
 
         [Test]
-        public void should_Execute_For_MSSQL()
+        public void should_Execute_Load_PatientExtract_DbCommand()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             _extractCommand.Execute();
@@ -35,13 +33,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
             var records = _context.Database
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientExtract")
                 .Single();
-            
+          
             Assert.IsTrue(records>0);
-
             
             var elapsedMs = watch.ElapsedMilliseconds;
             Console.WriteLine($"Loaded {records} records! in {elapsedMs}ms ({elapsedMs/1000}s)");
-
         }
 
         [TearDown]

@@ -77,39 +77,38 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                         }
 
 
-                        if (!extract.HasError)
+
+                        loaded++;
+                        _summary.Loaded = loaded;
+                        if (BatchSize == 0)
                         {
-                            loaded++;
-                            _summary.Loaded = loaded;
-                            if (BatchSize == 0)
+                            if (CleintConnection.State != ConnectionState.Open)
                             {
+                                CleintConnection.Open();
+                            }
+                            CleintConnection.Execute(action, extract);
+                        }
+                        else
+                        {
+                            extracts.Add(extract);
+
+                            if (count == BatchSize && BatchSize > 0)
+                            {
+
                                 if (CleintConnection.State != ConnectionState.Open)
                                 {
                                     CleintConnection.Open();
                                 }
-                                CleintConnection.Execute(action, extract);
-                            }
-                            else
-                            {
-                                extracts.Add(extract);
 
-                                if (count == BatchSize && BatchSize > 0)
-                                {
+                                var tx = CleintConnection.BeginTransaction();
+                                CleintConnection.Execute(action, extracts, tx);
+                                tx.Commit();
 
-                                    if (CleintConnection.State != ConnectionState.Open)
-                                    {
-                                        CleintConnection.Open();
-                                    }
-
-                                    var tx = CleintConnection.BeginTransaction();
-                                    CleintConnection.Execute(action, extracts, tx);
-                                    tx.Commit();
-
-                                    extracts = new List<T>();
-                                    count = 0;
-                                }
+                                extracts = new List<T>();
+                                count = 0;
                             }
                         }
+
 
                     }
 
