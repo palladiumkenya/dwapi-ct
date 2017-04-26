@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PalladiumDwh.ClientValidator.Core.Interfaces
+namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
     public interface IValidator
     {
@@ -10,5 +10,6 @@ namespace PalladiumDwh.ClientValidator.Core.Interfaces
         string Type { get; set; }
         string Logic { get; set; }
         string Summary { get; set; }
+        string GenerateValidateSql();
     }
 }

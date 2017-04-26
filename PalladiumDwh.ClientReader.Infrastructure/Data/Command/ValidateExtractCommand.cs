@@ -54,26 +54,28 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
             _validators = _validatorRepository.GetByExtract(extractName).ToList();
 
-            ShowPercentage(1);
+            ShowPercentage(1,1);
 
-            using (_emrConnection)
+            using (_connection)
             {
-                if (_emrConnection.State != ConnectionState.Open)
+                if (_connection.State != ConnectionState.Open)
                 {
-                    _emrConnection.Open();
+                    _connection.Open();
                 }
+
+                int totalcount = _validators.Count;
+                int count = 0;
+                int loaded = 0;
 
                 foreach (var v in _validators)
                 {
-                    using (var command = _emrConnection.CreateCommand())
+                    using (var command = _connection.CreateCommand())
                     {
-                        command.CommandText = v.GenerateValidateSQL();
-
-                        IDataReader reader;
+                        command.CommandText = v.GenerateValidateSql();
 
                         try
                         {
-                            reader = await GetTask(command);
+                            loaded += await GetTask(command);
                         }
                         catch (Exception e)
                         {
@@ -81,145 +83,29 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             throw;
                         }
 
-
-                        using (reader)
-                        {
-                            if (null != reader)
-                            {
-                                var extracts = new List<T>();
-                                int totalcount = 0;
-                                int count = 0;
-                                int loaded = 0;
-                                var extract = new T();
-                                string action = extract.GetAddAction();
-                                string errorAction = extract.GetAddErrorAction();
-
-                                while (reader.Read())
-                                {
-
-                                    totalcount++;
-                                    ShowPercentage(totalcount);
-                                    count++;
-
-
-                                    extract = new T();
-                                    await extract.LoadAsync(reader);
-
-                                    if (!extract.HasError)
-                                    {
-                                        //loaded++;
-
-                                        if (_batchSize == 0)
-                                        {
-                                            try
-                                            {
-                                                if (_connection.State != ConnectionState.Open)
-                                                {
-                                                    await _connection.OpenAsync();
-                                                }
-                                                var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                                loaded += await _connection.ExecuteAsync(action, extract, tx, 0);
-                                                tx.Commit();
-                                            }
-                                            catch (Exception e)
-                                            {
-                                                Log.Debug(e);
-                                                throw;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            extracts.Add(extract);
-
-                                            if (count == _batchSize && _batchSize > 0)
-                                            {
-                                                try
-                                                {
-                                                    if (_connection.State != ConnectionState.Open)
-                                                    {
-                                                        await _connection.OpenAsync();
-                                                    }
-                                                    var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                                    loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
-                                                    tx.Commit();
-                                                }
-                                                catch (Exception e)
-                                                {
-                                                    Log.Debug(e);
-                                                    throw;
-                                                }
-                                                extracts = new List<T>();
-                                                count = 0;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        //TODO:Move to Error Summary
-                                        try
-                                        {
-                                            if (_connection.State != ConnectionState.Open)
-                                            {
-                                                await _connection.OpenAsync();
-                                            }
-                                            var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                            await _connection.ExecuteAsync(errorAction, extract, tx, 0);
-                                            tx.Commit();
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Log.Debug(e);
-                                            throw;
-                                        }
-
-                                    }
-
-                                }
-
-                                if (extracts.Count > 0)
-                                {
-                                    try
-                                    {
-                                        if (_connection.State != ConnectionState.Open)
-                                        {
-                                            await _connection.OpenAsync();
-                                        }
-                                        var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                        loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
-                                        tx.Commit();
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Log.Debug(e);
-                                        throw;
-                                    }
-                                }
-
-                                //  _summary.Loaded = loaded;
-                                _summary.Total = totalcount;
-                            }
-                        }
-
+                        count++;
+                        ShowPercentage(count,totalcount);
                     }
                 }
 
-                
-
+                _summary.Total = loaded;
             }
             return _summary;
         }
-        private void ShowPercentage(int progress)
+        private void ShowPercentage(double count,double total)
         {
+            var perc = (count / total) * 100;
             if (null == _progress)
                 return;
-            _processStatus.Progress = progress;
+            _processStatus.Progress = (int) perc;
+
             _processStatus.ExtractSetting = _extractSetting;
             _progress.Report(_processStatus);
         }
 
-        private Task<IDataReader> GetTask(IDbCommand command)
+        private Task<int> GetTask(IDbCommand command)
         {
-            return Task.Run(() => command.ExecuteReader());
+            return Task.Run(() => command.ExecuteNonQuery());
         }
     }
 

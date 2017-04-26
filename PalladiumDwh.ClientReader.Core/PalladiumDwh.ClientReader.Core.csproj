@@ -55,6 +55,13 @@
   <ItemGroup>
     <Compile Include="Interfaces\Commands\ILoadCsvExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\IClearExtractsCommand.cs" />
+    <Compile Include="Interfaces\Commands\IValidatePatientArtExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IValidatePatientBaselinesExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IValidatePatientExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IValidatePatientLaboratoryExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IValidatePatientPharmacyExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IValidatePatientStatusExtractCommand.cs" />
+    <Compile Include="Interfaces\Commands\IValidatePatientVisitExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\IValidateExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncFacilityCommand.cs" />
     <Compile Include="Interfaces\Commands\ISyncPatientVisitExtractCommand.cs" />

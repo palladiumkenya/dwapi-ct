@@ -40,7 +40,6 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         public virtual void Execute()
         {
             _summary = new LoadSummary();
-
               
             string extractName = typeof(T).Name;
             string commandText = string.Empty;
@@ -83,7 +82,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                 totalcount++;
                                 count++;
 
-                                //extract = new T();
+                                extract = new T();
                                 extract.Load(reader);
                                 if (!extract.HasError)
                                 {

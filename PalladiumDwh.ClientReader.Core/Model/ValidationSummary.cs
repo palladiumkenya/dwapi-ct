@@ -9,7 +9,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         public override string ToString()
         {
-            return $"Loaded {Total}";
+            return $"Errors Found {Total}";
         }
     }
 }
