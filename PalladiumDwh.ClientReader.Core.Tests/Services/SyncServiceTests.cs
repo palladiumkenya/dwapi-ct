@@ -89,7 +89,8 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
                 _validatePatientExtractCommand,_validatePatientArtExtractCommand,_validatePatientBaselinesExtractCommand,_validatePatientLaboratoryExtractCommand,_validatePatientPharmacyExtractCommand,_validatePatientStatusExtractCommand,_validatePatientVisitExtractCommand,_syncPatientExtractCommand, _syncPatientArtExtractCommand, 
                 _syncPatientBaselinesExtractCommand,_syncPatientLaboratoryExtractCommand, _syncPatientPharmacyExtractCommand,_syncPatientVisitExtractCommand, _syncPatientStatusExtractCommand);
 
-            
+
+            _context.Database.ExecuteSqlCommand("DELETE FROM ValidationError");
 
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientExtract;DELETE FROM  PatientExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientArtExtract;DELETE FROM  PatientArtExtract");
@@ -98,9 +99,6 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientPharmacyExtract;DELETE FROM  PatientPharmacyExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract;DELETE FROM  PatientVisitExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract");
-
-            
-
         }
 
         
@@ -154,9 +152,13 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         public void should_SyncPatientsAsync()
         {
             var summary = _syncService.SyncPatientsAsync().Result;
-
-            var extracts = _context.ClientPatientExtracts.Count();
-            Assert.IsTrue(extracts > 0);
+            var cleanRecords = summary.LoadSummary.Total - summary.ValidationSummary.Total;
+            
+            Assert.AreEqual(summary.LoadSummary.Total, _context.TempPatientExtracts.Count());
+            Assert.AreEqual(summary.ValidationSummary.Total, _context.ValidationErrors.Count());
+            Assert.AreEqual(summary.SyncSummary.Total, _context.ClientPatientExtracts.Count());
+            Assert.AreEqual(cleanRecords, summary.SyncSummary.Total);
+            Console.WriteLine(summary.Report());
         }
 
         [Test]

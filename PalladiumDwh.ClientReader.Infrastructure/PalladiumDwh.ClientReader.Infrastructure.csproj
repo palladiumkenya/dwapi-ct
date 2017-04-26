@@ -168,6 +168,10 @@
     <Compile Include="Migrations\201704260842016_removeErrorTables.Designer.cs">
       <DependentUpon>201704260842016_removeErrorTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704261604444_allowNullsInTemp.cs" />
+    <Compile Include="Migrations\201704261604444_allowNullsInTemp.Designer.cs">
+      <DependentUpon>201704261604444_allowNullsInTemp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -203,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704260842016_removeErrorTables.resx">
       <DependentUpon>201704260842016_removeErrorTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261604444_allowNullsInTemp.resx">
+      <DependentUpon>201704261604444_allowNullsInTemp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

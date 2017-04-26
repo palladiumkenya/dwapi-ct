@@ -52,6 +52,20 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
             Log.Debug($"Executing Validate {extractName} command...");
 
+            var emr = _emrRepository.GetDefault();
+
+            if (null == emr) throw new Exception($"No Default EMR Setup !");
+
+            _extractSetting = emr.GetActiveExtractSetting($"{extractName}");
+
+            if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
+
+            commandText = _extractSetting.ExtractSql;
+
+            if (string.IsNullOrWhiteSpace(commandText)) throw new Exception($"No sql command found for {extractName}");
+
+            
+
             _validators = _validatorRepository.GetByExtract(extractName).ToList();
 
             ShowPercentage(1,1);
@@ -65,7 +79,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                 int totalcount = _validators.Count;
                 int count = 0;
-                int loaded = 0;
+                int errorCount = 0;
 
                 foreach (var v in _validators)
                 {
@@ -75,7 +89,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                         try
                         {
-                            loaded += await GetTask(command);
+                            errorCount += await GetTask(command);
                         }
                         catch (Exception e)
                         {
@@ -88,7 +102,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                     }
                 }
 
-                _summary.Total = loaded;
+                _summary.Total = await GetNumberOfRecordsWithErrors(_connection.CreateCommand(), extractName);
             }
             return _summary;
         }
@@ -106,6 +120,15 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         private Task<int> GetTask(IDbCommand command)
         {
             return Task.Run(() => command.ExecuteNonQuery());
+        }
+        private Task<int> GetNumberOfRecordsWithErrors(IDbCommand command,string extractName)
+        {
+            command.CommandText = $@"
+                SELECT count(Id)
+                FROM {extractName}
+                where CheckError=1";
+
+            return Task.Run(() => Convert.ToInt32(command.ExecuteScalar()));
         }
     }
 

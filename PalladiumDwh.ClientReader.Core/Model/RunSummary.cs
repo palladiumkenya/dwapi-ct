@@ -19,7 +19,12 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         public override string ToString()
         {
-            return $"Loaded {SyncSummary.Total} of {LoadSummary.Total} {LoadSummary.ErrorStatus()}";
+            return $"Loaded {SyncSummary.Total} of {LoadSummary.Total} | Rejected:{ValidationSummary.Total}";
+        }
+
+        public string Report()
+        {
+            return $"Loaded:{LoadSummary.Total} | Synced:{SyncSummary.Total} | Errors:{ValidationSummary.Total}";
         }
     }
 }

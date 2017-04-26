@@ -31,8 +31,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         [Test]
         public void should_Execute_Validate_PatientVisitExtract_DbCommand()
         {
-            var result = new LoadPatientExtractCommand(new EMRRepository(_context)).ExecuteAsync().Result;
-            _context.Database.ExecuteSqlCommand("UPDATE TempPatientVisitExtract SET Gender=NULL,DOB=NULL;");
+            var result = new LoadPatientVisitExtractCommand(new EMRRepository(_context)).ExecuteAsync().Result;
+            _context.Database.ExecuteSqlCommand("UPDATE TempPatientVisitExtract SET SiteCode=NULL;");
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
@@ -48,7 +48,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 
             Assert.IsTrue(records > 0);
             Assert.IsTrue(errorRecords > 0);
-            
+            Assert.AreEqual(records, summary.Total);
 
             var elapsedMs = watch.ElapsedMilliseconds;
             Console.WriteLine($"Validated {records} records! in {elapsedMs}ms ({elapsedMs / 1000}s)");

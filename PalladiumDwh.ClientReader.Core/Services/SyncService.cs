@@ -290,77 +290,84 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         public async Task<RunSummary> SyncPatientsAsync()
         {
-            var summary = new RunSummary();
-
-            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
-            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
-            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+            var summary = new RunSummary
+            {
+                LoadSummary = await _loadPatientExtractCommand.ExecuteAsync(),
+                ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync(),
+                SyncSummary = await _syncPatientExtractCommand.ExecuteAsync()
+            };
 
             return summary;
         }
 
         public async Task<RunSummary> SynPatientsArtAsync()
         {
-            var summary = new RunSummary();
-
-            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
-            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
-            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+            var summary = new RunSummary
+            {
+                LoadSummary = await _loadPatientArtExtractCommand.ExecuteAsync(),
+                ValidationSummary = await _validatePatientArtExtractCommand.ExecuteAsync(),
+                SyncSummary = await _syncPatientArtExtractCommand.ExecuteAsync()
+            };
 
             return summary;
         }
 
         public async Task<RunSummary> SynPatientsBaselinesAsync()
         {
-            var summary = new RunSummary();
-
-            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
-            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
-            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+            var summary = new RunSummary
+            {
+                LoadSummary = await _loadPatientBaselinesExtractCommand.ExecuteAsync(),
+                ValidationSummary = await _validatePatientBaselinesExtractCommand.ExecuteAsync(),
+                SyncSummary = await _syncPatientBaselinesExtractCommand.ExecuteAsync()
+            };
 
             return summary;
         }
 
         public async Task<RunSummary> SynPatientsStatusAsync()
         {
-            var summary = new RunSummary();
-
-            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
-            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
-            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+            var summary = new RunSummary
+            {
+                LoadSummary = await _loadPatientStatusExtractCommand.ExecuteAsync(),
+                ValidationSummary = await _validatePatientStatusExtractCommand.ExecuteAsync(),
+                SyncSummary = await _syncPatientStatusExtractCommand.ExecuteAsync()
+            };
 
             return summary;
         }
 
         public async Task<RunSummary> SynPatientsPharmacyAsync()
         {
-            var summary = new RunSummary();
-
-            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
-            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
-            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+            var summary = new RunSummary
+            {
+                LoadSummary = await _loadPatientPharmacyExtractCommand.ExecuteAsync(),
+                ValidationSummary = await _validatePatientPharmacyExtractCommand.ExecuteAsync(),
+                SyncSummary = await _syncPatientPharmacyExtractCommand.ExecuteAsync()
+            };
 
             return summary;
         }
 
         public async Task<RunSummary> SynPatientsLabAsync()
         {
-            var summary = new RunSummary();
-
-            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
-            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
-            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+            var summary = new RunSummary
+            {
+                LoadSummary = await _loadPatientLaboratoryExtractCommand.ExecuteAsync(),
+                ValidationSummary = await _validatePatientLaboratoryExtractCommand.ExecuteAsync(),
+                SyncSummary = await _syncPatientLaboratoryExtractCommand.ExecuteAsync()
+            };
 
             return summary;
         }
 
         public async Task<RunSummary> SynPatientsVisitsAsync()
         {
-            var summary = new RunSummary();
-
-            summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync();
-            summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync();
-            summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+            var summary = new RunSummary
+            {
+                LoadSummary = await _loadPatientVisitExtractCommand.ExecuteAsync(),
+                ValidationSummary = await _validatePatientVisitExtractCommand.ExecuteAsync(),
+                SyncSummary = await _syncPatientVisitExtractCommand.ExecuteAsync()
+            };
 
             return summary;
         }

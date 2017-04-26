@@ -89,9 +89,9 @@ namespace PalladiumDwh.ClientReader.Core.Model
         
         public ClientPatientExtract(TempPatientExtract extract)
         {
-            PatientPK = extract.PatientPK;
+            PatientPK = extract.PatientPK.Value;
             PatientID = extract.PatientID;
-            SiteCode = extract.SiteCode;
+            SiteCode = extract.SiteCode.Value;
             FacilityName = extract.FacilityName;
             Gender = extract.Gender;
             DOB = extract.DOB;

@@ -39,7 +39,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             }
 
             var sql = $"{GenerateInsert()} " +
-                      $"{selectSql} " +
+                      $"{selectSql};" +
                       $"{GenerateUpdateError()} ";
 
             return sql;
@@ -60,8 +60,9 @@ namespace PalladiumDwh.ClientReader.Core.Model
                     SET 
                         CheckError=1 
                     WHERE 
-                        Id IN (SELECT RecordId FROM ValidationError  where ValidatorId='{Id}')";
+                        Id IN (SELECT RecordId FROM ValidationError WHERE ValidatorId='{Id}')";
 
         }
+       
     }
 }

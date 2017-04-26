@@ -17,10 +17,10 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         [Key]
         [DoNotRead]
         public Guid Id { get; set; }
-        public int PatientPK { get; set; }
+        public int? PatientPK { get; set; }
         public string PatientID { get; set; }
         public int? FacilityId { get; set; }
-        public int SiteCode { get; set; }
+        public int? SiteCode { get; set; }
 
         [DoNotRead]
         public  DateTime DateExtracted { get; set; }

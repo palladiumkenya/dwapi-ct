@@ -47,9 +47,9 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         public ClientPatientPharmacyExtract(TempPatientPharmacyExtract extract)
         {
-            PatientPK = extract.PatientPK;
+            PatientPK = extract.PatientPK.Value;
             PatientID = extract.PatientID;
-            SiteCode = extract.SiteCode;
+            SiteCode = extract.SiteCode.Value;
             VisitID = extract.VisitID;
             Drug = extract.Drug;
             Provider = extract.Provider;

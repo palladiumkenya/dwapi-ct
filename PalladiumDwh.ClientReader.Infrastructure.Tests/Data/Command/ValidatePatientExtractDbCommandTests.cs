@@ -36,7 +36,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 
             var summary = _extractCommand.ExecuteAsync().Result;
             watch.Stop();
-            var errorRecords = _context.Database
+            var errors = _context.Database
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM ValidationError")
                 .Single();
 
@@ -45,10 +45,10 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
                 .Single();
 
             Assert.IsTrue(records > 0);
-            Assert.IsTrue(errorRecords > 0);          
-
+            Assert.IsTrue(errors > 0);
+            Assert.AreEqual(records,summary.Total);
             var elapsedMs = watch.ElapsedMilliseconds;
-            Console.WriteLine($"Validated {records} records! Found {errorRecords} errors in {elapsedMs}ms ({elapsedMs / 1000}s)");
+            Console.WriteLine($"Validated {records} records! Found {errors} errors in {elapsedMs}ms ({elapsedMs / 1000}s)");
         }
 
         [TearDown]
