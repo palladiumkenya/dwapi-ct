@@ -32,6 +32,15 @@ namespace PalladiumDwh.ClientApp.Views
         private  IProjectRepository _projectRepository;
         private  ISyncService _syncService;
         private  IClientPatientRepository _clientPatientRepository;
+
+        private  IClientPatientArtExtractRepository _clientPatientArtExtractRepository;
+        private  IClientPatientBaselinesExtractRepository _clientPatientBaselinesExtractRepository;
+        private  IClientPatientExtractRepository _clientPatientExtractRepository;
+        private  IClientPatientLaboratoryExtractRepository _clientPatientLaboratoryExtractRepository;
+        private  IClientPatientPharmacyExtractRepository _clientPatientPharmacyExtractRepository;
+        private  IClientPatientStatusExtractRepository _clientPatientStatusExtractRepository;
+        private  IClientPatientVisitExtractRepository _clientPatientVisitExtractRepository;
+
         private  IProfileManager _profileManager;
         private  IPushProfileService _pushService;
         private List<string> _eventSummaries = new List<string>();
@@ -39,6 +48,7 @@ namespace PalladiumDwh.ClientApp.Views
         private List<ExtractSetting> _extractSettingsList;
         private string  _selectedExtractSetting;
         private  string _selectedExtractSettingDispaly;
+        private object _clientExtracts;
 
         public Dashboard()
         {
@@ -217,6 +227,16 @@ namespace PalladiumDwh.ClientApp.Views
             set { tabPageValidationSummary.Text = value; }
         }
 
+        public object ClientExtracts
+        {
+            get { return _clientExtracts; }
+            set
+            {
+                _clientExtracts = value; 
+                LoadClientExtracts(_clientExtracts);
+            }
+        }
+
         public void ClearExtractSettingsList()
         {
             listViewExtractList.Items.Clear();
@@ -234,7 +254,18 @@ namespace PalladiumDwh.ClientApp.Views
             }
         }
 
-#endregion
+        public void ClearClientExtracts()
+        {
+            dataGridViewExtractDetail.DataSource = null;
+            dataGridViewExtractDetail.Rows.Clear();
+        }
+        private void LoadClientExtracts(object clientExtracts)
+        {
+            ClearClientExtracts();
+            dataGridViewExtractDetail.DataSource = clientExtracts;
+        }
+
+        #endregion
 
         private async void Dashboard_Load(object sender, EventArgs e)
         {
@@ -395,13 +426,25 @@ namespace PalladiumDwh.ClientApp.Views
             Program.IOC = await IoC.InitializeAsync();
             _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
             _syncService = Program.IOC.GetInstance<ISyncService>();
+
             _clientPatientRepository = Program.IOC.GetInstance<IClientPatientRepository>();
+
+            _clientPatientArtExtractRepository = Program.IOC.GetInstance<IClientPatientArtExtractRepository>(); 
+            _clientPatientBaselinesExtractRepository = Program.IOC.GetInstance<IClientPatientBaselinesExtractRepository>(); 
+            _clientPatientExtractRepository = Program.IOC.GetInstance<IClientPatientExtractRepository>(); 
+            _clientPatientLaboratoryExtractRepository = Program.IOC.GetInstance<IClientPatientLaboratoryExtractRepository>(); 
+            _clientPatientPharmacyExtractRepository = Program.IOC.GetInstance<IClientPatientPharmacyExtractRepository>(); 
+            _clientPatientStatusExtractRepository = Program.IOC.GetInstance<IClientPatientStatusExtractRepository>(); 
+            _clientPatientVisitExtractRepository = Program.IOC.GetInstance<IClientPatientVisitExtractRepository>(); 
+
+
             _profileManager = Program.IOC.GetInstance<IProfileManager>();
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
 
 
             Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository,
-                _profileManager, _pushService);
+                _profileManager, _pushService,
+                _clientPatientArtExtractRepository,_clientPatientBaselinesExtractRepository,_clientPatientExtractRepository,_clientPatientLaboratoryExtractRepository,_clientPatientPharmacyExtractRepository,_clientPatientStatusExtractRepository,_clientPatientVisitExtractRepository);
             Presenter.Initialize();
             Presenter.InitializeEmrInfo();
             Presenter.InitializeExtracts();

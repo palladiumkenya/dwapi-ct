@@ -27,17 +27,30 @@ namespace PalladiumDwh.ClientApp.Presenters
         private readonly IClientPatientRepository _clientPatientRepository;
         private readonly IProfileManager _profileManager;
         private readonly IPushProfileService _pushService;
+
+        private readonly IClientPatientArtExtractRepository _clientPatientArtExtractRepository;
+        private readonly IClientPatientBaselinesExtractRepository _clientPatientBaselinesExtractRepository;
+        private readonly IClientPatientExtractRepository _clientPatientExtractRepository;
+        private readonly IClientPatientLaboratoryExtractRepository _clientPatientLaboratoryExtractRepository;
+        private readonly IClientPatientPharmacyExtractRepository _clientPatientPharmacyExtractRepository;
+        private readonly IClientPatientStatusExtractRepository _clientPatientStatusExtractRepository;
+        private readonly IClientPatientVisitExtractRepository _clientPatientVisitExtractRepository;
+
         private long timeTaken = 0;
 
         private EmrViewModel _emrmodel;
         private IEnumerable<ClientPatientExtract> _clientPatientExtracts;
         public IDashboardView View { get; }
 
-
-
+     
         public DashboardPresenter(IDashboardView view, IProjectRepository projectRepository, ISyncService syncService,
             IClientPatientRepository clientPatientRepository, IProfileManager profileManager,
-            IPushProfileService pushService)
+            IPushProfileService pushService,
+            IClientPatientArtExtractRepository clientPatientArtExtractRepository, IClientPatientBaselinesExtractRepository clientPatientBaselinesExtractRepository, IClientPatientExtractRepository clientPatientExtractRepository, IClientPatientLaboratoryExtractRepository clientPatientLaboratoryExtractRepository, IClientPatientPharmacyExtractRepository clientPatientPharmacyExtractRepository, IClientPatientStatusExtractRepository clientPatientStatusExtractRepository, IClientPatientVisitExtractRepository clientPatientVisitExtractRepository
+
+
+
+            )
         {
             view.Presenter = this;
             View = view;
@@ -45,6 +58,15 @@ namespace PalladiumDwh.ClientApp.Presenters
             _projectRepository = projectRepository;
             _syncService = syncService;
             _clientPatientRepository = clientPatientRepository;
+
+            _clientPatientArtExtractRepository = clientPatientArtExtractRepository;
+            _clientPatientBaselinesExtractRepository = clientPatientBaselinesExtractRepository;
+            _clientPatientExtractRepository = clientPatientExtractRepository;
+            _clientPatientLaboratoryExtractRepository = clientPatientLaboratoryExtractRepository;
+            _clientPatientPharmacyExtractRepository = clientPatientPharmacyExtractRepository;
+            _clientPatientStatusExtractRepository = clientPatientStatusExtractRepository;
+            _clientPatientVisitExtractRepository = clientPatientVisitExtractRepository;
+
             _profileManager = profileManager;
             _pushService = pushService;
 
@@ -319,6 +341,47 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.RecordsHeader = $"{View.SelectedExtractSettingDispaly} Records";
             View.ValidtionHeader = $"{View.SelectedExtractSettingDispaly} Validation Summary";
             // _clientPatientExtracts = _clientPatientRepository.GetAll();
+
+            switch (View.SelectedExtractSetting)
+            {
+                case "TempPatientStatusExtract":
+                {
+                    View.ClientExtracts = _clientPatientStatusExtractRepository.GetAll(1, 100).ToList();
+                    break;
+                }
+                case "TempPatientArtExtract":
+                {
+                    View.ClientExtracts = _clientPatientArtExtractRepository.GetAll(1, 100).ToList();
+                    break;
+                }
+                case "TempPatientBaselinesExtract":
+                {
+                    View.ClientExtracts = _clientPatientBaselinesExtractRepository.GetAll(1, 100).ToList();
+                    break;
+                }
+
+                case "TempPatientVisitExtract":
+                {
+                    View.ClientExtracts = _clientPatientVisitExtractRepository.GetAll(1, 100).ToList();
+                    break;
+                }
+                case "TempPatientPharmacyExtract ":
+                {
+                    View.ClientExtracts = _clientPatientPharmacyExtractRepository.GetAll(1, 100).ToList();
+                    break;
+                }
+
+                case "TempPatientLaboratoryExtract ":
+                {
+                    View.ClientExtracts = _clientPatientLaboratoryExtractRepository.GetAll(1, 100).ToList();
+                    break;
+                }
+                default:
+                {
+                    View.ClientExtracts = _clientPatientExtractRepository.GetAll(1, 100).ToList();
+                    break;
+                }
+            }
 
         }
 

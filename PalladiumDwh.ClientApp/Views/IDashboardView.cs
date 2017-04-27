@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using PalladiumDwh.ClientApp.Events;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Presenters;
+using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientApp.Views
@@ -43,7 +44,9 @@ namespace PalladiumDwh.ClientApp.Views
         List<ExtractSetting> ExtractSettingsList { get; set; }
         string RecordsHeader { get; set; }
         string ValidtionHeader{ get; set; }
+        object ClientExtracts { get; set; }
         void ClearExtractSettingsList();
+        void ClearClientExtracts();
         #endregion
 
         List<string> EventSummaries { get; set; }
