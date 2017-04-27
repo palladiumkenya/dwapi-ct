@@ -19,6 +19,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 
 namespace PalladiumDwh.ClientApp.Views
@@ -41,7 +42,13 @@ namespace PalladiumDwh.ClientApp.Views
         private  IClientPatientStatusExtractRepository _clientPatientStatusExtractRepository;
         private  IClientPatientVisitExtractRepository _clientPatientVisitExtractRepository;
 
-        private ITempPatientExtractRepository _tempPatientExtractRepository;
+        private  ITempPatientArtExtractRepository _tempPatientArtExtractRepository;
+        private  ITempPatientBaselinesExtractRepository _tempPatientBaselinesExtractRepository;
+        private  ITempPatientExtractRepository _tempPatientExtractRepository;
+        private  ITempPatientLaboratoryExtractRepository _tempPatientLaboratoryExtractRepository;
+        private  ITempPatientPharmacyExtractRepository _tempPatientPharmacyExtractRepository;
+        private  ITempPatientStatusExtractRepository _tempPatientStatusExtractRepository;
+        private  ITempPatientVisitExtractRepository _tempPatientVisitExtractRepository;
 
         private  IProfileManager _profileManager;
         private  IPushProfileService _pushService;
@@ -491,7 +498,14 @@ namespace PalladiumDwh.ClientApp.Views
             _clientPatientStatusExtractRepository = Program.IOC.GetInstance<IClientPatientStatusExtractRepository>(); 
             _clientPatientVisitExtractRepository = Program.IOC.GetInstance<IClientPatientVisitExtractRepository>();
 
+            
+            _tempPatientArtExtractRepository = Program.IOC.GetInstance<ITempPatientArtExtractRepository>(); ;
+            _tempPatientBaselinesExtractRepository = Program.IOC.GetInstance<ITempPatientBaselinesExtractRepository>(); ;
             _tempPatientExtractRepository = Program.IOC.GetInstance<ITempPatientExtractRepository>();
+            _tempPatientLaboratoryExtractRepository = Program.IOC.GetInstance<ITempPatientLaboratoryExtractRepository>(); ;
+            _tempPatientPharmacyExtractRepository = Program.IOC.GetInstance<ITempPatientPharmacyExtractRepository>(); ;
+            _tempPatientStatusExtractRepository = Program.IOC.GetInstance<ITempPatientStatusExtractRepository>(); ;
+            _tempPatientVisitExtractRepository = Program.IOC.GetInstance<ITempPatientVisitExtractRepository>(); ;
 
             _profileManager = Program.IOC.GetInstance<IProfileManager>();
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
@@ -500,7 +514,8 @@ namespace PalladiumDwh.ClientApp.Views
             Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository,
                 _profileManager, _pushService,
                 _clientPatientArtExtractRepository,_clientPatientBaselinesExtractRepository,_clientPatientExtractRepository,_clientPatientLaboratoryExtractRepository,_clientPatientPharmacyExtractRepository,_clientPatientStatusExtractRepository,_clientPatientVisitExtractRepository,
-                _tempPatientExtractRepository);
+                _tempPatientExtractRepository,_tempPatientArtExtractRepository,_tempPatientBaselinesExtractRepository,_tempPatientLaboratoryExtractRepository,_tempPatientPharmacyExtractRepository,_tempPatientStatusExtractRepository,_tempPatientVisitExtractRepository
+                );
 
             Presenter.Initialize();
             Presenter.InitializeEmrInfo();

@@ -2,7 +2,7 @@
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
 {
-    public interface ITempPatientStatusExtractRepository : ITempExtractRepository<TempPatientStatusExtract>
+    public interface ITempPatientStatusExtractRepository : ITempExtractRepository<TempPatientStatusExtractError>
     {
         
     }

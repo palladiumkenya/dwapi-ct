@@ -175,6 +175,10 @@
     <Compile Include="Migrations\201704271230402_InitialPatientValidations.Designer.cs">
       <DependentUpon>201704271230402_InitialPatientValidations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704271309181_InitialAllValidations.cs" />
+    <Compile Include="Migrations\201704271309181_InitialAllValidations.Designer.cs">
+      <DependentUpon>201704271309181_InitialAllValidations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -207,6 +211,9 @@
     <EmbeddedResource Include="Migrations\201704271230402_InitialPatientValidations.resx">
       <DependentUpon>201704271230402_InitialPatientValidations.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704271309181_InitialAllValidations.resx">
+      <DependentUpon>201704271309181_InitialAllValidations.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Scripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Scripts.Designer.cs</LastGenOutput>
@@ -225,7 +232,20 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="CustomScripts\vTempPatientArtExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientArtExtractErrorSummary.sql" />
+    <Content Include="CustomScripts\vTempPatientBaselinesExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientBaselinesExtractErrorSummary.sql" />
+    <Content Include="CustomScripts\vTempPatientLaboratoryExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientLaboratoryExtractErrorSummary.sql" />
+    <Content Include="CustomScripts\vTempPatientPharmacyExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientPharmacyExtractErrorSummary.sql" />
+    <Content Include="CustomScripts\vTempPatientStatusExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientStatusExtractErrorSummary.sql" />
+    <Content Include="CustomScripts\vTempPatientVisitExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientVisitExtractErrorSummary.sql" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="CustomScripts\vTempPatientExtractError.sql" />
     <None Include="CustomScripts\vTempPatientExtractErrorSummary.sql" />

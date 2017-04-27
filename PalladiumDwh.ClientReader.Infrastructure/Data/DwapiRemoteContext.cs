@@ -36,7 +36,19 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         public virtual DbSet<TempPatientExtractError> TempPatientExtractErrors { get; set; }
         public virtual DbSet<TempPatientExtractErrorSummary> TempPatientExtractsErrorSummaries { get; set; }
-
+        public virtual DbSet<TempPatientArtExtractError> TempPatientArtExtractErrors { get; set; }
+        public virtual DbSet<TempPatientArtExtractErrorSummary> TempPatientArtExtractErrorSummaries { get; set; }
+        public virtual DbSet<TempPatientBaselinesExtractError> TempPatientBaselinesExtractErrors  { get; set; }
+        public virtual DbSet<TempPatientBaselinesExtractErrorSummary> TempPatientBaselinesExtractErrorSummaries { get; set; }
+        public virtual DbSet<TempPatientLaboratoryExtractError> TmPatientLaboratoryExtractErrors { get; set; }
+        public virtual DbSet<TempPatientLaboratoryExtractErrorSummary> TempPatientLaboratoryExtractErrorSummaries { get; set; }
+        public virtual DbSet<TempPatientPharmacyExtractError> TempPatientPharmacyExtractErrors { get; set; }
+        public virtual DbSet<TempPatientPharmacyExtractErrorSummary> TempPatientPharmacyExtractErrorSummaries { get; set; }
+        public virtual DbSet<TempPatientStatusExtractError> TempPatientStatusExtractErrors { get; set; }
+        public virtual DbSet<TempPatientStatusExtractErrorSummary> TempPatientStatusExtractErrorSummaries { get; set; }
+        public virtual DbSet<TempPatientVisitExtractError> TempPatientVisitExtractErrors { get; set; }
+        public virtual DbSet<TempPatientVisitExtractErrorSummary> TempPatientVisitExtractErrorSummaries { get; set; }
+      
         public virtual DbSet<ClientFacility> ClientFacilities { get; set; }
 
         public virtual DbSet<ClientPatientExtract> ClientPatientExtracts { get; set; }
@@ -101,6 +113,37 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
                 .HasMany(c => c.TempPatientExtractErrorSummaries)
                 .WithRequired()
                 .HasForeignKey(f => new { f.RecordId });
+
+            modelBuilder.Entity<TempPatientArtExtractError>()
+                .HasMany(c => c.TempPatientArtExtractErrorSummaries)
+                .WithRequired()
+                .HasForeignKey(f => new { f.RecordId });
+
+            modelBuilder.Entity<TempPatientBaselinesExtractError>()
+                .HasMany(c => c.TempPatientBaselinesExtractErrorSummaries)
+                .WithRequired()
+                .HasForeignKey(f => new { f.RecordId });
+
+            modelBuilder.Entity<TempPatientLaboratoryExtractError>()
+                .HasMany(c => c.TempPatientLaboratoryExtractErrorSummaries)
+                .WithRequired()
+                .HasForeignKey(f => new { f.RecordId });
+
+            modelBuilder.Entity<TempPatientPharmacyExtractError>()
+                .HasMany(c => c.TempPatientPharmacyExtractErrorSummaries)
+                .WithRequired()
+                .HasForeignKey(f => new { f.RecordId });
+
+            modelBuilder.Entity<TempPatientStatusExtractError>()
+                .HasMany(c => c.TempPatientStatusExtractErrorSummaries)
+                .WithRequired()
+                .HasForeignKey(f => new { f.RecordId });
+
+            modelBuilder.Entity<TempPatientVisitExtractError>()
+                .HasMany(c => c.TempPatientVisitExtractErrorSummaries)
+                .WithRequired()
+                .HasForeignKey(f => new { f.RecordId });
+
         }
     }
 }

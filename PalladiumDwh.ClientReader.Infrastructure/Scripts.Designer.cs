@@ -61,24 +61,59 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to USE [DWAPIRemote]
-        ///GO
-        ///
-        ////****** Object:  View [dbo].[vTempPatientExtractError]    Script Date: 27-Apr-17 1:22:56 PM ******/
-        ///SET ANSI_NULLS ON
-        ///GO
-        ///
-        ///SET QUOTED_IDENTIFIER ON
-        ///GO
-        ///
-        ///create view [dbo].[vTempPatientExtractError] as
+        ///   Looks up a localized string similar to create view vTempPatientArtExtractError as
+        ///SELECT        *
+        ///FROM            TempPatientArtExtract
+        ///WHERE        (CheckError = 1).
+        /// </summary>
+        internal static string vTempPatientArtExtractError {
+            get {
+                return ResourceManager.GetString("vTempPatientArtExtractError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE VIEW vTempPatientArtExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientArtExtractError.PatientPK,dbo.vTempPatientArtExtractError.FacilityId,
+        ///                         dbo.vTempPatientArtExtractError.PatientID, dbo.vTempPatientArtExtractError.SiteCode, dbo.vTempPatientArtExtractError.FacilityName, dbo.ValidationError.RecordId
+        ///FROM            dbo.vTempPa [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientArtExtractErrorSummary {
+            get {
+                return ResourceManager.GetString("vTempPatientArtExtractErrorSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to create view vTempPatientBaselinesExtractError as
+        ///SELECT        *
+        ///FROM            TempPatientBaselinesExtract
+        ///WHERE        (CheckError = 1).
+        /// </summary>
+        internal static string vTempPatientBaselinesExtractError {
+            get {
+                return ResourceManager.GetString("vTempPatientBaselinesExtractError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE VIEW vTempPatientBaselinesExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientBaselinesExtractError.PatientPK,dbo.vTempPatientBaselinesExtractError.FacilityId,
+        ///                         dbo.vTempPatientBaselinesExtractError.PatientID, dbo.vTempPatientBaselinesExtractError.SiteCode, dbo.vTempPatientBaselinesExtractError.FacilityName, dbo.ValidationError.R [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientBaselinesExtractErrorSummary {
+            get {
+                return ResourceManager.GetString("vTempPatientBaselinesExtractErrorSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to create view vTempPatientExtractError as
         ///SELECT        *
         ///FROM            TempPatientExtract
-        ///WHERE        (CheckError = 1)
-        ///GO
-        ///
-        ///
-        ///.
+        ///WHERE        (CheckError = 1).
         /// </summary>
         internal static string vTempPatientExtractError {
             get {
@@ -87,18 +122,113 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
-        ///
-        ///CREATE VIEW [dbo].[vTempPatientExtractErrorSummary]
+        ///   Looks up a localized string similar to CREATE VIEW vTempPatientExtractErrorSummary
         ///AS
-        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientExtractError.PatientPK, 
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientExtractError.PatientPK,dbo.vTempPatientExtractError.FacilityId,
         ///                         dbo.vTempPatientExtractError.PatientID, dbo.vTempPatientExtractError.SiteCode, dbo.vTempPatientExtractError.FacilityName, dbo.ValidationError.RecordId
-        ///FROM            dbo.vTempPatientExtractError INNER JOIN
-        ///                [rest of string was truncated]&quot;;.
+        ///FROM            dbo.vTempPatientExtractError  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string vTempPatientExtractErrorSummary {
             get {
                 return ResourceManager.GetString("vTempPatientExtractErrorSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to create view vTempPatientLaboratoryExtractError as
+        ///SELECT        *
+        ///FROM            TempPatientLaboratoryExtract
+        ///WHERE        (CheckError = 1).
+        /// </summary>
+        internal static string vTempPatientLaboratoryExtractError {
+            get {
+                return ResourceManager.GetString("vTempPatientLaboratoryExtractError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE VIEW vTempPatientLaboratoryExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientLaboratoryExtractError.PatientPK,dbo.vTempPatientLaboratoryExtractError.FacilityId,
+        ///                         dbo.vTempPatientLaboratoryExtractError.PatientID, dbo.vTempPatientLaboratoryExtractError.SiteCode, dbo.vTempPatientLaboratoryExtractError.FacilityName, dbo.ValidationE [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientLaboratoryExtractErrorSummary {
+            get {
+                return ResourceManager.GetString("vTempPatientLaboratoryExtractErrorSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to create view vTempPatientPharmacyExtractError as
+        ///SELECT        *
+        ///FROM            TempPatientPharmacyExtract
+        ///WHERE        (CheckError = 1).
+        /// </summary>
+        internal static string vTempPatientPharmacyExtractError {
+            get {
+                return ResourceManager.GetString("vTempPatientPharmacyExtractError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE VIEW vTempPatientPharmacyExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientPharmacyExtractError.PatientPK,dbo.vTempPatientPharmacyExtractError.FacilityId,
+        ///                         dbo.vTempPatientPharmacyExtractError.PatientID, dbo.vTempPatientPharmacyExtractError.SiteCode, dbo.vTempPatientPharmacyExtractError.FacilityName, dbo.ValidationError.RecordI [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientPharmacyExtractErrorSummary {
+            get {
+                return ResourceManager.GetString("vTempPatientPharmacyExtractErrorSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to create view vTempPatientStatusExtractError as
+        ///SELECT        *
+        ///FROM            TempPatientStatusExtract
+        ///WHERE        (CheckError = 1).
+        /// </summary>
+        internal static string vTempPatientStatusExtractError {
+            get {
+                return ResourceManager.GetString("vTempPatientStatusExtractError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE VIEW vTempPatientStatusExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientStatusExtractError.PatientPK,dbo.vTempPatientStatusExtractError.FacilityId,
+        ///                         dbo.vTempPatientStatusExtractError.PatientID, dbo.vTempPatientStatusExtractError.SiteCode, dbo.vTempPatientStatusExtractError.FacilityName, dbo.ValidationError.RecordId
+        ///FROM      [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientStatusExtractErrorSummary {
+            get {
+                return ResourceManager.GetString("vTempPatientStatusExtractErrorSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to create view vTempPatientVisitExtractError as
+        ///SELECT        *
+        ///FROM            TempPatientVisitExtract
+        ///WHERE        (CheckError = 1).
+        /// </summary>
+        internal static string vTempPatientVisitExtractError {
+            get {
+                return ResourceManager.GetString("vTempPatientVisitExtractError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE VIEW vTempPatientVisitExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientVisitExtractError.PatientPK,dbo.vTempPatientVisitExtractError.FacilityId,
+        ///                         dbo.vTempPatientVisitExtractError.PatientID, dbo.vTempPatientVisitExtractError.SiteCode, dbo.vTempPatientVisitExtractError.FacilityName, dbo.ValidationError.RecordId
+        ///FROM            [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientVisitExtractErrorSummary {
+            get {
+                return ResourceManager.GetString("vTempPatientVisitExtractErrorSummary", resourceCulture);
             }
         }
     }

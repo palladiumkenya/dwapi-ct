@@ -37,7 +37,14 @@ namespace PalladiumDwh.ClientApp.Presenters
         private readonly IClientPatientStatusExtractRepository _clientPatientStatusExtractRepository;
         private readonly IClientPatientVisitExtractRepository _clientPatientVisitExtractRepository;
 
+        private readonly ITempPatientArtExtractRepository _tempPatientArtExtractRepository;
+        private readonly ITempPatientBaselinesExtractRepository _tempPatientBaselinesExtractRepository;
         private readonly ITempPatientExtractRepository _tempPatientExtractRepository;
+        private readonly ITempPatientLaboratoryExtractRepository _tempPatientLaboratoryExtractRepository;
+        private readonly ITempPatientPharmacyExtractRepository _tempPatientPharmacyExtractRepository;
+        private readonly ITempPatientStatusExtractRepository _tempPatientStatusExtractRepository;
+        private readonly ITempPatientVisitExtractRepository _tempPatientVisitExtractRepository;
+
 
         private long timeTaken = 0;
 
@@ -45,14 +52,16 @@ namespace PalladiumDwh.ClientApp.Presenters
         private IEnumerable<ClientPatientExtract> _clientPatientExtracts;
         public IDashboardView View { get; }
 
-     
+        public DashboardPresenter()
+        {
+            
+        }
+
         public DashboardPresenter(IDashboardView view, IProjectRepository projectRepository, ISyncService syncService,
             IClientPatientRepository clientPatientRepository, IProfileManager profileManager,
             IPushProfileService pushService,
             IClientPatientArtExtractRepository clientPatientArtExtractRepository, IClientPatientBaselinesExtractRepository clientPatientBaselinesExtractRepository, IClientPatientExtractRepository clientPatientExtractRepository, IClientPatientLaboratoryExtractRepository clientPatientLaboratoryExtractRepository, IClientPatientPharmacyExtractRepository clientPatientPharmacyExtractRepository, IClientPatientStatusExtractRepository clientPatientStatusExtractRepository, IClientPatientVisitExtractRepository clientPatientVisitExtractRepository,
-        ITempPatientExtractRepository tempPatientExtractRepository
-
-
+        ITempPatientExtractRepository tempPatientExtractRepository, ITempPatientArtExtractRepository tempPatientArtExtractRepository, ITempPatientBaselinesExtractRepository tempPatientBaselinesExtractRepository, ITempPatientLaboratoryExtractRepository tempPatientLaboratoryExtractRepository, ITempPatientPharmacyExtractRepository tempPatientPharmacyExtractRepository, ITempPatientStatusExtractRepository tempPatientStatusExtractRepository, ITempPatientVisitExtractRepository tempPatientVisitExtractRepository
             )
         {
             view.Presenter = this;
@@ -69,11 +78,17 @@ namespace PalladiumDwh.ClientApp.Presenters
             _clientPatientPharmacyExtractRepository = clientPatientPharmacyExtractRepository;
             _clientPatientStatusExtractRepository = clientPatientStatusExtractRepository;
             _clientPatientVisitExtractRepository = clientPatientVisitExtractRepository;
-
+           
+            _tempPatientArtExtractRepository = tempPatientArtExtractRepository;
+            _tempPatientBaselinesExtractRepository = tempPatientBaselinesExtractRepository;
             _tempPatientExtractRepository = tempPatientExtractRepository;
+            _tempPatientLaboratoryExtractRepository = tempPatientLaboratoryExtractRepository;
+            _tempPatientPharmacyExtractRepository = tempPatientPharmacyExtractRepository;
+            _tempPatientStatusExtractRepository = tempPatientStatusExtractRepository;
+            _tempPatientVisitExtractRepository = tempPatientVisitExtractRepository;           
+
             _profileManager = profileManager;
             _pushService = pushService;
-
 
             View.EmrExtractLoaded += View_EmrExtractLoaded;
             View.CsvExtractLoaded += View_CsvExtractLoaded;
@@ -396,36 +411,66 @@ namespace PalladiumDwh.ClientApp.Presenters
             {
                 case "TempPatientStatusExtract":
                 {
-                    View.ClientExtracts = _clientPatientStatusExtractRepository.GetAll(1, 100).ToList();
+                    var selected = View.SelectedValidation;
+                    if (null != selected)
+                    {
+                        var extract = (TempPatientStatusExtractError)selected;
+                        View.ClientExtractsValidationErrors = extract.TempPatientStatusExtractErrorSummaries.ToList();
+                    }
                     break;
-                }
+                    }
                 case "TempPatientArtExtract":
                 {
-                    View.ClientExtracts = _clientPatientArtExtractRepository.GetAll(1, 100).ToList();
+                    var selected = View.SelectedValidation;
+                    if (null != selected)
+                    {
+                        var extract = (TempPatientArtExtractError)selected;
+                        View.ClientExtractsValidationErrors = extract.TempPatientArtExtractErrorSummaries.ToList();
+                    }
                     break;
-                }
+                    }
                 case "TempPatientBaselinesExtract":
                 {
-                    View.ClientExtracts = _clientPatientBaselinesExtractRepository.GetAll(1, 100).ToList();
+                    var selected = View.SelectedValidation;
+                    if (null != selected)
+                    {
+                        var extract = (TempPatientBaselinesExtractError)selected;
+                        View.ClientExtractsValidationErrors = extract.TempPatientBaselinesExtractErrorSummaries.ToList();
+                    }
                     break;
-                }
+                    }
 
                 case "TempPatientVisitExtract":
                 {
-                    View.ClientExtracts = _clientPatientVisitExtractRepository.GetAll(1, 50).ToList();
+                    var selected = View.SelectedValidation;
+                    if (null != selected)
+                    {
+                        var extract = (TempPatientVisitExtractError)selected;
+                        View.ClientExtractsValidationErrors = extract.TempPatientVisitExtractErrorSummaries.ToList();
+                    }
                     break;
-                }
+                    }
                 case "TempPatientPharmacyExtract ":
                 {
-                    View.ClientExtracts = _clientPatientPharmacyExtractRepository.GetAll(1, 50).ToList();
+                    var selected = View.SelectedValidation;
+                    if (null != selected)
+                    {
+                        var extract = (TempPatientPharmacyExtractError)selected;
+                        View.ClientExtractsValidationErrors = extract.TempPatientPharmacyExtractErrorSummaries.ToList();
+                    }
                     break;
-                }
+                    }
 
                 case "TempPatientLaboratoryExtract ":
                 {
-                    View.ClientExtracts = _clientPatientLaboratoryExtractRepository.GetAll(1, 50).ToList();
+                    var selected = View.SelectedValidation;
+                    if (null != selected)
+                    {
+                        var extract = (TempPatientLaboratoryExtractError)selected;
+                        View.ClientExtractsValidationErrors = extract.TempPatientLaboratoryExtractErrorSummaries.ToList();
+                    }
                     break;
-                }
+                    }
                 default:
                 {
                     var selected= View.SelectedValidation;
