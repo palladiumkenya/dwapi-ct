@@ -7,13 +7,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class removeErrorTables : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(removeErrorTables));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201704260842016_removeErrorTables"; }
+            get { return "201704271228567_Initial"; }
         }
         
         string IMigrationMetadata.Source

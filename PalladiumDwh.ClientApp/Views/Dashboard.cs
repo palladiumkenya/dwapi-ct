@@ -52,6 +52,8 @@ namespace PalladiumDwh.ClientApp.Views
         private  string _selectedExtractSettingDispaly;
         private object _clientExtracts;
         private object _clientExtractsValidations;
+        private object _clientExtractsValidationErrors;
+        private  object _selectedValidation;
 
         public Dashboard()
         {
@@ -175,7 +177,7 @@ namespace PalladiumDwh.ClientApp.Views
         }
 
 
-       
+      
 
         public List<string> EventSummaries
         {
@@ -206,6 +208,11 @@ namespace PalladiumDwh.ClientApp.Views
         public string SelectedExtractSettingDispaly
         {
             get { return _selectedExtractSettingDispaly; }
+        }
+
+        public object SelectedValidation
+        {
+            get { return _selectedValidation; }
         }
 
         public List<ExtractSetting> ExtractSettingsList
@@ -250,6 +257,16 @@ namespace PalladiumDwh.ClientApp.Views
             }
         }
 
+        public object ClientExtractsValidationErrors
+        {
+            get { return _clientExtractsValidationErrors; }
+            set
+            {
+                _clientExtractsValidationErrors = value;
+                LoadClientExtractsValidationErrors(_clientExtractsValidationErrors);
+            }
+        }
+
         public void ClearExtractSettingsList()
         {
             listViewExtractList.Items.Clear();
@@ -276,6 +293,7 @@ namespace PalladiumDwh.ClientApp.Views
         {
             ClearClientExtracts();
             dataGridViewExtractDetail.DataSource = clientExtracts;
+            
         }
 
         public void ClearClientExtractsValidations()
@@ -287,7 +305,20 @@ namespace PalladiumDwh.ClientApp.Views
         {
             ClearClientExtractsValidations();
             dataGridViewExtractValidations.DataSource = clientExtractsValidations;
+            dataGridViewExtractValidations.ClearSelection();
         }
+
+        public void ClearClientExtractsValidationErrors()
+        {
+            dataGridViewValidationDetails.DataSource = null;
+            dataGridViewValidationDetails.Rows.Clear();
+        }
+        private void LoadClientExtractsValidationErrors(object clientExtractsValidationErrors)
+        {
+            ClearClientExtractsValidationErrors();
+            dataGridViewValidationDetails.DataSource = clientExtractsValidationErrors;
+        }
+
         #endregion
 
         private async void Dashboard_Load(object sender, EventArgs e)
@@ -506,7 +537,16 @@ namespace PalladiumDwh.ClientApp.Views
 
         private void dataGridViewExtractValidations_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (dataGridViewExtractValidations.SelectedRows.Count != 0)
+            {
+                _selectedValidation = dataGridViewExtractValidations.SelectedRows[0].DataBoundItem;
+                Presenter.LoadExtractDetailValidationErrors();
+            }
+        }
 
+        private void dataGridViewExtractValidations_SelectionChanged(object sender, EventArgs e)
+        {
+          
         }
     }
 }

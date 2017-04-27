@@ -37,7 +37,6 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
         public virtual DbSet<TempPatientExtractError> TempPatientExtractErrors { get; set; }
         public virtual DbSet<TempPatientExtractErrorSummary> TempPatientExtractsErrorSummaries { get; set; }
 
-
         public virtual DbSet<ClientFacility> ClientFacilities { get; set; }
 
         public virtual DbSet<ClientPatientExtract> ClientPatientExtracts { get; set; }
@@ -102,7 +101,6 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
                 .HasMany(c => c.TempPatientExtractErrorSummaries)
                 .WithRequired()
                 .HasForeignKey(f => new { f.RecordId });
-
         }
     }
 }

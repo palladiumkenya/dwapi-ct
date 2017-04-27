@@ -12,6 +12,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 
@@ -382,11 +383,60 @@ namespace PalladiumDwh.ClientApp.Presenters
                 default:
                 {
                     View.ClientExtracts = _clientPatientExtractRepository.GetAll(1, 100).ToList();
-                    View.ClientExtractsValidations=_tempPatientExtractRepository.GetAll(1, 100).ToList();
+                    View.ClientExtractsValidations = _tempPatientExtractRepository.GetAll(1, 100).ToList(); ;
                     break;
                 }
             }
 
+        }
+
+        public void LoadExtractDetailValidationErrors()
+        {
+            switch (View.SelectedExtractSetting)
+            {
+                case "TempPatientStatusExtract":
+                {
+                    View.ClientExtracts = _clientPatientStatusExtractRepository.GetAll(1, 100).ToList();
+                    break;
+                }
+                case "TempPatientArtExtract":
+                {
+                    View.ClientExtracts = _clientPatientArtExtractRepository.GetAll(1, 100).ToList();
+                    break;
+                }
+                case "TempPatientBaselinesExtract":
+                {
+                    View.ClientExtracts = _clientPatientBaselinesExtractRepository.GetAll(1, 100).ToList();
+                    break;
+                }
+
+                case "TempPatientVisitExtract":
+                {
+                    View.ClientExtracts = _clientPatientVisitExtractRepository.GetAll(1, 50).ToList();
+                    break;
+                }
+                case "TempPatientPharmacyExtract ":
+                {
+                    View.ClientExtracts = _clientPatientPharmacyExtractRepository.GetAll(1, 50).ToList();
+                    break;
+                }
+
+                case "TempPatientLaboratoryExtract ":
+                {
+                    View.ClientExtracts = _clientPatientLaboratoryExtractRepository.GetAll(1, 50).ToList();
+                    break;
+                }
+                default:
+                {
+                    var selected= View.SelectedValidation;
+                    if (null != selected)
+                    {
+                        var extract = (TempPatientExtractError) selected;
+                        View.ClientExtractsValidationErrors = extract.TempPatientExtractErrorSummaries.ToList();
+                    }
+                    break;
+                }
+            }
         }
 
         //TODO: consider Parallel processing

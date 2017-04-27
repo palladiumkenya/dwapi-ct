@@ -671,10 +671,14 @@
             this.dataGridViewExtractValidations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewExtractValidations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewExtractValidations.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewExtractValidations.MultiSelect = false;
             this.dataGridViewExtractValidations.Name = "dataGridViewExtractValidations";
+            this.dataGridViewExtractValidations.ReadOnly = true;
+            this.dataGridViewExtractValidations.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewExtractValidations.Size = new System.Drawing.Size(832, 84);
             this.dataGridViewExtractValidations.TabIndex = 0;
             this.dataGridViewExtractValidations.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewExtractValidations_CellContentClick);
+            this.dataGridViewExtractValidations.SelectionChanged += new System.EventHandler(this.dataGridViewExtractValidations_SelectionChanged);
             // 
             // panel2
             // 

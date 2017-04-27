@@ -25,6 +25,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         #region Extracts Detail
         void LoadExtractList();
         void LoadExtractDetail();
+        void LoadExtractDetailValidationErrors();
         void SendExtracts();
         Task SendExtractsInParallel();
         #endregion

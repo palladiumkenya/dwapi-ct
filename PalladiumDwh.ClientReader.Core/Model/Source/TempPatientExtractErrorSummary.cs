@@ -14,7 +14,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string Field { get; set; }
         public string Type { get; set; }
         public string Summary { get; set; }
-        public string DateGenerated { get; set; }
+        public DateTime? DateGenerated { get; set; }
         public int? PatientPK { get; set; }
         public string PatientID { get; set; }
         public int? FacilityId { get; set; }

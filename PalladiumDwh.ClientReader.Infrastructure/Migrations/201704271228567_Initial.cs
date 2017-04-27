@@ -3,7 +3,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class retreat : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -333,11 +333,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
                         LastVisit = c.DateTime(),
                         ExitReason = c.String(maxLength: 150),
                         ExitDate = c.DateTime(),
-                        PatientPK = c.Int(nullable: false),
+                        PatientPK = c.Int(),
                         PatientID = c.String(maxLength: 150),
                         FacilityId = c.Int(),
-                        SiteCode = c.Int(nullable: false),
+                        SiteCode = c.Int(),
                         DateExtracted = c.DateTime(nullable: false),
+                        CheckError = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -370,11 +371,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
                         m6CD4Date = c.DateTime(),
                         Emr = c.String(maxLength: 150),
                         Project = c.String(maxLength: 150),
-                        PatientPK = c.Int(nullable: false),
+                        PatientPK = c.Int(),
                         PatientID = c.String(maxLength: 150),
                         FacilityId = c.Int(),
-                        SiteCode = c.Int(nullable: false),
+                        SiteCode = c.Int(),
                         DateExtracted = c.DateTime(nullable: false),
+                        CheckError = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -407,11 +409,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
                         StatusAtTBClinic = c.String(maxLength: 150),
                         Emr = c.String(maxLength: 150),
                         Project = c.String(maxLength: 150),
-                        PatientPK = c.Int(nullable: false),
+                        PatientPK = c.Int(),
                         PatientID = c.String(maxLength: 150),
                         FacilityId = c.Int(),
-                        SiteCode = c.Int(nullable: false),
+                        SiteCode = c.Int(),
                         DateExtracted = c.DateTime(nullable: false),
+                        CheckError = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -430,11 +433,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
                         TestName = c.String(maxLength: 150),
                         EnrollmentTest = c.Int(),
                         TestResult = c.String(maxLength: 150),
-                        PatientPK = c.Int(nullable: false),
+                        PatientPK = c.Int(),
                         PatientID = c.String(maxLength: 150),
                         FacilityId = c.Int(),
-                        SiteCode = c.Int(nullable: false),
+                        SiteCode = c.Int(),
                         DateExtracted = c.DateTime(nullable: false),
+                        CheckError = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -455,11 +459,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
                         ProphylaxisType = c.String(maxLength: 150),
                         Emr = c.String(maxLength: 150),
                         Project = c.String(maxLength: 150),
-                        PatientPK = c.Int(nullable: false),
+                        PatientPK = c.Int(),
                         PatientID = c.String(maxLength: 150),
                         FacilityId = c.Int(),
-                        SiteCode = c.Int(nullable: false),
+                        SiteCode = c.Int(),
                         DateExtracted = c.DateTime(nullable: false),
+                        CheckError = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -474,11 +479,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
                         ExitDescription = c.String(maxLength: 150),
                         ExitDate = c.DateTime(),
                         ExitReason = c.String(maxLength: 150),
-                        PatientPK = c.Int(nullable: false),
+                        PatientPK = c.Int(),
                         PatientID = c.String(maxLength: 150),
                         FacilityId = c.Int(),
-                        SiteCode = c.Int(nullable: false),
+                        SiteCode = c.Int(),
                         DateExtracted = c.DateTime(nullable: false),
+                        CheckError = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -516,11 +522,38 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
                         PwP = c.String(maxLength: 150),
                         GestationAge = c.Decimal(precision: 18, scale: 2),
                         NextAppointmentDate = c.DateTime(),
-                        PatientPK = c.Int(nullable: false),
+                        PatientPK = c.Int(),
                         PatientID = c.String(maxLength: 150),
                         FacilityId = c.Int(),
-                        SiteCode = c.Int(nullable: false),
+                        SiteCode = c.Int(),
                         DateExtracted = c.DateTime(nullable: false),
+                        CheckError = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.ValidationError",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        ValidatorId = c.Guid(nullable: false),
+                        RecordId = c.Guid(nullable: false),
+                        DateGenerated = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Validator", t => t.ValidatorId, cascadeDelete: true)
+                .Index(t => t.ValidatorId);
+            
+            CreateTable(
+                "dbo.Validator",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Extract = c.String(maxLength: 150),
+                        Field = c.String(maxLength: 150),
+                        Type = c.String(maxLength: 150),
+                        Logic = c.String(maxLength: 150),
+                        Summary = c.String(maxLength: 150),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -528,6 +561,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.ValidationError", "ValidatorId", "dbo.Validator");
             DropForeignKey("dbo.EMR", "ProjectId", "dbo.Project");
             DropForeignKey("dbo.ExtractSetting", "EmrId", "dbo.EMR");
             DropForeignKey("dbo.PatientVisitExtract", new[] { "PatientPK", "SiteCode" }, "dbo.PatientExtract");
@@ -536,6 +570,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
             DropForeignKey("dbo.PatientLaboratoryExtract", new[] { "PatientPK", "SiteCode" }, "dbo.PatientExtract");
             DropForeignKey("dbo.PatientBaselinesExtract", new[] { "PatientPK", "SiteCode" }, "dbo.PatientExtract");
             DropForeignKey("dbo.PatientArtExtract", new[] { "PatientPK", "SiteCode" }, "dbo.PatientExtract");
+            DropIndex("dbo.ValidationError", new[] { "ValidatorId" });
             DropIndex("dbo.ExtractSetting", new[] { "EmrId" });
             DropIndex("dbo.EMR", new[] { "ProjectId" });
             DropIndex("dbo.PatientVisitExtract", new[] { "PatientPK", "SiteCode" });
@@ -544,6 +579,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
             DropIndex("dbo.PatientLaboratoryExtract", new[] { "PatientPK", "SiteCode" });
             DropIndex("dbo.PatientBaselinesExtract", new[] { "PatientPK", "SiteCode" });
             DropIndex("dbo.PatientArtExtract", new[] { "PatientPK", "SiteCode" });
+            DropTable("dbo.Validator");
+            DropTable("dbo.ValidationError");
             DropTable("dbo.TempPatientVisitExtract");
             DropTable("dbo.TempPatientStatusExtract");
             DropTable("dbo.TempPatientPharmacyExtract");

@@ -7,13 +7,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class retreat : IMigrationMetadata
+    public sealed partial class InitialPatientValidations : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(retreat));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialPatientValidations));
         
         string IMigrationMetadata.Id
         {
-            get { return "201704240657079_retreat"; }
+            get { return "201704271230402_InitialPatientValidations"; }
         }
         
         string IMigrationMetadata.Source
