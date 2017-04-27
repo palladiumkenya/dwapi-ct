@@ -70,6 +70,11 @@
             this.labelExtractData = new System.Windows.Forms.Label();
             this.panelExtractDetail = new System.Windows.Forms.Panel();
             this.splitContainerExtractsSummary = new System.Windows.Forms.SplitContainer();
+            this.panelExtContent = new System.Windows.Forms.Panel();
+            this.listViewExtractList = new System.Windows.Forms.ListView();
+            this.panelExTop = new System.Windows.Forms.Panel();
+            this.labelHeader = new System.Windows.Forms.Label();
+            this.panelExBottom = new System.Windows.Forms.Panel();
             this.tabControlExtracts = new System.Windows.Forms.TabControl();
             this.tabPageRecords = new System.Windows.Forms.TabPage();
             this.panelExtractDataDetail = new System.Windows.Forms.Panel();
@@ -80,17 +85,13 @@
             this.panelValidationSummary = new System.Windows.Forms.Panel();
             this.splitContainerValidationSummary = new System.Windows.Forms.SplitContainer();
             this.dataGridViewExtractValidations = new System.Windows.Forms.DataGridView();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelValidationSummaryNav = new System.Windows.Forms.Panel();
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
-            this.labelHeader = new System.Windows.Forms.Label();
-            this.panelExtContent = new System.Windows.Forms.Panel();
-            this.listViewExtractList = new System.Windows.Forms.ListView();
-            this.panelExTop = new System.Windows.Forms.Panel();
-            this.panelExBottom = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridViewValidationDetails = new System.Windows.Forms.DataGridView();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -104,6 +105,8 @@
             this.splitContainerExtractsSummary.Panel1.SuspendLayout();
             this.splitContainerExtractsSummary.Panel2.SuspendLayout();
             this.splitContainerExtractsSummary.SuspendLayout();
+            this.panelExtContent.SuspendLayout();
+            this.panelExTop.SuspendLayout();
             this.tabControlExtracts.SuspendLayout();
             this.tabPageRecords.SuspendLayout();
             this.panelExtractDataDetail.SuspendLayout();
@@ -120,8 +123,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractValidations)).BeginInit();
             this.panel2.SuspendLayout();
             this.panelExtractDataDetailTop.SuspendLayout();
-            this.panelExtContent.SuspendLayout();
-            this.panelExTop.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewValidationDetails)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStripDashboard
@@ -204,8 +207,8 @@
             // statusStripDashboard
             // 
             this.statusStripDashboard.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelDashboard,
-            this.toolStripProgressBarDashboard});
+            this.toolStripProgressBarDashboard,
+            this.toolStripStatusLabelDashboard});
             this.statusStripDashboard.Location = new System.Drawing.Point(0, 639);
             this.statusStripDashboard.Name = "statusStripDashboard";
             this.statusStripDashboard.Size = new System.Drawing.Size(984, 22);
@@ -512,6 +515,53 @@
             this.splitContainerExtractsSummary.SplitterDistance = 134;
             this.splitContainerExtractsSummary.TabIndex = 3;
             // 
+            // panelExtContent
+            // 
+            this.panelExtContent.Controls.Add(this.listViewExtractList);
+            this.panelExtContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelExtContent.Location = new System.Drawing.Point(0, 43);
+            this.panelExtContent.Name = "panelExtContent";
+            this.panelExtContent.Padding = new System.Windows.Forms.Padding(5);
+            this.panelExtContent.Size = new System.Drawing.Size(134, 160);
+            this.panelExtContent.TabIndex = 6;
+            // 
+            // listViewExtractList
+            // 
+            this.listViewExtractList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewExtractList.Location = new System.Drawing.Point(5, 5);
+            this.listViewExtractList.Name = "listViewExtractList";
+            this.listViewExtractList.Size = new System.Drawing.Size(124, 150);
+            this.listViewExtractList.TabIndex = 1;
+            this.listViewExtractList.UseCompatibleStateImageBehavior = false;
+            this.listViewExtractList.View = System.Windows.Forms.View.List;
+            this.listViewExtractList.SelectedIndexChanged += new System.EventHandler(this.listViewExtractList_SelectedIndexChanged);
+            // 
+            // panelExTop
+            // 
+            this.panelExTop.Controls.Add(this.labelHeader);
+            this.panelExTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelExTop.Location = new System.Drawing.Point(0, 0);
+            this.panelExTop.Name = "panelExTop";
+            this.panelExTop.Size = new System.Drawing.Size(134, 43);
+            this.panelExTop.TabIndex = 4;
+            // 
+            // labelHeader
+            // 
+            this.labelHeader.AutoSize = true;
+            this.labelHeader.Location = new System.Drawing.Point(3, 27);
+            this.labelHeader.Name = "labelHeader";
+            this.labelHeader.Size = new System.Drawing.Size(45, 13);
+            this.labelHeader.TabIndex = 0;
+            this.labelHeader.Text = "Extracts";
+            // 
+            // panelExBottom
+            // 
+            this.panelExBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelExBottom.Location = new System.Drawing.Point(0, 203);
+            this.panelExBottom.Name = "panelExBottom";
+            this.panelExBottom.Size = new System.Drawing.Size(134, 68);
+            this.panelExBottom.TabIndex = 5;
+            // 
             // tabControlExtracts
             // 
             this.tabControlExtracts.Controls.Add(this.tabPageRecords);
@@ -601,6 +651,7 @@
             this.splitContainerValidationSummary.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerValidationSummary.Location = new System.Drawing.Point(0, 18);
             this.splitContainerValidationSummary.Name = "splitContainerValidationSummary";
+            this.splitContainerValidationSummary.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainerValidationSummary.Panel1
             // 
@@ -608,10 +659,10 @@
             // 
             // splitContainerValidationSummary.Panel2
             // 
-            this.splitContainerValidationSummary.Panel2.Controls.Add(this.checkedListBox1);
+            this.splitContainerValidationSummary.Panel2.Controls.Add(this.panel1);
             this.splitContainerValidationSummary.Panel2.Controls.Add(this.panel2);
             this.splitContainerValidationSummary.Size = new System.Drawing.Size(832, 221);
-            this.splitContainerValidationSummary.SplitterDistance = 642;
+            this.splitContainerValidationSummary.SplitterDistance = 84;
             this.splitContainerValidationSummary.TabIndex = 4;
             // 
             // dataGridViewExtractValidations
@@ -621,17 +672,9 @@
             this.dataGridViewExtractValidations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewExtractValidations.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewExtractValidations.Name = "dataGridViewExtractValidations";
-            this.dataGridViewExtractValidations.Size = new System.Drawing.Size(642, 221);
+            this.dataGridViewExtractValidations.Size = new System.Drawing.Size(832, 84);
             this.dataGridViewExtractValidations.TabIndex = 0;
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(0, 32);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(186, 189);
-            this.checkedListBox1.TabIndex = 8;
+            this.dataGridViewExtractValidations.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewExtractValidations_CellContentClick);
             // 
             // panel2
             // 
@@ -639,13 +682,13 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(186, 32);
+            this.panel2.Size = new System.Drawing.Size(832, 20);
             this.panel2.TabIndex = 7;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(3, 2);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 5;
@@ -678,52 +721,24 @@
             this.labelExtractDataDetail.TabIndex = 0;
             this.labelExtractDataDetail.Text = "Extract Details";
             // 
-            // labelHeader
+            // panel1
             // 
-            this.labelHeader.AutoSize = true;
-            this.labelHeader.Location = new System.Drawing.Point(3, 27);
-            this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(45, 13);
-            this.labelHeader.TabIndex = 0;
-            this.labelHeader.Text = "Extracts";
+            this.panel1.Controls.Add(this.dataGridViewValidationDetails);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 20);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(832, 113);
+            this.panel1.TabIndex = 9;
             // 
-            // panelExtContent
+            // dataGridViewValidationDetails
             // 
-            this.panelExtContent.Controls.Add(this.listViewExtractList);
-            this.panelExtContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelExtContent.Location = new System.Drawing.Point(0, 43);
-            this.panelExtContent.Name = "panelExtContent";
-            this.panelExtContent.Padding = new System.Windows.Forms.Padding(5);
-            this.panelExtContent.Size = new System.Drawing.Size(134, 160);
-            this.panelExtContent.TabIndex = 6;
-            // 
-            // listViewExtractList
-            // 
-            this.listViewExtractList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewExtractList.Location = new System.Drawing.Point(5, 5);
-            this.listViewExtractList.Name = "listViewExtractList";
-            this.listViewExtractList.Size = new System.Drawing.Size(124, 150);
-            this.listViewExtractList.TabIndex = 1;
-            this.listViewExtractList.UseCompatibleStateImageBehavior = false;
-            this.listViewExtractList.View = System.Windows.Forms.View.List;
-            this.listViewExtractList.SelectedIndexChanged += new System.EventHandler(this.listViewExtractList_SelectedIndexChanged);
-            // 
-            // panelExTop
-            // 
-            this.panelExTop.Controls.Add(this.labelHeader);
-            this.panelExTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelExTop.Location = new System.Drawing.Point(0, 0);
-            this.panelExTop.Name = "panelExTop";
-            this.panelExTop.Size = new System.Drawing.Size(134, 43);
-            this.panelExTop.TabIndex = 4;
-            // 
-            // panelExBottom
-            // 
-            this.panelExBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelExBottom.Location = new System.Drawing.Point(0, 203);
-            this.panelExBottom.Name = "panelExBottom";
-            this.panelExBottom.Size = new System.Drawing.Size(134, 68);
-            this.panelExBottom.TabIndex = 5;
+            this.dataGridViewValidationDetails.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewValidationDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewValidationDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewValidationDetails.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewValidationDetails.Name = "dataGridViewValidationDetails";
+            this.dataGridViewValidationDetails.Size = new System.Drawing.Size(832, 113);
+            this.dataGridViewValidationDetails.TabIndex = 1;
             // 
             // Dashboard
             // 
@@ -760,6 +775,9 @@
             this.splitContainerExtractsSummary.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerExtractsSummary)).EndInit();
             this.splitContainerExtractsSummary.ResumeLayout(false);
+            this.panelExtContent.ResumeLayout(false);
+            this.panelExTop.ResumeLayout(false);
+            this.panelExTop.PerformLayout();
             this.tabControlExtracts.ResumeLayout(false);
             this.tabPageRecords.ResumeLayout(false);
             this.panelExtractDataDetail.ResumeLayout(false);
@@ -778,9 +796,8 @@
             this.panel2.PerformLayout();
             this.panelExtractDataDetailTop.ResumeLayout(false);
             this.panelExtractDataDetailTop.PerformLayout();
-            this.panelExtContent.ResumeLayout(false);
-            this.panelExTop.ResumeLayout(false);
-            this.panelExTop.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewValidationDetails)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -842,7 +859,6 @@
         private System.Windows.Forms.Panel panelValidationSummary;
         private System.Windows.Forms.SplitContainer splitContainerValidationSummary;
         private System.Windows.Forms.DataGridView dataGridViewExtractValidations;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelValidationSummaryNav;
@@ -851,5 +867,7 @@
         private System.Windows.Forms.Panel panelExTop;
         private System.Windows.Forms.Label labelHeader;
         private System.Windows.Forms.Panel panelExBottom;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridView dataGridViewValidationDetails;
     }
 }

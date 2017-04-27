@@ -101,6 +101,13 @@
     <Compile Include="Interfaces\Profiles\IClientPatientPharmacyProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientStatusProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientVisitProfile.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientArtExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientBaselinesExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientLaboratoryExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientPharmacyExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientStatusExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientVisitExtractRepository.cs" />
     <Compile Include="Interfaces\Repository\IClientPatientVisitExtractRepository.cs" />
     <Compile Include="Interfaces\Repository\IClientPatientArtExtractRepository.cs" />
     <Compile Include="Interfaces\Repository\IClientPatientBaselinesExtractRepository.cs" />
@@ -111,6 +118,7 @@
     <Compile Include="Interfaces\Repository\IClientExtractRepository.cs" />
     <Compile Include="Interfaces\Repository\IExtractSettingRepository.cs" />
     <Compile Include="Interfaces\Repository\IEMRRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempExtractRepository.cs" />
     <Compile Include="Interfaces\Repository\IValidatorRepository.cs" />
     <Compile Include="Interfaces\Repository\IProjectRepository.cs" />
     <Compile Include="Interfaces\Repository\IClientRepository.cs" />
@@ -145,6 +153,8 @@
     <Compile Include="Model\ProcessStatus.cs" />
     <Compile Include="Model\PushResponse.cs" />
     <Compile Include="Model\RunSummary.cs" />
+    <Compile Include="Model\Source\TempPatientExtractError.cs" />
+    <Compile Include="Model\Source\TempPatientExtractErrorSummary.cs" />
     <Compile Include="Model\SyncSummary.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\Profile\ClientExtractProfile.cs" />

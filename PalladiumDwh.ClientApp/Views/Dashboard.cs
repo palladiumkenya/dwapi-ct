@@ -41,6 +41,8 @@ namespace PalladiumDwh.ClientApp.Views
         private  IClientPatientStatusExtractRepository _clientPatientStatusExtractRepository;
         private  IClientPatientVisitExtractRepository _clientPatientVisitExtractRepository;
 
+        private ITempPatientExtractRepository _tempPatientExtractRepository;
+
         private  IProfileManager _profileManager;
         private  IPushProfileService _pushService;
         private List<string> _eventSummaries = new List<string>();
@@ -49,6 +51,7 @@ namespace PalladiumDwh.ClientApp.Views
         private string  _selectedExtractSetting;
         private  string _selectedExtractSettingDispaly;
         private object _clientExtracts;
+        private object _clientExtractsValidations;
 
         public Dashboard()
         {
@@ -237,6 +240,16 @@ namespace PalladiumDwh.ClientApp.Views
             }
         }
 
+        public object ClientExtractsValidations
+        {
+            get { return _clientExtractsValidations; }
+            set
+            {
+                _clientExtractsValidations = value;
+                LoadClientExtractsValidations(_clientExtractsValidations);
+            }
+        }
+
         public void ClearExtractSettingsList()
         {
             listViewExtractList.Items.Clear();
@@ -265,6 +278,16 @@ namespace PalladiumDwh.ClientApp.Views
             dataGridViewExtractDetail.DataSource = clientExtracts;
         }
 
+        public void ClearClientExtractsValidations()
+        {
+            dataGridViewExtractValidations.DataSource = null;
+            dataGridViewExtractValidations.Rows.Clear();
+        }
+        private void LoadClientExtractsValidations(object clientExtractsValidations)
+        {
+            ClearClientExtractsValidations();
+            dataGridViewExtractValidations.DataSource = clientExtractsValidations;
+        }
         #endregion
 
         private async void Dashboard_Load(object sender, EventArgs e)
@@ -435,8 +458,9 @@ namespace PalladiumDwh.ClientApp.Views
             _clientPatientLaboratoryExtractRepository = Program.IOC.GetInstance<IClientPatientLaboratoryExtractRepository>(); 
             _clientPatientPharmacyExtractRepository = Program.IOC.GetInstance<IClientPatientPharmacyExtractRepository>(); 
             _clientPatientStatusExtractRepository = Program.IOC.GetInstance<IClientPatientStatusExtractRepository>(); 
-            _clientPatientVisitExtractRepository = Program.IOC.GetInstance<IClientPatientVisitExtractRepository>(); 
+            _clientPatientVisitExtractRepository = Program.IOC.GetInstance<IClientPatientVisitExtractRepository>();
 
+            _tempPatientExtractRepository = Program.IOC.GetInstance<ITempPatientExtractRepository>();
 
             _profileManager = Program.IOC.GetInstance<IProfileManager>();
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
@@ -444,7 +468,9 @@ namespace PalladiumDwh.ClientApp.Views
 
             Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository,
                 _profileManager, _pushService,
-                _clientPatientArtExtractRepository,_clientPatientBaselinesExtractRepository,_clientPatientExtractRepository,_clientPatientLaboratoryExtractRepository,_clientPatientPharmacyExtractRepository,_clientPatientStatusExtractRepository,_clientPatientVisitExtractRepository);
+                _clientPatientArtExtractRepository,_clientPatientBaselinesExtractRepository,_clientPatientExtractRepository,_clientPatientLaboratoryExtractRepository,_clientPatientPharmacyExtractRepository,_clientPatientStatusExtractRepository,_clientPatientVisitExtractRepository,
+                _tempPatientExtractRepository);
+
             Presenter.Initialize();
             Presenter.InitializeEmrInfo();
             Presenter.InitializeExtracts();
@@ -476,6 +502,11 @@ namespace PalladiumDwh.ClientApp.Views
                 _selectedExtractSetting = listViewExtractList.SelectedItems[0].SubItems[1].Text;
                 Presenter.LoadExtractDetail();
             }
+        }
+
+        private void dataGridViewExtractValidations_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -146,13 +146,21 @@
     <Compile Include="Data\Command\LoadPatientExtractCommand.cs" />
     <Compile Include="Data\Command\SyncCommand.cs" />
     <Compile Include="Data\DWAPIRemoteDBInitializer .cs" />
+    <Compile Include="Data\Repository\TempExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientExtractRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientArtExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientPatientArtExtractRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientBaselinesExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientPatientBaselinesExtractRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientPatientExtractRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientLaboratoryExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientPatientLaboratoryExtractRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientPharmacyExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientPatientPharmacyExtractRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientStatusExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientPatientStatusExtractRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientVisitExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientPatientVisitExtractRepository.cs" />
     <Compile Include="Data\Repository\ValidatorRepository.cs" />
     <Compile Include="Data\Repository\ProjectRepository.cs" />
@@ -183,10 +191,19 @@
     <Compile Include="Migrations\201704261604444_allowNullsInTemp.Designer.cs">
       <DependentUpon>201704261604444_allowNullsInTemp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704271020383_extractValidations.cs" />
+    <Compile Include="Migrations\201704271020383_extractValidations.Designer.cs">
+      <DependentUpon>201704271020383_extractValidations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Scripts.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PalladiumDwh.ClientReader.Core\PalladiumDwh.ClientReader.Core.csproj">
@@ -222,6 +239,13 @@
     <EmbeddedResource Include="Migrations\201704261604444_allowNullsInTemp.resx">
       <DependentUpon>201704261604444_allowNullsInTemp.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704271020383_extractValidations.resx">
+      <DependentUpon>201704271020383_extractValidations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Scripts.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Scripts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -237,6 +261,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="CustomScripts\vTempPatientExtractError.sql" />
+    <None Include="CustomScripts\vTempPatientExtractErrorSummary.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

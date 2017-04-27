@@ -223,6 +223,7 @@
     <Compile Include="Data\Command\SyncPatientStatusExtractCommandTests.cs" />
     <Compile Include="Data\Command\SyncPatientVisitExtractCommandTests.cs" />
     <Compile Include="Data\Command\SyncPatientExtractCommandTests.cs" />
+    <Compile Include="Data\Repository\TempExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\ClientExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\ProjectRepositoryTests.cs" />
     <Compile Include="Data\Repository\EMRRepositoryTests.cs" />

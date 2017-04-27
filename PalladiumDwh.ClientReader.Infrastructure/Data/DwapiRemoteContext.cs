@@ -34,6 +34,10 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
         public virtual DbSet<Validator> Validators { get; set; }
         public virtual DbSet<ValidationError> ValidationErrors { get; set; }
 
+        public virtual DbSet<TempPatientExtractError> TempPatientExtractErrors { get; set; }
+        public virtual DbSet<TempPatientExtractErrorSummary> TempPatientExtractsErrorSummaries { get; set; }
+
+
         public virtual DbSet<ClientFacility> ClientFacilities { get; set; }
 
         public virtual DbSet<ClientPatientExtract> ClientPatientExtracts { get; set; }
@@ -93,6 +97,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
                 .HasMany(c => c.ValidationErrors)
                 .WithRequired()
                 .HasForeignKey(f => new { f.ValidatorId });
+
+            modelBuilder.Entity<TempPatientExtractError>()
+                .HasMany(c => c.TempPatientExtractErrorSummaries)
+                .WithRequired()
+                .HasForeignKey(f => new { f.RecordId });
+
         }
     }
 }

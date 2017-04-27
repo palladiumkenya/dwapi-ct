@@ -36,6 +36,8 @@ namespace PalladiumDwh.ClientApp.Presenters
         private readonly IClientPatientStatusExtractRepository _clientPatientStatusExtractRepository;
         private readonly IClientPatientVisitExtractRepository _clientPatientVisitExtractRepository;
 
+        private readonly ITempPatientExtractRepository _tempPatientExtractRepository;
+
         private long timeTaken = 0;
 
         private EmrViewModel _emrmodel;
@@ -46,8 +48,8 @@ namespace PalladiumDwh.ClientApp.Presenters
         public DashboardPresenter(IDashboardView view, IProjectRepository projectRepository, ISyncService syncService,
             IClientPatientRepository clientPatientRepository, IProfileManager profileManager,
             IPushProfileService pushService,
-            IClientPatientArtExtractRepository clientPatientArtExtractRepository, IClientPatientBaselinesExtractRepository clientPatientBaselinesExtractRepository, IClientPatientExtractRepository clientPatientExtractRepository, IClientPatientLaboratoryExtractRepository clientPatientLaboratoryExtractRepository, IClientPatientPharmacyExtractRepository clientPatientPharmacyExtractRepository, IClientPatientStatusExtractRepository clientPatientStatusExtractRepository, IClientPatientVisitExtractRepository clientPatientVisitExtractRepository
-
+            IClientPatientArtExtractRepository clientPatientArtExtractRepository, IClientPatientBaselinesExtractRepository clientPatientBaselinesExtractRepository, IClientPatientExtractRepository clientPatientExtractRepository, IClientPatientLaboratoryExtractRepository clientPatientLaboratoryExtractRepository, IClientPatientPharmacyExtractRepository clientPatientPharmacyExtractRepository, IClientPatientStatusExtractRepository clientPatientStatusExtractRepository, IClientPatientVisitExtractRepository clientPatientVisitExtractRepository,
+        ITempPatientExtractRepository tempPatientExtractRepository
 
 
             )
@@ -67,6 +69,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             _clientPatientStatusExtractRepository = clientPatientStatusExtractRepository;
             _clientPatientVisitExtractRepository = clientPatientVisitExtractRepository;
 
+            _tempPatientExtractRepository = tempPatientExtractRepository;
             _profileManager = profileManager;
             _pushService = pushService;
 
@@ -362,23 +365,24 @@ namespace PalladiumDwh.ClientApp.Presenters
 
                 case "TempPatientVisitExtract":
                 {
-                    View.ClientExtracts = _clientPatientVisitExtractRepository.GetAll(1, 100).ToList();
+                    View.ClientExtracts = _clientPatientVisitExtractRepository.GetAll(1, 50).ToList();
                     break;
                 }
                 case "TempPatientPharmacyExtract ":
                 {
-                    View.ClientExtracts = _clientPatientPharmacyExtractRepository.GetAll(1, 100).ToList();
+                    View.ClientExtracts = _clientPatientPharmacyExtractRepository.GetAll(1, 50).ToList();
                     break;
                 }
 
                 case "TempPatientLaboratoryExtract ":
                 {
-                    View.ClientExtracts = _clientPatientLaboratoryExtractRepository.GetAll(1, 100).ToList();
+                    View.ClientExtracts = _clientPatientLaboratoryExtractRepository.GetAll(1, 50).ToList();
                     break;
                 }
                 default:
                 {
                     View.ClientExtracts = _clientPatientExtractRepository.GetAll(1, 100).ToList();
+                    View.ClientExtractsValidations=_tempPatientExtractRepository.GetAll(1, 100).ToList();
                     break;
                 }
             }
