@@ -3,10 +3,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialAllValidations : DbMigration
+    public partial class InitialValidations : DbMigration
     {
         public override void Up()
         {
+            Sql(Scripts.vTempPatientExtractError);
+            Sql(Scripts.vTempPatientExtractErrorSummary);
             Sql(Scripts.vTempPatientArtExtractError);
             Sql(Scripts.vTempPatientArtExtractErrorSummary);
             Sql(Scripts.vTempPatientBaselinesExtractError);
@@ -23,6 +25,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
         
         public override void Down()
         {
+            Sql("DROP VIEW vTempPatientExtractErrorSummary;");
+            Sql("DROP VIEW vTempPatientExtractError;");
             Sql("DROP VIEW vTempPatientArtExtractErrorSummary");
             Sql("DROP VIEW vTempPatientArtExtractError");
             Sql("DROP VIEW vTempPatientBaselinesExtractErrorSummary");
