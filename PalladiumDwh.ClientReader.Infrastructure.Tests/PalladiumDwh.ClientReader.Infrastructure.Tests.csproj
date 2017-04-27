@@ -99,6 +99,9 @@
       <HintPath>..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
@@ -220,6 +223,7 @@
     <Compile Include="Data\Command\SyncPatientStatusExtractCommandTests.cs" />
     <Compile Include="Data\Command\SyncPatientVisitExtractCommandTests.cs" />
     <Compile Include="Data\Command\SyncPatientExtractCommandTests.cs" />
+    <Compile Include="Data\Repository\ClientExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\ProjectRepositoryTests.cs" />
     <Compile Include="Data\Repository\EMRRepositoryTests.cs" />
     <Compile Include="Data\Repository\ClientRepositoryTests.cs" />

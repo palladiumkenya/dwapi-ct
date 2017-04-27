@@ -86,6 +86,9 @@
       <HintPath>..\packages\Npgsql.3.2.0\lib\net451\Npgsql.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -143,6 +146,7 @@
     <Compile Include="Data\Command\LoadPatientExtractCommand.cs" />
     <Compile Include="Data\Command\SyncCommand.cs" />
     <Compile Include="Data\DWAPIRemoteDBInitializer .cs" />
+    <Compile Include="Data\Repository\ClientExtractRepository.cs" />
     <Compile Include="Data\Repository\ValidatorRepository.cs" />
     <Compile Include="Data\Repository\ProjectRepository.cs" />
     <Compile Include="Data\Repository\ExtractSettingRepository.cs" />

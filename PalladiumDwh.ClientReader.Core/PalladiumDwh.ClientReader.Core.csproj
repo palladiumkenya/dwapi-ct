@@ -42,6 +42,9 @@
       <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -98,6 +101,7 @@
     <Compile Include="Interfaces\Profiles\IClientPatientPharmacyProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientStatusProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientVisitProfile.cs" />
+    <Compile Include="Interfaces\Repository\IClientExtractRepository.cs" />
     <Compile Include="Interfaces\Repository\IExtractSettingRepository.cs" />
     <Compile Include="Interfaces\Repository\IEMRRepository.cs" />
     <Compile Include="Interfaces\Repository\IValidatorRepository.cs" />

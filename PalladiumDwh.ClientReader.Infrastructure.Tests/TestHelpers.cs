@@ -82,7 +82,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests
             }
             return patients;
         }
-
+        
         public static void RefershConnect(string key = "EMRDatabase")
         {
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
