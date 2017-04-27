@@ -277,6 +277,8 @@ namespace PalladiumDwh.ClientApp.Presenters
             }
         }
 
+      
+
         private  void View_EmrExtractLoaded(object sender, Events.EmrExtractLoadedEvent e)
         {
             View.ShowPleaseWait();
@@ -305,9 +307,18 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         #region Extracts Detail
 
+        public void LoadExtractList()
+        {
+            var list = View.ExtractSettings;
+            if(null!=list)
+                View.ExtractSettingsList = View.ExtractSettings;
+        }
+
         public void LoadExtractDetail()
         {
-           // _clientPatientExtracts = _clientPatientRepository.GetAll();
+            View.RecordsHeader = $"{View.SelectedExtractSettingDispaly} Records";
+            View.ValidtionHeader = $"{View.SelectedExtractSettingDispaly} Validation Summary";
+            // _clientPatientExtracts = _clientPatientRepository.GetAll();
 
         }
 

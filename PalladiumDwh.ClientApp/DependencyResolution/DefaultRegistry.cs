@@ -1,5 +1,6 @@
 using PalladiumDwh.ClientApp.Views;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using PalladiumDwh.ClientUploader.Core.Services;
@@ -28,6 +29,7 @@ namespace PalladiumDwh.ClientApp.DependencyResolution {
 
             For<DwapiRemoteContext>().Use<DwapiRemoteContext>()
                 .SelectConstructor(() => new DwapiRemoteContext());
+
 
             For<IPushProfileService>().Use<PushProfileService>()
                 .Ctor<string>("baseUrl").Is(Properties.Settings.Default.dwapiUrl);

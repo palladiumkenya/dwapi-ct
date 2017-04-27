@@ -117,7 +117,9 @@
     <Compile Include="Model\ExtractsViewModel.cs" />
     <Compile Include="Model\EmrViewModel.cs" />
     <Compile Include="Presenters\DashboardPresenter.cs" />
+    <Compile Include="Presenters\ExtractListPresenter.cs" />
     <Compile Include="Presenters\FeedBackPresenter.cs" />
+    <Compile Include="Presenters\IExtractListPresenter.cs" />
     <Compile Include="Presenters\IFeedBackPresenter.cs" />
     <Compile Include="Presenters\IDashboardPresenter.cs" />
     <Compile Include="Presenters\IOptionPresenter.cs" />
@@ -133,16 +135,24 @@
     <Compile Include="Views\Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ExtractListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ExtractListControl.Designer.cs">
+      <DependentUpon>ExtractListControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\FeedBack.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\FeedBack.Designer.cs">
       <DependentUpon>FeedBack.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\IExtractListView.cs" />
     <Compile Include="Views\IFeedBackView.cs" />
     <Compile Include="Views\IDashboardView.cs" />
     <Compile Include="Views\IOptionView.cs" />
     <Compile Include="Views\IStartupView.cs" />
+    <Compile Include="Views\IControlView.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\Options.cs">
       <SubType>Form</SubType>
@@ -168,6 +178,9 @@
     </Compile>
     <EmbeddedResource Include="Views\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ExtractListControl.resx">
+      <DependentUpon>ExtractListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FeedBack.resx">
       <DependentUpon>FeedBack.cs</DependentUpon>

@@ -101,6 +101,13 @@
     <Compile Include="Interfaces\Profiles\IClientPatientPharmacyProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientStatusProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientVisitProfile.cs" />
+    <Compile Include="Interfaces\Repository\IClientPatientVisitExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\IClientPatientArtExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\IClientPatientBaselinesExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\IClientPatientLaboratoryExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\IClientPatientPharmacyExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\IClientPatientStatusExtractRepository.cs" />
+    <Compile Include="Interfaces\Repository\IClientPatientExtractRepository.cs" />
     <Compile Include="Interfaces\Repository\IClientExtractRepository.cs" />
     <Compile Include="Interfaces\Repository\IExtractSettingRepository.cs" />
     <Compile Include="Interfaces\Repository\IEMRRepository.cs" />

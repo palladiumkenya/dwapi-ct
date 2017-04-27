@@ -18,7 +18,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Repository
     {
         private DwapiRemoteContext _context;
         private List<ClientPatientExtract> _clientPatientExtracts;
-        private IClientExtractRepository<ClientPatientExtract> _repository;
+        private IClientPatientExtractRepository _repository;
 
         [SetUp]
         public void SetUp()
@@ -27,7 +27,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Repository
             _clientPatientExtracts = Builder<ClientPatientExtract>.CreateListOfSize(10).Build().ToList();
             TestHelpers.CreateTestData(_context, _clientPatientExtracts);
 
-            _repository = new ClientExtractRepository<ClientPatientExtract>(_context);
+            _repository = new ClientPatientExtractRepository(_context);
         }
 
         [Test]

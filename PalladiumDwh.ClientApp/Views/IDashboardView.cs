@@ -36,6 +36,16 @@ namespace PalladiumDwh.ClientApp.Views
         void ClearExtracts();
         void UpdateStatus(ExtractsViewModel viewModel);
         #endregion
+
+        #region ExtractsList
+        string SelectedExtractSetting { get; }
+        string SelectedExtractSettingDispaly { get; }
+        List<ExtractSetting> ExtractSettingsList { get; set; }
+        string RecordsHeader { get; set; }
+        string ValidtionHeader{ get; set; }
+        void ClearExtractSettingsList();
+        #endregion
+
         List<string> EventSummaries { get; set; }
         string Status { get; set; }
         bool ConfirmAction(string action, string actionTilte);

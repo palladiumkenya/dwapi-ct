@@ -69,31 +69,28 @@
             this.panelExtractDataTop = new System.Windows.Forms.Panel();
             this.labelExtractData = new System.Windows.Forms.Label();
             this.panelExtractDetail = new System.Windows.Forms.Panel();
-            this.panelExtractDataDetail = new System.Windows.Forms.Panel();
-            this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
-            this.labelExtractDataDetail = new System.Windows.Forms.Label();
             this.splitContainerExtractsSummary = new System.Windows.Forms.SplitContainer();
             this.tabControlExtracts = new System.Windows.Forms.TabControl();
             this.tabPageRecords = new System.Windows.Forms.TabPage();
-            this.tabPageValidationSummary = new System.Windows.Forms.TabPage();
-            this.panelRecordsNav = new System.Windows.Forms.Panel();
+            this.panelExtractDataDetail = new System.Windows.Forms.Panel();
             this.splitContainerRecords = new System.Windows.Forms.SplitContainer();
             this.dataGridViewExtractDetail = new System.Windows.Forms.DataGridView();
-            this.checkedListBoxSummary = new System.Windows.Forms.CheckedListBox();
-            this.panelSummaryTop = new System.Windows.Forms.Panel();
-            this.labelSummary = new System.Windows.Forms.Label();
+            this.panelRecordsNav = new System.Windows.Forms.Panel();
+            this.tabPageValidationSummary = new System.Windows.Forms.TabPage();
             this.panelValidationSummary = new System.Windows.Forms.Panel();
             this.splitContainerValidationSummary = new System.Windows.Forms.SplitContainer();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewExtractValidations = new System.Windows.Forms.DataGridView();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelValidationSummaryNav = new System.Windows.Forms.Panel();
-            this.panelExtractListTop = new System.Windows.Forms.Panel();
-            this.panelExtractListAction = new System.Windows.Forms.Panel();
-            this.panelExtractList = new System.Windows.Forms.Panel();
+            this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
+            this.labelExtractDataDetail = new System.Windows.Forms.Label();
+            this.labelHeader = new System.Windows.Forms.Label();
+            this.panelExtContent = new System.Windows.Forms.Panel();
             this.listViewExtractList = new System.Windows.Forms.ListView();
-            this.labelExtractListHeader = new System.Windows.Forms.Label();
+            this.panelExTop = new System.Windows.Forms.Panel();
+            this.panelExBottom = new System.Windows.Forms.Panel();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -103,30 +100,28 @@
             this.panelExtractAction.SuspendLayout();
             this.panelExtractDataTop.SuspendLayout();
             this.panelExtractDetail.SuspendLayout();
-            this.panelExtractDataDetail.SuspendLayout();
-            this.panelExtractDataDetailTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerExtractsSummary)).BeginInit();
             this.splitContainerExtractsSummary.Panel1.SuspendLayout();
             this.splitContainerExtractsSummary.Panel2.SuspendLayout();
             this.splitContainerExtractsSummary.SuspendLayout();
             this.tabControlExtracts.SuspendLayout();
             this.tabPageRecords.SuspendLayout();
-            this.tabPageValidationSummary.SuspendLayout();
+            this.panelExtractDataDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRecords)).BeginInit();
             this.splitContainerRecords.Panel1.SuspendLayout();
-            this.splitContainerRecords.Panel2.SuspendLayout();
             this.splitContainerRecords.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractDetail)).BeginInit();
-            this.panelSummaryTop.SuspendLayout();
+            this.tabPageValidationSummary.SuspendLayout();
             this.panelValidationSummary.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerValidationSummary)).BeginInit();
             this.splitContainerValidationSummary.Panel1.SuspendLayout();
             this.splitContainerValidationSummary.Panel2.SuspendLayout();
             this.splitContainerValidationSummary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractValidations)).BeginInit();
             this.panel2.SuspendLayout();
-            this.panelExtractListTop.SuspendLayout();
-            this.panelExtractList.SuspendLayout();
+            this.panelExtractDataDetailTop.SuspendLayout();
+            this.panelExtContent.SuspendLayout();
+            this.panelExTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripDashboard
@@ -498,6 +493,47 @@
             this.panelExtractDetail.Size = new System.Drawing.Size(984, 306);
             this.panelExtractDetail.TabIndex = 5;
             // 
+            // splitContainerExtractsSummary
+            // 
+            this.splitContainerExtractsSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerExtractsSummary.Location = new System.Drawing.Point(0, 35);
+            this.splitContainerExtractsSummary.Name = "splitContainerExtractsSummary";
+            // 
+            // splitContainerExtractsSummary.Panel1
+            // 
+            this.splitContainerExtractsSummary.Panel1.Controls.Add(this.panelExtContent);
+            this.splitContainerExtractsSummary.Panel1.Controls.Add(this.panelExTop);
+            this.splitContainerExtractsSummary.Panel1.Controls.Add(this.panelExBottom);
+            // 
+            // splitContainerExtractsSummary.Panel2
+            // 
+            this.splitContainerExtractsSummary.Panel2.Controls.Add(this.tabControlExtracts);
+            this.splitContainerExtractsSummary.Size = new System.Drawing.Size(984, 271);
+            this.splitContainerExtractsSummary.SplitterDistance = 134;
+            this.splitContainerExtractsSummary.TabIndex = 3;
+            // 
+            // tabControlExtracts
+            // 
+            this.tabControlExtracts.Controls.Add(this.tabPageRecords);
+            this.tabControlExtracts.Controls.Add(this.tabPageValidationSummary);
+            this.tabControlExtracts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlExtracts.Location = new System.Drawing.Point(0, 0);
+            this.tabControlExtracts.Name = "tabControlExtracts";
+            this.tabControlExtracts.SelectedIndex = 0;
+            this.tabControlExtracts.Size = new System.Drawing.Size(846, 271);
+            this.tabControlExtracts.TabIndex = 3;
+            // 
+            // tabPageRecords
+            // 
+            this.tabPageRecords.Controls.Add(this.panelExtractDataDetail);
+            this.tabPageRecords.Location = new System.Drawing.Point(4, 22);
+            this.tabPageRecords.Name = "tabPageRecords";
+            this.tabPageRecords.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageRecords.Size = new System.Drawing.Size(838, 245);
+            this.tabPageRecords.TabIndex = 0;
+            this.tabPageRecords.Text = "Records";
+            this.tabPageRecords.UseVisualStyleBackColor = true;
+            // 
             // panelExtractDataDetail
             // 
             this.panelExtractDataDetail.Controls.Add(this.splitContainerRecords);
@@ -505,8 +541,123 @@
             this.panelExtractDataDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelExtractDataDetail.Location = new System.Drawing.Point(3, 3);
             this.panelExtractDataDetail.Name = "panelExtractDataDetail";
-            this.panelExtractDataDetail.Size = new System.Drawing.Size(752, 239);
+            this.panelExtractDataDetail.Size = new System.Drawing.Size(832, 239);
             this.panelExtractDataDetail.TabIndex = 2;
+            // 
+            // splitContainerRecords
+            // 
+            this.splitContainerRecords.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerRecords.Location = new System.Drawing.Point(0, 18);
+            this.splitContainerRecords.Name = "splitContainerRecords";
+            // 
+            // splitContainerRecords.Panel1
+            // 
+            this.splitContainerRecords.Panel1.Controls.Add(this.dataGridViewExtractDetail);
+            this.splitContainerRecords.Size = new System.Drawing.Size(832, 221);
+            this.splitContainerRecords.SplitterDistance = 799;
+            this.splitContainerRecords.TabIndex = 4;
+            // 
+            // dataGridViewExtractDetail
+            // 
+            this.dataGridViewExtractDetail.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewExtractDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewExtractDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewExtractDetail.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewExtractDetail.Name = "dataGridViewExtractDetail";
+            this.dataGridViewExtractDetail.Size = new System.Drawing.Size(799, 221);
+            this.dataGridViewExtractDetail.TabIndex = 0;
+            // 
+            // panelRecordsNav
+            // 
+            this.panelRecordsNav.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelRecordsNav.Location = new System.Drawing.Point(0, 0);
+            this.panelRecordsNav.Name = "panelRecordsNav";
+            this.panelRecordsNav.Size = new System.Drawing.Size(832, 18);
+            this.panelRecordsNav.TabIndex = 3;
+            // 
+            // tabPageValidationSummary
+            // 
+            this.tabPageValidationSummary.Controls.Add(this.panelValidationSummary);
+            this.tabPageValidationSummary.Location = new System.Drawing.Point(4, 22);
+            this.tabPageValidationSummary.Name = "tabPageValidationSummary";
+            this.tabPageValidationSummary.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageValidationSummary.Size = new System.Drawing.Size(838, 245);
+            this.tabPageValidationSummary.TabIndex = 1;
+            this.tabPageValidationSummary.Text = "Validation Summary";
+            this.tabPageValidationSummary.UseVisualStyleBackColor = true;
+            // 
+            // panelValidationSummary
+            // 
+            this.panelValidationSummary.Controls.Add(this.splitContainerValidationSummary);
+            this.panelValidationSummary.Controls.Add(this.panelValidationSummaryNav);
+            this.panelValidationSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelValidationSummary.Location = new System.Drawing.Point(3, 3);
+            this.panelValidationSummary.Name = "panelValidationSummary";
+            this.panelValidationSummary.Size = new System.Drawing.Size(832, 239);
+            this.panelValidationSummary.TabIndex = 3;
+            // 
+            // splitContainerValidationSummary
+            // 
+            this.splitContainerValidationSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerValidationSummary.Location = new System.Drawing.Point(0, 18);
+            this.splitContainerValidationSummary.Name = "splitContainerValidationSummary";
+            // 
+            // splitContainerValidationSummary.Panel1
+            // 
+            this.splitContainerValidationSummary.Panel1.Controls.Add(this.dataGridViewExtractValidations);
+            // 
+            // splitContainerValidationSummary.Panel2
+            // 
+            this.splitContainerValidationSummary.Panel2.Controls.Add(this.checkedListBox1);
+            this.splitContainerValidationSummary.Panel2.Controls.Add(this.panel2);
+            this.splitContainerValidationSummary.Size = new System.Drawing.Size(832, 221);
+            this.splitContainerValidationSummary.SplitterDistance = 642;
+            this.splitContainerValidationSummary.TabIndex = 4;
+            // 
+            // dataGridViewExtractValidations
+            // 
+            this.dataGridViewExtractValidations.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewExtractValidations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewExtractValidations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewExtractValidations.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewExtractValidations.Name = "dataGridViewExtractValidations";
+            this.dataGridViewExtractValidations.Size = new System.Drawing.Size(642, 221);
+            this.dataGridViewExtractValidations.TabIndex = 0;
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(0, 32);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(186, 189);
+            this.checkedListBox1.TabIndex = 8;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(186, 32);
+            this.panel2.TabIndex = 7;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Summary";
+            // 
+            // panelValidationSummaryNav
+            // 
+            this.panelValidationSummaryNav.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelValidationSummaryNav.Location = new System.Drawing.Point(0, 0);
+            this.panelValidationSummaryNav.Name = "panelValidationSummaryNav";
+            this.panelValidationSummaryNav.Size = new System.Drawing.Size(832, 18);
+            this.panelValidationSummaryNav.TabIndex = 3;
             // 
             // panelExtractDataDetailTop
             // 
@@ -527,238 +678,52 @@
             this.labelExtractDataDetail.TabIndex = 0;
             this.labelExtractDataDetail.Text = "Extract Details";
             // 
-            // splitContainerExtractsSummary
+            // labelHeader
             // 
-            this.splitContainerExtractsSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerExtractsSummary.Location = new System.Drawing.Point(0, 35);
-            this.splitContainerExtractsSummary.Name = "splitContainerExtractsSummary";
+            this.labelHeader.AutoSize = true;
+            this.labelHeader.Location = new System.Drawing.Point(3, 27);
+            this.labelHeader.Name = "labelHeader";
+            this.labelHeader.Size = new System.Drawing.Size(45, 13);
+            this.labelHeader.TabIndex = 0;
+            this.labelHeader.Text = "Extracts";
             // 
-            // splitContainerExtractsSummary.Panel1
+            // panelExtContent
             // 
-            this.splitContainerExtractsSummary.Panel1.Controls.Add(this.panelExtractList);
-            this.splitContainerExtractsSummary.Panel1.Controls.Add(this.panelExtractListAction);
-            this.splitContainerExtractsSummary.Panel1.Controls.Add(this.panelExtractListTop);
-            // 
-            // splitContainerExtractsSummary.Panel2
-            // 
-            this.splitContainerExtractsSummary.Panel2.Controls.Add(this.tabControlExtracts);
-            this.splitContainerExtractsSummary.Size = new System.Drawing.Size(984, 271);
-            this.splitContainerExtractsSummary.SplitterDistance = 214;
-            this.splitContainerExtractsSummary.TabIndex = 3;
-            // 
-            // tabControlExtracts
-            // 
-            this.tabControlExtracts.Controls.Add(this.tabPageRecords);
-            this.tabControlExtracts.Controls.Add(this.tabPageValidationSummary);
-            this.tabControlExtracts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlExtracts.Location = new System.Drawing.Point(0, 0);
-            this.tabControlExtracts.Name = "tabControlExtracts";
-            this.tabControlExtracts.SelectedIndex = 0;
-            this.tabControlExtracts.Size = new System.Drawing.Size(766, 271);
-            this.tabControlExtracts.TabIndex = 3;
-            // 
-            // tabPageRecords
-            // 
-            this.tabPageRecords.Controls.Add(this.panelExtractDataDetail);
-            this.tabPageRecords.Location = new System.Drawing.Point(4, 22);
-            this.tabPageRecords.Name = "tabPageRecords";
-            this.tabPageRecords.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageRecords.Size = new System.Drawing.Size(758, 245);
-            this.tabPageRecords.TabIndex = 0;
-            this.tabPageRecords.Text = "Records";
-            this.tabPageRecords.UseVisualStyleBackColor = true;
-            // 
-            // tabPageValidationSummary
-            // 
-            this.tabPageValidationSummary.Controls.Add(this.panelValidationSummary);
-            this.tabPageValidationSummary.Location = new System.Drawing.Point(4, 22);
-            this.tabPageValidationSummary.Name = "tabPageValidationSummary";
-            this.tabPageValidationSummary.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageValidationSummary.Size = new System.Drawing.Size(758, 245);
-            this.tabPageValidationSummary.TabIndex = 1;
-            this.tabPageValidationSummary.Text = "Validation Summary";
-            this.tabPageValidationSummary.UseVisualStyleBackColor = true;
-            // 
-            // panelRecordsNav
-            // 
-            this.panelRecordsNav.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelRecordsNav.Location = new System.Drawing.Point(0, 0);
-            this.panelRecordsNav.Name = "panelRecordsNav";
-            this.panelRecordsNav.Size = new System.Drawing.Size(752, 18);
-            this.panelRecordsNav.TabIndex = 3;
-            // 
-            // splitContainerRecords
-            // 
-            this.splitContainerRecords.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerRecords.Location = new System.Drawing.Point(0, 18);
-            this.splitContainerRecords.Name = "splitContainerRecords";
-            // 
-            // splitContainerRecords.Panel1
-            // 
-            this.splitContainerRecords.Panel1.Controls.Add(this.dataGridViewExtractDetail);
-            // 
-            // splitContainerRecords.Panel2
-            // 
-            this.splitContainerRecords.Panel2.Controls.Add(this.checkedListBoxSummary);
-            this.splitContainerRecords.Panel2.Controls.Add(this.panelSummaryTop);
-            this.splitContainerRecords.Size = new System.Drawing.Size(752, 221);
-            this.splitContainerRecords.SplitterDistance = 581;
-            this.splitContainerRecords.TabIndex = 4;
-            // 
-            // dataGridViewExtractDetail
-            // 
-            this.dataGridViewExtractDetail.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridViewExtractDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewExtractDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewExtractDetail.Location = new System.Drawing.Point(0, 0);
-            this.dataGridViewExtractDetail.Name = "dataGridViewExtractDetail";
-            this.dataGridViewExtractDetail.Size = new System.Drawing.Size(581, 221);
-            this.dataGridViewExtractDetail.TabIndex = 0;
-            // 
-            // checkedListBoxSummary
-            // 
-            this.checkedListBoxSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxSummary.FormattingEnabled = true;
-            this.checkedListBoxSummary.Location = new System.Drawing.Point(0, 32);
-            this.checkedListBoxSummary.Name = "checkedListBoxSummary";
-            this.checkedListBoxSummary.Size = new System.Drawing.Size(167, 189);
-            this.checkedListBoxSummary.TabIndex = 8;
-            // 
-            // panelSummaryTop
-            // 
-            this.panelSummaryTop.Controls.Add(this.labelSummary);
-            this.panelSummaryTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelSummaryTop.Location = new System.Drawing.Point(0, 0);
-            this.panelSummaryTop.Name = "panelSummaryTop";
-            this.panelSummaryTop.Size = new System.Drawing.Size(167, 32);
-            this.panelSummaryTop.TabIndex = 7;
-            // 
-            // labelSummary
-            // 
-            this.labelSummary.AutoSize = true;
-            this.labelSummary.Location = new System.Drawing.Point(12, 9);
-            this.labelSummary.Name = "labelSummary";
-            this.labelSummary.Size = new System.Drawing.Size(50, 13);
-            this.labelSummary.TabIndex = 5;
-            this.labelSummary.Text = "Summary";
-            // 
-            // panelValidationSummary
-            // 
-            this.panelValidationSummary.Controls.Add(this.splitContainerValidationSummary);
-            this.panelValidationSummary.Controls.Add(this.panelValidationSummaryNav);
-            this.panelValidationSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelValidationSummary.Location = new System.Drawing.Point(3, 3);
-            this.panelValidationSummary.Name = "panelValidationSummary";
-            this.panelValidationSummary.Size = new System.Drawing.Size(752, 239);
-            this.panelValidationSummary.TabIndex = 3;
-            // 
-            // splitContainerValidationSummary
-            // 
-            this.splitContainerValidationSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerValidationSummary.Location = new System.Drawing.Point(0, 18);
-            this.splitContainerValidationSummary.Name = "splitContainerValidationSummary";
-            // 
-            // splitContainerValidationSummary.Panel1
-            // 
-            this.splitContainerValidationSummary.Panel1.Controls.Add(this.dataGridView1);
-            // 
-            // splitContainerValidationSummary.Panel2
-            // 
-            this.splitContainerValidationSummary.Panel2.Controls.Add(this.checkedListBox1);
-            this.splitContainerValidationSummary.Panel2.Controls.Add(this.panel2);
-            this.splitContainerValidationSummary.Size = new System.Drawing.Size(752, 221);
-            this.splitContainerValidationSummary.SplitterDistance = 581;
-            this.splitContainerValidationSummary.TabIndex = 4;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(581, 221);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(0, 32);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(167, 189);
-            this.checkedListBox1.TabIndex = 8;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(167, 32);
-            this.panel2.TabIndex = 7;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Summary";
-            // 
-            // panelValidationSummaryNav
-            // 
-            this.panelValidationSummaryNav.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelValidationSummaryNav.Location = new System.Drawing.Point(0, 0);
-            this.panelValidationSummaryNav.Name = "panelValidationSummaryNav";
-            this.panelValidationSummaryNav.Size = new System.Drawing.Size(752, 18);
-            this.panelValidationSummaryNav.TabIndex = 3;
-            // 
-            // panelExtractListTop
-            // 
-            this.panelExtractListTop.Controls.Add(this.labelExtractListHeader);
-            this.panelExtractListTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelExtractListTop.Location = new System.Drawing.Point(0, 0);
-            this.panelExtractListTop.Name = "panelExtractListTop";
-            this.panelExtractListTop.Size = new System.Drawing.Size(214, 25);
-            this.panelExtractListTop.TabIndex = 0;
-            // 
-            // panelExtractListAction
-            // 
-            this.panelExtractListAction.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelExtractListAction.Location = new System.Drawing.Point(0, 249);
-            this.panelExtractListAction.Name = "panelExtractListAction";
-            this.panelExtractListAction.Size = new System.Drawing.Size(214, 22);
-            this.panelExtractListAction.TabIndex = 2;
-            // 
-            // panelExtractList
-            // 
-            this.panelExtractList.Controls.Add(this.listViewExtractList);
-            this.panelExtractList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelExtractList.Location = new System.Drawing.Point(0, 25);
-            this.panelExtractList.Name = "panelExtractList";
-            this.panelExtractList.Padding = new System.Windows.Forms.Padding(5);
-            this.panelExtractList.Size = new System.Drawing.Size(214, 224);
-            this.panelExtractList.TabIndex = 3;
+            this.panelExtContent.Controls.Add(this.listViewExtractList);
+            this.panelExtContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelExtContent.Location = new System.Drawing.Point(0, 43);
+            this.panelExtContent.Name = "panelExtContent";
+            this.panelExtContent.Padding = new System.Windows.Forms.Padding(5);
+            this.panelExtContent.Size = new System.Drawing.Size(134, 160);
+            this.panelExtContent.TabIndex = 6;
             // 
             // listViewExtractList
             // 
             this.listViewExtractList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewExtractList.Location = new System.Drawing.Point(5, 5);
             this.listViewExtractList.Name = "listViewExtractList";
-            this.listViewExtractList.Size = new System.Drawing.Size(204, 214);
-            this.listViewExtractList.TabIndex = 0;
+            this.listViewExtractList.Size = new System.Drawing.Size(124, 150);
+            this.listViewExtractList.TabIndex = 1;
             this.listViewExtractList.UseCompatibleStateImageBehavior = false;
+            this.listViewExtractList.View = System.Windows.Forms.View.List;
+            this.listViewExtractList.SelectedIndexChanged += new System.EventHandler(this.listViewExtractList_SelectedIndexChanged);
             // 
-            // labelExtractListHeader
+            // panelExTop
             // 
-            this.labelExtractListHeader.AutoSize = true;
-            this.labelExtractListHeader.Location = new System.Drawing.Point(7, 7);
-            this.labelExtractListHeader.Name = "labelExtractListHeader";
-            this.labelExtractListHeader.Size = new System.Drawing.Size(45, 13);
-            this.labelExtractListHeader.TabIndex = 0;
-            this.labelExtractListHeader.Text = "Extracts";
+            this.panelExTop.Controls.Add(this.labelHeader);
+            this.panelExTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelExTop.Location = new System.Drawing.Point(0, 0);
+            this.panelExTop.Name = "panelExTop";
+            this.panelExTop.Size = new System.Drawing.Size(134, 43);
+            this.panelExTop.TabIndex = 4;
+            // 
+            // panelExBottom
+            // 
+            this.panelExBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelExBottom.Location = new System.Drawing.Point(0, 203);
+            this.panelExBottom.Name = "panelExBottom";
+            this.panelExBottom.Size = new System.Drawing.Size(134, 68);
+            this.panelExBottom.TabIndex = 5;
             // 
             // Dashboard
             // 
@@ -791,34 +756,31 @@
             this.panelExtractDataTop.ResumeLayout(false);
             this.panelExtractDataTop.PerformLayout();
             this.panelExtractDetail.ResumeLayout(false);
-            this.panelExtractDataDetail.ResumeLayout(false);
-            this.panelExtractDataDetailTop.ResumeLayout(false);
-            this.panelExtractDataDetailTop.PerformLayout();
             this.splitContainerExtractsSummary.Panel1.ResumeLayout(false);
             this.splitContainerExtractsSummary.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerExtractsSummary)).EndInit();
             this.splitContainerExtractsSummary.ResumeLayout(false);
             this.tabControlExtracts.ResumeLayout(false);
             this.tabPageRecords.ResumeLayout(false);
-            this.tabPageValidationSummary.ResumeLayout(false);
+            this.panelExtractDataDetail.ResumeLayout(false);
             this.splitContainerRecords.Panel1.ResumeLayout(false);
-            this.splitContainerRecords.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRecords)).EndInit();
             this.splitContainerRecords.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractDetail)).EndInit();
-            this.panelSummaryTop.ResumeLayout(false);
-            this.panelSummaryTop.PerformLayout();
+            this.tabPageValidationSummary.ResumeLayout(false);
             this.panelValidationSummary.ResumeLayout(false);
             this.splitContainerValidationSummary.Panel1.ResumeLayout(false);
             this.splitContainerValidationSummary.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerValidationSummary)).EndInit();
             this.splitContainerValidationSummary.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractValidations)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panelExtractListTop.ResumeLayout(false);
-            this.panelExtractListTop.PerformLayout();
-            this.panelExtractList.ResumeLayout(false);
+            this.panelExtractDataDetailTop.ResumeLayout(false);
+            this.panelExtractDataDetailTop.PerformLayout();
+            this.panelExtContent.ResumeLayout(false);
+            this.panelExTop.ResumeLayout(false);
+            this.panelExTop.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -877,20 +839,17 @@
         private System.Windows.Forms.TabPage tabPageValidationSummary;
         private System.Windows.Forms.SplitContainer splitContainerRecords;
         private System.Windows.Forms.DataGridView dataGridViewExtractDetail;
-        private System.Windows.Forms.CheckedListBox checkedListBoxSummary;
-        private System.Windows.Forms.Panel panelSummaryTop;
-        private System.Windows.Forms.Label labelSummary;
         private System.Windows.Forms.Panel panelValidationSummary;
         private System.Windows.Forms.SplitContainer splitContainerValidationSummary;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridViewExtractValidations;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelValidationSummaryNav;
-        private System.Windows.Forms.Panel panelExtractList;
+        private System.Windows.Forms.Panel panelExtContent;
         private System.Windows.Forms.ListView listViewExtractList;
-        private System.Windows.Forms.Panel panelExtractListAction;
-        private System.Windows.Forms.Panel panelExtractListTop;
-        private System.Windows.Forms.Label labelExtractListHeader;
+        private System.Windows.Forms.Panel panelExTop;
+        private System.Windows.Forms.Label labelHeader;
+        private System.Windows.Forms.Panel panelExBottom;
     }
 }

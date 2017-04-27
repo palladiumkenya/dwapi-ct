@@ -36,6 +36,9 @@ namespace PalladiumDwh.ClientApp.Views
         private  IPushProfileService _pushService;
         private List<string> _eventSummaries = new List<string>();
         private List<string> _allEventSummaries=new List<string>();
+        private List<ExtractSetting> _extractSettingsList;
+        private string  _selectedExtractSetting;
+        private  string _selectedExtractSettingDispaly;
 
         public Dashboard()
         {
@@ -158,6 +161,9 @@ namespace PalladiumDwh.ClientApp.Views
 
         }
 
+
+       
+
         public List<string> EventSummaries
         {
             get { return _eventSummaries; }
@@ -176,6 +182,59 @@ namespace PalladiumDwh.ClientApp.Views
         public event EventHandler<ExtractSentEvent> ExtractSent;
 
         #endregion
+
+        #region ExtractSettingsList
+
+        public string SelectedExtractSetting
+        {
+            get { return _selectedExtractSetting; }
+        }
+
+        public string SelectedExtractSettingDispaly
+        {
+            get { return _selectedExtractSettingDispaly; }
+        }
+
+        public List<ExtractSetting> ExtractSettingsList
+        {
+            get { return _extractSettingsList; }
+            set
+            {
+                _extractSettingsList = value;
+                LoadExtractExtractSettingList(_extractSettingsList);
+            }
+        }
+
+        public string RecordsHeader
+        {
+            get { return tabPageRecords.Text; }
+            set {  tabPageRecords.Text = value; }
+        }
+
+        public string ValidtionHeader
+        {
+            get { return tabPageValidationSummary.Text; }
+            set { tabPageValidationSummary.Text = value; }
+        }
+
+        public void ClearExtractSettingsList()
+        {
+            listViewExtractList.Items.Clear();
+        }
+
+
+        private void LoadExtractExtractSettingList(List<ExtractSetting> extractSettings)
+        {
+            ClearExtractSettingsList();
+            foreach (var e in extractSettings)
+            {
+                var item = new ListViewItem {Text = e.Display};
+                item.SubItems.Add(e.Destination);
+                listViewExtractList.Items.Add(item);
+            }
+        }
+
+#endregion
 
         private async void Dashboard_Load(object sender, EventArgs e)
         {
@@ -246,7 +305,7 @@ namespace PalladiumDwh.ClientApp.Views
             */
         }
 
-      
+        
 
 
         private void LoadExtracts(List<ExtractsViewModel> extracts)
@@ -350,6 +409,7 @@ namespace PalladiumDwh.ClientApp.Views
             await Presenter.LoadEmrInfoAsync();
 
             Presenter.LoadExtractSettings();
+            Presenter.LoadExtractList();
 
         }
 
@@ -363,6 +423,16 @@ namespace PalladiumDwh.ClientApp.Views
         {
             toolStripProgressBarDashboard.Style = ProgressBarStyle.Continuous;
             Cursor.Current = Cursors.Default;
+        }
+
+        private void listViewExtractList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewExtractList.SelectedItems.Count > 0)
+            {
+                _selectedExtractSettingDispaly = listViewExtractList.SelectedItems[0].Text;
+                _selectedExtractSetting = listViewExtractList.SelectedItems[0].SubItems[1].Text;
+                Presenter.LoadExtractDetail();
+            }
         }
     }
 }

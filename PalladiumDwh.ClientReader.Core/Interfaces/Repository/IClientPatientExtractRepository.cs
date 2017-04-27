@@ -6,9 +6,8 @@ using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
 {
-    public interface IClientExtractRepository<T>
+    public interface IClientPatientExtractRepository:IClientExtractRepository<ClientPatientExtract>
     {
-        IEnumerable<T> GetAll();
-        IPagedList<T> GetAll(int? page, int? pageSize, string search="");
+        
     }
 }

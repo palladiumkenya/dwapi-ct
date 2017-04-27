@@ -11,7 +11,7 @@ using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 {
-    public class ClientExtractRepository<T> : IClientExtractRepository<T> where T: ClientExtract
+    public abstract class ClientExtractRepository<T> : IClientExtractRepository<T> where T: ClientExtract
     {
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -22,6 +22,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
         {
             Context = context;
             DbSet = context.Set<T>();
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return DbSet;
         }
 
         public IPagedList<T> GetAll(int? page, int? pageSize, string search = "")

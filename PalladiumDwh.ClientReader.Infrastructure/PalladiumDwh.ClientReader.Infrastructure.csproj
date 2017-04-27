@@ -147,6 +147,13 @@
     <Compile Include="Data\Command\SyncCommand.cs" />
     <Compile Include="Data\DWAPIRemoteDBInitializer .cs" />
     <Compile Include="Data\Repository\ClientExtractRepository.cs" />
+    <Compile Include="Data\Repository\ClientPatientArtExtractRepository.cs" />
+    <Compile Include="Data\Repository\ClientPatientBaselinesExtractRepository.cs" />
+    <Compile Include="Data\Repository\ClientPatientExtractRepository.cs" />
+    <Compile Include="Data\Repository\ClientPatientLaboratoryExtractRepository.cs" />
+    <Compile Include="Data\Repository\ClientPatientPharmacyExtractRepository.cs" />
+    <Compile Include="Data\Repository\ClientPatientStatusExtractRepository.cs" />
+    <Compile Include="Data\Repository\ClientPatientVisitExtractRepository.cs" />
     <Compile Include="Data\Repository\ValidatorRepository.cs" />
     <Compile Include="Data\Repository\ProjectRepository.cs" />
     <Compile Include="Data\Repository\ExtractSettingRepository.cs" />
