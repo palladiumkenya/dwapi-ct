@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using log4net;
@@ -16,10 +11,8 @@ using PalladiumDwh.ClientApp.Events;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Presenters;
 using PalladiumDwh.ClientReader.Core.Interfaces;
-using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
-using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 
 namespace PalladiumDwh.ClientApp.Views
@@ -334,6 +327,7 @@ namespace PalladiumDwh.ClientApp.Views
             toolStripProgressBarDashboard.Style=ProgressBarStyle.Marquee;
             //toolStripProgressBarDashboard.MarqueeAnimationSpeed = 10;
 
+
             try
             {
                 await StartUp();
@@ -351,7 +345,12 @@ namespace PalladiumDwh.ClientApp.Views
             toolStripProgressBarDashboard.Style = ProgressBarStyle.Continuous;
             Cursor.Current = Cursors.Default;
         }
-
+        private void InitializeOpenFileDialog()
+        {
+            openFileDialogCsv.Filter = "CSV-File (Macintosh) (*.csv)|*.csv|CSV-File (MS-DOS) (*.csv)|*.csv";
+            openFileDialogCsv.Multiselect = true;
+            openFileDialogCsv.Title = "Extracts";
+        }
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var options = new Options();
@@ -464,7 +463,19 @@ namespace PalladiumDwh.ClientApp.Views
 
         private void buttonLoadCsv_Click(object sender, EventArgs e)
         {
-            OnCsvExtractLoaded(new CsvExtractLoadedEvent(ExtractSettings));
+            DialogResult dr = this.openFileDialogCsv.ShowDialog();
+            if (dr == System.Windows.Forms.DialogResult.OK)
+            {
+                foreach (String file in openFileDialogCsv.FileNames)
+                {
+                    // save cvs to folder
+                    var folderToSaveTo = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    folderToSaveTo = folderToSaveTo.EndsWith("\\") ? folderToSaveTo : $"{folderToSaveTo}\\";
+                    var destination = $@"{folderToSaveTo}Dwapi\Csv\{Path.GetFileName(file)}";
+                    File.Copy(file, destination);
+                }
+                OnCsvExtractLoaded(new CsvExtractLoadedEvent(ExtractSettings));
+            }
         }
 
         private void buttonExport_Click(object sender, EventArgs e)

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data.Entity;
-using EntityFramework.Seeder;
+﻿using EntityFramework.Seeder;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Migrations

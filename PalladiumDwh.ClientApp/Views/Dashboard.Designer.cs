@@ -92,6 +92,7 @@
             this.panelValidationSummaryNav = new System.Windows.Forms.Panel();
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
+            this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -748,6 +749,10 @@
             this.labelExtractDataDetail.TabIndex = 0;
             this.labelExtractDataDetail.Text = "Extract Details";
             // 
+            // openFileDialogCsv
+            // 
+            this.openFileDialogCsv.FileName = "openFileDialog1";
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -877,5 +882,6 @@
         private System.Windows.Forms.Panel panelExBottom;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dataGridViewValidationDetails;
+        private System.Windows.Forms.OpenFileDialog openFileDialogCsv;
     }
 }

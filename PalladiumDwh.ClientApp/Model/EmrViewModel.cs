@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientApp.Model

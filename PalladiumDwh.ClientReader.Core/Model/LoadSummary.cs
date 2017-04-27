@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PalladiumDwh.ClientReader.Core.Model
+﻿namespace PalladiumDwh.ClientReader.Core.Model
 {
     public class LoadSummary
     {

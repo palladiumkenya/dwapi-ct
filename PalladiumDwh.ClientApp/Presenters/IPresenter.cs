@@ -1,6 +1,4 @@
-﻿using PalladiumDwh.ClientApp.Views;
-
-namespace PalladiumDwh.ClientApp.Presenters
+﻿namespace PalladiumDwh.ClientApp.Presenters
 {
     public interface IPresenter<T>
     {

@@ -2,7 +2,6 @@
 using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Services;

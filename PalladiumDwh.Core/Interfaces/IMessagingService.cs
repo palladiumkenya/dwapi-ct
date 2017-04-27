@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PalladiumDwh.Core.Interfaces
+﻿namespace PalladiumDwh.Core.Interfaces
 {
     public interface IMessagingService
     {

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.CodeDom;
 using System.Linq;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
-using PalladiumDwh.ClientReader.Core.Interfaces.Profiles;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Profile;
 using PalladiumDwh.ClientUploader.Core.Interfaces;

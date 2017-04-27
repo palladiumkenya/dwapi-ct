@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Security;
 using System.Threading.Tasks;
 using log4net;
-using PalladiumDwh.ClientApp.DependencyResolution;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Views;
 using PalladiumDwh.ClientReader.Core.Interfaces;
-using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
-using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientApp.Presenters
 {

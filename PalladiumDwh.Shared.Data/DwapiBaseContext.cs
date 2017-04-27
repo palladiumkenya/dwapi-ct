@@ -1,6 +1,5 @@
 ﻿using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.Migrations.History;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using PalladiumDwh.Shared.Data.EFConvention;
 

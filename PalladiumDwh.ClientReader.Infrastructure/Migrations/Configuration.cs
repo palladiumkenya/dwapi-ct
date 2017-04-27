@@ -1,5 +1,3 @@
-using EntityFramework.Seeder;
-
 namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
 {
     using System.Data.Entity.Migrations;

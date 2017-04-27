@@ -1,9 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Messaging;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 

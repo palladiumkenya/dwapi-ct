@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PalladiumDwh.ClientReader.Core.Model
+﻿namespace PalladiumDwh.ClientReader.Core.Model
 {
     public class RunSummary
     {

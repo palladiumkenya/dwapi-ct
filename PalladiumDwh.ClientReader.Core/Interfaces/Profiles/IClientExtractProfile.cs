@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using PalladiumDwh.ClientReader.Core.Model.DTO;
+﻿using PalladiumDwh.ClientReader.Core.Model.DTO;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Profiles
 {

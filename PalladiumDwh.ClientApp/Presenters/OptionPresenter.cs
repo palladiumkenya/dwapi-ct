@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
-using System.Runtime.InteropServices;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Views;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;

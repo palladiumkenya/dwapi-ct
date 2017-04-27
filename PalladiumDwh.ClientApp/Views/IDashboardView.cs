@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using PalladiumDwh.ClientApp.Events;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Presenters;
-using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientApp.Views

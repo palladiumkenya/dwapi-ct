@@ -1,6 +1,3 @@
-using PalladiumDwh.ClientApp.Views;
-using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
-using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using PalladiumDwh.ClientUploader.Core.Services;

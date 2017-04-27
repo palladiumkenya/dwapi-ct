@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using PalladiumDwh.ClientReader.Core.Model.Source;
+﻿using System.Threading.Tasks;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
 {

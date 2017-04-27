@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using PalladiumDwh.ClientReader.Core.Interfaces;
-using PalladiumDwh.ClientValidator.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Model

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
-using Dapper;
 using log4net;
 using PalladiumDwh.ClientReader.Core.Model;
 

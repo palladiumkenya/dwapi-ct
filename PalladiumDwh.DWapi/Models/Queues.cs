@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Shared.Model.Profile;
-
-namespace PalladiumDwh.DWapi.Models
+﻿namespace PalladiumDwh.DWapi.Models
 {
     public class Queues
     {

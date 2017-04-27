@@ -1,10 +1,8 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Threading.Tasks;
 using DbUp;
 using PalladiumDwh.ClientApp.Views;
 using System.Configuration;
-using DbUp.Engine.Output;
 
 namespace PalladiumDwh.ClientApp.Presenters
 {

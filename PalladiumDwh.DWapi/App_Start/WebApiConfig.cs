@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using System.Net.Http.Extensions.Compression.Core.Compressors;
 using System.Web.Http;
-using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
 
 namespace PalladiumDwh.DWapi
 {
