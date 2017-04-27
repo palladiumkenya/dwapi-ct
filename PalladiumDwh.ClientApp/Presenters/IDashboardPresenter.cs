@@ -18,6 +18,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         void InitializeExtracts();
         void LoadExtractSettings();
         void LoadExtracts(List<ExtractSetting> extracts);
+        void LoadCsvExtracts(List<ExtractSetting> extracts);
         void ShowSelectedExtract();
 
         #endregion

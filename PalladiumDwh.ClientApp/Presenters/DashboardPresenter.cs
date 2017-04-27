@@ -269,6 +269,103 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ShowReady();
         }
 
+        public async void LoadCsvExtracts(List<ExtractSetting> extracts)
+        {
+            string logMessages = "Loading EMR CSV extracts";
+            return;
+            Log.Debug($"{logMessages}...");
+
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            View.CanLoadEmr = false;
+            View.Status = "initializing loading...";
+            int total = extracts.Count;
+            int count = 0;
+
+            //clear db
+            Log.Debug($"{logMessages} [Clearing database]...");
+            try
+            {
+                await _syncService.InitializeAsync();
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+                string errorMessage = "Error clearing data!";
+                View.ShowErrorMessage($"{errorMessage},{e.Message}");
+                View.Status = "Error clearing data!";
+                View.CanLoadEmr = true;
+                return;
+            }
+
+
+            //Patient Extract
+            var priorityExtracts = extracts.Where(x => x.IsPriority).OrderBy(x => x.Rank);
+
+            foreach (var extract in priorityExtracts)
+            {
+                Log.Debug($"{logMessages} [{extract}]...");
+                var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
+                count++;
+                var vm = new ExtractsViewModel(extract) { Status = "loading..." };
+                View.UpdateStatus(vm);
+
+                //View.Status = $"loading {count}/{total} ({extract.Display}) ...";
+                View.Status = $"loading...";
+
+                RunSummary summary = null;
+
+                try
+                {
+                    summary = await _syncService.SyncAsync(extract, progressIndicator);
+                }
+                catch (Exception e)
+                {
+                    View.ShowErrorMessage(e.Message);
+                    View.Status = "Error loading data! Check logs for details";
+                }
+
+                vm = new ExtractsViewModel(extract)
+                {
+                    Total = (null == summary ? 0 : summary.SyncSummary.Total),
+                    Status = (null == summary ? "Error loading !" : summary.ToString())
+                };
+                View.UpdateStatus(vm);
+                Log.Debug($"{logMessages} [{extract}] Complete");
+            }
+
+
+            //Other Extracts
+            var otherExtracts = extracts.Where(x => x.IsPriority == false).OrderBy(x => x.Rank);
+
+            var tasks = new List<Task>();
+
+            foreach (var extract in otherExtracts)
+            {
+                Log.Debug($"{logMessages} [{extract}]...");
+                var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
+                count++;
+                var vm = new ExtractsViewModel(extract) { Status = "loading..." };
+                View.UpdateStatus(vm);
+                tasks.Add(GetTask(_syncService, extract));
+            }
+
+            await Task.WhenAll(tasks.ToArray());
+
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            timeTaken += elapsedMs;
+            var msg = $"Load Completed ({count} of {total}) Extracts Time: {elapsedMs * 0.001} s !";
+            UpdateUi(msg);
+
+            Log.Debug($"{msg}");
+
+            this.View.EventSummaries = new List<string>() { msg };
+
+            View.CanLoadEmr = true;
+            LoadExtractDetail();
+            View.ShowReady();
+        }
+
         private void ReportProgress(ProcessStatus processStatus)
         {
             var vm = new ExtractsViewModel(processStatus.ExtractSetting)
@@ -325,7 +422,10 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ShowPleaseWait();
             LoadExtracts(e.Extracts);
         }
-
+        private void View_CsvExtractLoaded(object sender, Events.CsvExtractLoadedEvent e)
+        {
+            throw new System.NotImplementedException();
+        }
         private async void View_ExtractSent(object sender, Events.ExtractSentEvent e)
         {
             await SendExtractsInParallel();
@@ -337,10 +437,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             throw new System.NotImplementedException();
         }
 
-        private void View_CsvExtractLoaded(object sender, Events.CsvExtractLoadedEvent e)
-        {
-            throw new System.NotImplementedException();
-        }
+      
 
 
 
