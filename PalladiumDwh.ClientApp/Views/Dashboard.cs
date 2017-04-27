@@ -542,6 +542,8 @@ namespace PalladiumDwh.ClientApp.Views
 
         private void listViewExtractList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            _selectedExtractSettingDispaly = _selectedExtractSetting = "";
+
             if (listViewExtractList.SelectedItems.Count > 0)
             {
                 _selectedExtractSettingDispaly = listViewExtractList.SelectedItems[0].Text;

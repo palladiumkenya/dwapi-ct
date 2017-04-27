@@ -39,8 +39,8 @@
             this.feedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripDashboard = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabelDashboard = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBarDashboard = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripStatusLabelDashboard = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelTop = new System.Windows.Forms.Panel();
             this.panelTopH = new System.Windows.Forms.Panel();
             this.labelTopH = new System.Windows.Forms.Label();
@@ -85,13 +85,13 @@
             this.panelValidationSummary = new System.Windows.Forms.Panel();
             this.splitContainerValidationSummary = new System.Windows.Forms.SplitContainer();
             this.dataGridViewExtractValidations = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridViewValidationDetails = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelValidationSummaryNav = new System.Windows.Forms.Panel();
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.dataGridViewValidationDetails = new System.Windows.Forms.DataGridView();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -121,10 +121,10 @@
             this.splitContainerValidationSummary.Panel2.SuspendLayout();
             this.splitContainerValidationSummary.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractValidations)).BeginInit();
-            this.panel2.SuspendLayout();
-            this.panelExtractDataDetailTop.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewValidationDetails)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.panelExtractDataDetailTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripDashboard
@@ -215,6 +215,11 @@
             this.statusStripDashboard.TabIndex = 1;
             this.statusStripDashboard.Text = "statusStrip1";
             // 
+            // toolStripProgressBarDashboard
+            // 
+            this.toolStripProgressBarDashboard.Name = "toolStripProgressBarDashboard";
+            this.toolStripProgressBarDashboard.Size = new System.Drawing.Size(200, 16);
+            // 
             // toolStripStatusLabelDashboard
             // 
             this.toolStripStatusLabelDashboard.Name = "toolStripStatusLabelDashboard";
@@ -222,11 +227,6 @@
             this.toolStripStatusLabelDashboard.Spring = true;
             this.toolStripStatusLabelDashboard.Text = "Loading...";
             this.toolStripStatusLabelDashboard.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // toolStripProgressBarDashboard
-            // 
-            this.toolStripProgressBarDashboard.Name = "toolStripProgressBarDashboard";
-            this.toolStripProgressBarDashboard.Size = new System.Drawing.Size(200, 16);
             // 
             // panelTop
             // 
@@ -614,6 +614,8 @@
             this.dataGridViewExtractDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewExtractDetail.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewExtractDetail.Name = "dataGridViewExtractDetail";
+            this.dataGridViewExtractDetail.ReadOnly = true;
+            this.dataGridViewExtractDetail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewExtractDetail.Size = new System.Drawing.Size(799, 221);
             this.dataGridViewExtractDetail.TabIndex = 0;
             // 
@@ -680,6 +682,27 @@
             this.dataGridViewExtractValidations.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewExtractValidations_CellContentClick);
             this.dataGridViewExtractValidations.SelectionChanged += new System.EventHandler(this.dataGridViewExtractValidations_SelectionChanged);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.dataGridViewValidationDetails);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 20);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(832, 113);
+            this.panel1.TabIndex = 9;
+            // 
+            // dataGridViewValidationDetails
+            // 
+            this.dataGridViewValidationDetails.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewValidationDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewValidationDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewValidationDetails.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewValidationDetails.Name = "dataGridViewValidationDetails";
+            this.dataGridViewValidationDetails.ReadOnly = true;
+            this.dataGridViewValidationDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewValidationDetails.Size = new System.Drawing.Size(832, 113);
+            this.dataGridViewValidationDetails.TabIndex = 1;
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.label1);
@@ -724,25 +747,6 @@
             this.labelExtractDataDetail.Size = new System.Drawing.Size(75, 13);
             this.labelExtractDataDetail.TabIndex = 0;
             this.labelExtractDataDetail.Text = "Extract Details";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.dataGridViewValidationDetails);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 20);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(832, 113);
-            this.panel1.TabIndex = 9;
-            // 
-            // dataGridViewValidationDetails
-            // 
-            this.dataGridViewValidationDetails.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridViewValidationDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewValidationDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewValidationDetails.Location = new System.Drawing.Point(0, 0);
-            this.dataGridViewValidationDetails.Name = "dataGridViewValidationDetails";
-            this.dataGridViewValidationDetails.Size = new System.Drawing.Size(832, 113);
-            this.dataGridViewValidationDetails.TabIndex = 1;
             // 
             // Dashboard
             // 
@@ -796,12 +800,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerValidationSummary)).EndInit();
             this.splitContainerValidationSummary.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractValidations)).EndInit();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewValidationDetails)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panelExtractDataDetailTop.ResumeLayout(false);
             this.panelExtractDataDetailTop.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewValidationDetails)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
