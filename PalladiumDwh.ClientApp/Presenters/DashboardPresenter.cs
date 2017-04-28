@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using log4net;
+using log4net.Util;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Views;
 using PalladiumDwh.ClientReader.Core.Interfaces;
@@ -425,7 +426,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         private async void View_ExtractSent(object sender, Events.ExtractSentEvent e)
         {
             await SendExtractsInParallel();
-             //SendExtracts();
+            //SendExtracts();
         }
 
         private void View_ExtractExported(object sender, Events.ExtractExportedEvent e)
@@ -602,7 +603,14 @@ namespace PalladiumDwh.ClientApp.Presenters
                 var extractsToSend = _profileManager.Generate(p);
                 foreach (var e in extractsToSend)
                 {
-                    var result = await _pushService.PushAsync(e);
+                    try
+                    {
+                        var result = await _pushService.PushAsync(e);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Debug(ex);
+                    }
                     UpdateUi($"sending Patient Profile {count} of {total}");
                 }
             }
@@ -641,7 +649,14 @@ namespace PalladiumDwh.ClientApp.Presenters
 
                 }
                 UpdateUi($"sending Patient Profile {count} of {total}");
-                await Task.WhenAll(tasks.ToArray());
+                try
+                {
+                    await Task.WhenAll(tasks.ToArray());
+                }
+                catch (Exception ex)
+                {
+                    Log.Debug(ex);
+                }
             }
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
