@@ -453,7 +453,11 @@ namespace PalladiumDwh.ClientApp.Presenters
         {
             View.RecordsHeader = $"{View.SelectedExtractSettingDispaly} Records";
             View.ValidtionHeader = $"{View.SelectedExtractSettingDispaly} Validation Summary";
-            
+
+            View.ClearClientExtracts();
+            View.ClearClientExtractsValidations();
+            View.ClearClientExtractsValidationErrors();
+
 
             switch (View.SelectedExtractSetting)
             {
@@ -467,39 +471,44 @@ namespace PalladiumDwh.ClientApp.Presenters
                 {
                     View.ClientExtracts = _clientPatientArtExtractRepository.GetAll(1, 100).ToList();
                     View.ClientExtractsValidations = _tempPatientArtExtractRepository.GetAll(1, 100).ToList();
-                    break;
+                        break;
                 }
                 case "TempPatientBaselinesExtract":
                 {
                     View.ClientExtracts = _clientPatientBaselinesExtractRepository.GetAll(1, 100).ToList();
                     View.ClientExtractsValidations = _tempPatientBaselinesExtractRepository.GetAll(1, 100).ToList();
-                    break;
+                    
+                        break;
                 }
 
                 case "TempPatientVisitExtract":
                 {
                     View.ClientExtracts = _clientPatientVisitExtractRepository.GetAll(1, 50).ToList();
                     View.ClientExtractsValidations = _tempPatientVisitExtractRepository.GetAll(1, 100).ToList();
-                    break;
+                    
+                        break;
                 }
                 case "TempPatientPharmacyExtract":
                 {
                     View.ClientExtracts = _clientPatientPharmacyExtractRepository.GetAll(1, 50).ToList();
                     View.ClientExtractsValidations = _tempPatientPharmacyExtractRepository.GetAll(1, 100).ToList();
-                    break;
+                    
+                        break;
                 }
 
                 case "TempPatientLaboratoryExtract":
                 {
                     View.ClientExtracts = _clientPatientLaboratoryExtractRepository.GetAll(1, 50).ToList();
                     View.ClientExtractsValidations = _tempPatientLaboratoryExtractRepository.GetAll(1, 100).ToList();
-                    break;
+                    
+                        break;
                 }
                 default:
                 {
                     View.ClientExtracts = _clientPatientExtractRepository.GetAll(1, 100).ToList();
                     View.ClientExtractsValidations = _tempPatientExtractRepository.GetAll(1, 100).ToList();
-                    break;
+                    
+                        break;
                 }
             }
 
