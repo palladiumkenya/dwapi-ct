@@ -601,15 +601,15 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.Status="sending...";
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
 
-            var list = _clientPatientRepository.GetAll(false).ToList();
-            var total = list.Count();
+            var patientExtracts = _clientPatientRepository.GetAll(false).ToList();
+            var total = patientExtracts.Count();
             int count = 0;
             
-            foreach (var p in list)
+            foreach (var patient in patientExtracts)
             {
                 count++;
                 
-                var extractsToSend = _profileManager.Generate(p);
+                var extractsToSend = _profileManager.Generate(patient);
                 foreach (var e in extractsToSend)
                 {
                     try

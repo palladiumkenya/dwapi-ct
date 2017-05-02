@@ -18,8 +18,7 @@ namespace PalladiumDwh.ClientApp
         static void Main()
         {
             Log.Debug("Loading DWapi...");
-            
-
+           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             

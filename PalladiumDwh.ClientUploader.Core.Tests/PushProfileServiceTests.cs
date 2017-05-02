@@ -16,20 +16,23 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
     public class PushProfileServiceTests
     {
         private IPushProfileService _service;
-        private string _url = "http://data.kenyahmis.org:81/dwapi/api/";
-        //private string _url = "http://localhost/dwapi/api/";
+        //private string _url = "http://data.kenyahmis.org:81/dwapi/api/";
+        private string _url = "http://localhost/dwapi/api/";
         private DwapiRemoteContext _context;
         
         private IClientPatientRepository _clientPatientRepository;
         private ClientPatientExtract _patientExtract;
         private ProfileManager _profileManager;
         private IEnumerable<IClientExtractProfile> _profiles;
-        
+        private ClientPatientExtract _patientExtract2;
+        private IEnumerable<IClientExtractProfile> _profiles2;
+
 
         [SetUp]
         public void SetUp()
         {
             _patientExtract = TestHelpers.GetTestPatientWithExtracts(1, 5).First();
+            _patientExtract2 = TestHelpers.GetTestPatientWithExtracts(1, 5, 0, 0).First();
 
             _context = new DwapiRemoteContext();
             _context.Database.ExecuteSqlCommand("Delete from PatientExtract;");
@@ -42,6 +45,7 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
             
             _profileManager = new ProfileManager();
             _profiles=_profileManager.Generate(_patientExtract);
+            _profiles2 = _profileManager.Generate(_patientExtract2);
         }
 
         [Test]
@@ -96,6 +100,50 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
             }
         }
 
+        [Test]
+        public void Should_Handle_Push_Network_Errors()
+        {
+            var extractProfile = _profiles.FirstOrDefault(x => x.Source == "PatientArtExtract");
+
+            //Network Error
+            _service = new PushProfileService("http://localhostt/dwapi/api/", _clientPatientRepository);
+            var pushResponse = _service.PushAsync(extractProfile).Result;
+            Assert.IsFalse(pushResponse.IsSuccess);
+
+            _context = new DwapiRemoteContext();
+            var extracts = _context.ClientPatientArtExtracts.Where(x => x.Status != "Sent").ToList();
+            Assert.IsTrue(extracts.Count > 0);
+            Console.WriteLine($"{extracts.Count} Failed to send");
+            foreach (var e in extracts)
+            {
+                Console.WriteLine($"{e} | {e.Status}");
+            }
+
+            Console.WriteLine(pushResponse.Status);
+            Console.WriteLine($"{extractProfile.GetType().Name} | {pushResponse}");
+        }
+        [Test]
+        public void Should_Handle_Push_Send_Errors()
+        {
+            var extractProfile = _profiles2.FirstOrDefault(x => x.Source == "PatientArtExtract");
+
+            //Send Error
+            _service = new PushProfileService("http://localhost/dwapi/api/", _clientPatientRepository);
+            var pushResponse = _service.PushAsync(extractProfile).Result;
+            Assert.IsFalse(pushResponse.IsSuccess);
+
+            _context = new DwapiRemoteContext();
+            var extracts = _context.ClientPatientArtExtracts.Where(x => x.Status!="Sent").ToList();
+            Assert.IsTrue(extracts.Count > 0);
+            Console.WriteLine($"{extracts.Count} Failed to send");
+            foreach (var e in extracts)
+            {
+                Console.WriteLine($"{e} | {e.Status}");
+            }
+
+            Console.WriteLine(pushResponse.Status);
+            Console.WriteLine($"{extractProfile.GetType().Name} | {pushResponse}");
+        }
         [TearDown]
         public void TearDown()
         {

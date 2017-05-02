@@ -34,6 +34,11 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Id = Guid.NewGuid();
         }
 
+        public bool IsSent()
+        {
+            return Status.Equals("Sent");
+        }
+
         public virtual string GetAddAction(string source, bool lookup = true)
         {
             StringBuilder scb = new StringBuilder();

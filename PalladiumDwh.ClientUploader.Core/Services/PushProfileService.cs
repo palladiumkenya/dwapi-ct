@@ -32,23 +32,47 @@ namespace PalladiumDwh.ClientUploader.Core.Services
 
         public async Task<PushResponse> PushAsync(IClientExtractProfile profile)
         {
-            var response = await _client.PostAsJsonAsync(profile.EndPoint, profile);
+            HttpResponseMessage response = null;
+            string content = string.Empty;
+            PushResponse pushResponse = null;
 
-            response.EnsureSuccessStatusCode();
-
-            string content = await response.Content.ReadAsStringAsync();
-
+            try
+            {
+                response = await _client.PostAsJsonAsync(profile.EndPoint, profile);
+            }
+            catch (Exception e)
+            {
+                //  network error
+                Log.Debug(e);
+                pushResponse = new PushResponse(profile, content, $"Network Error:{e.Message}", false);
+            }
             
-            var respone=new PushResponse(profile, content, "Sent",true);
-            UpdateExtract(respone,profile.Source);
-            return respone;
+            if (null != response)
+            {
+                try
+                {
+                    content = await response.Content.ReadAsStringAsync();
+                    pushResponse = response.IsSuccessStatusCode ? new PushResponse(profile, content, "Sent", true) : new PushResponse(profile, content, $"Send Error:{content}", false);
+                }
+                catch (Exception e)
+                {
+                    // send error
+                    Log.Debug(e);
+                    pushResponse = new PushResponse(profile, content, $"Send Error:{e.Message}", false);
+                }
+            }
+
+            UpdateExtract(pushResponse,profile.Source);
+            return pushResponse;
         }
 
         //TODO make  UpdateExtract async
-        private void UpdateExtract(PushResponse response,string source)
+        private void UpdateExtract(PushResponse response, string source)
         {
-            if (response.IsSuccess)
-                _repository.UpdatePush(new ClientPatientExtract(){PatientPK = response.PatientPK,SiteCode = response.SiteCode},source,response);
+            //if (response.IsSuccess)
+            _repository.UpdatePush(
+                new ClientPatientExtract() {PatientPK = response.PatientPK, SiteCode = response.SiteCode}, source,
+                response);
         }
 
     }
