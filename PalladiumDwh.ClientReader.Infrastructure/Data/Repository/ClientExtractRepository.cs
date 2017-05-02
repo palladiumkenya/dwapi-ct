@@ -52,5 +52,29 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
             return pagedlist;
         }
 
+        public IPagedList<T> GetAllSendErrors(int? page, int? pageSize, string search = "")
+        {
+            IEnumerable<T> logs;
+
+            page = page == 0 ? 1 : page;
+            pageSize = pageSize == 0 ? 100 : pageSize;
+            pageSize = pageSize == -1 ? DbSet.Count() : pageSize;
+
+            logs = DbSet.Where(x => x.Status != "Sent" && !string.IsNullOrEmpty(x.Status));
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                logs = logs.Where(n =>
+                    n.PatientID.ToLower().Contains(search.ToLower())
+                );
+            }
+
+
+            var pagedlist = logs
+                .OrderBy(x => x.PatientID)
+                .ToPagedList(page.Value, pageSize.Value);
+
+            return pagedlist;
+        }
     }
 }

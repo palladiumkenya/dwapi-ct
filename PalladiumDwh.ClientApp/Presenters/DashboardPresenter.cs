@@ -453,10 +453,12 @@ namespace PalladiumDwh.ClientApp.Presenters
         {
             View.RecordsHeader = $"{View.SelectedExtractSettingDispaly} Records";
             View.ValidtionHeader = $"{View.SelectedExtractSettingDispaly} Validation Summary";
+            View.SendHeader = $"{View.SelectedExtractSettingDispaly} Send Summary";
 
             View.ClearClientExtracts();
             View.ClearClientExtractsValidations();
             View.ClearClientExtractsValidationErrors();
+            View.ClearClientExtractsNotSent();
 
 
             switch (View.SelectedExtractSetting)
@@ -465,19 +467,21 @@ namespace PalladiumDwh.ClientApp.Presenters
                 {
                     View.ClientExtracts = _clientPatientStatusExtractRepository.GetAll(1, 100).ToList();
                     View.ClientExtractsValidations = _tempPatientStatusExtractRepository.GetAll(1, 100).ToList();
-                    break;
+                    View.ClientExtractsNotSent= _clientPatientStatusExtractRepository.GetAllSendErrors(1, 100).ToList();
+                        break;
                 }
                 case "TempPatientArtExtract":
                 {
                     View.ClientExtracts = _clientPatientArtExtractRepository.GetAll(1, 100).ToList();
                     View.ClientExtractsValidations = _tempPatientArtExtractRepository.GetAll(1, 100).ToList();
+                    View.ClientExtractsNotSent = _clientPatientArtExtractRepository.GetAllSendErrors(1, 100).ToList();
                         break;
                 }
                 case "TempPatientBaselinesExtract":
                 {
                     View.ClientExtracts = _clientPatientBaselinesExtractRepository.GetAll(1, 100).ToList();
                     View.ClientExtractsValidations = _tempPatientBaselinesExtractRepository.GetAll(1, 100).ToList();
-                    
+                    View.ClientExtractsNotSent = _clientPatientBaselinesExtractRepository.GetAllSendErrors(1, 100).ToList();
                         break;
                 }
 
@@ -485,14 +489,14 @@ namespace PalladiumDwh.ClientApp.Presenters
                 {
                     View.ClientExtracts = _clientPatientVisitExtractRepository.GetAll(1, 50).ToList();
                     View.ClientExtractsValidations = _tempPatientVisitExtractRepository.GetAll(1, 100).ToList();
-                    
+                    View.ClientExtractsNotSent = _clientPatientVisitExtractRepository.GetAllSendErrors(1, 50).ToList();
                         break;
                 }
                 case "TempPatientPharmacyExtract":
                 {
                     View.ClientExtracts = _clientPatientPharmacyExtractRepository.GetAll(1, 50).ToList();
                     View.ClientExtractsValidations = _tempPatientPharmacyExtractRepository.GetAll(1, 100).ToList();
-                    
+                    View.ClientExtractsNotSent = _clientPatientPharmacyExtractRepository.GetAllSendErrors(1, 50).ToList();
                         break;
                 }
 
@@ -500,14 +504,14 @@ namespace PalladiumDwh.ClientApp.Presenters
                 {
                     View.ClientExtracts = _clientPatientLaboratoryExtractRepository.GetAll(1, 50).ToList();
                     View.ClientExtractsValidations = _tempPatientLaboratoryExtractRepository.GetAll(1, 100).ToList();
-                    
+                    View.ClientExtractsNotSent = _clientPatientLaboratoryExtractRepository.GetAllSendErrors(1, 50).ToList();
                         break;
                 }
                 default:
                 {
                     View.ClientExtracts = _clientPatientExtractRepository.GetAll(1, 100).ToList();
                     View.ClientExtractsValidations = _tempPatientExtractRepository.GetAll(1, 100).ToList();
-                    
+                    View.ClientExtractsNotSent = _clientPatientExtractRepository.GetAllSendErrors(1, 100).ToList();
                         break;
                 }
             }
@@ -591,6 +595,11 @@ namespace PalladiumDwh.ClientApp.Presenters
                     break;
                 }
             }
+        }
+
+        public void LoadExtractNotSent()
+        {
+            throw new NotImplementedException();
         }
 
         //TODO: consider Parallel processing

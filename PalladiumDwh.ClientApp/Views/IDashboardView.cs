@@ -43,17 +43,21 @@ namespace PalladiumDwh.ClientApp.Views
         List<ExtractSetting> ExtractSettingsList { get; set; }
         string RecordsHeader { get; set; }
         string ValidtionHeader{ get; set; }
+        string SendHeader { get; set; }
         object ClientExtracts { get; set; }
         object ClientExtractsValidations { get; set; }
         object ClientExtractsValidationErrors { get; set; }
+        object ClientExtractsNotSent { get; set; }
         void ClearExtractSettingsList();
         void ClearClientExtracts();
         void ClearClientExtractsValidations();
         void ClearClientExtractsValidationErrors();
+        void ClearClientExtractsNotSent();
         #endregion
 
         List<string> EventSummaries { get; set; }
         string Status { get; set; }
+        
         bool ConfirmAction(string action, string actionTilte);
         void CloseView();
         void UpdateProgress(int i);

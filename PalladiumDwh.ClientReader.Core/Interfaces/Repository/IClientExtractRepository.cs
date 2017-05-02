@@ -7,5 +7,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
     {
         IEnumerable<T> GetAll();
         IPagedList<T> GetAll(int? page, int? pageSize, string search="");
+        IPagedList<T> GetAllSendErrors(int? page, int? pageSize, string search = "");
     }
 }

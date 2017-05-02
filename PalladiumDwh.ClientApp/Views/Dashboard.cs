@@ -54,6 +54,7 @@ namespace PalladiumDwh.ClientApp.Views
         private object _clientExtractsValidations;
         private object _clientExtractsValidationErrors;
         private  object _selectedValidation;
+        private object _clientExtractsNotSent;
 
         public Dashboard()
         {
@@ -178,7 +179,6 @@ namespace PalladiumDwh.ClientApp.Views
 
 
       
-
         public List<string> EventSummaries
         {
             get { return _eventSummaries; }
@@ -237,6 +237,12 @@ namespace PalladiumDwh.ClientApp.Views
             set { tabPageValidationSummary.Text = value; }
         }
 
+        public string SendHeader
+        {
+            get { return tabPageSendSummary.Text; }
+            set { tabPageSendSummary.Text = value; }
+        }
+
         public object ClientExtracts
         {
             get { return _clientExtracts; }
@@ -264,6 +270,16 @@ namespace PalladiumDwh.ClientApp.Views
             {
                 _clientExtractsValidationErrors = value;
                 LoadClientExtractsValidationErrors(_clientExtractsValidationErrors);
+            }
+        }
+
+        public object ClientExtractsNotSent
+        {
+            get { return _clientExtractsNotSent; }
+            set
+            {
+                _clientExtractsNotSent = value;
+                LoadClientExtractsNotSent(_clientExtractsNotSent);
             }
         }
 
@@ -318,6 +334,19 @@ namespace PalladiumDwh.ClientApp.Views
             ClearClientExtractsValidationErrors();
             dataGridViewValidationDetails.DataSource = clientExtractsValidationErrors;
         }
+
+        public void ClearClientExtractsNotSent()
+        {
+            dataGridViewSendSummary.DataSource = null;
+            dataGridViewSendSummary.Rows.Clear();
+        }
+        private void LoadClientExtractsNotSent(object clientExtractsNotSent)
+        {
+            ClearClientExtractsNotSent();
+            dataGridViewSendSummary.DataSource = clientExtractsNotSent;
+            dataGridViewSendSummary.ClearSelection();
+        }
+
 
         #endregion
 

@@ -93,6 +93,11 @@
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
             this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
+            this.tabPageSendSummary = new System.Windows.Forms.TabPage();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.dataGridViewSendSummary = new System.Windows.Forms.DataGridView();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -126,6 +131,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewValidationDetails)).BeginInit();
             this.panel2.SuspendLayout();
             this.panelExtractDataDetailTop.SuspendLayout();
+            this.tabPageSendSummary.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSendSummary)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStripDashboard
@@ -567,6 +578,7 @@
             // 
             this.tabControlExtracts.Controls.Add(this.tabPageRecords);
             this.tabControlExtracts.Controls.Add(this.tabPageValidationSummary);
+            this.tabControlExtracts.Controls.Add(this.tabPageSendSummary);
             this.tabControlExtracts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlExtracts.Location = new System.Drawing.Point(0, 0);
             this.tabControlExtracts.Name = "tabControlExtracts";
@@ -753,6 +765,60 @@
             // 
             this.openFileDialogCsv.FileName = "openFileDialog1";
             // 
+            // tabPageSendSummary
+            // 
+            this.tabPageSendSummary.Controls.Add(this.panel3);
+            this.tabPageSendSummary.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSendSummary.Name = "tabPageSendSummary";
+            this.tabPageSendSummary.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSendSummary.Size = new System.Drawing.Size(838, 245);
+            this.tabPageSendSummary.TabIndex = 2;
+            this.tabPageSendSummary.Text = "Send Summary";
+            this.tabPageSendSummary.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.splitContainer1);
+            this.panel3.Controls.Add(this.panel4);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(832, 239);
+            this.panel3.TabIndex = 3;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 18);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.dataGridViewSendSummary);
+            this.splitContainer1.Size = new System.Drawing.Size(832, 221);
+            this.splitContainer1.SplitterDistance = 799;
+            this.splitContainer1.TabIndex = 4;
+            // 
+            // dataGridViewSendSummary
+            // 
+            this.dataGridViewSendSummary.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewSendSummary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewSendSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewSendSummary.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewSendSummary.Name = "dataGridViewSendSummary";
+            this.dataGridViewSendSummary.ReadOnly = true;
+            this.dataGridViewSendSummary.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewSendSummary.Size = new System.Drawing.Size(799, 221);
+            this.dataGridViewSendSummary.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(832, 18);
+            this.panel4.TabIndex = 3;
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -811,6 +877,12 @@
             this.panel2.PerformLayout();
             this.panelExtractDataDetailTop.ResumeLayout(false);
             this.panelExtractDataDetailTop.PerformLayout();
+            this.tabPageSendSummary.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSendSummary)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -883,5 +955,10 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dataGridViewValidationDetails;
         private System.Windows.Forms.OpenFileDialog openFileDialogCsv;
+        private System.Windows.Forms.TabPage tabPageSendSummary;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.DataGridView dataGridViewSendSummary;
+        private System.Windows.Forms.Panel panel4;
     }
 }
