@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
@@ -19,12 +20,13 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Reports
     {
         private ISummaryReport _summaryReport;
         private string _excelFile;
-
+        private string _excelFileBatch;
         [SetUp]
         public void SetUp()
         {
             _summaryReport = new SummaryReport();
             _excelFile = $"{Utility.GetFolderPath(TestContext.CurrentContext.TestDirectory)}ValidationErrors.xlsx";
+            _excelFileBatch = $"{Utility.GetFolderPath(TestContext.CurrentContext.TestDirectory)}ValidationErrorsBatch.xlsx";
         }
 
         [Test]
@@ -32,13 +34,24 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Reports
         {
             var patientExtractsErrors = Builder<TempPatientExtractErrorSummary>.CreateListOfSize(10).Build().ToList();
             var artExtractsErrors = Builder<TempPatientArtExtractErrorSummary>.CreateListOfSize(10).Build().ToList();
+            var summaryFile=_summaryReport.CreateExcelErrorSummary(patientExtractsErrors, "PatientExtract", _excelFile);
+            var file = TestHelpers.GetExcel("ValidationErrors");
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(summaryFile));
+            Assert.IsTrue(File.Exists(summaryFile));
+            Console.WriteLine(summaryFile);
+        }
+        [Test]
+        public void should_create_ExcelErrorSummary_From_Batch()
+        {
+            var patientExtractsErrors = Builder<TempPatientExtractErrorSummary>.CreateListOfSize(10).Build().ToList();
+            var artExtractsErrors = Builder<TempPatientArtExtractErrorSummary>.CreateListOfSize(10).Build().ToList();
             var list = new List<IEnumerable<IExtractErrorSummary>>
             {
-                patientExtractsErrors//,artExtractsErrors
+                patientExtractsErrors,artExtractsErrors
             };
 
-            _summaryReport.CreateExcelErrorSummary(list, _excelFile);
-            var file = TestHelpers.GetExcel("ValidationErrors");
+            _summaryReport.CreateExcelErrorSummaryBatch(list, _excelFileBatch);
+            var file = TestHelpers.GetExcel("ValidationErrorsBatch");
             Assert.IsTrue(!string.IsNullOrWhiteSpace(file));
             Console.WriteLine(file);
         }

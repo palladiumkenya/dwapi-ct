@@ -53,6 +53,7 @@ namespace PalladiumDwh.ClientApp.Views
         void ClearClientExtractsValidations();
         void ClearClientExtractsValidationErrors();
         void ClearClientExtractsNotSent();
+        bool CanGenerateSummary { get; set; }
         #endregion
 
         List<string> EventSummaries { get; set; }
@@ -63,5 +64,7 @@ namespace PalladiumDwh.ClientApp.Views
         void UpdateProgress(int i);
         void ShowPleaseWait();
         void ShowReady();
+        void ShowMessage(string message);
+        void OpenFile(string filename);
     }
 }

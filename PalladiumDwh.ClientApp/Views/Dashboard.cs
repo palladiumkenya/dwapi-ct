@@ -62,11 +62,32 @@ namespace PalladiumDwh.ClientApp.Views
          
         }
         public IDashboardPresenter Presenter { get; set; }
+        public void ShowMessage(string message)
+        {
+            MessageBox.Show(message, this.Text,
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void OpenFile(string filename)
+        {
+            try
+            {
+
+
+                System.Diagnostics.Process.Start(filename);
+                }
+            catch(Exception e)
+            {
+                ShowErrorMessage(e.Message);
+            }
+        }
+
         public void ShowErrorMessage(string message)
         {
             MessageBox.Show(message, this.Text,
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+
 
         public string Title
         {
@@ -333,6 +354,7 @@ namespace PalladiumDwh.ClientApp.Views
         {
             ClearClientExtractsValidationErrors();
             dataGridViewValidationDetails.DataSource = clientExtractsValidationErrors;
+            CanGenerateSummary = dataGridViewValidationDetails.Rows.Count > 0;
         }
 
         public void ClearClientExtractsNotSent()
@@ -340,6 +362,13 @@ namespace PalladiumDwh.ClientApp.Views
             dataGridViewSendSummary.DataSource = null;
             dataGridViewSendSummary.Rows.Clear();
         }
+
+        public bool CanGenerateSummary
+        {
+            get { return linkLabelGenerateValidationSummary.Enabled; }
+            set { linkLabelGenerateValidationSummary.Enabled = value; }
+        }
+
         private void LoadClientExtractsNotSent(object clientExtractsNotSent)
         {
             ClearClientExtractsNotSent();
@@ -604,6 +633,11 @@ namespace PalladiumDwh.ClientApp.Views
         private void dataGridViewExtractValidations_SelectionChanged(object sender, EventArgs e)
         {
           
+        }
+
+        private void linkLabelGenerateValidationSummary_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Presenter.GenerateSummary();
         }
     }
 }

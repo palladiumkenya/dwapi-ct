@@ -28,8 +28,10 @@ namespace PalladiumDwh.ClientApp.Presenters
         void LoadExtractDetail();
         void LoadExtractDetailValidationErrors();
         void LoadExtractNotSent();
+        void GenerateSummary();
         void SendExtracts();
         Task SendExtractsInParallel();
+        
         #endregion
     }
 }

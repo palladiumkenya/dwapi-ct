@@ -90,14 +90,15 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelValidationSummaryNav = new System.Windows.Forms.Panel();
-            this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
-            this.labelExtractDataDetail = new System.Windows.Forms.Label();
-            this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
             this.tabPageSendSummary = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridViewSendSummary = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
+            this.labelExtractDataDetail = new System.Windows.Forms.Label();
+            this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
+            this.linkLabelGenerateValidationSummary = new System.Windows.Forms.LinkLabel();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -130,13 +131,13 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewValidationDetails)).BeginInit();
             this.panel2.SuspendLayout();
-            this.panelExtractDataDetailTop.SuspendLayout();
             this.tabPageSendSummary.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSendSummary)).BeginInit();
+            this.panelExtractDataDetailTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripDashboard
@@ -718,6 +719,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.linkLabelGenerateValidationSummary);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
@@ -741,29 +743,6 @@
             this.panelValidationSummaryNav.Name = "panelValidationSummaryNav";
             this.panelValidationSummaryNav.Size = new System.Drawing.Size(832, 18);
             this.panelValidationSummaryNav.TabIndex = 3;
-            // 
-            // panelExtractDataDetailTop
-            // 
-            this.panelExtractDataDetailTop.BackColor = System.Drawing.Color.Gainsboro;
-            this.panelExtractDataDetailTop.Controls.Add(this.labelExtractDataDetail);
-            this.panelExtractDataDetailTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelExtractDataDetailTop.Location = new System.Drawing.Point(0, 0);
-            this.panelExtractDataDetailTop.Name = "panelExtractDataDetailTop";
-            this.panelExtractDataDetailTop.Size = new System.Drawing.Size(984, 35);
-            this.panelExtractDataDetailTop.TabIndex = 0;
-            // 
-            // labelExtractDataDetail
-            // 
-            this.labelExtractDataDetail.AutoSize = true;
-            this.labelExtractDataDetail.Location = new System.Drawing.Point(15, 10);
-            this.labelExtractDataDetail.Name = "labelExtractDataDetail";
-            this.labelExtractDataDetail.Size = new System.Drawing.Size(75, 13);
-            this.labelExtractDataDetail.TabIndex = 0;
-            this.labelExtractDataDetail.Text = "Extract Details";
-            // 
-            // openFileDialogCsv
-            // 
-            this.openFileDialogCsv.FileName = "openFileDialog1";
             // 
             // tabPageSendSummary
             // 
@@ -818,6 +797,40 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(832, 18);
             this.panel4.TabIndex = 3;
+            // 
+            // panelExtractDataDetailTop
+            // 
+            this.panelExtractDataDetailTop.BackColor = System.Drawing.Color.Gainsboro;
+            this.panelExtractDataDetailTop.Controls.Add(this.labelExtractDataDetail);
+            this.panelExtractDataDetailTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelExtractDataDetailTop.Location = new System.Drawing.Point(0, 0);
+            this.panelExtractDataDetailTop.Name = "panelExtractDataDetailTop";
+            this.panelExtractDataDetailTop.Size = new System.Drawing.Size(984, 35);
+            this.panelExtractDataDetailTop.TabIndex = 0;
+            // 
+            // labelExtractDataDetail
+            // 
+            this.labelExtractDataDetail.AutoSize = true;
+            this.labelExtractDataDetail.Location = new System.Drawing.Point(15, 10);
+            this.labelExtractDataDetail.Name = "labelExtractDataDetail";
+            this.labelExtractDataDetail.Size = new System.Drawing.Size(75, 13);
+            this.labelExtractDataDetail.TabIndex = 0;
+            this.labelExtractDataDetail.Text = "Extract Details";
+            // 
+            // openFileDialogCsv
+            // 
+            this.openFileDialogCsv.FileName = "openFileDialog1";
+            // 
+            // linkLabelGenerateValidationSummary
+            // 
+            this.linkLabelGenerateValidationSummary.AutoSize = true;
+            this.linkLabelGenerateValidationSummary.Location = new System.Drawing.Point(730, 2);
+            this.linkLabelGenerateValidationSummary.Name = "linkLabelGenerateValidationSummary";
+            this.linkLabelGenerateValidationSummary.Size = new System.Drawing.Size(97, 13);
+            this.linkLabelGenerateValidationSummary.TabIndex = 0;
+            this.linkLabelGenerateValidationSummary.TabStop = true;
+            this.linkLabelGenerateValidationSummary.Text = "Generate Summary";
+            this.linkLabelGenerateValidationSummary.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGenerateValidationSummary_LinkClicked);
             // 
             // Dashboard
             // 
@@ -875,14 +888,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewValidationDetails)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panelExtractDataDetailTop.ResumeLayout(false);
-            this.panelExtractDataDetailTop.PerformLayout();
             this.tabPageSendSummary.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSendSummary)).EndInit();
+            this.panelExtractDataDetailTop.ResumeLayout(false);
+            this.panelExtractDataDetailTop.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -960,5 +973,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dataGridViewSendSummary;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.LinkLabel linkLabelGenerateValidationSummary;
     }
 }

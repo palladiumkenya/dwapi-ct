@@ -5,6 +5,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Reports
 {
     public interface ISummaryReport
     {
-        void CreateExcelErrorSummary(IEnumerable<IExtractErrorSummary> summaries,string file="");
+        string CreateExcelErrorSummary(IEnumerable<IExtractErrorSummary> summaries,string extract,string file="");
+        void CreateExcelErrorSummaryBatch(IEnumerable<IEnumerable<IExtractErrorSummary>> summariesBatch, string file = "");
     }
 }

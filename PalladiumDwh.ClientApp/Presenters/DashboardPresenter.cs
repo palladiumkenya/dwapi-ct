@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using log4net;
 using log4net.Util;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Views;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientReader.Core.Interfaces.Reports;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
+using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
+using PalladiumDwh.ClientReader.Core.Reports;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 
 namespace PalladiumDwh.ClientApp.Presenters
@@ -41,6 +45,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         private readonly ITempPatientPharmacyExtractRepository _tempPatientPharmacyExtractRepository;
         private readonly ITempPatientStatusExtractRepository _tempPatientStatusExtractRepository;
         private readonly ITempPatientVisitExtractRepository _tempPatientVisitExtractRepository;
+        private ISummaryReport _summaryReport;
 
 
         private long timeTaken = 0;
@@ -96,7 +101,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         public void Initialize()
         {
             View.Title = "Dashboard";
-            View.CanExport = View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
+            View.CanExport = View.CanLoadCsv = View.CanSend = View.CanLoadEmr =View.CanGenerateSummary= false;
             View.Status = "Starting ,please wait ...";
         }
 
@@ -520,6 +525,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public void LoadExtractDetailValidationErrors()
         {
+            View.CanGenerateSummary = false;
             switch (View.SelectedExtractSetting)
             {
                 case "TempPatientStatusExtract":
@@ -600,6 +606,80 @@ namespace PalladiumDwh.ClientApp.Presenters
         public void LoadExtractNotSent()
         {
             throw new NotImplementedException();
+        }
+
+        public void GenerateSummary()
+        {
+            if (null == View.ClientExtractsValidationErrors)
+            {
+                return;
+            }
+
+            
+
+            switch (View.SelectedExtractSetting)
+            {
+                case "TempPatientStatusExtract":
+                {
+                    var summary = (List<TempPatientStatusExtractErrorSummary>)View.ClientExtractsValidationErrors;
+                    _summaryReport = new SummaryReport();
+                        var summaryFile = _summaryReport.CreateExcelErrorSummary(summary, "PatientStatusExtract");
+                    View.OpenFile(summaryFile);
+                    break;
+                }
+                case "TempPatientArtExtract":
+                {
+                    var summary = (List<TempPatientArtExtractErrorSummary>)View.ClientExtractsValidationErrors;
+                    _summaryReport = new SummaryReport();
+                        var summaryFile = _summaryReport.CreateExcelErrorSummary(summary, "PatientArtExtract");
+                    View.OpenFile(summaryFile);
+                        break;
+                }
+                case "TempPatientBaselinesExtract":
+                {
+                    var summary = (List<TempPatientBaselinesExtractErrorSummary>)View.ClientExtractsValidationErrors;
+                    _summaryReport = new SummaryReport();
+                        var summaryFile = _summaryReport.CreateExcelErrorSummary(summary, "PatientBaselinesExtract");
+                    View.OpenFile(summaryFile);
+                        break;
+                }
+
+                case "TempPatientVisitExtract":
+                {
+                    var summary = (List<TempPatientVisitExtractErrorSummary>)View.ClientExtractsValidationErrors;
+                    _summaryReport = new SummaryReport();
+
+                        var summaryFile = _summaryReport.CreateExcelErrorSummary(summary, "PatientVisitExtract");
+                    View.OpenFile(summaryFile);
+                        break;
+                }
+                case "TempPatientPharmacyExtract":
+                {
+                    var summary = (List<TempPatientPharmacyExtractErrorSummary>)View.ClientExtractsValidationErrors;
+                    _summaryReport = new SummaryReport();
+                        var summaryFile = _summaryReport.CreateExcelErrorSummary(summary, "PatientPharmacyExtract");
+                    View.ShowMessage($"Summary Generated :{summaryFile}");
+                    break;
+                }
+
+                case "TempPatientLaboratoryExtract":
+                {
+                    var summary = (List<TempPatientLaboratoryExtractErrorSummary>)View.ClientExtractsValidationErrors;
+                    _summaryReport = new SummaryReport();
+
+                        var summaryFile = _summaryReport.CreateExcelErrorSummary(summary, "PatientLaboratoryExtract");
+                    View.OpenFile(summaryFile);
+                        break;
+                }
+                default:
+                {
+                    var summary = (List<TempPatientExtractErrorSummary>)View.ClientExtractsValidationErrors;
+                    _summaryReport = new SummaryReport();
+                        var summaryFile = _summaryReport.CreateExcelErrorSummary(summary, "PatientExtact");
+                    View.OpenFile(summaryFile);
+                        break;
+                }
+            }
         }
 
         //TODO: consider Parallel processing
@@ -686,6 +766,9 @@ namespace PalladiumDwh.ClientApp.Presenters
             this.View.EventSummaries = new List<string>() { msg, $"Total time taken: {timeTaken * 0.001} s" };
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
         }
+
+       
+
         private void UpdateUi(string message)
         {
             View.Status = $"{message}";
