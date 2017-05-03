@@ -156,6 +156,11 @@ namespace PalladiumDwh.Shared.Custom
 
             return tb;
         }
+
+        public static string GetFolderPath(string folder)
+        {
+            return folder.EndsWith("\\") ? folder : $"{folder}\\";
+        }
     }
 }
 

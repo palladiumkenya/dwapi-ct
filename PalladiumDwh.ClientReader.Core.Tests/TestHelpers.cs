@@ -66,6 +66,12 @@ namespace PalladiumDwh.ClientReader.Core.Tests
             var files = Directory.GetFiles(path, "*.csv", SearchOption.AllDirectories);
             return files.FirstOrDefault(x => x.Contains(name));
         }
+        public static string GetExcel(string name)
+        {
+            string path = TestContext.CurrentContext.TestDirectory;
+            var files = Directory.GetFiles(path, "*.xlsx", SearchOption.AllDirectories);
+            return files.FirstOrDefault(x => x.Contains(name));
+        }
 
         public static string GetPatientsSql(int top = -1)
         {
