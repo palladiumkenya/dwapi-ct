@@ -27,15 +27,20 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
             return DbSet;
         }
 
+        public IEnumerable<T> GetAllSendErrors()
+        {
+           return DbSet.Where(x => x.Status != "Sent" && !string.IsNullOrEmpty(x.Status));
+        }
+
         public IPagedList<T> GetAll(int? page, int? pageSize, string search = "")
         {
             IEnumerable<T> logs;
 
             page = page == 0 ? 1 : page;
             pageSize = pageSize == 0 ? 100 : pageSize;
-            pageSize = pageSize == -1 ? DbSet.Count() : pageSize;
+            pageSize = pageSize == -1 ? GetAll().Count() : pageSize;
 
-            logs = DbSet;
+            logs = GetAll();
 
             if (!string.IsNullOrWhiteSpace(search))
             {
@@ -58,9 +63,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 
             page = page == 0 ? 1 : page;
             pageSize = pageSize == 0 ? 100 : pageSize;
-            pageSize = pageSize == -1 ? DbSet.Count() : pageSize;
+            pageSize = pageSize == -1 ? GetAllSendErrors().Count() : pageSize;
 
-            logs = DbSet.Where(x => x.Status != "Sent" && !string.IsNullOrEmpty(x.Status));
+            logs = GetAllSendErrors();
 
             if (!string.IsNullOrWhiteSpace(search))
             {

@@ -91,7 +91,7 @@ RecordId
 
                     row.Append(
                         ConstructCell(summary.SiteCode.ToString(), CellValues.Number),
-                        ConstructCell(summary.PatientPK.ToString(), CellValues.String),
+                        ConstructCell(summary.PatientPK.ToString(), CellValues.Number),
                         ConstructCell(summary.PatientID, CellValues.String),
                         ConstructCell(summary.Type, CellValues.String),
                         ConstructCell(summary.Field, CellValues.String),
