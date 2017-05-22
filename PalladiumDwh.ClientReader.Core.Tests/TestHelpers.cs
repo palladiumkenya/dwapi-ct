@@ -12,7 +12,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests
 {
     public static class TestHelpers
     {
-        public static void CreateTestData<T>(DbContext context, IEnumerable<T> entities) where T : Entity
+        public static void CreateTestData<T>(DbContext context, IEnumerable<T> entities) where T : class 
         {
             context.Set<T>().AddRange(entities);
             context.SaveChanges();
@@ -38,11 +38,11 @@ namespace PalladiumDwh.ClientReader.Core.Tests
             foreach (var p in patients)
             {
                 p.FacilityId = facility.Id;
-                p.AddPatientArtExtracts(Builder<PatientArtExtract>.CreateListOfSize(count).Build().ToList());
-                p.AddPatientBaselinesExtracts(Builder<PatientBaselinesExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddPatientArtExtracts(Builder<PatientArtExtract>.CreateListOfSize(patientCount).Build().ToList());
+                p.AddPatientBaselinesExtracts(Builder<PatientBaselinesExtract>.CreateListOfSize(patientCount).Build().ToList());
                 p.AddPatientLaboratoryExtracts(Builder<PatientLaboratoryExtract>.CreateListOfSize(count).Build().ToList());
                 p.AddPatientPharmacyExtracts(Builder<PatientPharmacyExtract>.CreateListOfSize(count).Build().ToList());
-                p.AddPatientStatusExtracts(Builder<PatientStatusExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddPatientStatusExtracts(Builder<PatientStatusExtract>.CreateListOfSize(patientCount).Build().ToList());
                 p.AddPatientVisitExtracts(Builder<PatientVisitExtract>.CreateListOfSize(count).Build().ToList());
 
             }
@@ -71,6 +71,12 @@ namespace PalladiumDwh.ClientReader.Core.Tests
             string path = TestContext.CurrentContext.TestDirectory;
             var files = Directory.GetFiles(path, "*.xlsx", SearchOption.AllDirectories);
             return files.FirstOrDefault(x => x.Contains(name));
+        }
+        public static IEnumerable<string> GetExports(string name)
+        {
+            string path = TestContext.CurrentContext.TestDirectory;
+            var files = Directory.GetFiles(path, "*.dwh", SearchOption.AllDirectories);
+            return files.Where(x => x.Contains(name));
         }
 
         public static string GetPatientsSql(int top = -1)

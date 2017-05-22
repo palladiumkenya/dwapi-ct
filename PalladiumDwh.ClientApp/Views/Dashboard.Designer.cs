@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
             this.menuStripDashboard = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,6 +89,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.dataGridViewValidationDetails = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.linkLabelGenerateValidationSummary = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelValidationSummaryNav = new System.Windows.Forms.Panel();
             this.tabPageSendSummary = new System.Windows.Forms.TabPage();
@@ -98,7 +100,6 @@
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
             this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
-            this.linkLabelGenerateValidationSummary = new System.Windows.Forms.LinkLabel();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -727,6 +728,17 @@
             this.panel2.Size = new System.Drawing.Size(832, 20);
             this.panel2.TabIndex = 7;
             // 
+            // linkLabelGenerateValidationSummary
+            // 
+            this.linkLabelGenerateValidationSummary.AutoSize = true;
+            this.linkLabelGenerateValidationSummary.Location = new System.Drawing.Point(730, 2);
+            this.linkLabelGenerateValidationSummary.Name = "linkLabelGenerateValidationSummary";
+            this.linkLabelGenerateValidationSummary.Size = new System.Drawing.Size(97, 13);
+            this.linkLabelGenerateValidationSummary.TabIndex = 0;
+            this.linkLabelGenerateValidationSummary.TabStop = true;
+            this.linkLabelGenerateValidationSummary.Text = "Generate Summary";
+            this.linkLabelGenerateValidationSummary.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGenerateValidationSummary_LinkClicked);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -821,17 +833,6 @@
             // 
             this.openFileDialogCsv.FileName = "openFileDialog1";
             // 
-            // linkLabelGenerateValidationSummary
-            // 
-            this.linkLabelGenerateValidationSummary.AutoSize = true;
-            this.linkLabelGenerateValidationSummary.Location = new System.Drawing.Point(730, 2);
-            this.linkLabelGenerateValidationSummary.Name = "linkLabelGenerateValidationSummary";
-            this.linkLabelGenerateValidationSummary.Size = new System.Drawing.Size(97, 13);
-            this.linkLabelGenerateValidationSummary.TabIndex = 0;
-            this.linkLabelGenerateValidationSummary.TabStop = true;
-            this.linkLabelGenerateValidationSummary.Text = "Generate Summary";
-            this.linkLabelGenerateValidationSummary.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGenerateValidationSummary_LinkClicked);
-            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -842,6 +843,7 @@
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.statusStripDashboard);
             this.Controls.Add(this.menuStripDashboard);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripDashboard;
             this.Name = "Dashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

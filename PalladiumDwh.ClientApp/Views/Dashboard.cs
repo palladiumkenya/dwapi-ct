@@ -45,6 +45,8 @@ namespace PalladiumDwh.ClientApp.Views
 
         private  IProfileManager _profileManager;
         private  IPushProfileService _pushService;
+        private IExportService _exportService;
+
         private List<string> _eventSummaries = new List<string>();
         private List<string> _allEventSummaries=new List<string>();
         private List<ExtractSetting> _extractSettingsList;
@@ -55,6 +57,8 @@ namespace PalladiumDwh.ClientApp.Views
         private object _clientExtractsValidationErrors;
         private  object _selectedValidation;
         private object _clientExtractsNotSent;
+
+        
 
         public Dashboard()
         {
@@ -72,7 +76,6 @@ namespace PalladiumDwh.ClientApp.Views
         {
             try
             {
-
 
                 System.Diagnostics.Process.Start(filename);
                 }
@@ -578,13 +581,20 @@ namespace PalladiumDwh.ClientApp.Views
 
             _profileManager = Program.IOC.GetInstance<IProfileManager>();
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
+            _exportService = Program.IOC.GetInstance<IExportService>();
 
 
             Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository,
                 _profileManager, _pushService,
-                _clientPatientArtExtractRepository,_clientPatientBaselinesExtractRepository,_clientPatientExtractRepository,_clientPatientLaboratoryExtractRepository,_clientPatientPharmacyExtractRepository,_clientPatientStatusExtractRepository,_clientPatientVisitExtractRepository,
-                _tempPatientExtractRepository,_tempPatientArtExtractRepository,_tempPatientBaselinesExtractRepository,_tempPatientLaboratoryExtractRepository,_tempPatientPharmacyExtractRepository,_tempPatientStatusExtractRepository,_tempPatientVisitExtractRepository
-                );
+                _clientPatientArtExtractRepository, _clientPatientBaselinesExtractRepository,
+                _clientPatientExtractRepository, _clientPatientLaboratoryExtractRepository,
+                _clientPatientPharmacyExtractRepository, _clientPatientStatusExtractRepository,
+                _clientPatientVisitExtractRepository,
+                _tempPatientExtractRepository, _tempPatientArtExtractRepository, _tempPatientBaselinesExtractRepository,
+                _tempPatientLaboratoryExtractRepository, _tempPatientPharmacyExtractRepository,
+                _tempPatientStatusExtractRepository, _tempPatientVisitExtractRepository,
+                _exportService
+            );
 
             Presenter.Initialize();
             Presenter.InitializeEmrInfo();

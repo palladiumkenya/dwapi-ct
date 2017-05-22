@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("EMR Setup");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("EMR Setup");
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options));
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOk = new System.Windows.Forms.Button();
@@ -109,7 +110,7 @@
             // 
             this.listViewOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewOptions.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem12});
+            listViewItem1});
             this.listViewOptions.Location = new System.Drawing.Point(3, 5);
             this.listViewOptions.Name = "listViewOptions";
             this.listViewOptions.Size = new System.Drawing.Size(170, 419);
@@ -228,6 +229,7 @@
             this.ClientSize = new System.Drawing.Size(684, 483);
             this.Controls.Add(this.splitContainerOptions);
             this.Controls.Add(this.panel2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Options";
             this.Text = "Options";
             this.Load += new System.EventHandler(this.Options_Load);

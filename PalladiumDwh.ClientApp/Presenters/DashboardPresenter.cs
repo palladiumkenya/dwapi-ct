@@ -15,7 +15,9 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.ClientReader.Core.Reports;
+using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
+using System.Windows.Forms;
 
 namespace PalladiumDwh.ClientApp.Presenters
 {
@@ -45,7 +47,9 @@ namespace PalladiumDwh.ClientApp.Presenters
         private readonly ITempPatientPharmacyExtractRepository _tempPatientPharmacyExtractRepository;
         private readonly ITempPatientStatusExtractRepository _tempPatientStatusExtractRepository;
         private readonly ITempPatientVisitExtractRepository _tempPatientVisitExtractRepository;
+
         private ISummaryReport _summaryReport;
+        private IExportService _exportService;
 
 
         private long timeTaken = 0;
@@ -63,7 +67,8 @@ namespace PalladiumDwh.ClientApp.Presenters
             IClientPatientRepository clientPatientRepository, IProfileManager profileManager,
             IPushProfileService pushService,
             IClientPatientArtExtractRepository clientPatientArtExtractRepository, IClientPatientBaselinesExtractRepository clientPatientBaselinesExtractRepository, IClientPatientExtractRepository clientPatientExtractRepository, IClientPatientLaboratoryExtractRepository clientPatientLaboratoryExtractRepository, IClientPatientPharmacyExtractRepository clientPatientPharmacyExtractRepository, IClientPatientStatusExtractRepository clientPatientStatusExtractRepository, IClientPatientVisitExtractRepository clientPatientVisitExtractRepository,
-        ITempPatientExtractRepository tempPatientExtractRepository, ITempPatientArtExtractRepository tempPatientArtExtractRepository, ITempPatientBaselinesExtractRepository tempPatientBaselinesExtractRepository, ITempPatientLaboratoryExtractRepository tempPatientLaboratoryExtractRepository, ITempPatientPharmacyExtractRepository tempPatientPharmacyExtractRepository, ITempPatientStatusExtractRepository tempPatientStatusExtractRepository, ITempPatientVisitExtractRepository tempPatientVisitExtractRepository
+        ITempPatientExtractRepository tempPatientExtractRepository, ITempPatientArtExtractRepository tempPatientArtExtractRepository, ITempPatientBaselinesExtractRepository tempPatientBaselinesExtractRepository, ITempPatientLaboratoryExtractRepository tempPatientLaboratoryExtractRepository, ITempPatientPharmacyExtractRepository tempPatientPharmacyExtractRepository, ITempPatientStatusExtractRepository tempPatientStatusExtractRepository, ITempPatientVisitExtractRepository tempPatientVisitExtractRepository,
+            IExportService exportService
             )
         {
             view.Presenter = this;
@@ -91,6 +96,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             _profileManager = profileManager;
             _pushService = pushService;
+            _exportService = exportService;
 
             View.EmrExtractLoaded += View_EmrExtractLoaded;
             View.CsvExtractLoaded += View_CsvExtractLoaded;
@@ -100,7 +106,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public void Initialize()
         {
-            View.Title = "Dashboard";
+            View.Title = $"Dashboard v{Application.ProductVersion}";
             View.CanExport = View.CanLoadCsv = View.CanSend = View.CanLoadEmr =View.CanGenerateSummary= false;
             View.Status = "Starting ,please wait ...";
         }
@@ -434,9 +440,9 @@ namespace PalladiumDwh.ClientApp.Presenters
             //SendExtracts();
         }
 
-        private void View_ExtractExported(object sender, Events.ExtractExportedEvent e)
+        private async void View_ExtractExported(object sender, Events.ExtractExportedEvent e)
         {
-            throw new System.NotImplementedException();
+            await ExportExtractsAsync();
         }
 
       
@@ -767,7 +773,22 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
         }
 
-       
+        public async Task ExportExtractsAsync()
+        {
+            try
+            {
+                var location = await _exportService.ExportToJSonAsync();
+                View.OpenFile(location);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+            
+        }
+
 
         private void UpdateUi(string message)
         {

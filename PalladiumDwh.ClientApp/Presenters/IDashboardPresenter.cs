@@ -31,7 +31,9 @@ namespace PalladiumDwh.ClientApp.Presenters
         void GenerateSummary();
         void SendExtracts();
         Task SendExtractsInParallel();
-        
+
+        Task ExportExtractsAsync();
+
         #endregion
     }
 }
