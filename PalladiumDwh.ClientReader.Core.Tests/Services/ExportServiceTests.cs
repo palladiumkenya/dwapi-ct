@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using DocumentFormat.OpenXml.Spreadsheet;
 using FizzWare.NBuilder;
@@ -24,10 +25,18 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         private IExportService _exportService;
         private List<ClientPatientExtract> _clientPatientExtracts;
         private string _exportDir;
+        private IProgress<int> _progress;
+        private string _exportPath;
 
         [SetUp]
         public void SetUp()
         {
+            _exportPath = $@"{TestContext.CurrentContext.TestDirectory.HasToEndsWith(@"\")}DWapi\Exports\Extracts\";
+            if (!Directory.Exists(_exportPath))
+            {
+                Directory.CreateDirectory(_exportPath);
+            }
+            _progress = new Progress<int>(ReportProgress);
             _context = new DwapiRemoteContext(Effort.DbConnectionFactory.CreateTransient(), true);
             _clientPatientExtracts = Builder<ClientPatientExtract>.CreateListOfSize(3).Build().ToList();
             TestHelpers.CreateTestData(_context, _clientPatientExtracts);
@@ -40,29 +49,45 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         [Test]
         public void should_Export_Extracts_ToJSon()
         {
-            var saveFolder= _exportService.ExportToJSonAsync(_exportDir).Result;
+            var saveFolder= _exportService.ExportToJSonAsync(_exportDir, _progress).Result;
             Assert.IsTrue(!string.IsNullOrWhiteSpace(saveFolder));
-            Console.WriteLine(saveFolder);
-            var files = TestHelpers.GetExports("-");
+            Console.WriteLine($"Exported to:{saveFolder}");
+
+            var files = TestHelpers.GetExports($"{DateTime.Today:yyyyMMMdd}");
             Assert.IsNotEmpty(files);
-            
+            foreach (var f in files)
+            {
+                ZipFile.ExtractToDirectory(f,_exportPath);
+            }
+
             var patients = _clientPatientExtractRepository.GetAll();
             foreach (var p in patients)
             {
-                Assert.IsTrue(File.Exists($"{saveFolder}{p.Id}.dwh"));
+                Assert.IsTrue(File.Exists($"{_exportPath}{p.Id}.dwh"));
             }
-            var selectedFile = files.FirstOrDefault();
+            var selectedFile = Directory.GetFiles(_exportPath, "*.dwh", SearchOption.AllDirectories).FirstOrDefault();
             Console.WriteLine(selectedFile);
             var contents = File.ReadAllText(selectedFile);
             Console.WriteLine(contents);
+           
         }
+
         [Test]
         public void should_Decode_Exported_Json_Extracts()
         {
             var saveFolder = _exportService.ExportToJSonAsync(_exportDir).Result;
             Assert.IsTrue(!string.IsNullOrWhiteSpace(saveFolder));
-            Console.WriteLine(saveFolder);
-            var files = TestHelpers.GetExports("-");
+            Console.WriteLine($"Exported to:{saveFolder}");
+
+            var files = TestHelpers.GetExports($"{DateTime.Today:yyyyMMMdd}");
+            Assert.IsNotEmpty(files);
+            foreach (var f in files)
+            {
+                ZipFile.ExtractToDirectory(f, _exportPath);
+            }
+
+            files = Directory.GetFiles(_exportPath, "*.dwh", SearchOption.AllDirectories);
+
             var selectedFile = files.FirstOrDefault();
             Assert.IsNotNull(selectedFile);
             Console.WriteLine(selectedFile);
@@ -77,6 +102,12 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             Console.WriteLine(new string('-', 30));
             Console.WriteLine(new string('-', 30));
             Console.WriteLine(decoded);
+        }
+
+        private void ReportProgress(int value)
+        {
+            //Update the UI to reflect the progress value that is passed back.
+            Console.WriteLine($"Exporting {value}%");
         }
     }
 }

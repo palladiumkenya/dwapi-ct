@@ -5,6 +5,7 @@ using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Interfaces.Source;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
@@ -74,8 +75,8 @@ namespace PalladiumDwh.ClientReader.Core.Tests
         }
         public static IEnumerable<string> GetExports(string name)
         {
-            string path = TestContext.CurrentContext.TestDirectory;
-            var files = Directory.GetFiles(path, "*.dwh", SearchOption.AllDirectories);
+            string path = $@"{TestContext.CurrentContext.TestDirectory.HasToEndsWith(@"\")}DWapi\Exports\";
+            var files = Directory.GetFiles(path, "*.zip", SearchOption.AllDirectories);
             return files.Where(x => x.Contains(name));
         }
 

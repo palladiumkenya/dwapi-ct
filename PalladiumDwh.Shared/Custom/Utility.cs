@@ -161,6 +161,24 @@ namespace PalladiumDwh.Shared.Custom
         {
             return folder.EndsWith("\\") ? folder : $"{folder}\\";
         }
+
+        public static string HasToEndsWith(this string value, string end)
+        {
+            return value.EndsWith(end) ? value : $"{value}{end}";
+        }
+
+        public static string ReplaceFromEnd(this string s, string suffix,string replaceWith, int number = 1)
+        {
+            var finalString = s;
+
+            if (s.EndsWith(suffix))
+            {
+                finalString= s.Substring(0, s.Length - number);
+                finalString = $@"{finalString}.zip";
+            }
+            
+            return finalString;
+        }
     }
 }
 

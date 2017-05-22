@@ -148,6 +148,25 @@ namespace PalladiumDwh.Shared.Tests
             Assert.That(namesJoined, Does.StartWith("@"));
             Console.WriteLine(namesJoined);
         }
+        [Test]
+        public void should_Replace_End()
+        {
+            var list = @"C:\Export\01JAN16\";
+            var list2 = @"C:\Export\01JAN16";
+            var list3 = "";
+
+            var result = list.ReplaceFromEnd(@"\", "zip");
+            Assert.AreEqual(@"C:\Export\01JAN16.zip", result);
+            Console.WriteLine(result);
+
+            var result2 = list2.ReplaceFromEnd(@"\", "zip");
+            Assert.AreEqual(list2, result2);
+            Console.WriteLine(result2);
+
+            var result3 = list3.ReplaceFromEnd(@"\", "zip");
+            Assert.AreEqual(list3, result3);
+            Console.WriteLine(result3);
+        }
     }
 
 

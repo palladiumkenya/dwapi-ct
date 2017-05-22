@@ -17,7 +17,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
             context.SaveChanges();
             context.ExtractSettings.SeedFromResource("PalladiumDwh.ClientReader.Infrastructure.Seed.ExtractSetting.csv",c => new {c.Name, c.EmrId});
             context.SaveChanges();
-            context.Validators.SeedFromResource("PalladiumDwh.ClientReader.Infrastructure.Seed.Validator.csv",c => new {c.Extract, c.Field, c.Type});
+            context.Validators.SeedFromResource("PalladiumDwh.ClientReader.Infrastructure.Seed.Validator.csv",c => new {c.Id});
             context.SaveChanges();
         }
     }

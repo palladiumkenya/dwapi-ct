@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
+using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
@@ -14,29 +14,56 @@ namespace PalladiumDwh.ClientReader.Core.Services
     {
         
         private readonly IClientPatientExtractRepository _clientPatientExtractRepository;
-        
+        private IProgress<int> _progress;
+        private int _progressValue;
+        private int _taskCount;
 
         public ExportService(IClientPatientExtractRepository clientPatientExtractRepository)
         {
             _clientPatientExtractRepository = clientPatientExtractRepository;
         }
 
-        public async Task<string> ExportToJSonAsync(string exportDir = "")
+        public async Task<string> ExportToJSonAsync(string exportDir = "", IProgress<int> progress = null)
         {
-            string folderToSaveTo;
+            _progress = progress;
 
-            folderToSaveTo = string.IsNullOrWhiteSpace(exportDir) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : exportDir;
+            var parentFolder = "";
+            var folderToSaveTo = "";
 
 
-            folderToSaveTo = folderToSaveTo.EndsWith("\\") ? folderToSaveTo : $"{folderToSaveTo}\\";
-            folderToSaveTo = $@"{folderToSaveTo}Exports\{DateTime.Today:yyyyMMMdd}\";
+            if (string.IsNullOrWhiteSpace(exportDir))
+            {
+                //save to My Documents
+                folderToSaveTo = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            }
+            else
+            {
+                folderToSaveTo = exportDir;
+            }
+
+            folderToSaveTo = folderToSaveTo.HasToEndsWith(@"\");
+            parentFolder = $@"{folderToSaveTo}DWapi\Exports\".HasToEndsWith(@"\");
+
+            folderToSaveTo = $@"{parentFolder}{DateTime.Today:yyyyMMMdd}\".HasToEndsWith(@"\");
+            
 
             bool exists = Directory.Exists(folderToSaveTo);
 
             if (!exists)
+            {
                 Directory.CreateDirectory(folderToSaveTo);
+            }
+            else
+            {
+                // Delete All
+                Directory.Delete(folderToSaveTo,true);
+                Directory.CreateDirectory(folderToSaveTo);
+            }
 
-            var patients = await Task.Run(() => _clientPatientExtractRepository.GetAll());
+            var patients = await Task.Run(() => _clientPatientExtractRepository.GetAll().ToList());
+
+            _taskCount = patients.Count;
+
             foreach (var p in patients)
             {
                 var jsonPatient = JsonConvert.SerializeObject(p, Formatting.Indented,
@@ -49,9 +76,14 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 jsonPatient = Base64Encode(jsonPatient);
 
                 await Task.Run(() => System.IO.File.WriteAllText($"{folderToSaveTo}{p.Id}.dwh", jsonPatient));
+
+                _progressValue++;
+                ShowPercentage(_progressValue);
             }
 
-            return folderToSaveTo;
+            await ZipExtracts(folderToSaveTo);
+
+            return parentFolder;
         }
 
         public  string Base64Encode(string plainText)
@@ -63,6 +95,30 @@ namespace PalladiumDwh.ClientReader.Core.Services
         {
             var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+        private Task ZipExtracts(string folder)
+        {
+            string zipped = folder.ReplaceFromEnd(@"\", ".zip");
+
+            if (File.Exists(zipped))
+                File.Delete(zipped);
+
+            return Task.Run(() =>
+                {
+                     ZipFile.CreateFromDirectory(folder, zipped, CompressionLevel.Fastest, false);
+                    Directory.Delete(folder, true);
+                }
+            );
+
+        }
+
+        private void ShowPercentage(int progress)
+        {
+            if (null == _progress)
+                return;
+            decimal status = decimal.Divide(progress, _taskCount) * 100;
+            _progress.Report((int)status);
         }
     }
 }

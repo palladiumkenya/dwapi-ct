@@ -775,9 +775,14 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public async Task ExportExtractsAsync()
         {
+            View.Status = "Exporting...";
+            View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
+
+            var progress = new Progress<int>(ExportReportProgress);
+
             try
             {
-                var location = await _exportService.ExportToJSonAsync();
+                var location = await _exportService.ExportToJSonAsync(string.Empty,progress);
                 View.OpenFile(location);
             }
             catch (Exception e)
@@ -785,18 +790,19 @@ namespace PalladiumDwh.ClientApp.Presenters
                 Console.WriteLine(e);
                 throw;
             }
-            
-            
-        }
 
+            View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
+        }
 
         private void UpdateUi(string message)
         {
             View.Status = $"{message}";
         }
 
-        
-
+        private void ExportReportProgress(int value)
+        {
+            Console.WriteLine($"Exporting {value}%");
+        }
         #endregion
     }
 }
