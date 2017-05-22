@@ -101,7 +101,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         ///   Looks up a localized string similar to CREATE VIEW vTempPatientBaselinesExtractErrorSummary
         ///AS
         ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientBaselinesExtractError.PatientPK,dbo.vTempPatientBaselinesExtractError.FacilityId,
-        ///                         dbo.vTempPatientBaselinesExtractError.PatientID, dbo.vTempPatientBaselinesExtractError.SiteCode, dbo.vTempPatientBaselinesExtractError.FacilityName, dbo.ValidationError.R [rest of string was truncated]&quot;;.
+        ///                         dbo.vTempPatientBaselinesExtractError.PatientID, dbo.vTempPatientBaselinesExtractError.SiteCode, dbo.ValidationError.RecordId
+        ///FROM            dbo.vTempPatientBaselinesEx [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string vTempPatientBaselinesExtractErrorSummary {
             get {
@@ -174,7 +175,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         ///   Looks up a localized string similar to CREATE VIEW vTempPatientPharmacyExtractErrorSummary
         ///AS
         ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientPharmacyExtractError.PatientPK,dbo.vTempPatientPharmacyExtractError.FacilityId,
-        ///                         dbo.vTempPatientPharmacyExtractError.PatientID, dbo.vTempPatientPharmacyExtractError.SiteCode, dbo.vTempPatientPharmacyExtractError.FacilityName, dbo.ValidationError.RecordI [rest of string was truncated]&quot;;.
+        ///                         dbo.vTempPatientPharmacyExtractError.PatientID, dbo.vTempPatientPharmacyExtractError.SiteCode,  dbo.ValidationError.RecordId
+        ///FROM            dbo.vTempPatientPharmacyExtract [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string vTempPatientPharmacyExtractErrorSummary {
             get {

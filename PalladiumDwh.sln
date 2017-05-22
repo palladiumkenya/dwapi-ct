@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.Core", "PalladiumDwh.Core\PalladiumDwh.Core.csproj", "{59A12AB3-C0EC-4CFE-BCA0-959FAA563AEB}"
 EndProject
@@ -41,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientReader.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientReader.Infrastructure", "PalladiumDwh.ClientReader.Infrastructure\PalladiumDwh.ClientReader.Infrastructure.csproj", "{6DFA67BB-56B7-4695-98F3-B2AD83B09845}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientReader.Infrastructure.Tests", "PalladiumDwh.ClientReader.Infrastructure.Tests\PalladiumDwh.ClientReader.Infrastructure.Tests.csproj", "{59D7021E-700A-4811-A687-046C89416112}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientReader.Core.Tests", "PalladiumDwh.ClientReader.Core.Tests\PalladiumDwh.ClientReader.Core.Tests.csproj", "{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientUploader.Core", "PalladiumDwh.ClientUploader.Core\PalladiumDwh.ClientUploader.Core.csproj", "{E1EE232F-1977-4E72-98D6-7A088B201D38}"
@@ -54,6 +52,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientUploader.Core.Tests", "PalladiumDwh.ClientUploader.Core.Tests\PalladiumDwh.ClientUploader.Core.Tests.csproj", "{B4BECF3B-F4C8-43ED-91AC-048658E28CB3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientApp", "PalladiumDwh.ClientApp\PalladiumDwh.ClientApp.csproj", "{937CEB6E-CC7D-4A14-A7F6-30055E087275}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalladiumDwh.ClientReader.Infrastructure.Tests", "PalladiumDwh.ClientReader.Infrastructure.Tests\PalladiumDwh.ClientReader.Infrastructure.Tests.csproj", "{59D7021E-700A-4811-A687-046C89416112}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,10 +113,6 @@ Global
 		{6DFA67BB-56B7-4695-98F3-B2AD83B09845}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DFA67BB-56B7-4695-98F3-B2AD83B09845}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DFA67BB-56B7-4695-98F3-B2AD83B09845}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59D7021E-700A-4811-A687-046C89416112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59D7021E-700A-4811-A687-046C89416112}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59D7021E-700A-4811-A687-046C89416112}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59D7021E-700A-4811-A687-046C89416112}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -141,6 +137,10 @@ Global
 		{937CEB6E-CC7D-4A14-A7F6-30055E087275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{937CEB6E-CC7D-4A14-A7F6-30055E087275}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{937CEB6E-CC7D-4A14-A7F6-30055E087275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59D7021E-700A-4811-A687-046C89416112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D7021E-700A-4811-A687-046C89416112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D7021E-700A-4811-A687-046C89416112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D7021E-700A-4811-A687-046C89416112}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,12 +159,12 @@ Global
 		{2BA071EB-06AD-41A0-8ADA-0F9804A6246C} = {D08B9570-DB7E-4961-82DF-25F0587AE9CD}
 		{B7E99F1A-ECE6-44D7-BDF4-75A453B5FE43} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{6DFA67BB-56B7-4695-98F3-B2AD83B09845} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
-		{59D7021E-700A-4811-A687-046C89416112} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{1128E6B5-A3D2-4EE1-95F3-5B9A19ED78C1} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{E1EE232F-1977-4E72-98D6-7A088B201D38} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{335B20E1-FD2A-48EC-9376-9F294AAEF75D} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{EA397F5A-646B-4CB3-A0A6-2DC48BAE13D3} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{B4BECF3B-F4C8-43ED-91AC-048658E28CB3} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{937CEB6E-CC7D-4A14-A7F6-30055E087275} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
+		{59D7021E-700A-4811-A687-046C89416112} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 	EndGlobalSection
 EndGlobal
