@@ -775,6 +775,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public async Task ExportExtractsAsync()
         {
+            
             View.Status = "Exporting...";
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
 
@@ -790,8 +791,9 @@ namespace PalladiumDwh.ClientApp.Presenters
                 Console.WriteLine(e);
                 throw;
             }
-
+            View.Status = "Export Complete!";
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
+            View.ShowReady();
         }
 
         private void UpdateUi(string message)
@@ -801,7 +803,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         private void ExportReportProgress(int value)
         {
-            Console.WriteLine($"Exporting {value}%");
+            View.Status = $"Exporting {value}%";
         }
         #endregion
     }

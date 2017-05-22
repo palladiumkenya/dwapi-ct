@@ -541,6 +541,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         private void buttonExport_Click(object sender, EventArgs e)
         {
+            ShowPleaseWait();
             OnExtractExported(new ExtractExportedEvent(ExtractSettings));
         }
 
