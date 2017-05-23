@@ -7,7 +7,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
     public interface IImportService
     {
-        Task<List<ImportManifest>> GetCurrentImports(string importDir = "");
+        Task<List<ImportManifest>> GetCurrentImports(string importDir = "", IProgress<int> progress = null);
         Task<List<ImportManifest>> ExtractExportsAsync(List<string> exportFiles,string importDir="", IProgress<int> progress = null);
         Task<IEnumerable<ClientPatientExtract>> ReadExportsAsync(string importDir);
         string Base64Decode(string base64EncodedData);

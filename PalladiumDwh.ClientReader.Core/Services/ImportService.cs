@@ -28,8 +28,9 @@ namespace PalladiumDwh.ClientReader.Core.Services
             _clientPatientExtractRepository = clientPatientExtractRepository;
         }
 
-        public async Task<List<ImportManifest>> GetCurrentImports(string importDir = "")
+        public async Task<List<ImportManifest>> GetCurrentImports(string importDir = "", IProgress<int> progress = null)
         {
+            _progress = progress;
             var importManifests = new List<ImportManifest>();
             string folderToSaveTo;
             if (string.IsNullOrWhiteSpace(importDir))
@@ -43,11 +44,20 @@ namespace PalladiumDwh.ClientReader.Core.Services
             }
             folderToSaveTo = folderToSaveTo.HasToEndsWith(@"\");
             string parentFolder = $@"{folderToSaveTo}DWapi\Imports\".HasToEndsWith(@"\");
-
+            var dirs = Directory.GetDirectories(parentFolder).ToList();
+            _taskCount = dirs.Count;
             try
             {
+                foreach (var dir in dirs)
+                {
+                    await Task.Run(() =>
+                    {
+                        importManifests.Add(ImportManifest.Create(dir));
+                    });
 
-                importManifests.Add(ImportManifest.Create(parentFolder));
+                    _progressValue++;
+                    ShowPercentage(_progressValue);
+                }
             }
             catch (Exception e)
             {

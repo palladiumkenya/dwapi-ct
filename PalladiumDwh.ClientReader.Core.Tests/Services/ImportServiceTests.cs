@@ -43,11 +43,29 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         }
 
         [Test]
+        public void should_Get_Exisitng_Imports()
+        {
+            var imports = _importService.GetCurrentImports($@"{_importPath}",_progress).Result;
+
+            Assert.IsNotEmpty(imports);
+            Console.WriteLine($"Extracted TO:{_importPath}");
+            foreach (var i in imports)
+            {
+                Console.WriteLine(i);
+                foreach (var p in i.Profiles)
+                {
+                    Console.WriteLine($" >.{p}");
+                }
+            }
+
+        }
+
+        [Test]
         public void should_Extract_Exports_To_ImportFolder()
         {
             var files = Directory.GetFiles(_exportDir, "*.zip").ToList();
 
-            var imports = _importService.ExtractExportsAsync(files, _importPath).Result;
+            var imports = _importService.ExtractExportsAsync(files, _importPath, _progress).Result;
 
             Assert.IsNotEmpty(imports);
             Console.WriteLine($"Extracted TO:{_importPath}");
