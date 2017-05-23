@@ -116,9 +116,12 @@
     <Content Include="database.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Exports\62ed88f5-d0f2-443a-b42a-43b4b22fb129.dwh" />
-    <None Include="Exports\ba5c3b22-3b67-4bc0-af43-ab513ec4ae9e.dwh" />
-    <None Include="Exports\ca32c13c-b754-47cf-bff0-84ee84077fbe.dwh" />
+    <None Include="Exports\2017May20-10402.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Exports\2017May23-1.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Extracts\_ARTPatientExtract Lunga Lunga 13053.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -160,6 +160,7 @@
     <Compile Include="Model\DTO\ClientPatientVisitExtractDTO.cs" />
     <Compile Include="Model\ExtractSetting.cs" />
     <Compile Include="Model\EMR.cs" />
+    <Compile Include="Model\ImportManifest.cs" />
     <Compile Include="Model\ProcessStatus.cs" />
     <Compile Include="Model\PushResponse.cs" />
     <Compile Include="Model\RunSummary.cs" />

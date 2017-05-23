@@ -55,10 +55,19 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
 
             var files = TestHelpers.GetExports($"{DateTime.Today:yyyyMMMdd}");
             Assert.IsNotEmpty(files);
+
+            if(Directory.Exists(_exportPath))
+                Directory.Delete(_exportPath,true);
+                
             foreach (var f in files)
             {
                 ZipFile.ExtractToDirectory(f,_exportPath);
             }
+
+            Assert.IsTrue(File.Exists($"{_exportPath}dwapi.manifest"));
+            var mainifest= File.ReadAllText($"{_exportPath}dwapi.manifest");
+            Assert.IsTrue(mainifest.Length > 0);
+            Console.WriteLine(mainifest);
 
             var patients = _clientPatientExtractRepository.GetAll();
             foreach (var p in patients)

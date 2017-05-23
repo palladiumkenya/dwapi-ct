@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -29,6 +30,23 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
             var parentFolder = "";
             var folderToSaveTo = "";
+            var siteCode = 0;
+            var manifest = "";
+            
+
+            var patients = await Task.Run(() => _clientPatientExtractRepository.GetAll().ToList());
+            _taskCount = patients.Count;
+            if (_taskCount > 0)
+            {
+                var siteCodes = patients
+                    .Select(x => x.SiteCode)
+                    .Distinct()
+                    .ToList();
+                manifest = string.Join("|", siteCodes);
+
+                siteCode = siteCodes.First();
+            }
+
 
 
             if (string.IsNullOrWhiteSpace(exportDir))
@@ -44,7 +62,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             folderToSaveTo = folderToSaveTo.HasToEndsWith(@"\");
             parentFolder = $@"{folderToSaveTo}DWapi\Exports\".HasToEndsWith(@"\");
 
-            folderToSaveTo = $@"{parentFolder}{DateTime.Today:yyyyMMMdd}\".HasToEndsWith(@"\");
+            folderToSaveTo = $@"{parentFolder}{DateTime.Today:yyyyMMMdd}-{siteCode}\".HasToEndsWith(@"\");
             
 
             bool exists = Directory.Exists(folderToSaveTo);
@@ -60,9 +78,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 Directory.CreateDirectory(folderToSaveTo);
             }
 
-            var patients = await Task.Run(() => _clientPatientExtractRepository.GetAll().ToList());
-
-            _taskCount = patients.Count;
+            addManifesrt(folderToSaveTo,manifest);
 
             foreach (var p in patients)
             {
@@ -111,6 +127,16 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 }
             );
 
+        }
+
+        private void addManifesrt(string folder, string manifestData)
+        {
+            string fileName = $"{folder.HasToEndsWith(@"\")}dwapi.manifest";
+            using (StreamWriter writer =
+                new StreamWriter(fileName))
+            {
+                writer.Write($"{manifestData}");
+            }
         }
 
         private void ShowPercentage(int progress)
