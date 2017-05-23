@@ -46,6 +46,7 @@ namespace PalladiumDwh.ClientApp.Views
         private  IProfileManager _profileManager;
         private  IPushProfileService _pushService;
         private IExportService _exportService;
+        private IImportService _importService;
 
         private List<string> _eventSummaries = new List<string>();
         private List<string> _allEventSummaries=new List<string>();
@@ -202,7 +203,8 @@ namespace PalladiumDwh.ClientApp.Views
         }
 
 
-      
+        public List<string> ExportFiles { get; set; }
+
         public List<string> EventSummaries
         {
             get { return _eventSummaries; }
@@ -219,6 +221,7 @@ namespace PalladiumDwh.ClientApp.Views
         public event EventHandler<CsvExtractLoadedEvent> CsvExtractLoaded;
         public event EventHandler<ExtractExportedEvent> ExtractExported;
         public event EventHandler<ExtractSentEvent> ExtractSent;
+        public event EventHandler<ExtractImportedEvent> ExtractImported;
 
         #endregion
 
@@ -493,6 +496,11 @@ namespace PalladiumDwh.ClientApp.Views
         {
             ExtractSent?.Invoke(this, e);
         }
+
+        protected virtual void OnExtractImported(ExtractImportedEvent e)
+        {
+            ExtractImported?.Invoke(this, e);
+        }
         #endregion
 
         private void LoadEventSummary(List<string> eventSummaries)
@@ -544,7 +552,22 @@ namespace PalladiumDwh.ClientApp.Views
             ShowPleaseWait();
             OnExtractExported(new ExtractExportedEvent(ExtractSettings));
         }
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            openFileDialogExports.Filter = "DWapi Exports (*.zip)|*.zip";
 
+            DialogResult dr = this.openFileDialogExports.ShowDialog();
+            if (dr == System.Windows.Forms.DialogResult.OK)
+            {
+                var imports = openFileDialogExports.FileNames.ToList();
+                if (imports.Count > 0)
+                {
+                    ExportFiles = imports;
+                    ShowPleaseWait();
+                    OnExtractImported(new ExtractImportedEvent(openFileDialogExports.FileNames.ToList()));
+                }
+            }
+        }
         private void buttonSend_Click(object sender, EventArgs e)
         {
             OnExtractSent(new ExtractSentEvent());
@@ -583,7 +606,7 @@ namespace PalladiumDwh.ClientApp.Views
             _profileManager = Program.IOC.GetInstance<IProfileManager>();
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
             _exportService = Program.IOC.GetInstance<IExportService>();
-
+            _importService = Program.IOC.GetInstance<IImportService>();
 
             Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository,
                 _profileManager, _pushService,
@@ -594,7 +617,7 @@ namespace PalladiumDwh.ClientApp.Views
                 _tempPatientExtractRepository, _tempPatientArtExtractRepository, _tempPatientBaselinesExtractRepository,
                 _tempPatientLaboratoryExtractRepository, _tempPatientPharmacyExtractRepository,
                 _tempPatientStatusExtractRepository, _tempPatientVisitExtractRepository,
-                _exportService
+                _exportService,_importService
             );
 
             Presenter.Initialize();
@@ -663,5 +686,12 @@ namespace PalladiumDwh.ClientApp.Views
             }
             
         }
+
+        private void openFileDialogCsv_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+       
     }
 }

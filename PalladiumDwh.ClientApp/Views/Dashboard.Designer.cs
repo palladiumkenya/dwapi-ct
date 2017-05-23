@@ -63,6 +63,7 @@
             this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panelExtractDataStatus = new System.Windows.Forms.Panel();
             this.panelExtractAction = new System.Windows.Forms.Panel();
+            this.buttonImport = new System.Windows.Forms.Button();
             this.buttonSend = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
             this.buttonLoadCsv = new System.Windows.Forms.Button();
@@ -100,6 +101,7 @@
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
             this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialogExports = new System.Windows.Forms.OpenFileDialog();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -431,6 +433,7 @@
             // 
             // panelExtractAction
             // 
+            this.panelExtractAction.Controls.Add(this.buttonImport);
             this.panelExtractAction.Controls.Add(this.buttonSend);
             this.panelExtractAction.Controls.Add(this.buttonExport);
             this.panelExtractAction.Controls.Add(this.buttonLoadCsv);
@@ -441,9 +444,19 @@
             this.panelExtractAction.Size = new System.Drawing.Size(984, 39);
             this.panelExtractAction.TabIndex = 0;
             // 
+            // buttonImport
+            // 
+            this.buttonImport.Location = new System.Drawing.Point(302, 8);
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(126, 23);
+            this.buttonImport.TabIndex = 4;
+            this.buttonImport.Text = "Import";
+            this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
+            // 
             // buttonSend
             // 
-            this.buttonSend.Location = new System.Drawing.Point(448, 8);
+            this.buttonSend.Location = new System.Drawing.Point(589, 8);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(140, 23);
             this.buttonSend.TabIndex = 3;
@@ -453,7 +466,7 @@
             // 
             // buttonExport
             // 
-            this.buttonExport.Location = new System.Drawing.Point(302, 8);
+            this.buttonExport.Location = new System.Drawing.Point(434, 8);
             this.buttonExport.Name = "buttonExport";
             this.buttonExport.Size = new System.Drawing.Size(140, 23);
             this.buttonExport.TabIndex = 2;
@@ -833,6 +846,11 @@
             // openFileDialogCsv
             // 
             this.openFileDialogCsv.FileName = "openFileDialog1";
+            this.openFileDialogCsv.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialogCsv_FileOk);
+            // 
+            // openFileDialogExports
+            // 
+            this.openFileDialogExports.Multiselect = true;
             // 
             // Dashboard
             // 
@@ -977,5 +995,7 @@
         private System.Windows.Forms.DataGridView dataGridViewSendSummary;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.LinkLabel linkLabelGenerateValidationSummary;
+        private System.Windows.Forms.OpenFileDialog openFileDialogExports;
+        private System.Windows.Forms.Button buttonImport;
     }
 }

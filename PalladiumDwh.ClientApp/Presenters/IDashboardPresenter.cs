@@ -34,6 +34,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         Task ExportExtractsAsync();
 
+        Task ImportExtractsAsync();
         #endregion
     }
 }

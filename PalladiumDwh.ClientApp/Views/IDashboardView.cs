@@ -31,6 +31,7 @@ namespace PalladiumDwh.ClientApp.Views
         event EventHandler<CsvExtractLoadedEvent> CsvExtractLoaded;
         event EventHandler<ExtractExportedEvent> ExtractExported;
         event EventHandler<ExtractSentEvent> ExtractSent;
+        event EventHandler<ExtractImportedEvent> ExtractImported;
 
         void ClearExtracts();
         void UpdateStatus(ExtractsViewModel viewModel);
@@ -54,6 +55,8 @@ namespace PalladiumDwh.ClientApp.Views
         void ClearClientExtractsValidationErrors();
         void ClearClientExtractsNotSent();
         bool CanGenerateSummary { get; set; }
+
+        List<string> ExportFiles { get; set; }
         #endregion
 
         List<string> EventSummaries { get; set; }

@@ -50,6 +50,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         private ISummaryReport _summaryReport;
         private IExportService _exportService;
+        private IImportService _importService;
 
 
         private long timeTaken = 0;
@@ -68,7 +69,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             IPushProfileService pushService,
             IClientPatientArtExtractRepository clientPatientArtExtractRepository, IClientPatientBaselinesExtractRepository clientPatientBaselinesExtractRepository, IClientPatientExtractRepository clientPatientExtractRepository, IClientPatientLaboratoryExtractRepository clientPatientLaboratoryExtractRepository, IClientPatientPharmacyExtractRepository clientPatientPharmacyExtractRepository, IClientPatientStatusExtractRepository clientPatientStatusExtractRepository, IClientPatientVisitExtractRepository clientPatientVisitExtractRepository,
         ITempPatientExtractRepository tempPatientExtractRepository, ITempPatientArtExtractRepository tempPatientArtExtractRepository, ITempPatientBaselinesExtractRepository tempPatientBaselinesExtractRepository, ITempPatientLaboratoryExtractRepository tempPatientLaboratoryExtractRepository, ITempPatientPharmacyExtractRepository tempPatientPharmacyExtractRepository, ITempPatientStatusExtractRepository tempPatientStatusExtractRepository, ITempPatientVisitExtractRepository tempPatientVisitExtractRepository,
-            IExportService exportService
+            IExportService exportService,IImportService importService
             )
         {
             view.Presenter = this;
@@ -97,12 +98,16 @@ namespace PalladiumDwh.ClientApp.Presenters
             _profileManager = profileManager;
             _pushService = pushService;
             _exportService = exportService;
+            _importService = importService;
 
             View.EmrExtractLoaded += View_EmrExtractLoaded;
             View.CsvExtractLoaded += View_CsvExtractLoaded;
             View.ExtractExported += View_ExtractExported;
             View.ExtractSent += View_ExtractSent;
+            View.ExtractImported += View_ExtractImported;
         }
+
+      
 
         public void Initialize()
         {
@@ -445,7 +450,11 @@ namespace PalladiumDwh.ClientApp.Presenters
             await ExportExtractsAsync();
         }
 
-      
+        private async void View_ExtractImported(object sender, Events.ExtractImportedEvent e)
+        {
+            await ImportExtractsAsync();
+
+        }
 
 
 
@@ -792,6 +801,28 @@ namespace PalladiumDwh.ClientApp.Presenters
                 throw;
             }
             View.Status = "Export Complete!";
+            View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
+            View.ShowReady();
+        }
+
+        public async Task ImportExtractsAsync()
+        {
+            View.Status = "Importing...";
+            View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
+
+            var progress = new Progress<int>(ExportReportProgress);
+
+            try
+            {
+                var importManifests = await _importService.ExtractExportsAsync(View.ExportFiles, string.Empty, progress);
+                View.ShowMessage($"Imported {importManifests.Count} files Successfuly!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            View.Status = "Importing Complete!";
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
             View.ShowReady();
         }
