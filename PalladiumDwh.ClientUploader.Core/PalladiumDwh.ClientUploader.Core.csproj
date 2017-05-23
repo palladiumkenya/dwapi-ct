@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\IProfileManager.cs" />
     <Compile Include="Interfaces\IPushProfileService.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISmartSendService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProfileManager.cs" />
     <Compile Include="Services\PushProfileService.cs" />
