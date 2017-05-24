@@ -112,6 +112,7 @@
     <Compile Include="Interfaces\Profiles\IPatientProfile.cs" />
     <Compile Include="Interfaces\Profiles\IPatientStatusProfile.cs" />
     <Compile Include="Interfaces\Profiles\IPatientVisitProfile.cs" />
+    <Compile Include="Model\Manifest.cs" />
     <Compile Include="Model\Profile\ExtractProfile.cs" />
     <Compile Include="Model\Profile\PatientARTProfile.cs" />
     <Compile Include="Model\Profile\PatientBaselineProfile.cs" />
