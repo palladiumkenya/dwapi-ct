@@ -32,9 +32,11 @@ namespace PalladiumDwh.Shared.Model.Extract
         public decimal? GestationAge { get; set; }
         public DateTime? NextAppointmentDate { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Created { get; set; }
 
         public PatientVisitExtract()
         {
+            Created = DateTime.Now;
         }
 
         public PatientVisitExtract(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, Guid patientId, string emr, string project)
@@ -68,6 +70,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             PatientId = patientId;
             Emr = emr;
             Project = project;
+            Created = DateTime.Now;
         }
     }
 }

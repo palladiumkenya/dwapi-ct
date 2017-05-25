@@ -87,6 +87,7 @@
     <Compile Include="Model\DTO\PatientPharmacyExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientStatusExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientVisitExtractDTO.cs" />
+    <Compile Include="Model\MasterFacility.cs" />
     <Compile Include="Model\Facility.cs" />
     <Compile Include="Interfaces\Extracts\IExtract.cs" />
     <Compile Include="Interfaces\Extracts\IPatientArtExtract.cs" />

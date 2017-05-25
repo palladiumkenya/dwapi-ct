@@ -28,11 +28,15 @@ namespace PalladiumDwh.Shared.Model.Extract
         public int? m6CD4 { get; set; }
         public DateTime? m6CD4Date { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Created { get; set; }
 
         public PatientBaselinesExtract()
         {
-            
+            Created = DateTime.Now;
         }
+
+        
+
         public PatientBaselinesExtract(int? bCd4, DateTime? bCd4Date, int? bWab, DateTime? bWabDate, int? bWho, DateTime? bWhoDate, int? eWab, DateTime? eWabDate, int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? lastWab, DateTime? lastWabDate, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, Guid patientId, string emr, string project)
         {
             bCD4 = bCd4;
@@ -60,6 +64,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             PatientId = patientId;
             Emr = emr;
             Project = project;
+            Created = DateTime.Now;
         }
     }
 }

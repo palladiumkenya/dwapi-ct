@@ -28,9 +28,11 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string ExitReason { get; set; }
         public DateTime? ExitDate { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Created { get; set; }
 
         public PatientArtExtract()
         {
+            Created=DateTime.Now;
         }
 
         public PatientArtExtract(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, Guid patientId, string emr, string project)
@@ -60,6 +62,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             PatientId = patientId;
             Emr = emr;
             Project = project;
+            Created = DateTime.Now;
         }
     }
 }

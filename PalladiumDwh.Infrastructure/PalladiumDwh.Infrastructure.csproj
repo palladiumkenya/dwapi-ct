@@ -31,9 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.Seeder.EF6, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Seeder.EF6.0.4.0\lib\EntityFramework.Seeder.EF6.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
@@ -62,40 +71,21 @@
     <Compile Include="Data\Repository\PatientPharmacyRepository.cs" />
     <Compile Include="Data\Repository\PatientStatusRepository.cs" />
     <Compile Include="Data\Repository\PatientVisitRepository.cs" />
-    <Compile Include="Migrations\201701160913554_initial.cs" />
-    <Compile Include="Migrations\201701160913554_initial.Designer.cs">
-      <DependentUpon>201701160913554_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701161200456_PatientPharmacy.cs" />
-    <Compile Include="Migrations\201701161200456_PatientPharmacy.Designer.cs">
-      <DependentUpon>201701161200456_PatientPharmacy.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701170619143_AddedVoided.cs" />
-    <Compile Include="Migrations\201701170619143_AddedVoided.Designer.cs">
-      <DependentUpon>201701170619143_AddedVoided.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701221347378_KeCols.cs" />
-    <Compile Include="Migrations\201701221347378_KeCols.Designer.cs">
-      <DependentUpon>201701221347378_KeCols.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701230557452_SharedDataModel.cs" />
-    <Compile Include="Migrations\201701230557452_SharedDataModel.Designer.cs">
-      <DependentUpon>201701230557452_SharedDataModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701231221539_ProcessedColumn.cs" />
-    <Compile Include="Migrations\201701231221539_ProcessedColumn.Designer.cs">
-      <DependentUpon>201701231221539_ProcessedColumn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701260926055_NewCols.cs" />
-    <Compile Include="Migrations\201701260926055_NewCols.Designer.cs">
-      <DependentUpon>201701260926055_NewCols.cs</DependentUpon>
+    <Compile Include="Migrations\201705251225248_CentralInitial.cs" />
+    <Compile Include="Migrations\201705251225248_CentralInitial.Designer.cs">
+      <DependentUpon>201705251225248_CentralInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Migrations\201705251225248_CentralInitial.resx">
+      <DependentUpon>201705251225248_CentralInitial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PalladiumDwh.Core\PalladiumDwh.Core.csproj">
@@ -110,29 +100,6 @@
       <Project>{50ed08e8-8fea-4c87-b265-e39daea4b480}</Project>
       <Name>PalladiumDwh.Shared</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701160913554_initial.resx">
-      <DependentUpon>201701160913554_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701161200456_PatientPharmacy.resx">
-      <DependentUpon>201701161200456_PatientPharmacy.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701170619143_AddedVoided.resx">
-      <DependentUpon>201701170619143_AddedVoided.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701221347378_KeCols.resx">
-      <DependentUpon>201701221347378_KeCols.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701230557452_SharedDataModel.resx">
-      <DependentUpon>201701230557452_SharedDataModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701231221539_ProcessedColumn.resx">
-      <DependentUpon>201701231221539_ProcessedColumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701260926055_NewCols.resx">
-      <DependentUpon>201701260926055_NewCols.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -61,6 +61,11 @@ namespace PalladiumDwh.Core.Services
             }
         }
 
+        public void SyncManifest(Manifest manifest)
+        {
+            _patientExtractRepository.ClearManifest(manifest);
+        }
+
         public Guid? SyncPatient(PatientProfile profile)
         {
             return SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);

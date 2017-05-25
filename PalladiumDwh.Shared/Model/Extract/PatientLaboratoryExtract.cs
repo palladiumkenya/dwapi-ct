@@ -12,9 +12,11 @@ namespace PalladiumDwh.Shared.Model.Extract
         public int? EnrollmentTest { get; set; }
         public string TestResult { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Created { get; set; }
 
         public PatientLaboratoryExtract()
         {
+            Created = DateTime.Now;
         }
 
         public PatientLaboratoryExtract(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, Guid patientId, string emr, string project)
@@ -28,6 +30,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             PatientId = patientId;
             Emr = emr;
             Project = project;
+            Created = DateTime.Now;
         }
     }
 }

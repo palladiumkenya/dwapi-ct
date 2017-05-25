@@ -1,8 +1,12 @@
 ﻿
 using System;
+using System.Data.SqlClient;
+using System.Linq;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Data.Repository;
+using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
+using Dapper;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {
@@ -48,6 +52,32 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             }
 
             return patientId;
+        }
+
+        public void ClearManifest(Manifest manifest)
+        {
+            var connection = _context.Database.Connection as SqlConnection;
+
+            var sql = $@"
+                DELETE FROM PatientExtract
+                WHERE        
+	                (FacilityId = (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode})) AND 
+	                (PatientPID NOT IN ({manifest.GetPatientPKsJoined()}))
+            ";
+
+            if (null != connection)
+            {
+                using (connection)
+                {
+                    connection.Open();
+
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        connection.Execute(sql, null, transaction, 0);
+                        transaction.Commit();
+                    }
+                }
+            }
         }
     }
 }

@@ -45,6 +45,7 @@ namespace PalladiumDwh.DWapi.Tests
             }
             return patients;
         }
+     
 
         public static IEnumerable<PatientExtract> GetTestPatientWithExtracts(Facility facility, int patientCount, int count)
         {

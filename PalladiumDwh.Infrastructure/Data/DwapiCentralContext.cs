@@ -25,6 +25,8 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<PatientStatusExtract> PatientStatusExtracts { get; set; }
         public virtual DbSet<PatientVisitExtract> PatientVisitExtracts { get; set; }
 
+        public virtual DbSet<MasterFacility> MasterFacilities { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

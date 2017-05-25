@@ -1,8 +1,9 @@
 namespace PalladiumDwh.Infrastructure.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class CentralInitial : DbMigration
     {
         public override void Up()
         {
@@ -10,9 +11,14 @@ namespace PalladiumDwh.Infrastructure.Migrations
                 "dbo.Facility",
                 c => new
                     {
+                        Emr = c.String(maxLength: 150),
+                        Project = c.String(maxLength: 150),
+                        Voided = c.Boolean(nullable: false),
+                        Processed = c.Boolean(nullable: false),
                         Id = c.Guid(nullable: false),
                         Code = c.Int(nullable: false),
                         Name = c.String(maxLength: 150),
+                        Created = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -20,7 +26,12 @@ namespace PalladiumDwh.Infrastructure.Migrations
                 "dbo.PatientExtract",
                 c => new
                     {
+                        Emr = c.String(maxLength: 150),
+                        Project = c.String(maxLength: 150),
+                        Voided = c.Boolean(nullable: false),
+                        Processed = c.Boolean(nullable: false),
                         Id = c.Guid(nullable: false),
+                        PatientPID = c.Int(nullable: false),
                         PatientCccNumber = c.String(maxLength: 150),
                         Gender = c.String(maxLength: 150),
                         DOB = c.DateTime(),
@@ -39,9 +50,11 @@ namespace PalladiumDwh.Infrastructure.Migrations
                         DateConfirmedHIVPositive = c.DateTime(),
                         PreviousARTExposure = c.String(maxLength: 150),
                         PreviousARTStartDate = c.DateTime(),
-                        Emr = c.String(maxLength: 150),
-                        Project = c.String(maxLength: 150),
+                        StatusAtCCC = c.String(maxLength: 150),
+                        StatusAtPMTCT = c.String(maxLength: 150),
+                        StatusAtTBClinic = c.String(maxLength: 150),
                         FacilityId = c.Guid(nullable: false),
+                        Created = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Facility", t => t.FacilityId, cascadeDelete: true)
@@ -51,11 +64,17 @@ namespace PalladiumDwh.Infrastructure.Migrations
                 "dbo.PatientArtExtract",
                 c => new
                     {
+                        Emr = c.String(maxLength: 150),
+                        Project = c.String(maxLength: 150),
+                        Voided = c.Boolean(nullable: false),
+                        Processed = c.Boolean(nullable: false),
                         Id = c.Guid(nullable: false),
+                        DOB = c.DateTime(),
                         AgeEnrollment = c.Decimal(precision: 18, scale: 2),
                         AgeARTStart = c.Decimal(precision: 18, scale: 2),
                         AgeLastVisit = c.Decimal(precision: 18, scale: 2),
                         RegistrationDate = c.DateTime(),
+                        Gender = c.String(maxLength: 150),
                         PatientSource = c.String(maxLength: 150),
                         StartARTDate = c.DateTime(),
                         PreviousARTStartDate = c.DateTime(),
@@ -68,12 +87,12 @@ namespace PalladiumDwh.Infrastructure.Migrations
                         LastRegimenLine = c.String(maxLength: 150),
                         Duration = c.Decimal(precision: 18, scale: 2),
                         ExpectedReturn = c.DateTime(),
+                        Provider = c.String(maxLength: 150),
                         LastVisit = c.DateTime(),
                         ExitReason = c.String(maxLength: 150),
                         ExitDate = c.DateTime(),
-                        Emr = c.String(maxLength: 150),
-                        Project = c.String(maxLength: 150),
                         PatientId = c.Guid(nullable: false),
+                        Created = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PatientExtract", t => t.PatientId, cascadeDelete: true)
@@ -83,26 +102,35 @@ namespace PalladiumDwh.Infrastructure.Migrations
                 "dbo.PatientBaselinesExtract",
                 c => new
                     {
+                        Emr = c.String(maxLength: 150),
+                        Project = c.String(maxLength: 150),
+                        Voided = c.Boolean(nullable: false),
+                        Processed = c.Boolean(nullable: false),
                         Id = c.Guid(nullable: false),
+                        bCD4 = c.Int(),
+                        bCD4Date = c.DateTime(),
+                        bWAB = c.Int(),
+                        bWABDate = c.DateTime(),
+                        bWHO = c.Int(),
+                        bWHODate = c.DateTime(),
+                        eWAB = c.Int(),
+                        eWABDate = c.DateTime(),
                         eCD4 = c.Int(),
                         eCD4Date = c.DateTime(),
                         eWHO = c.Int(),
                         eWHODate = c.DateTime(),
-                        bCD4 = c.Int(),
-                        bCD4Date = c.DateTime(),
-                        bWHO = c.Int(),
-                        bWHODate = c.DateTime(),
                         lastWHO = c.Int(),
                         lastWHODate = c.DateTime(),
                         lastCD4 = c.Int(),
                         lastCD4Date = c.DateTime(),
+                        lastWAB = c.Int(),
+                        lastWABDate = c.DateTime(),
                         m12CD4 = c.Int(),
                         m12CD4Date = c.DateTime(),
                         m6CD4 = c.Int(),
                         m6CD4Date = c.DateTime(),
-                        Emr = c.String(maxLength: 150),
-                        Project = c.String(maxLength: 150),
                         PatientId = c.Guid(nullable: false),
+                        Created = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PatientExtract", t => t.PatientId, cascadeDelete: true)
@@ -112,15 +140,19 @@ namespace PalladiumDwh.Infrastructure.Migrations
                 "dbo.PatientLaboratoryExtract",
                 c => new
                     {
+                        Emr = c.String(maxLength: 150),
+                        Project = c.String(maxLength: 150),
+                        Voided = c.Boolean(nullable: false),
+                        Processed = c.Boolean(nullable: false),
                         Id = c.Guid(nullable: false),
                         VisitId = c.Int(),
                         OrderedByDate = c.DateTime(),
                         ReportedByDate = c.DateTime(),
                         TestName = c.String(maxLength: 150),
+                        EnrollmentTest = c.Int(),
                         TestResult = c.String(maxLength: 150),
-                        Emr = c.String(maxLength: 150),
-                        Project = c.String(maxLength: 150),
                         PatientId = c.Guid(nullable: false),
+                        Created = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PatientExtract", t => t.PatientId, cascadeDelete: true)
@@ -130,38 +162,42 @@ namespace PalladiumDwh.Infrastructure.Migrations
                 "dbo.PatientPharmacyExtract",
                 c => new
                     {
+                        Emr = c.String(maxLength: 150),
+                        Project = c.String(maxLength: 150),
+                        Voided = c.Boolean(nullable: false),
+                        Processed = c.Boolean(nullable: false),
                         Id = c.Guid(nullable: false),
                         VisitID = c.Int(),
                         Drug = c.String(maxLength: 150),
+                        Provider = c.String(maxLength: 150),
                         DispenseDate = c.DateTime(),
                         Duration = c.Decimal(precision: 18, scale: 2),
-                        ExpectedReturn = c.String(maxLength: 150),
+                        ExpectedReturn = c.DateTime(),
                         TreatmentType = c.String(maxLength: 150),
+                        RegimenLine = c.String(maxLength: 150),
                         PeriodTaken = c.String(maxLength: 150),
                         ProphylaxisType = c.String(maxLength: 150),
-                        Emr = c.String(maxLength: 150),
-                        Project = c.String(maxLength: 150),
-                        Uploaded = c.Int(),
                         PatientId = c.Guid(nullable: false),
-                        PatientExtractId = c.Guid(),
+                        Created = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.PatientExtract", t => t.PatientExtractId)
                 .ForeignKey("dbo.PatientExtract", t => t.PatientId, cascadeDelete: true)
-                .Index(t => t.PatientId)
-                .Index(t => t.PatientExtractId);
+                .Index(t => t.PatientId);
             
             CreateTable(
                 "dbo.PatientStatusExtract",
                 c => new
                     {
+                        Emr = c.String(maxLength: 150),
+                        Project = c.String(maxLength: 150),
+                        Voided = c.Boolean(nullable: false),
+                        Processed = c.Boolean(nullable: false),
                         Id = c.Guid(nullable: false),
                         ExitDescription = c.String(maxLength: 150),
                         ExitDate = c.DateTime(),
                         ExitReason = c.String(maxLength: 150),
-                        Emr = c.String(maxLength: 150),
-                        Project = c.String(maxLength: 150),
                         PatientId = c.Guid(nullable: false),
+                        Created = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PatientExtract", t => t.PatientId, cascadeDelete: true)
@@ -171,6 +207,10 @@ namespace PalladiumDwh.Infrastructure.Migrations
                 "dbo.PatientVisitExtract",
                 c => new
                     {
+                        Emr = c.String(maxLength: 150),
+                        Project = c.String(maxLength: 150),
+                        Voided = c.Boolean(nullable: false),
+                        Processed = c.Boolean(nullable: false),
                         Id = c.Guid(nullable: false),
                         VisitId = c.Int(),
                         VisitDate = c.DateTime(),
@@ -198,13 +238,22 @@ namespace PalladiumDwh.Infrastructure.Migrations
                         PwP = c.String(maxLength: 150),
                         GestationAge = c.Decimal(precision: 18, scale: 2),
                         NextAppointmentDate = c.DateTime(),
-                        Emr = c.String(maxLength: 150),
-                        Project = c.String(maxLength: 150),
                         PatientId = c.Guid(nullable: false),
+                        Created = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PatientExtract", t => t.PatientId, cascadeDelete: true)
                 .Index(t => t.PatientId);
+            
+            CreateTable(
+                "dbo.MasterFacility",
+                c => new
+                    {
+                        Code = c.Int(nullable: false),
+                        Name = c.String(maxLength: 150),
+                        County = c.String(maxLength: 150),
+                    })
+                .PrimaryKey(t => t.Code);
             
         }
         
@@ -214,18 +263,17 @@ namespace PalladiumDwh.Infrastructure.Migrations
             DropForeignKey("dbo.PatientVisitExtract", "PatientId", "dbo.PatientExtract");
             DropForeignKey("dbo.PatientStatusExtract", "PatientId", "dbo.PatientExtract");
             DropForeignKey("dbo.PatientPharmacyExtract", "PatientId", "dbo.PatientExtract");
-            DropForeignKey("dbo.PatientPharmacyExtract", "PatientExtractId", "dbo.PatientExtract");
             DropForeignKey("dbo.PatientLaboratoryExtract", "PatientId", "dbo.PatientExtract");
             DropForeignKey("dbo.PatientBaselinesExtract", "PatientId", "dbo.PatientExtract");
             DropForeignKey("dbo.PatientArtExtract", "PatientId", "dbo.PatientExtract");
             DropIndex("dbo.PatientVisitExtract", new[] { "PatientId" });
             DropIndex("dbo.PatientStatusExtract", new[] { "PatientId" });
-            DropIndex("dbo.PatientPharmacyExtract", new[] { "PatientExtractId" });
             DropIndex("dbo.PatientPharmacyExtract", new[] { "PatientId" });
             DropIndex("dbo.PatientLaboratoryExtract", new[] { "PatientId" });
             DropIndex("dbo.PatientBaselinesExtract", new[] { "PatientId" });
             DropIndex("dbo.PatientArtExtract", new[] { "PatientId" });
             DropIndex("dbo.PatientExtract", new[] { "FacilityId" });
+            DropTable("dbo.MasterFacility");
             DropTable("dbo.PatientVisitExtract");
             DropTable("dbo.PatientStatusExtract");
             DropTable("dbo.PatientPharmacyExtract");

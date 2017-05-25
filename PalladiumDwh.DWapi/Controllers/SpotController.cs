@@ -16,13 +16,12 @@ namespace PalladiumDwh.DWapi.Controllers
     public class SpotController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly IMessagingSenderService _messagingService;
+        private readonly IPatientExtractRepository _patientExtractRepository;
         private readonly string _gateway = typeof(Manifest).Name.ToLower();
 
-        public SpotController(IMessagingSenderService messagingService)
+        public SpotController(IPatientExtractRepository patientExtractRepository)
         {
-            _messagingService = messagingService;
-            _messagingService.Initialize(_gateway);
+            _patientExtractRepository = patientExtractRepository;
         }
 
         public async Task<HttpResponseMessage> Post([FromBody] Manifest manifest)
@@ -36,8 +35,8 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 try
                 {
-                    var messageRef = await _messagingService.SendAsync(manifest, _gateway);
-                    return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
+                    _patientExtractRepository.ClearManifest(manifest);
+                    return Request.CreateResponse(HttpStatusCode.OK, $"{manifest}");
                 }
                 catch (Exception ex)
                 {

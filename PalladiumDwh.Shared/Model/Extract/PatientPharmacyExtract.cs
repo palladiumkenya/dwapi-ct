@@ -16,9 +16,11 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string PeriodTaken { get; set; }
         public string ProphylaxisType { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Created { get; set; }
 
         public PatientPharmacyExtract()
         {
+            Created = DateTime.Now;
         }
 
         public PatientPharmacyExtract(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, Guid patientId, string emr, string project)
@@ -36,6 +38,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             PatientId = patientId;
             Emr = emr;
             Project = project;
+            Created = DateTime.Now;
         }
     }
 }

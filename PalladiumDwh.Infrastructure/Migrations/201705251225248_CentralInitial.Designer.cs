@@ -7,13 +7,13 @@ namespace PalladiumDwh.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class KeCols : IMigrationMetadata
+    public sealed partial class CentralInitial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(KeCols));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CentralInitial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201701221347378_KeCols"; }
+            get { return "201705251225248_CentralInitial"; }
         }
         
         string IMigrationMetadata.Source

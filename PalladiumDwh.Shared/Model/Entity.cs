@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.Shared.Model
 {
@@ -25,7 +26,7 @@ namespace PalladiumDwh.Shared.Model
         }
         protected Entity()
         {
-            Id = Guid.NewGuid();
+            Id = LiveGuid.NewGuid();
         }
     }
 }

@@ -7,6 +7,7 @@ using log4net;
 using PalladiumDwh.ClientReader.Core.Interfaces.Profiles;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientUploader.Core.Services
 {
@@ -14,7 +15,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
     {
 
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
+        private readonly int retryConnection = 5;
 
         private readonly string _baseUrl;
         private readonly IClientPatientRepository _repository;
@@ -28,6 +29,41 @@ namespace PalladiumDwh.ClientUploader.Core.Services
             _client.BaseAddress = new Uri(_baseUrl);
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        public async Task<string> SpotAsync(Manifest manifest)
+        {
+            HttpResponseMessage response = null;
+            string spotResponse = string.Empty;
+
+            try
+            {
+                bool postSuccess = false;
+                int retryCount = 0;
+
+                while (postSuccess == false && retryCount <= retryConnection)
+                {
+                    response = await _client.PostAsJsonAsync("Spot", manifest);
+                    postSuccess = response.IsSuccessStatusCode;
+                    retryCount++;
+                }
+
+                if (postSuccess)
+                {
+                    spotResponse = await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    if (response != null) response.EnsureSuccessStatusCode();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+                throw new Exception($"Initial connection to Server Failed !:"+e.Message);
+            }
+            return spotResponse;
         }
 
         public async Task<PushResponse> PushAsync(IClientExtractProfile profile)
