@@ -6,25 +6,12 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 namespace PalladiumDwh.ClientReader.Core.Model.Source
 {
     [Table("vTempPatientBaselinesExtractErrorSummary")]
-    public class TempPatientBaselinesExtractErrorSummary : IExtractErrorSummary
+    public class TempPatientBaselinesExtractErrorSummary : TempExtractErrorSummary
     {
-        [Key]
-        public Guid Id { get; set; }
-        public string Field { get; set; }
-        public string Type { get; set; }
-        public string Summary { get; set; }
-        public DateTime? DateGenerated { get; set; }
-        public int? PatientPK { get; set; }
-        public string PatientID { get; set; }
-        public int? FacilityId { get; set; }
-        public int? SiteCode { get; set; }
-        //public string FacilityName { get; set; }
-        public Guid RecordId { get; set; }
+        
+        [NotMapped]
+        public override string FacilityName { get; set; }
 
-        public override string ToString()
-        {
-            return $"{SiteCode}-{PatientID}";
-        }
 
     }
 }

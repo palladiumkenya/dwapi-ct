@@ -111,6 +111,14 @@
     <Compile Include="Interfaces\Profiles\IClientPatientStatusProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientVisitProfile.cs" />
     <Compile Include="Interfaces\Reports\ISummaryReport.cs" />
+    <Compile Include="Interfaces\Repository\ITempExtractErrorSummaryRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientBaselinesExtractErrorSummaryRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientVisitExtractErrorSummaryRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientStatusExtractErrorSummaryRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientPharmacyExtractErrorSummaryRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientLaboratoryExtractErrorSummaryRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientExtractErrorSummaryRepository.cs" />
+    <Compile Include="Interfaces\Repository\ITempPatientArtExtractErrorSummaryRepository.cs" />
     <Compile Include="Interfaces\Repository\ITempPatientArtExtractRepository.cs" />
     <Compile Include="Interfaces\Repository\ITempPatientBaselinesExtractRepository.cs" />
     <Compile Include="Interfaces\Repository\ITempPatientExtractRepository.cs" />
@@ -165,6 +173,7 @@
     <Compile Include="Model\PushResponse.cs" />
     <Compile Include="Model\RunSummary.cs" />
     <Compile Include="Interfaces\Source\IExtractErrorSummary.cs" />
+    <Compile Include="Model\Source\TempExtractErrorSummary.cs" />
     <Compile Include="Model\Source\TempPatientArtExtractError.cs" />
     <Compile Include="Model\Source\TempPatientBaselinesExtractError.cs" />
     <Compile Include="Model\Source\TempPatientExtractError.cs" />

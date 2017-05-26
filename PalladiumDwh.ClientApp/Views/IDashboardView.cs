@@ -47,15 +47,12 @@ namespace PalladiumDwh.ClientApp.Views
         string SendHeader { get; set; }
         object ClientExtracts { get; set; }
         object ClientExtractsValidations { get; set; }
-        object ClientExtractsValidationErrors { get; set; }
         object ClientExtractsNotSent { get; set; }
         void ClearExtractSettingsList();
         void ClearClientExtracts();
         void ClearClientExtractsValidations();
-        void ClearClientExtractsValidationErrors();
         void ClearClientExtractsNotSent();
         bool CanGenerateSummary { get; set; }
-
         List<string> ExportFiles { get; set; }
         #endregion
 

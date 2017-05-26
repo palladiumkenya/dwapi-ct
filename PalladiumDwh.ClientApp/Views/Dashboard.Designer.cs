@@ -85,14 +85,10 @@
             this.panelRecordsNav = new System.Windows.Forms.Panel();
             this.tabPageValidationSummary = new System.Windows.Forms.TabPage();
             this.panelValidationSummary = new System.Windows.Forms.Panel();
-            this.splitContainerValidationSummary = new System.Windows.Forms.SplitContainer();
-            this.dataGridViewExtractValidations = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dataGridViewValidationDetails = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.linkLabelGenerateValidationSummary = new System.Windows.Forms.LinkLabel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.dataGridViewExtractValidations = new System.Windows.Forms.DataGridView();
             this.panelValidationSummaryNav = new System.Windows.Forms.Panel();
+            this.linkLabelGenerateAllValidationSummary = new System.Windows.Forms.LinkLabel();
             this.tabPageSendSummary = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -126,14 +122,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractDetail)).BeginInit();
             this.tabPageValidationSummary.SuspendLayout();
             this.panelValidationSummary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerValidationSummary)).BeginInit();
-            this.splitContainerValidationSummary.Panel1.SuspendLayout();
-            this.splitContainerValidationSummary.Panel2.SuspendLayout();
-            this.splitContainerValidationSummary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractValidations)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewValidationDetails)).BeginInit();
-            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractValidations)).BeginInit();
+            this.panelValidationSummaryNav.SuspendLayout();
             this.tabPageSendSummary.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -669,7 +660,7 @@
             // 
             // panelValidationSummary
             // 
-            this.panelValidationSummary.Controls.Add(this.splitContainerValidationSummary);
+            this.panelValidationSummary.Controls.Add(this.panel1);
             this.panelValidationSummary.Controls.Add(this.panelValidationSummaryNav);
             this.panelValidationSummary.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelValidationSummary.Location = new System.Drawing.Point(3, 3);
@@ -677,24 +668,14 @@
             this.panelValidationSummary.Size = new System.Drawing.Size(832, 239);
             this.panelValidationSummary.TabIndex = 3;
             // 
-            // splitContainerValidationSummary
+            // panel1
             // 
-            this.splitContainerValidationSummary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerValidationSummary.Location = new System.Drawing.Point(0, 18);
-            this.splitContainerValidationSummary.Name = "splitContainerValidationSummary";
-            this.splitContainerValidationSummary.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainerValidationSummary.Panel1
-            // 
-            this.splitContainerValidationSummary.Panel1.Controls.Add(this.dataGridViewExtractValidations);
-            // 
-            // splitContainerValidationSummary.Panel2
-            // 
-            this.splitContainerValidationSummary.Panel2.Controls.Add(this.panel1);
-            this.splitContainerValidationSummary.Panel2.Controls.Add(this.panel2);
-            this.splitContainerValidationSummary.Size = new System.Drawing.Size(832, 221);
-            this.splitContainerValidationSummary.SplitterDistance = 84;
-            this.splitContainerValidationSummary.TabIndex = 4;
+            this.panel1.Controls.Add(this.dataGridViewExtractValidations);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 18);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(832, 221);
+            this.panel1.TabIndex = 5;
             // 
             // dataGridViewExtractValidations
             // 
@@ -702,73 +683,32 @@
             this.dataGridViewExtractValidations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewExtractValidations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewExtractValidations.Location = new System.Drawing.Point(0, 0);
-            this.dataGridViewExtractValidations.MultiSelect = false;
             this.dataGridViewExtractValidations.Name = "dataGridViewExtractValidations";
             this.dataGridViewExtractValidations.ReadOnly = true;
             this.dataGridViewExtractValidations.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewExtractValidations.Size = new System.Drawing.Size(832, 84);
-            this.dataGridViewExtractValidations.TabIndex = 0;
-            this.dataGridViewExtractValidations.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewExtractValidations_CellContentClick);
-            this.dataGridViewExtractValidations.SelectionChanged += new System.EventHandler(this.dataGridViewExtractValidations_SelectionChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.dataGridViewValidationDetails);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 20);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(832, 113);
-            this.panel1.TabIndex = 9;
-            // 
-            // dataGridViewValidationDetails
-            // 
-            this.dataGridViewValidationDetails.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridViewValidationDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewValidationDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewValidationDetails.Location = new System.Drawing.Point(0, 0);
-            this.dataGridViewValidationDetails.Name = "dataGridViewValidationDetails";
-            this.dataGridViewValidationDetails.ReadOnly = true;
-            this.dataGridViewValidationDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewValidationDetails.Size = new System.Drawing.Size(832, 113);
-            this.dataGridViewValidationDetails.TabIndex = 1;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.linkLabelGenerateValidationSummary);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(832, 20);
-            this.panel2.TabIndex = 7;
-            // 
-            // linkLabelGenerateValidationSummary
-            // 
-            this.linkLabelGenerateValidationSummary.AutoSize = true;
-            this.linkLabelGenerateValidationSummary.Location = new System.Drawing.Point(730, 2);
-            this.linkLabelGenerateValidationSummary.Name = "linkLabelGenerateValidationSummary";
-            this.linkLabelGenerateValidationSummary.Size = new System.Drawing.Size(97, 13);
-            this.linkLabelGenerateValidationSummary.TabIndex = 0;
-            this.linkLabelGenerateValidationSummary.TabStop = true;
-            this.linkLabelGenerateValidationSummary.Text = "Generate Summary";
-            this.linkLabelGenerateValidationSummary.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGenerateValidationSummary_LinkClicked);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 2);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Summary";
+            this.dataGridViewExtractValidations.Size = new System.Drawing.Size(832, 221);
+            this.dataGridViewExtractValidations.TabIndex = 1;
             // 
             // panelValidationSummaryNav
             // 
+            this.panelValidationSummaryNav.Controls.Add(this.linkLabelGenerateAllValidationSummary);
             this.panelValidationSummaryNav.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelValidationSummaryNav.Location = new System.Drawing.Point(0, 0);
             this.panelValidationSummaryNav.Name = "panelValidationSummaryNav";
             this.panelValidationSummaryNav.Size = new System.Drawing.Size(832, 18);
             this.panelValidationSummaryNav.TabIndex = 3;
+            // 
+            // linkLabelGenerateAllValidationSummary
+            // 
+            this.linkLabelGenerateAllValidationSummary.AutoSize = true;
+            this.linkLabelGenerateAllValidationSummary.Enabled = false;
+            this.linkLabelGenerateAllValidationSummary.Location = new System.Drawing.Point(716, 1);
+            this.linkLabelGenerateAllValidationSummary.Name = "linkLabelGenerateAllValidationSummary";
+            this.linkLabelGenerateAllValidationSummary.Size = new System.Drawing.Size(116, 13);
+            this.linkLabelGenerateAllValidationSummary.TabIndex = 1;
+            this.linkLabelGenerateAllValidationSummary.TabStop = true;
+            this.linkLabelGenerateAllValidationSummary.Text = "Generate Full Summary";
+            this.linkLabelGenerateAllValidationSummary.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGenerateAllValidationSummary_LinkClicked);
             // 
             // tabPageSendSummary
             // 
@@ -900,15 +840,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractDetail)).EndInit();
             this.tabPageValidationSummary.ResumeLayout(false);
             this.panelValidationSummary.ResumeLayout(false);
-            this.splitContainerValidationSummary.Panel1.ResumeLayout(false);
-            this.splitContainerValidationSummary.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerValidationSummary)).EndInit();
-            this.splitContainerValidationSummary.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractValidations)).EndInit();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewValidationDetails)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtractValidations)).EndInit();
+            this.panelValidationSummaryNav.ResumeLayout(false);
+            this.panelValidationSummaryNav.PerformLayout();
             this.tabPageSendSummary.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -976,26 +911,22 @@
         private System.Windows.Forms.SplitContainer splitContainerRecords;
         private System.Windows.Forms.DataGridView dataGridViewExtractDetail;
         private System.Windows.Forms.Panel panelValidationSummary;
-        private System.Windows.Forms.SplitContainer splitContainerValidationSummary;
-        private System.Windows.Forms.DataGridView dataGridViewExtractValidations;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelValidationSummaryNav;
         private System.Windows.Forms.Panel panelExtContent;
         private System.Windows.Forms.ListView listViewExtractList;
         private System.Windows.Forms.Panel panelExTop;
         private System.Windows.Forms.Label labelHeader;
         private System.Windows.Forms.Panel panelExBottom;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataGridView dataGridViewValidationDetails;
         private System.Windows.Forms.OpenFileDialog openFileDialogCsv;
         private System.Windows.Forms.TabPage tabPageSendSummary;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dataGridViewSendSummary;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.LinkLabel linkLabelGenerateValidationSummary;
         private System.Windows.Forms.OpenFileDialog openFileDialogExports;
         private System.Windows.Forms.Button buttonImport;
+        private System.Windows.Forms.LinkLabel linkLabelGenerateAllValidationSummary;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridView dataGridViewExtractValidations;
     }
 }

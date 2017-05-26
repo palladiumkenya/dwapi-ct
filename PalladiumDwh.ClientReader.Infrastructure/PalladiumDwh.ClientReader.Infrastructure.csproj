@@ -119,8 +119,16 @@
     <Compile Include="Data\Command\LoadPatientExtractCommand.cs" />
     <Compile Include="Data\Command\SyncCommand.cs" />
     <Compile Include="Data\DWAPIRemoteDBInitializer .cs" />
+    <Compile Include="Data\Repository\TempExtractErrorSummaryRepository.cs" />
     <Compile Include="Data\Repository\TempExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientExtractRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientBaselinesExtractErrorSummaryRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientExtractErrorSummaryRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientLaboratoryExtractErrorSummaryRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientPharmacyExtractErrorSummaryRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientVisitExtractErrorSummaryRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientStatusExtractErrorSummaryRepository.cs" />
+    <Compile Include="Data\Repository\TempPatientArtExtractErrorSummaryRepository.cs" />
     <Compile Include="Data\Repository\TempPatientArtExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientPatientArtExtractRepository.cs" />
     <Compile Include="Data\Repository\TempPatientBaselinesExtractRepository.cs" />

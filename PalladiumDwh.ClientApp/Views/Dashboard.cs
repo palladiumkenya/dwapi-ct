@@ -43,7 +43,17 @@ namespace PalladiumDwh.ClientApp.Views
         private  ITempPatientStatusExtractRepository _tempPatientStatusExtractRepository;
         private  ITempPatientVisitExtractRepository _tempPatientVisitExtractRepository;
 
-        private  IProfileManager _profileManager;
+        private  ITempPatientArtExtractErrorSummaryRepository _tempPatientArtExtractErrorSummaryRepository;
+        private  ITempPatientBaselinesExtractErrorSummaryRepository _tempPatientBaselinesExtractErrorSummaryRepository;
+        private  ITempPatientExtractErrorSummaryRepository _tempPatientExtractErrorSummaryRepository;
+        private  ITempPatientLaboratoryExtractErrorSummaryRepository _tempPatientLaboratoryExtractErrorSummaryRepository;
+        private  ITempPatientPharmacyExtractErrorSummaryRepository _tempPatientPharmacyExtractErrorSummaryRepository;
+        private  ITempPatientStatusExtractErrorSummaryRepository _tempPatientStatusExtractErrorSummaryRepository;
+        private  ITempPatientVisitExtractErrorSummaryRepository _tempPatientVisitExtractErrorSummaryRepository;
+
+
+
+        private IProfileManager _profileManager;
         private  IPushProfileService _pushService;
         private IExportService _exportService;
         private IImportService _importService;
@@ -203,6 +213,7 @@ namespace PalladiumDwh.ClientApp.Views
         }
 
 
+        
         public List<string> ExportFiles { get; set; }
 
         public List<string> EventSummaries
@@ -290,15 +301,7 @@ namespace PalladiumDwh.ClientApp.Views
             }
         }
 
-        public object ClientExtractsValidationErrors
-        {
-            get { return _clientExtractsValidationErrors; }
-            set
-            {
-                _clientExtractsValidationErrors = value;
-                LoadClientExtractsValidationErrors(_clientExtractsValidationErrors);
-            }
-        }
+       
 
         public object ClientExtractsNotSent
         {
@@ -349,19 +352,10 @@ namespace PalladiumDwh.ClientApp.Views
             ClearClientExtractsValidations();
             dataGridViewExtractValidations.DataSource = clientExtractsValidations;
             dataGridViewExtractValidations.ClearSelection();
+            CanGenerateSummary = dataGridViewExtractValidations.Rows.Count > 0;
         }
 
-        public void ClearClientExtractsValidationErrors()
-        {
-            dataGridViewValidationDetails.DataSource = null;
-            dataGridViewValidationDetails.Rows.Clear();
-        }
-        private void LoadClientExtractsValidationErrors(object clientExtractsValidationErrors)
-        {
-            ClearClientExtractsValidationErrors();
-            dataGridViewValidationDetails.DataSource = clientExtractsValidationErrors;
-            CanGenerateSummary = dataGridViewValidationDetails.Rows.Count > 0;
-        }
+       
 
         public void ClearClientExtractsNotSent()
         {
@@ -371,9 +365,11 @@ namespace PalladiumDwh.ClientApp.Views
 
         public bool CanGenerateSummary
         {
-            get { return linkLabelGenerateValidationSummary.Enabled; }
-            set { linkLabelGenerateValidationSummary.Enabled = value; }
+            get { return linkLabelGenerateAllValidationSummary.Enabled; }
+            set { linkLabelGenerateAllValidationSummary.Enabled = value; }
         }
+
+     
 
         private void LoadClientExtractsNotSent(object clientExtractsNotSent)
         {
@@ -528,6 +524,7 @@ namespace PalladiumDwh.ClientApp.Views
         private  void buttonLoad_Click(object sender, EventArgs e)
         {
             OnEmrExtractLoaded(new EmrExtractLoadedEvent(ExtractSettings));
+            CanGenerateSummary = dataGridViewExtractValidations.Rows.Count > 0;
         }
 
         private void buttonLoadCsv_Click(object sender, EventArgs e)
@@ -603,6 +600,20 @@ namespace PalladiumDwh.ClientApp.Views
             _tempPatientStatusExtractRepository = Program.IOC.GetInstance<ITempPatientStatusExtractRepository>(); ;
             _tempPatientVisitExtractRepository = Program.IOC.GetInstance<ITempPatientVisitExtractRepository>(); ;
 
+
+            _tempPatientArtExtractErrorSummaryRepository = Program.IOC.GetInstance<ITempPatientArtExtractErrorSummaryRepository>(); ;
+            _tempPatientBaselinesExtractErrorSummaryRepository = Program.IOC.GetInstance<ITempPatientBaselinesExtractErrorSummaryRepository>(); ;
+            _tempPatientExtractErrorSummaryRepository = Program.IOC.GetInstance<ITempPatientExtractErrorSummaryRepository>();
+            _tempPatientLaboratoryExtractErrorSummaryRepository = Program.IOC.GetInstance<ITempPatientLaboratoryExtractErrorSummaryRepository>(); ;
+            _tempPatientPharmacyExtractErrorSummaryRepository = Program.IOC.GetInstance<ITempPatientPharmacyExtractErrorSummaryRepository>(); ;
+            _tempPatientStatusExtractErrorSummaryRepository = Program.IOC.GetInstance<ITempPatientStatusExtractErrorSummaryRepository>(); ;
+            _tempPatientVisitExtractErrorSummaryRepository = Program.IOC.GetInstance<ITempPatientVisitExtractErrorSummaryRepository>(); ;
+
+
+
+
+
+
             _profileManager = Program.IOC.GetInstance<IProfileManager>();
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
             _exportService = Program.IOC.GetInstance<IExportService>();
@@ -617,7 +628,16 @@ namespace PalladiumDwh.ClientApp.Views
                 _tempPatientExtractRepository, _tempPatientArtExtractRepository, _tempPatientBaselinesExtractRepository,
                 _tempPatientLaboratoryExtractRepository, _tempPatientPharmacyExtractRepository,
                 _tempPatientStatusExtractRepository, _tempPatientVisitExtractRepository,
-                _exportService,_importService
+
+                _tempPatientArtExtractErrorSummaryRepository,
+            _tempPatientBaselinesExtractErrorSummaryRepository,
+                _tempPatientExtractErrorSummaryRepository,
+            _tempPatientLaboratoryExtractErrorSummaryRepository,
+                _tempPatientPharmacyExtractErrorSummaryRepository,
+            _tempPatientStatusExtractErrorSummaryRepository,
+            _tempPatientVisitExtractErrorSummaryRepository,
+
+                _exportService, _importService
             );
 
             Presenter.Initialize();
@@ -645,6 +665,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         private void listViewExtractList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            CanGenerateSummary = false;
             _selectedExtractSettingDispaly = _selectedExtractSetting = "";
 
             if (listViewExtractList.SelectedItems.Count > 0)
@@ -652,27 +673,14 @@ namespace PalladiumDwh.ClientApp.Views
                 _selectedExtractSettingDispaly = listViewExtractList.SelectedItems[0].Text;
                 _selectedExtractSetting = listViewExtractList.SelectedItems[0].SubItems[1].Text;
                 Presenter.LoadExtractDetail();
+                CanGenerateSummary = dataGridViewExtractValidations.Rows.Count > 0;
             }
         }
 
-        private void dataGridViewExtractValidations_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dataGridViewExtractValidations.SelectedRows.Count != 0)
-            {
-                _selectedValidation = dataGridViewExtractValidations.SelectedRows[0].DataBoundItem;
-                Presenter.LoadExtractDetailValidationErrors();
-            }
-        }
+      
 
-        private void dataGridViewExtractValidations_SelectionChanged(object sender, EventArgs e)
-        {
-          
-        }
-
-        private void linkLabelGenerateValidationSummary_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Presenter.GenerateSummary();
-        }
+ 
+        
 
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -692,6 +700,9 @@ namespace PalladiumDwh.ClientApp.Views
 
         }
 
-       
+        private void linkLabelGenerateAllValidationSummary_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Presenter.GenerateSummary();
+        }
     }
 }
