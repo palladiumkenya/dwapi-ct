@@ -33,7 +33,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
 
         protected TempExtract()
         {
-            Id=Guid.NewGuid();
+            Id=LiveGuid.NewGuid();
             DateExtracted=DateTime.Now;
         }
 

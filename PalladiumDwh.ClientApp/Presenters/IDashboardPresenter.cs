@@ -29,6 +29,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         void LoadExtractDetailValidationErrors();
         void LoadExtractNotSent();
         void GenerateSummary();
+        Task<bool> CheckSpot();
         void SendExtracts();
         Task SendExtractsInParallel();
 

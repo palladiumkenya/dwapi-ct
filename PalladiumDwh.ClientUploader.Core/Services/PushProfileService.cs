@@ -37,7 +37,8 @@ namespace PalladiumDwh.ClientUploader.Core.Services
 
         public async Task<string> SpotAsync(Manifest manifest, IProgress<DProgress> progress = null)
         {
-            
+            Log.Debug("spotting...");
+
             HttpResponseMessage response = null;
             string spotResponse = string.Empty;
 
@@ -64,6 +65,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
                 spotResponse = await response.Content.ReadAsStringAsync();
                 if (postSuccess)
                 {
+                    Log.Debug(spotResponse);
                     progress?.Report($"Facility:{spotResponse}");
                 }
                 else

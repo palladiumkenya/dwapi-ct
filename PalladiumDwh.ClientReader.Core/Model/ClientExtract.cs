@@ -31,7 +31,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         protected ClientExtract()
         {
-            Id = Guid.NewGuid();
+            Id = LiveGuid.NewGuid();
         }
 
         public bool IsSent()

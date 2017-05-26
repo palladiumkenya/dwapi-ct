@@ -192,6 +192,15 @@ namespace PalladiumDwh.Shared.Custom
 
             progress?.Report(dp);
         }
+
+        public static string GetErrorMessage(Exception ex)
+        {
+            if (null == ex.InnerException)
+            {
+                return ex.Message;
+            }
+            return ex.InnerException.Message;
+        }
     }
 }
 

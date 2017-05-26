@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using PagedList;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
@@ -44,11 +45,35 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Data
 
         }
 
-        //TODO: select unprocessed extracts only
-        public Manifest GetManifest()
+        
+        public IEnumerable<Manifest> GetManifests()
         {
-            var siteCode = _context.ClientPatientExtracts.AsNoTracking().Distinct(XmlReadMode=>xx)
+            var manifests=new List<Manifest>();
 
+            var siteCodes = _context.ClientPatientExtracts.AsNoTracking()
+                .Select(x => x.SiteCode)
+                .Distinct();
+
+            foreach (var s in siteCodes)
+            {
+                var manifest=new Manifest(s);
+
+                var pks = _context.ClientPatientExtracts.AsNoTracking()
+                    .Where(x=>x.SiteCode==s)
+                    .Select(x => x.PatientPK)
+                    .Distinct()
+                    .ToList();
+
+                if (null != pks)
+                {
+                    if (pks.Count > 0)
+                        manifest.PatientPKs.AddRange(pks);
+                }
+
+                manifests.Add(manifest);
+            }
+
+            return manifests;
         }
 
         public IEnumerable<ClientPatientExtract> GetAll(bool processed)

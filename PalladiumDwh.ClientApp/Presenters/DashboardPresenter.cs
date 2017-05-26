@@ -18,6 +18,7 @@ using PalladiumDwh.ClientReader.Core.Reports;
 using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using System.Windows.Forms;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientApp.Presenters
@@ -698,14 +699,42 @@ namespace PalladiumDwh.ClientApp.Presenters
             }
         }
 
+        public async Task<bool> CheckSpot()
+        {
+            bool spotOk = true;
+            //SPOT
+            var spotprogress = new Progress<DProgress>(ShowDProgress);
+            var manifests = _clientPatientRepository.GetManifests().ToList();
+
+            foreach (var m in manifests)
+            {
+                try
+                {
+                    await _pushService.SpotAsync(m, spotprogress);
+                }
+                catch (Exception ex)
+                {
+                    spotOk = false;
+                    Log.Debug(ex);
+
+                    View.ShowErrorMessage(
+                        $"Failed to Send data! Error:{Utility.GetErrorMessage(ex)}");
+                }
+            }
+
+            return spotOk;
+        }
+
         //TODO: consider Parallel processing
         public async void SendExtracts()
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
+            
 
             View.Status="sending...";
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
 
+          
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             var patientExtracts = _clientPatientRepository.GetAll(false).ToList();
             var total = patientExtracts.Count();
             int count = 0;
@@ -745,18 +774,21 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.Status = "sending...";
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
 
+            var proccedToSend = await CheckSpot();
+
+            if (!proccedToSend)
+            {
+                View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
+                return;
+            }
+
             var list = _clientPatientRepository.GetAll(false).ToList();
             var total = list.Count();
             int count = 0;
 
-            //SPOT
+           
 
-
-            var spotprogress = new Progress<DProgress>(ShowDProgress);
-
-            await _pushService.SpotAsync()
-
-
+            //SEND
             foreach (var p in list)
             {
                 var tasks = new List<Task>();

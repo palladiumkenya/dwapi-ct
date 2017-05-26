@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientUploader.Core.Tests
@@ -22,7 +23,7 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
             var patients = Builder<ClientPatientExtract>.CreateListOfSize(patientCount).Build().ToList();
             foreach (var p in patients)
             {
-                p.Id = Guid.NewGuid();
+                p.Id = LiveGuid.NewGuid();
                 p.Processed = false;
                 p.AddPatientArtExtracts(Builder<ClientPatientArtExtract>.CreateListOfSize(1).All().With(x=>x.Processed=false).Build().ToList());
                 p.AddPatientBaselinesExtracts(Builder<ClientPatientBaselinesExtract>.CreateListOfSize(1).All().With(x => x.Processed = false).Build().ToList());
@@ -38,7 +39,7 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
             var patients = Builder<ClientPatientExtract>.CreateListOfSize(patientCount).Build().ToList();
             foreach (var p in patients)
             {
-                p.Id = Guid.NewGuid();
+                p.Id = LiveGuid.NewGuid();
                 p.PatientPK = patientId;
                 p.SiteCode = siteCode;
                 p.Processed = false;

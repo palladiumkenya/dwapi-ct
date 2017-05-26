@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
@@ -94,6 +95,21 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Tests.Data
             Assert.That(artExtraacts.Count,Is.EqualTo(0));
 
             _context.Database.ExecuteSqlCommand("Delete from PatientExtract;");
+        }
+
+        [Test]
+        public void should_Get_Manifests()
+        {
+            var manifests = _repository.GetManifests();
+
+            Assert.IsNotEmpty(manifests);
+            var manifest = manifests.First();
+            Assert.IsNotNull(manifest);
+
+            Assert.IsTrue(manifest.SiteCode > 0);
+            Assert.IsTrue(manifest.PatientPKs.Count > 0);
+
+            Console.WriteLine(manifest);
         }
 
         [TearDown]
