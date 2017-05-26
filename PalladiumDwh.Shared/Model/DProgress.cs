@@ -33,6 +33,11 @@ namespace PalladiumDwh.Shared.Model
             return new DProgress(status,valuePercentage);
         }
 
+        public string ShowProgress()
+        {
+            return ToString();
+        }
+
         public override string ToString()
         {
             string valueOutput = ValuePercentage.HasValue ? $"{ValuePercentage} %" :string.Empty;

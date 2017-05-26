@@ -702,6 +702,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         private void linkLabelGenerateAllValidationSummary_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            ShowPleaseWait();
             Presenter.GenerateSummary();
         }
     }

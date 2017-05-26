@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using PalladiumDwh.ClientReader.Core.Interfaces.Reports;
 using PalladiumDwh.ClientReader.Core.Interfaces.Source;
+using PalladiumDwh.Shared.Custom;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Reports
 {
     public class SummaryReport:ISummaryReport
     {
-        public string CreateExcelErrorSummary(IEnumerable<IExtractErrorSummary> summaries, string extract, string file = "")
+        public string CreateExcelErrorSummary(IEnumerable<IExtractErrorSummary> summaries, string extract, string file = "",IProgress<DProgress> progress = null)
         {
+            progress.ReportStatus("Generating Summary...");
+            
             string fileName = "";
 
             if (string.IsNullOrWhiteSpace(file))
@@ -84,8 +90,12 @@ RecordId
                 // Insert the header row to the Sheet Data
                 sheetData.AppendChild(row);
 
+                var extractErrorSummaries = summaries as IList<IExtractErrorSummary> ?? summaries.ToList();
+                var total = extractErrorSummaries.Count();
+                int count = 0;
+
                 // Inserting each employee
-                foreach (var summary in summaries)
+                foreach (var summary in extractErrorSummaries)
                 {
                     row = new Row();
 
@@ -101,6 +111,8 @@ RecordId
                     );
 
                     sheetData.AppendChild(row);
+                    count++;
+                    progress.ReportStatus("Generating Summary",count,total);
                 }
 
                 worksheetPart.Worksheet.Save();

@@ -47,7 +47,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
                 bool postSuccess = false;
                 int retryCount = 0;
 
-                progress?.Report("checking Facility details...");
+                progress?.ReportStatus("checking Facility details...");
 
                 while (postSuccess == false && retryCount <= _maxRetries)
                 {
@@ -55,7 +55,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
                     postSuccess = response.IsSuccessStatusCode;
                     if (!postSuccess)
                     {
-                        progress?.Report($"re-checking Facility details Attempt {retryCount}...");
+                        progress?.ReportStatus($"re-checking Facility details Attempt {retryCount}...");
                         retryCount++;
                     }
 
@@ -66,7 +66,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
                 if (postSuccess)
                 {
                     Log.Debug(spotResponse);
-                    progress?.Report($"Facility:{spotResponse}");
+                    progress?.ReportStatus($"Facility:{spotResponse}");
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
             }
             catch (Exception e)
             {
-                progress?.Report("Error ocurred !");
+                progress?.ReportStatus("Error ocurred !");
                 Log.Debug(e);
                 throw;
             }
