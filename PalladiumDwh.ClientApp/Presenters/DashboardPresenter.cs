@@ -18,6 +18,7 @@ using PalladiumDwh.ClientReader.Core.Reports;
 using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using System.Windows.Forms;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientApp.Presenters
 {
@@ -748,6 +749,14 @@ namespace PalladiumDwh.ClientApp.Presenters
             var total = list.Count();
             int count = 0;
 
+            //SPOT
+
+
+            var spotprogress = new Progress<DProgress>(ShowDProgress);
+
+            await _pushService.SpotAsync()
+
+
             foreach (var p in list)
             {
                 var tasks = new List<Task>();
@@ -835,6 +844,11 @@ namespace PalladiumDwh.ClientApp.Presenters
         private void ExportReportProgress(int value)
         {
             View.Status = $"Exporting {value}%";
+        }
+
+        private void ShowDProgress(DProgress value)
+        {
+            View.Status = $"{value}";
         }
         #endregion
     }

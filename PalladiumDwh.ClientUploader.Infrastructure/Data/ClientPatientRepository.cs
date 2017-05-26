@@ -6,6 +6,7 @@ using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using Dapper;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientUploader.Infrastructure.Data
 {
@@ -44,6 +45,12 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Data
         }
 
         //TODO: select unprocessed extracts only
+        public Manifest GetManifest()
+        {
+            var siteCode = _context.ClientPatientExtracts.AsNoTracking().Distinct(XmlReadMode=>xx)
+
+        }
+
         public IEnumerable<ClientPatientExtract> GetAll(bool processed)
         {
            return GetAll().Where(x => x.Processed == processed||x.Processed==null);

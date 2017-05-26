@@ -9,6 +9,7 @@ using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using PalladiumDwh.ClientUploader.Core.Services;
 using PalladiumDwh.ClientUploader.Infrastructure.Data;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientUploader.Core.Tests
 {
@@ -26,7 +27,8 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
         private IEnumerable<IClientExtractProfile> _profiles;
         private ClientPatientExtract _patientExtract2;
         private IEnumerable<IClientExtractProfile> _profiles2;
-
+        private Manifest _manifest;
+        private IProgress<DProgress> _progress;
 
         [SetUp]
         public void SetUp()
@@ -46,7 +48,32 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
             _profileManager = new ProfileManager();
             _profiles=_profileManager.Generate(_patientExtract);
             _profiles2 = _profileManager.Generate(_patientExtract2);
+
+            _manifest = TestHelpers.GetTestManifest();
+            _progress = new Progress<DProgress>(ReportProgress);
+
         }
+
+
+
+        [Test]
+        public void Should_Spot()
+        {
+            var response = _service.SpotAsync(_manifest,_progress).Result;
+            Assert.IsTrue(response.Length > 0);
+            Console.WriteLine(response);
+        }
+        [Test]
+        public void Should_Handle_Spot_Error()
+        {
+            _manifest.SiteCode = -1;
+            var ex = Assert.Throws<AggregateException>(() =>
+                {
+                    var response= _service.SpotAsync(_manifest, _progress).Result;
+                }
+            );
+            Console.WriteLine(ex.InnerException.Message);
+}
 
         [Test]
         public void Should_Push()
@@ -148,6 +175,11 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
         public void TearDown()
         {
             _context.Database.ExecuteSqlCommand("Delete from PatientExtract;");
+        }
+
+        private void ReportProgress(DProgress value)
+        {
+            Console.WriteLine(value);
         }
     }
 }

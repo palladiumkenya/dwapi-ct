@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using log4net;
 using Newtonsoft.Json;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Shared.Custom
 {
@@ -178,6 +179,18 @@ namespace PalladiumDwh.Shared.Custom
             }
             
             return finalString;
+        }
+
+        public static void Report(this IProgress<DProgress> progress,string status, decimal? count = null, decimal? total = null)
+        {
+            var dp = DProgress.Report(status);
+
+            if (count.HasValue && total.HasValue)
+            {
+                decimal percentage = decimal.Divide(count.Value, total.Value) * 100;
+            }
+
+            progress?.Report(dp);
         }
     }
 }

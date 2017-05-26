@@ -2,6 +2,7 @@
 using System;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;
@@ -54,7 +55,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             return patientId;
         }
 
-        public void ClearManifest(Manifest manifest)
+        public async Task ClearManifest(Manifest manifest)
         {
             var connection = _context.Database.Connection as SqlConnection;
 
@@ -73,7 +74,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
                     using (var transaction = connection.BeginTransaction())
                     {
-                        connection.Execute(sql, null, transaction, 0);
+                        await connection.ExecuteAsync(sql, null, transaction, 0);
                         transaction.Commit();
                     }
                 }

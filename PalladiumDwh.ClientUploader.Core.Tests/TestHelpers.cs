@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientUploader.Core.Tests
 {
     public static class TestHelpers
     {
+        public static Manifest GetTestManifest()
+        {
+            var mainfest = Builder<Manifest>.CreateNew().Build();
+            mainfest.SiteCode = 15311;
+            mainfest.PatientPKs.AddRange(new List<int> {1, 2, 3, 4, 5});
+            return mainfest;
+        }
+
         public static IEnumerable<ClientPatientExtract> GetTestPatientWithExtracts(int patientCount, int count)
         {
             var patients = Builder<ClientPatientExtract>.CreateListOfSize(patientCount).Build().ToList();

@@ -7,6 +7,7 @@ using log4net;
 using PalladiumDwh.ClientReader.Core.Interfaces.Profiles;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientUploader.Core.Services
@@ -15,11 +16,14 @@ namespace PalladiumDwh.ClientUploader.Core.Services
     {
 
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly int retryConnection = 5;
+        private readonly int _maxRetries = 3;
 
         private readonly string _baseUrl;
         private readonly IClientPatientRepository _repository;
         private HttpClient _client;
+
+        private IProgress<DProgress> _progress;
+        private string _progressStatus;
 
         public PushProfileService(string baseUrl, IClientPatientRepository repository)
         {
@@ -31,8 +35,9 @@ namespace PalladiumDwh.ClientUploader.Core.Services
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<string> SpotAsync(Manifest manifest)
+        public async Task<string> SpotAsync(Manifest manifest, IProgress<DProgress> progress = null)
         {
+            
             HttpResponseMessage response = null;
             string spotResponse = string.Empty;
 
@@ -41,27 +46,37 @@ namespace PalladiumDwh.ClientUploader.Core.Services
                 bool postSuccess = false;
                 int retryCount = 0;
 
-            while (postSuccess == false && retryCount <= retryConnection)
+                progress?.Report("checking Facility details...");
+
+                while (postSuccess == false && retryCount <= _maxRetries)
                 {
                     response = await _client.PostAsJsonAsync("Spot", manifest);
                     postSuccess = response.IsSuccessStatusCode;
-                    retryCount++;
+                    if (!postSuccess)
+                    {
+                        progress?.Report($"re-checking Facility details Attempt {retryCount}...");
+                        retryCount++;
+                    }
+
+
                 }
 
+                spotResponse = await response.Content.ReadAsStringAsync();
                 if (postSuccess)
                 {
-                    spotResponse = await response.Content.ReadAsStringAsync();
+                    progress?.Report($"Facility:{spotResponse}");
                 }
                 else
                 {
-                    if (response != null) response.EnsureSuccessStatusCode();
+                    throw new Exception(spotResponse);
                 }
 
             }
             catch (Exception e)
             {
+                progress?.Report("Error ocurred !");
                 Log.Debug(e);
-                throw new Exception($"Initial connection to Server Failed !:"+e.Message);
+                throw;
             }
             return spotResponse;
         }
@@ -111,5 +126,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
                 response);
         }
 
+
+     
     }
 }
