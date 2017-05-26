@@ -41,7 +41,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
                 bool postSuccess = false;
                 int retryCount = 0;
 
-                while (postSuccess == false && retryCount <= retryConnection)
+            while (postSuccess == false && retryCount <= retryConnection)
                 {
                     response = await _client.PostAsJsonAsync("Spot", manifest);
                     postSuccess = response.IsSuccessStatusCode;
