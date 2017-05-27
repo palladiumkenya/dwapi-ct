@@ -156,9 +156,9 @@
     <Compile Include="Migrations\201704271434597_InitialValidations.Designer.cs">
       <DependentUpon>201704271434597_InitialValidations.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705271542214_ValidationsV1.cs" />
-    <Compile Include="Migrations\201705271542214_ValidationsV1.Designer.cs">
-      <DependentUpon>201705271542214_ValidationsV1.cs</DependentUpon>
+    <Compile Include="Migrations\201705271928563_ValidationsV1.cs" />
+    <Compile Include="Migrations\201705271928563_ValidationsV1.Designer.cs">
+      <DependentUpon>201705271928563_ValidationsV1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
@@ -192,8 +192,8 @@
     <EmbeddedResource Include="Migrations\201704271434597_InitialValidations.resx">
       <DependentUpon>201704271434597_InitialValidations.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705271542214_ValidationsV1.resx">
-      <DependentUpon>201705271542214_ValidationsV1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705271928563_ValidationsV1.resx">
+      <DependentUpon>201705271928563_ValidationsV1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Scripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>

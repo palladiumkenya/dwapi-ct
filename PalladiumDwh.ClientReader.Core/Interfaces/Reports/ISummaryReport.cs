@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Interfaces.Source;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Reports

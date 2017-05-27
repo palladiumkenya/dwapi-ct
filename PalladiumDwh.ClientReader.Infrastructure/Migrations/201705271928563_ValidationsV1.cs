@@ -18,7 +18,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
 
         public override void Down()
         {
-            Sql(Scripts.vTempPatientExtractErrorSummary.Replace("CREATE","ALTER"));
+            Sql(Scripts.vTempPatientExtractErrorSummary.Replace("CREATE", "ALTER"));
             Sql(Scripts.vTempPatientArtExtractErrorSummary.Replace("CREATE", "ALTER"));
             Sql(Scripts.vTempPatientBaselinesExtractErrorSummary.Replace("CREATE", "ALTER"));
             Sql(Scripts.vTempPatientLaboratoryExtractErrorSummary.Replace("CREATE", "ALTER"));

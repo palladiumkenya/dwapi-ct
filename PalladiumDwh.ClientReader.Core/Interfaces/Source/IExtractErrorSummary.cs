@@ -1,4 +1,5 @@
 ﻿using System;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Source
 {
@@ -14,5 +15,8 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Source
         int? SiteCode { get; set; }
         string Summary { get; set; }
         string Type { get; set; }
+
+        void AddHeader(Row row);
+        void AddRow(Row row);
     }
 }

@@ -13,7 +13,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201705271542214_ValidationsV1"; }
+            get { return "201705271928563_ValidationsV1"; }
         }
         
         string IMigrationMetadata.Source

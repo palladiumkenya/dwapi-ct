@@ -19,5 +19,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string ExitDescription { get; set; }
         public DateTime? ExitDate { get; set; }
         public string ExitReason { get; set; }
+
+        
     }
 }

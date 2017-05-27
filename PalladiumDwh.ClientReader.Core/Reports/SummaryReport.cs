@@ -9,6 +9,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using PalladiumDwh.ClientReader.Core.Interfaces.Reports;
 using PalladiumDwh.ClientReader.Core.Interfaces.Source;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
@@ -71,22 +72,8 @@ namespace PalladiumDwh.ClientReader.Core.Reports
 
                 // Constructing header
                 Row row = new Row();
-                /*
-FacilityId
-Id
-RecordId
-                 */
-                row.Append(
-                    ConstructCell("SiteCode", CellValues.String),
-                    ConstructCell("PatientPK", CellValues.String),
-                    ConstructCell("PatientID", CellValues.String),
-                    ConstructCell("Type", CellValues.String),
-                    ConstructCell("Field", CellValues.String),
-                    ConstructCell("Summary", CellValues.String),
-                    ConstructCell("DateGenerated", CellValues.String),
-                    ConstructCell("RecordId", CellValues.String)
-                );
-
+                summaries.First().AddHeader(row);
+                
                 // Insert the header row to the Sheet Data
                 sheetData.AppendChild(row);
 
@@ -99,16 +86,7 @@ RecordId
                 {
                     row = new Row();
 
-                    row.Append(
-                        ConstructCell(summary.SiteCode.ToString(), CellValues.Number),
-                        ConstructCell(summary.PatientPK.ToString(), CellValues.Number),
-                        ConstructCell(summary.PatientID, CellValues.String),
-                        ConstructCell(summary.Type, CellValues.String),
-                        ConstructCell(summary.Field, CellValues.String),
-                        ConstructCell(summary.Summary, CellValues.String),
-                        ConstructCell(summary.DateGenerated.Value.ToString("ddMMMyyyy"), CellValues.Date),
-                        ConstructCell(summary.RecordId.ToString(), CellValues.String)
-                    );
+                    summary.AddRow(row);
 
                     sheetData.AppendChild(row);
                     count++;
@@ -121,6 +99,13 @@ RecordId
 
             return fileName;
         }
+
+        public string CreateExcelErrorSummary<T>(IEnumerable<IExtractErrorSummary> summaries, string extract, string file = "", IProgress<DProgress> progress = null) where T : TempExtractErrorSummary
+        {
+            throw new NotImplementedException();
+        }
+
+        
 
         public void CreateExcelErrorSummaryBatch(IEnumerable<IEnumerable<IExtractErrorSummary>> summariesBatch, string file = "")
         {
