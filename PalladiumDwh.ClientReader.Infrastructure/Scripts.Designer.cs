@@ -86,6 +86,19 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ALTER VIEW vTempPatientArtExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientArtExtractError.PatientPK,dbo.vTempPatientArtExtractError.FacilityId,
+        ///                         dbo.vTempPatientArtExtractError.PatientID, dbo.vTempPatientArtExtractError.SiteCode, dbo.vTempPatientArtExtractError.FacilityName, dbo.ValidationError.RecordId
+        ///FROM            dbo.vTempPat [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientArtExtractErrorSummaryV1 {
+            get {
+                return ResourceManager.GetString("vTempPatientArtExtractErrorSummaryV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to create view vTempPatientBaselinesExtractError as
         ///SELECT        *
         ///FROM            TempPatientBaselinesExtract
@@ -107,6 +120,19 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         internal static string vTempPatientBaselinesExtractErrorSummary {
             get {
                 return ResourceManager.GetString("vTempPatientBaselinesExtractErrorSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALTER VIEW vTempPatientBaselinesExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientBaselinesExtractError.PatientPK,dbo.vTempPatientBaselinesExtractError.FacilityId,
+        ///                         dbo.vTempPatientBaselinesExtractError.PatientID, dbo.vTempPatientBaselinesExtractError.SiteCode, dbo.ValidationError.RecordId
+        ///FROM            dbo.vTempPatientBaselinesExt [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientBaselinesExtractErrorSummaryV1 {
+            get {
+                return ResourceManager.GetString("vTempPatientBaselinesExtractErrorSummaryV1", resourceCulture);
             }
         }
         
@@ -136,6 +162,19 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ALTER VIEW vTempPatientExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientExtractError.PatientPK,dbo.vTempPatientExtractError.FacilityId,
+        ///                         dbo.vTempPatientExtractError.PatientID, dbo.vTempPatientExtractError.SiteCode, dbo.vTempPatientExtractError.FacilityName, dbo.ValidationError.RecordId
+        ///FROM            dbo.vTempPatientExtractError I [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientExtractErrorSummaryV1 {
+            get {
+                return ResourceManager.GetString("vTempPatientExtractErrorSummaryV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to create view vTempPatientLaboratoryExtractError as
         ///SELECT        *
         ///FROM            TempPatientLaboratoryExtract
@@ -156,6 +195,18 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         internal static string vTempPatientLaboratoryExtractErrorSummary {
             get {
                 return ResourceManager.GetString("vTempPatientLaboratoryExtractErrorSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALTER VIEW vTempPatientLaboratoryExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientLaboratoryExtractError.PatientPK,dbo.vTempPatientLaboratoryExtractError.FacilityId,
+        ///                         dbo.vTempPatientLaboratoryExtractError.PatientID, dbo.vTempPatientLaboratoryExtractError.SiteCode, dbo.vTempPatientLaboratoryExtractError.FacilityName, dbo.ValidationEr [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientLaboratoryExtractErrorSummaryV1 {
+            get {
+                return ResourceManager.GetString("vTempPatientLaboratoryExtractErrorSummaryV1", resourceCulture);
             }
         }
         
@@ -185,6 +236,19 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ALTER VIEW vTempPatientPharmacyExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientPharmacyExtractError.PatientPK,dbo.vTempPatientPharmacyExtractError.FacilityId,
+        ///                         dbo.vTempPatientPharmacyExtractError.PatientID, dbo.vTempPatientPharmacyExtractError.SiteCode,  dbo.ValidationError.RecordId
+        ///FROM            dbo.vTempPatientPharmacyExtractE [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientPharmacyExtractErrorSummaryV1 {
+            get {
+                return ResourceManager.GetString("vTempPatientPharmacyExtractErrorSummaryV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to create view vTempPatientStatusExtractError as
         ///SELECT        *
         ///FROM            TempPatientStatusExtract
@@ -210,6 +274,19 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ALTER VIEW vTempPatientStatusExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientStatusExtractError.PatientPK,dbo.vTempPatientStatusExtractError.FacilityId,
+        ///                         dbo.vTempPatientStatusExtractError.PatientID, dbo.vTempPatientStatusExtractError.SiteCode, dbo.vTempPatientStatusExtractError.FacilityName, dbo.ValidationError.RecordId
+        ///FROM       [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientStatusExtractErrorSummaryV1 {
+            get {
+                return ResourceManager.GetString("vTempPatientStatusExtractErrorSummaryV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to create view vTempPatientVisitExtractError as
         ///SELECT        *
         ///FROM            TempPatientVisitExtract
@@ -231,6 +308,19 @@ namespace PalladiumDwh.ClientReader.Infrastructure {
         internal static string vTempPatientVisitExtractErrorSummary {
             get {
                 return ResourceManager.GetString("vTempPatientVisitExtractErrorSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALTER VIEW vTempPatientVisitExtractErrorSummary
+        ///AS
+        ///SELECT        dbo.ValidationError.Id, dbo.Validator.Extract, dbo.Validator.Field, dbo.Validator.Type, dbo.Validator.Summary, dbo.ValidationError.DateGenerated, dbo.vTempPatientVisitExtractError.PatientPK,dbo.vTempPatientVisitExtractError.FacilityId,
+        ///                         dbo.vTempPatientVisitExtractError.PatientID, dbo.vTempPatientVisitExtractError.SiteCode, dbo.vTempPatientVisitExtractError.FacilityName, dbo.ValidationError.RecordId
+        ///FROM             [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string vTempPatientVisitExtractErrorSummaryV1 {
+            get {
+                return ResourceManager.GetString("vTempPatientVisitExtractErrorSummaryV1", resourceCulture);
             }
         }
     }

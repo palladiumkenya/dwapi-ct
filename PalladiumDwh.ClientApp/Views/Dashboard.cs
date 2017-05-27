@@ -209,7 +209,6 @@ namespace PalladiumDwh.ClientApp.Views
         {
             get { return toolStripStatusLabelDashboard.Text; }
             set { toolStripStatusLabelDashboard.Text = value; }
-
         }
 
 
@@ -221,14 +220,14 @@ namespace PalladiumDwh.ClientApp.Views
         {
             get
             {
-                if (comboBoxPgSizeRecords.SelectedIndex > 0)
-                {
-                    return Convert.ToInt32(comboBoxPgSizeRecords.SelectedItem);
-                }
-                else
-                {
+                //if (comboBoxPgSizeRecords.SelectedIndex > 0)
+                //{
+                //    return Convert.ToInt32(comboBoxPgSizeRecords.SelectedItem);
+                //}
+                //else
+                //{
                     return 100;
-                }
+                //}
 
             }
             set { comboBoxPgSizeRecords.SelectedItem = value; }

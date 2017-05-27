@@ -9,5 +9,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
     public class TempPatientArtExtractErrorSummary: TempExtractErrorSummary
     {
         
+
     }
 }

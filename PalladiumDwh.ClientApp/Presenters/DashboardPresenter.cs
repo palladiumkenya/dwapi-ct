@@ -604,7 +604,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 }
             }
 
-            View.RecordsViewShowing=$"Showing {}of {}"
+            //View.RecordsViewShowing=$"Showing {}of {}"
         }
 
         public async void GenerateSummary()

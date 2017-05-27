@@ -156,6 +156,10 @@
     <Compile Include="Migrations\201704271434597_InitialValidations.Designer.cs">
       <DependentUpon>201704271434597_InitialValidations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705271542214_ValidationsV1.cs" />
+    <Compile Include="Migrations\201705271542214_ValidationsV1.Designer.cs">
+      <DependentUpon>201705271542214_ValidationsV1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -188,9 +192,13 @@
     <EmbeddedResource Include="Migrations\201704271434597_InitialValidations.resx">
       <DependentUpon>201704271434597_InitialValidations.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705271542214_ValidationsV1.resx">
+      <DependentUpon>201705271542214_ValidationsV1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Scripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Scripts.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\EMR.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -210,16 +218,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CustomScripts\vTempPatientArtExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientArtExtractErrorSummaryV1.sql" />
     <Content Include="CustomScripts\vTempPatientArtExtractErrorSummary.sql" />
     <Content Include="CustomScripts\vTempPatientBaselinesExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientBaselinesExtractErrorSummaryV1.sql" />
     <Content Include="CustomScripts\vTempPatientBaselinesExtractErrorSummary.sql" />
+    <None Include="CustomScripts\vTempPatientExtractErrorSummaryV1.sql" />
     <Content Include="CustomScripts\vTempPatientLaboratoryExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientLaboratoryExtractErrorSummaryV1.sql" />
     <Content Include="CustomScripts\vTempPatientLaboratoryExtractErrorSummary.sql" />
     <Content Include="CustomScripts\vTempPatientPharmacyExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientPharmacyExtractErrorSummaryV1.sql" />
     <Content Include="CustomScripts\vTempPatientPharmacyExtractErrorSummary.sql" />
     <Content Include="CustomScripts\vTempPatientStatusExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientStatusExtractErrorSummaryV1.sql" />
     <Content Include="CustomScripts\vTempPatientStatusExtractErrorSummary.sql" />
     <Content Include="CustomScripts\vTempPatientVisitExtractError.sql" />
+    <Content Include="CustomScripts\vTempPatientVisitExtractErrorSummaryV1.sql" />
     <Content Include="CustomScripts\vTempPatientVisitExtractErrorSummary.sql" />
   </ItemGroup>
   <ItemGroup>

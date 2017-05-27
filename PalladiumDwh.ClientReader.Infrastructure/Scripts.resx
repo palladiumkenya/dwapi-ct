@@ -124,11 +124,17 @@
   <data name="vTempPatientArtExtractErrorSummary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientArtExtractErrorSummary.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="vTempPatientArtExtractErrorSummaryV1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>CustomScripts\vTempPatientArtExtractErrorSummaryV1.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="vTempPatientBaselinesExtractError" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientBaselinesExtractError.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="vTempPatientBaselinesExtractErrorSummary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientBaselinesExtractErrorSummary.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="vTempPatientBaselinesExtractErrorSummaryV1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>CustomScripts\vTempPatientBaselinesExtractErrorSummaryV1.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="vTempPatientExtractError" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientExtractError.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -136,11 +142,17 @@
   <data name="vTempPatientExtractErrorSummary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientExtractErrorSummary.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="vTempPatientExtractErrorSummaryV1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>CustomScripts\vTempPatientExtractErrorSummaryV1.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="vTempPatientLaboratoryExtractError" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientLaboratoryExtractError.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="vTempPatientLaboratoryExtractErrorSummary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientLaboratoryExtractErrorSummary.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="vTempPatientLaboratoryExtractErrorSummaryV1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>CustomScripts\vTempPatientLaboratoryExtractErrorSummaryV1.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="vTempPatientPharmacyExtractError" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientPharmacyExtractError.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -148,16 +160,25 @@
   <data name="vTempPatientPharmacyExtractErrorSummary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientPharmacyExtractErrorSummary.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="vTempPatientPharmacyExtractErrorSummaryV1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>CustomScripts\vTempPatientPharmacyExtractErrorSummaryV1.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="vTempPatientStatusExtractError" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientStatusExtractError.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="vTempPatientStatusExtractErrorSummary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientStatusExtractErrorSummary.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="vTempPatientStatusExtractErrorSummaryV1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>CustomScripts\vTempPatientStatusExtractErrorSummaryV1.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="vTempPatientVisitExtractError" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientVisitExtractError.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="vTempPatientVisitExtractErrorSummary" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CustomScripts\vTempPatientVisitExtractErrorSummary.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="vTempPatientVisitExtractErrorSummaryV1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>CustomScripts\vTempPatientVisitExtractErrorSummaryV1.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

@@ -10,7 +10,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
     {
         [NotMapped]
         public override string FacilityName { get; set; }
-
+        
 
     }
 }
