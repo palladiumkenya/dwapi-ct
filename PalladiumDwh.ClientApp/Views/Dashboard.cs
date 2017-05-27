@@ -215,6 +215,36 @@ namespace PalladiumDwh.ClientApp.Views
 
         
         public List<string> ExportFiles { get; set; }
+        public int RecordsPage { get; set; }
+
+        public int RecordsPageSize
+        {
+            get
+            {
+                if (comboBoxPgSizeRecords.SelectedIndex > 0)
+                {
+                    return Convert.ToInt32(comboBoxPgSizeRecords.SelectedItem);
+                }
+                else
+                {
+                    return 100;
+                }
+
+            }
+            set { comboBoxPgSizeRecords.SelectedItem = value; }
+        }
+
+        public int ValidationsPageSize { get; set; }
+        public int NotSentPageSize { get; set; }
+
+        public string RecordsViewShowing
+        {
+            get { return labelRecordsShowing.Text; }
+            set { labelRecordsShowing.Text = value; }
+        }
+
+        public string ValidationsShowing { get; set; }
+        public string NotSentShowing { get; set; }
 
         public List<string> EventSummaries
         {
@@ -704,6 +734,27 @@ namespace PalladiumDwh.ClientApp.Views
         {
             ShowPleaseWait();
             Presenter.GenerateSummary();
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+  
+
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxPgSizeRecords_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxPgSizeRecords.SelectedIndex > 0)
+            {
+                var size = RecordsPageSize;
+                Presenter.LoadExtractDetail();
+            }
         }
     }
 }

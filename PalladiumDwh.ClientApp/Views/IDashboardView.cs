@@ -54,6 +54,14 @@ namespace PalladiumDwh.ClientApp.Views
         void ClearClientExtractsNotSent();
         bool CanGenerateSummary { get; set; }
         List<string> ExportFiles { get; set; }
+        int RecordsPage { get; set; }
+        int RecordsPageSize { get; set; }
+        int ValidationsPageSize { get; set; }
+        int NotSentPageSize { get; set; }
+
+        string RecordsViewShowing { get; set; }
+        string ValidationsShowing { get; set; }
+        string NotSentShowing { get; set; }
         #endregion
 
         List<string> EventSummaries { get; set; }

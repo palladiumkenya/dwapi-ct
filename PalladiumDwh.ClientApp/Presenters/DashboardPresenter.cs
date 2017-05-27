@@ -18,6 +18,7 @@ using PalladiumDwh.ClientReader.Core.Reports;
 using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using System.Windows.Forms;
+using PagedList;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
@@ -128,6 +129,8 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ExtractExported += View_ExtractExported;
             View.ExtractSent += View_ExtractSent;
             View.ExtractImported += View_ExtractImported;
+
+            View.RecordsPageSize = 50;
         }
 
       
@@ -495,6 +498,8 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public async Task LoadExtractDetail()
         {
+            
+
             View.RecordsHeader = $"{View.SelectedExtractSettingDispaly} Records";
             View.ValidtionHeader = $"{View.SelectedExtractSettingDispaly} Validation Summary";
             View.SendHeader = $"{View.SelectedExtractSettingDispaly} Send Summary";
@@ -508,19 +513,22 @@ namespace PalladiumDwh.ClientApp.Presenters
             {
                 case "TempPatientStatusExtract":
                 {
-                    View.ClientExtracts =
-                        await Task.Run(() => _clientPatientStatusExtractRepository.GetAll(1, 100).ToList());
-                    View.ClientExtractsValidations =
-                        await Task.Run(() => _tempPatientStatusExtractErrorSummaryRepository.GetAll(1, 100).ToList());
-                    View.ClientExtractsNotSent = await Task.Run(() => _clientPatientStatusExtractRepository
-                        .GetAllSendErrors(1, 100)
-                        .ToList());
+                    var  recordsList = await Task.Run(() => _clientPatientStatusExtractRepository.GetAll(View.RecordsPage, View.RecordsPageSize));
+                    View.ClientExtracts = recordsList.ToList();
+                    View.RecordsViewShowing = $@"Showing {recordsList.Count} of {recordsList.TotalItemCount}";
+                        
+                    var validationList= await Task.Run(() => _tempPatientStatusExtractErrorSummaryRepository.GetAll(1, 100));
+                    View.ClientExtractsValidations = validationList.ToList();
+
+                    var notSentList = await Task.Run(() => _clientPatientStatusExtractRepository.GetAllSendErrors(1, 100));
+                    View.ClientExtractsNotSent = notSentList.ToList();
+                        
                     break;
                 }
                 case "TempPatientArtExtract":
                 {
                     View.ClientExtracts =
-                        await Task.Run(() => _clientPatientArtExtractRepository.GetAll(1, 100).ToList());
+                        await Task.Run(() => _clientPatientArtExtractRepository.GetAll(1, View.RecordsPageSize).ToList());
                     View.ClientExtractsValidations = await Task.Run(() => _tempPatientArtExtractErrorSummaryRepository
                         .GetAll(1, 100)
                         .ToList());
@@ -532,7 +540,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 case "TempPatientBaselinesExtract":
                 {
                     View.ClientExtracts = await Task.Run(
-                        () => _clientPatientBaselinesExtractRepository.GetAll(1, 100).ToList());
+                        () => _clientPatientBaselinesExtractRepository.GetAll(1, View.RecordsPageSize).ToList());
                     View.ClientExtractsValidations =
                         await Task.Run(() => _tempPatientBaselinesExtractErrorSummaryRepository.GetAll(1, 100)
                             .ToList());
@@ -547,7 +555,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 case "TempPatientVisitExtract":
                 {
                     View.ClientExtracts =
-                        await Task.Run(() => _clientPatientVisitExtractRepository.GetAll(1, 50).ToList());
+                        await Task.Run(() => _clientPatientVisitExtractRepository.GetAll(1, View.RecordsPageSize).ToList());
                     View.ClientExtractsValidations = await Task.Run(() => _tempPatientVisitExtractErrorSummaryRepository
                         .GetAll(1, 100)
                         .ToList());
@@ -560,7 +568,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 case "TempPatientPharmacyExtract":
                 {
                     View.ClientExtracts =
-                        await Task.Run(() => _clientPatientPharmacyExtractRepository.GetAll(1, 50).ToList());
+                        await Task.Run(() => _clientPatientPharmacyExtractRepository.GetAll(1, View.RecordsPageSize).ToList());
                     View.ClientExtractsValidations =
                         await Task.Run(() => _tempPatientPharmacyExtractErrorSummaryRepository.GetAll(1, 100).ToList());
                     View.ClientExtractsNotSent = await Task.Run(() => _clientPatientPharmacyExtractRepository
@@ -573,7 +581,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 case "TempPatientLaboratoryExtract":
                 {
                     View.ClientExtracts = await Task.Run(
-                        () => _clientPatientLaboratoryExtractRepository.GetAll(1, 50).ToList());
+                        () => _clientPatientLaboratoryExtractRepository.GetAll(1, View.RecordsPageSize).ToList());
                     View.ClientExtractsValidations =
                         await Task.Run(
                             () => _tempPatientLaboratoryExtractErrorSummaryRepository.GetAll(1, 100).ToList());
@@ -585,7 +593,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 }
                 default:
                 {
-                    View.ClientExtracts = await Task.Run(() => _clientPatientExtractRepository.GetAll(1, 100).ToList());
+                    View.ClientExtracts = await Task.Run(() => _clientPatientExtractRepository.GetAll(1, View.RecordsPageSize).ToList());
                     View.ClientExtractsValidations = await Task.Run(() => _tempPatientExtractErrorSummaryRepository
                         .GetAll(1, 100)
                         .ToList());
@@ -596,7 +604,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 }
             }
 
-
+            View.RecordsViewShowing=$"Showing {}of {}"
         }
 
         public async void GenerateSummary()
