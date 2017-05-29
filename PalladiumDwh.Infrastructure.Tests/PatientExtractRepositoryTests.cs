@@ -19,6 +19,8 @@ namespace PalladiumDwh.Infrastructure.Tests
         private DwapiCentralContext _dbcontext;
 
         private List<Facility> _facilities;
+        private List<MasterFacility> _masterFacilities;
+
         private IPatientExtractRepository _patientExtractRepository;
         private Facility _facilityA;
         private List<PatientExtract> _patients;
@@ -30,6 +32,17 @@ namespace PalladiumDwh.Infrastructure.Tests
             
 
             _context = new DwapiCentralContext(Effort.DbConnectionFactory.CreateTransient(), true);
+
+            _masterFacilities = Builder<MasterFacility>.CreateListOfSize(5).Build().ToList();
+            int mfl = 100;
+            foreach (var f in _masterFacilities)
+            {
+                f.Code = mfl;
+                mfl++;
+            }
+            _context.MasterFacilities.AddRange(_masterFacilities);
+            _context.SaveChanges();
+
             _facilities = TestHelpers.GetTestData<Facility>(5).ToList();
             TestHelpers.CreateTestData(_context, _facilities);
             _facilityA = _facilities.First();
@@ -106,6 +119,21 @@ namespace PalladiumDwh.Infrastructure.Tests
 
             Assert.IsTrue(cleanPatients.Count==4);
         }
+
+        [Test]
+        public void should_Verify_MasterFacility()
+        {
+            int code = _masterFacilities.Last().Code;
+            var mflsite = _patientExtractRepository.VerifyFacility(code).Result;
+            Assert.IsNotNull(mflsite);
+            Console.WriteLine(mflsite);
+
+            var nonMflsite = _patientExtractRepository.VerifyFacility(-1100).Result;
+            Assert.IsNull(nonMflsite);
+            
+
+        }
+
 
         [TearDown]
         public void TearDown()

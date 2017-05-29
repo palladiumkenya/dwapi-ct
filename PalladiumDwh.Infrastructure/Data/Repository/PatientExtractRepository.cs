@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,6 +58,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
         public async Task ClearManifest(Manifest manifest)
         {
+
+
             var connection = _context.Database.Connection as SqlConnection;
 
             var sql = $@"
@@ -79,6 +82,13 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                     }
                 }
             }
+        }
+
+        public Task<MasterFacility> VerifyFacility(int siteCode)
+        {
+            return _context.MasterFacilities
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Code == siteCode);
         }
     }
 }

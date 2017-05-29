@@ -26,6 +26,8 @@ namespace PalladiumDwh.DWapi.Controllers
 
         public async Task<HttpResponseMessage> Post([FromBody] Manifest manifest)
         {
+            MasterFacility masterFacility = null;
+
             if (null != manifest)
             {
                 if (!manifest.IsValid())
@@ -33,10 +35,24 @@ namespace PalladiumDwh.DWapi.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                         new HttpError($"Invalid Manifest,Please ensure the SiteCode [{manifest.SiteCode}] is valid and there exists atlease one (1) Patient record"));
                 }
+
+                try
+                {
+                    masterFacility = await _patientExtractRepository.VerifyFacility(manifest.SiteCode);
+                    if (null == masterFacility)
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                            new HttpError($"SiteCode [{manifest.SiteCode}] NOT FOUND in Master Facility List"));
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+                }
+
                 try
                 {
                     await _patientExtractRepository.ClearManifest(manifest);
-                    return Request.CreateResponse(HttpStatusCode.OK, $"{manifest}");
+                    return Request.CreateResponse(HttpStatusCode.OK, $"{masterFacility}");
                 }
                 catch (Exception ex)
                 {
@@ -44,6 +60,7 @@ namespace PalladiumDwh.DWapi.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
             }
+
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new Manifest().GetType().Name}' is null"));
         }
     }

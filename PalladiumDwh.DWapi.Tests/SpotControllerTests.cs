@@ -39,13 +39,13 @@ namespace PalladiumDwh.DWapi.Tests
         {
 
             _dbcontext = new DwapiCentralContext();
-            _dbcontext.Database.ExecuteSqlCommand($@"DELETE FROM [Facility] where Code=999999");
+            _dbcontext.Database.ExecuteSqlCommand($@"DELETE FROM [Facility] where Code=20612");
 
 
             _facilities = TestHelpers.GetTestData<Facility>(1).ToList();
             foreach (var f in _facilities)
             {
-                f.Code = 999999;
+                f.Code = 20612;
             }
             TestHelpers.CreateTestData(_dbcontext, _facilities);
             _facilityA = _facilities.First();           
@@ -89,6 +89,19 @@ namespace PalladiumDwh.DWapi.Tests
             var cleanPatients = _patientExtractRepository.GetAllBy(x => x.FacilityId == _facilityA.Id).ToList();
 
             Assert.IsTrue(cleanPatients.Count == 4);
+
+            Console.WriteLine($"{response}");
+        }
+
+        [Test]
+        public void should_Not_Post_InvalidMFL()
+        {
+            _manifest.SiteCode = 111;
+            var result = _controller.Post(_manifest).Result;
+
+            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
+            var response = result.Content.ReadAsStringAsync().Result;
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(response));
 
             Console.WriteLine($"{response}");
         }
