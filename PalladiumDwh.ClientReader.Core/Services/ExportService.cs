@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
+using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.Shared.Custom;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
@@ -26,28 +28,23 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         public async Task<string> ExportToJSonAsync(string exportDir = "", IProgress<int> progress = null)
         {
+            List<Manifest> currentManifests = new List<Manifest>();
+            
+
             _progress = progress;
 
             var parentFolder = "";
             var folderToSaveTo = "";
             var siteCode = 0;
-            var manifest = "";
             
 
             var patients = await Task.Run(() => _clientPatientExtractRepository.GetAll().ToList());
             _taskCount = patients.Count;
+
             if (_taskCount > 0)
             {
-                var siteCodes = patients
-                    .Select(x => x.SiteCode)
-                    .Distinct()
-                    .ToList();
-                manifest = string.Join("|", siteCodes);
-
-                siteCode = siteCodes.First();
+                currentManifests = CreateManifests(patients);
             }
-
-
 
             if (string.IsNullOrWhiteSpace(exportDir))
             {
@@ -78,7 +75,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 Directory.CreateDirectory(folderToSaveTo);
             }
 
-            addManifesrt(folderToSaveTo,manifest);
+            addManifesrt(folderToSaveTo, currentManifests);
 
             foreach (var p in patients)
             {
@@ -129,13 +126,13 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         }
 
-        private void addManifesrt(string folder, string manifestData)
+        private void addManifesrt(string folder, List<Manifest> currentManifests)
         {
             string fileName = $"{folder.HasToEndsWith(@"\")}dwapi.manifest";
             using (StreamWriter writer =
                 new StreamWriter(fileName))
             {
-                writer.Write($"{manifestData}");
+                writer.Write(JsonConvert.SerializeObject(currentManifests));
             }
         }
 
@@ -145,6 +142,36 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 return;
             decimal status = decimal.Divide(progress, _taskCount) * 100;
             _progress.Report((int)status);
+        }
+
+        private List<Manifest> CreateManifests(List<ClientPatientExtract> patients)
+        {
+            var manifests = new List<Manifest>();
+
+            var siteCodes = patients
+                .Select(x => x.SiteCode)
+                .Distinct();
+
+            foreach (var s in siteCodes)
+            {
+                var manifest = new Manifest(s);
+
+                var pks = patients
+                    .Where(x => x.SiteCode == s)
+                    .Select(x => x.PatientPK)
+                    .Distinct()
+                    .ToList();
+
+                if (null != pks)
+                {
+                    if (pks.Count > 0)
+                        manifest.PatientPKs.AddRange(pks);
+                }
+
+                manifests.Add(manifest);
+            }
+
+            return manifests;
         }
     }
 }

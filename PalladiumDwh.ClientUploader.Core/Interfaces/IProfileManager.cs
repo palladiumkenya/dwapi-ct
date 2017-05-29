@@ -6,6 +6,7 @@ namespace PalladiumDwh.ClientUploader.Core.Interfaces
 {
     public interface IProfileManager
     {
+        ClientPatientExtract Decode(string encodedPatient);
         IEnumerable<IClientExtractProfile> Generate(ClientPatientExtract patient);
     }
 }

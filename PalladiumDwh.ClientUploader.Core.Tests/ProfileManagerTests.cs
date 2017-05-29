@@ -21,6 +21,13 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
         }
 
         [Test]
+        public void should_Decord_PatientProfile()
+        {
+            var exracts = _profileManager.Generate(_patientExtract).ToList();
+            Assert.IsTrue(exracts.Count > 0);
+        }
+
+        [Test]
         public void should_Generate_Profiles()
         {
             var exracts = _profileManager.Generate(_patientExtract).ToList();

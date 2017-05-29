@@ -93,6 +93,10 @@
     <Content Include="database.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Imports\facilty\21954d70-4168-4e52-96a8-6bf4a195eda9.dwh" />
+    <None Include="Imports\facilty\c0d0c93a-3ca8-4ac6-b6b4-af90632ad1fa.dwh" />
+    <None Include="Imports\facilty\de95e706-a12e-4d14-96d5-f560115bc7fc.dwh" />
+    <None Include="Imports\facilty\dwapi.manifest" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

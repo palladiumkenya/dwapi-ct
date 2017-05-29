@@ -39,6 +39,8 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _progress = new Progress<int>(ReportProgress);
             _context = new DwapiRemoteContext(Effort.DbConnectionFactory.CreateTransient(), true);
             _clientPatientExtracts = Builder<ClientPatientExtract>.CreateListOfSize(3).Build().ToList();
+            _clientPatientExtracts.First().SiteCode = 1990;
+            _clientPatientExtracts.Last().SiteCode = 1990;
             TestHelpers.CreateTestData(_context, _clientPatientExtracts);
 
             _clientPatientExtractRepository = new ClientPatientExtractRepository(_context);

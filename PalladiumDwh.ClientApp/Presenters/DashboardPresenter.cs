@@ -772,8 +772,6 @@ namespace PalladiumDwh.ClientApp.Presenters
             var total = list.Count();
             int count = 0;
 
-           
-
             //SEND
             foreach (var p in list)
             {
@@ -803,7 +801,6 @@ namespace PalladiumDwh.ClientApp.Presenters
             timeTaken += elapsedMs;
             var msg = $"Send Completed ({count} of {total}) Time: {elapsedMs * 0.001} s !";
             UpdateUi(msg);
-
 
             this.View.EventSummaries = new List<string>() { msg, $"Total time taken: {timeTaken * 0.001} s" };
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;

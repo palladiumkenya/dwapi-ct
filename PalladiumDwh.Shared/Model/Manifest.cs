@@ -34,7 +34,6 @@ namespace PalladiumDwh.Shared.Model
         {
             return string.Join(",", PatientPKs);
         }
-
         public override string ToString()
         {
             return $"{SiteCode} AllowedToSend ({PatientPKs.Count})";

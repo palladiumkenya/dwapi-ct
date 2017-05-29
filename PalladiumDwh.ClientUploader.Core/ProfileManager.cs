@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using PalladiumDwh.ClientReader.Core.Interfaces.Profiles;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Profile;
@@ -11,6 +12,13 @@ namespace PalladiumDwh.ClientUploader.Core
     {
         public ProfileManager()
         {
+        }
+
+        public ClientPatientExtract Decode(string encodedPatient)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(encodedPatient);
+            var decodedPatient = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            return JsonConvert.DeserializeObject<ClientPatientExtract>(decodedPatient);
         }
 
         public IEnumerable<IClientExtractProfile> Generate(ClientPatientExtract patient)

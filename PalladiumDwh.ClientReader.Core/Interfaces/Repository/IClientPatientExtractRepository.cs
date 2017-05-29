@@ -1,4 +1,6 @@
-﻿using PalladiumDwh.ClientReader.Core.Model;
+﻿using System.Collections.Generic;
+using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
 {
