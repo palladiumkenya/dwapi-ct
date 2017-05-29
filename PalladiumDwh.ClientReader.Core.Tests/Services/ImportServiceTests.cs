@@ -81,18 +81,12 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         [Test]
         public void should_Read_Imports()
         {
-            var imports = _importService.GetCurrentImports($@"{_importPath}", _progress).Result;
+            _importPath = $@"{_importPath.HasToEndsWith(@"\")}Imports";
+
+            var imports = _importService.ReadExportsAsync(_importPath).Result;
 
             Assert.IsNotEmpty(imports);
-            Console.WriteLine($"Extracted TO:{_importPath}");
-            foreach (var i in imports)
-            {
-                Console.WriteLine(i);
-                foreach (var p in i.Profiles)
-                {
-                    Console.WriteLine($" >.{p}");
-                }
-            }
+           
         }
         /*
         [Test]

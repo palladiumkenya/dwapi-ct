@@ -146,6 +146,42 @@
     <None Include="Extracts\_PatientWABWHOCD4Extract Lunga Lunga 13053.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Imports\bbb2c50l\6624968a-8b38-4d06-a446-a7820090ef89.dwh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\bbb2c50l\c1be9795-527c-4c87-9442-a7820090ef89.dwh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\bbb2c50l\dwapi.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\bbb2c50l\f7d9301d-b066-4862-af2c-a7820090ef89.dwh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\iak5eb2x\5e3fbbb2-66db-4af0-b642-a78200903c34.dwh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\iak5eb2x\9f13ed65-bd1e-46d1-8db2-a78200903c34.dwh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\iak5eb2x\dwapi.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\iak5eb2x\e1957324-b0fb-48f4-84a2-a78200903c34.dwh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\wpdi2nvv\12775edb-dd99-460d-a4b8-a78200916202.dwh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\wpdi2nvv\83cac1ff-8209-4a38-86a7-a78200916202.dwh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\wpdi2nvv\dwapi.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Imports\wpdi2nvv\e6ce2467-bbce-4dbe-8831-a78200916202.dwh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

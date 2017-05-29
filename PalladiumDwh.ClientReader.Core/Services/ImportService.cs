@@ -88,6 +88,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             {
                 folderToSaveTo = importDir;
             }
+
             folderToSaveTo = folderToSaveTo.HasToEndsWith(@"\");
             parentFolder = $@"{folderToSaveTo}DWapi\Imports\".HasToEndsWith(@"\");
 
@@ -124,11 +125,27 @@ namespace PalladiumDwh.ClientReader.Core.Services
             return importManifests;
         }
 
-        public async Task<IEnumerable<SiteManifest>> ReadExportsAsync(string importDir)
+        public async Task<IEnumerable<SiteManifest>> ReadExportsAsync(string importDir="")
         {
+            string folderToImportFrom = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(importDir))
+            {
+                //save to My Documents
+                folderToImportFrom = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                folderToImportFrom = $@"{folderToImportFrom}DWapi\Imports\".HasToEndsWith(@"\");
+            }
+            else
+            {
+                //TODO: check import folder
+                folderToImportFrom = importDir;
+            }
+
+            folderToImportFrom = folderToImportFrom.HasToEndsWith(@"\");
+            
             List<SiteManifest> siteManifests = new List<SiteManifest>();
 
-            string folderToImportFrom = importDir.HasToEndsWith(@"\");
+            
 
             bool exists = Directory.Exists(folderToImportFrom);
 
@@ -141,7 +158,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             {
                 
                 //read manifest
-                var manifestFiles = await Task.Run(() => Directory.GetFiles(folderToImportFrom, "*.manifest"));
+                var manifestFiles = await Task.Run(() => Directory.GetFiles(siteFolder, "*.manifest"));
 
                 var manifestFile = manifestFiles.First();
                 if (manifestFile != null)
@@ -156,7 +173,11 @@ namespace PalladiumDwh.ClientReader.Core.Services
                         foreach (var pf in profileFiles)
                         {
                             //Create profile
-                            var profileContent = await Task.Run(() => File.ReadAllText(pf));
+                            var profileContent = await Task.Run(() =>
+                            {
+                                var raw = File.ReadAllText(pf);
+                                return Base64Decode(raw);
+                            });
 
                             siteManifest.AddProfie(profileContent);
                         }
