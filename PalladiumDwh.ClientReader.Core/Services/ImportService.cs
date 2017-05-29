@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -123,31 +124,49 @@ namespace PalladiumDwh.ClientReader.Core.Services
             return importManifests;
         }
 
-        public async Task<IEnumerable<ClientPatientExtract>> ReadExportsAsync(string importDir)
+        public async Task<IEnumerable<SiteManifest>> ReadExportsAsync(string importDir)
         {
-            List<ClientPatientExtract> decodedList=new List<ClientPatientExtract>();
+            List<SiteManifest> siteManifests = new List<SiteManifest>();
 
-            string folderToImportFrom = importDir;
-            folderToImportFrom = folderToImportFrom.EndsWith("\\") ? folderToImportFrom : $"{folderToImportFrom}\\";
+            string folderToImportFrom = importDir.HasToEndsWith(@"\");
 
             bool exists = Directory.Exists(folderToImportFrom);
 
             if (!exists)
                 throw new ArgumentException($"Folder {folderToImportFrom} doesnt exist");
 
-            var files = await Task.Run(() => Directory.GetFiles(folderToImportFrom, "*.dwh", SearchOption.AllDirectories));
+            var siteFolders= await Task.Run(() => Directory.GetDirectories(folderToImportFrom));
 
-            foreach (var f in files)
+            foreach (var siteFolder in siteFolders)
             {
-                var decoded = await Task.Run(() =>
+                
+                //read manifest
+                var manifestFiles = await Task.Run(() => Directory.GetFiles(folderToImportFrom, "*.manifest"));
+
+                var manifestFile = manifestFiles.First();
+                if (manifestFile != null)
                 {
-                    var content = File.ReadAllText(f);
-                    return Base64Decode(content);
-                });
-                decodedList.Add(JsonConvert.DeserializeObject<ClientPatientExtract>(decoded));
+                    var manifestFileConntent = await Task.Run(() => File.ReadAllText(manifestFile));
+                    var siteManifest = SiteManifest.Create(manifestFileConntent);
+
+                    if (siteManifest.ReadComplete)
+                    {
+                        var profileFiles = await Task.Run(() => Directory.GetFiles(siteFolder, "*.dwh"));
+
+                        foreach (var pf in profileFiles)
+                        {
+                            //Create profile
+                            var profileContent = await Task.Run(() => File.ReadAllText(pf));
+
+                            siteManifest.AddProfie(profileContent);
+                        }
+                    }
+
+                    siteManifests.Add(siteManifest);
+                }
             }
 
-            return decodedList;
+            return siteManifests;
         }
 
         public  string Base64Decode(string base64EncodedData)

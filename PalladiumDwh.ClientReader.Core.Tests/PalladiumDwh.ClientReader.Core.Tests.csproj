@@ -116,10 +116,13 @@
     <Content Include="database.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Exports\2017May20-10402.zip">
+    <None Include="Exports\2017May29-177.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Exports\2017May23-1.zip">
+    <None Include="Exports\2017May29-222.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Exports\2017May29-278.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Extracts\_ARTPatientExtract Lunga Lunga 13053.csv">

@@ -173,6 +173,7 @@
     <Compile Include="Model\PushResponse.cs" />
     <Compile Include="Model\RunSummary.cs" />
     <Compile Include="Interfaces\Source\IExtractErrorSummary.cs" />
+    <Compile Include="Model\SiteManifest.cs" />
     <Compile Include="Model\Source\TempExtractErrorSummary.cs" />
     <Compile Include="Model\Source\TempPatientArtExtractError.cs" />
     <Compile Include="Model\Source\TempPatientBaselinesExtractError.cs" />

@@ -44,6 +44,9 @@ namespace PalladiumDwh.ClientReader.Core.Services
             if (_taskCount > 0)
             {
                 currentManifests = CreateManifests(patients);
+                var currentSite = currentManifests.FirstOrDefault();
+                if (null != currentSite)
+                    siteCode = currentSite.SiteCode;
             }
 
             if (string.IsNullOrWhiteSpace(exportDir))
