@@ -86,6 +86,11 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             var imports = _importService.ReadExportsAsync(_importPath).Result;
 
             Assert.IsNotEmpty(imports);
+            foreach (var import in imports)
+            {
+                Assert.True(import.ReadComplete);
+                Console.WriteLine(import);
+            }
            
         }
         /*

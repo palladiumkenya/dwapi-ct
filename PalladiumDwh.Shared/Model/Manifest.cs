@@ -19,7 +19,6 @@ namespace PalladiumDwh.Shared.Model
         {
             SiteCode = siteCode;
         }
-
    
         public bool IsValid()
         {

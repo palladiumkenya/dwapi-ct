@@ -46,5 +46,10 @@ namespace PalladiumDwh.ClientReader.Core.Model
                 ReadStatus = $"Error reading Patient data:{e.Message}";
             }
         }
+
+        public override string ToString()
+        {
+            return $"Manifests:{Manifests.Count}:Patient:{PatientExtracts.Count}:Complete:{ReadComplete}|{ReadStatus}";
+        }
     }
 }

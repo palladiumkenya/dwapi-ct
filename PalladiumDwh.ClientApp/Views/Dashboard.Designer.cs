@@ -84,6 +84,7 @@
             this.splitContainerRecords = new System.Windows.Forms.SplitContainer();
             this.dataGridViewExtractDetail = new System.Windows.Forms.DataGridView();
             this.panelRecordsNav = new System.Windows.Forms.Panel();
+            this.labelRecordsShowing = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -113,7 +114,6 @@
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
             this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExports = new System.Windows.Forms.OpenFileDialog();
-            this.labelRecordsShowing = new System.Windows.Forms.Label();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -457,7 +457,7 @@
             // 
             // buttonImport
             // 
-            this.buttonImport.Location = new System.Drawing.Point(302, 8);
+            this.buttonImport.Location = new System.Drawing.Point(303, 8);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(126, 23);
             this.buttonImport.TabIndex = 4;
@@ -670,6 +670,16 @@
             this.panelRecordsNav.Name = "panelRecordsNav";
             this.panelRecordsNav.Size = new System.Drawing.Size(832, 34);
             this.panelRecordsNav.TabIndex = 3;
+            // 
+            // labelRecordsShowing
+            // 
+            this.labelRecordsShowing.AutoSize = true;
+            this.labelRecordsShowing.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRecordsShowing.Location = new System.Drawing.Point(206, 3);
+            this.labelRecordsShowing.Name = "labelRecordsShowing";
+            this.labelRecordsShowing.Size = new System.Drawing.Size(78, 13);
+            this.labelRecordsShowing.TabIndex = 3;
+            this.labelRecordsShowing.Text = "Showing {} of {}";
             // 
             // panel2
             // 
@@ -958,16 +968,6 @@
             // openFileDialogExports
             // 
             this.openFileDialogExports.Multiselect = true;
-            // 
-            // labelRecordsShowing
-            // 
-            this.labelRecordsShowing.AutoSize = true;
-            this.labelRecordsShowing.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRecordsShowing.Location = new System.Drawing.Point(206, 3);
-            this.labelRecordsShowing.Name = "labelRecordsShowing";
-            this.labelRecordsShowing.Size = new System.Drawing.Size(78, 13);
-            this.labelRecordsShowing.TabIndex = 3;
-            this.labelRecordsShowing.Text = "Showing {} of {}";
             // 
             // Dashboard
             // 
