@@ -56,5 +56,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
                 ConstructCell(GetNullDateValue(LastVisit), CellValues.Date)
             );
         }
+        
     }
 }

@@ -23,7 +23,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
 
         public override string ToString()
         {
-            return $"{SiteCode}-{PatientID}";
+            return $"{SiteCode}-{PatientID}|{Summary}";
         }
 
         protected Cell ConstructCell(string value, CellValues dataType)
@@ -73,5 +73,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
             return value?.ToString() ?? string.Empty;
         }
 
+        
     }
 }

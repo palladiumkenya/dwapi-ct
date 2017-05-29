@@ -8,6 +8,8 @@ using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Core.Model.Source;
+using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
@@ -81,7 +83,39 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests
             }
             return patients;
         }
-        
+
+        public static void CreateTestPatientWithValidations(DwapiRemoteContext context)
+        {
+            var validators = Builder<Core.Model.Validator>.CreateListOfSize(2)
+                .All()
+                .With(x => x.Type = "TEST")
+                .Build()
+                .ToList();
+
+            var tempPatientExtracts = Builder<TempPatientExtract>.CreateListOfSize(5)
+                .All()
+                .With(x => x.CheckError = false)
+                .Build().ToList();
+
+            var p1 = tempPatientExtracts.First();
+            p1.CheckError = true;
+            var p2 = tempPatientExtracts.Last();
+            p2.CheckError = true;
+
+            var validationErrors = Builder<ValidationError>.CreateListOfSize(2).Build().ToList();
+
+            var v1 = validationErrors.First();
+            v1.ValidatorId = validators.First().Id;
+            v1.RecordId = p1.Id;
+            var v2 = validationErrors.Last();
+            v2.ValidatorId = validators.Last().Id;
+            v2.RecordId = p2.Id;
+
+            CreateTestData(context, validators);
+            CreateTestData(context, tempPatientExtracts);
+            CreateTestData(context, validationErrors);
+        }
+
         public static void RefershConnect(string key = "EMRDatabase")
         {
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
