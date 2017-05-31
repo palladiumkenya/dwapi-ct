@@ -11,11 +11,13 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public List<ClientPatientExtract> PatientExtracts { get; set; }=new List<ClientPatientExtract>();
         public bool ReadComplete { get; set; }
         public string ReadStatus { get; set; }
+        public string Location { get; set; }
 
-        public static SiteManifest Create(string manifestFile)
+        public static SiteManifest Create(string manifestFile,string location)
         {
             var siteManifest=new SiteManifest();
             siteManifest.ReadManifest(manifestFile);
+            siteManifest.Location = location;
             return siteManifest;
         }
         private void ReadManifest(string manifestFile)

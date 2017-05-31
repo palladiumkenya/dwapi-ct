@@ -41,7 +41,6 @@ namespace PalladiumDwh.Shared.Model
         public override string ToString()
         {
             string valueOutput = ValuePercentage.HasValue ? $"{ValuePercentage} %" :string.Empty;
-
             return $@"{Status} {valueOutput}";
         }
     }

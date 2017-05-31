@@ -13,6 +13,7 @@ using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
 using PalladiumDwh.Shared.Custom;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Tests.Services
 {
@@ -25,12 +26,14 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         private List<ClientPatientExtract> _clientPatientExtracts;
         private string _exportDir;
         private IProgress<int> _progress;
+        private IProgress<DProgress> _dprogress;
         private string _importPath;
 
         [SetUp]
         public void SetUp()
         {
             _progress = new Progress<int>(ReportProgress);
+            _dprogress=new Progress<DProgress>(ReportDProgress);
             _exportDir = $"{Utility.GetFolderPath(TestContext.CurrentContext.TestDirectory)}Exports\\";
             _importPath = $@"{TestContext.CurrentContext.TestDirectory.HasToEndsWith(@"\")}";
 
@@ -64,7 +67,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         {
             var files = Directory.GetFiles(_exportDir, "*.zip").ToList();
 
-            var imports = _importService.ExtractExportsAsync(files, _importPath, _progress).Result;
+            var imports = _importService.ExtractExportsAsync(files, _importPath, _dprogress).Result;
 
             Assert.IsNotEmpty(imports);
             Console.WriteLine($"Extracted TO:{_importPath}");
@@ -83,7 +86,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         {
             _importPath = $@"{_importPath.HasToEndsWith(@"\")}Imports";
 
-            var imports = _importService.ReadExportsAsync(_importPath).Result;
+            var imports = _importService.ReadExportsAsync(_importPath, _dprogress).Result;
 
             Assert.IsNotEmpty(imports);
             foreach (var import in imports)
@@ -128,6 +131,11 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             Console.WriteLine(decoded);
         }
         */
+
+        private void ReportDProgress(DProgress value)
+        {
+            Console.WriteLine(value);
+        }
 
         private void ReportProgress(int value)
         {

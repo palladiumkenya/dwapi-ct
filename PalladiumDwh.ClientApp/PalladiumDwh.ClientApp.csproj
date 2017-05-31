@@ -95,6 +95,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -113,6 +114,7 @@
     <Compile Include="Events\CsvExtractLoadedEvent.cs" />
     <Compile Include="Events\EmrExtractLoadedEvent.cs" />
     <Compile Include="Events\ExtractSentEvent.cs" />
+    <Compile Include="Model\ExportsViewModel.cs" />
     <Compile Include="Model\ExtractsViewModel.cs" />
     <Compile Include="Model\EmrViewModel.cs" />
     <Compile Include="Presenters\DashboardPresenter.cs" />
@@ -121,9 +123,11 @@
     <Compile Include="Presenters\IExtractListPresenter.cs" />
     <Compile Include="Presenters\IFeedBackPresenter.cs" />
     <Compile Include="Presenters\IDashboardPresenter.cs" />
+    <Compile Include="Presenters\IManageExportsPresenter.cs" />
     <Compile Include="Presenters\IOptionPresenter.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
     <Compile Include="Presenters\IStartupPresenter.cs" />
+    <Compile Include="Presenters\ManageExportsPresenter.cs" />
     <Compile Include="Presenters\OptionPresenter.cs" />
     <Compile Include="Presenters\StartupPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="Views\IExtractListView.cs" />
     <Compile Include="Views\IFeedBackView.cs" />
     <Compile Include="Views\IDashboardView.cs" />
+    <Compile Include="Views\IManageExportsView.cs" />
     <Compile Include="Views\IOptionView.cs" />
     <Compile Include="Views\IStartupView.cs" />
     <Compile Include="Views\IControlView.cs" />

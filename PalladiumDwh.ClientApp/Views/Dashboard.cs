@@ -261,7 +261,7 @@ namespace PalladiumDwh.ClientApp.Views
         public event EventHandler<CsvExtractLoadedEvent> CsvExtractLoaded;
         public event EventHandler<ExtractExportedEvent> ExtractExported;
         public event EventHandler<ExtractSentEvent> ExtractSent;
-        public event EventHandler<ExtractImportedEvent> ExtractImported;
+        
 
         #endregion
 
@@ -521,11 +521,6 @@ namespace PalladiumDwh.ClientApp.Views
         {
             ExtractSent?.Invoke(this, e);
         }
-
-        protected virtual void OnExtractImported(ExtractImportedEvent e)
-        {
-            ExtractImported?.Invoke(this, e);
-        }
         #endregion
 
         private void LoadEventSummary(List<string> eventSummaries)
@@ -580,19 +575,8 @@ namespace PalladiumDwh.ClientApp.Views
         }
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            openFileDialogExports.Filter = "DWapi Exports (*.zip)|*.zip";
-
-            DialogResult dr = this.openFileDialogExports.ShowDialog();
-            if (dr == System.Windows.Forms.DialogResult.OK)
-            {
-                var imports = openFileDialogExports.FileNames.ToList();
-                if (imports.Count > 0)
-                {
-                    ExportFiles = imports;
-                    ShowPleaseWait();
-                    OnExtractImported(new ExtractImportedEvent(openFileDialogExports.FileNames.ToList()));
-                }
-            }
+            var options = new SendExport();
+            options.ShowDialog(this);
         }
         private void buttonSend_Click(object sender, EventArgs e)
         {

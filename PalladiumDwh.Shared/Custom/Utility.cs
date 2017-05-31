@@ -181,6 +181,7 @@ namespace PalladiumDwh.Shared.Custom
             return finalString;
         }
 
+
         public static void ReportStatus(this IProgress<DProgress> progress,string status, decimal? count = null, decimal? total = null)
         {
             var dp = DProgress.Report(status);
@@ -191,7 +192,13 @@ namespace PalladiumDwh.Shared.Custom
                 dp = DProgress.Report(status, (int) percentage);
             }
 
-            progress?.Report(dp);
+            progress.Report(dp);
+        }
+
+        public static int GetPercentage(decimal count,decimal total)
+        {
+                decimal percentage = decimal.Divide(count, total) * 100;
+            return (int) percentage;
         }
 
         public static string GetErrorMessage(Exception ex)

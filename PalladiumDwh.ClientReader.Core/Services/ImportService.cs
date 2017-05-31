@@ -13,6 +13,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.Shared.Custom;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
@@ -21,6 +22,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IClientPatientExtractRepository _clientPatientExtractRepository;
         private IProgress<int> _progress;
+        private IProgress<DProgress> _dprogress;
         private int _progressValue;
         private int _taskCount;
 
@@ -69,15 +71,13 @@ namespace PalladiumDwh.ClientReader.Core.Services
         }
 
         public async Task<List<ImportManifest>> ExtractExportsAsync(List<string> exportFiles, string importDir = "",
-            IProgress<int> progress = null)
+            IProgress<DProgress> progress = null)
         {
             var importManifests = new List<ImportManifest>();
 
-            _progress = progress;
-
             string parentFolder = "";
             string folderToSaveTo = "";
-            _taskCount = exportFiles.Count;
+            int fileCount =_taskCount= exportFiles.Count;
 
             if (string.IsNullOrWhiteSpace(importDir))
             {
@@ -100,7 +100,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             }
 
             //unzip extract
-
+            int count = 0;
             foreach (var f in exportFiles)
             {
                 var folder = await UnZipExtracts(f, parentFolder);
@@ -117,15 +117,14 @@ namespace PalladiumDwh.ClientReader.Core.Services
                     Log.Debug(e);
                 }
 
-                _progressValue++;
-                ShowPercentage(_progressValue);
-
+                count++;
+                progress.ReportStatus("Extracting...", count, fileCount);
             }
 
             return importManifests;
         }
 
-        public async Task<IEnumerable<SiteManifest>> ReadExportsAsync(string importDir="")
+        public async Task<IEnumerable<SiteManifest>> ReadExportsAsync(string importDir="", IProgress<DProgress> progress = null)
         {
             string folderToImportFrom = string.Empty;
 
@@ -133,7 +132,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             {
                 //save to My Documents
                 folderToImportFrom = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                folderToImportFrom = $@"{folderToImportFrom}DWapi\Imports\".HasToEndsWith(@"\");
+                folderToImportFrom = $@"{folderToImportFrom.HasToEndsWith(@"\")}DWapi\Imports\".HasToEndsWith(@"\");
             }
             else
             {
@@ -144,9 +143,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             folderToImportFrom = folderToImportFrom.HasToEndsWith(@"\");
             
             List<SiteManifest> siteManifests = new List<SiteManifest>();
-
-            
-
+           
             bool exists = Directory.Exists(folderToImportFrom);
 
             if (!exists)
@@ -154,9 +151,12 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
             var siteFolders= await Task.Run(() => Directory.GetDirectories(folderToImportFrom));
 
+            int folderCount = siteFolders.Length;
+            int count = 0;
+
             foreach (var siteFolder in siteFolders)
             {
-                
+                count++;
                 //read manifest
                 var manifestFiles = await Task.Run(() => Directory.GetFiles(siteFolder, "*.manifest"));
 
@@ -164,12 +164,14 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 if (manifestFile != null)
                 {
                     var manifestFileConntent = await Task.Run(() => File.ReadAllText(manifestFile));
-                    var siteManifest = SiteManifest.Create(manifestFileConntent);
+                    var siteManifest = SiteManifest.Create(manifestFileConntent, siteFolder);
 
                     if (siteManifest.ReadComplete)
                     {
                         var profileFiles = await Task.Run(() => Directory.GetFiles(siteFolder, "*.dwh"));
 
+                        int profileFileCount = profileFiles.Length;
+                        int pcount = 0;
                         foreach (var pf in profileFiles)
                         {
                             //Create profile
@@ -180,11 +182,17 @@ namespace PalladiumDwh.ClientReader.Core.Services
                             });
 
                             siteManifest.AddProfie(profileContent);
+                            pcount++;
+                            progress.ReportStatus($"Loading Export {count} of {folderCount} (Reading profile {pcount}/{profileFileCount})...", count, folderCount);
                         }
                     }
-
                     siteManifests.Add(siteManifest);
+
                 }
+
+                
+                progress.ReportStatus($"Loading Export {count} of {folderCount}", count, folderCount);
+
             }
 
             return siteManifests;
@@ -218,6 +226,12 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 return;
             decimal status = decimal.Divide(progress, _taskCount) * 100;
             _progress.Report((int)status);
+        }
+        private void ShowDPercentage(DProgress progress)
+        {
+            if (null == _progress)
+                return;
+            _dprogress.Report(progress);
         }
     }
 }

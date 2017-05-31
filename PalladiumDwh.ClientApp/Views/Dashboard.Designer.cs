@@ -113,7 +113,6 @@
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
             this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialogExports = new System.Windows.Forms.OpenFileDialog();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -457,17 +456,17 @@
             // 
             // buttonImport
             // 
-            this.buttonImport.Location = new System.Drawing.Point(303, 8);
+            this.buttonImport.Location = new System.Drawing.Point(847, 8);
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(126, 23);
+            this.buttonImport.Size = new System.Drawing.Size(134, 23);
             this.buttonImport.TabIndex = 4;
-            this.buttonImport.Text = "Import";
+            this.buttonImport.Text = "Send Exports";
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // buttonSend
             // 
-            this.buttonSend.Location = new System.Drawing.Point(589, 8);
+            this.buttonSend.Location = new System.Drawing.Point(448, 8);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(140, 23);
             this.buttonSend.TabIndex = 3;
@@ -477,7 +476,7 @@
             // 
             // buttonExport
             // 
-            this.buttonExport.Location = new System.Drawing.Point(434, 8);
+            this.buttonExport.Location = new System.Drawing.Point(302, 8);
             this.buttonExport.Name = "buttonExport";
             this.buttonExport.Size = new System.Drawing.Size(140, 23);
             this.buttonExport.TabIndex = 2;
@@ -965,10 +964,6 @@
             this.openFileDialogCsv.FileName = "openFileDialog1";
             this.openFileDialogCsv.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialogCsv_FileOk);
             // 
-            // openFileDialogExports
-            // 
-            this.openFileDialogExports.Multiselect = true;
-            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1107,7 +1102,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dataGridViewSendSummary;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.OpenFileDialog openFileDialogExports;
         private System.Windows.Forms.Button buttonImport;
         private System.Windows.Forms.LinkLabel linkLabelGenerateAllValidationSummary;
         private System.Windows.Forms.Panel panel1;

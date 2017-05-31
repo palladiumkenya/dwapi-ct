@@ -31,8 +31,6 @@ namespace PalladiumDwh.ClientApp.Views
         event EventHandler<CsvExtractLoadedEvent> CsvExtractLoaded;
         event EventHandler<ExtractExportedEvent> ExtractExported;
         event EventHandler<ExtractSentEvent> ExtractSent;
-        event EventHandler<ExtractImportedEvent> ExtractImported;
-
         void ClearExtracts();
         void UpdateStatus(ExtractsViewModel viewModel);
         #endregion

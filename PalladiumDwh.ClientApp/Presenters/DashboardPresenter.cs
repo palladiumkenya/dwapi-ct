@@ -128,7 +128,6 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.CsvExtractLoaded += View_CsvExtractLoaded;
             View.ExtractExported += View_ExtractExported;
             View.ExtractSent += View_ExtractSent;
-            View.ExtractImported += View_ExtractImported;
 
             View.RecordsPageSize = 50;
         }
@@ -477,13 +476,6 @@ namespace PalladiumDwh.ClientApp.Presenters
             await ExportExtractsAsync();
         }
 
-        private async void View_ExtractImported(object sender, Events.ExtractImportedEvent e)
-        {
-            await ImportExtractsAsync();
-
-        }
-
-
 
         #endregion
 
@@ -829,27 +821,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ShowReady();
         }
 
-        public async Task ImportExtractsAsync()
-        {
-            View.Status = "Importing...";
-            View.CanLoadCsv = View.CanSend = View.CanLoadEmr = false;
-
-            var progress = new Progress<int>(ExportReportProgress);
-
-            try
-            {
-                var importManifests = await _importService.ExtractExportsAsync(View.ExportFiles, string.Empty, progress);
-                View.ShowMessage($"Imported {importManifests.Count} files Successfuly!");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            View.Status = "Importing Complete!";
-            View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
-            View.ShowReady();
-        }
+      
 
         private void UpdateUi(string message)
         {
