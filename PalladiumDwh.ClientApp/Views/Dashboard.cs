@@ -622,11 +622,6 @@ namespace PalladiumDwh.ClientApp.Views
             _tempPatientStatusExtractErrorSummaryRepository = Program.IOC.GetInstance<ITempPatientStatusExtractErrorSummaryRepository>(); ;
             _tempPatientVisitExtractErrorSummaryRepository = Program.IOC.GetInstance<ITempPatientVisitExtractErrorSummaryRepository>(); ;
 
-
-
-
-
-
             _profileManager = Program.IOC.GetInstance<IProfileManager>();
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
             _exportService = Program.IOC.GetInstance<IExportService>();
@@ -661,7 +656,6 @@ namespace PalladiumDwh.ClientApp.Views
 
             Presenter.LoadExtractSettings();
             Presenter.LoadExtractList();
-
         }
 
         public void ShowPleaseWait()

@@ -26,5 +26,7 @@ namespace PalladiumDwh.ClientApp.Model
             }
             return list;
         }
+
+        
     }
 }

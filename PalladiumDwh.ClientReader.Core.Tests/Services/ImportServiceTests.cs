@@ -74,10 +74,6 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             foreach (var i in imports)
             {
                 Console.WriteLine(i);
-                foreach (var p in i.Profiles)
-                {
-                    Console.WriteLine($" >.{p}");
-                }
             }
         }
 

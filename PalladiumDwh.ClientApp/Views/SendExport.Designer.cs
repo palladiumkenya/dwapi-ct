@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.labelHDescrption = new System.Windows.Forms.Label();
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelAction = new System.Windows.Forms.Panel();
             this.buttonSendDWH = new System.Windows.Forms.Button();
@@ -53,7 +54,6 @@
             this.tabPageErrors = new System.Windows.Forms.TabPage();
             this.panelErrors = new System.Windows.Forms.Panel();
             this.panelErrorsH = new System.Windows.Forms.Panel();
-            this.labelHDescrption = new System.Windows.Forms.Label();
             this.openFileDialogExports = new System.Windows.Forms.OpenFileDialog();
             this.panelHeader.SuspendLayout();
             this.panelAction.SuspendLayout();
@@ -79,6 +79,15 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(702, 10);
             this.panelHeader.TabIndex = 0;
+            // 
+            // labelHDescrption
+            // 
+            this.labelHDescrption.AutoSize = true;
+            this.labelHDescrption.Location = new System.Drawing.Point(33, 24);
+            this.labelHDescrption.Name = "labelHDescrption";
+            this.labelHDescrption.Size = new System.Drawing.Size(61, 13);
+            this.labelHDescrption.TabIndex = 10;
+            this.labelHDescrption.Text = " Descrption";
             // 
             // labelHeader
             // 
@@ -163,6 +172,7 @@
             this.linkLableDelete.TabIndex = 11;
             this.linkLableDelete.TabStop = true;
             this.linkLableDelete.Text = "Delete All";
+            this.linkLableDelete.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLableDelete_LinkClicked);
             // 
             // labelCount
             // 
@@ -308,15 +318,6 @@
             this.panelErrorsH.Name = "panelErrorsH";
             this.panelErrorsH.Size = new System.Drawing.Size(688, 27);
             this.panelErrorsH.TabIndex = 0;
-            // 
-            // labelHDescrption
-            // 
-            this.labelHDescrption.AutoSize = true;
-            this.labelHDescrption.Location = new System.Drawing.Point(33, 24);
-            this.labelHDescrption.Name = "labelHDescrption";
-            this.labelHDescrption.Size = new System.Drawing.Size(61, 13);
-            this.labelHDescrption.TabIndex = 10;
-            this.labelHDescrption.Text = " Descrption";
             // 
             // openFileDialogExports
             // 

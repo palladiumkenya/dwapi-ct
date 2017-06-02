@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using log4net;
@@ -103,17 +104,13 @@ namespace PalladiumDwh.ClientApp.Views
             set { pbExports.Value = value; }
         }
 
-        public async Task StartUp()
+        public Task StartUp()
         {
-           var importService  = Program.IOC.GetInstance<IImportService>();
-
+            var importService  = Program.IOC.GetInstance<IImportService>();
             Presenter =new ManageExportsPresenter(this, importService);
             Presenter.Initialize();
-
-            await Presenter.LoadExportsAsync();
-
-            CanLoadExports = true;
-            CanSend = CanDeleteAll = false;
+            return Presenter.LoadExisitingExportsAsync();
+         
         }
         public void ShowErrorMessage(string message)
         {
@@ -129,6 +126,7 @@ namespace PalladiumDwh.ClientApp.Views
         public void ShowReady()
         {
             Cursor.Current = Cursors.Default;
+            labelExportsStatus.Text = "Ready";
             pbExports.Value = 0;
         }
 
@@ -163,6 +161,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         public void ClearExports()
         {
+            
             listViewExports.Items.Clear();
         }
 
@@ -180,13 +179,14 @@ namespace PalladiumDwh.ClientApp.Views
         public void ClearEvents()
         {
             listBoxEventsSummary.DataSource = null;
+            listBoxEventsSummary.Items.Clear();
         }
 
         private async void SendExport_Load(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
             try
-            {
+            {               
                 await StartUp();
             }
             catch (Exception ex)
@@ -217,6 +217,16 @@ namespace PalladiumDwh.ClientApp.Views
                         await Presenter.LoadExportsAsync();
                 }
             }
+        }
+
+        private async void linkLableDelete_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you Sure", "Confrm Delete", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                await Presenter.DeleteAllExportsAsync();
+            }
+            
         }
     }
 }

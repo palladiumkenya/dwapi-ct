@@ -6,6 +6,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using log4net;
 using Newtonsoft.Json;
@@ -100,7 +101,9 @@ namespace PalladiumDwh.ClientReader.Core.Services
             }
 
             //unzip extract
+
             int count = 0;
+
             foreach (var f in exportFiles)
             {
                 var folder = await UnZipExtracts(f, parentFolder);
@@ -109,7 +112,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 {
                     await Task.Run(() =>
                     {
-                        importManifests.Add(ImportManifest.Create(folder));
+                        importManifests.Add(ImportManifest.CreateSite(folder));
                     });
                 }
                 catch (Exception e)
@@ -126,6 +129,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         public async Task<IEnumerable<SiteManifest>> ReadExportsAsync(string importDir="", IProgress<DProgress> progress = null)
         {
+            
             string folderToImportFrom = string.Empty;
 
             if (string.IsNullOrWhiteSpace(importDir))
@@ -133,6 +137,20 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 //save to My Documents
                 folderToImportFrom = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 folderToImportFrom = $@"{folderToImportFrom.HasToEndsWith(@"\")}DWapi\Imports\".HasToEndsWith(@"\");
+
+                try
+                {
+                    if (!Directory.Exists(folderToImportFrom))
+                    {
+                        Directory.CreateDirectory(folderToImportFrom);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                    throw;
+                }
+                
             }
             else
             {
@@ -147,9 +165,9 @@ namespace PalladiumDwh.ClientReader.Core.Services
             bool exists = Directory.Exists(folderToImportFrom);
 
             if (!exists)
-                throw new ArgumentException($"Folder {folderToImportFrom} doesnt exist");
+                throw new ArgumentException($"Folder {folderToImportFrom} NOT Found !");
 
-            var siteFolders= await Task.Run(() => Directory.GetDirectories(folderToImportFrom));
+            var siteFolders = await Task.Run(() => Directory.GetDirectories(folderToImportFrom));
 
             int folderCount = siteFolders.Length;
             int count = 0;
@@ -163,18 +181,24 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 var manifestFile = manifestFiles.First();
                 if (manifestFile != null)
                 {
-                    var manifestFileConntent = await Task.Run(() => File.ReadAllText(manifestFile));
-                    var siteManifest = SiteManifest.Create(manifestFileConntent, siteFolder);
+                    var manifestFileContent = await Task.Run(() => File.ReadAllText(manifestFile));
 
+                    var siteManifest = SiteManifest.Create(manifestFileContent, siteFolder);
+                    
+                    /*                    
                     if (siteManifest.ReadComplete)
                     {
                         var profileFiles = await Task.Run(() => Directory.GetFiles(siteFolder, "*.dwh"));
 
                         int profileFileCount = profileFiles.Length;
+                        siteManifest.ProfileCount = profileFileCount;
+
+                        // Create profile
+                       
                         int pcount = 0;
                         foreach (var pf in profileFiles)
                         {
-                            //Create profile
+                            
                             var profileContent = await Task.Run(() =>
                             {
                                 var raw = File.ReadAllText(pf);
@@ -185,17 +209,44 @@ namespace PalladiumDwh.ClientReader.Core.Services
                             pcount++;
                             progress.ReportStatus($"Loading Export {count} of {folderCount} (Reading profile {pcount}/{profileFileCount})...", count, folderCount);
                         }
+                       
                     }
+                    */
+
                     siteManifests.Add(siteManifest);
-
                 }
-
                 
                 progress.ReportStatus($"Loading Export {count} of {folderCount}", count, folderCount);
 
             }
 
             return siteManifests;
+        }
+
+        public async Task ClearExportsAsync(List<string> exportFolders, IProgress<DProgress> progress = null)
+        {
+            int folderCount = exportFolders.Count;
+            int count = 0;
+
+            foreach (var siteFolder in exportFolders)
+            {
+                count++;
+
+                //remove folder
+
+                bool exists = Directory.Exists(siteFolder);
+
+                if (exists)
+                {
+                    await
+                        Task.Run(() =>
+                        {
+                            Directory.Delete(siteFolder, true);
+                        });
+                }
+
+                progress.ReportStatus($"Deleting Export {count} of {folderCount}", count, folderCount);
+            }
         }
 
         public  string Base64Decode(string base64EncodedData)

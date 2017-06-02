@@ -78,7 +78,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 Directory.CreateDirectory(folderToSaveTo);
             }
 
-            addManifesrt(folderToSaveTo, currentManifests);
+            addManifest(folderToSaveTo, currentManifests);
 
             foreach (var p in patients)
             {
@@ -129,7 +129,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         }
 
-        private void addManifesrt(string folder, List<Manifest> currentManifests)
+        private void addManifest(string folder, List<Manifest> currentManifests)
         {
             string fileName = $"{folder.HasToEndsWith(@"\")}dwapi.manifest";
             using (StreamWriter writer =

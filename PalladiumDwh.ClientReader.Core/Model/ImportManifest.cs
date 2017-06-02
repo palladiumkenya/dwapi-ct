@@ -17,10 +17,15 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public ImportManifest()
         {
         }
-
-        private ImportManifest(string manifest, List<string> profiles)
+        private ImportManifest(string manifest)
         {
             Manifest = manifest.Trim();
+        }
+
+
+        private ImportManifest(string manifest, List<string> profiles)
+            : this(manifest)
+        {
             Profiles = profiles;
         }
 
@@ -32,6 +37,16 @@ namespace PalladiumDwh.ClientReader.Core.Model
             var profiles = Directory.GetFiles(directory, "*.dwh").ToList();
 
             return new ImportManifest(manifest, profiles);
+        }
+
+        public static ImportManifest CreateSite(string directory)
+        {
+            directory = directory.HasToEndsWith(@"\");
+
+            var manifest = File.ReadAllText($@"{directory}dwapi.manifest");
+            //var profiles = Directory.GetFiles(directory, "*.dwh").ToList();
+
+            return new ImportManifest(manifest);
         }
 
         public override string ToString()

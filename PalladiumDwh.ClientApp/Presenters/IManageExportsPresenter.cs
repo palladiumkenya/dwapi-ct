@@ -10,7 +10,6 @@ namespace PalladiumDwh.ClientApp.Presenters
         Task<bool> ExtractExportsAsync();
         Task LoadExportsAsync();
         Task SendExportsAsync();
-
-        void DeleteAllExports();
+        Task DeleteAllExportsAsync();
     }
 }
