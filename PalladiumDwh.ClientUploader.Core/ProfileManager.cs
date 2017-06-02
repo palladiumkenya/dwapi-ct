@@ -5,6 +5,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Profiles;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Profile;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
+using PalladiumDwh.ClientUploader.Core.Model;
 
 namespace PalladiumDwh.ClientUploader.Core
 {
@@ -61,6 +62,11 @@ namespace PalladiumDwh.ClientUploader.Core
             }
           
             return list;
+        }
+
+        public IEnumerable<SiteProfile> Generate(SiteManifest siteManifest)
+        {
+            return SiteProfile.Create(siteManifest);
         }
     }
 }

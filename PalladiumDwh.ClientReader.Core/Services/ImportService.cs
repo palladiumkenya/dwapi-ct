@@ -32,43 +32,63 @@ namespace PalladiumDwh.ClientReader.Core.Services
             _clientPatientExtractRepository = clientPatientExtractRepository;
         }
 
-        public async Task<List<ImportManifest>> GetCurrentImports(string importDir = "", IProgress<int> progress = null)
+        public async Task<SiteManifest> GetSiteManifest(string importLocation , IProgress<DProgress> progress = null)
         {
-            _progress = progress;
-            var importManifests = new List<ImportManifest>();
-            string folderToSaveTo;
-            if (string.IsNullOrWhiteSpace(importDir))
+            Log.Debug($"Reading export form [{importLocation}]...");
+
+            SiteManifest siteManifest = null;
+            importLocation = importLocation.HasToEndsWith(@"\");
+
+            if (!Directory.Exists(importLocation))
             {
-                //save to My Documents
-                folderToSaveTo = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                Log.Debug($"Folder [{importLocation}] MISSING!");
+                throw new ArgumentException($"Folder {importLocation} Not found");
             }
-            else
+
+            var manifestFiles = Directory.GetFiles(importLocation, "*.manifest");
+            var manifestFile = manifestFiles.First();
+            
+            if (manifestFile != null)
             {
-                folderToSaveTo = importDir;
-            }
-            folderToSaveTo = folderToSaveTo.HasToEndsWith(@"\");
-            string parentFolder = $@"{folderToSaveTo}DWapi\Imports\".HasToEndsWith(@"\");
-            var dirs = Directory.GetDirectories(parentFolder).ToList();
-            _taskCount = dirs.Count;
-            try
-            {
-                foreach (var dir in dirs)
+                var manifestFileContent = File.ReadAllText(manifestFile);
+
+                siteManifest = SiteManifest.Create(manifestFileContent, importLocation);
+
+                if (siteManifest.ReadComplete)
                 {
-                    await Task.Run(() =>
+                    Log.Debug($"Reading export form [{importLocation}] SiteInfo Found.");
+
+                    var profileFiles = await Task.Run(() => Directory.GetFiles(importLocation, "*.dwh"));
+
+                    int profileFileCount = profileFiles.Length;
+                    siteManifest.ProfileCount = profileFileCount;
+
+                    // Create profile
+
+                    int pcount = 0;
+                    foreach (var pf in profileFiles)
                     {
-                        importManifests.Add(ImportManifest.Create(dir));
-                    });
 
-                    _progressValue++;
-                    ShowPercentage(_progressValue);
+                        var profileContent = await Task.Run(() =>
+                        {
+                            var raw = File.ReadAllText(pf);
+                            return Base64Decode(raw);
+                        });
+
+                        siteManifest.AddProfie(profileContent);
+                        pcount++;
+                        progress.ReportStatus($"Reading profiles...", pcount,profileFileCount);
+                    }
+
                 }
-            }
-            catch (Exception e)
-            {
-                Log.Debug(e);
+                else
+                {
+                    Log.Debug($"Reading export form [{importLocation}] SiteInfo NOT FOUND !");
+                }                
             }
 
-            return importManifests;
+            File.WriteAllText($"{importLocation.HasToEndsWith(@"\")}SiteManifestA.json",JsonConvert.SerializeObject(siteManifest));
+            return siteManifest;
         }
 
         public async Task<List<ImportManifest>> ExtractExportsAsync(List<string> exportFiles, string importDir = "",

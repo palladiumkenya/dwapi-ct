@@ -65,6 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProfileManager.cs" />
     <Compile Include="Services\PushProfileService.cs" />
+    <Compile Include="Model\SiteProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PalladiumDwh.ClientReader.Core\PalladiumDwh.ClientReader.Core.csproj">

@@ -201,6 +201,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         private async void buttonLoadExport_Click(object sender, EventArgs e)
         {
+
             openFileDialogExports.Filter = "DWapi Exports (*.zip)|*.zip";
 
             DialogResult dr = this.openFileDialogExports.ShowDialog();

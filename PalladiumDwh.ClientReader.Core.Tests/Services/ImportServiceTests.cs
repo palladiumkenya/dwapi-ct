@@ -46,20 +46,28 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         }
 
         [Test]
-        public void should_Get_Exisitng_Imports()
+        public void should_Get_Exisitng_Manifest_From_Imports()
         {
-            var imports = _importService.GetCurrentImports($@"{_importPath}",_progress).Result;
+            _importPath = $"{_importPath.HasToEndsWith(@"\")}Imports";
+            var siteFolders = Directory.GetDirectories(_importPath);
+            Assert.IsNotEmpty(siteFolders);
 
-            Assert.IsNotEmpty(imports);
-            Console.WriteLine($"Extracted TO:{_importPath}");
-            foreach (var i in imports)
+            var siteFolder = siteFolders.First();
+            Assert.IsNotNull(siteFolder);
+
+            var siteManifest = _importService.GetSiteManifest($@"{siteFolder}", _dprogress).Result;
+            Assert.IsNotNull(siteManifest);
+
+            foreach (var s in siteManifest.Manifests)
             {
-                Console.WriteLine(i);
-                foreach (var p in i.Profiles)
-                {
-                    Console.WriteLine($" >.{p}");
-                }
+                Console.WriteLine(s);
             }
+            foreach (var p in siteManifest.PatientExtracts)
+            {
+                Console.WriteLine($">.{p.Id}-{p},{p.SiteCode}");
+            }
+            Console.WriteLine(siteManifest);
+            
         }
 
         [Test]

@@ -7,6 +7,7 @@ using log4net;
 using PalladiumDwh.ClientReader.Core.Interfaces.Profiles;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
+using PalladiumDwh.ClientUploader.Core.Model;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
@@ -117,6 +118,11 @@ namespace PalladiumDwh.ClientUploader.Core.Services
 
             UpdateExtract(pushResponse,profile.Source);
             return pushResponse;
+        }
+
+        public Task<PushResponse> PushAsync(SiteProfile siteProfile)
+        {
+            throw new NotImplementedException();
         }
 
         //TODO make  UpdateExtract async

@@ -34,6 +34,12 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
             Assert.IsTrue(exracts.Count>0);
         }
 
+        [Test]
+        public void should_Generate_Site_Profiles()
+        {
+            var exracts = _profileManager.Generate(_patientExtract).ToList();
+            Assert.IsTrue(exracts.Count > 0);
+        }
         [TestCase(typeof(ClientPatientARTProfile), 1,5)]
         [TestCase(typeof(ClientPatientBaselineProfile), 1, 5)]
         [TestCase(typeof(ClientPatientLabProfile), 1, 5)]
