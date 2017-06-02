@@ -95,7 +95,7 @@ namespace PalladiumDwh.ClientApp.Views
         public string Status
         {
             get { return labelExportsStatus.Text; }
-            set { labelExportsStatus.Text = value; }
+            set{labelExportsStatus.Text= value;}
         }
 
         public int ProgessStatus
@@ -106,10 +106,11 @@ namespace PalladiumDwh.ClientApp.Views
 
         public Task StartUp()
         {
+            Cursor.Current = Cursors.WaitCursor;
             var importService  = Program.IOC.GetInstance<IImportService>();
             Presenter =new ManageExportsPresenter(this, importService);
             Presenter.Initialize();
-            return Presenter.LoadExisitingExportsAsync();
+            return Presenter.LoadExportsAsync(true);
          
         }
         public void ShowErrorMessage(string message)
@@ -183,10 +184,9 @@ namespace PalladiumDwh.ClientApp.Views
         }
 
         private async void SendExport_Load(object sender, EventArgs e)
-        {
-            Cursor.Current = Cursors.WaitCursor;
+        {            
             try
-            {               
+            {                
                 await StartUp();
             }
             catch (Exception ex)
@@ -214,19 +214,28 @@ namespace PalladiumDwh.ClientApp.Views
                     ShowPleaseWait();
                     bool cansend = await Presenter.ExtractExportsAsync();
                     if (cansend)
-                        await Presenter.LoadExportsAsync();
+                        await Presenter.LoadExportsAsync(false);
                 }
             }
         }
 
         private async void linkLableDelete_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Are you Sure", "Confrm Delete", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Are you sure ?", "Confirm Delete", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.Yes)
             {
                 await Presenter.DeleteAllExportsAsync();
             }
-            
+        }
+
+        private void progressBar1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSendDWH_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

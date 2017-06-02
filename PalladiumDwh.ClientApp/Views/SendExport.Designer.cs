@@ -28,18 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelHeader = new System.Windows.Forms.Panel();
-            this.labelHDescrption = new System.Windows.Forms.Label();
-            this.labelHeader = new System.Windows.Forms.Label();
-            this.panelAction = new System.Windows.Forms.Panel();
-            this.buttonSendDWH = new System.Windows.Forms.Button();
-            this.buttonLoadExport = new System.Windows.Forms.Button();
+            this.openFileDialogExports = new System.Windows.Forms.OpenFileDialog();
             this.statusStripExports = new System.Windows.Forms.StatusStrip();
-            this.labelExportsStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.pbExports = new System.Windows.Forms.ToolStripProgressBar();
-            this.panelInfo = new System.Windows.Forms.Panel();
-            this.linkLableDelete = new System.Windows.Forms.LinkLabel();
-            this.labelCount = new System.Windows.Forms.Label();
             this.tabControlExports = new System.Windows.Forms.TabControl();
             this.tabPageStatus = new System.Windows.Forms.TabPage();
             this.splitContainerExports = new System.Windows.Forms.SplitContainer();
@@ -51,14 +41,21 @@
             this.listBoxEventsSummary = new System.Windows.Forms.ListBox();
             this.panelEventsH = new System.Windows.Forms.Panel();
             this.labelEventSummary = new System.Windows.Forms.Label();
+            this.panelInfo = new System.Windows.Forms.Panel();
+            this.linkLableDelete = new System.Windows.Forms.LinkLabel();
+            this.labelCount = new System.Windows.Forms.Label();
             this.tabPageErrors = new System.Windows.Forms.TabPage();
             this.panelErrors = new System.Windows.Forms.Panel();
             this.panelErrorsH = new System.Windows.Forms.Panel();
-            this.openFileDialogExports = new System.Windows.Forms.OpenFileDialog();
-            this.panelHeader.SuspendLayout();
-            this.panelAction.SuspendLayout();
+            this.panelAction = new System.Windows.Forms.Panel();
+            this.buttonSendDWH = new System.Windows.Forms.Button();
+            this.buttonLoadExport = new System.Windows.Forms.Button();
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.labelHDescrption = new System.Windows.Forms.Label();
+            this.labelHeader = new System.Windows.Forms.Label();
+            this.labelExportsStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pbExports = new System.Windows.Forms.ToolStripProgressBar();
             this.statusStripExports.SuspendLayout();
-            this.panelInfo.SuspendLayout();
             this.tabControlExports.SuspendLayout();
             this.tabPageStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerExports)).BeginInit();
@@ -66,67 +63,15 @@
             this.splitContainerExports.Panel2.SuspendLayout();
             this.splitContainerExports.SuspendLayout();
             this.panelEventsH.SuspendLayout();
+            this.panelInfo.SuspendLayout();
             this.tabPageErrors.SuspendLayout();
+            this.panelAction.SuspendLayout();
+            this.panelHeader.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panelHeader
+            // openFileDialogExports
             // 
-            this.panelHeader.BackColor = System.Drawing.SystemColors.Control;
-            this.panelHeader.Controls.Add(this.labelHDescrption);
-            this.panelHeader.Controls.Add(this.labelHeader);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(702, 10);
-            this.panelHeader.TabIndex = 0;
-            // 
-            // labelHDescrption
-            // 
-            this.labelHDescrption.AutoSize = true;
-            this.labelHDescrption.Location = new System.Drawing.Point(33, 24);
-            this.labelHDescrption.Name = "labelHDescrption";
-            this.labelHDescrption.Size = new System.Drawing.Size(61, 13);
-            this.labelHDescrption.TabIndex = 10;
-            this.labelHDescrption.Text = " Descrption";
-            // 
-            // labelHeader
-            // 
-            this.labelHeader.AutoSize = true;
-            this.labelHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHeader.Location = new System.Drawing.Point(12, 9);
-            this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(49, 13);
-            this.labelHeader.TabIndex = 9;
-            this.labelHeader.Text = "Exports";
-            // 
-            // panelAction
-            // 
-            this.panelAction.Controls.Add(this.buttonSendDWH);
-            this.panelAction.Controls.Add(this.buttonLoadExport);
-            this.panelAction.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelAction.Location = new System.Drawing.Point(0, 10);
-            this.panelAction.Name = "panelAction";
-            this.panelAction.Size = new System.Drawing.Size(702, 33);
-            this.panelAction.TabIndex = 1;
-            // 
-            // buttonSendDWH
-            // 
-            this.buttonSendDWH.Location = new System.Drawing.Point(123, 5);
-            this.buttonSendDWH.Name = "buttonSendDWH";
-            this.buttonSendDWH.Size = new System.Drawing.Size(167, 23);
-            this.buttonSendDWH.TabIndex = 1;
-            this.buttonSendDWH.Text = "Send to Data Warehouse";
-            this.buttonSendDWH.UseVisualStyleBackColor = true;
-            // 
-            // buttonLoadExport
-            // 
-            this.buttonLoadExport.Location = new System.Drawing.Point(7, 5);
-            this.buttonLoadExport.Name = "buttonLoadExport";
-            this.buttonLoadExport.Size = new System.Drawing.Size(110, 23);
-            this.buttonLoadExport.TabIndex = 0;
-            this.buttonLoadExport.Text = "Load Exports";
-            this.buttonLoadExport.UseVisualStyleBackColor = true;
-            this.buttonLoadExport.Click += new System.EventHandler(this.buttonLoadExport_Click);
+            this.openFileDialogExports.Multiselect = true;
             // 
             // statusStripExports
             // 
@@ -136,53 +81,8 @@
             this.statusStripExports.Location = new System.Drawing.Point(0, 384);
             this.statusStripExports.Name = "statusStripExports";
             this.statusStripExports.Size = new System.Drawing.Size(702, 22);
-            this.statusStripExports.TabIndex = 0;
-            this.statusStripExports.Text = "statusStripExports";
-            // 
-            // labelExportsStatus
-            // 
-            this.labelExportsStatus.Name = "labelExportsStatus";
-            this.labelExportsStatus.Size = new System.Drawing.Size(485, 17);
-            this.labelExportsStatus.Spring = true;
-            this.labelExportsStatus.Text = "Ready";
-            this.labelExportsStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pbExports
-            // 
-            this.pbExports.Name = "pbExports";
-            this.pbExports.Size = new System.Drawing.Size(200, 16);
-            this.pbExports.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            // 
-            // panelInfo
-            // 
-            this.panelInfo.Controls.Add(this.linkLableDelete);
-            this.panelInfo.Controls.Add(this.labelCount);
-            this.panelInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelInfo.Location = new System.Drawing.Point(3, 286);
-            this.panelInfo.Name = "panelInfo";
-            this.panelInfo.Size = new System.Drawing.Size(688, 26);
-            this.panelInfo.TabIndex = 2;
-            // 
-            // linkLableDelete
-            // 
-            this.linkLableDelete.AutoSize = true;
-            this.linkLableDelete.Location = new System.Drawing.Point(2, 6);
-            this.linkLableDelete.Name = "linkLableDelete";
-            this.linkLableDelete.Size = new System.Drawing.Size(52, 13);
-            this.linkLableDelete.TabIndex = 11;
-            this.linkLableDelete.TabStop = true;
-            this.linkLableDelete.Text = "Delete All";
-            this.linkLableDelete.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLableDelete_LinkClicked);
-            // 
-            // labelCount
-            // 
-            this.labelCount.AutoSize = true;
-            this.labelCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCount.Location = new System.Drawing.Point(60, 6);
-            this.labelCount.Name = "labelCount";
-            this.labelCount.Size = new System.Drawing.Size(106, 13);
-            this.labelCount.TabIndex = 10;
-            this.labelCount.Text = "0 Loaded Exports";
+            this.statusStripExports.TabIndex = 5;
+            this.statusStripExports.Text = "statusStrip1";
             // 
             // tabControlExports
             // 
@@ -193,7 +93,7 @@
             this.tabControlExports.Name = "tabControlExports";
             this.tabControlExports.SelectedIndex = 0;
             this.tabControlExports.Size = new System.Drawing.Size(702, 341);
-            this.tabControlExports.TabIndex = 3;
+            this.tabControlExports.TabIndex = 8;
             // 
             // tabPageStatus
             // 
@@ -221,7 +121,7 @@
             // 
             this.splitContainerExports.Panel2.Controls.Add(this.listBoxEventsSummary);
             this.splitContainerExports.Panel2.Controls.Add(this.panelEventsH);
-            this.splitContainerExports.Size = new System.Drawing.Size(688, 283);
+            this.splitContainerExports.Size = new System.Drawing.Size(688, 286);
             this.splitContainerExports.SplitterDistance = 458;
             this.splitContainerExports.TabIndex = 5;
             // 
@@ -239,7 +139,7 @@
             this.listViewExports.Location = new System.Drawing.Point(0, 0);
             this.listViewExports.MultiSelect = false;
             this.listViewExports.Name = "listViewExports";
-            this.listViewExports.Size = new System.Drawing.Size(458, 283);
+            this.listViewExports.Size = new System.Drawing.Size(458, 286);
             this.listViewExports.TabIndex = 1;
             this.listViewExports.UseCompatibleStateImageBehavior = false;
             this.listViewExports.View = System.Windows.Forms.View.Details;
@@ -270,7 +170,7 @@
             this.listBoxEventsSummary.FormattingEnabled = true;
             this.listBoxEventsSummary.Location = new System.Drawing.Point(0, 26);
             this.listBoxEventsSummary.Name = "listBoxEventsSummary";
-            this.listBoxEventsSummary.Size = new System.Drawing.Size(226, 257);
+            this.listBoxEventsSummary.Size = new System.Drawing.Size(226, 260);
             this.listBoxEventsSummary.TabIndex = 8;
             // 
             // panelEventsH
@@ -291,6 +191,37 @@
             this.labelEventSummary.TabIndex = 8;
             this.labelEventSummary.Text = "Events Summary";
             // 
+            // panelInfo
+            // 
+            this.panelInfo.Controls.Add(this.linkLableDelete);
+            this.panelInfo.Controls.Add(this.labelCount);
+            this.panelInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelInfo.Location = new System.Drawing.Point(3, 289);
+            this.panelInfo.Name = "panelInfo";
+            this.panelInfo.Size = new System.Drawing.Size(688, 23);
+            this.panelInfo.TabIndex = 2;
+            // 
+            // linkLableDelete
+            // 
+            this.linkLableDelete.AutoSize = true;
+            this.linkLableDelete.Location = new System.Drawing.Point(2, 6);
+            this.linkLableDelete.Name = "linkLableDelete";
+            this.linkLableDelete.Size = new System.Drawing.Size(52, 13);
+            this.linkLableDelete.TabIndex = 11;
+            this.linkLableDelete.TabStop = true;
+            this.linkLableDelete.Text = "Delete All";
+            this.linkLableDelete.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLableDelete_LinkClicked);
+            // 
+            // labelCount
+            // 
+            this.labelCount.AutoSize = true;
+            this.labelCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCount.Location = new System.Drawing.Point(60, 6);
+            this.labelCount.Name = "labelCount";
+            this.labelCount.Size = new System.Drawing.Size(106, 13);
+            this.labelCount.TabIndex = 10;
+            this.labelCount.Text = "0 Loaded Exports";
+            // 
             // tabPageErrors
             // 
             this.tabPageErrors.Controls.Add(this.panelErrors);
@@ -298,7 +229,7 @@
             this.tabPageErrors.Location = new System.Drawing.Point(4, 22);
             this.tabPageErrors.Name = "tabPageErrors";
             this.tabPageErrors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageErrors.Size = new System.Drawing.Size(694, 315);
+            this.tabPageErrors.Size = new System.Drawing.Size(694, 337);
             this.tabPageErrors.TabIndex = 1;
             this.tabPageErrors.Text = "Send Errors";
             this.tabPageErrors.UseVisualStyleBackColor = true;
@@ -308,7 +239,7 @@
             this.panelErrors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelErrors.Location = new System.Drawing.Point(3, 30);
             this.panelErrors.Name = "panelErrors";
-            this.panelErrors.Size = new System.Drawing.Size(688, 282);
+            this.panelErrors.Size = new System.Drawing.Size(688, 304);
             this.panelErrors.TabIndex = 1;
             // 
             // panelErrorsH
@@ -319,9 +250,78 @@
             this.panelErrorsH.Size = new System.Drawing.Size(688, 27);
             this.panelErrorsH.TabIndex = 0;
             // 
-            // openFileDialogExports
+            // panelAction
             // 
-            this.openFileDialogExports.Multiselect = true;
+            this.panelAction.Controls.Add(this.buttonSendDWH);
+            this.panelAction.Controls.Add(this.buttonLoadExport);
+            this.panelAction.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelAction.Location = new System.Drawing.Point(0, 10);
+            this.panelAction.Name = "panelAction";
+            this.panelAction.Size = new System.Drawing.Size(702, 33);
+            this.panelAction.TabIndex = 7;
+            // 
+            // buttonSendDWH
+            // 
+            this.buttonSendDWH.Location = new System.Drawing.Point(123, 5);
+            this.buttonSendDWH.Name = "buttonSendDWH";
+            this.buttonSendDWH.Size = new System.Drawing.Size(167, 23);
+            this.buttonSendDWH.TabIndex = 1;
+            this.buttonSendDWH.Text = "Send to Data Warehouse";
+            this.buttonSendDWH.UseVisualStyleBackColor = true;
+            this.buttonSendDWH.Click += new System.EventHandler(this.buttonSendDWH_Click);
+            // 
+            // buttonLoadExport
+            // 
+            this.buttonLoadExport.Location = new System.Drawing.Point(7, 5);
+            this.buttonLoadExport.Name = "buttonLoadExport";
+            this.buttonLoadExport.Size = new System.Drawing.Size(110, 23);
+            this.buttonLoadExport.TabIndex = 0;
+            this.buttonLoadExport.Text = "Load Exports";
+            this.buttonLoadExport.UseVisualStyleBackColor = true;
+            this.buttonLoadExport.Click += new System.EventHandler(this.buttonLoadExport_Click);
+            // 
+            // panelHeader
+            // 
+            this.panelHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.panelHeader.Controls.Add(this.labelHDescrption);
+            this.panelHeader.Controls.Add(this.labelHeader);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(702, 10);
+            this.panelHeader.TabIndex = 6;
+            // 
+            // labelHDescrption
+            // 
+            this.labelHDescrption.AutoSize = true;
+            this.labelHDescrption.Location = new System.Drawing.Point(33, 24);
+            this.labelHDescrption.Name = "labelHDescrption";
+            this.labelHDescrption.Size = new System.Drawing.Size(61, 13);
+            this.labelHDescrption.TabIndex = 10;
+            this.labelHDescrption.Text = " Descrption";
+            // 
+            // labelHeader
+            // 
+            this.labelHeader.AutoSize = true;
+            this.labelHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelHeader.Location = new System.Drawing.Point(12, 9);
+            this.labelHeader.Name = "labelHeader";
+            this.labelHeader.Size = new System.Drawing.Size(49, 13);
+            this.labelHeader.TabIndex = 9;
+            this.labelHeader.Text = "Exports";
+            // 
+            // labelExportsStatus
+            // 
+            this.labelExportsStatus.Name = "labelExportsStatus";
+            this.labelExportsStatus.Size = new System.Drawing.Size(454, 17);
+            this.labelExportsStatus.Spring = true;
+            this.labelExportsStatus.Text = "Ready";
+            this.labelExportsStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pbExports
+            // 
+            this.pbExports.Name = "pbExports";
+            this.pbExports.Size = new System.Drawing.Size(200, 16);
             // 
             // SendExport
             // 
@@ -329,19 +329,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(702, 406);
             this.Controls.Add(this.tabControlExports);
-            this.Controls.Add(this.statusStripExports);
             this.Controls.Add(this.panelAction);
             this.Controls.Add(this.panelHeader);
+            this.Controls.Add(this.statusStripExports);
             this.Name = "SendExport";
             this.Text = "Manage Exports";
             this.Load += new System.EventHandler(this.SendExport_Load);
-            this.panelHeader.ResumeLayout(false);
-            this.panelHeader.PerformLayout();
-            this.panelAction.ResumeLayout(false);
             this.statusStripExports.ResumeLayout(false);
             this.statusStripExports.PerformLayout();
-            this.panelInfo.ResumeLayout(false);
-            this.panelInfo.PerformLayout();
             this.tabControlExports.ResumeLayout(false);
             this.tabPageStatus.ResumeLayout(false);
             this.splitContainerExports.Panel1.ResumeLayout(false);
@@ -350,28 +345,24 @@
             this.splitContainerExports.ResumeLayout(false);
             this.panelEventsH.ResumeLayout(false);
             this.panelEventsH.PerformLayout();
+            this.panelInfo.ResumeLayout(false);
+            this.panelInfo.PerformLayout();
             this.tabPageErrors.ResumeLayout(false);
+            this.panelAction.ResumeLayout(false);
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panelHeader;
-        private System.Windows.Forms.Panel panelAction;
+        private System.Windows.Forms.OpenFileDialog openFileDialogExports;
         private System.Windows.Forms.StatusStrip statusStripExports;
         private System.Windows.Forms.ToolStripStatusLabel labelExportsStatus;
         private System.Windows.Forms.ToolStripProgressBar pbExports;
-        private System.Windows.Forms.Panel panelInfo;
-        private System.Windows.Forms.Button buttonSendDWH;
-        private System.Windows.Forms.Button buttonLoadExport;
-        private System.Windows.Forms.Label labelHeader;
-        private System.Windows.Forms.Label labelCount;
-        private System.Windows.Forms.LinkLabel linkLableDelete;
         private System.Windows.Forms.TabControl tabControlExports;
         private System.Windows.Forms.TabPage tabPageStatus;
-        private System.Windows.Forms.TabPage tabPageErrors;
         private System.Windows.Forms.SplitContainer splitContainerExports;
         private System.Windows.Forms.ListView listViewExports;
         private System.Windows.Forms.ColumnHeader columnHeaderSite;
@@ -381,9 +372,17 @@
         private System.Windows.Forms.ListBox listBoxEventsSummary;
         private System.Windows.Forms.Panel panelEventsH;
         private System.Windows.Forms.Label labelEventSummary;
+        private System.Windows.Forms.Panel panelInfo;
+        private System.Windows.Forms.LinkLabel linkLableDelete;
+        private System.Windows.Forms.Label labelCount;
+        private System.Windows.Forms.TabPage tabPageErrors;
         private System.Windows.Forms.Panel panelErrors;
         private System.Windows.Forms.Panel panelErrorsH;
+        private System.Windows.Forms.Panel panelAction;
+        private System.Windows.Forms.Button buttonSendDWH;
+        private System.Windows.Forms.Button buttonLoadExport;
+        private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelHDescrption;
-        private System.Windows.Forms.OpenFileDialog openFileDialogExports;
+        private System.Windows.Forms.Label labelHeader;
     }
 }

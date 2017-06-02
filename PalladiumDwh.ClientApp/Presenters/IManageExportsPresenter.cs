@@ -5,10 +5,8 @@ namespace PalladiumDwh.ClientApp.Presenters
 {
     public interface IManageExportsPresenter : IPresenter<IManageExportsView>
     {
-        Task LoadExisitingExportsAsync();
-
         Task<bool> ExtractExportsAsync();
-        Task LoadExportsAsync();
+        Task LoadExportsAsync(bool startup);
         Task SendExportsAsync();
         Task DeleteAllExportsAsync();
     }

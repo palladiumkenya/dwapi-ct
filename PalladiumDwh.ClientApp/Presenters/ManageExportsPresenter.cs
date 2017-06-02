@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.EnterpriseServices;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using log4net;
 using PalladiumDwh.ClientApp.Model;
@@ -34,38 +35,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public async Task LoadExisitingExportsAsync()
         {
-            View.Status = "Loading Export(s)...";
-            View.CanLoadExports = View.CanSend = View.CanDeleteAll = false;
-
-            var progress = new Progress<DProgress>(ShowDProgress);
-
-            try
-            {
-                var exports = new List<ExportsViewModel>();
-                var siteManifests = await _importService.ReadExportsAsync(string.Empty, progress);
-                foreach (var s in siteManifests)
-                {
-                    exports.AddRange(ExportsViewModel.Create(s));
-                }
-                View.Exports = exports;
-                View.ExportsCount = exports.Count;
-                View.CanDeleteAll = exports.Count > 0;
-                View.ShowReady();
-                
-                
-            }
-            catch (Exception e)
-            {
-                Log.Debug(e);
-                View.ShowErrorMessage(Utility.GetErrorMessage(e));
-            }
-
-            View.Status = "Loading Export(s) Complete!";
-
-            View.ShowReady();
-            View.CanLoadExports = true;
-            View.CanSend = View.CanDeleteAll = false;
-            View.Status = "Deleting Export(s) Complete!";
+           
         }
 
      
@@ -89,14 +59,18 @@ namespace PalladiumDwh.ClientApp.Presenters
                 Log.Debug(e);
                 View.ShowErrorMessage(Utility.GetErrorMessage(e));
             }
+            
             View.Status = "Copying Export(s) Complete!";
             View.CanLoadExports = true;
+            
             View.ShowReady();
             return extractComplete;
         }
 
-        public async Task LoadExportsAsync()
+        public async Task LoadExportsAsync(bool startup)
         {
+            var exports = new List<ExportsViewModel>();
+
             View.Status = "Loading Export(s)...";
             View.CanLoadExports = View.CanSend = View.CanDeleteAll = false;
 
@@ -104,17 +78,14 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             try
             {
-                var exports = new List<ExportsViewModel>();
-                var siteManifests = await _importService.ReadExportsAsync(string.Empty,progress);
+                var siteManifests = await _importService.ReadExportsAsync(string.Empty, progress);
                 foreach (var s in siteManifests)
                 {
-                    exports.AddRange( ExportsViewModel.Create(s));
+                    exports.AddRange(ExportsViewModel.Create(s));
                 }
                 View.Exports = exports;
-                View.EventsSummary = new List<string> { $"Loaded {exports.Count} Sites" };
-                View.ExportsCount = exports.Count;
-                View.CanDeleteAll = exports.Count > 0;
-                
+                if(!startup)
+                    View.EventsSummary = new List<string> { $"Loaded {exports.Count} Sites" };
             }
             catch (Exception e)
             {
@@ -122,11 +93,11 @@ namespace PalladiumDwh.ClientApp.Presenters
                 View.ShowErrorMessage(Utility.GetErrorMessage(e));
             }
 
-            View.Status = "Loading Export(s) Complete!";
-
+            View.ExportsCount = exports.Count;
+            View.CanSend = View.CanDeleteAll = exports.Count > 0;
             View.CanLoadExports = true;
+            await Task.Delay(1);
             View.ShowReady();
-            View.Status = "Deleting Export(s) Complete!";
         }
 
         public Task SendExportsAsync()
@@ -151,7 +122,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.Status = "Deleting Export(s) Complete!";
 
             
-            await LoadExportsAsync();
+            await LoadExportsAsync(false);
             
             View.CanLoadExports = true;
             View.ShowReady();

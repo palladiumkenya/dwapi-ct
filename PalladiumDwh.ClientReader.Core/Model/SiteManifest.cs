@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PalladiumDwh.Shared.Model;
 
@@ -14,13 +15,21 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string ReadStatus { get; set; }
         public string Location { get; set; }
 
-        public static SiteManifest Create(string manifestFile,string location)
+        public static Task<SiteManifest> CreateAsync(string manifestFile, string location)
         {
-            var siteManifest=new SiteManifest();
+            return Task.Run(() => Create(manifestFile,location));
+        }
+
+        public static SiteManifest Create(string manifestFile, string location)
+        {
+            var siteManifest = new SiteManifest();
+
             siteManifest.ReadManifest(manifestFile);
+
             siteManifest.Location = location;
             return siteManifest;
         }
+
         private void ReadManifest(string manifestFile)
         {
             ReadComplete = true;
