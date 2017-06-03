@@ -111,6 +111,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             foreach (var export in View.Exports)
             {
                 var siteManifest =await _importService.GetSiteManifest(export.Location);
+
                 var siteProfiles = _profileManager.GenerateSiteProfiles(siteManifest);
 
                 foreach (var siteProfile in siteProfiles)

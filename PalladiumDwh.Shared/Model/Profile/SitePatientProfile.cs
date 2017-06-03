@@ -7,12 +7,12 @@ using PalladiumDwh.Shared.Model.Extract;
 namespace PalladiumDwh.Shared.Model.Profile
 {
     public class SitePatientProfile 
-    {
-        [JsonIgnore]
+    {        
         public Manifest Manifest { get; set; }
-
         public FacilityDTO Facility { get; set; }
         public PatientExtractDTO Demographic { get; set; }
+        public Facility FacilityInfo { get; set; }
+        public PatientExtract PatientInfo { get; set; }
 
         public List<PatientArtExtractDTO> ArtExtracts { get; set; } = new List<PatientArtExtractDTO>();
         public List<PatientBaselinesExtractDTO> BaselinesExtracts { get; set; } = new List<PatientBaselinesExtractDTO>();

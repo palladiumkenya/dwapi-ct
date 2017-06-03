@@ -70,9 +70,9 @@ namespace PalladiumDwh.ClientUploader.Core
             return SiteProfile.Create(siteManifest);
         }
 
-        public SitePatientProfile SitePatientProfile(SiteProfile siteProfile)
+        public ClientSitePatientProfile SitePatientProfile(SiteProfile siteProfile)
         {
-            var sitePatientProfile=new SitePatientProfile();
+            var sitePatientProfile=new ClientSitePatientProfile();
 
             sitePatientProfile.Manifest = siteProfile.Manifest;
 
@@ -85,14 +85,17 @@ namespace PalladiumDwh.ClientUploader.Core
 
                 if (patient.HasArt())
                 {
-                    var artProfile = PatientARTProfile.Create(facility, patient);
+                    var artProfile = ClientPatientARTProfile.Create(facility, patient);
                     sitePatientProfile.ArtExtracts = artProfile.ArtExtracts;
                 }
 
-             
+                if (patient.HasVisits())
+                {
+                    var artProfile = ClientPatientVisitProfile.Create(facility, patient);
+                    sitePatientProfile.VisitExtracts = artProfile.VisitExtracts;
+                }
+
             }
-
-
 
             return sitePatientProfile;
         }

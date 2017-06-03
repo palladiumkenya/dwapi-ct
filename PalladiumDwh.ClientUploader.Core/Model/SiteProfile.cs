@@ -26,6 +26,7 @@ namespace PalladiumDwh.ClientUploader.Core.Model
                 var patientExtracts = siteManifest.PatientExtracts.Where(x => x.SiteCode == manifest.SiteCode).ToList();
                 if (null != patientExtracts)
                 {
+
                     if (patientExtracts.Count > 0)
                         siteProfile.ClientPatientExtracts.AddRange(patientExtracts);
                 }

@@ -9,8 +9,9 @@ namespace PalladiumDwh.ClientReader.Core.Model
     public class SiteManifest
     {
         public List<Manifest> Manifests { get; set; }=new List<Manifest>();
+        public List<ClientPatientExtract> PatientExtracts { get; set; } = new List<ClientPatientExtract>();
+
         public int ProfileCount { get; set; }
-        public List<ClientPatientExtract> PatientExtracts { get; set; }=new List<ClientPatientExtract>();
         public bool ReadComplete { get; set; }
         public string ReadStatus { get; set; }
         public string Location { get; set; }
