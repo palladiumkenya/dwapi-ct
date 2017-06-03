@@ -128,7 +128,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                     bool siteOk = false;
                     try
                     {
-                        View.Status = $"{status} | Verfying MFLCode:{siteProfile.Manifest.SiteCode}";
+                        View.Status = $"{status} | Verifying MFLCode:{siteProfile.Manifest.SiteCode}";
 
                         var response = await _pushProfileService.SpotAsync(siteProfile.Manifest);
                         siteOk = true;
