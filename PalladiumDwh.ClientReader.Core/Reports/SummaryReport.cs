@@ -19,7 +19,7 @@ namespace PalladiumDwh.ClientReader.Core.Reports
     {
         public string CreateExcelErrorSummary(IEnumerable<IExtractErrorSummary> summaries, string extract, string file = "",IProgress<DProgress> progress = null)
         {
-            progress.ReportStatus("Generating Summary...");
+            progress?.ReportStatus("Generating Summary...");
             
             string fileName = "";
 
@@ -90,7 +90,7 @@ namespace PalladiumDwh.ClientReader.Core.Reports
 
                     sheetData.AppendChild(row);
                     count++;
-                    progress.ReportStatus("Generating Summary",count,total);
+                    progress?.ReportStatus("Generating Summary",count,total);
                 }
 
                 worksheetPart.Worksheet.Save();

@@ -32,72 +32,13 @@ namespace PalladiumDwh.ClientReader.Core.Services
             _clientPatientExtractRepository = clientPatientExtractRepository;
         }
 
-        public async Task<SiteManifest> GetSiteManifest(string importLocation , IProgress<DProgress> progress = null)
-        {
-            Log.Debug($"Reading export form [{importLocation}]...");
-
-            SiteManifest siteManifest = null;
-            importLocation = importLocation.HasToEndsWith(@"\");
-
-            if (!Directory.Exists(importLocation))
-            {
-                Log.Debug($"Folder [{importLocation}] MISSING!");
-                throw new ArgumentException($"Folder {importLocation} Not found");
-            }
-
-            var manifestFiles = Directory.GetFiles(importLocation, "*.manifest");
-            var manifestFile = manifestFiles.First();
-            
-            if (manifestFile != null)
-            {
-                var manifestFileContent = File.ReadAllText(manifestFile);
-
-                siteManifest = SiteManifest.Create(manifestFileContent, importLocation);
-
-                if (siteManifest.ReadComplete)
-                {
-                    Log.Debug($"Reading export form [{importLocation}] SiteInfo Found.");
-
-                    var profileFiles = await Task.Run(() => Directory.GetFiles(importLocation, "*.dwh"));
-
-                    int profileFileCount = profileFiles.Length;
-                    siteManifest.ProfileCount = profileFileCount;
-
-                    // Create profile
-
-                    int pcount = 0;
-                    foreach (var pf in profileFiles)
-                    {
-
-                        var profileContent = await Task.Run(() =>
-                        {
-                            var raw = File.ReadAllText(pf);
-                            return Base64Decode(raw);
-                        });
-
-                        siteManifest.AddProfie(profileContent);
-                        pcount++;
-                        progress.ReportStatus($"Reading profiles...", pcount,profileFileCount);
-                    }
-                }
-                else
-                {
-                    Log.Debug($"Reading export form [{importLocation}] SiteInfo NOT FOUND !");
-                }                
-            }
-
-            File.WriteAllText($"{importLocation.HasToEndsWith(@"\")}SiteManifestA.json",JsonConvert.SerializeObject(siteManifest));
-            return siteManifest;
-        }
-
-        public async Task<List<ImportManifest>> ExtractExportsAsync(List<string> exportFiles, string importDir = "",
-            IProgress<DProgress> progress = null)
+        public async Task<IEnumerable<ImportManifest>> ExtractExportsAsync(List<string> exportFiles, string importDir = "", IProgress<DProgress> progress = null)
         {
             var importManifests = new List<ImportManifest>();
 
             string parentFolder = "";
             string folderToSaveTo = "";
-            int fileCount =_taskCount= exportFiles.Count;
+            int fileCount = _taskCount = exportFiles.Count;
 
             if (string.IsNullOrWhiteSpace(importDir))
             {
@@ -140,13 +81,12 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 }
 
                 count++;
-                progress.ReportStatus("Extracting...", count, fileCount);
+                progress?.ReportStatus("Extracting...", count, fileCount);
             }
 
             return importManifests;
         }
-
-        public async Task<IEnumerable<SiteManifest>> ReadExportsAsync(string importDir = "",IProgress<DProgress> progress = null)
+        public async Task<IEnumerable<SiteManifest>> ReadExportsAsync(string importDir = "", IProgress<DProgress> progress = null)
         {
             string folderToImportFrom;
 
@@ -176,14 +116,14 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
             folderToImportFrom = folderToImportFrom.HasToEndsWith(@"\");
 
-            List<SiteManifest> siteManifests = new List<SiteManifest>();
+            var siteManifests = new List<SiteManifest>();
 
             bool exists = Directory.Exists(folderToImportFrom);
 
             if (!exists)
                 throw new ArgumentException($"Folder {folderToImportFrom} NOT Found !");
 
-            
+
             var siteFolders = await Task.Run(() => Directory.GetDirectories(folderToImportFrom));
 
             int folderCount = siteFolders.Length;
@@ -191,7 +131,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
             foreach (var siteFolder in siteFolders)
             {
-                
+
                 count++;
                 //read manifest
                 await Task.Run(() =>
@@ -209,15 +149,73 @@ namespace PalladiumDwh.ClientReader.Core.Services
                         siteManifests.Add(siteManifest);
                     }
                 });
-                
 
-                progress.ReportStatus($"Loading Export {count} of {folderCount}", count, folderCount);
+
+                progress?.ReportStatus($"Loading Export {count} of {folderCount}", count, folderCount);
 
             }
-            
+
             return siteManifests;
         }
 
+        public async Task<SiteManifest> GetSiteManifest(string importLocation , IProgress<DProgress> progress = null)
+        {
+            Log.Debug($"Reading export form [{importLocation}]...");
+
+            SiteManifest siteManifest = null;
+            importLocation = importLocation.HasToEndsWith(@"\");
+
+            if (!Directory.Exists(importLocation))
+            {
+                Log.Debug($"Folder [{importLocation}] MISSING!");
+                throw new ArgumentException($"Folder {importLocation} Not found");
+            }
+
+            var manifestFiles = Directory.GetFiles(importLocation, "*.manifest");
+            var manifestFile = manifestFiles.First();
+            
+            if (manifestFile != null)
+            {
+                //Read Site Codes and PatientPKs
+                var manifestFileContent = File.ReadAllText(manifestFile);
+
+                siteManifest = SiteManifest.Create(manifestFileContent, importLocation);
+
+                if (siteManifest.ReadComplete)
+                {
+                    Log.Debug($"Reading export form [{importLocation}] SiteInfo Found.");
+
+                    var profileFiles = await Task.Run(() => Directory.GetFiles(importLocation, "*.dwh"));
+
+                    int profileFileCount = profileFiles.Length;
+                    siteManifest.ProfileCount = profileFileCount;
+
+                    // Decode Patient Profiles
+
+                    int pcount = 0;
+                    foreach (var pf in profileFiles)
+                    {
+
+                        var profileContent = await Task.Run(() =>
+                        {
+                            var raw = File.ReadAllText(pf);
+                            return Base64Decode(raw);
+                        });
+
+                        siteManifest.AddProfie(profileContent);
+                        pcount++;
+                        progress?.ReportStatus($"Reading profiles...", pcount,profileFileCount);
+                    }
+                }
+                else
+                {
+                    Log.Debug($"Reading export form [{importLocation}] SiteInfo NOT FOUND !");
+                }                
+            }
+
+            File.WriteAllText($"{importLocation.HasToEndsWith(@"\")}SiteManifestA.json",JsonConvert.SerializeObject(siteManifest));
+            return siteManifest;
+        }
         public async Task ClearExportsAsync(List<string> exportFolders, IProgress<DProgress> progress = null)
         {
             int folderCount = exportFolders.Count;
@@ -240,10 +238,9 @@ namespace PalladiumDwh.ClientReader.Core.Services
                         });
                 }
 
-                progress.ReportStatus($"Deleting Export {count} of {folderCount}", count, folderCount);
+                progress?.ReportStatus($"Deleting Export {count} of {folderCount}", count, folderCount);
             }
         }
-
         public  string Base64Decode(string base64EncodedData)
         {
             var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
@@ -265,7 +262,6 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 }
             );
         }
-
         private void ShowPercentage(int progress)
         {
             if (null == _progress)
@@ -304,7 +300,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
                             siteManifest.AddProfie(profileContent);
                             pcount++;
-                            progress.ReportStatus($"Loading Export {count} of {folderCount} (Reading profile {pcount}/{profileFileCount})...", count, folderCount);
+                            progress?.ReportStatus($"Loading Export {count} of {folderCount} (Reading profile {pcount}/{profileFileCount})...", count, folderCount);
                         }
                        
                     }

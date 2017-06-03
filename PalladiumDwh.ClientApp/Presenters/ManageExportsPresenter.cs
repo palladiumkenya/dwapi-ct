@@ -50,8 +50,9 @@ namespace PalladiumDwh.ClientApp.Presenters
             try
             {
                 var importManifests = await _importService.ExtractExportsAsync(View.ExportFiles, string.Empty, progress);
-                extractComplete = importManifests.Count > 0;
-                View.EventsSummary = new List<string>{$"Copied {importManifests.Count} file(s) Successfuly!"};
+                var manifestsCount = importManifests.ToList().Count;
+                extractComplete = manifestsCount > 0;
+                View.EventsSummary = new List<string>{$"Copied {manifestsCount} file(s) Successfuly!"};
             }
             catch (Exception e)
             {
@@ -106,25 +107,37 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             var progress = new Progress<DProgress>(ShowDProgress);
 
+            int exportCount = View.ExportsCount;
             int count = 0;
 
             foreach (var export in View.Exports)
             {
+                count++;
+                string status = $"Sending Export {count} of {exportCount}";
+
+                //Read Sites data
                 var siteManifest =await _importService.GetSiteManifest(export.Location);
 
+                //Disaggregate into profiles
                 var siteProfiles = _profileManager.GenerateSiteProfiles(siteManifest);
 
+                progress.ReportStatus(status);
+                
                 foreach (var siteProfile in siteProfiles)
                 {
                     bool siteOk = false;
                     try
                     {
+                        View.Status = $"{status} | Verfying MFLCode:{siteProfile.Manifest.SiteCode}";
+
                         var response = await _pushProfileService.SpotAsync(siteProfile.Manifest);
                         siteOk = true;
+                        View.Status = $"{status} | {response}";
                     }
                     catch (Exception e)
                     {
                         Log.Debug(e);
+                        View.Status = $"{status} | MFLCode:{siteProfile.Manifest.SiteCode} Error";
                     }
 
                     if (siteOk)
@@ -143,7 +156,8 @@ namespace PalladiumDwh.ClientApp.Presenters
                                 tasks.Add(_pushProfileService.PushAsync(e));
                             }
 
-                            progress.ReportStatus($"Sending site [{siteProfile.Manifest.SiteCode}] Patient {patientCount} of {patientTotal}", count, View.ExportsCount);
+                            progress.ReportStatus($"{status} | Site:{siteProfile.Manifest.SiteCode}", patientCount,
+                                patientTotal);
 
                             try
                             {
@@ -155,13 +169,14 @@ namespace PalladiumDwh.ClientApp.Presenters
                             }
                         }
                     }
-                    await _pushProfileService.PushAsync(siteProfile);
+                    
                 }
-                count++;
-                progress.ReportStatus($"Sending Export(s)  ", count, View.ExportsCount);
+                
             }
 
-            await LoadExportsAsync(false);
+            await Task.Delay(1);
+            View.CanLoadExports = View.CanSend = View.CanDeleteAll = false;
+            View.ShowReady();
         }
 
         public async Task DeleteAllExportsAsync()

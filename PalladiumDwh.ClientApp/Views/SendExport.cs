@@ -236,9 +236,9 @@ namespace PalladiumDwh.ClientApp.Views
 
         }
 
-        private void buttonSendDWH_Click(object sender, EventArgs e)
+        private async void buttonSendDWH_Click(object sender, EventArgs e)
         {
-
+            await Presenter.SendExportsAsync();
         }
     }
 }
