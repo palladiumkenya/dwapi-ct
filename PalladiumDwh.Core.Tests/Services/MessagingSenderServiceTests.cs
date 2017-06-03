@@ -214,7 +214,7 @@ namespace PalladiumDwh.Core.Tests.Services
 
         [Order(11)]
         [TestCase(@".\private$\dwapi.emr.")]
-        //[TestCase(@".\private$\dwapi.emr.concept.")]
+        [TestCase(@".\private$\dwapi.emr.concept.")]
         public void should_Delete_All_Queues(string name)
         {
             _allGateways = TestHelpers.GetAllGateways(name);

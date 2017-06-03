@@ -59,8 +59,6 @@ namespace PalladiumDwh.ClientUploader.Core.Services
                         progress?.ReportStatus($"re-checking Facility details Attempt {retryCount}...");
                         retryCount++;
                     }
-
-
                 }
 
                 spotResponse = await response.Content.ReadAsStringAsync();

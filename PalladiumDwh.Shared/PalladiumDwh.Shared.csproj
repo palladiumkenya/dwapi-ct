@@ -119,6 +119,7 @@
     <Compile Include="Model\Profile\PatientBaselineProfile.cs" />
     <Compile Include="Model\Profile\PatientLabProfile.cs" />
     <Compile Include="Model\Profile\PatientPharmacyProfile.cs" />
+    <Compile Include="Model\Profile\SitePatientProfile.cs" />
     <Compile Include="Model\Profile\PatientProfile.cs" />
     <Compile Include="Model\Profile\PatientStatusProfile.cs" />
     <Compile Include="Model\Profile\PatientVisitProfile.cs" />

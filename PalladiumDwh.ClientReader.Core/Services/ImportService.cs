@@ -79,7 +79,6 @@ namespace PalladiumDwh.ClientReader.Core.Services
                         pcount++;
                         progress.ReportStatus($"Reading profiles...", pcount,profileFileCount);
                     }
-
                 }
                 else
                 {
@@ -147,8 +146,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             return importManifests;
         }
 
-        public async Task<IEnumerable<SiteManifest>> ReadExportsAsync(string importDir = "",
-            IProgress<DProgress> progress = null)
+        public async Task<IEnumerable<SiteManifest>> ReadExportsAsync(string importDir = "",IProgress<DProgress> progress = null)
         {
             string folderToImportFrom;
 

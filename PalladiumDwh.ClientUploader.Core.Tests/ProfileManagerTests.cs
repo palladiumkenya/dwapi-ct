@@ -25,7 +25,7 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
             _patientExtract = TestHelpers.GetTestPatientWithExtracts(1, 5).First();
             _profileManager=new ProfileManager();
             _importPath = $@"{TestContext.CurrentContext.TestDirectory.HasToEndsWith(@"\")}Imports";
-            _siteManifestJson = $@"{_importPath.HasToEndsWith(@"\")}Imports\SiteManifestA.json";
+            _siteManifestJson = $@"{_importPath.HasToEndsWith(@"\")}SiteManifestA.json";
         }
 
         [Test]
@@ -52,6 +52,21 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
 
             var siteProfiles = _profileManager.GenerateSiteProfiles(siteManifest).ToList();
             Assert.IsTrue(siteProfiles.Count > 0);
+            foreach (var sp in siteProfiles)
+            {
+                Console.WriteLine(sp.Manifest);
+                foreach (var p in sp.ClientPatientExtracts)
+                {
+                    Console.WriteLine($">.{p.Id}|{p.PatientPK}");
+                    Console.WriteLine($">>>.       ART|{p.ClientPatientArtExtracts.Count}");
+                    Console.WriteLine($">>>. Baselines|{p.ClientPatientBaselinesExtracts.Count}");
+                    Console.WriteLine($">>>.      Labs|{p.ClientPatientLaboratoryExtracts.Count}");
+                    Console.WriteLine($">>>.  Pharmacy|{p.ClientPatientPharmacyExtracts.Count}");
+                    Console.WriteLine($">>>.    Status|{p.ClientPatientStatusExtracts.Count}");
+                    Console.WriteLine($">>>.    Visits|{p.ClientPatientVisitExtracts.Count}");
+                }
+                
+            }
         }
         [TestCase(typeof(ClientPatientARTProfile), 1,5)]
         [TestCase(typeof(ClientPatientBaselineProfile), 1, 5)]

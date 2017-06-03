@@ -9,6 +9,8 @@ using log4net;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Views;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientUploader.Core;
+using PalladiumDwh.ClientUploader.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
@@ -19,13 +21,17 @@ namespace PalladiumDwh.ClientApp.Presenters
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private IImportService _importService;
+        private IPushProfileService _pushProfileService;
+        private IProfileManager _profileManager;
         public IManageExportsView View { get; private set; }
         
-        public ManageExportsPresenter(IManageExportsView view, IImportService importService)
+        public ManageExportsPresenter(IManageExportsView view, IImportService importService, IPushProfileService pushProfileService)
         {
             View = view;
             View.Presenter = this;
             _importService = importService;
+            _pushProfileService = pushProfileService;
+            _profileManager=new ProfileManager();
         }
 
         public void Initialize()
@@ -33,14 +39,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.CanLoadExports = View.CanSend = View.CanDeleteAll = false;
         }
 
-        public async Task LoadExisitingExportsAsync()
-        {
-           
-        }
-
-     
-
-        public async Task<bool> ExtractExportsAsync()
+         public async Task<bool> ExtractExportsAsync()
         {
             bool extractComplete = false;
             View.Status = "Copying Export(s)...";
@@ -100,9 +99,68 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ShowReady();
         }
 
-        public Task SendExportsAsync()
+        public async Task SendExportsAsync()
         {
-            throw new System.NotImplementedException();
+            View.Status = "Sending Export(s)...";
+            View.CanLoadExports = View.CanSend = View.CanDeleteAll = false;
+
+            var progress = new Progress<DProgress>(ShowDProgress);
+
+            int count = 0;
+
+            foreach (var export in View.Exports)
+            {
+                var siteManifest =await _importService.GetSiteManifest(export.Location);
+                var siteProfiles = _profileManager.GenerateSiteProfiles(siteManifest);
+
+                foreach (var siteProfile in siteProfiles)
+                {
+                    bool siteOk = false;
+                    try
+                    {
+                        var response = await _pushProfileService.SpotAsync(siteProfile.Manifest);
+                        siteOk = true;
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Debug(e);
+                    }
+
+                    if (siteOk)
+                    {
+                        var tasks = new List<Task>();
+
+                        int patientTotal=siteProfile.ClientPatientExtracts.Count;
+                        int patientCount = 0;
+
+                        foreach (var p in siteProfile.ClientPatientExtracts)
+                        {
+                            var extractsToSend = _profileManager.Generate(p);
+
+                            foreach (var e in extractsToSend)
+                            {
+                                tasks.Add(_pushProfileService.PushAsync(e));
+                            }
+
+                            progress.ReportStatus($"Sending site [{siteProfile.Manifest.SiteCode}] Patient {patientCount} of {patientTotal}", count, View.ExportsCount);
+
+                            try
+                            {
+                                await Task.WhenAll(tasks.ToArray());
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Debug(ex);
+                            }
+                        }
+                    }
+                    await _pushProfileService.PushAsync(siteProfile);
+                }
+                count++;
+                progress.ReportStatus($"Sending Export(s)  ", count, View.ExportsCount);
+            }
+
+            await LoadExportsAsync(false);
         }
 
         public async Task DeleteAllExportsAsync()
@@ -128,8 +186,6 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ShowReady();
             View.ClearEvents();
         }
-
-
 
         private void ShowDProgress(DProgress progress)
         {

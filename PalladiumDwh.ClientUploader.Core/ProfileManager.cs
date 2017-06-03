@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using PalladiumDwh.ClientReader.Core.Interfaces.Profiles;
@@ -6,6 +6,7 @@ using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Profile;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using PalladiumDwh.ClientUploader.Core.Model;
+ using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.ClientUploader.Core
 {
@@ -67,6 +68,33 @@ namespace PalladiumDwh.ClientUploader.Core
         public IEnumerable<SiteProfile> GenerateSiteProfiles(SiteManifest siteManifest)
         {
             return SiteProfile.Create(siteManifest);
+        }
+
+        public SitePatientProfile SitePatientProfile(SiteProfile siteProfile)
+        {
+            var sitePatientProfile=new SitePatientProfile();
+
+            sitePatientProfile.Manifest = siteProfile.Manifest;
+
+            foreach (var patient in siteProfile.ClientPatientExtracts)
+            {
+                if (null == patient)
+                    throw new Exception("Patient not Initialized");
+
+                var facility = new ClientFacility(patient.SiteCode, patient.FacilityName, patient.Emr, patient.Project);
+
+                if (patient.HasArt())
+                {
+                    var artProfile = PatientARTProfile.Create(facility, patient);
+                    sitePatientProfile.ArtExtracts = artProfile.ArtExtracts;
+                }
+
+             
+            }
+
+
+
+            return sitePatientProfile;
         }
     }
 }

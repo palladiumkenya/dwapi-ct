@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Interfaces.Profiles;
 using PalladiumDwh.ClientReader.Core.Model;
@@ -9,6 +11,7 @@ using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using PalladiumDwh.ClientUploader.Core.Services;
 using PalladiumDwh.ClientUploader.Infrastructure.Data;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientUploader.Core.Tests
@@ -17,8 +20,8 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
     public class PushProfileServiceTests
     {
         private IPushProfileService _service;
-        private string _url = "http://data.kenyahmis.org:81/dwapi/api/";
-        //private string _url = "http://localhost/dwapi/api/";
+        //private string _url = "http://data.kenyahmis.org:81/dwapi/api/";
+        private string _url = "http://localhost/dwapi/api/";
         private DwapiRemoteContext _context;
         
         private IClientPatientRepository _clientPatientRepository;
@@ -29,6 +32,8 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
         private IEnumerable<IClientExtractProfile> _profiles2;
         private Manifest _manifest;
         private IProgress<DProgress> _progress;
+        private string _importPath;
+        private string _siteManifestJson;
 
         [SetUp]
         public void SetUp()
@@ -86,6 +91,13 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
             Console.WriteLine(ex.InnerException.Message);
         }
 
+        [Test]
+        public void Should_Push_SiteProfile()
+        {
+            var siteProfile = TestHelpers.GetSiteProfiles().First();
+            var pushResponse = _service.PushAsync(siteProfile).Result;
+            Assert.IsTrue(pushResponse.IsSuccess);
+        }
 
         [Test]
         public void Should_Push()

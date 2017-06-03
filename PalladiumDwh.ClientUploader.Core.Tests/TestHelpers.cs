@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FizzWare.NBuilder;
+using Newtonsoft.Json;
+using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientUploader.Core.Model;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
@@ -51,6 +55,21 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
                 p.AddPatientVisitExtracts(Builder<ClientPatientVisitExtract>.CreateListOfSize(count).All().With(x => x.Processed = false).Build().ToList());
             }
             return patients;
+        }
+
+        public static IEnumerable<SiteProfile> GetSiteProfiles()
+        {
+            var importPath = $@"{TestContext.CurrentContext.TestDirectory.HasToEndsWith(@"\")}Imports";
+            var siteManifestJson = $@"{importPath.HasToEndsWith(@"\")}SiteManifestA.json";
+
+            var fileContent = File.ReadAllText(siteManifestJson);
+            Assert.IsTrue(fileContent.Length > 0);
+            var siteManifest = JsonConvert.DeserializeObject<SiteManifest>(fileContent);
+            Assert.IsNotNull(siteManifest);
+
+            var siteProfiles = new ProfileManager().GenerateSiteProfiles(siteManifest).ToList();
+
+            return siteProfiles;
         }
     }
 }

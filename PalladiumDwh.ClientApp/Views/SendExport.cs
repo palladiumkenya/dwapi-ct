@@ -13,6 +13,7 @@ using log4net;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Presenters;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientUploader.Core.Interfaces;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientApp.Views
@@ -108,7 +109,8 @@ namespace PalladiumDwh.ClientApp.Views
         {
             Cursor.Current = Cursors.WaitCursor;
             var importService  = Program.IOC.GetInstance<IImportService>();
-            Presenter =new ManageExportsPresenter(this, importService);
+            var pushProfileService = Program.IOC.GetInstance<IPushProfileService>();
+            Presenter =new ManageExportsPresenter(this, importService, pushProfileService);
             Presenter.Initialize();
             return Presenter.LoadExportsAsync(true);
          
