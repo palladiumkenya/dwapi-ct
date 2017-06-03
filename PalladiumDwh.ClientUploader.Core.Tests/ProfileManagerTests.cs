@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Profile;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
+using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientUploader.Core.Tests
 {
@@ -12,12 +15,17 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
     {
         private ClientPatientExtract _patientExtract;
         private IProfileManager _profileManager;
+        private string _importPath;
+        private string _siteManifestJson;
 
         [SetUp]
         public void SetUp()
         {
+            
             _patientExtract = TestHelpers.GetTestPatientWithExtracts(1, 5).First();
             _profileManager=new ProfileManager();
+            _importPath = $@"{TestContext.CurrentContext.TestDirectory.HasToEndsWith(@"\")}Imports";
+            _siteManifestJson = $@"{_importPath.HasToEndsWith(@"\")}Imports\SiteManifestA.json";
         }
 
         [Test]
@@ -37,8 +45,13 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
         [Test]
         public void should_Generate_Site_Profiles()
         {
-            var exracts = _profileManager.Generate(_patientExtract).ToList();
-            Assert.IsTrue(exracts.Count > 0);
+            var fileContent = File.ReadAllText(_siteManifestJson);
+            Assert.IsTrue(fileContent.Length>0);
+            var siteManifest = JsonConvert.DeserializeObject<SiteManifest>(fileContent);
+            Assert.IsNotNull(siteManifest);
+
+            var siteProfiles = _profileManager.GenerateSiteProfiles(siteManifest).ToList();
+            Assert.IsTrue(siteProfiles.Count > 0);
         }
         [TestCase(typeof(ClientPatientARTProfile), 1,5)]
         [TestCase(typeof(ClientPatientBaselineProfile), 1, 5)]

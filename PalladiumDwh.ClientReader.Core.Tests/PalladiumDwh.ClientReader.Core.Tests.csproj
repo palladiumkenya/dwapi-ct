@@ -170,6 +170,9 @@
     <None Include="Imports\iak5eb2x\e1957324-b0fb-48f4-84a2-a78200903c34.dwh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Imports\SiteManifestA.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Imports\wpdi2nvv\12775edb-dd99-460d-a4b8-a78200916202.dwh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

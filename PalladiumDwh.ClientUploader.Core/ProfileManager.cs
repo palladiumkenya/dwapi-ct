@@ -64,7 +64,7 @@ namespace PalladiumDwh.ClientUploader.Core
             return list;
         }
 
-        public IEnumerable<SiteProfile> Generate(SiteManifest siteManifest)
+        public IEnumerable<SiteProfile> GenerateSiteProfiles(SiteManifest siteManifest)
         {
             return SiteProfile.Create(siteManifest);
         }

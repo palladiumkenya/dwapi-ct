@@ -9,6 +9,6 @@ namespace PalladiumDwh.ClientUploader.Core.Interfaces
     {
         ClientPatientExtract Decode(string encodedPatient);
         IEnumerable<IClientExtractProfile> Generate(ClientPatientExtract patient);
-        IEnumerable<SiteProfile> Generate(SiteManifest siteManifest);
+        IEnumerable<SiteProfile> GenerateSiteProfiles(SiteManifest siteManifest);
     }
 }
