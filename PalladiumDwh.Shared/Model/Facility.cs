@@ -26,6 +26,10 @@ namespace PalladiumDwh.Shared.Model
             Project = project;
         }
 
+        public string GetStatus()
+        {
+            return $"{Name} ({Code}) | Patients:{PatientExtracts.Count}";
+        }
         public override string ToString()
         {
             return $"{Name} ({Code})";

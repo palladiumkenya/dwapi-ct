@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Extensions.Compression.Client;
+using System.Net.Http.Extensions.Compression.Core.Compressors;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -30,7 +32,11 @@ namespace PalladiumDwh.ClientUploader.Core.Services
         {
             _baseUrl = baseUrl.EndsWith(@"/") ? baseUrl : $"{baseUrl}/";
             _repository = repository;
-            _client = new HttpClient();
+            _client = new HttpClient(new ClientCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
+
+            _client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+            _client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+
             _client.BaseAddress = new Uri(_baseUrl);
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
