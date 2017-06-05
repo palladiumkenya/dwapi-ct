@@ -35,7 +35,7 @@ namespace PalladiumDwh.ClientApp.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:88/dwapi/api")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://data.kenyahmis.org:81/dwapi/api")]
         public string dwapiUrl {
             get {
                 return ((string)(this["dwapiUrl"]));
