@@ -32,12 +32,13 @@ namespace PalladiumDwh.ClientUploader.Core.Services
         {
             _baseUrl = baseUrl.EndsWith(@"/") ? baseUrl : $"{baseUrl}/";
             _repository = repository;
-            _client = new HttpClient(new ClientCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
+          //  _client = new HttpClient();
 
+            
+            _client = new HttpClient(new ClientCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
+            _client.BaseAddress = new Uri(_baseUrl);
             _client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             _client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
-
-            _client.BaseAddress = new Uri(_baseUrl);
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -88,7 +89,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
             return spotResponse;
         }
 
-        public async Task<PushResponse> PushAsync(IClientExtractProfile profile)
+        public async Task<PushResponse> PushAsync(IClientExtractProfile profile, bool processResponse = true)
         {
             HttpResponseMessage response = null;
             string content = string.Empty;
@@ -96,7 +97,9 @@ namespace PalladiumDwh.ClientUploader.Core.Services
 
             try
             {
-                response = await _client.PostAsJsonAsync(profile.EndPoint, profile);
+                
+                    response = await _client.PostAsJsonAsync(profile.EndPoint, profile);
+                
             }
             catch (Exception e)
             {
@@ -120,7 +123,9 @@ namespace PalladiumDwh.ClientUploader.Core.Services
                 }
             }
 
-            UpdateExtract(pushResponse,profile.Source);
+            if(processResponse)
+                UpdateExtract(pushResponse,profile.Source);
+
             return pushResponse;
         }
 

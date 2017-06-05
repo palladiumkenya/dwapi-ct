@@ -129,11 +129,11 @@ namespace PalladiumDwh.ClientApp.Presenters
                     try
                     {
                         View.Status = $"{status} | Verifying MFLCode:{siteProfile.Manifest.SiteCode}";
-                        await Task.Delay(2000);
+                        
                         var response = await _pushProfileService.SpotAsync(siteProfile.Manifest);
                         siteOk = true;
                         View.Status = $"{status} | {response}";
-                        await Task.Delay(2000);
+                        
                     }
                     catch (Exception e)
                     {
@@ -155,7 +155,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
                             foreach (var e in extractsToSend)
                             {
-                                tasks.Add(_pushProfileService.PushAsync(e));
+                                tasks.Add(_pushProfileService.PushAsync(e, false));
                             }
 
                             progress.ReportStatus($"{status} | Site:{siteProfile.Manifest.SiteCode}", patientCount,

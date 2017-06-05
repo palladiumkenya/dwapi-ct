@@ -21,7 +21,7 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
     {
         private IPushProfileService _service;
         //private string _url = "http://data.kenyahmis.org:81/dwapi/api/";
-        private string _url = "http://localhost/dwapi/api/";
+        private string _url = "http://localhost:21751/api/";
         private DwapiRemoteContext _context;
         
         private IClientPatientRepository _clientPatientRepository;
@@ -63,8 +63,21 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
 
         [Test]
         public void Should_Spot()
-        {
+        {      
             var response = _service.SpotAsync(_manifest,_progress).Result;
+            Assert.IsTrue(response.Length > 0);
+            Console.WriteLine(response);
+        }
+
+        [Test]
+        public void Should_Spot_Gzipped()
+        {
+            for (int j = 0; j < 50000; j++)
+            {
+                _manifest.PatientPKs.Add(j);
+            }
+            string man = JsonConvert.SerializeObject(_manifest);
+            var response = _service.SpotAsync(_manifest, _progress).Result;
             Assert.IsTrue(response.Length > 0);
             Console.WriteLine(response);
         }

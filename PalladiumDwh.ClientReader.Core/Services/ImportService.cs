@@ -213,7 +213,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 }                
             }
 
-            File.WriteAllText($"{importLocation.HasToEndsWith(@"\")}SiteManifestA.json",JsonConvert.SerializeObject(siteManifest));
+           
             return siteManifest;
         }
         public async Task ClearExportsAsync(List<string> exportFolders, IProgress<DProgress> progress = null)

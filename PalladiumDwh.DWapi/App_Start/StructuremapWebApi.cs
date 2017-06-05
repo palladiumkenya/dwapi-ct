@@ -18,6 +18,8 @@
 using System.Web.Http;
 using PalladiumDwh.DWapi;
 using PalladiumDwh.DWapi.DependencyResolution;
+using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
+using System.Net.Http.Extensions.Compression.Core.Compressors;
 
 [assembly: WebActivatorEx.PostApplicationStartMethod(typeof(StructuremapWebApi), "Start")]
 

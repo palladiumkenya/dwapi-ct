@@ -11,7 +11,7 @@ namespace PalladiumDwh.ClientUploader.Core.Interfaces
     {
         Task<string> SpotAsync(Manifest manifest, IProgress<DProgress> progress = null);
 
-        Task<PushResponse> PushAsync(IClientExtractProfile profile);
+        Task<PushResponse> PushAsync(IClientExtractProfile profile,bool processResponse=true);
         Task<PushResponse> PushAsync(SiteProfile siteProfile);
     }
 }

@@ -9,6 +9,7 @@ using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 using Dapper;
+using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {
@@ -58,10 +59,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
         public async Task ClearManifest(Manifest manifest)
         {
-
-
             var connection = _context.Database.Connection as SqlConnection;
-
+       
             var sql = $@"
                 DELETE FROM PatientExtract
                 WHERE        

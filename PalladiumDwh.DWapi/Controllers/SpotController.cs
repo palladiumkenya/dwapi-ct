@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
 using log4net;
+using Newtonsoft.Json;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Profile;
@@ -26,6 +27,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
         public async Task<HttpResponseMessage> Post([FromBody] Manifest manifest)
         {
+            
             MasterFacility masterFacility = null;
 
             if (null != manifest)
@@ -48,7 +50,7 @@ namespace PalladiumDwh.DWapi.Controllers
                     Log.Debug(e);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
                 }
-
+               
                 try
                 {
                     await _patientExtractRepository.ClearManifest(manifest);

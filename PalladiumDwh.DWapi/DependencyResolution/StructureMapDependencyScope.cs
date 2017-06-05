@@ -35,7 +35,7 @@ namespace PalladiumDwh.DWapi.DependencyResolution
             get
             {
                 var ctx = Container.TryGetInstance<HttpContextBase>();
-                return ctx ?? new HttpContextWrapper(System.Web.HttpContext.Current);
+                return ctx ?? (System.Web.HttpContext.Current != null ? new HttpContextWrapper(System.Web.HttpContext.Current) : null);
             }
         }
 
@@ -47,8 +47,16 @@ namespace PalladiumDwh.DWapi.DependencyResolution
 
         public IContainer CurrentNestedContainer
         {
-            get { return (IContainer) HttpContext.Items[NestedContainerKey]; }
-            set { HttpContext.Items[NestedContainerKey] = value; }
+            get
+            {
+                if (HttpContext != null)
+                    return (IContainer)HttpContext.Items[NestedContainerKey];
+                return null;
+            }
+            set
+            {
+                HttpContext.Items[NestedContainerKey] = value;
+            }
         }
 
         #endregion

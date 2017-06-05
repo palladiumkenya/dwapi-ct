@@ -60,10 +60,6 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.WebApi.Extensions.Compression.Server, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Extensions.Compression.Server.2.0.6\lib\net45\Microsoft.AspNet.WebApi.Extensions.Compression.Server.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -89,10 +85,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.Extensions.Compression.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Extensions.Compression.Server.2.0.6\lib\net45\System.Net.Http.Extensions.Compression.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -307,6 +299,10 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Microsoft.AspNet.WebApi.Extensions.Compression.Server\Microsoft.AspNet.WebApi.Extensions.Compression.Server.csproj">
+      <Project>{70d2be22-a862-4464-b989-f2fdd9f6c8e4}</Project>
+      <Name>Microsoft.AspNet.WebApi.Extensions.Compression.Server</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PalladiumDwh.Core\PalladiumDwh.Core.csproj">
       <Project>{59A12AB3-C0EC-4CFE-BCA0-959FAA563AEB}</Project>
       <Name>PalladiumDwh.Core</Name>
@@ -322,6 +318,10 @@
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
       <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
       <Name>PalladiumDwh.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Net.Http.Extensions.Compression.Core\System.Net.Http.Extensions.Compression.Core.csproj">
+      <Project>{bbc839cf-96b4-4423-9492-8d41d176c8e2}</Project>
+      <Name>System.Net.Http.Extensions.Compression.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

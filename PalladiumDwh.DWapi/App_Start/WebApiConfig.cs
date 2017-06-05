@@ -10,6 +10,7 @@ namespace PalladiumDwh.DWapi
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            GlobalConfiguration.Configuration.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -24,9 +25,9 @@ namespace PalladiumDwh.DWapi
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
-            //GlobalConfiguration.Configuration.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
-
+            
             StructuremapWebApi.Start();
+            
         }
     }
 }

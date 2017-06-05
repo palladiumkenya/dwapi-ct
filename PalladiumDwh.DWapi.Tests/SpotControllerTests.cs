@@ -21,7 +21,7 @@ namespace PalladiumDwh.DWapi.Tests
     {
         private readonly string _queueName = $@".\private$\dwapi.emr.concept";
 
-        private static readonly string baseUrl = "http://localhost/api/Spot";
+        private static readonly string baseUrl = "http://localhost:88/api/Spot";
 
         private SpotController _controller;
         private List<PatientExtract> _patientWithAllExtracts;
@@ -97,6 +97,7 @@ namespace PalladiumDwh.DWapi.Tests
         public void should_Not_Post_InvalidMFL()
         {
             _manifest.SiteCode = 111;
+          
             var result = _controller.Post(_manifest).Result;
 
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
