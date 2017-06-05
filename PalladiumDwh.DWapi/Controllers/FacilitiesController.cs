@@ -29,7 +29,7 @@ namespace PalladiumDwh.DWapi.Controllers
             }
             else
             {
-                response = Request.CreateResponse(HttpStatusCode.OK, facility);
+                response = Request.CreateResponse(HttpStatusCode.OK, facility.GetStatus());
             }
             return response;
         }

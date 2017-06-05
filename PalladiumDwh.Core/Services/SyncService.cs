@@ -35,6 +35,11 @@ namespace PalladiumDwh.Core.Services
 
         public void Sync(object profile)
         {
+            if (profile.GetType() == typeof(Manifest))
+            {
+                SyncManifest(profile as Manifest);
+            }
+
             if (profile.GetType() == typeof(PatientARTProfile))
             {
                 SyncArt(profile as PatientARTProfile);
@@ -70,6 +75,7 @@ namespace PalladiumDwh.Core.Services
         {
             return SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
         }
+
 
         public void SyncArt(PatientARTProfile profile)
         {

@@ -226,8 +226,6 @@ namespace PalladiumDwh.Core.Tests.Services
             Assert.IsTrue(true);
         }
 
-
-
         [TearDown]
         public void TearDown()
         {

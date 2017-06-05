@@ -19,7 +19,8 @@ namespace PalladiumDWh.DwapiService.Scheduler
             _scheduler.Start();
 
             var jobs = new List<Type>
-            {              
+            {
+                typeof(SyncManifestJob),
                 typeof(SyncPatientARTJob),
                 typeof(SyncPatientBaselineJob),
                 typeof(SyncPatientPharmacyJob),

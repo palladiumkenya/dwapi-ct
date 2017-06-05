@@ -14,7 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>E:\Workspace\palladium\Publish\</PublishUrl>
+    <PublishUrl>E:\palladium\source\dwh\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -109,6 +109,7 @@
       <DependentUpon>ExtractService.cs</DependentUpon>
     </Compile>
     <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="Job\SyncManifestJob.cs" />
     <Compile Include="Scheduler\ProfileScheduler.cs" />
     <Compile Include="Job\SyncPatientLabJob.cs" />
     <Compile Include="Job\SyncPatientPharmacyJob.cs" />

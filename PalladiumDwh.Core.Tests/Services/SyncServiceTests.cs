@@ -18,6 +18,7 @@ namespace PalladiumDwh.Core.Tests.Services
     {
         private ISyncService _syncService;
         private Facility _newFacility;
+        private DwapiCentralContext _dbcontext;
         private DwapiCentralContext _context;
         private List<Facility> _facilities;
         private IFacilityRepository _facilityRepository;
@@ -30,11 +31,29 @@ namespace PalladiumDwh.Core.Tests.Services
         private IPatientStatusRepository _patientStatusRepository;
         private IPatientVisitRepository _patientVisitRepository;
         private List<PatientExtract> _patientWithAllExtracts;
+        private List<PatientExtract> _manifestPatientWithAllExtracts;
+        private Facility _manifestFacility;
 
+        private Facility _facilityA;
+        private List<PatientExtract> _patients;
 
         [SetUp]
         public void SetUp()
         {
+            _dbcontext = new DwapiCentralContext();
+            _facilityA =new Facility(999999,"FTest","E1","P1");
+            _dbcontext.Database.ExecuteSqlCommand($@"DELETE FROM [Facility] where Code={_facilityA.Code}");
+            TestHelpers.CreateTestData(_dbcontext, new List<Facility> { _facilityA });
+            _patients = TestHelpers.GetTestPatientWithExtracts(_facilityA, 5, 1).ToList();
+            int pid = 1000;
+            foreach (var p in _patients)
+            {
+                p.PatientPID = pid;
+                pid++;
+            }
+            TestHelpers.CreateTestData(_dbcontext, _patients);
+
+
             _context = new DwapiCentralContext(Effort.DbConnectionFactory.CreateTransient(), true);
             _facilities = TestHelpers.GetTestData<Facility>(5).ToList();
             TestHelpers.CreateTestData(_context, _facilities);
@@ -52,6 +71,18 @@ namespace PalladiumDwh.Core.Tests.Services
 
             _newFacility = Builder<Facility>.CreateNew().Build();
             _patientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_newFacility, 2, 10).ToList();
+
+            _manifestFacility= _facilities.First();
+            _manifestPatientWithAllExtracts = TestHelpers.GetTestPatientWithExtracts(_manifestFacility, 4, 1).ToList();
+
+            int id = _patientWithAllExtracts.Max(x => x.PatientPID);
+            foreach (var p in _manifestPatientWithAllExtracts)
+            {
+                id++;
+                p.PatientPID = id;
+            }
+
+            TestHelpers.CreateTestData(_context,_manifestPatientWithAllExtracts);
         }
 
         [Test]
@@ -79,6 +110,34 @@ namespace PalladiumDwh.Core.Tests.Services
             var facility = _facilityRepository.Find(savedPatient.FacilityId);
             Assert.IsNotNull(facility);
             Assert.AreEqual(_newFacility.Code,facility.Code);       
+        }
+
+        [Test]
+        public void should_SynManifest()
+        {
+            _syncService = new SyncService(
+                _facilityRepository = new FacilityRepository(_context),
+                _patientExtractRepository = new PatientExtractRepository(_dbcontext),
+                _patientArtExtractRepository = new PatientArtExtractRepository(_context),
+                _patientBaseLinesRepository = new PatientBaseLinesRepository(_context),
+                _patientLabRepository = new PatientLabRepository(_context),
+                _patientPharmacyRepository = new PatientPharmacyRepository(_context),
+                _patientStatusRepository = new PatientStatusRepository(_context),
+                _patientVisitRepository = new PatientVisitRepository(_context)
+            );
+
+            var manifest = new Manifest(_facilityA.Code);
+            var currentPatients = _patients.Where(x => x.PatientPID > 1000);
+            foreach (var p in currentPatients)
+            {
+                manifest.AddPatientPk(p.PatientPID);
+            }
+
+            _syncService.SyncManifest(manifest);
+
+            _patientExtractRepository = new PatientExtractRepository(new DwapiCentralContext());
+            var cleanPatients = _patientExtractRepository.GetAllBy(x => x.FacilityId == _facilityA.Id).ToList();
+            Assert.IsTrue(cleanPatients.Count == 4);
         }
 
         [Test]
@@ -155,5 +214,13 @@ namespace PalladiumDwh.Core.Tests.Services
             Assert.IsNotNull(savedPatient);
             Assert.IsTrue(savedPatient.PatientVisitExtracts.Count > 0);
         }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _dbcontext = new DwapiCentralContext();
+            _dbcontext.Database.ExecuteSqlCommand($@"DELETE FROM [Facility] where Code={_facilityA.Code}");
+        }
+
     }
 }

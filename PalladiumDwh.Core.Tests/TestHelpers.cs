@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using FizzWare.NBuilder;
@@ -52,7 +53,7 @@ namespace PalladiumDwh.Core.Tests
             var gateways = new List<string>
             {
                 queueName.Substring(0, queueName.Length - 1),
-                
+                $"{queueName}{typeof(Manifest).Name.ToLower()}",
                 $"{queueName}{typeof(PatientARTProfile).Name.ToLower()}",
                 $"{queueName}{typeof(PatientBaselineProfile).Name.ToLower()}",
                 $"{queueName}{typeof(PatientLabProfile).Name.ToLower()}",

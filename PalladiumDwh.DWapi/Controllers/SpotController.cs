@@ -18,16 +18,18 @@ namespace PalladiumDwh.DWapi.Controllers
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IPatientExtractRepository _patientExtractRepository;
+        private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(Manifest).Name.ToLower();
 
-        public SpotController(IPatientExtractRepository patientExtractRepository)
+        public SpotController(IMessagingSenderService messagingService,IPatientExtractRepository patientExtractRepository)
         {
+            _messagingService = messagingService;
+            _messagingService.Initialize(_gateway);
             _patientExtractRepository = patientExtractRepository;
         }
 
         public async Task<HttpResponseMessage> Post([FromBody] Manifest manifest)
-        {
-            
+        {           
             MasterFacility masterFacility = null;
 
             if (null != manifest)
@@ -50,10 +52,10 @@ namespace PalladiumDwh.DWapi.Controllers
                     Log.Debug(e);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
                 }
-               
+
                 try
                 {
-                    await _patientExtractRepository.ClearManifest(manifest);
+                    await _messagingService.SendAsync(manifest, _gateway);
                     return Request.CreateResponse(HttpStatusCode.OK, $"{masterFacility}");
                 }
                 catch (Exception ex)

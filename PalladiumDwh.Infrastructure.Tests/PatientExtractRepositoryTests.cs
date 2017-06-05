@@ -22,6 +22,7 @@ namespace PalladiumDwh.Infrastructure.Tests
         private List<MasterFacility> _masterFacilities;
 
         private IPatientExtractRepository _patientExtractRepository;
+
         private Facility _facilityA;
         private List<PatientExtract> _patients;
 

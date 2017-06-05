@@ -21,7 +21,7 @@ namespace PalladiumDwh.ClientUploader.Core.Tests
     {
         private IPushProfileService _service;
         //private string _url = "http://data.kenyahmis.org:81/dwapi/api/";
-        private string _url = "http://localhost:21751/api/";
+        private string _url = "http://localhost:88/dwapi/api/";
         private DwapiRemoteContext _context;
         
         private IClientPatientRepository _clientPatientRepository;

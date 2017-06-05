@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.DWapi.Models;
+using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Controllers
@@ -29,7 +30,8 @@ namespace PalladiumDwh.DWapi.Controllers
                 $"{queueName}.{typeof(PatientLabProfile).Name.ToLower()}",
                 $"{queueName}.{typeof(PatientPharmacyProfile).Name.ToLower()}",
                 $"{queueName}.{typeof(PatientVisitProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientStatusProfile).Name.ToLower()}"
+                $"{queueName}.{typeof(PatientStatusProfile).Name.ToLower()}",
+                $"{queueName}.{typeof(Manifest).Name.ToLower()}"
             };
 
 
@@ -53,7 +55,8 @@ namespace PalladiumDwh.DWapi.Controllers
                 $"{queueName}.{typeof(PatientLabProfile).Name.ToLower()}",
                 $"{queueName}.{typeof(PatientPharmacyProfile).Name.ToLower()}",
                 $"{queueName}.{typeof(PatientVisitProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientStatusProfile).Name.ToLower()}"
+                $"{queueName}.{typeof(PatientStatusProfile).Name.ToLower()}",
+                $"{queueName}.{typeof(Manifest).Name.ToLower()}"
             };
 
             foreach (var g in gateways)

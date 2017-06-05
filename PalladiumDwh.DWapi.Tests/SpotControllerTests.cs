@@ -33,11 +33,11 @@ namespace PalladiumDwh.DWapi.Tests
         private Facility _facilityA;
         private List<PatientExtract> _patients;
         private PatientExtractRepository _patientExtractRepository;
-
+        private IMessagingSenderService _messagingService;
         [SetUp]
         public void SetUp()
         {
-
+            _messagingService = new MessagingSenderService(_queueName);
             _dbcontext = new DwapiCentralContext();
             _dbcontext.Database.ExecuteSqlCommand($@"DELETE FROM [Facility] where Code=20612");
 
@@ -65,7 +65,7 @@ namespace PalladiumDwh.DWapi.Tests
 
             
 
-            _controller = new SpotController(_patientExtractRepository);
+            _controller = new SpotController(_messagingService,_patientExtractRepository);
             TestHelpers.SetupControllerForTests(_controller, baseUrl, "Spot");
 
              _manifest = new Manifest(_facilityA.Code);
