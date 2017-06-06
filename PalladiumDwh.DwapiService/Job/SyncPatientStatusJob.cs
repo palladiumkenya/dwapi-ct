@@ -12,7 +12,6 @@ namespace PalladiumDWh.DwapiService.Job
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-      
         public void Execute(IJobExecutionContext context)
         {
             var profile = typeof(PatientStatusProfile).Name;
@@ -22,6 +21,7 @@ namespace PalladiumDWh.DwapiService.Job
                 var reader = Program.IOC.GetInstance<IMessagingReaderService>();
                 reader.Initialize(profile);
                 reader.Read(profile);
+                reader.PrcocessBacklog(profile);
             }
             catch (Exception ex)
             {

@@ -61,6 +61,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Net.Http.Extensions.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.WebApi.Extensions.Compression.Server", "Microsoft.AspNet.WebApi.Extensions.Compression.Server\Microsoft.AspNet.WebApi.Extensions.Compression.Server.csproj", "{70D2BE22-A862-4464-B989-F2FDD9F6C8E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Net.Http.Extensions.Compression.Client", "System.Net.Http.Extensions.Compression.Client\System.Net.Http.Extensions.Compression.Client.csproj", "{1F947F28-DCB1-448C-A2F0-7A8093AF532B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -245,6 +247,14 @@ Global
 		{70D2BE22-A862-4464-B989-F2FDD9F6C8E4}.Staging|Any CPU.Build.0 = Release|Any CPU
 		{70D2BE22-A862-4464-B989-F2FDD9F6C8E4}.Test|Any CPU.ActiveCfg = Release|Any CPU
 		{70D2BE22-A862-4464-B989-F2FDD9F6C8E4}.Test|Any CPU.Build.0 = Release|Any CPU
+		{1F947F28-DCB1-448C-A2F0-7A8093AF532B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F947F28-DCB1-448C-A2F0-7A8093AF532B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F947F28-DCB1-448C-A2F0-7A8093AF532B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F947F28-DCB1-448C-A2F0-7A8093AF532B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F947F28-DCB1-448C-A2F0-7A8093AF532B}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{1F947F28-DCB1-448C-A2F0-7A8093AF532B}.Staging|Any CPU.Build.0 = Release|Any CPU
+		{1F947F28-DCB1-448C-A2F0-7A8093AF532B}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{1F947F28-DCB1-448C-A2F0-7A8093AF532B}.Test|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -272,5 +282,6 @@ Global
 		{59D7021E-700A-4811-A687-046C89416112} = {91EBE02B-2447-4FE5-B176-B8EEE794AC6F}
 		{BBC839CF-96B4-4423-9492-8D41D176C8E2} = {CB1713AD-9101-483C-BB80-51EA6B4C2144}
 		{70D2BE22-A862-4464-B989-F2FDD9F6C8E4} = {CB1713AD-9101-483C-BB80-51EA6B4C2144}
+		{1F947F28-DCB1-448C-A2F0-7A8093AF532B} = {CB1713AD-9101-483C-BB80-51EA6B4C2144}
 	EndGlobalSection
 EndGlobal

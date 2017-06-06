@@ -32,10 +32,7 @@ namespace PalladiumDwh.ClientUploader.Core.Services
         {
             _baseUrl = baseUrl.EndsWith(@"/") ? baseUrl : $"{baseUrl}/";
             _repository = repository;
-          //  _client = new HttpClient();
-
-            
-            _client = new HttpClient(new ClientCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
+            _client = new HttpClient(new ClientCompressionHandler(4096,new GZipCompressor(), new DeflateCompressor()));
             _client.BaseAddress = new Uri(_baseUrl);
             _client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
             _client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));

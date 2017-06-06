@@ -21,7 +21,8 @@ namespace PalladiumDWh.DwapiService.Job
             {
                 var reader = Program.IOC.GetInstance<IMessagingReaderService>();
                 reader.Initialize(profile);
-                reader.Read(profile);
+                reader.Read(profile);                
+                reader.PrcocessBacklog(profile);
             }
             catch (Exception ex)
             {

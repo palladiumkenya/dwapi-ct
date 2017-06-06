@@ -46,12 +46,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Extensions.Compression.Client, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.Extensions.Compression.Client.2.0.5\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\System.Net.Http.Extensions.Compression.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Extensions.Compression.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.Extensions.Compression.Client.2.0.5\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\System.Net.Http.Extensions.Compression.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -81,6 +75,14 @@
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
       <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
       <Name>PalladiumDwh.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Net.Http.Extensions.Compression.Client\System.Net.Http.Extensions.Compression.Client.csproj">
+      <Project>{1F947F28-DCB1-448C-A2F0-7A8093AF532B}</Project>
+      <Name>System.Net.Http.Extensions.Compression.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Net.Http.Extensions.Compression.Core\System.Net.Http.Extensions.Compression.Core.csproj">
+      <Project>{BBC839CF-96B4-4423-9492-8D41D176C8E2}</Project>
+      <Name>System.Net.Http.Extensions.Compression.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

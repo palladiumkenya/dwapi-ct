@@ -84,5 +84,70 @@ namespace PalladiumDwh.Core.Services
                 tx.Commit();
             }
         }
+
+        public void PrcocessBacklog(string gateway="")
+        {
+            if (null == Queue)
+                Initialize(gateway);
+
+            var msmqMain = Queue as MessageQueue;
+
+            if (null == msmqMain)
+            {
+                return;
+            }
+
+
+            if (null == BacklogQueue)
+                Initialize(gateway);
+
+            var msmqBacklog = BacklogQueue as MessageQueue;
+
+            if (null == msmqBacklog)
+            {
+                return;
+            }           
+
+            var count = msmqBacklog.Count();
+
+            if (count > 0)
+            {
+                var messageIds = msmqBacklog.GetAllMessages().Select(x => x.Id).ToList();
+
+                Log.Debug($"Backlog-Queue {QueueName} has {messageIds.Count} !");
+
+                var batches = messageIds.Split(_queueBatch).ToList();
+                var batchCount = batches.Count;
+
+                Log.Debug($"Backlog-Queue {QueueName} will be processed in {batchCount} batches");
+
+                int n = 0;
+                foreach (var batch in batches)
+                {
+                    n++;
+                    Log.Debug($"processing {QueueName} {n} of {batchCount} batches...");
+                    foreach (var m in batch.ToList())
+                    {
+                        var msg = msmqBacklog.PeekById(m);
+                        if (null != msg)
+                        {
+                            try
+                            {
+                                var tx = new MessageQueueTransaction();
+                                tx.Begin();
+                                msmqMain.Send(msg, tx);
+                                tx.Commit();
+                                msmqBacklog.ReceiveById(m);
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Debug(e);
+                            }
+                        }
+                    }
+                }
+                Log.Debug(new string('*', 30));
+            }
+        }
     }
 }

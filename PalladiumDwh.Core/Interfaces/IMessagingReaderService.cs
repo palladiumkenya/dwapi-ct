@@ -4,5 +4,6 @@
     {
         void Read(string gateway="");
         void MoveToBacklog(object message);
+        void PrcocessBacklog(string gateway="");
     }
 }

@@ -102,7 +102,7 @@ namespace PalladiumDwh.Core.Tests.Services
             var msmq = new MessageQueue(_messagingReaderService.BacklogQueueName);
             Assert.IsNotNull(msmq);
             Assert.IsTrue(msmq.Count() > 0);
-            Console.WriteLine(_messagingReaderService.BacklogQueueName);
+            Console.WriteLine($"{_messagingReaderService.BacklogQueueName}:{msmq.Count()}");
         }
         [Test]
         public void should_Move_To_Backlog_Queue_On_Error()
@@ -125,7 +125,28 @@ namespace PalladiumDwh.Core.Tests.Services
             Assert.IsTrue(msmq.Count() > 0);
             Console.WriteLine(_messagingReaderService.BacklogQueueName);
         }
-        
+
+
+        [Test]
+        public void should_Proccess_Backlog_Queue()
+        {
+            var message = Utility.CreateMessage(_profile);
+            _messagingReaderService.Initialize();
+            _messagingReaderService.MoveToBacklog(message);
+            var msmq = new MessageQueue(_messagingReaderService.BacklogQueueName);
+            Assert.IsNotNull(msmq);
+            Assert.IsTrue(msmq.Count() > 0);
+            Console.WriteLine("before");
+            Console.WriteLine($"{_messagingReaderService.BacklogQueueName}:{msmq.Count()}");
+            Console.WriteLine(new string('-', 40));
+
+            _messagingReaderService.Initialize();
+            _messagingReaderService.PrcocessBacklog();
+            Assert.IsTrue(msmq.Count()== 0);
+            Console.WriteLine($"{_messagingReaderService.BacklogQueueName}:{msmq.Count()}");
+        }
+
+
         [TearDown]
         public void TearDown()
         {
