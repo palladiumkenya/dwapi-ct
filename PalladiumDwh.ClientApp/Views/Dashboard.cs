@@ -14,6 +14,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientApp.Views
 {
@@ -22,7 +23,7 @@ namespace PalladiumDwh.ClientApp.Views
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private List<ExtractsViewModel> _extracts=new List<ExtractsViewModel>();
-
+        private IUpdateDatabase _updateDatabase;
         private  IProjectRepository _projectRepository;
         private  ISyncService _syncService;
         private  IClientPatientRepository _clientPatientRepository;
@@ -591,6 +592,11 @@ namespace PalladiumDwh.ClientApp.Views
         public async Task StartUp()
         {
             Program.IOC = await IoC.InitializeAsync();
+            _updateDatabase = Program.IOC.GetInstance<IUpdateDatabase>();
+
+            var progress = new Progress<DProgress>(ViewProgress);
+            await _updateDatabase.RunUpdateAsync(progress);
+
             _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
             _syncService = Program.IOC.GetInstance<ISyncService>();
 
@@ -627,7 +633,7 @@ namespace PalladiumDwh.ClientApp.Views
             _exportService = Program.IOC.GetInstance<IExportService>();
             _importService = Program.IOC.GetInstance<IImportService>();
 
-            Presenter = new DashboardPresenter(this, _projectRepository, _syncService, _clientPatientRepository,
+            Presenter = new DashboardPresenter(this,_updateDatabase, _projectRepository, _syncService, _clientPatientRepository,
                 _profileManager, _pushService,
                 _clientPatientArtExtractRepository, _clientPatientBaselinesExtractRepository,
                 _clientPatientExtractRepository, _clientPatientLaboratoryExtractRepository,
@@ -651,6 +657,8 @@ namespace PalladiumDwh.ClientApp.Views
             Presenter.Initialize();
             Presenter.InitializeEmrInfo();
             Presenter.InitializeExtracts();
+
+            
 
             await Presenter.LoadEmrInfoAsync();
 
@@ -732,6 +740,16 @@ namespace PalladiumDwh.ClientApp.Views
                 var size = RecordsPageSize;
                 Presenter.LoadExtractDetail();
             }
+        }
+
+        private void menuStripDashboard_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void ViewProgress(DProgress value)
+        {
+            Status = $"{value.ShowProgress()}";
         }
     }
 }

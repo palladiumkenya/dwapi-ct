@@ -164,6 +164,7 @@
             this.menuStripDashboard.Size = new System.Drawing.Size(984, 24);
             this.menuStripDashboard.TabIndex = 0;
             this.menuStripDashboard.Text = "menuStripDashboard";
+            this.menuStripDashboard.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStripDashboard_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 

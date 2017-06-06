@@ -101,6 +101,7 @@
     <Compile Include="Interfaces\IExportService.cs" />
     <Compile Include="Interfaces\IReadExtractService.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
+    <Compile Include="Interfaces\IUpdateDatabase.cs" />
     <Compile Include="Interfaces\IValidationSummary.cs" />
     <Compile Include="Interfaces\IValidator.cs" />
     <Compile Include="Interfaces\Profiles\IClientExtractProfile.cs" />

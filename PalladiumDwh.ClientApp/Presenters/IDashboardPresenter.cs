@@ -7,6 +7,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 {
     public interface IDashboardPresenter:IPresenter<IDashboardView>
     {
+        Task RunMigrationsAsync();
 
         #region EMR Information
         void InitializeEmrInfo();
