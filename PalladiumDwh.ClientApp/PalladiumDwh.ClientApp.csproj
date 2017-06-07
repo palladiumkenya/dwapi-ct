@@ -150,6 +150,8 @@
     <Compile Include="Views\FeedBack.Designer.cs">
       <DependentUpon>FeedBack.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presenters\IDatabaseSetupPresenter.cs" />
+    <Compile Include="Views\IDatabaseSetupView.cs" />
     <Compile Include="Views\IExtractListView.cs" />
     <Compile Include="Views\IFeedBackView.cs" />
     <Compile Include="Views\IDashboardView.cs" />

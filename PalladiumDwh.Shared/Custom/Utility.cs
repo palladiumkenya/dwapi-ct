@@ -163,6 +163,7 @@ namespace PalladiumDwh.Shared.Custom
             return folder.EndsWith("\\") ? folder : $"{folder}\\";
         }
 
+
         public static string HasToEndsWith(this string value, string end)
         {
             return value.EndsWith(end) ? value : $"{value}{end}";
