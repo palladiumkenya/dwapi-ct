@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -413,15 +414,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         private async void Dashboard_Load(object sender, EventArgs e)
         {
-            try
-            {
-                System.Diagnostics.Process.Start(@"updater.exe");
-            }
-            catch (Exception ex)
-            {
-                Log.Debug(ex);
-            }
-
+            
             Cursor.Current = Cursors.WaitCursor;
             toolStripProgressBarDashboard.Style=ProgressBarStyle.Marquee;
             //toolStripProgressBarDashboard.MarqueeAnimationSpeed = 10;
@@ -602,6 +595,21 @@ namespace PalladiumDwh.ClientApp.Views
 
             Program.IOC = await IoC.InitializeAsync();
             _databaseManager = Program.IOC.GetInstance<IDatabaseManager>();
+
+            Status = "checking for updates...";
+
+            try
+            {
+                Process process = new Process();
+                process.StartInfo.FileName = @"updater.exe";
+                process.Start();
+                process.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex);
+            }
+
 
             var progress = new Progress<DProgress>(ViewProgress);
             await _databaseManager.RunUpdateAsync(progress);
