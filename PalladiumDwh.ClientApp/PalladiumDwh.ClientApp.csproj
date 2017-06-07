@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{937CEB6E-CC7D-4A14-A7F6-30055E087275}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PalladiumDwh.ClientApp</RootNamespace>
+    <AssemblyName>PalladiumDwh.ClientApp</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>E:\Publish\wwwroot\dwapiclient\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <UpdateUrl>http://localhost/dwapiclient/</UpdateUrl>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>2529D28AF32A50860360BD4DBB555F77F053F6CA</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>PalladiumDwh.ClientApp_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\app.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DbUp, Version=3.3.5.0, Culture=neutral, PublicKeyToken=4b419c53bdfd4cbf, processorArchitecture=MSIL">
+      <HintPath>..\packages\dbup.3.3.5\lib\net35\DbUp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=0.0.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.1\lib\net45\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.JScript" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=4.4.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StructureMap.4.4.5\lib\net45\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DependencyResolution\DefaultRegistry.cs" />
+    <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="Events\ExtractImportedEvent.cs" />
+    <Compile Include="Events\ExtractExportedEvent.cs" />
+    <Compile Include="Events\CsvExtractLoadedEvent.cs" />
+    <Compile Include="Events\EmrExtractLoadedEvent.cs" />
+    <Compile Include="Events\ExtractSentEvent.cs" />
+    <Compile Include="Model\ExportsViewModel.cs" />
+    <Compile Include="Model\ExtractsViewModel.cs" />
+    <Compile Include="Model\EmrViewModel.cs" />
+    <Compile Include="Presenters\DashboardPresenter.cs" />
+    <Compile Include="Presenters\ExtractListPresenter.cs" />
+    <Compile Include="Presenters\FeedBackPresenter.cs" />
+    <Compile Include="Presenters\IExtractListPresenter.cs" />
+    <Compile Include="Presenters\IFeedBackPresenter.cs" />
+    <Compile Include="Presenters\IDashboardPresenter.cs" />
+    <Compile Include="Presenters\IManageExportsPresenter.cs" />
+    <Compile Include="Presenters\IOptionPresenter.cs" />
+    <Compile Include="Presenters\IPresenter.cs" />
+    <Compile Include="Presenters\IStartupPresenter.cs" />
+    <Compile Include="Presenters\ManageExportsPresenter.cs" />
+    <Compile Include="Presenters\OptionPresenter.cs" />
+    <Compile Include="Presenters\StartupPresenter.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ExtractListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ExtractListControl.Designer.cs">
+      <DependentUpon>ExtractListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FeedBack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FeedBack.Designer.cs">
+      <DependentUpon>FeedBack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presenters\IDatabaseSetupPresenter.cs" />
+    <Compile Include="Views\IDatabaseSetupView.cs" />
+    <Compile Include="Views\IExtractListView.cs" />
+    <Compile Include="Views\IFeedBackView.cs" />
+    <Compile Include="Views\IDashboardView.cs" />
+    <Compile Include="Views\IManageExportsView.cs" />
+    <Compile Include="Views\IOptionView.cs" />
+    <Compile Include="Views\IStartupView.cs" />
+    <Compile Include="Views\IControlView.cs" />
+    <Compile Include="Views\IView.cs" />
+    <Compile Include="Views\Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Options.Designer.cs">
+      <DependentUpon>Options.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SendExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SendExport.Designer.cs">
+      <DependentUpon>SendExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Startup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Startup.Designer.cs">
+      <DependentUpon>Startup.cs</DependentUpon>
+    </Compile>
+    <None Include="Resources\app.ico" />
+    <None Include="Resources\favicon.ico" />
+    <None Include="Resources\ms-icon-310x310.png" />
+    <None Include="Resources\ms-icon-150x150.png" />
+    <None Include="Resources\ms-icon-144x144.png" />
+    <None Include="Resources\ms-icon-70x70.png" />
+    <None Include="Resources\favicon-96x96.png" />
+    <None Include="Resources\favicon-32x32.png" />
+    <None Include="Resources\favicon-16x16.png" />
+    <None Include="Resources\apple-icon-precomposed.png" />
+    <None Include="Resources\apple-icon-180x180.png" />
+    <None Include="Resources\apple-icon-152x152.png" />
+    <None Include="Resources\apple-icon-144x144.png" />
+    <None Include="Resources\apple-icon-120x120.png" />
+    <None Include="Resources\apple-icon-114x114.png" />
+    <None Include="Resources\apple-icon-76x76.png" />
+    <None Include="Resources\apple-icon-72x72.png" />
+    <None Include="Resources\apple-icon-60x60.png" />
+    <None Include="Resources\apple-icon-57x57.png" />
+    <None Include="Resources\apple-icon.png" />
+    <None Include="Resources\android-icon-192x192.png" />
+    <None Include="Resources\android-icon-144x144.png" />
+    <None Include="Resources\android-icon-96x96.png" />
+    <None Include="Resources\android-icon-72x72.png" />
+    <None Include="Resources\android-icon-48x48.png" />
+    <None Include="Resources\android-icon-36x36.png" />
+    <None Include="Resources\pepfar.png" />
+    <None Include="Resources\palladiumlogo.png" />
+    <None Include="Resources\nascop.png" />
+    <None Include="Resources\gok.png" />
+    <None Include="Resources\dwh.png" />
+    <EmbeddedResource Include="Scripts\Script0001.sql" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Views\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ExtractListControl.resx">
+      <DependentUpon>ExtractListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FeedBack.resx">
+      <DependentUpon>FeedBack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Options.resx">
+      <DependentUpon>Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="database.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Views\SendExport.resx">
+      <DependentUpon>SendExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Startup.resx">
+      <DependentUpon>Startup.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PalladiumDwh.ClientReader.Core\PalladiumDwh.ClientReader.Core.csproj">
+      <Project>{B7E99F1A-ECE6-44D7-BDF4-75A453B5FE43}</Project>
+      <Name>PalladiumDwh.ClientReader.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalladiumDwh.ClientReader.Infrastructure\PalladiumDwh.ClientReader.Infrastructure.csproj">
+      <Project>{6DFA67BB-56B7-4695-98F3-B2AD83B09845}</Project>
+      <Name>PalladiumDwh.ClientReader.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalladiumDwh.ClientUploader.Core\PalladiumDwh.ClientUploader.Core.csproj">
+      <Project>{E1EE232F-1977-4E72-98D6-7A088B201D38}</Project>
+      <Name>PalladiumDwh.ClientUploader.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalladiumDwh.ClientUploader.Infrastructure\PalladiumDwh.ClientUploader.Infrastructure.csproj">
+      <Project>{335b20e1-fd2a-48ec-9376-9f294aaef75d}</Project>
+      <Name>PalladiumDwh.ClientUploader.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalladiumDwh.Shared.Data\PalladiumDwh.Shared.Data.csproj">
+      <Project>{AE9E2E4A-0F4D-4CA1-9EBB-9EEC7AA209CC}</Project>
+      <Name>PalladiumDwh.Shared.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">
+      <Project>{50ED08E8-8FEA-4C87-B265-E39DAEA4B480}</Project>
+      <Name>PalladiumDwh.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

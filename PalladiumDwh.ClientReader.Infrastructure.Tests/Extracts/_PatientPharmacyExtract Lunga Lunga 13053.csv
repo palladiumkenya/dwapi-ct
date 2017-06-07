@@ -1,0 +1,6 @@
+PatientID,FacilityID,SiteCode,PatientPK,VisitID,Drug,Provider,DispenseDate,Duration,ExpectedReturn,TreatmentType,RegimenLine,PeriodTaken,ProphylaxisType
+
+254-13053-0-17494675,13053,13053,4,7224,Sulfa/TMX-Septra 800mg/160mg,NULL,2014-02-21 00:00:00.000,90.00,2014-05-22 00:00:00.000,Prophylaxis,NULL,NULL,CTX
+254-13053-0-1469,13053,13053,5,44,Sulfa/TMX-Septra 800mg/160mg,NULL,2013-09-12 00:00:00.000,90.00,2013-12-11 00:00:00.000,Prophylaxis,NULL,NULL,CTX
+
+254-13053-0-1469,13053,13053,5,7600,Sulfa/TMX-Septra 800mg/160mg,NULL,2014-03-14 00:00:00.000,30.00,2014-04-13 00:00:00.000,Prophylaxis,NULL,NULL,CTX
