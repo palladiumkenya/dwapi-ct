@@ -4,8 +4,10 @@ using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
-    public interface IUpdateDatabase
+    public interface IDatabaseManager
     {
+        string DatabaseName { get; }
+        bool CheckDatabaseExist();
         Task RunUpdateAsync(IProgress<DProgress> progress=null);
     }
 }

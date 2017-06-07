@@ -163,7 +163,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
-    <Compile Include="Migrations\UpdateDatabase.cs" />
+    <Compile Include="Data\DatabaseManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts.Designer.cs">
       <AutoGen>True</AutoGen>

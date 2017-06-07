@@ -23,7 +23,7 @@ namespace PalladiumDwh.ClientApp.Views
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private List<ExtractsViewModel> _extracts=new List<ExtractsViewModel>();
-        private IUpdateDatabase _updateDatabase;
+        private IDatabaseManager _databaseManager;
         private  IProjectRepository _projectRepository;
         private  ISyncService _syncService;
         private  IClientPatientRepository _clientPatientRepository;
@@ -413,10 +413,18 @@ namespace PalladiumDwh.ClientApp.Views
 
         private async void Dashboard_Load(object sender, EventArgs e)
         {
+            try
+            {
+                System.Diagnostics.Process.Start(@"updater.exe");
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex);
+            }
+
             Cursor.Current = Cursors.WaitCursor;
             toolStripProgressBarDashboard.Style=ProgressBarStyle.Marquee;
             //toolStripProgressBarDashboard.MarqueeAnimationSpeed = 10;
-
 
             try
             {
@@ -591,11 +599,12 @@ namespace PalladiumDwh.ClientApp.Views
 
         public async Task StartUp()
         {
+
             Program.IOC = await IoC.InitializeAsync();
-            _updateDatabase = Program.IOC.GetInstance<IUpdateDatabase>();
+            _databaseManager = Program.IOC.GetInstance<IDatabaseManager>();
 
             var progress = new Progress<DProgress>(ViewProgress);
-            await _updateDatabase.RunUpdateAsync(progress);
+            await _databaseManager.RunUpdateAsync(progress);
 
             _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
             _syncService = Program.IOC.GetInstance<ISyncService>();
@@ -633,7 +642,7 @@ namespace PalladiumDwh.ClientApp.Views
             _exportService = Program.IOC.GetInstance<IExportService>();
             _importService = Program.IOC.GetInstance<IImportService>();
 
-            Presenter = new DashboardPresenter(this,_updateDatabase, _projectRepository, _syncService, _clientPatientRepository,
+            Presenter = new DashboardPresenter(this,_databaseManager, _projectRepository, _syncService, _clientPatientRepository,
                 _profileManager, _pushService,
                 _clientPatientArtExtractRepository, _clientPatientBaselinesExtractRepository,
                 _clientPatientExtractRepository, _clientPatientLaboratoryExtractRepository,

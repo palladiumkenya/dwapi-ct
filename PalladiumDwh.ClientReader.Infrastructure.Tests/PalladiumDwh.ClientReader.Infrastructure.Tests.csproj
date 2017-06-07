@@ -131,6 +131,7 @@
     <Compile Include="Data\Command\SyncPatientStatusExtractCommandTests.cs" />
     <Compile Include="Data\Command\SyncPatientVisitExtractCommandTests.cs" />
     <Compile Include="Data\Command\SyncPatientExtractCommandTests.cs" />
+    <Compile Include="Data\DatabaseManagerTests.cs" />
     <Compile Include="Data\Repository\TempPatientExtractErrorSummaryRepositoryTests.cs" />
     <Compile Include="Data\Repository\TempExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\ClientExtractRepositoryTests.cs" />

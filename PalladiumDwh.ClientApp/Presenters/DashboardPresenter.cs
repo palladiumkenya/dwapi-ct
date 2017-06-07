@@ -29,7 +29,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private IUpdateDatabase _updateDatabase;
+        private IDatabaseManager _databaseManager;
 
         private IProjectRepository _projectRepository;
         private readonly ISyncService _syncService;
@@ -81,7 +81,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
     
 
-        public DashboardPresenter(IDashboardView view, IUpdateDatabase updateDatabase, IProjectRepository projectRepository, ISyncService syncService,
+        public DashboardPresenter(IDashboardView view, IDatabaseManager databaseManager, IProjectRepository projectRepository, ISyncService syncService,
             IClientPatientRepository clientPatientRepository, IProfileManager profileManager,
             IPushProfileService pushService,
             IClientPatientArtExtractRepository clientPatientArtExtractRepository, IClientPatientBaselinesExtractRepository clientPatientBaselinesExtractRepository, IClientPatientExtractRepository clientPatientExtractRepository, IClientPatientLaboratoryExtractRepository clientPatientLaboratoryExtractRepository, IClientPatientPharmacyExtractRepository clientPatientPharmacyExtractRepository, IClientPatientStatusExtractRepository clientPatientStatusExtractRepository, IClientPatientVisitExtractRepository clientPatientVisitExtractRepository,
@@ -93,7 +93,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             view.Presenter = this;
             View = view;
 
-            _updateDatabase = updateDatabase;
+            _databaseManager = databaseManager;
 
             _projectRepository = projectRepository;
             _syncService = syncService;
@@ -150,7 +150,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         public async Task RunMigrationsAsync()
         {
             var progress = new Progress<DProgress>(ShowDProgress);
-            await _updateDatabase.RunUpdateAsync(progress);
+            await _databaseManager.RunUpdateAsync(progress);
             View.Status = "Starting ,please wait ...";
         }
 
