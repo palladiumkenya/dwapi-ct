@@ -47,7 +47,11 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         public void SaveEmr(DatabaseConfig databaseConfig)
         {
-            throw new System.NotImplementedException();
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
+            connectionStringsSection.ConnectionStrings[$"{databaseConfig.DatabaseType.Key}"].ConnectionString = databaseConfig.GetConnectionString();
+            config.Save();
+            ConfigurationManager.RefreshSection("connectionStrings");
         }
     }
 }

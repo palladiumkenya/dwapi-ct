@@ -65,6 +65,31 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             Console.WriteLine($">. {connectionStringSettings.ConnectionString}");
         }
 
+        [Test]
+        public void void_should_SaveChanges_EmrApp_Connection()
+        {
+            var emrdbtype = DatabaseType.GetAll().First(x => x.Key.ToLower() == "EMRDatabase".ToLower());
+            Assert.IsNotNull(emrdbtype);
+
+            // IQTools
+
+            var dbConfig = new DatabaseConfig();
+            dbConfig.DatabaseType = emrdbtype;
+            dbConfig.Server = @".\SQLExpress";
+            dbConfig.Password = "c0nstella";
+            dbConfig.User = "sa";
+
+            _service.SaveEmr(dbConfig);
+            _service.Refresh();
+
+            var connectionStringSettings = _service.ConnectionStringSettingses.First(x => x.Name.ToLower() == emrdbtype.Key.ToLower());
+            Assert.IsNotNull(connectionStringSettings);
+            Assert.IsTrue(connectionStringSettings.ConnectionString.Contains(@".\SQLExpress"));
+            Console.WriteLine($"{connectionStringSettings.Name} ({connectionStringSettings.ProviderName})");
+            Console.WriteLine(new string('-', 40));
+            Console.WriteLine($">. {connectionStringSettings.ConnectionString}");
+        }
+
         [TearDown]
         public void TearDown()
         {
