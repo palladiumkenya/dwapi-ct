@@ -37,10 +37,12 @@ namespace PalladiumDwh.ClientReader.Core.Model
             }
             if (DatabaseType.Provider.ToLower().Contains("MySql.Data.MySqlClient".ToLower()))
             {
+                Port = Port > 0 ? Port : 3306;
                 connectionString = $@"Server={Server};Port={Port};Database={Database};Uid={User};Pwd={Password};";
             }
             if (DatabaseType.Provider.ToLower().Contains("Npgsql".ToLower()))
             {
+                Port = Port > 0 ? Port : 5432;
                 connectionString = $@"Server={Server};Port={Port};Database={Database};User Id={User};Password={Password};";
             }
 

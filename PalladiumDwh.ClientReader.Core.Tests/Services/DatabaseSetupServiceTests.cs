@@ -66,25 +66,27 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         }
 
         [Test]
-        public void void_should_SaveChanges_EmrApp_Connection()
+        [TestCase(@"EMRDatabase")]
+        [TestCase(@"MySQLEMRDatabase")]
+        [TestCase(@"PostgreSQLEMRDatabase")]
+        public void void_should_SaveChanges_EmrApp_Connection(string key)
         {
-            var emrdbtype = DatabaseType.GetAll().First(x => x.Key.ToLower() == "EMRDatabase".ToLower());
+            var emrdbtype = DatabaseType.GetAll().First(x => x.Key.ToLower() == key.ToLower());
             Assert.IsNotNull(emrdbtype);
-
-            // IQTools
 
             var dbConfig = new DatabaseConfig();
             dbConfig.DatabaseType = emrdbtype;
-            dbConfig.Server = @".\SQLExpress";
-            dbConfig.Password = "c0nstella";
-            dbConfig.User = "sa";
+            dbConfig.Server = @"127.0.0.1";
+            dbConfig.Database = "emrdatabase";
+            dbConfig.Password = "emrpassword";
+            dbConfig.User = "emruser";
 
             _service.SaveEmr(dbConfig);
             _service.Refresh();
 
             var connectionStringSettings = _service.ConnectionStringSettingses.First(x => x.Name.ToLower() == emrdbtype.Key.ToLower());
             Assert.IsNotNull(connectionStringSettings);
-            Assert.IsTrue(connectionStringSettings.ConnectionString.Contains(@".\SQLExpress"));
+            Assert.IsTrue(connectionStringSettings.ConnectionString.Contains(dbConfig.Server));
             Console.WriteLine($"{connectionStringSettings.Name} ({connectionStringSettings.ProviderName})");
             Console.WriteLine(new string('-', 40));
             Console.WriteLine($">. {connectionStringSettings.ConnectionString}");
