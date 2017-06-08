@@ -7,8 +7,6 @@ namespace PalladiumDwh.ClientApp.Presenters
     {
         Task Load();
         Task Save();
-        Task Test();
-        Task SaveEmr();
-        Task TestEmr();
+        Task Test();       
     }
 }

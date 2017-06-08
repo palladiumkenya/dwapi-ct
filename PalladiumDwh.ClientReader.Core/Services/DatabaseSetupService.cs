@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Common;
+using System.Linq;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Model;
 
@@ -9,12 +11,12 @@ namespace PalladiumDwh.ClientReader.Core.Services
     public class DatabaseSetupService:IDatabaseSetupService
     {
         private readonly string _localKey= "DWAPIRemote";
-        private readonly string _databaseConfigFile;
+        private readonly IDatabaseManager _databaseManager;
 
-        public DatabaseSetupService(string databaseConfigFile)
+        public DatabaseSetupService(IDatabaseManager databaseManager)
         {
-            _databaseConfigFile = databaseConfigFile;
-            ConnectionStringSettingses =GetAll(ConfigurationManager.ConnectionStrings);
+            _databaseManager = databaseManager;
+            ConnectionStringSettingses = GetAll(ConfigurationManager.ConnectionStrings);
         }
 
         private List<ConnectionStringSettings> GetAll(ConnectionStringSettingsCollection connectionStrings)
@@ -52,6 +54,18 @@ namespace PalladiumDwh.ClientReader.Core.Services
             connectionStringsSection.ConnectionStrings[$"{databaseConfig.DatabaseType.Key}"].ConnectionString = databaseConfig.GetConnectionString();
             config.Save();
             ConfigurationManager.RefreshSection("connectionStrings");
+        }
+
+        public DatabaseConfig Read(string key)
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
+            var connectionString = connectionStringsSection.ConnectionStrings[$"{key}"].ConnectionString;
+            var dbtype=DatabaseType.GetAll().FirstOrDefault(x => x.Key.ToLower() == key);
+
+            var databaseConfig=_databaseManager.GetDatabaseConfig(dbtype.Provider, connectionString);
+            databaseConfig.DatabaseType = dbtype;
+            return databaseConfig;
         }
     }
 }

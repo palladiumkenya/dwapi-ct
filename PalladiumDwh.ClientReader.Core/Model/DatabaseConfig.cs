@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,8 +10,8 @@ using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Model
 {
-    public class DatabaseConfig
-    {
+    public class DatabaseConfig { 
+    
         public DatabaseType DatabaseType { get; set; }
         public string Server { get; set; }
         public int Port { get; set; }
@@ -16,6 +19,16 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string User { get; set; }
         public string Password { get; set; }
         public string AdvancedProperties { get; set; }
+
+        public DatabaseConfig()
+        {
+        }
+
+        public DatabaseConfig(DatabaseType dbtype, string currentConnection)
+        {
+            DatabaseType = dbtype;
+
+        }
 
         public string GetConnectionString()
         {
@@ -54,6 +67,6 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
             return connectionString;
         }
-
+        
     }
 }

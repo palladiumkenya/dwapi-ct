@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
+using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces
@@ -10,5 +11,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         void Refresh();
         void Save(DatabaseConfig databaseConfig);
         void SaveEmr(DatabaseConfig databaseConfig);
+        DatabaseConfig Read(string key);
     }
 }

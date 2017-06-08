@@ -118,6 +118,7 @@
     <Compile Include="Model\ExtractsViewModel.cs" />
     <Compile Include="Model\EmrViewModel.cs" />
     <Compile Include="Presenters\DashboardPresenter.cs" />
+    <Compile Include="Presenters\DatabaseSetupPresenter.cs" />
     <Compile Include="Presenters\ExtractListPresenter.cs" />
     <Compile Include="Presenters\FeedBackPresenter.cs" />
     <Compile Include="Presenters\IExtractListPresenter.cs" />
