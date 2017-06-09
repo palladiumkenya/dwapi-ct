@@ -12,7 +12,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         List<ConnectionStringSettings> ConnectionStringSettingses { get; set; }
         void Refresh();
         Task Save(DatabaseConfig databaseConfig);
-        void SaveEmr(DatabaseConfig databaseConfig);
+        Task SaveEmr(DatabaseConfig databaseConfig);
         Task<bool> CanConnect(string key = "");
         Task<bool> CanConnect(DatabaseConfig databaseConfig);
         DatabaseConfig Read(string key="");

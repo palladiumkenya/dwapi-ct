@@ -54,13 +54,16 @@ namespace PalladiumDwh.ClientReader.Core.Services
             });
         }
 
-        public void SaveEmr(DatabaseConfig databaseConfig)
+        public async Task SaveEmr(DatabaseConfig databaseConfig)
         {
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
             connectionStringsSection.ConnectionStrings[$"{databaseConfig.DatabaseType.Key}"].ConnectionString = databaseConfig.GetConnectionString();
-            config.Save();
-            ConfigurationManager.RefreshSection("connectionStrings");
+            await Task.Run(() =>
+            {
+                config.Save();
+                ConfigurationManager.RefreshSection("connectionStrings");
+            });
         }
 
         public async Task<bool> CanConnect(string key = "")

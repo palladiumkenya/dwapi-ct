@@ -121,9 +121,9 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.Status = "Saving...";
             try
             {
+                View.DatabaseConfig.DatabaseType.Key = View.EmrKey;
                 await _databaseSetupService.Save(View.DatabaseConfig);
-                View.ShowMessage("Settings have been saved, Application will now restart");
-                Application.Restart();
+                View.ShowMessage("Settings have been saved");
             }
             catch (Exception e)
             {
