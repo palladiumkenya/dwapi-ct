@@ -37,6 +37,7 @@
             this.listViewOptions = new System.Windows.Forms.ListView();
             this.panelOptionMain = new System.Windows.Forms.Panel();
             this.panelSubOptionMain = new System.Windows.Forms.Panel();
+            this.buttonDatabase = new System.Windows.Forms.Button();
             this.labelExtractInfo = new System.Windows.Forms.Label();
             this.labelId = new System.Windows.Forms.Label();
             this.dataGridViewOptions = new System.Windows.Forms.DataGridView();
@@ -130,6 +131,7 @@
             // 
             // panelSubOptionMain
             // 
+            this.panelSubOptionMain.Controls.Add(this.buttonDatabase);
             this.panelSubOptionMain.Controls.Add(this.labelExtractInfo);
             this.panelSubOptionMain.Controls.Add(this.labelId);
             this.panelSubOptionMain.Controls.Add(this.dataGridViewOptions);
@@ -140,10 +142,20 @@
             this.panelSubOptionMain.Size = new System.Drawing.Size(504, 350);
             this.panelSubOptionMain.TabIndex = 2;
             // 
+            // buttonDatabase
+            // 
+            this.buttonDatabase.Location = new System.Drawing.Point(10, 252);
+            this.buttonDatabase.Name = "buttonDatabase";
+            this.buttonDatabase.Size = new System.Drawing.Size(141, 23);
+            this.buttonDatabase.TabIndex = 5;
+            this.buttonDatabase.Text = "Database Settings";
+            this.buttonDatabase.UseVisualStyleBackColor = true;
+            this.buttonDatabase.Click += new System.EventHandler(this.buttonDatabase_Click);
+            // 
             // labelExtractInfo
             // 
             this.labelExtractInfo.AutoSize = true;
-            this.labelExtractInfo.Location = new System.Drawing.Point(157, 262);
+            this.labelExtractInfo.Location = new System.Drawing.Point(172, 257);
             this.labelExtractInfo.Name = "labelExtractInfo";
             this.labelExtractInfo.Size = new System.Drawing.Size(67, 13);
             this.labelExtractInfo.TabIndex = 4;
@@ -154,11 +166,12 @@
             this.labelId.AutoSize = true;
             this.labelId.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelId.ForeColor = System.Drawing.Color.Gray;
-            this.labelId.Location = new System.Drawing.Point(351, 262);
+            this.labelId.Location = new System.Drawing.Point(476, 290);
             this.labelId.Name = "labelId";
             this.labelId.Size = new System.Drawing.Size(16, 13);
             this.labelId.TabIndex = 3;
             this.labelId.Text = "Id";
+            this.labelId.Visible = false;
             // 
             // dataGridViewOptions
             // 
@@ -178,9 +191,9 @@
             // 
             // buttonSetDefault
             // 
-            this.buttonSetDefault.Location = new System.Drawing.Point(11, 257);
+            this.buttonSetDefault.Location = new System.Drawing.Point(377, 251);
             this.buttonSetDefault.Name = "buttonSetDefault";
-            this.buttonSetDefault.Size = new System.Drawing.Size(140, 23);
+            this.buttonSetDefault.Size = new System.Drawing.Size(115, 23);
             this.buttonSetDefault.TabIndex = 1;
             this.buttonSetDefault.Text = "Set as &Default";
             this.buttonSetDefault.UseVisualStyleBackColor = true;
@@ -229,7 +242,10 @@
             this.ClientSize = new System.Drawing.Size(684, 483);
             this.Controls.Add(this.splitContainerOptions);
             this.Controls.Add(this.panel2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Options";
             this.Text = "Options";
             this.Load += new System.EventHandler(this.Options_Load);
@@ -267,5 +283,6 @@
         private System.Windows.Forms.DataGridView dataGridViewOptions;
         private System.Windows.Forms.Label labelId;
         private System.Windows.Forms.Label labelExtractInfo;
+        private System.Windows.Forms.Button buttonDatabase;
     }
 }

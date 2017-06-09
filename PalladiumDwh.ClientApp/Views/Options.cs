@@ -145,5 +145,15 @@ namespace PalladiumDwh.ClientApp.Views
         {
             throw new NotImplementedException();
         }
+
+        private void buttonDatabase_Click(object sender, EventArgs e)
+        {
+            if (null != SelectedEmr)
+            {
+                var databaseSetup = new EmrDatabaseSetup(SelectedEmr.Id, $"{SelectedEmr.EMR} (v {SelectedEmr.Version})",SelectedEmr.Key);
+                databaseSetup.ShowDialog(this);
+            }
+
+        }
     }
 }

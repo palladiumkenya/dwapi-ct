@@ -73,7 +73,6 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
                 migrator.Update();
             });
         }
-
         public IDbConnection GetConnection(string provider, string connectionString)
         {
             DbConnection connection = null;
@@ -201,6 +200,96 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             progress?.ReportStatus($"Search found {listOfServers.Count}");
 
             return listOfServers;
+        }
+
+        public async Task<List<string>> GetDatabaseList(DatabaseConfig databaseConfig, IProgress<DProgress> progress = null)
+        {
+            progress?.ReportStatus("Loading databases...");
+
+            List<string> databaseList = new List<string>();
+
+            string providerName = databaseConfig.DatabaseType.Provider;
+            string connectionString = databaseConfig.GetConnectionString();
+
+            if (providerName.ToLower().Contains("System.Data.SqlClient".ToLower()))
+            {
+
+                string sql = @"
+                                SELECT	name
+                                FROM	sys.databases
+                                WHERE	(name LIKE '%IQTools%')
+                            ";
+                using (var connection = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                       await connection.OpenAsync();
+                    }
+                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (dr.Read())
+                        {
+                            var dbname = dr[0].ToString();
+                            databaseList.Add(dbname);
+                        }
+                    }
+                }
+            }
+
+            if (providerName.ToLower().Contains("MySql.Data.MySqlClient".ToLower()))
+            {
+                string sql = @"SHOW DATABASES;";
+
+                using (var connection = new MySqlConnection(connectionString))
+                using (MySqlCommand cmd = new MySqlCommand(sql, connection))
+                {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        await connection.OpenAsync();
+                    }
+                    using (MySqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            var dbname = dr[0].ToString();
+                            databaseList.Add(dbname);
+                        }
+                    }
+                }
+
+            }
+
+            //            
+            if (providerName.ToLower().Contains("Npgsql".ToLower()))
+            {
+                string sql = @"SELECT datname FROM pg_database WHERE datistemplate = false;";
+
+                using (var connection = new NpgsqlConnection(connectionString))
+                using (NpgsqlCommand cmd = new NpgsqlCommand(sql, connection))
+                {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        await connection.OpenAsync();
+                    }
+                    using (NpgsqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            var dbname = dr[0].ToString();
+                            databaseList.Add(dbname);
+                        }
+                    }
+                }
+
+            }
+
+            if (databaseList.Count > 0)
+                databaseList.Sort();
+
+            progress?.ReportStatus($"Databases found {databaseList.Count}");
+
+            return databaseList;
         }
     }
 }

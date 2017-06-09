@@ -9,7 +9,6 @@ namespace PalladiumDwh.ClientApp.Views
 {
     public interface IDashboardView:IView<IDashboardPresenter>
     {
-        
         #region EMR Information
         string EMRInfoTitle { get; set; }
         string EMR { get; set; }

@@ -115,7 +115,6 @@ namespace PalladiumDwh.ClientApp.Views
         public string HeaderDescription { get; set; }
 
         #region EMR Information
-
         public string EMRInfoTitle
         {
             get { return labelTopH.Text; }
@@ -614,6 +613,7 @@ namespace PalladiumDwh.ClientApp.Views
                 Log.Debug(ex);
             }
 
+
             Status = "checking database...";
             await Task.Delay(1);
 
@@ -623,6 +623,7 @@ namespace PalladiumDwh.ClientApp.Views
                 var databaseSetup = new DatabaseSetup();
                 databaseSetup.ShowDialog(this);
             }
+
 
             var progress = new Progress<DProgress>(ViewProgress);
             await _databaseManager.RunUpdateAsync(progress);

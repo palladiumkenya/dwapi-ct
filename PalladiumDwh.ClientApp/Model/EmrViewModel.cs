@@ -9,6 +9,7 @@ namespace PalladiumDwh.ClientApp.Model
         public string Project { get; set; }
         public string EMR { get; set; }
         public string Version { get; set; }
+        public string Key { get; set; }
         public bool IsDefault { get; set; }
         public Guid Id { get; set; }
         public List<ExtractSetting> ExtractSettings { get; set; }=new List<ExtractSetting>();
@@ -22,6 +23,7 @@ namespace PalladiumDwh.ClientApp.Model
             Project = project.Name;
             EMR = emr.Name;
             Version = emr.Version;
+            Key = emr.ConnectionKey;
             IsDefault = emr.IsDefault;
             Id = emr.Id;
             ExtractSettings.AddRange(emr.ExtractSettings);            

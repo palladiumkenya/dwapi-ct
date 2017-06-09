@@ -30,6 +30,8 @@
         {
             this.openFileDialogExports = new System.Windows.Forms.OpenFileDialog();
             this.statusStripExports = new System.Windows.Forms.StatusStrip();
+            this.labelExportsStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pbExports = new System.Windows.Forms.ToolStripProgressBar();
             this.tabControlExports = new System.Windows.Forms.TabControl();
             this.tabPageStatus = new System.Windows.Forms.TabPage();
             this.splitContainerExports = new System.Windows.Forms.SplitContainer();
@@ -53,8 +55,6 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelHDescrption = new System.Windows.Forms.Label();
             this.labelHeader = new System.Windows.Forms.Label();
-            this.labelExportsStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.pbExports = new System.Windows.Forms.ToolStripProgressBar();
             this.statusStripExports.SuspendLayout();
             this.tabControlExports.SuspendLayout();
             this.tabPageStatus.SuspendLayout();
@@ -83,6 +83,19 @@
             this.statusStripExports.Size = new System.Drawing.Size(702, 22);
             this.statusStripExports.TabIndex = 5;
             this.statusStripExports.Text = "statusStrip1";
+            // 
+            // labelExportsStatus
+            // 
+            this.labelExportsStatus.Name = "labelExportsStatus";
+            this.labelExportsStatus.Size = new System.Drawing.Size(485, 17);
+            this.labelExportsStatus.Spring = true;
+            this.labelExportsStatus.Text = "Ready";
+            this.labelExportsStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pbExports
+            // 
+            this.pbExports.Name = "pbExports";
+            this.pbExports.Size = new System.Drawing.Size(200, 16);
             // 
             // tabControlExports
             // 
@@ -229,7 +242,7 @@
             this.tabPageErrors.Location = new System.Drawing.Point(4, 22);
             this.tabPageErrors.Name = "tabPageErrors";
             this.tabPageErrors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageErrors.Size = new System.Drawing.Size(694, 337);
+            this.tabPageErrors.Size = new System.Drawing.Size(694, 315);
             this.tabPageErrors.TabIndex = 1;
             this.tabPageErrors.Text = "Send Errors";
             this.tabPageErrors.UseVisualStyleBackColor = true;
@@ -239,7 +252,7 @@
             this.panelErrors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelErrors.Location = new System.Drawing.Point(3, 30);
             this.panelErrors.Name = "panelErrors";
-            this.panelErrors.Size = new System.Drawing.Size(688, 304);
+            this.panelErrors.Size = new System.Drawing.Size(688, 282);
             this.panelErrors.TabIndex = 1;
             // 
             // panelErrorsH
@@ -309,19 +322,6 @@
             this.labelHeader.Size = new System.Drawing.Size(49, 13);
             this.labelHeader.TabIndex = 9;
             this.labelHeader.Text = "Exports";
-            // 
-            // labelExportsStatus
-            // 
-            this.labelExportsStatus.Name = "labelExportsStatus";
-            this.labelExportsStatus.Size = new System.Drawing.Size(454, 17);
-            this.labelExportsStatus.Spring = true;
-            this.labelExportsStatus.Text = "Ready";
-            this.labelExportsStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pbExports
-            // 
-            this.pbExports.Name = "pbExports";
-            this.pbExports.Size = new System.Drawing.Size(200, 16);
             // 
             // SendExport
             // 

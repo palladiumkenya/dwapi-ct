@@ -40,6 +40,10 @@ namespace PalladiumDwh.ClientApp.Presenters
             {
                 list.AddRange(EmrViewModel.CreateList(p));
             }
+            if (list.Count > 0)
+            {
+                list = list.OrderByDescending(x => x.IsDefault).ToList();
+            }
             View.Emrs = list;
             View.CanMarkDefault = View.Emrs.Count > 0;
         }
