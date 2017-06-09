@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using DocumentFormat.OpenXml.Drawing.Spreadsheet;
 using Microsoft.Build.Framework;
 using PalladiumDwh.ClientApp.Views;
@@ -33,37 +34,41 @@ namespace PalladiumDwh.ClientApp.Presenters
        public void Initialize()
        {
            View.CanSave = View.CanEdit = View.CanRefresh = View.CanTest = false;
-            View.Edit(View.CanSave);
+            View.Edit(false);
        }
 
         public async Task Load()
         {
             View.ShowPleaseWait();
-            DatabaseConfig configs = null;
+            DatabaseConfig databaseConfig = null;
             var dbtypes = DatabaseType.GetAll();
             
             //Load DWAPIRemote Config
             await Task.Run(() =>
             {
-                configs = _databaseSetupService.Read();
+                databaseConfig = _databaseSetupService.Read();
             });
 
+           //databaseConfig = null;
+
             View.DatabaseTypes = dbtypes;
-            View.DatabaseConfig = configs;
+            View.DatabaseConfig = databaseConfig;
 
-            View.DatabaseConfig = null;
-
-            if (null == View.DatabaseConfig)
+            if (null == databaseConfig)
             {
+                //No connections 
+
                 View.Edit(true);
-                View.CanRefresh = View.CanTest =  View.CanSave = true;
+                View.CanRefresh = View.CanTest = View.CanSave = true;
                 View.CanEdit = false;
             }
             else
             {
+                //Has connections 
+
                 View.Edit(false);
-                View.CanRefresh = View.CanTest = View.CanEdit = false;
-                View.CanSave = true;
+                View.CanRefresh = View.CanTest = View.CanSave = false;
+                View.CanEdit= true;
             }
 
             View.ShowReady();
@@ -71,7 +76,9 @@ namespace PalladiumDwh.ClientApp.Presenters
 
        public async Task Refresh()
        {
-           var progress = new Progress<DProgress>(ShowDProgress);
+           View.CanRefresh = false;
+
+            var progress = new Progress<DProgress>(ShowDProgress);
             View.ShowPleaseWait();
            try
            {
@@ -79,39 +86,67 @@ namespace PalladiumDwh.ClientApp.Presenters
            }
            catch (Exception e)
            {
-               View.ShowErrorMessage(Utility.GetErrorMessage(e));
+               //View.ShowErrorMessage(Utility.GetErrorMessage(e));
            }
            View.ShowReady();
+           View.CanRefresh = true;
         }
 
        public async Task Save()
        {
-           View.ShowPleaseWait();
-           View.Status = "Saving...";
-           await Task.Run(() =>
-           {
-               _databaseSetupService.Save(View.DatabaseConfig);
-           });
+           View.CanTest = View.CanRefresh= View.CanEdit = View.CanSave = false;
 
+            View.ShowPleaseWait();
+           View.Status = "Saving...";
+           try
+           {
+                await _databaseSetupService.Save(View.DatabaseConfig);
+               View.ShowMessage("Settings have been saved, Application will now restart");
+                Application.Restart();
+            }
+           catch (Exception e)
+           {
+               View.ShowErrorMessage(Utility.GetErrorMessage(e));
+            }
            await Load();
            View.ShowReady();
         }
 
        public async Task Test()
         {
+            View.CanTest = View.CanRefresh= View.CanEdit= View.CanSave=false;
+
             View.ShowPleaseWait();
             View.Status = "Testing Connection...";
             try
             {
                 var ok = await _databaseSetupService.CanConnect(View.DatabaseConfig);
                 View.Status = $"Connection {(ok?"Successful": "FAILED")}";
+                if (ok)
+                {
+                    View.ShowMessage(View.Status);
+                }
+                else
+                {
+                    View.ShowErrorMessage(View.Status);
+                }
+                    
             }
             catch (Exception e)
             {
                 View.ShowErrorMessage(Utility.GetErrorMessage(e));
             }
             View.ShowReady();
+            View.CanTest = View.CanRefresh=View.CanSave = true;
+
         }
+
+       public void Change()
+       {
+           View.Edit(true);
+           View.CanEdit = false;
+           View.CanSave = View.CanRefresh = View.CanTest = true;
+       }
 
        private void ShowDProgress(DProgress progress)
        {

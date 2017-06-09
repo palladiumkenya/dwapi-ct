@@ -8,6 +8,8 @@ namespace PalladiumDwh.ClientApp.Presenters
         Task Load();
         Task Refresh();
         Task Save();
-        Task Test();       
+        Task Test();
+        void Change();
+
     }
 }

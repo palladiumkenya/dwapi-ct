@@ -36,6 +36,7 @@
             this.labelHDescrption = new System.Windows.Forms.Label();
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelAction = new System.Windows.Forms.Panel();
+            this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonTest = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
@@ -49,7 +50,6 @@
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.labelServer = new System.Windows.Forms.Label();
             this.comboBoxServer = new System.Windows.Forms.ComboBox();
-            this.buttonEdit = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.panelAction.SuspendLayout();
@@ -122,6 +122,16 @@
             this.panelAction.Name = "panelAction";
             this.panelAction.Size = new System.Drawing.Size(394, 27);
             this.panelAction.TabIndex = 9;
+            // 
+            // buttonEdit
+            // 
+            this.buttonEdit.Location = new System.Drawing.Point(250, 3);
+            this.buttonEdit.Name = "buttonEdit";
+            this.buttonEdit.Size = new System.Drawing.Size(75, 23);
+            this.buttonEdit.TabIndex = 10;
+            this.buttonEdit.Text = "Change";
+            this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonSave
             // 
@@ -228,6 +238,7 @@
             this.buttonRefresh.TabIndex = 5;
             this.buttonRefresh.Text = "Refresh";
             this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
             // labelServer
             // 
@@ -245,15 +256,6 @@
             this.comboBoxServer.Name = "comboBoxServer";
             this.comboBoxServer.Size = new System.Drawing.Size(241, 21);
             this.comboBoxServer.TabIndex = 4;
-            // 
-            // buttonEdit
-            // 
-            this.buttonEdit.Location = new System.Drawing.Point(250, 3);
-            this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(75, 23);
-            this.buttonEdit.TabIndex = 10;
-            this.buttonEdit.Text = "Change";
-            this.buttonEdit.UseVisualStyleBackColor = true;
             // 
             // DatabaseSetup
             // 

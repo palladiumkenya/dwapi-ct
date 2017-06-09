@@ -40,13 +40,18 @@ namespace PalladiumDwh.ClientReader.Core.Services
             ConnectionStringSettingses = GetAll(ConfigurationManager.ConnectionStrings);
         }
 
-        public void Save(DatabaseConfig databaseConfig)
+        public async  Task Save(DatabaseConfig databaseConfig)
         {
+          
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
             connectionStringsSection.ConnectionStrings[$"{_localKey}"].ConnectionString = databaseConfig.GetConnectionString();
-            config.Save();
-            ConfigurationManager.RefreshSection("connectionStrings");
+
+            await Task.Run(() =>
+            {
+                config.Save();
+                ConfigurationManager.RefreshSection("connectionStrings");
+            });
         }
 
         public void SaveEmr(DatabaseConfig databaseConfig)

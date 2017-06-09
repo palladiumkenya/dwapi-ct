@@ -117,8 +117,8 @@ namespace PalladiumDwh.ClientApp.Views
 
         public bool CanEdit
         {
-            get { return buttonSave.Visible; }
-            set { buttonSave.Visible = value; }
+            get { return buttonEdit.Visible; }
+            set { buttonEdit.Visible = value; }
         }
 
         public bool CanRefresh
@@ -209,6 +209,16 @@ namespace PalladiumDwh.ClientApp.Views
         private async void buttonSave_Click(object sender, EventArgs e)
         {
             await Presenter.Save();
+        }
+
+        private async void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            await Presenter.Refresh();
+        }
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+          Presenter.Change();
         }
     }
 }
