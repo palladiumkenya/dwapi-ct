@@ -84,6 +84,7 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.JScript" />
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -138,6 +139,12 @@
     </Compile>
     <Compile Include="Views\Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DatabaseSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\DatabaseSetup.Designer.cs">
+      <DependentUpon>DatabaseSetup.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ExtractListControl.cs">
       <SubType>UserControl</SubType>
@@ -223,6 +230,9 @@
     </Compile>
     <EmbeddedResource Include="Views\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\DatabaseSetup.resx">
+      <DependentUpon>DatabaseSetup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ExtractListControl.resx">
       <DependentUpon>ExtractListControl.cs</DependentUpon>

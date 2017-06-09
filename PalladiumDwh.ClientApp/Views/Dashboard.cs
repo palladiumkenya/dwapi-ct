@@ -25,6 +25,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         private List<ExtractsViewModel> _extracts=new List<ExtractsViewModel>();
         private IDatabaseManager _databaseManager;
+        private IDatabaseSetupService _databaseSetupService;
         private  IProjectRepository _projectRepository;
         private  ISyncService _syncService;
         private  IClientPatientRepository _clientPatientRepository;
@@ -592,9 +593,12 @@ namespace PalladiumDwh.ClientApp.Views
 
         public async Task StartUp()
         {
+            ShowPleaseWait();
 
             Program.IOC = await IoC.InitializeAsync();
+
             _databaseManager = Program.IOC.GetInstance<IDatabaseManager>();
+            _databaseSetupService = Program.IOC.GetInstance<IDatabaseSetupService>();
 
             Status = "checking for updates...";
 
@@ -610,6 +614,15 @@ namespace PalladiumDwh.ClientApp.Views
                 Log.Debug(ex);
             }
 
+            Status = "checking database...";
+            await Task.Delay(1);
+
+            var dbOnline = await _databaseSetupService.CanConnect();
+            if (!dbOnline)
+            {
+                var databaseSetup = new DatabaseSetup();
+                databaseSetup.ShowDialog(this);
+            }
 
             var progress = new Progress<DProgress>(ViewProgress);
             await _databaseManager.RunUpdateAsync(progress);

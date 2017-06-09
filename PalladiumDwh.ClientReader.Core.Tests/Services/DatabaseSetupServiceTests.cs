@@ -5,6 +5,7 @@ using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Services;
+using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientReader.Core.Tests.Services
@@ -24,7 +25,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _appDir = $@"{Utility.GetFolderPath(TestContext.CurrentContext.TestDirectory).HasToEndsWith(@"\")}";
             _dbconfig = $@"{_appDir.HasToEndsWith(@"\")}database.config";
             _dbconfigBackup = $@"{_appDir.HasToEndsWith(@"\")}database.config.bak";
-            _service =new DatabaseSetupService(_dbconfig);
+            _service =new DatabaseSetupService(new DatabaseManager(new DwapiRemoteContext()));
         }
 
         [Test]

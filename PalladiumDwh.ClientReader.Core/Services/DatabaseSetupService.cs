@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Common;
 using System.Linq;
+using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Wordprocessing;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Model;
 
@@ -56,12 +58,27 @@ namespace PalladiumDwh.ClientReader.Core.Services
             ConfigurationManager.RefreshSection("connectionStrings");
         }
 
-        public DatabaseConfig Read(string key)
+        public async Task<bool> CanConnect(string key = "")
         {
+            var databaseConfig = Read(key);
+            return await _databaseManager.CheckConnection(databaseConfig);
+        }
+
+        public async Task<bool> CanConnect(DatabaseConfig databaseConfig)
+        {
+            return await _databaseManager.CheckConnection(databaseConfig);
+        }
+
+        public DatabaseConfig Read(string key="")
+        {
+            key = string.IsNullOrWhiteSpace(key) ? _localKey : key;
+
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
             var connectionString = connectionStringsSection.ConnectionStrings[$"{key}"].ConnectionString;
-            var dbtype=DatabaseType.GetAll().FirstOrDefault(x => x.Key.ToLower() == key);
+            var provider = connectionStringsSection.ConnectionStrings[$"{key}"].ProviderName;
+
+            var dbtype=DatabaseType.GetAll().FirstOrDefault(x => x.Provider.ToLower() == provider.ToLower());
 
             var databaseConfig=_databaseManager.GetDatabaseConfig(dbtype.Provider, connectionString);
             databaseConfig.DatabaseType = dbtype;

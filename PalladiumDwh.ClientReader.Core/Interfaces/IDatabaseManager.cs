@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Model;
@@ -9,9 +10,11 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
     public interface IDatabaseManager
     {
         string DatabaseName { get; }
-        bool CheckDatabaseExist();
+        bool CheckDatabaseExist(string provider, string connectionString);
         Task RunUpdateAsync(IProgress<DProgress> progress=null);
         IDbConnection GetConnection(string provider, string connectionString);
         DatabaseConfig GetDatabaseConfig(string provider, string connectionString);
+        Task<bool> CheckConnection(DatabaseConfig databaseConfig);
+        Task<List<string>> GetSqlServersList(IProgress<DProgress> progress = null);
     }
 }

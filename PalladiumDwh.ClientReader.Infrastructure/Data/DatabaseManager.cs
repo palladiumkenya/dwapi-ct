@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.Entity.Infrastructure.Interception;
 using System.Data.Entity.Migrations;
+using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Xml.Xsl;
 using log4net;
 using MySql.Data.MySqlClient;
 using Npgsql;
@@ -29,7 +33,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         public string DatabaseName { get; private set; }
 
-        public bool CheckDatabaseExist()
+        public bool CheckDatabaseExist(string provider, string connectionString)
         {
             Log.Debug($"checking if database is setup...");
 
@@ -37,6 +41,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
             try
             {
+                var con = GetConnection(provider, connectionString);
+
                 exists = _context.Database.Exists();
                 if (exists)
                 {
@@ -131,6 +137,70 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             }
 
             return databaseConfig;
+        }
+        
+
+        public  async Task<bool> CheckConnection(DatabaseConfig databaseConfig)
+        {
+            bool connectionOk = true;
+            var con = GetConnection(databaseConfig.DatabaseType.Provider, databaseConfig.GetConnectionString());
+            if (con != null)
+            {
+                try
+                {
+                    connectionOk = await Task.Run(() =>
+                        {
+                            con.Open();
+                            return con.State == ConnectionState.Open;
+                        }
+                    );
+                }
+                catch (Exception e)
+                {
+                    connectionOk = false;
+                    Log.Debug(e);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+            return connectionOk;
+
+        }
+
+        public async Task<List<string>> GetSqlServersList(IProgress<DProgress> progress = null)
+        {
+            progress?.ReportStatus("Searching...");
+
+            List<string> listOfServers = new List<string>();
+            DataTable sqlServersTable;
+            try
+            {
+                sqlServersTable = await Task.Run(() => SqlDataSourceEnumerator.Instance.GetDataSources());
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+                throw;
+            }
+            
+
+            foreach (DataRow rowOfData in sqlServersTable.Rows)
+            {
+                //get the server name
+                string serverName = rowOfData["ServerName"].ToString();
+                //get the instance name
+                string instanceName = rowOfData["InstanceName"].ToString();
+                serverName = $"{serverName}{(string.IsNullOrWhiteSpace(instanceName)?string.Empty: $@"\{instanceName}")}";
+                listOfServers.Add(serverName);
+            }
+            if (listOfServers.Count > 0)
+                listOfServers.Sort();
+
+            progress?.ReportStatus($"Search found {listOfServers.Count}");
+
+            return listOfServers;
         }
     }
 }
