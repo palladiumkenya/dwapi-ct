@@ -266,6 +266,7 @@
             this.comboBoxDatabaseType.Name = "comboBoxDatabaseType";
             this.comboBoxDatabaseType.Size = new System.Drawing.Size(157, 21);
             this.comboBoxDatabaseType.TabIndex = 12;
+            this.comboBoxDatabaseType.SelectedIndexChanged += new System.EventHandler(this.comboBoxDatabaseType_SelectedIndexChanged);
             // 
             // panelMainTitle
             // 

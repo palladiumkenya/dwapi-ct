@@ -36,9 +36,17 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
         }
 
         [Test]
-        public void should_GetSqlServersList()
+        public void should_Get_Sql_ServersList()
         {
-            var sqlList = _databaseManager.GetSqlServersList(_dprogress).Result;
+            var emrdbtype = DatabaseType.GetAll().First(x => x.Provider.ToLower() == "System.Data.SqlClient".ToLower());
+            Assert.IsNotNull(emrdbtype);
+            var dbConfig = new DatabaseConfig();
+            dbConfig.DatabaseType = emrdbtype;
+            dbConfig.Server = @".\Koske14";
+            dbConfig.Password = "maun";
+            dbConfig.User = "sa";
+
+            var sqlList = _databaseManager.GetServersList(dbConfig,_dprogress).Result;
             Assert.IsNotEmpty(sqlList);
             foreach (var s in sqlList)
             {

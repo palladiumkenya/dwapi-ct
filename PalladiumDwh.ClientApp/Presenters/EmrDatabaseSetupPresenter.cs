@@ -85,7 +85,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ShowPleaseWait();
             try
             {
-                View.Servers = await _databaseManager.GetSqlServersList(progress);
+                View.Servers = await _databaseManager.GetServersList(View.DatabaseConfig, progress);
             }
             catch (Exception e)
             {
@@ -123,7 +123,8 @@ namespace PalladiumDwh.ClientApp.Presenters
             {
                 View.DatabaseConfig.DatabaseType.Key = View.EmrKey;
                 await _databaseSetupService.SaveEmr(View.DatabaseConfig);
-                View.ShowMessage("Settings have been saved");
+                View.ShowMessage("Settings have been saved, Application will now restart");
+                Application.Restart();
             }
             catch (Exception e)
             {

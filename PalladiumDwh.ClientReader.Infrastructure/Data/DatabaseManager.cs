@@ -168,7 +168,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         }
 
-        public async Task<List<string>> GetSqlServersList(IProgress<DProgress> progress = null)
+        public async Task<List<string>> GetServersList(DatabaseConfig databaseConfig, IProgress<DProgress> progress = null)
         {
             progress?.ReportStatus("Searching...");
 

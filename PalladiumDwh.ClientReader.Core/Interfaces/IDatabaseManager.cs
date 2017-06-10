@@ -15,7 +15,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         IDbConnection GetConnection(string provider, string connectionString);
         DatabaseConfig GetDatabaseConfig(string provider, string connectionString);
         Task<bool> CheckConnection(DatabaseConfig databaseConfig);
-        Task<List<string>> GetSqlServersList(IProgress<DProgress> progress = null);
+        Task<List<string>> GetServersList(DatabaseConfig databaseConfig,IProgress<DProgress> progress = null);
         Task<List<string>> GetDatabaseList(DatabaseConfig databaseConfig, IProgress<DProgress> progress = null);
     }
 }

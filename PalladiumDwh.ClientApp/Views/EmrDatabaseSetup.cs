@@ -322,5 +322,10 @@ namespace PalladiumDwh.ClientApp.Views
         {
             await Presenter.RefreshDatabase();
         }
+
+        private void comboBoxDatabaseType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
