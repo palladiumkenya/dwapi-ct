@@ -33,6 +33,14 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         private ILoadPatientStatusExtractCommand _loadPatientStatusExtractCommand;
         private ILoadPatientVisitExtractCommand _loadPatientVisitExtractCommand;
 
+        private ILoadPatientExtractCsvCommand _loadPatientExtractCsvCommand;
+        private ILoadPatientArtExtractCsvCommand _loadPatientArtExtractCsvCommand;
+        private ILoadPatientBaselinesExtractCsvCommand _loadPatientBaselinesExtractCsvCommand;
+        private ILoadPatientLaboratoryExtractCsvCommand _loadPatientLaboratoryExtractCsvCommand;
+        private ILoadPatientPharmacyExtractCsvCommand _loadPatientPharmacyExtractCsvCommand;
+        private ILoadPatientStatusExtractCsvCommand _loadPatientStatusExtractCsvCommand;
+        private ILoadPatientVisitExtractCsvCommand _loadPatientVisitExtractCsvCommand;
+
         private IValidatePatientExtractCommand _validatePatientExtractCommand;
         private IValidatePatientArtExtractCommand _validatePatientArtExtractCommand;
         private IValidatePatientBaselinesExtractCommand _validatePatientBaselinesExtractCommand;
@@ -58,13 +66,13 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
 
             _clearExtractsCommand = new ClearExtractsCommand(new EMRRepository(_context));
 
-            _loadPatientExtractCommand = new LoadPatientExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientExtract"));
-            _loadPatientArtExtractCommand = new LoadPatientArtExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("ARTPatientExtract"));
-            _loadPatientBaselinesExtractCommand = new LoadPatientBaselinesExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientWABWHOCD4Extract"));
-            _loadPatientLaboratoryExtractCommand = new LoadPatientLaboratoryExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientLaboratoryExtract"));
-            _loadPatientPharmacyExtractCommand = new LoadPatientPharmacyExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientPharmacyExtract"));
-            _loadPatientVisitExtractCommand = new LoadPatientVisitExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientVisitExtract"));
-            _loadPatientStatusExtractCommand = new LoadPatientStatusExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientStatusExtract"));
+            _loadPatientExtractCsvCommand = new LoadPatientExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientExtract"));
+            _loadPatientArtExtractCsvCommand = new LoadPatientArtExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("ARTPatientExtract"));
+            _loadPatientBaselinesExtractCsvCommand = new LoadPatientBaselinesExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientWABWHOCD4Extract"));
+            _loadPatientLaboratoryExtractCsvCommand = new LoadPatientLaboratoryExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientLaboratoryExtract"));
+            _loadPatientPharmacyExtractCsvCommand = new LoadPatientPharmacyExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientPharmacyExtract"));
+            _loadPatientVisitExtractCsvCommand = new LoadPatientVisitExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientVisitExtract"));
+            _loadPatientStatusExtractCsvCommand = new LoadPatientStatusExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientStatusExtract"));
 
             _validatePatientExtractCommand = new ValidatePatientExtractCommand(new EMRRepository(_context), new ValidatorRepository(_context));
             _validatePatientArtExtractCommand = new ValidatePatientArtExtractCommand(new EMRRepository(_context), new ValidatorRepository(_context));

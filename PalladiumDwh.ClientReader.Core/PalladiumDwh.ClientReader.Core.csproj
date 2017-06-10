@@ -69,6 +69,13 @@
     <Compile Include="DwapiSetting.cs" />
     <Compile Include="Interfaces\Commands\ILoadCsvExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\IClearExtractsCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientArtExtractCsvCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientBaselinesExtractCsvCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientExtractCsvCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientLaboratoryExtractCsvCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientPharmacyExtractCsvCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientStatusExtractCsvCommand.cs" />
+    <Compile Include="Interfaces\Commands\ILoadPatientVisitExtractCsvCommand.cs" />
     <Compile Include="Interfaces\Commands\IValidatePatientArtExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\IValidatePatientBaselinesExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\IValidatePatientExtractCommand.cs" />
@@ -106,6 +113,7 @@
     <Compile Include="Interfaces\IImportService.cs" />
     <Compile Include="Interfaces\IExportService.cs" />
     <Compile Include="Interfaces\IReadExtractService.cs" />
+    <Compile Include="Interfaces\ISyncCsvService.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
     <Compile Include="Interfaces\IDatabaseManager.cs" />
     <Compile Include="Interfaces\IValidationSummary.cs" />
@@ -234,6 +242,7 @@
     <Compile Include="Services\ImportCsvService.cs" />
     <Compile Include="Services\ImportService.cs" />
     <Compile Include="Services\ExportService.cs" />
+    <Compile Include="Services\SyncCsvService.cs" />
     <Compile Include="Services\SyncService.cs" />
   </ItemGroup>
   <ItemGroup>

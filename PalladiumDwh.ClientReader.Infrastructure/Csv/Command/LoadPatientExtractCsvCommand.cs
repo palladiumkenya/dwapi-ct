@@ -4,7 +4,7 @@ using PalladiumDwh.ClientReader.Core.Model.Source;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
 {
-  public  class LoadPatientExtractCsvCommand: LoadExtractCsvCommand<TempPatientExtract>, ILoadPatientExtractCommand
+  public  class LoadPatientExtractCsvCommand: LoadExtractCsvCommand<TempPatientExtract>, ILoadPatientExtractCsvCommand
   {
       public LoadPatientExtractCsvCommand(IDbConnection clientConnection, string commandText, int batchSize = 100) : base(clientConnection, commandText, batchSize)
       {

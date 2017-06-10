@@ -10,6 +10,7 @@ using PalladiumDwh.ClientReader.Core.Model.Source;
 using Dapper;
 using log4net;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
