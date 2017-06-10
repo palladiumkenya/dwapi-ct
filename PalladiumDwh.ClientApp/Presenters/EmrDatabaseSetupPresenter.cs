@@ -79,7 +79,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public async Task Refresh()
         {
-            View.CanRefresh = false;
+            View.CanRefresh = View.CanRefreshDatabase= false;
 
             var progress = new Progress<DProgress>(ShowDProgress);
             View.ShowPleaseWait();
@@ -92,12 +92,12 @@ namespace PalladiumDwh.ClientApp.Presenters
                 //View.ShowErrorMessage(Utility.GetErrorMessage(e));
             }
             View.ShowReady();
-            View.CanRefresh = true;
+            View.CanRefresh = View.CanRefreshDatabase=true;
         }
 
         public async Task RefreshDatabase()
         {
-            View.CanRefreshDatabase = false;
+            View.CanRefreshDatabase = View.CanRefresh= false;
 
             var progress = new Progress<DProgress>(ShowDProgress);
             View.ShowPleaseWait();
@@ -110,7 +110,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 //View.ShowErrorMessage(Utility.GetErrorMessage(e));
             }
             View.ShowReady();
-            View.CanRefreshDatabase = true;
+            View.CanRefreshDatabase = View.CanRefresh= true;
         }
 
         public async Task Save()
@@ -122,7 +122,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             try
             {
                 View.DatabaseConfig.DatabaseType.Key = View.EmrKey;
-                await _databaseSetupService.Save(View.DatabaseConfig);
+                await _databaseSetupService.SaveEmr(View.DatabaseConfig);
                 View.ShowMessage("Settings have been saved");
             }
             catch (Exception e)

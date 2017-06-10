@@ -10,9 +10,9 @@ using PalladiumDwh.ClientReader.Core.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
-    public class DatabaseSetupService:IDatabaseSetupService
+    public class DatabaseSetupService : IDatabaseSetupService
     {
-        private readonly string _localKey= "DWAPIRemote";
+        private readonly string _localKey = "DWAPIRemote";
         private readonly IDatabaseManager _databaseManager;
 
         public DatabaseSetupService(IDatabaseManager databaseManager)
@@ -23,7 +23,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         private List<ConnectionStringSettings> GetAll(ConnectionStringSettingsCollection connectionStrings)
         {
-            List < ConnectionStringSettings> list=new List<ConnectionStringSettings>();
+            List<ConnectionStringSettings> list = new List<ConnectionStringSettings>();
 
 
             foreach (ConnectionStringSettings c in connectionStrings)
@@ -33,19 +33,21 @@ namespace PalladiumDwh.ClientReader.Core.Services
             return list;
         }
 
-        public List<ConnectionStringSettings> ConnectionStringSettingses { get; set; }=new List<ConnectionStringSettings>();
+        public List<ConnectionStringSettings> ConnectionStringSettingses { get; set; } =
+            new List<ConnectionStringSettings>();
 
         public void Refresh()
         {
             ConnectionStringSettingses = GetAll(ConfigurationManager.ConnectionStrings);
         }
 
-        public async  Task Save(DatabaseConfig databaseConfig)
+        public async Task Save(DatabaseConfig databaseConfig)
         {
-          
+
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
-            connectionStringsSection.ConnectionStrings[$"{_localKey}"].ConnectionString = databaseConfig.GetConnectionString();
+            var connectionStringsSection = (ConnectionStringsSection) config.GetSection("connectionStrings");
+            connectionStringsSection.ConnectionStrings[$"{_localKey}"].ConnectionString =
+                databaseConfig.GetConnectionString();
 
             await Task.Run(() =>
             {
@@ -57,8 +59,9 @@ namespace PalladiumDwh.ClientReader.Core.Services
         public async Task SaveEmr(DatabaseConfig databaseConfig)
         {
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
-            connectionStringsSection.ConnectionStrings[$"{databaseConfig.DatabaseType.Key}"].ConnectionString = databaseConfig.GetConnectionString();
+            var connectionStringsSection = (ConnectionStringsSection) config.GetSection("connectionStrings");
+            connectionStringsSection.ConnectionStrings[$"{databaseConfig.DatabaseType.Key}"].ConnectionString =
+                databaseConfig.GetConnectionString();
             await Task.Run(() =>
             {
                 config.Save();
@@ -77,18 +80,18 @@ namespace PalladiumDwh.ClientReader.Core.Services
             return await _databaseManager.CheckConnection(databaseConfig);
         }
 
-        public DatabaseConfig Read(string key="")
+        public DatabaseConfig Read(string key = "")
         {
             key = string.IsNullOrWhiteSpace(key) ? _localKey : key;
 
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
+            var connectionStringsSection = (ConnectionStringsSection) config.GetSection("connectionStrings");
             var connectionString = connectionStringsSection.ConnectionStrings[$"{key}"].ConnectionString;
             var provider = connectionStringsSection.ConnectionStrings[$"{key}"].ProviderName;
 
-            var dbtype=DatabaseType.GetAll().FirstOrDefault(x => x.Provider.ToLower() == provider.ToLower());
+            var dbtype = DatabaseType.GetAll().FirstOrDefault(x => x.Provider.ToLower() == provider.ToLower());
 
-            var databaseConfig=_databaseManager.GetDatabaseConfig(dbtype.Provider, connectionString);
+            var databaseConfig = _databaseManager.GetDatabaseConfig(dbtype.Provider, connectionString);
             databaseConfig.DatabaseType = dbtype;
             return databaseConfig;
         }

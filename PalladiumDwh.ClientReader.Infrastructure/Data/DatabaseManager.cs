@@ -141,7 +141,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         public  async Task<bool> CheckConnection(DatabaseConfig databaseConfig)
         {
-            bool connectionOk = true;
+            bool connectionOk = false;
             var con = GetConnection(databaseConfig.DatabaseType.Provider, databaseConfig.GetConnectionString());
             if (con != null)
             {
@@ -156,8 +156,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
                 }
                 catch (Exception e)
                 {
-                    connectionOk = false;
                     Log.Debug(e);
+                    throw;
                 }
                 finally
                 {
@@ -213,6 +213,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
             if (providerName.ToLower().Contains("System.Data.SqlClient".ToLower()))
             {
+                databaseConfig.Database = "master";
+                connectionString = databaseConfig.GetConnectionString();
 
                 string sql = @"
                                 SELECT	name

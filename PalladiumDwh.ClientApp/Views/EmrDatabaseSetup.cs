@@ -144,24 +144,24 @@ namespace PalladiumDwh.ClientApp.Views
         private void LoadDatabaseConfig(DatabaseConfig databaseConfig)
         {
             if (comboBoxDatabaseType.Items.Count > 0)
-                comboBoxDatabaseType.SelectedIndex = 0;
+                comboBoxDatabaseType.SelectedIndex =-1;
 
             if (comboBoxServer.Items.Count>0)
-                comboBoxServer.SelectedIndex = 0;
+                comboBoxServer.SelectedIndex = -1;
             comboBoxServer.Text = "";
-            textBoxPort.Clear();
-            
+
+            textBoxPort.Clear();          
             textBoxUser.Clear();
             textBoxPassword.Clear();
 
             if (comboBoxDatabaseName.Items.Count > 0)
-                comboBoxServer.SelectedIndex = 0;
+                comboBoxServer.SelectedIndex = -1;
             comboBoxDatabaseName.Text = "";
 
             if (null==databaseConfig)
                 return;
-
-            comboBoxDatabaseType.SelectedItem = databaseConfig.DatabaseType;
+            
+            comboBoxDatabaseType.SelectedValue = databaseConfig.DatabaseType.Provider;
             comboBoxServer.Text = databaseConfig.Server;
             textBoxPort.Text = databaseConfig.Port > 0 ? databaseConfig.Port.ToString() : string.Empty;
             textBoxUser.Text= databaseConfig.User;

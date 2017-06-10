@@ -74,7 +74,7 @@ namespace PalladiumDwh.ClientApp.Views
         private void LoadDatabaseConfig(DatabaseConfig databaseConfig)
         {
             if(comboBoxServer.Items.Count>0)
-                comboBoxServer.SelectedIndex = 0;
+                comboBoxServer.SelectedIndex = -1;
 
             comboBoxServer.Text = "";
             textBoxUser.Clear();

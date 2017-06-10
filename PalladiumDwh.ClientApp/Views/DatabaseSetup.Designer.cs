@@ -271,6 +271,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "DatabaseSetup";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Database Setup";
             this.Load += new System.EventHandler(this.DatabaseSetup_Load);
             this.statusStrip1.ResumeLayout(false);
