@@ -13,6 +13,10 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         void Refresh();
         Task Save(DatabaseConfig databaseConfig);
         Task SaveEmr(DatabaseConfig databaseConfig);
+        Task<bool> ServerExists(string key = "");
+        Task<bool> ServerExists(DatabaseConfig databaseConfig);
+        Task<bool> DatabaseExists(DatabaseConfig databaseConfig, IProgress<DProgress> progress = null);
+
         Task<bool> CanConnect(string key = "");
         Task<bool> CanConnect(DatabaseConfig databaseConfig);
         DatabaseConfig Read(string key="");

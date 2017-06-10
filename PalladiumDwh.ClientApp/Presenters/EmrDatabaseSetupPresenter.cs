@@ -61,6 +61,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 View.Edit(true);
                 View.CanRefresh = View.CanRefreshDatabase = View.CanTest = View.CanSave = true;
                 View.CanEdit = false;
+                
             }
             else
             {
@@ -72,8 +73,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             }
 
-            View.CanUsePort = !databaseConfig.DatabaseType.Provider.ToLower()
-                .Contains("System.Data.SqlClient".ToLower());
+           
             View.ShowReady();
         }
 
@@ -171,6 +171,28 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             View.CanUsePort = !View.DatabaseConfig.DatabaseType.Provider.ToLower()
                 .Contains("System.Data.SqlClient".ToLower());
+        }
+
+        public void ChangeDatabaseType()
+        {
+            if(null== View.SelectedDatabaseType)
+                return;
+
+            try
+            {
+                if (!View.SelectedDatabaseType.Provider.ToLower().Contains("System.Data.SqlClient".ToLower()))
+                {
+                    View.CanUsePort = true;
+                }
+                else
+                {
+                    View.CanUsePort = false;
+                }
+                
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         private void ShowDProgress(DProgress progress)

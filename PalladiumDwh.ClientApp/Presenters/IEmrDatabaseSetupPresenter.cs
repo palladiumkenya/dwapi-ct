@@ -11,6 +11,6 @@ namespace PalladiumDwh.ClientApp.Presenters
         Task Save();
         Task Test();
         void Change();
-
+        void ChangeDatabaseType();
     }
 }

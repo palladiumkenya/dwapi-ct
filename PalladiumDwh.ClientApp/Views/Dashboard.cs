@@ -15,6 +15,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientApp.Views
@@ -613,11 +614,22 @@ namespace PalladiumDwh.ClientApp.Views
                 Log.Debug(ex);
             }
 
+            //CHECK DB SETUP
 
             Status = "checking database...";
             await Task.Delay(1);
 
-            var dbOnline = await _databaseSetupService.CanConnect();
+            bool dbOnline = false;
+            try
+            {
+                dbOnline = await _databaseSetupService.CanConnect();
+            }
+            catch (Exception e)
+            {
+                var msg = $"Could not connect to the Application Database !,\nPlease check your database connection,\n{Utility.GetErrorMessage(e)}";
+                ShowErrorMessage(msg);
+            }
+            
             if (!dbOnline)
             {
                 var databaseSetup = new DatabaseSetup();
@@ -781,6 +793,14 @@ namespace PalladiumDwh.ClientApp.Views
         private void ViewProgress(DProgress value)
         {
             Status = $"{value.ShowProgress()}";
+        }
+
+        private void linkLabelEmrSetup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var options = new Options();
+            options.ShowDialog(this);
+            Presenter.LoadEmrInfo();
+            Presenter.LoadExtractSettings();
         }
     }
 }

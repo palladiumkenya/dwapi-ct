@@ -50,6 +50,8 @@
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.labelServer = new System.Windows.Forms.Label();
             this.comboBoxServer = new System.Windows.Forms.ComboBox();
+            this.labelDatabase = new System.Windows.Forms.Label();
+            this.textBoxDatabase = new System.Windows.Forms.TextBox();
             this.statusStrip1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.panelAction.SuspendLayout();
@@ -63,7 +65,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelStatus,
             this.pbSetup});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 204);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 224);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(394, 22);
             this.statusStrip1.TabIndex = 0;
@@ -118,7 +120,7 @@
             this.panelAction.Controls.Add(this.buttonSave);
             this.panelAction.Controls.Add(this.buttonTest);
             this.panelAction.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelAction.Location = new System.Drawing.Point(0, 177);
+            this.panelAction.Location = new System.Drawing.Point(0, 197);
             this.panelAction.Name = "panelAction";
             this.panelAction.Size = new System.Drawing.Size(394, 27);
             this.panelAction.TabIndex = 9;
@@ -163,7 +165,7 @@
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(0, 10);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(394, 167);
+            this.panelMain.Size = new System.Drawing.Size(394, 187);
             this.panelMain.TabIndex = 11;
             // 
             // panelMainTitle
@@ -186,13 +188,15 @@
             // 
             // groupBoxLogin
             // 
+            this.groupBoxLogin.Controls.Add(this.textBoxDatabase);
+            this.groupBoxLogin.Controls.Add(this.labelDatabase);
             this.groupBoxLogin.Controls.Add(this.textBoxUser);
             this.groupBoxLogin.Controls.Add(this.labelUser);
             this.groupBoxLogin.Controls.Add(this.labelPassword);
             this.groupBoxLogin.Controls.Add(this.textBoxPassword);
             this.groupBoxLogin.Location = new System.Drawing.Point(8, 80);
             this.groupBoxLogin.Name = "groupBoxLogin";
-            this.groupBoxLogin.Size = new System.Drawing.Size(381, 81);
+            this.groupBoxLogin.Size = new System.Drawing.Size(381, 105);
             this.groupBoxLogin.TabIndex = 10;
             this.groupBoxLogin.TabStop = false;
             this.groupBoxLogin.Text = "Provide database login credentials";
@@ -257,11 +261,28 @@
             this.comboBoxServer.Size = new System.Drawing.Size(232, 21);
             this.comboBoxServer.TabIndex = 4;
             // 
+            // labelDatabase
+            // 
+            this.labelDatabase.AutoSize = true;
+            this.labelDatabase.Location = new System.Drawing.Point(67, 75);
+            this.labelDatabase.Name = "labelDatabase";
+            this.labelDatabase.Size = new System.Drawing.Size(53, 13);
+            this.labelDatabase.TabIndex = 8;
+            this.labelDatabase.Text = "Database";
+            // 
+            // textBoxDatabase
+            // 
+            this.textBoxDatabase.Location = new System.Drawing.Point(128, 72);
+            this.textBoxDatabase.Name = "textBoxDatabase";
+            this.textBoxDatabase.ReadOnly = true;
+            this.textBoxDatabase.Size = new System.Drawing.Size(189, 20);
+            this.textBoxDatabase.TabIndex = 9;
+            // 
             // DatabaseSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 226);
+            this.ClientSize = new System.Drawing.Size(394, 246);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelAction);
             this.Controls.Add(this.panelHeader);
@@ -313,5 +334,7 @@
         private System.Windows.Forms.Label labelServer;
         private System.Windows.Forms.ComboBox comboBoxServer;
         private System.Windows.Forms.Button buttonEdit;
+        private System.Windows.Forms.TextBox textBoxDatabase;
+        private System.Windows.Forms.Label labelDatabase;
     }
 }

@@ -64,7 +64,7 @@ namespace PalladiumDwh.ClientApp.Views
             {
                 if (comboBoxDatabaseType.Items.Count > 0)
                 {
-                    if (comboBoxDatabaseType.SelectedIndex > 0)
+                    if (comboBoxDatabaseType.SelectedIndex > -1)
                         return comboBoxDatabaseType.SelectedItem as DatabaseType;
                 }
                 return null;
@@ -163,7 +163,7 @@ namespace PalladiumDwh.ClientApp.Views
             
             comboBoxDatabaseType.SelectedValue = databaseConfig.DatabaseType.Provider;
             comboBoxServer.Text = databaseConfig.Server;
-            textBoxPort.Text = databaseConfig.Port > 0 ? databaseConfig.Port.ToString() : string.Empty;
+            textBoxPort.Text = databaseConfig.Port > 0 && CanUsePort ? databaseConfig.Port.ToString() : string.Empty;
             textBoxUser.Text= databaseConfig.User;
             textBoxPassword.Text = databaseConfig.Password;
             comboBoxDatabaseName.Text = databaseConfig.Database;
@@ -298,6 +298,8 @@ namespace PalladiumDwh.ClientApp.Views
                 pbSetup.Value = progress.ValuePercentage.Value;
         }
 
+    
+
         private async void buttonTest_Click(object sender, EventArgs e)
         {
             await Presenter.Test();
@@ -325,7 +327,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         private void comboBoxDatabaseType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            Presenter.ChangeDatabaseType();
         }
     }
 }

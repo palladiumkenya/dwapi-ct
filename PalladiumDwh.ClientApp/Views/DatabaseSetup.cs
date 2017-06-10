@@ -68,6 +68,7 @@ namespace PalladiumDwh.ClientApp.Views
             _databaseConfig.Server=comboBoxServer.Text ;
             _databaseConfig.User=textBoxUser.Text;
             _databaseConfig.Password = textBoxPassword.Text;
+            _databaseConfig.Database = textBoxDatabase.Text;
             return _databaseConfig;
         }
 
@@ -79,6 +80,7 @@ namespace PalladiumDwh.ClientApp.Views
             comboBoxServer.Text = "";
             textBoxUser.Clear();
             textBoxPassword.Clear();
+            textBoxDatabase.Clear();
 
             if (null==databaseConfig)
                 return;
@@ -86,6 +88,7 @@ namespace PalladiumDwh.ClientApp.Views
             comboBoxServer.Text = databaseConfig.Server;
             textBoxUser.Text= databaseConfig.User;
             textBoxPassword.Text = databaseConfig.Password;
+            textBoxDatabase.Text = databaseConfig.Database;
         }
 
         public string Title

@@ -44,6 +44,7 @@
             this.toolStripProgressBarDashboard = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabelDashboard = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.linkLabelEmrSetup = new System.Windows.Forms.LinkLabel();
             this.panelTopH = new System.Windows.Forms.Panel();
             this.labelTopH = new System.Windows.Forms.Label();
             this.textBoxProject = new System.Windows.Forms.TextBox();
@@ -259,6 +260,7 @@
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.White;
+            this.panelTop.Controls.Add(this.linkLabelEmrSetup);
             this.panelTop.Controls.Add(this.panelTopH);
             this.panelTop.Controls.Add(this.textBoxProject);
             this.panelTop.Controls.Add(this.labelProject);
@@ -271,6 +273,17 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(984, 64);
             this.panelTop.TabIndex = 2;
+            // 
+            // linkLabelEmrSetup
+            // 
+            this.linkLabelEmrSetup.AutoSize = true;
+            this.linkLabelEmrSetup.Location = new System.Drawing.Point(365, 40);
+            this.linkLabelEmrSetup.Name = "linkLabelEmrSetup";
+            this.linkLabelEmrSetup.Size = new System.Drawing.Size(112, 13);
+            this.linkLabelEmrSetup.TabIndex = 6;
+            this.linkLabelEmrSetup.TabStop = true;
+            this.linkLabelEmrSetup.Text = "Change EMR Settings";
+            this.linkLabelEmrSetup.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelEmrSetup_LinkClicked);
             // 
             // panelTopH
             // 
@@ -979,7 +992,7 @@
             this.MainMenuStrip = this.menuStripDashboard;
             this.Name = "Dashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Dashboard";
+            this.Text = "1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Dashboard_Load);
             this.menuStripDashboard.ResumeLayout(false);
@@ -1122,5 +1135,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxPgSizeRecords;
         private System.Windows.Forms.Label labelRecordsShowing;
+        private System.Windows.Forms.LinkLabel linkLabelEmrSetup;
     }
 }

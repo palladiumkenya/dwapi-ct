@@ -96,6 +96,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             return connection;
         }
 
+        public IDbConnection GetConnection(DatabaseConfig databaseConfig)
+        {
+            return GetConnection(databaseConfig.DatabaseType.Provider, databaseConfig.GetConnectionString());
+        }
+
         public DatabaseConfig GetDatabaseConfig(string provider, string connectionString)
         {
             DatabaseConfig databaseConfig=new DatabaseConfig();
@@ -138,7 +143,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
             return databaseConfig;
         }
-        
+
+        public async Task<bool> CheckServerConnection(DatabaseConfig databaseConfig)
+        {
+            databaseConfig.Database = "master";
+            return await CheckConnection(databaseConfig);
+        }
+
 
         public  async Task<bool> CheckConnection(DatabaseConfig databaseConfig)
         {
@@ -168,6 +179,42 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             return connectionOk;
 
         }
+
+        public async Task<bool> CheckAppConnection(DatabaseConfig databaseConfig, IProgress<DProgress> progress = null)
+        {
+            progress?.ReportStatus($"Checking database [{databaseConfig.Database}]...");
+
+            bool connectionOk = false;
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var cn = (DbConnection)GetConnection(databaseConfig);
+                    var ctx = new DwapiRemoteContext(cn, true);
+                    var exists = ctx.Database.Exists();
+
+                    if (exists)
+                    {
+                        connectionOk = true;
+                    }
+                    else
+                    {
+                        progress?.ReportStatus($"Creating database [{databaseConfig.Database}]...");
+                        connectionOk = ctx.Database.CreateIfNotExists();
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+                throw;
+            }
+
+            return connectionOk;
+        }
+
+
 
         public async Task<List<string>> GetServersList(DatabaseType databaseType, IProgress<DProgress> progress = null)
         {
@@ -233,26 +280,33 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
                 databaseConfig.Database = "master";
                 connectionString = databaseConfig.GetConnectionString();
 
-                string sql = @"
+                try
+                {
+                    string sql = @"
                                 SELECT	name
                                 FROM	sys.databases
                                 WHERE	(name LIKE '%IQTools%')
                             ";
-                using (var connection = new SqlConnection(connectionString))
-                using (SqlCommand cmd = new SqlCommand(sql, connection))
-                {
-                    if (connection.State != ConnectionState.Open)
+                    using (var connection = new SqlConnection(connectionString))
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
-                       await connection.OpenAsync();
-                    }
-                    using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
-                    {
-                        while (dr.Read())
+                        if (connection.State != ConnectionState.Open)
                         {
-                            var dbname = dr[0].ToString();
-                            databaseList.Add(dbname);
+                            await connection.OpenAsync();
+                        }
+                        using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                        {
+                            while (dr.Read())
+                            {
+                                var dbname = dr[0].ToString();
+                                databaseList.Add(dbname);
+                            }
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
                 }
             }
 
@@ -260,21 +314,28 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             {
                 string sql = @"SHOW DATABASES;";
 
-                using (var connection = new MySqlConnection(connectionString))
-                using (MySqlCommand cmd = new MySqlCommand(sql, connection))
+                try
                 {
-                    if (connection.State != ConnectionState.Open)
+                    using (var connection = new MySqlConnection(connectionString))
+                    using (MySqlCommand cmd = new MySqlCommand(sql, connection))
                     {
-                        await connection.OpenAsync();
-                    }
-                    using (MySqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
+                        if (connection.State != ConnectionState.Open)
                         {
-                            var dbname = dr[0].ToString();
-                            databaseList.Add(dbname);
+                            await connection.OpenAsync();
+                        }
+                        using (MySqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                var dbname = dr[0].ToString();
+                                databaseList.Add(dbname);
+                            }
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
                 }
 
             }
@@ -282,23 +343,30 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             //            
             if (providerName.ToLower().Contains("Npgsql".ToLower()))
             {
-                string sql = @"SELECT datname FROM pg_database WHERE datistemplate = false;";
-
-                using (var connection = new NpgsqlConnection(connectionString))
-                using (NpgsqlCommand cmd = new NpgsqlCommand(sql, connection))
+                try
                 {
-                    if (connection.State != ConnectionState.Open)
+                    string sql = @"SELECT datname FROM pg_database WHERE datistemplate = false;";
+
+                    using (var connection = new NpgsqlConnection(connectionString))
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(sql, connection))
                     {
-                        await connection.OpenAsync();
-                    }
-                    using (NpgsqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
+                        if (connection.State != ConnectionState.Open)
                         {
-                            var dbname = dr[0].ToString();
-                            databaseList.Add(dbname);
+                            await connection.OpenAsync();
+                        }
+                        using (NpgsqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                var dbname = dr[0].ToString();
+                                databaseList.Add(dbname);
+                            }
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
                 }
 
             }

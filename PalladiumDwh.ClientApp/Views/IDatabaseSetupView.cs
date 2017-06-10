@@ -12,7 +12,7 @@ namespace PalladiumDwh.ClientApp.Views
         DatabaseType SelectedDatabaseType { get; set; }
     List<string> Servers { get; set; }
         DatabaseConfig DatabaseConfig { get; set; }
-        
+
         bool CanSave { get; set; }
         bool CanTest { get; set; }
         bool CanEdit { get; set; }

@@ -155,5 +155,18 @@ namespace PalladiumDwh.ClientApp.Views
             }
 
         }
+
+        private void listViewOptions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewOptions.SelectedIndices.Count > 0)
+            {
+                var item = listViewOptions.SelectedItems[0].Text;
+                if (item.ToLower().Contains("Database".ToLower()))
+                {
+                    var databaseSetup = new DatabaseSetup();
+                    databaseSetup.ShowDialog(this);
+                }
+            }
+        }
     }
 }

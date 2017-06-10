@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("EMR Setup");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Database");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options));
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonCancel = new System.Windows.Forms.Button();
@@ -111,13 +112,15 @@
             // 
             this.listViewOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewOptions.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem1,
+            listViewItem2});
             this.listViewOptions.Location = new System.Drawing.Point(3, 5);
             this.listViewOptions.Name = "listViewOptions";
             this.listViewOptions.Size = new System.Drawing.Size(170, 419);
             this.listViewOptions.TabIndex = 0;
             this.listViewOptions.UseCompatibleStateImageBehavior = false;
             this.listViewOptions.View = System.Windows.Forms.View.List;
+            this.listViewOptions.SelectedIndexChanged += new System.EventHandler(this.listViewOptions_SelectedIndexChanged);
             // 
             // panelOptionMain
             // 

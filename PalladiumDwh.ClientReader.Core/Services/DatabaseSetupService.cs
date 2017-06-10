@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Wordprocessing;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
@@ -43,8 +44,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         public async Task Save(DatabaseConfig databaseConfig)
         {
-
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+          var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             var connectionStringsSection = (ConnectionStringsSection) config.GetSection("connectionStrings");
             connectionStringsSection.ConnectionStrings[$"{_localKey}"].ConnectionString =
                 databaseConfig.GetConnectionString();
@@ -67,6 +67,22 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 config.Save();
                 ConfigurationManager.RefreshSection("connectionStrings");
             });
+        }
+
+        public async Task<bool> ServerExists(string key = "")
+        {
+            var databaseConfig = Read(key);
+            return await _databaseManager.CheckServerConnection(databaseConfig);
+        }
+
+        public async Task<bool> ServerExists(DatabaseConfig databaseConfig)
+        {
+            return await _databaseManager.CheckServerConnection(databaseConfig);
+        }
+
+        public async Task<bool> DatabaseExists(DatabaseConfig databaseConfig, IProgress<DProgress> progress = null)
+        {
+            return await _databaseManager.CheckAppConnection(databaseConfig, progress);
         }
 
         public async Task<bool> CanConnect(string key = "")

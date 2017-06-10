@@ -94,16 +94,28 @@ namespace PalladiumDwh.ClientApp.Presenters
 
        public async Task Save()
        {
-           View.CanTest = View.CanRefresh= View.CanEdit = View.CanSave = false;
+           var progress = new Progress<DProgress>(ShowDProgress);
+
+            View.CanTest = View.CanRefresh= View.CanEdit = View.CanSave = false;
 
             View.ShowPleaseWait();
            View.Status = "Saving...";
            try
            {
-                await _databaseSetupService.Save(View.DatabaseConfig);
-               View.ShowMessage("Settings have been saved, Application will now restart");
-                Application.Restart();
-            }
+               
+                var dbOnline = await _databaseSetupService.DatabaseExists(View.DatabaseConfig, progress);
+
+               if (dbOnline)
+               {
+                   await _databaseSetupService.Save(View.DatabaseConfig);
+                   View.ShowMessage("Settings have been saved, Application will now restart");
+                   Application.Restart();
+               }
+               else
+               {
+                   View.ShowErrorMessage("Database could not be created");
+                }
+           }
            catch (Exception e)
            {
                View.ShowErrorMessage(Utility.GetErrorMessage(e));
@@ -113,24 +125,18 @@ namespace PalladiumDwh.ClientApp.Presenters
         }
 
        public async Task Test()
-        {
+       {
             View.CanTest = View.CanRefresh= View.CanEdit= View.CanSave=false;
-
             View.ShowPleaseWait();
             View.Status = "Testing Connection...";
             try
             {
-                var ok = await _databaseSetupService.CanConnect(View.DatabaseConfig);
-                View.Status = $"Connection {(ok?"Successful": "FAILED")}";
-                if (ok)
-                {
-                    View.ShowMessage(View.Status);
-                }
-                else
-                {
-                    View.ShowErrorMessage(View.Status);
-                }
-                    
+                string conStatus = $"Connection to server {View.DatabaseConfig.Server}";
+
+                await _databaseSetupService.ServerExists(View.DatabaseConfig);
+
+                View.Status = $"{conStatus} Successful";
+                View.ShowMessage(View.Status);
             }
             catch (Exception e)
             {
