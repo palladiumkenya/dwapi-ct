@@ -7,6 +7,7 @@ namespace PalladiumDwh.ClientApp.Model
     public class ExtractsViewModel
     {
         public string Extract { get; set; }
+        public string ExtractName { get; set; }
         public int Total { get; set; }
         public string Status { get; set; }
         public Guid Id { get; set; }
@@ -19,6 +20,7 @@ namespace PalladiumDwh.ClientApp.Model
         public ExtractsViewModel(ExtractSetting setting):this()
         {
             Extract = setting.Display;
+            ExtractName = setting.Name;
             Id = setting.Id;
         }
 

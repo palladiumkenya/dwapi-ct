@@ -65,7 +65,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         private ISummaryReport _summaryReport;
         private IExportService _exportService;
         private IImportService _importService;
-
+        private IImporCsvService _imporCsvService;
 
         private long timeTaken = 0;
 
@@ -87,7 +87,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             IClientPatientArtExtractRepository clientPatientArtExtractRepository, IClientPatientBaselinesExtractRepository clientPatientBaselinesExtractRepository, IClientPatientExtractRepository clientPatientExtractRepository, IClientPatientLaboratoryExtractRepository clientPatientLaboratoryExtractRepository, IClientPatientPharmacyExtractRepository clientPatientPharmacyExtractRepository, IClientPatientStatusExtractRepository clientPatientStatusExtractRepository, IClientPatientVisitExtractRepository clientPatientVisitExtractRepository,
         ITempPatientExtractRepository tempPatientExtractRepository, ITempPatientArtExtractRepository tempPatientArtExtractRepository, ITempPatientBaselinesExtractRepository tempPatientBaselinesExtractRepository, ITempPatientLaboratoryExtractRepository tempPatientLaboratoryExtractRepository, ITempPatientPharmacyExtractRepository tempPatientPharmacyExtractRepository, ITempPatientStatusExtractRepository tempPatientStatusExtractRepository, ITempPatientVisitExtractRepository tempPatientVisitExtractRepository,
             ITempPatientArtExtractErrorSummaryRepository tempPatientArtExtractErrorSummaryRepository, ITempPatientBaselinesExtractErrorSummaryRepository tempPatientBaselinesExtractErrorSummaryRepository, ITempPatientExtractErrorSummaryRepository tempPatientExtractErrorSummaryRepository, ITempPatientLaboratoryExtractErrorSummaryRepository tempPatientLaboratoryExtractErrorSummaryRepository, ITempPatientPharmacyExtractErrorSummaryRepository tempPatientPharmacyExtractErrorSummaryRepository, ITempPatientStatusExtractErrorSummaryRepository tempPatientStatusExtractErrorSummaryRepository, ITempPatientVisitExtractErrorSummaryRepository tempPatientVisitExtractErrorSummaryRepository,
-            IExportService exportService,IImportService importService
+            IExportService exportService,IImportService importService, IImporCsvService imporCsvService
             )
         {
             view.Presenter = this;
@@ -127,6 +127,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             _pushService = pushService;
             _exportService = exportService;
             _importService = importService;
+            _imporCsvService = imporCsvService;
 
             View.EmrExtractLoaded += View_EmrExtractLoaded;
             View.CsvExtractLoaded += View_CsvExtractLoaded;
@@ -414,6 +415,36 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.CanLoadEmr = true;
             LoadExtractDetail();
             View.ShowReady();
+        }
+
+        public async Task CopyCsvAsync()
+        {
+
+            View.Status = "Copying Csv(s)...";
+
+
+            View.CanLoadCsv = View.CanSend = View.CanExport = false;
+
+            var progress = new Progress<DProgress>(ShowDProgress);
+
+            try
+            {
+                var csvFiles = await _imporCsvService.CopyCsvFilesAsync(View.CsvFiles, string.Empty, progress);
+                var csvFilesCount = csvFiles.ToList().Count;
+                View.EventSummaries = new List<string> { $"Copied {csvFilesCount} csv file(s) Successfuly!" };                
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+                View.ShowErrorMessage(Utility.GetErrorMessage(e));
+            }
+
+            View.Status = "Copying Csv(s) Complete!";
+            View.CanLoadCsv = View.CanSend = View.CanExport = false;
+
+            View.ShowReady();
+
+
         }
 
         private void ReportProgress(ProcessStatus processStatus)

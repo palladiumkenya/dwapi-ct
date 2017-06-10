@@ -51,6 +51,7 @@ namespace PalladiumDwh.ClientApp.Views
         void ClearClientExtractsNotSent();
         bool CanGenerateSummary { get; set; }
         List<string> ExportFiles { get; set; }
+        List<string> CsvFiles { get; set; }
         int RecordsPage { get; set; }
         int RecordsPageSize { get; set; }
         int ValidationsPageSize { get; set; }

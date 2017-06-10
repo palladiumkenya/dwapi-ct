@@ -975,7 +975,7 @@
             // 
             // openFileDialogCsv
             // 
-            this.openFileDialogCsv.FileName = "openFileDialog1";
+            this.openFileDialogCsv.Multiselect = true;
             this.openFileDialogCsv.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialogCsv_FileOk);
             // 
             // Dashboard

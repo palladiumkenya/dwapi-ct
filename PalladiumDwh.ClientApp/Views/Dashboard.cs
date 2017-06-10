@@ -61,6 +61,7 @@ namespace PalladiumDwh.ClientApp.Views
         private  IPushProfileService _pushService;
         private IExportService _exportService;
         private IImportService _importService;
+        private IImporCsvService _imporCsvService;
 
         private List<string> _eventSummaries = new List<string>();
         private List<string> _allEventSummaries=new List<string>();
@@ -217,6 +218,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         
         public List<string> ExportFiles { get; set; }
+        public List<string> CsvFiles { get; set; }=new List<string>();
         public int RecordsPage { get; set; }
 
         public int RecordsPageSize
@@ -554,20 +556,21 @@ namespace PalladiumDwh.ClientApp.Views
             CanGenerateSummary = dataGridViewExtractValidations.Rows.Count > 0;
         }
 
-        private void buttonLoadCsv_Click(object sender, EventArgs e)
+        private async void buttonLoadCsv_Click(object sender, EventArgs e)
         {
+            openFileDialogCsv.Filter = "Data Warehouse Extracts (*.csv)|*.csv";
+
             DialogResult dr = this.openFileDialogCsv.ShowDialog();
             if (dr == System.Windows.Forms.DialogResult.OK)
             {
-                foreach (String file in openFileDialogCsv.FileNames)
+                ShowPleaseWait();
+                var csvFiles = openFileDialogCsv.FileNames.ToList();
+                if (csvFiles.Count > 0)
                 {
-                    // save cvs to folder
-                    var folderToSaveTo = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    folderToSaveTo = folderToSaveTo.EndsWith("\\") ? folderToSaveTo : $"{folderToSaveTo}\\";
-                    var destination = $@"{folderToSaveTo}Dwapi\Csv\{Path.GetFileName(file)}";
-                    File.Copy(file, destination);
+                    CsvFiles = csvFiles;
+                    ShowPleaseWait();
+                    await Presenter.CopyCsvAsync();
                 }
-                OnCsvExtractLoaded(new CsvExtractLoadedEvent(ExtractSettings));
             }
         }
 
@@ -675,6 +678,7 @@ namespace PalladiumDwh.ClientApp.Views
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
             _exportService = Program.IOC.GetInstance<IExportService>();
             _importService = Program.IOC.GetInstance<IImportService>();
+            _imporCsvService = Program.IOC.GetInstance<IImporCsvService>();
 
             Presenter = new DashboardPresenter(this,_databaseManager, _projectRepository, _syncService, _clientPatientRepository,
                 _profileManager, _pushService,
@@ -694,7 +698,7 @@ namespace PalladiumDwh.ClientApp.Views
             _tempPatientStatusExtractErrorSummaryRepository,
             _tempPatientVisitExtractErrorSummaryRepository,
 
-                _exportService, _importService
+                _exportService, _importService,_imporCsvService
             );
 
             Presenter.Initialize();
