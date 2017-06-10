@@ -992,7 +992,7 @@
             this.MainMenuStrip = this.menuStripDashboard;
             this.Name = "Dashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "1";
+            this.Text = "National Data Warehouse Client";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Dashboard_Load);
             this.menuStripDashboard.ResumeLayout(false);

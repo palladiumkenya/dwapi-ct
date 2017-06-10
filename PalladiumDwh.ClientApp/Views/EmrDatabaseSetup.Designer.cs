@@ -205,6 +205,7 @@
             this.labelEmrKey.Size = new System.Drawing.Size(43, 13);
             this.labelEmrKey.TabIndex = 17;
             this.labelEmrKey.Text = "EmrKey";
+            this.labelEmrKey.Visible = false;
             // 
             // labelEmrName
             // 
@@ -288,6 +289,7 @@
             this.labelEmrId.Size = new System.Drawing.Size(16, 13);
             this.labelEmrId.TabIndex = 16;
             this.labelEmrId.Text = "Id";
+            this.labelEmrId.Visible = false;
             // 
             // labelSectionTitle
             // 
