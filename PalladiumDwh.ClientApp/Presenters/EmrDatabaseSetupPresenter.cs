@@ -85,7 +85,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ShowPleaseWait();
             try
             {
-                View.Servers = await _databaseManager.GetServersList(View.DatabaseConfig, progress);
+                View.Servers = await _databaseManager.GetServersList(View.SelectedDatabaseType, progress);
             }
             catch (Exception e)
             {

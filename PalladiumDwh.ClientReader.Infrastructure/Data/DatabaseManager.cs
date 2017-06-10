@@ -12,6 +12,7 @@ using System.Xml.Xsl;
 using log4net;
 using MySql.Data.MySqlClient;
 using Npgsql;
+using PalladiumDwh.ClientReader.Core;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Infrastructure.Migrations;
@@ -168,34 +169,45 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         }
 
-        public async Task<List<string>> GetServersList(DatabaseConfig databaseConfig, IProgress<DProgress> progress = null)
+        public async Task<List<string>> GetServersList(DatabaseType databaseType, IProgress<DProgress> progress = null)
         {
             progress?.ReportStatus("Searching...");
 
+            string providerName = string.Empty;
             List<string> listOfServers = new List<string>();
-            DataTable sqlServersTable;
-            try
-            {
-                sqlServersTable = await Task.Run(() => SqlDataSourceEnumerator.Instance.GetDataSources());
-            }
-            catch (Exception e)
-            {
-                Log.Debug(e);
-                throw;
-            }
-            
 
-            foreach (DataRow rowOfData in sqlServersTable.Rows)
+            if (null != databaseType)
             {
-                //get the server name
-                string serverName = rowOfData["ServerName"].ToString();
-                //get the instance name
-                string instanceName = rowOfData["InstanceName"].ToString();
-                serverName = $"{serverName}{(string.IsNullOrWhiteSpace(instanceName)?string.Empty: $@"\{instanceName}")}";
-                listOfServers.Add(serverName);
+                providerName = databaseType.Provider;
             }
-            if (listOfServers.Count > 0)
-                listOfServers.Sort();
+
+            if (providerName.ToLower().Contains("System.Data.SqlClient".ToLower()))
+            {
+                DataTable sqlServersTable;
+                try
+                {
+                    sqlServersTable = await Task.Run(() => SqlDataSourceEnumerator.Instance.GetDataSources());
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                    throw;
+                }
+
+
+                foreach (DataRow rowOfData in sqlServersTable.Rows)
+                {
+                    //get the server name
+                    string serverName = rowOfData["ServerName"].ToString();
+                    //get the instance name
+                    string instanceName = rowOfData["InstanceName"].ToString();
+                    serverName =
+                        $"{serverName}{(string.IsNullOrWhiteSpace(instanceName) ? string.Empty : $@"\{instanceName}")}";
+                    listOfServers.Add(serverName);
+                }
+                if (listOfServers.Count > 0)
+                    listOfServers.Sort();
+            }
 
             progress?.ReportStatus($"Search found {listOfServers.Count}");
 
@@ -205,11 +217,16 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
         public async Task<List<string>> GetDatabaseList(DatabaseConfig databaseConfig, IProgress<DProgress> progress = null)
         {
             progress?.ReportStatus("Loading databases...");
-
+            string providerName = string.Empty;
+            string connectionString = string.Empty;
+            
             List<string> databaseList = new List<string>();
 
-            string providerName = databaseConfig.DatabaseType.Provider;
-            string connectionString = databaseConfig.GetConnectionString();
+            if (null != databaseConfig)
+            {
+                providerName = databaseConfig.DatabaseType.Provider;
+                connectionString = databaseConfig.GetConnectionString();
+            }
 
             if (providerName.ToLower().Contains("System.Data.SqlClient".ToLower()))
             {

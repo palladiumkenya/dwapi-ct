@@ -46,7 +46,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
             dbConfig.Password = "maun";
             dbConfig.User = "sa";
 
-            var sqlList = _databaseManager.GetServersList(dbConfig,_dprogress).Result;
+            var sqlList = _databaseManager.GetServersList(dbConfig.DatabaseType,_dprogress).Result;
             Assert.IsNotEmpty(sqlList);
             foreach (var s in sqlList)
             {
