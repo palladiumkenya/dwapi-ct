@@ -140,7 +140,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public void Initialize()
         {
-            View.Title = $"Dashboard v{Application.ProductVersion}";
+            View.Title = $"National Data Warehouse Client | v{Application.ProductVersion}";
             View.CanExport = View.CanLoadCsv = View.CanSend = View.CanLoadEmr =View.CanGenerateSummary= false;
             View.Status = "Starting ,please wait ...";
         }
