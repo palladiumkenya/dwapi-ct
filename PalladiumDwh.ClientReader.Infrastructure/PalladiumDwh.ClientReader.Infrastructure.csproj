@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Csv\Command\ClearCsvExtractsCommand.cs" />
     <Compile Include="Csv\Command\LoadExtractCsvCommand.cs" />
     <Compile Include="Csv\Command\LoadPatientArtExtractCsvCommand.cs" />
     <Compile Include="Csv\Command\LoadPatientBaselinesExtractCsvCommand.cs" />

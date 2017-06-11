@@ -33,6 +33,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         private IProjectRepository _projectRepository;
         private readonly ISyncService _syncService;
+        private readonly ISyncCsvService _syncCsvService;
         private readonly IClientPatientRepository _clientPatientRepository;
         private readonly IProfileManager _profileManager;
         private readonly IPushProfileService _pushService;
@@ -65,7 +66,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         private ISummaryReport _summaryReport;
         private IExportService _exportService;
         private IImportService _importService;
-        private IImporCsvService _imporCsvService;
+        private IImportCsvService _importCsvService;
 
         private long timeTaken = 0;
 
@@ -87,7 +88,8 @@ namespace PalladiumDwh.ClientApp.Presenters
             IClientPatientArtExtractRepository clientPatientArtExtractRepository, IClientPatientBaselinesExtractRepository clientPatientBaselinesExtractRepository, IClientPatientExtractRepository clientPatientExtractRepository, IClientPatientLaboratoryExtractRepository clientPatientLaboratoryExtractRepository, IClientPatientPharmacyExtractRepository clientPatientPharmacyExtractRepository, IClientPatientStatusExtractRepository clientPatientStatusExtractRepository, IClientPatientVisitExtractRepository clientPatientVisitExtractRepository,
         ITempPatientExtractRepository tempPatientExtractRepository, ITempPatientArtExtractRepository tempPatientArtExtractRepository, ITempPatientBaselinesExtractRepository tempPatientBaselinesExtractRepository, ITempPatientLaboratoryExtractRepository tempPatientLaboratoryExtractRepository, ITempPatientPharmacyExtractRepository tempPatientPharmacyExtractRepository, ITempPatientStatusExtractRepository tempPatientStatusExtractRepository, ITempPatientVisitExtractRepository tempPatientVisitExtractRepository,
             ITempPatientArtExtractErrorSummaryRepository tempPatientArtExtractErrorSummaryRepository, ITempPatientBaselinesExtractErrorSummaryRepository tempPatientBaselinesExtractErrorSummaryRepository, ITempPatientExtractErrorSummaryRepository tempPatientExtractErrorSummaryRepository, ITempPatientLaboratoryExtractErrorSummaryRepository tempPatientLaboratoryExtractErrorSummaryRepository, ITempPatientPharmacyExtractErrorSummaryRepository tempPatientPharmacyExtractErrorSummaryRepository, ITempPatientStatusExtractErrorSummaryRepository tempPatientStatusExtractErrorSummaryRepository, ITempPatientVisitExtractErrorSummaryRepository tempPatientVisitExtractErrorSummaryRepository,
-            IExportService exportService,IImportService importService, IImporCsvService imporCsvService
+            IExportService exportService,IImportService importService, IImportCsvService importCsvService,
+        ISyncCsvService syncCsvService
             )
         {
             view.Presenter = this;
@@ -127,7 +129,8 @@ namespace PalladiumDwh.ClientApp.Presenters
             _pushService = pushService;
             _exportService = exportService;
             _importService = importService;
-            _imporCsvService = imporCsvService;
+            _importCsvService = importCsvService;
+            _syncCsvService = syncCsvService;
 
             View.EmrExtractLoaded += View_EmrExtractLoaded;
             View.CsvExtractLoaded += View_CsvExtractLoaded;
@@ -322,13 +325,14 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public async void LoadCsvExtracts(List<ExtractSetting> extracts)
         {
-            string logMessages = "Loading EMR CSV extracts";
-            return;
+            var dprogress = new Progress<DProgress>(ShowDProgress);
+
+            string logMessages = "Loading Csv extracts";
             Log.Debug($"{logMessages}...");
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
             View.CanLoadEmr = false;
-            View.Status = "initializing loading...";
+            View.Status = "initializing loading csv...";
             int total = extracts.Count;
             int count = 0;
 
@@ -336,7 +340,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             Log.Debug($"{logMessages} [Clearing database]...");
             try
             {
-                await _syncService.InitializeAsync();
+                await _syncCsvService.InitializeAsync();
             }
             catch (Exception e)
             {
@@ -352,8 +356,13 @@ namespace PalladiumDwh.ClientApp.Presenters
             //Patient Extract
             var priorityExtracts = extracts.Where(x => x.IsPriority).OrderBy(x => x.Rank);
 
+          
             foreach (var extract in priorityExtracts)
             {
+                var ecsv = $@"\{extract.ExtractCsv.HasToEndsWith(".csv")}";
+
+                var csv = View.CsvFiles.FirstOrDefault(x => x.ToLower().Contains(ecsv.ToLower()));
+
                 Log.Debug($"{logMessages} [{extract}]...");
                 var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
                 count++;
@@ -367,7 +376,8 @@ namespace PalladiumDwh.ClientApp.Presenters
 
                 try
                 {
-                    summary = await _syncService.SyncAsync(extract, progressIndicator);
+                    //csv priorities
+                    summary = await _syncCsvService.SyncAsync(extract, csv, progressIndicator,dprogress);
                 }
                 catch (Exception e)
                 {
@@ -392,12 +402,15 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             foreach (var extract in otherExtracts)
             {
+                var ecsv = $@"\{extract.ExtractCsv.HasToEndsWith(".csv")}";
+                var csv = View.CsvFiles.FirstOrDefault(x => x.ToLower().Contains(ecsv.ToLower()));
+
                 Log.Debug($"{logMessages} [{extract}]...");
                 var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
                 count++;
                 var vm = new ExtractsViewModel(extract) { Status = "loading..." };
                 View.UpdateStatus(vm);
-                tasks.Add(GetTask(_syncService, extract));
+                tasks.Add(GetTask(_syncCsvService, extract,csv));
             }
 
             await Task.WhenAll(tasks.ToArray());
@@ -412,8 +425,9 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             this.View.EventSummaries = new List<string>() { msg };
 
+
+            await LoadExtractDetail();
             View.CanLoadEmr = true;
-            LoadExtractDetail();
             View.ShowReady();
         }
 
@@ -429,8 +443,9 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             try
             {
-                var csvFiles = await _imporCsvService.CopyCsvFilesAsync(View.CsvFiles, string.Empty, progress);
+                var csvFiles = await _importCsvService.CopyCsvFilesAsync(View.CsvFiles, string.Empty, progress);
                 var csvFilesCount = csvFiles.ToList().Count;
+                View.CsvFiles = csvFiles;
                 View.EventSummaries = new List<string> { $"Copied {csvFilesCount} csv file(s) Successfuly!" };                
             }
             catch (Exception e)
@@ -455,6 +470,34 @@ namespace PalladiumDwh.ClientApp.Presenters
                 Status = $"loaded {processStatus.Progress}"
             };
             View.UpdateStatus(vm);
+        }
+
+        private async Task<RunSummary> GetTask(ISyncCsvService service, ExtractSetting extractSetting,string csvFile)
+        {
+            RunSummary summary = null;
+
+            var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
+            var dprogress = new Progress<DProgress>(ShowDProgress);
+            try
+            {
+                summary = await service.SyncAsync(extractSetting,csvFile, progressIndicator,dprogress);
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+                View.ShowErrorMessage(e.Message);
+                View.Status = "Error loading data! Check logs for details";
+            }
+
+
+            var vm = new ExtractsViewModel(extractSetting)
+            {
+                Total = (null == summary ? 0 : summary.SyncSummary.Total),
+                Status = (null == summary ? "Error loading !" : summary.ToString())
+            };
+            View.UpdateStatus(vm);
+
+            return summary;
         }
 
         private async Task<RunSummary> GetTask(ISyncService service, ExtractSetting extractSetting)

@@ -1,9 +1,12 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientReader.Infrastructure.Csv.Command;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
@@ -14,16 +17,16 @@ using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
 namespace PalladiumDwh.ClientReader.Core.Tests.Services
 {
     [TestFixture]
-    public class SyncServiceFromCsvTests
+    public class SyncCsvServiceTests
     {
         private readonly string _cn = ConfigurationManager.ConnectionStrings["DWAPIRemote"].ConnectionString;
         private readonly string _srcCn = ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString;
 
-        private ISyncService _syncService;
+        private ISyncCsvService _syncService;
 
         private DwapiRemoteContext _context;
 
-        private IClearExtractsCommand _clearExtractsCommand;
+        private IClearCsvExtractsCommand _clearExtractsCommand;
 
         private ILoadPatientExtractCommand _loadPatientExtractCommand;
         private ILoadPatientArtExtractCommand _loadPatientArtExtractCommand;
@@ -58,21 +61,28 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         private ISyncPatientStatusExtractCommand _syncPatientStatusExtractCommand;
         private int top = 10;
         private int topExtracts = -1;
+        private string _csvARTPatientExtract;
+        private string _csvPatientExtract;
+        private string _csvPatientLaboratoryExtract;
+        private string _csvPatientPharmacyExtract;
+        private string _csvPatientStatusExtract;
+        private string _csvPatientVisitExtract;
+        private string _csvPatientWABWHOCD4Extract;
 
         [SetUp]
         public void should_SetUp()
         {
             _context = new DwapiRemoteContext();
 
-            _clearExtractsCommand = new ClearExtractsCommand(new EMRRepository(_context));
+            _clearExtractsCommand = new ClearCsvExtractsCommand(new EMRRepository(_context));
 
-            _loadPatientExtractCsvCommand = new LoadPatientExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientExtract"));
-            _loadPatientArtExtractCsvCommand = new LoadPatientArtExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("ARTPatientExtract"));
-            _loadPatientBaselinesExtractCsvCommand = new LoadPatientBaselinesExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientWABWHOCD4Extract"));
-            _loadPatientLaboratoryExtractCsvCommand = new LoadPatientLaboratoryExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientLaboratoryExtract"));
-            _loadPatientPharmacyExtractCsvCommand = new LoadPatientPharmacyExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientPharmacyExtract"));
-            _loadPatientVisitExtractCsvCommand = new LoadPatientVisitExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientVisitExtract"));
-            _loadPatientStatusExtractCsvCommand = new LoadPatientStatusExtractCsvCommand(new SqlConnection(_cn), TestHelpers.GetCsv("PatientStatusExtract"));
+            _loadPatientExtractCsvCommand = new LoadPatientExtractCsvCommand(new EMRRepository(_context));
+            _loadPatientArtExtractCsvCommand = new LoadPatientArtExtractCsvCommand(new EMRRepository(_context));
+            _loadPatientBaselinesExtractCsvCommand = new LoadPatientBaselinesExtractCsvCommand(new EMRRepository(_context));
+            _loadPatientLaboratoryExtractCsvCommand = new LoadPatientLaboratoryExtractCsvCommand(new EMRRepository(_context));
+            _loadPatientPharmacyExtractCsvCommand = new LoadPatientPharmacyExtractCsvCommand(new EMRRepository(_context));
+            _loadPatientVisitExtractCsvCommand = new LoadPatientVisitExtractCsvCommand(new EMRRepository(_context));
+            _loadPatientStatusExtractCsvCommand = new LoadPatientStatusExtractCsvCommand(new EMRRepository(_context));
 
             _validatePatientExtractCommand = new ValidatePatientExtractCommand(new EMRRepository(_context), new ValidatorRepository(_context));
             _validatePatientArtExtractCommand = new ValidatePatientArtExtractCommand(new EMRRepository(_context), new ValidatorRepository(_context));
@@ -90,9 +100,9 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _syncPatientVisitExtractCommand = new SyncPatientVisitExtractCommand(new EMRRepository(_context));
             _syncPatientStatusExtractCommand = new SyncPatientStatusExtractCommand(new EMRRepository(_context));
 
-            _syncService = new SyncService(
+            _syncService = new SyncCsvService(
                 _clearExtractsCommand,
-                _loadPatientExtractCommand, _loadPatientArtExtractCommand, _loadPatientBaselinesExtractCommand, _loadPatientLaboratoryExtractCommand, _loadPatientPharmacyExtractCommand, _loadPatientStatusExtractCommand, _loadPatientVisitExtractCommand,
+                _loadPatientExtractCsvCommand, _loadPatientArtExtractCsvCommand, _loadPatientBaselinesExtractCsvCommand, _loadPatientLaboratoryExtractCsvCommand, _loadPatientPharmacyExtractCsvCommand, _loadPatientStatusExtractCsvCommand, _loadPatientVisitExtractCsvCommand,
                 _validatePatientExtractCommand, _validatePatientArtExtractCommand, _validatePatientBaselinesExtractCommand, _validatePatientLaboratoryExtractCommand, _validatePatientPharmacyExtractCommand, _validatePatientStatusExtractCommand, _validatePatientVisitExtractCommand, _syncPatientExtractCommand, _syncPatientArtExtractCommand,
                 _syncPatientBaselinesExtractCommand, _syncPatientLaboratoryExtractCommand, _syncPatientPharmacyExtractCommand, _syncPatientVisitExtractCommand, _syncPatientStatusExtractCommand);
 
@@ -104,93 +114,70 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract;DELETE FROM  PatientVisitExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract");
 
-        }
+            _csvARTPatientExtract = TestHelpers.GetCsv("ARTPatientExtract","Extracts");
+            _csvPatientExtract = TestHelpers.GetCsv("_PatientExtract", "Extracts");
+            _csvPatientLaboratoryExtract = TestHelpers.GetCsv("PatientLaboratoryExtract", "Extracts");
+            _csvPatientPharmacyExtract = TestHelpers.GetCsv("PatientPharmacyExtract", "Extracts");
+            _csvPatientStatusExtract = TestHelpers.GetCsv("PatientStatusExtract", "Extracts");
+            _csvPatientVisitExtract = TestHelpers.GetCsv("PatientVisitExtract", "Extracts");
+            _csvPatientWABWHOCD4Extract = TestHelpers.GetCsv("PatientWABWHOCD4Extract", "Extracts");
 
+            var ou= _syncService.InitializeAsync().Result;
+
+            var pextractSetting = new ExtractSetting(nameof(TempPatientExtract));
+            var psummary = _syncService.SyncAsync(pextractSetting, _csvPatientExtract).Result;
+        }
         [Test]
-        public void should_SyncAll()
+        public void should_Sync_ARTPatientExtract()
         {
-            _syncService.SyncAll();
-
-            
-            Assert.IsTrue(_context.ClientPatientExtracts.ToList().Count > 0);
-            Assert.IsTrue(_context.ClientPatientArtExtracts.ToList().Count > 0);
-            Assert.IsTrue(_context.ClientPatientBaselinesExtracts.ToList().Count > 0);
-            Assert.IsTrue(_context.ClientPatientLaboratoryExtracts.ToList().Count > 0);
-            Assert.IsTrue(_context.ClientPatientPharmacyExtracts.ToList().Count > 0);
-            Assert.IsTrue(_context.ClientPatientVisitExtracts.ToList().Count > 0);
-            Assert.IsTrue(_context.ClientPatientStatusExtracts.ToList().Count > 0);
-            
+            var extractSetting=new ExtractSetting(nameof(TempPatientArtExtract));
+            var summary= _syncService.SyncAsync(extractSetting, _csvARTPatientExtract).Result;
+            Assert.IsTrue(_context.TempPatientArtExtracts.ToList().Count > 0);
+            Console.WriteLine(summary);
         }
-
+       
         [Test]
-        public void should_SyncPatients()
+        public void should_Sync_PatientLaboratoryExtract()
         {
-            _syncService.SyncPatients();
-
-            var extracts = _context.ClientPatientExtracts.Count();
-            Assert.IsTrue(extracts > 0);
+            var extractSetting = new ExtractSetting(nameof(TempPatientLaboratoryExtract));
+            var summary = _syncService.SyncAsync(extractSetting, _csvARTPatientExtract).Result;
+            Assert.IsTrue(_context.TempPatientLaboratoryExtracts.ToList().Count > 0);
+            Console.WriteLine(summary);
         }
-
         [Test]
-        public void should_SynPatientsArt()
+        public void should_Sync_PatientPharmacyExtract()
         {
-            _syncService.SyncPatients();
-            _syncService.SynPatientsArt();
-
-            var extracts = _context.ClientPatientArtExtracts.Count();
-            Assert.IsTrue(extracts > 0);
+            var extractSetting = new ExtractSetting(nameof(TempPatientPharmacyExtract));
+            var summary = _syncService.SyncAsync(extractSetting, _csvPatientPharmacyExtract).Result;
+            Assert.IsTrue(_context.TempPatientPharmacyExtracts.ToList().Count > 0);
+            Console.WriteLine(summary);
         }
-
         [Test]
-        public void should_SynPatientsBaselines()
+        public void should_Sync_PatientStatusExtract()
         {
-            _syncService.SyncPatients();
-            _syncService.SynPatientsBaselines();
+            var extractSetting = new ExtractSetting(nameof(TempPatientStatusExtract));
+            var summary = _syncService.SyncAsync(extractSetting, _csvPatientStatusExtract).Result;
+            Assert.IsTrue(_context.TempPatientStatusExtracts.ToList().Count > 0);
+            Console.WriteLine(summary);
 
-            var extracts = _context.ClientPatientBaselinesExtracts.Count();
-            Assert.IsTrue(extracts > 0);
         }
-
         [Test]
-        public void should_SynPatientsLab()
+        public void should_Sync_PatientVisitExtract()
         {
-            _syncService.SyncPatients();
-            _syncService.SynPatientsLab();
-
-            var extracts = _context.ClientPatientLaboratoryExtracts.Count();
-            Assert.IsTrue(extracts > 0);
+            var extractSetting = new ExtractSetting(nameof(TempPatientVisitExtract));
+            var summary = _syncService.SyncAsync(extractSetting, _csvPatientVisitExtract).Result;
+            Assert.IsTrue(_context.TempPatientVisitExtracts.ToList().Count > 0);
+            Console.WriteLine(summary);
         }
-
         [Test]
-        public void should_SynPatientsPharmacy()
+        public void should_Sync_PatientWABWHOCD4Extract()
         {
-            _syncService.SyncPatients();
-            _syncService.SynPatientsPharmacy();
-
-            var extracts = _context.ClientPatientPharmacyExtracts.Count();
-            Assert.IsTrue(extracts > 0);
+            var extractSetting = new ExtractSetting(nameof(TempPatientBaselinesExtract));
+            var summary = _syncService.SyncAsync(extractSetting, _csvPatientWABWHOCD4Extract).Result;
+            Assert.IsTrue(_context.TempPatientBaselinesExtracts.ToList().Count > 0);
+            Console.WriteLine(summary);
         }
-
-        [Test]
-        public void should_SynPatientsStatus()
-        {
-            _syncService.SyncPatients();
-            _syncService.SynPatientsStatus();
-
-            var extracts = _context.ClientPatientStatusExtracts.Count();
-            Assert.IsTrue(extracts > 0);
-        }
-
-
-        [Test]
-        public void should_SynPatientsVisits()
-        {
-            _syncService.SyncPatients();
-            _syncService.SynPatientsVisits();
-
-            var extracts = _context.ClientPatientVisitExtracts.Count();
-            Assert.IsTrue(extracts > 0);
-        }
+      
 
         [TearDown]
         public void TearDown()

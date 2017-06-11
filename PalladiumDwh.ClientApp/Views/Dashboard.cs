@@ -61,7 +61,8 @@ namespace PalladiumDwh.ClientApp.Views
         private  IPushProfileService _pushService;
         private IExportService _exportService;
         private IImportService _importService;
-        private IImporCsvService _imporCsvService;
+        private IImportCsvService _importCsvService;
+        private ISyncCsvService _syncCsvService;
 
         private List<string> _eventSummaries = new List<string>();
         private List<string> _allEventSummaries=new List<string>();
@@ -570,6 +571,7 @@ namespace PalladiumDwh.ClientApp.Views
                     CsvFiles = csvFiles;
                     ShowPleaseWait();
                     await Presenter.CopyCsvAsync();
+                    Presenter.LoadCsvExtracts(ExtractSettings);
                 }
             }
         }
@@ -645,6 +647,7 @@ namespace PalladiumDwh.ClientApp.Views
 
             _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
             _syncService = Program.IOC.GetInstance<ISyncService>();
+            _syncCsvService = Program.IOC.GetInstance<ISyncCsvService>();
 
             _clientPatientRepository = Program.IOC.GetInstance<IClientPatientRepository>();
 
@@ -678,7 +681,7 @@ namespace PalladiumDwh.ClientApp.Views
             _pushService = Program.IOC.GetInstance<IPushProfileService>();
             _exportService = Program.IOC.GetInstance<IExportService>();
             _importService = Program.IOC.GetInstance<IImportService>();
-            _imporCsvService = Program.IOC.GetInstance<IImporCsvService>();
+            _importCsvService = Program.IOC.GetInstance<IImportCsvService>();
 
             Presenter = new DashboardPresenter(this,_databaseManager, _projectRepository, _syncService, _clientPatientRepository,
                 _profileManager, _pushService,
@@ -698,7 +701,7 @@ namespace PalladiumDwh.ClientApp.Views
             _tempPatientStatusExtractErrorSummaryRepository,
             _tempPatientVisitExtractErrorSummaryRepository,
 
-                _exportService, _importService,_imporCsvService
+                _exportService, _importService,_importCsvService, _syncCsvService
             );
 
             Presenter.Initialize();

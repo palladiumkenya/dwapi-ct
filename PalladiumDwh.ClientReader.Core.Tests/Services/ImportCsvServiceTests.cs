@@ -21,7 +21,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
     public class ImportCsvServiceTests
     {
       
-        private IImporCsvService _importService;
+        private IImportCsvService _importService;
         private string _extractsDir;
         private string _importPath;
         private IProgress<DProgress> _dprogress;

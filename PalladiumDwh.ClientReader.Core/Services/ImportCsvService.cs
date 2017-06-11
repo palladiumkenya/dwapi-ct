@@ -11,7 +11,7 @@ using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
-    public class ImportCsvService : IImporCsvService
+    public class ImportCsvService : IImportCsvService
     {
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private int _taskCount;
@@ -48,6 +48,8 @@ namespace PalladiumDwh.ClientReader.Core.Services
             //copy csvs extracts
 
             int count = 0;
+
+            /*
             var folder =
                 $"{parentFolder.HasToEndsWith(@"\")}{Path.GetFileNameWithoutExtension(Path.GetRandomFileName())}";
             folder = folder.HasToEndsWith(@"\");
@@ -57,14 +59,16 @@ namespace PalladiumDwh.ClientReader.Core.Services
             {
                 Directory.CreateDirectory(folder);
             }
-
+            */
             foreach (var f in exportFiles)
             {
                 try
                 {
+                    var csvExtract= GetExtractByFileName(f);
+
                     await Task.Run(() =>
                     {
-                        string csv = $"{folder}{Path.GetFileName(f)}";
+                        string csv = $"{parentFolder}{csvExtract}";
                         File.Copy(f, csv, true);
                         importManifests.Add(csv);
                     });
@@ -92,7 +96,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             {
                 //Read from My Documents
                 folderToImportFrom = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                folderToImportFrom = $@"{folderToImportFrom.HasToEndsWith(@"\")}DWapi\CsvImports\".HasToEndsWith(@"\");
+                folderToImportFrom = $@"{folderToImportFrom.HasToEndsWith(@"\")}DWapi\CsvImports".HasToEndsWith(@"\");
                 try
                 {
                     if (!Directory.Exists(folderToImportFrom))
@@ -118,24 +122,8 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 throw new ArgumentException($"Folder {folderToImportFrom} NOT Found !");
 
 
-            var siteFolders = await Task.Run(() => Directory.GetDirectories(folderToImportFrom));
-
-            int folderCount = siteFolders.Length;
-            int count = 0;
-
-            foreach (var siteFolder in siteFolders)
-            {
-
-                count++;
-                progress?.ReportStatus($"Loading Csv from Site {count} of {folderCount}");
-
-                //read csvFiles
-                await Task.Run(() =>
-                {
-                    var manifestFiles = Directory.GetFiles(siteFolder, "*.csv");
-                    list.AddRange(manifestFiles);
-                });
-            }
+            var csvFiles = await Task.Run(() => Directory.GetFiles(folderToImportFrom, "*.csv"));
+            list.AddRange(csvFiles);
 
             return list;
         }
@@ -148,31 +136,31 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
             if (file.ToLower().Contains("ARTPatient".ToLower()))
             {
-                extract = "ARTPatientExtract";
+                extract = "ARTPatientExtract.csv";
             }
             else if (file.ToLower().Contains("PatientExtract".ToLower()) &&!file.ToLower().Contains("ARTPatient".ToLower()))
             {
-                extract = "PatientExtract";
+                extract = "PatientExtract.csv";
             }
             else if (file.ToLower().Contains("Laboratory".ToLower()))
             {
-                extract = "PatientLaboratoryExtract";
+                extract = "PatientLaboratoryExtract.csv";
             }
             else if (file.ToLower().Contains("Pharmacy".ToLower()))
             {
-                extract = "PatientPharmacyExtract";
+                extract = "PatientPharmacyExtract.csv";
             }
             else if (file.ToLower().Contains("Status".ToLower()))
             {
-                extract = "PatientStatusExtract";
+                extract = "PatientStatusExtract.csv";
             }
             else if (file.ToLower().Contains("Visit".ToLower()))
             {
-                extract = "PatientVisitExtract";
+                extract = "PatientVisitExtract.csv";
             }
             else if (file.ToLower().Contains("WHOCD4".ToLower()))
             {
-                extract = "PatientWABWHOCD4Extract";
+                extract = "PatientWABWHOCD4Extract.csv";
             }
 
             return extract;

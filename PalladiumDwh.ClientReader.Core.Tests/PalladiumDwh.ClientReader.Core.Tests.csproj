@@ -108,7 +108,7 @@
     <Compile Include="Services\ImportCsvServiceTests.cs" />
     <Compile Include="Services\ImportServiceTests.cs" />
     <Compile Include="Services\ExportServiceTests.cs" />
-    <Compile Include="Services\SyncServiceFromCsvTests.cs" />
+    <Compile Include="Services\SyncCsvServiceTests.cs" />
     <Compile Include="Services\SyncServiceTests.cs" />
     <Compile Include="TestHelpers.cs" />
     <Compile Include="TestInitializer.cs" />

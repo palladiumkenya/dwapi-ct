@@ -10,6 +10,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using log4net;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
@@ -105,6 +106,72 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             }
             return _summary;
         }
+
+        public async Task<ValidationSummary> ExecuteValidateAsync(Progress<DProgress> progressPercent = null)
+        {
+            
+            _summary = new ValidationSummary();
+
+            var extractName = typeof(T).Name;
+            var commandText = string.Empty;
+
+            Log.Debug($"Executing Validate {extractName} command...");
+
+            var emr = _emrRepository.GetDefault();
+
+            if (null == emr) throw new Exception($"No Default EMR Setup !");
+
+            _extractSetting = emr.GetActiveExtractSetting($"{extractName}");
+
+            if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
+
+            commandText = _extractSetting.ExtractSql;
+
+            if (string.IsNullOrWhiteSpace(commandText)) throw new Exception($"No sql command found for {extractName}");
+
+
+
+            _validators = _validatorRepository.GetByExtract(extractName).ToList();
+
+            ShowPercentage(1, 1);
+
+            using (_connection)
+            {
+                if (_connection.State != ConnectionState.Open)
+                {
+                    _connection.Open();
+                }
+
+                int totalcount = _validators.Count;
+                int count = 0;
+                int errorCount = 0;
+
+                foreach (var v in _validators)
+                {
+                    using (var command = _connection.CreateCommand())
+                    {
+                        command.CommandText = v.GenerateValidateSql();
+
+                        try
+                        {
+                            errorCount += await GetTask(command);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Debug(e);
+                            throw;
+                        }
+
+                        count++;
+                        ShowPercentage(count, totalcount);
+                    }
+                }
+
+                _summary.Total = await GetNumberOfRecordsWithErrors(_connection.CreateCommand(), extractName);
+            }
+            return _summary;
+        }
+
         private void ShowPercentage(double count,double total)
         {
             var perc = (count / total) * 100;

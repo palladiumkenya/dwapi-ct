@@ -67,6 +67,7 @@
     <Compile Include="DatabaseType.cs" />
     <Compile Include="DefaultSettings.cs" />
     <Compile Include="DwapiSetting.cs" />
+    <Compile Include="Interfaces\Commands\IClearCsvExtractsCommand.cs" />
     <Compile Include="Interfaces\Commands\ILoadCsvExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\IClearExtractsCommand.cs" />
     <Compile Include="Interfaces\Commands\ILoadPatientArtExtractCsvCommand.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="Interfaces\IClientPatientVisitExtract.cs" />
     <Compile Include="Interfaces\IClientExtract.cs" />
     <Compile Include="Interfaces\IDatabaseSetupService.cs" />
-    <Compile Include="Interfaces\IImporCsvService.cs" />
+    <Compile Include="Interfaces\IImportCsvService.cs" />
     <Compile Include="Interfaces\IImportService.cs" />
     <Compile Include="Interfaces\IExportService.cs" />
     <Compile Include="Interfaces\IReadExtractService.cs" />

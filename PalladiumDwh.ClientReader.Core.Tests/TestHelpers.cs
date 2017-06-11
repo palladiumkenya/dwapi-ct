@@ -61,9 +61,9 @@ namespace PalladiumDwh.ClientReader.Core.Tests
             return extracts;
         }
 
-        public static string GetCsv(string name)
+        public static string GetCsv(string name,string folder="")
         {
-            string path = TestContext.CurrentContext.TestDirectory;
+            string path = $"{TestContext.CurrentContext.TestDirectory.HasToEndsWith(@"\")}{folder}";
             var files = Directory.GetFiles(path, "*.csv", SearchOption.AllDirectories);
             return files.FirstOrDefault(x => x.Contains(name));
         }

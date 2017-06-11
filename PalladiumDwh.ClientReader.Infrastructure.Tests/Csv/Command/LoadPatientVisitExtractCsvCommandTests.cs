@@ -7,6 +7,7 @@ using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Infrastructure.Csv.Command;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
+using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Csv.Command
@@ -32,7 +33,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Csv.Command
 
             _commandText = TestHelpers.GetCsv("PatientVisitExtract");
 
-            _extractCommand = new LoadPatientVisitExtractCsvCommand(_clientConnection, $"{_commandText}");
+            _extractCommand = new LoadPatientVisitExtractCsvCommand(new EMRRepository(_context));
 
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract");          
         }
@@ -43,7 +44,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Csv.Command
             Assert.That(_commandText, Does.Exist);
             
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            var summary = _extractCommand.ExecuteLoadAsync(_dprogress).Result;
+            var summary = _extractCommand.ExecuteAsync(_commandText, _dprogress).Result;
             watch.Stop();
             var records = _context.Database
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientVisitExtract")

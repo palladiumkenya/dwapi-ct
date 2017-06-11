@@ -9,8 +9,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
     public interface ILoadCsvExtractCommand<T> where T: TempExtract
     {
         LoadSummary Summary { get; }
-        void Execute();
-        Task<LoadSummary> ExecuteAsync(Progress<ProcessStatus> progressPercent = null);
-        Task<LoadSummary> ExecuteLoadAsync(Progress<DProgress> progressPercent = null);
+        Task<LoadSummary> ExecuteAsync(string csvExtract, Progress<DProgress> progress = null);
     }
 }
