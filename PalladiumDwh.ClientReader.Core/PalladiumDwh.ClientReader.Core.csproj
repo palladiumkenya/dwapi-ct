@@ -183,6 +183,7 @@
     <Compile Include="Model\DTO\ClientPatientPharmacyExtractDTO.cs" />
     <Compile Include="Model\DTO\ClientPatientStatusExtractDTO.cs" />
     <Compile Include="Model\DTO\ClientPatientVisitExtractDTO.cs" />
+    <Compile Include="Model\EventHistory.cs" />
     <Compile Include="Model\ExtractSetting.cs" />
     <Compile Include="Model\EMR.cs" />
     <Compile Include="Model\ImportManifest.cs" />

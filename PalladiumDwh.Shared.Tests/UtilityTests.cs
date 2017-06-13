@@ -167,6 +167,36 @@ namespace PalladiumDwh.Shared.Tests
             Assert.AreEqual(list3, result3);
             Console.WriteLine(result3);
         }
+        [Test]
+        public void should_Get_Timings()
+        {
+            string result;
+
+            var date = DateTime.Now.AddSeconds(-5);
+            Assert.That(result=date.GetTiming(","), Does.Contain("second"));
+            Console.WriteLine($"{result} ({date:dd-MMM-yyyy hh:mm:ss})");
+
+            date = DateTime.Now.AddMinutes(-5);
+            Assert.That(result = date.GetTiming(","), Does.Contain("minute"));
+            Console.WriteLine($"{result} ({date:dd-MMM-yyyy hh:mm:ss})");
+
+            date = DateTime.Now.AddHours(-3);
+            Assert.That(result = date.GetTiming(","), Does.Contain("hour"));
+            Console.WriteLine($"{result} ({date:dd-MMM-yyyy hh:mm:ss})");
+
+
+            date = DateTime.Now.AddDays(-4);
+            Assert.That(result = date.GetTiming(","), Does.Contain("day"));
+            Console.WriteLine($"{result} ({date:dd-MMM-yyyy hh:mm:ss})");
+
+
+            date = DateTime.Now.AddMonths(-3);
+            Assert.That(result = date.GetTiming(","), Does.Contain("month"));
+            Console.WriteLine($"{result} ({date:dd-MMM-yyyy hh:mm:ss})");
+
+            DateTime? dateNull = null;
+            Assert.That(result = dateNull.GetTiming(","), Is.Empty);
+        }
     }
 
 

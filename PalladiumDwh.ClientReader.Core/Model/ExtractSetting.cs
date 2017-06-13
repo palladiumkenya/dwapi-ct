@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PalladiumDwh.ClientReader.Core.Model
@@ -16,6 +17,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public bool IsActive { get; set; }
         public bool IsPriority { get; set; }
         public Guid EmrId { get; set; }
+        public ICollection<EventHistory> Events { get; set; }=new List<EventHistory>();
 
         public ExtractSetting()
         {
