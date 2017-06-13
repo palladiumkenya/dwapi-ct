@@ -10,6 +10,7 @@ using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
@@ -129,6 +130,18 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests
             string path = TestContext.CurrentContext.TestDirectory;
             var files = Directory.GetFiles(path, "*.csv", SearchOption.AllDirectories);
             return files.FirstOrDefault(x => x.Contains(name));
+        }
+
+        public static IEnumerable<string> GetAllCsvs(string name,string folder="")
+        {
+            string path = TestContext.CurrentContext.TestDirectory;
+            if (!string.IsNullOrWhiteSpace(folder))
+            {
+                path = $"{TestContext.CurrentContext.TestDirectory.HasToEndsWith(@"\")}{folder.HasToEndsWith(@"\")}";
+            }
+            
+            var files = Directory.GetFiles(path, "*.csv", SearchOption.AllDirectories);
+            return files.Where(x => x.Contains(name));
         }
 
         public static DbConnection GetConnection(string key= "EMRDatabase")
@@ -256,6 +269,20 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests
                     IQC_m12CD4 ON tmp_PatientMaster.PatientPK = IQC_m12CD4.PatientPK LEFT OUTER JOIN
                     IQC_m6CD4 ON tmp_PatientMaster.PatientPK = IQC_m6CD4.PatientPK
             ";
+        }
+
+        public static IEnumerable<DiscoverSource> GetTestDiscoverSourcesData()
+        {
+            var list = Builder<DiscoverSource>.CreateListOfSize(6).Build();
+            foreach (var l in list)
+            {
+                l.SiteCode = 2000;
+                l.NumOfTempRecords = 1;
+            }
+            list.First().SiteCode = null;
+            list[1].SiteCode = 1000;
+            list.Last().SiteCode = null;
+            return list;
         }
     }
 }

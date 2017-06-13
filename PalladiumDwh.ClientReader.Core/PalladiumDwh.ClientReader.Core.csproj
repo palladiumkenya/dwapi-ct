@@ -67,6 +67,7 @@
     <Compile Include="DatabaseType.cs" />
     <Compile Include="DefaultSettings.cs" />
     <Compile Include="DwapiSetting.cs" />
+    <Compile Include="Interfaces\Commands\IAnalyzeCsvTempExtractsCommand.cs" />
     <Compile Include="Interfaces\Commands\IAnalyzeTempExtractsCommand.cs" />
     <Compile Include="Interfaces\Commands\IClearCsvExtractsCommand.cs" />
     <Compile Include="Interfaces\Commands\ILoadCsvExtractCommand.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Model\RunSummary.cs" />
     <Compile Include="Interfaces\Source\IExtractErrorSummary.cs" />
     <Compile Include="Model\SiteManifest.cs" />
+    <Compile Include="Model\Source\DiscoverSource.cs" />
     <Compile Include="Model\Source\TempExtractErrorSummary.cs" />
     <Compile Include="Model\Source\TempPatientArtExtractError.cs" />
     <Compile Include="Model\Source\TempPatientBaselinesExtractError.cs" />

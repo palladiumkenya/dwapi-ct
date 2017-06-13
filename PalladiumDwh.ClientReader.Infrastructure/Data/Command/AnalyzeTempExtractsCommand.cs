@@ -68,7 +68,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                 foreach (var extract in extractSettings)
                 {
                     count++;
-                    progress?.ReportStatus($"Analyzing Extracts [{extract.Display}]...",count,_taskCount);
+                    string stats = $"Analyzing Extract {count} of {_taskCount} [{extract.Display}]";
 
                     var reader= await CountCommand(extract.ExtractSql);
 
@@ -79,7 +79,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             while (reader.Read())
                             {
                                 int? siteCode = (int?) reader.Get("SiteCode",typeof(int?));
-                                int? found = (int?)reader.Get("NumOfTempRecors", typeof(int?));
+                                int? found = (int?)reader.Get("NumOfTempRecords", typeof(int?));
 
                                 var eventHistory =
                                     EventHistory.CreateFound(siteCode, extract.Display, found, extract.Id);
@@ -89,6 +89,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             }
                         }
                     }
+                    progress?.ReportStatus($"{stats}", count, _taskCount);
                 }
             }
             
@@ -99,7 +100,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         {
             string sql = $@"
                 SELECT        
-	                 SiteCode,COUNT(PatientID) AS NumOfTempRecors
+	                 SiteCode,COUNT(PatientPK) AS NumOfTempRecords
                 FROM            
 	                (
                     {extractSql}
