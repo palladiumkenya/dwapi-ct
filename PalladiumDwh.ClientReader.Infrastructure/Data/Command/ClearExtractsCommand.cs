@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using log4net;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
+using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 
 using PalladiumDwh.Shared.Model.Extract;
@@ -40,7 +41,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                 using (var command = _connection.CreateCommand())
                 {
-                    command.CommandText = @"                        
+                    command.CommandText = @"     
+                        TRUNCATE TABLE EventHistory;
                         TRUNCATE TABLE TempPatientArtExtract;TRUNCATE TABLE PatientArtExtract;
                         TRUNCATE TABLE TempPatientBaselinesExtract;TRUNCATE TABLE PatientBaselinesExtract;
                         TRUNCATE TABLE TempPatientLaboratoryExtract;TRUNCATE TABLE PatientLaboratoryExtract;
@@ -101,6 +103,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                 command.CommandTimeout = 0;
 
                 var count = await Task.WhenAll(
+                    TruncateCommand(nameof(EventHistory)),
                     TruncateCommand(nameof(TempPatientExtract)),
                     TruncateCommand(nameof(TempPatientArtExtract)), TruncateCommand(nameof(PatientArtExtract)),
                     TruncateCommand(nameof(TempPatientBaselinesExtract)),

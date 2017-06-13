@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
@@ -23,6 +24,28 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests
             context.Set<T>().AddRange(entities);
             context.SaveChanges();
         }
+
+        public static IEnumerable<EventHistory> GetTestEventHistories(Guid extractSettingId)
+        {
+            var events = Builder<EventHistory>.CreateListOfSize(2).Build().ToList();
+
+            foreach (var e in events)
+            {
+                e.Display = "Patient Status";
+                e.SiteCode = 990099;
+                e.ExtractSettingId = extractSettingId;
+                e.Found = null;
+                e.FoundDate = null;
+                e.Loaded = null;
+                e.LoadDate = null;
+                e.Sent = null;
+                e.NotSent = null;
+                e.SendDate = null;
+            }
+
+            return events;
+        }
+
         public static IEnumerable<T> GetTestData<T>(int count) where T : Entity
         {
             return Builder<T>.CreateListOfSize(count).Build();

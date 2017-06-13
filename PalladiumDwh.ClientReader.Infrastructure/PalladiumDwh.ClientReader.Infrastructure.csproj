@@ -122,6 +122,7 @@
     <Compile Include="Data\Command\LoadPatientExtractCommand.cs" />
     <Compile Include="Data\Command\SyncCommand.cs" />
     <Compile Include="Data\DWAPIRemoteDBInitializer .cs" />
+    <Compile Include="Data\Repository\EventHistoryRepository.cs" />
     <Compile Include="Data\Repository\TempExtractErrorSummaryRepository.cs" />
     <Compile Include="Data\Repository\TempExtractRepository.cs" />
     <Compile Include="Data\Repository\ClientExtractRepository.cs" />

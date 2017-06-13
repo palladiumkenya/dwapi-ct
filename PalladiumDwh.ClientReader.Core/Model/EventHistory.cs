@@ -54,6 +54,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             ExtractSettingId = extractSettingId;
         }
 
+       
         public static EventHistory CreateFound(int? siteCode, string display, int? found,Guid extractSettingId)
         {
             return new EventHistory(siteCode,display,found,DateTime.Now, string.Empty,true,extractSettingId);
@@ -66,12 +67,21 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         public string LoadInfo()
         {
-            return $"Loaded {Loaded}/{Found} {LoadDate.GetTiming("|")}";
+            return $"{Display} > Loaded {Loaded}/{Found} {LoadDate.GetTiming("|")}";
+        }
+
+        public string RejectedInfo()
+        {
+            return $"{Display} > Loaded {Rejected}/{Loaded} {LoadDate.GetTiming("|")}";
         }
 
         public string SendInfo()
         {
-            return $"Sent {Sent}/{NotSent} {SendDate.GetTiming("|")}";
+            return $"{Display} > Sent {Sent}/{Loaded} {SendDate.GetTiming("|")}";
+        }
+        public string NotSenTInfo()
+        {
+            return $"{Display} > Not Sent {NotSent}/{Sent} {SendDate.GetTiming("|")}";
         }
     }
 }

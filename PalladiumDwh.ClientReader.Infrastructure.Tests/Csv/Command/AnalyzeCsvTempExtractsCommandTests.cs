@@ -73,7 +73,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Csv.Command
         {
 
             var files = Directory.GetFiles(_extractsDir, "*.csv").ToList();
-            var csvs = _importService.CopyCsvFilesAsync(files, _importPath, _dprogress).Result;
+            var csvs = _importService.CopyCsvFilesAsync(files, _importPath).Result;
 
             var emr = _context.Emrs.FirstOrDefault(x => x.Name.ToLower().Equals("IQCare".ToLower()));
             

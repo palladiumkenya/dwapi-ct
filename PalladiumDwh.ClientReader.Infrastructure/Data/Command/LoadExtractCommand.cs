@@ -227,6 +227,10 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                         }
                                         var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
                                         loaded += await _connection.ExecuteAsync(action, extract, tx, 0);
+                                        
+                                        //update stats
+
+
                                         tx.Commit();
                                     }
                                     catch (Exception e)
@@ -307,6 +311,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         {
             return Task.Run(() => command.ExecuteReader());
         }
+
+        
     }
 
 

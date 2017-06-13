@@ -67,6 +67,7 @@
     <Compile Include="DatabaseType.cs" />
     <Compile Include="DefaultSettings.cs" />
     <Compile Include="DwapiSetting.cs" />
+    <Compile Include="Enums\StatAction.cs" />
     <Compile Include="Interfaces\Commands\IAnalyzeCsvTempExtractsCommand.cs" />
     <Compile Include="Interfaces\Commands\IAnalyzeTempExtractsCommand.cs" />
     <Compile Include="Interfaces\Commands\IClearCsvExtractsCommand.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Interfaces\Profiles\IClientPatientStatusProfile.cs" />
     <Compile Include="Interfaces\Profiles\IClientPatientVisitProfile.cs" />
     <Compile Include="Interfaces\Reports\ISummaryReport.cs" />
+    <Compile Include="Interfaces\Repository\IEventHistoryRepository.cs" />
     <Compile Include="Interfaces\Repository\ITempExtractErrorSummaryRepository.cs" />
     <Compile Include="Interfaces\Repository\ITempPatientBaselinesExtractErrorSummaryRepository.cs" />
     <Compile Include="Interfaces\Repository\ITempPatientVisitExtractErrorSummaryRepository.cs" />
