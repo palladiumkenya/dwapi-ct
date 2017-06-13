@@ -21,6 +21,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<EMR> Emrs { get; set; }
         public virtual DbSet<ExtractSetting> ExtractSettings { get; set; }
+        public virtual DbSet<EventHistory> EventHistories { get; set; }
 
 
         public virtual DbSet<TempPatientExtract> TempPatientExtracts { get; set; }
@@ -75,7 +76,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
            .WithRequired()
            .HasForeignKey(f => new { f.EmrId });
 
-     
+            modelBuilder.Entity<ExtractSetting>()
+                .HasMany(c => c.Events)
+                .WithRequired()
+                .HasForeignKey(f => new { f.ExtractSettingId });
+
+
             modelBuilder.Entity<ClientPatientExtract>()
                .HasMany(c => c.ClientPatientArtExtracts)
                .WithRequired()

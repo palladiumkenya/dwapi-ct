@@ -67,6 +67,7 @@
     <Compile Include="DatabaseType.cs" />
     <Compile Include="DefaultSettings.cs" />
     <Compile Include="DwapiSetting.cs" />
+    <Compile Include="Interfaces\Commands\IAnalyzeTempExtractsCommand.cs" />
     <Compile Include="Interfaces\Commands\IClearCsvExtractsCommand.cs" />
     <Compile Include="Interfaces\Commands\ILoadCsvExtractCommand.cs" />
     <Compile Include="Interfaces\Commands\IClearExtractsCommand.cs" />

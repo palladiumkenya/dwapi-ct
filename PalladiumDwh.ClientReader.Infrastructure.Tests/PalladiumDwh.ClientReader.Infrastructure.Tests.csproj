@@ -110,6 +110,7 @@
     <Compile Include="Csv\Command\LoadPatientArtExtractCsvCommandTests.cs" />
     <Compile Include="Csv\Command\LoadPatientExtractCsvCommandTests.cs" />
     <Compile Include="Data\Command\ClearExtractsCommandTests.cs" />
+    <Compile Include="Data\Command\AnalyzeTempExtractsCommandTests.cs" />
     <Compile Include="Data\Command\ValidatePatientArtExtractDbCommandTests.cs" />
     <Compile Include="Data\Command\LoadPatientArtExtractDbCommandTests.cs" />
     <Compile Include="Data\Command\ValidatePatientBaselinesExtractDbCommandTests.cs" />

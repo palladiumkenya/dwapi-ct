@@ -92,6 +92,7 @@
     <Compile Include="Csv\Command\LoadPatientPharmacyExtractCsvCommand.cs" />
     <Compile Include="Csv\Command\LoadPatientStatusExtractCsvCommand.cs" />
     <Compile Include="Csv\Command\LoadPatientVisitExtractCsvCommand.cs" />
+    <Compile Include="Data\Command\AnalyzeTempExtractsCommand.cs" />
     <Compile Include="Data\Command\ClearExtractsCommand.cs" />
     <Compile Include="Data\Command\ValidatePatientArtExtractCommand.cs" />
     <Compile Include="Data\Command\ValidatePatientBaselinesExtractCommand.cs" />
@@ -161,6 +162,14 @@
     <Compile Include="Migrations\201705271928563_ValidationsV1.Designer.cs">
       <DependentUpon>201705271928563_ValidationsV1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706130626513_InitialEventHistory.cs" />
+    <Compile Include="Migrations\201706130626513_InitialEventHistory.Designer.cs">
+      <DependentUpon>201706130626513_InitialEventHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706130647008_EventHistoryRev001.cs" />
+    <Compile Include="Migrations\201706130647008_EventHistoryRev001.Designer.cs">
+      <DependentUpon>201706130647008_EventHistoryRev001.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -196,6 +205,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705271928563_ValidationsV1.resx">
       <DependentUpon>201705271928563_ValidationsV1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706130626513_InitialEventHistory.resx">
+      <DependentUpon>201706130626513_InitialEventHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706130647008_EventHistoryRev001.resx">
+      <DependentUpon>201706130647008_EventHistoryRev001.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Scripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>

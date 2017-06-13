@@ -8,7 +8,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
     public class EventHistory : Entity
     {
-        public int SiteCode { get; set; }
+        public int? SiteCode { get; set; }
         public string Display { get; set; }
 
         public int? Found { get; set; }
@@ -32,13 +32,36 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         [NotMapped]
         public override string Emr { get; set; }
-
         [NotMapped]
         public override string Project { get; set; }
+        [NotMapped]
+        public override bool Processed { get; set; }
+        [NotMapped]
+        public override bool Voided { get; set; }
+
+        public EventHistory()
+        {
+        }
+
+        private EventHistory(int? siteCode, string display, int? found, DateTime? foundDate, string foundStatus, bool isFoundSuccess, Guid extractSettingId)
+        {
+            SiteCode = siteCode;
+            Display = display;
+            Found = found;
+            FoundDate = foundDate;
+            FoundStatus = foundStatus;
+            IsFoundSuccess = isFoundSuccess;
+            ExtractSettingId = extractSettingId;
+        }
+
+        public static EventHistory CreateFound(int? siteCode, string display, int? found,Guid extractSettingId)
+        {
+            return new EventHistory(siteCode,display,found,DateTime.Now, string.Empty,true,extractSettingId);
+        }
 
         public string FoundInfo()
         {
-            return $"Found {Found} {FoundDate.GetTiming("|")}";
+            return $"{Display} > Found {Found} {FoundDate.GetTiming("|")}";
         }
 
         public string LoadInfo()
