@@ -11,6 +11,7 @@ using Dapper;
 using log4net;
 using PalladiumDwh.ClientReader.Core.Enums;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
@@ -145,8 +146,10 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             }
         }
 
-        public virtual async Task<LoadSummary> ExecuteAsync(Progress<ProcessStatus> progressPercent = null)
+        public virtual async Task<LoadSummary> ExecuteAsync(Progress<ProcessStatus> progressPercent = null, IProgress<DProgress> progress = null)
         {
+            //progress?.ReportStatus("");
+
             _progress = progressPercent;
             _summary = new LoadSummary();
 

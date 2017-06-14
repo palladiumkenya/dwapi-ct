@@ -124,4 +124,3 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
         }
     }
 }
-}
