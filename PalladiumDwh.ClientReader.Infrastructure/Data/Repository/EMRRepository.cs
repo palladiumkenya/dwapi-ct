@@ -195,17 +195,17 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 	                    SUM(Found) AS Found, 
 	                    MAX(FoundDate) AS FoundDate, 
 	                    MAX(Loaded) AS Loaded, 
-	                    SUM(Rejected) AS Rejected, 
+	                    MAX(Rejected) AS Rejected, 
 	                    MAX(LoadDate) AS LoadDate, 
-	                    SUM(Sent) AS Sent, 
-	                    SUM(NotSent) AS NotSent, 
+	                    MAX(Sent) AS Sent, 
+	                    MAX(NotSent) AS NotSent, 
 	                    MAX(SendDate) AS SendDate
                     FROM            
 	                    EventHistory
                     WHERE        
 	                    (ExtractSettingId = @ExtractSettingId)
                     GROUP BY 
-	                    Display",new {ExtractSettingId = extractSettingId});
+	                    Display", new {ExtractSettingId = extractSettingId});
         }
     }
 }

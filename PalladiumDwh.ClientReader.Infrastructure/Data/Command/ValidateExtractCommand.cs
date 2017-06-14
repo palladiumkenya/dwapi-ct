@@ -9,6 +9,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using log4net;
+using PalladiumDwh.ClientReader.Core.Enums;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.Shared.Model;
 
@@ -53,21 +54,18 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             Log.Debug($"Executing Validate {extractName} command...");
 
             var emr = _emrRepository.GetDefault();
-
-            if (null == emr) throw new Exception($"No Default EMR Setup !");
+        if (null == emr) throw new Exception($"No Default EMR Setup !");
 
             _extractSetting = emr.GetActiveExtractSetting($"{extractName}");
-
             if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
 
             commandText = _extractSetting.ExtractSql;
-
             if (string.IsNullOrWhiteSpace(commandText)) throw new Exception($"No sql command found for {extractName}");
 
-            
+            EventHistory currentHistory = _emrRepository.GetStats(_extractSetting.Id);
+
 
             _validators = _validatorRepository.GetByExtract(extractName).ToList();
-
             ShowPercentage(1,1);
 
             using (_connection)
@@ -103,6 +101,10 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                 }
 
                 _summary.Total = await GetNumberOfRecordsWithErrors(_connection.CreateCommand(), extractName);
+
+                //update stats
+                _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Rejected, _summary.Total);
+
             }
             return _summary;
         }

@@ -72,7 +72,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         public string RejectedInfo()
         {
-            return $"{Display} > Loaded {Rejected}/{Found} {LoadDate.GetTiming("|")}";
+            return $"{Display} > Rejected {Rejected}/{Found} {LoadDate.GetTiming("|")}";
         }
 
         public string SendInfo()
