@@ -172,6 +172,10 @@
     <Compile Include="Migrations\201706130647008_EventHistoryRev001.Designer.cs">
       <DependentUpon>201706130647008_EventHistoryRev001.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706140730444_EventHistoryRev002.cs" />
+    <Compile Include="Migrations\201706140730444_EventHistoryRev002.Designer.cs">
+      <DependentUpon>201706140730444_EventHistoryRev002.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -213,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706130647008_EventHistoryRev001.resx">
       <DependentUpon>201706130647008_EventHistoryRev001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706140730444_EventHistoryRev002.resx">
+      <DependentUpon>201706140730444_EventHistoryRev002.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Scripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>

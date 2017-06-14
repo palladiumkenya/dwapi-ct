@@ -10,6 +10,8 @@ using PalladiumDwh.ClientReader.Core.Enums;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
 using System.Data.Entity;
+using System.Threading.Tasks;
+using Dapper;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 {
@@ -77,63 +79,116 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
             return Context.Emrs.FirstOrDefault(x => x.IsDefault);
         }
 
-        public void UpdateStats(EventHistory eventHistory, StatAction action, int count)
+        public int CreateStats(EventHistory eventHistory, StatAction action)
         {
+            var db = Context.Database.Connection as SqlConnection;
+
             if (action == StatAction.Found)
             {
-                eventHistory.Found = count;
-                Context.EventHistories.Add(eventHistory);
+                try
+                {
+                    return db.Execute(@"
+                    INSERT INTO EventHistory
+                        (Id,SiteCode,Display,Found,FoundDate,ExtractSettingId)
+                    VALUES
+                        (@Id,@SiteCode,@Display,@Found,@FoundDate,@ExtractSettingId)", eventHistory);
+                }
+                catch (Exception ex)
+                {
+                    Log.Debug(ex);
+                    throw;
+                }
             }
+            return -1;
+        }
+
+        public int UpdateStats(Guid extractSettingId, StatAction action, int count)
+        {
+            var db = Context.Database.Connection;
+            var eventHistoryToUpdate = new EventHistory {ExtractSettingId = extractSettingId};
+
             if (action == StatAction.Loaded)
             {
-                var eventHistoryToUpdate = GetStats(eventHistory.ExtractSettingId);
-                if (null != eventHistoryToUpdate)
+                eventHistoryToUpdate.Loaded = count;
+                eventHistoryToUpdate.LoadDate = DateTime.Now;
+
+                try
                 {
-                    eventHistoryToUpdate.Loaded = count;
-                    eventHistoryToUpdate.LoadDate = DateTime.Now;
-                    Context.EventHistories.Attach(eventHistoryToUpdate);
-                    Context.Entry(eventHistoryToUpdate).State = EntityState.Modified;
+                    return db.Execute(@"
+                                UPDATE EventHistory 
+                                SET Loaded=@Loaded,LoadDate=@LoadDate
+                                WHERE (ExtractSettingId=@ExtractSettingId)
+                                ", eventHistoryToUpdate);
                 }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                    throw;
+                }
+                
             }
             if (action == StatAction.Rejected)
             {
-                var eventHistoryToUpdate = GetStats(eventHistory.ExtractSettingId);
-                if (null != eventHistoryToUpdate)
+                eventHistoryToUpdate.Rejected = count;
+                try
                 {
-                    eventHistoryToUpdate.Rejected = count;
-                    Context.EventHistories.Attach(eventHistoryToUpdate);
-                    Context.Entry(eventHistoryToUpdate).State = EntityState.Modified;
+                    return db.Execute(@"
+                                UPDATE EventHistory 
+                                SET Rejected=@Rejected
+                                WHERE (ExtractSettingId=@ExtractSettingId)
+                                ", eventHistoryToUpdate);
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                    throw;
                 }
             }
 
             if (action == StatAction.Sent)
             {
-                var eventHistoryToUpdate = GetStats(eventHistory.ExtractSettingId);
-                if (null != eventHistoryToUpdate)
+                eventHistoryToUpdate.Sent = count;
+                eventHistoryToUpdate.SendDate = DateTime.Now;
+                try
                 {
-                    eventHistoryToUpdate.Sent = count;
-                    eventHistoryToUpdate.SendDate = DateTime.Now;
-                    Context.EventHistories.Attach(eventHistoryToUpdate);
-                    Context.Entry(eventHistoryToUpdate).State = EntityState.Modified;
+                    return db.Execute(@"
+                                UPDATE EventHistory 
+                                SET Sent=@Sent,SendDate=@SendDate
+                                WHERE (ExtractSettingId=@ExtractSettingId)
+                                ", eventHistoryToUpdate);
                 }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                    throw;
+                }
+
             }
 
             if (action == StatAction.NotSent)
             {
-                var eventHistoryToUpdate = GetStats(eventHistory.ExtractSettingId);
-                if (null != eventHistoryToUpdate)
+                eventHistoryToUpdate.NotSent = count;
+                try
                 {
-                    eventHistoryToUpdate.NotSent = count;
-                    Context.EventHistories.Attach(eventHistoryToUpdate);
-                    Context.Entry(eventHistoryToUpdate).State = EntityState.Modified;
+                    return db.Execute(@"
+                                UPDATE EventHistory 
+                                SET NotSent=@NotSent
+                                WHERE (ExtractSettingId=@ExtractSettingId)
+                                ", eventHistoryToUpdate);
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                    throw;
                 }
             }
-
+            return -1;
         }
 
         public EventHistory GetStats(Guid extractSettingId)
         {
-            return Context.EventHistories.FirstOrDefault(x => x.ExtractSettingId == extractSettingId);
+            var db = Context.Database.Connection;
+            return db.QueryFirstOrDefault<EventHistory>(@"SELECT * FROM EventHistory WHERE ExtractSettingId = @ExtractSettingId", new {ExtractSettingId = extractSettingId});
         }
     }
 }

@@ -14,19 +14,19 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public int? Found { get; set; }
         public DateTime? FoundDate { get; set; }
         public string FoundStatus { get; set; }
-        public bool IsFoundSuccess { get; set; }
+        public bool? IsFoundSuccess { get; set; }
 
         public int? Loaded { get; set; }
         public int? Rejected { get; set; }
         public DateTime? LoadDate { get; set; }
         public string LoadStatus { get; set; }
-        public bool IsLoadSuccess { get; set; }
+        public bool? IsLoadSuccess { get; set; }
 
         public int? Sent { get; set; }
         public int? NotSent { get; set; }
         public DateTime? SendDate { get; set; }
         public string SendStatus { get; set; }
-        public bool IsSendSuccess { get; set; }
+        public bool? IsSendSuccess { get; set; }
 
         public Guid ExtractSettingId { get; set; }
 
@@ -43,7 +43,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        private EventHistory(int? siteCode, string display, int? found, DateTime? foundDate, string foundStatus, bool isFoundSuccess, Guid extractSettingId)
+        private EventHistory(int? siteCode, string display, int? found, DateTime? foundDate, string foundStatus, bool? isFoundSuccess, Guid extractSettingId)
         {
             SiteCode = siteCode;
             Display = display;
@@ -72,7 +72,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         public string RejectedInfo()
         {
-            return $"{Display} > Loaded {Rejected}/{Loaded} {LoadDate.GetTiming("|")}";
+            return $"{Display} > Loaded {Rejected}/{Found} {LoadDate.GetTiming("|")}";
         }
 
         public string SendInfo()
