@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Infrastructure.Interception;
+using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -8,6 +10,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Dapper;
 using log4net;
+using PalladiumDwh.ClientReader.Core.Enums;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
@@ -23,44 +26,44 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IEMRRepository _emrRepository;
-        internal readonly IDbConnection CleintConnection;
+        internal readonly SqlConnection CleintConnection;
         internal string CommandText;
         internal readonly int BatchSize;
         private  LoadSummary _summary;
+        private ExtractSetting _extractSetting;
 
         protected LoadExtractCsvCommand(IEMRRepository emrRepository, int batchSize = 100)
         {
             _emrRepository = emrRepository;
-            CleintConnection = _emrRepository.GetConnection();
+            CleintConnection = _emrRepository.GetConnection() as SqlConnection;
             BatchSize = batchSize;
         }
 
         public LoadSummary Summary => _summary;
 
-        public async Task<LoadSummary> ExecuteAsync(string csvExtract, Progress<DProgress> progress = null)
+        public async Task<LoadSummary> ExecuteAsync(string csvExtract, IProgress<DProgress> progress = null)
         {
-            CommandText = csvExtract;
             _summary = new LoadSummary();
-            int totalRecords = 0;
+            var extractName = typeof(T).Name;
 
+            CommandText = csvExtract;
+            if (string.IsNullOrWhiteSpace(CommandText)) throw new Exception($"missing csv file found!");
+
+            var emr = _emrRepository.GetDefault();
+            if (null == emr) throw new Exception($"No Default EMR Setup !");
+
+            _extractSetting = emr.GetActiveExtractSetting($"{extractName}");
+            if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
+
+            int totalRecords = 0;
             progress?.ReportStatus($"Reading Csv...");
 
-            try
-            {
-                await Task.Run(() =>
-                {
-                    totalRecords = File.ReadAllLines(CommandText).Length;
-                });
-            }
-            catch (Exception e)
-            {
-                Log.Debug(e);
-            }
+            EventHistory currentHistory = _emrRepository.GetStats(_extractSetting.Id);
 
+            totalRecords = currentHistory.Found ?? await GetTotal(CommandText);
 
             using (TextReader txtReader = File.OpenText(CommandText))
             {
-
                 var reader = new CsvReader(txtReader, GetConfig());
                 reader.Configuration.RegisterClassMap(TempExtractMap.GetMap<T>());
 
@@ -71,16 +74,16 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                     int loaded = 0;
                     var extract = (T)Activator.CreateInstance(typeof(T));
                     string action = extract.GetAddAction();
+                    int totalcount = 0;
                     while (reader.Read())
                     {
-
                         count++;
-                        _summary.Total = count;
+
                         try
                         {
+                            totalcount++;
                             extract = reader.GetRecord<T>();
                             //extract.Load(reader);
-
                         }
                         catch (Exception ex)
                         {
@@ -96,17 +99,28 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                             //extract.HasError = true;
                         }
 
-
-
-                        loaded++;
-                        _summary.Loaded = loaded;
                         if (BatchSize == 0)
                         {
-                            if (CleintConnection.State != ConnectionState.Open)
+                            try
                             {
-                                CleintConnection.Open();
+                                if (CleintConnection.State != ConnectionState.Open)
+                                {
+                                    await CleintConnection.OpenAsync();
+                                }
+                                var tx = CleintConnection.BeginTransaction(IsolationLevel.RepeatableRead);
+                                loaded += await CleintConnection.ExecuteAsync(action, extract, tx, 0);
+                                tx.Commit();
+
+                                //update stats
+                                _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Loaded, loaded);
+
                             }
-                            CleintConnection.Execute(action, extract);
+                            catch (Exception e)
+                            {
+                                Log.Debug(e);
+                                throw;
+                            }
+                           
                         }
                         else
                         {
@@ -114,36 +128,60 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
 
                             if (count == BatchSize && BatchSize > 0)
                             {
-
-                                if (CleintConnection.State != ConnectionState.Open)
+                                try
                                 {
-                                    CleintConnection.Open();
+                                    if (CleintConnection.State != ConnectionState.Open)
+                                    {
+                                        await CleintConnection.OpenAsync();
+                                    }
+                                    var tx = CleintConnection.BeginTransaction(IsolationLevel.RepeatableRead);
+                                    loaded += await CleintConnection.ExecuteAsync(action, extract, tx, 0);
+                                    tx.Commit();
+
+                                    //update stats
+                                    _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Loaded, loaded);
                                 }
-
-                                var tx = CleintConnection.BeginTransaction();
-                                CleintConnection.Execute(action, extracts, tx);
-                                tx.Commit();
-
+                                catch (Exception e)
+                                {
+                                    Log.Debug(e);
+                                    throw;
+                                }
+                                
                                 extracts = new List<T>();
                                 count = 0;
                             }
                         }
 
-                        progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}]...", count, totalRecords);
+                        progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}]...", loaded, totalRecords);
                     }
 
                     if (extracts.Count > 0)
                     {
-
-                        if (CleintConnection.State != ConnectionState.Open)
+                        try
                         {
-                            CleintConnection.Open();
-                        }
-                        var tx = CleintConnection.BeginTransaction();
-                        CleintConnection.Execute(action, extracts, tx);
-                        tx.Commit();
+                            if (CleintConnection.State != ConnectionState.Open)
+                            {
+                                await CleintConnection.OpenAsync();
+                            }
+                            var tx = CleintConnection.BeginTransaction(IsolationLevel.RepeatableRead);
+                            loaded += await CleintConnection.ExecuteAsync(action, extract, tx, 0);
+                            tx.Commit();
 
+                            //update stats
+                            _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Loaded, loaded);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Debug(e);
+                            throw;
+                        }
+                        progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}]...", loaded, totalRecords);
                     }
+
+                    currentHistory = _emrRepository.GetStats(_extractSetting.Id);
+
+                    _summary.Loaded = currentHistory.Loaded ?? loaded;
+                    _summary.Total = currentHistory.Found ?? totalcount;
                 }
             }
 
@@ -162,6 +200,26 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                 TrimFields = true,
                 TrimHeaders = true
             };
+
+        }
+
+        private async Task<int> GetTotal(string csv)
+        {
+            var totalRecords = 0;
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    totalRecords = File.ReadAllLines(csv).Length;
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+            }
+
+            return totalRecords;
 
         }
     }
