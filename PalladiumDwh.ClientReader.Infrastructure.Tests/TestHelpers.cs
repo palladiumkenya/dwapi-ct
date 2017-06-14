@@ -148,9 +148,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests
             config.Save();
             ConfigurationManager.RefreshSection("connectionStrings");
         }
-        public static string GetCsv(string name)
+        public static string GetCsv(string name, string folder = "")
         {
             string path = TestContext.CurrentContext.TestDirectory;
+            if (!string.IsNullOrWhiteSpace(folder))
+            {
+                path = $"{TestContext.CurrentContext.TestDirectory.HasToEndsWith(@"\")}{folder.HasToEndsWith(@"\")}";
+            }
             var files = Directory.GetFiles(path, "*.csv", SearchOption.AllDirectories);
             return files.FirstOrDefault(x => x.Contains(name));
         }

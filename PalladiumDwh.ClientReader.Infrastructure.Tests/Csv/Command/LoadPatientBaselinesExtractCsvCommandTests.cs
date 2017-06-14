@@ -41,7 +41,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Csv.Command
             new SqlConnection(ConfigurationManager.ConnectionStrings["EMRDatabase"].ConnectionString);
             _clientConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DWAPIRemote"].ConnectionString);
 
-            _commandText = TestHelpers.GetCsv("PatientWABWHOCD4Extract");
+            _commandText = TestHelpers.GetCsv("PatientWABWHOCD4Extract", "Extracts");
 
             _extractCommand = new LoadPatientBaselinesExtractCsvCommand(_emrRepository);
             _context.Database.ExecuteSqlCommand("DELETE FROM EventHistory");
