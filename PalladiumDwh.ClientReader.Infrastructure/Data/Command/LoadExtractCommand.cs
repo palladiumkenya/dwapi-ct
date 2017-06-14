@@ -168,7 +168,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             if (string.IsNullOrWhiteSpace(commandText)) throw new Exception($"No sql command found for {extractName}");
 
             EventHistory currentHistory = _emrRepository.GetStats(_extractSetting.Id);
-
+            
+            progress?.ReportStatus($"Loading Extracts {extractName}...");
             ShowPercentage(1);
 
             using (_emrConnection)
@@ -234,6 +235,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                                         //update stats
                                         _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Loaded, loaded);
+
+                                        
 
                                     }
                                     catch (Exception e)
