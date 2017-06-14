@@ -8,6 +8,7 @@ namespace PalladiumDwh.ClientApp.Model
     {
         public string Project { get; set; }
         public string EMR { get; set; }
+        public EMR ActivEmr { get; set; }
         public string Version { get; set; }
         public string Key { get; set; }
         public bool IsDefault { get; set; }
@@ -20,6 +21,7 @@ namespace PalladiumDwh.ClientApp.Model
 
         public EmrViewModel(Project project, EMR emr)
         {
+            ActivEmr = emr;
             Project = project.Name;
             EMR = emr.Name;
             Version = emr.Version;

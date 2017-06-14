@@ -9,6 +9,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using Dapper;
 using log4net;
+using PalladiumDwh.ClientReader.Core.Enums;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.Shared.Model;
 
@@ -155,16 +156,15 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             Log.Debug($"Executing load {extractName} command...");
 
             var emr = _emrRepository.GetDefault();
-
             if (null == emr) throw new Exception($"No Default EMR Setup !");
 
             _extractSetting = emr.GetActiveExtractSetting($"{extractName}");
-
             if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
 
             commandText = _extractSetting.ExtractSql;
-
             if (string.IsNullOrWhiteSpace(commandText)) throw new Exception($"No sql command found for {extractName}");
+
+            EventHistory currentHistory = _emrRepository.GetStats(_extractSetting.Id);
 
             ShowPercentage(1);
 
@@ -227,11 +227,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                         }
                                         var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
                                         loaded += await _connection.ExecuteAsync(action, extract, tx, 0);
-                                        
-                                        //update stats
-
-
                                         tx.Commit();
+
+                                        //update stats
+                                        _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Loaded, loaded);
+
                                     }
                                     catch (Exception e)
                                     {
@@ -254,6 +254,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                             var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
                                             loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
                                             tx.Commit();
+
+                                            //update stats
+                                            _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Loaded, loaded);
                                         }
                                         catch (Exception e)
                                         {
@@ -279,6 +282,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                     var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
                                     loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
                                     tx.Commit();
+
+                                    //update stats
+                                    _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Loaded, loaded);
                                 }
                                 catch (Exception e)
                                 {
@@ -287,8 +293,10 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                 }
                             }
 
-                            _summary.Loaded = loaded;
-                            _summary.Total = totalcount;
+                            currentHistory = _emrRepository.GetStats(_extractSetting.Id);
+
+                            _summary.Loaded = currentHistory.Loaded ?? loaded;
+                            _summary.Total = currentHistory.Found ?? totalcount;
                         }
                     }
 

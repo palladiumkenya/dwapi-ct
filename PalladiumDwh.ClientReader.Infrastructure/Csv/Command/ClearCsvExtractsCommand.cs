@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
@@ -8,6 +9,8 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
+using PalladiumDwh.Shared.Custom;
+using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
@@ -16,63 +19,32 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private readonly IEMRRepository _emrRepository;
         private readonly SqlConnection _connection;
-        private IProgress<int> _progress;
-        private int _progressValue;
+
+        private IProgress<DProgress> _dprogress;
+        private int _dprogressValue;
         private int _taskCount;
+        private string progressStatus = "Clearing existng Extracts";
 
         public ClearCsvExtractsCommand(IEMRRepository emrRepository)
         {
-            _emrRepository = emrRepository;
             _connection = emrRepository.GetConnection() as SqlConnection;
-        }
-
-        public int Execute()
-        {
-            int totalCount;
-            using (_connection)
-            {
-                if (_connection.State != ConnectionState.Open)
-                {
-                    _connection.Open();
-                }
-
-                using (var command = _connection.CreateCommand())
-                {
-                    command.CommandText = @"   
-                        TRUNCATE TABLE EventHistory;
-                        TRUNCATE TABLE TempPatientArtExtract;TRUNCATE TABLE PatientArtExtract;
-                        TRUNCATE TABLE TempPatientBaselinesExtract;TRUNCATE TABLE PatientBaselinesExtract;
-                        TRUNCATE TABLE TempPatientLaboratoryExtract;TRUNCATE TABLE PatientLaboratoryExtract;
-                        TRUNCATE TABLE TempPatientPharmacyExtract;TRUNCATE TABLE PatientPharmacyExtract;
-                        TRUNCATE TABLE TempPatientVisitExtract;TRUNCATE TABLE PatientVisitExtract;
-                        TRUNCATE TABLE TempPatientStatusExtract;TRUNCATE TABLE PatientStatusExtract;
-                        TRUNCATE TABLE TempPatientExtract;
-                        DELETE FROM PatientExtract;
-                                ";
-                    totalCount = command.ExecuteNonQuery();
-                }
-            }
-            return totalCount;
         }
 
         private Task<int> TruncateCommand(string extract)
         {
-            //TODO:Handle Truncate Errors
-            _progressValue++;
-            var count = GetCommand(extract, "TRUNCATE TABLE").ExecuteNonQueryAsync();
-            ShowPercentage(_progressValue);
-            return count;
+            _dprogressValue++;
+            _dprogress?.ReportStatus($"{progressStatus}", _dprogressValue, _taskCount);
+            var command = GetCommand(extract, "TRUNCATE TABLE");
+            return command.ExecuteNonQueryAsync();
         }
 
         private Task<int> DeleteCommand(string extract)
         {
-            //TODO:Handle Delete Errors
-            _progressValue++;
-            var count = GetCommand(extract, "DELETE FROM").ExecuteNonQueryAsync();
-            ShowPercentage(_progressValue);
-            return count;
+            _dprogressValue++;
+            _dprogress?.ReportStatus($"{progressStatus}", _dprogressValue, _taskCount);
+            var command = GetCommand(extract, "DELETE FROM");
+            return command.ExecuteNonQueryAsync();
         }
 
         private SqlCommand GetCommand(string extract, string action)
@@ -83,13 +55,37 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
             return command;
         }
 
-        public async Task<int> ExecuteAsync()
+        public async Task<int> ExecuteAsync(IProgress<DProgress> dprogress = null)
         {
+            _dprogress = dprogress;
+
+            _dprogress?.ReportStatus($"{progressStatus}...");
+
             Log.Debug($"Executing ClearExtracts command...");
 
-            _progressValue = 1;
+            int totalCount = 0;
 
-            int totalCount;
+
+            var truncates = new List<string>
+            {  nameof(EventHistory),
+                nameof(TempPatientExtract),
+                nameof(TempPatientArtExtract),
+                nameof(PatientArtExtract),
+                nameof(TempPatientBaselinesExtract),
+                nameof(PatientBaselinesExtract),
+                nameof(TempPatientStatusExtract),
+                nameof(PatientStatusExtract),
+                nameof(TempPatientLaboratoryExtract),
+                nameof(PatientLaboratoryExtract),
+                nameof(TempPatientPharmacyExtract),
+                nameof(PatientPharmacyExtract),
+                nameof(TempPatientVisitExtract),
+                nameof(PatientVisitExtract)
+            };
+
+            var deletes = new List<string> { nameof(PatientExtract) };
+
+            _taskCount = truncates.Count + deletes.Count + 1;
 
             using (_connection)
             {
@@ -101,33 +97,31 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                 var command = _connection.CreateCommand();
                 command.CommandTimeout = 0;
 
-                var count = await Task.WhenAll(
-                    TruncateCommand(nameof(EventHistory)),
-                    TruncateCommand(nameof(TempPatientExtract)),
-                    TruncateCommand(nameof(TempPatientArtExtract)), TruncateCommand(nameof(PatientArtExtract)),
-                    TruncateCommand(nameof(TempPatientBaselinesExtract)),
-                    TruncateCommand(nameof(PatientBaselinesExtract)),
-                    TruncateCommand(nameof(TempPatientStatusExtract)), TruncateCommand(nameof(PatientStatusExtract)),
-                    TruncateCommand(nameof(TempPatientLaboratoryExtract)),
-                    TruncateCommand(nameof(PatientLaboratoryExtract)),
-                    TruncateCommand(nameof(TempPatientPharmacyExtract)),
-                    TruncateCommand(nameof(PatientPharmacyExtract)),
-                    TruncateCommand(nameof(TempPatientVisitExtract)), TruncateCommand(nameof(PatientVisitExtract))
-                );
+                var parallelTasks = new List<Task<int>>();
 
+                foreach (var name in truncates)
+                {
+                    parallelTasks.Add(TruncateCommand(name));
+                }
 
-                totalCount = await DeleteCommand(nameof(PatientExtract));
+                var orderdTasks = new List<Task<int>>();
+
+                foreach (var name in deletes)
+                {
+                    orderdTasks.Add(DeleteCommand(name));
+                }
+
+                var count = await Task.WhenAll(parallelTasks);
+
+                foreach (var t in orderdTasks)
+                {
+                    totalCount += await t;
+                }
+
+                _dprogress?.ReportStatus($"{progressStatus} Finished", _taskCount, _taskCount);
             }
-
             return totalCount;
         }
-
-        private void ShowPercentage(int progress)
-        {
-            if (null == _progress)
-                return;
-            decimal status = (progress / _taskCount) * 100;
-            _progress.Report((int) status);
-        }
     }
+}
 }

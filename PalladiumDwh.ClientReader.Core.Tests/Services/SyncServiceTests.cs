@@ -10,6 +10,7 @@ using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
+using PalladiumDwh.Shared.Model;
 
 
 namespace PalladiumDwh.ClientReader.Core.Tests.Services
@@ -23,6 +24,8 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         private ISyncService _syncService;
 
         private DwapiRemoteContext _context;
+
+        private IAnalyzeTempExtractsCommand _analyzeTempExtractsCommand;
 
         private IClearExtractsCommand _clearExtractsCommand;
         private ILoadPatientExtractCommand _loadPatientExtractCommand;
@@ -50,12 +53,18 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         private ISyncPatientStatusExtractCommand _syncPatientStatusExtractCommand;
         private int top = 10;
         private int topExtracts = -1;
+        private IProgress<DProgress> _dprogress;
 
         [SetUp]
         public void should_SetUp()
         {
+
+            _dprogress = new Progress<DProgress>(ReportDProgress);
+
             _context = new DwapiRemoteContext();
-            _clearExtractsCommand=new ClearExtractsCommand(new EMRRepository(_context));
+
+            _analyzeTempExtractsCommand=new AnalyzeTempExtractsCommand(new EMRRepository(_context),new DatabaseManager(_context));
+            _clearExtractsCommand =new ClearExtractsCommand(new EMRRepository(_context));
 
             _loadPatientExtractCommand = new LoadPatientExtractCommand(new EMRRepository(_context));
             _loadPatientArtExtractCommand = new LoadPatientArtExtractCommand(new EMRRepository(_context));
@@ -82,12 +91,14 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _syncPatientStatusExtractCommand = new SyncPatientStatusExtractCommand(new EMRRepository(_context));
 
             _syncService = new SyncService(
-                _clearExtractsCommand,
+            _analyzeTempExtractsCommand,
+        _clearExtractsCommand,
                 _loadPatientExtractCommand, _loadPatientArtExtractCommand, _loadPatientBaselinesExtractCommand,_loadPatientLaboratoryExtractCommand, _loadPatientPharmacyExtractCommand,_loadPatientStatusExtractCommand, _loadPatientVisitExtractCommand,
                 _validatePatientExtractCommand,_validatePatientArtExtractCommand,_validatePatientBaselinesExtractCommand,_validatePatientLaboratoryExtractCommand,_validatePatientPharmacyExtractCommand,_validatePatientStatusExtractCommand,_validatePatientVisitExtractCommand,_syncPatientExtractCommand, _syncPatientArtExtractCommand, 
                 _syncPatientBaselinesExtractCommand,_syncPatientLaboratoryExtractCommand, _syncPatientPharmacyExtractCommand,_syncPatientVisitExtractCommand, _syncPatientStatusExtractCommand);
 
 
+            _context.Database.ExecuteSqlCommand("DELETE FROM EventHistory");
             _context.Database.ExecuteSqlCommand("DELETE FROM ValidationError");
 
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientExtract;DELETE FROM  PatientExtract");
@@ -99,6 +110,13 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract");
         }
 
+
+        [Test]
+        public void should_InitializeAsync()
+        {
+            var result = _syncService.InitializeAsync(_dprogress).Result;
+            Assert.IsTrue(result==1);
+        }
         
         [TestCase(nameof(TempPatientArtExtract))]
         [TestCase(nameof(TempPatientBaselinesExtract))]
@@ -223,7 +241,8 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         [TearDown]
         public void TearDown()
         {
-            
+            _context.Database.ExecuteSqlCommand("DELETE FROM EventHistory");
+            _context.Database.ExecuteSqlCommand("DELETE FROM ValidationError");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientExtract;DELETE FROM  PatientExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientArtExtract;DELETE FROM  PatientArtExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientBaselinesExtract;DELETE FROM  PatientBaselinesExtract");
@@ -232,6 +251,10 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientStatusExtract;DELETE FROM  PatientStatusExtract");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientVisitExtract;DELETE FROM  PatientVisitExtract");
 
+        }
+        private void ReportDProgress(DProgress value)
+        {
+            Console.WriteLine(value);
         }
     }
 }

@@ -11,8 +11,10 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using log4net;
 using PalladiumDwh.ClientReader.Core;
+using PalladiumDwh.ClientReader.Core.Enums;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using PalladiumDwh.ClientReader.Core.Model.Source.Map;
@@ -26,26 +28,26 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private readonly DwapiRemoteContext _context;
-        
+        private readonly IEMRRepository _emrRepository;
+
 
         private IProgress<DProgress> _progress;
         private int _progressValue;
         private int _taskCount;
         
 
-        public AnalyzeCsvTempExtractsCommand(DwapiRemoteContext context)
+        public AnalyzeCsvTempExtractsCommand(IEMRRepository emrRepository)
         {
-            _context = context;
-            
+            _emrRepository = emrRepository;
         }
 
-        public async Task<IEnumerable<EventHistory>> ExecuteAsync(EMR emr, List<string> csvFiles,
+        public async Task<IEnumerable<EventHistory>> ExecuteAsync(List<string> csvFiles,
             IProgress<DProgress> progress = null)
         {
             Log.Debug($"Executing AnalyzeCsvExtracts command...");
             List<EventHistory> eventHistories = new List<EventHistory>();
 
+            var emr = _emrRepository.GetDefault();
             if (null == emr)
             {
                 Log.Debug($"no EMR set !");
@@ -84,8 +86,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                         var eventHistory =
                             EventHistory.CreateFound(s.SiteCode, extract.Display, s.Found, extract.Id);
 
-                        _context.EventHistories.Add(eventHistory);
-                        await _context.SaveChangesAsync();
+                        _emrRepository.CreateStats(eventHistory, StatAction.Found);
                     }
                     
                     progress?.ReportStatus($"{stats}",csvCount,matchingCsvFilesCount);

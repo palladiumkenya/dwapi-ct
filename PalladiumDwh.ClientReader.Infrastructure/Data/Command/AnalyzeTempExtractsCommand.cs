@@ -8,8 +8,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using log4net;
 using PalladiumDwh.ClientReader.Core;
+using PalladiumDwh.ClientReader.Core.Enums;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
@@ -20,26 +22,28 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private readonly DwapiRemoteContext _context;
+        private readonly IEMRRepository _emrRepository;
         private readonly IDatabaseManager _databaseManager;
         private SqlConnection _connection;
+
 
         private IProgress<DProgress> _progress;
         private int _progressValue;
         private int _taskCount;
-        
 
-        public AnalyzeTempExtractsCommand(DwapiRemoteContext context, IDatabaseManager databaseManager)
+        public AnalyzeTempExtractsCommand(IEMRRepository emrRepository, IDatabaseManager databaseManager)
         {
-            _context = context;
+            _emrRepository = emrRepository;
             _databaseManager = databaseManager;
         }
 
-        public async Task<IEnumerable<EventHistory>> ExecuteAsync(EMR emr, IProgress<DProgress> progress = null)
+        public async Task<IEnumerable<EventHistory>> ExecuteAsync(IProgress<DProgress> progress = null)
         {
             Log.Debug($"Executing AnalyzeExtracts command...");
             List<EventHistory> eventHistories = new List<EventHistory>();
 
+
+            var emr = _emrRepository.GetDefault();
             if (null == emr)
             {
                 Log.Debug($"no EMR set !");
@@ -62,14 +66,14 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                 //Analyze TempExtracts
 
-                _taskCount = emr.ExtractSettings.Count;
+                _taskCount = emr.ExtractSettings.Count+1;
                 int count = 0;
                 var extractSettings = emr.ExtractSettings.OrderByDescending(x => x.IsPriority);
                 foreach (var extract in extractSettings)
                 {
                     count++;
-                    string stats = $"Analyzing Extract {count} of {_taskCount} [{extract.Display}]";
-
+                    string stats = $"Analyzing Extract {count} of {_taskCount-1} [{extract.Display}]";
+                    progress?.ReportStatus($"{stats}", count, _taskCount);
                     var reader= await CountCommand(extract.ExtractSql);
 
                     using (reader)
@@ -84,13 +88,15 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                 var eventHistory =
                                     EventHistory.CreateFound(siteCode, extract.Display, found, extract.Id);
 
-                                _context.EventHistories.Add(eventHistory);
-                                await _context.SaveChangesAsync();
+                                _emrRepository.CreateStats(eventHistory, StatAction.Found);
+                                
                             }
                         }
                     }
-                    progress?.ReportStatus($"{stats}", count, _taskCount);
+                    
                 }
+
+                progress?.ReportStatus($"Analyzing Extract Finished", _taskCount, _taskCount);
             }
             
             return eventHistories;

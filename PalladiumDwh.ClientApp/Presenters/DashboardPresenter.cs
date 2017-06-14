@@ -18,6 +18,7 @@ using PalladiumDwh.ClientReader.Core.Reports;
 using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using System.Windows.Forms;
+using DocumentFormat.OpenXml.Wordprocessing;
 using PagedList;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
@@ -238,6 +239,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             int count = 0;
 
             //clear db
+
             Log.Debug($"{logMessages} [Clearing database]...");
             try
             {

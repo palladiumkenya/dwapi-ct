@@ -9,7 +9,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
 {
     public interface IAnalyzeCsvTempExtractsCommand
     {
-        Task<IEnumerable<EventHistory>> ExecuteAsync(EMR emr, List<string> csvFiles, IProgress<DProgress> progress = null);
+        Task<IEnumerable<EventHistory>> ExecuteAsync(List<string> csvFiles, IProgress<DProgress> progress = null);
         IEnumerable<EventHistory> GenerateFoundEventHistory(string csvFile);
     }
 }

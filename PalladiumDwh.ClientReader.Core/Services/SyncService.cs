@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Presentation;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Services
 {
     public class SyncService : ISyncService
     {
+        private readonly IAnalyzeTempExtractsCommand _analyzeTempExtractsCommand;
+
         private readonly IClearExtractsCommand _clearExtractsCommand;
 
         private readonly ILoadPatientExtractCommand _loadPatientExtractCommand;
@@ -37,7 +42,9 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         private SyncSummary _summary;
 
-        public SyncService(IClearExtractsCommand clearExtractsCommand,
+        public SyncService(
+            IAnalyzeTempExtractsCommand analyzeTempExtractsCommand,
+            IClearExtractsCommand clearExtractsCommand,
             ILoadPatientExtractCommand loadPatientExtractCommand,
             ILoadPatientArtExtractCommand loadPatientArtExtractCommand,
             ILoadPatientBaselinesExtractCommand loadPatientBaselinesExtractCommand,
@@ -60,6 +67,9 @@ namespace PalladiumDwh.ClientReader.Core.Services
             ISyncPatientVisitExtractCommand syncPatientVisitExtractCommand,
             ISyncPatientStatusExtractCommand syncPatientStatusExtractCommand)
         {
+
+            _analyzeTempExtractsCommand =analyzeTempExtractsCommand;
+
             _clearExtractsCommand = clearExtractsCommand;
 
             _loadPatientExtractCommand = loadPatientExtractCommand;
@@ -89,12 +99,14 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         public void Initialize()
         {
-            _clearExtractsCommand.Execute();
+           // _clearExtractsCommand.Execute();
         }
 
-        public async Task InitializeAsync()
+        public async Task<int> InitializeAsync(IProgress<DProgress> dprogress = null)
         {
-            await _clearExtractsCommand.ExecuteAsync();
+            await _clearExtractsCommand.ExecuteAsync(dprogress);
+            await _analyzeTempExtractsCommand.ExecuteAsync(dprogress);
+            return 1;
         }
 
         public RunSummary Sync(ExtractSetting extract)
@@ -233,7 +245,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         public void SyncAll()
         {
-            _clearExtractsCommand.Execute();
+            //_clearExtractsCommand.ExecuteAsync().Result;
             SyncPatients();
             SynPatientsArt();
             SynPatientsBaselines();

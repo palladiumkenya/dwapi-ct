@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
 {
     public interface IClearCsvExtractsCommand
     {
-        int Execute();
-        Task<int> ExecuteAsync();
+        Task<int> ExecuteAsync(IProgress<DProgress> dprogress = null);
     }
 }

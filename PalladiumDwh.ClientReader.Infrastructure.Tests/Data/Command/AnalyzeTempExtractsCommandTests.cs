@@ -24,7 +24,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 
             _context = new DwapiRemoteContext();
             _databaseManager = new DatabaseManager(_context);
-            _extractCommand = new AnalyzeTempExtractsCommand(_context,_databaseManager);
+            _extractCommand = new AnalyzeTempExtractsCommand(new EMRRepository(_context),_databaseManager);
             _context.Database.ExecuteSqlCommand("DELETE FROM EventHistory");
             
             /*
@@ -42,9 +42,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         [Test]
         public void should_Execute_Load_AnalyzeTempExtracts_Find_DbCommand()
         {
-            var emr = _context.Emrs.FirstOrDefault(x => x.Name.ToLower().Equals("IQCare".ToLower()));
-
-            var events= _extractCommand.ExecuteAsync(emr, _dprogress).Result.ToList();
+            var events= _extractCommand.ExecuteAsync( _dprogress).Result.ToList();
 
             _context=new  DwapiRemoteContext();
             var updatedEventHistories = _context.EventHistories.ToList();

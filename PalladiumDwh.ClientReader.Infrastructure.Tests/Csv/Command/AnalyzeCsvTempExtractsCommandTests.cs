@@ -7,6 +7,7 @@ using PalladiumDwh.ClientReader.Core.Services;
 using PalladiumDwh.ClientReader.Infrastructure.Csv.Command;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
+using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
 
@@ -27,7 +28,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Csv.Command
 
             _dprogress = new Progress<DProgress>(ReportDProgress);
             _context = new DwapiRemoteContext();
-            _extractCommand = new AnalyzeCsvTempExtractsCommand(_context);
+            _extractCommand = new AnalyzeCsvTempExtractsCommand(new EMRRepository(_context));
             _context.Database.ExecuteSqlCommand("DELETE FROM EventHistory");
 
 
@@ -78,7 +79,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Csv.Command
             var emr = _context.Emrs.FirstOrDefault(x => x.Name.ToLower().Equals("IQCare".ToLower()));
             
 
-            var events = _extractCommand.ExecuteAsync(emr,csvs, _dprogress).Result.ToList();
+            var events = _extractCommand.ExecuteAsync(csvs, _dprogress).Result.ToList();
 
             _context = new DwapiRemoteContext();
             var updatedEventHistories = _context.EventHistories.ToList();

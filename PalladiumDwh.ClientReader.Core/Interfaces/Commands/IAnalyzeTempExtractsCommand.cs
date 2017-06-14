@@ -8,6 +8,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
 {
     public interface IAnalyzeTempExtractsCommand
     {
-        Task<IEnumerable<EventHistory>> ExecuteAsync(EMR emr, IProgress<DProgress> progress = null);
+        Task<IEnumerable<EventHistory>> ExecuteAsync(IProgress<DProgress> progress = null);
     }
 }

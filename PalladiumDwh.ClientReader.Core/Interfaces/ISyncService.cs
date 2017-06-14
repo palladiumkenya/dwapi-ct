@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces
 {
     public interface ISyncService
     {
         void Initialize();
-        Task InitializeAsync();
+        Task<int> InitializeAsync(IProgress<DProgress> dprogress = null);
         RunSummary Sync(ExtractSetting extract);
         Task<RunSummary> SyncAsync(ExtractSetting extract, Progress<ProcessStatus> progressPercent = null);
         void SyncAll();
