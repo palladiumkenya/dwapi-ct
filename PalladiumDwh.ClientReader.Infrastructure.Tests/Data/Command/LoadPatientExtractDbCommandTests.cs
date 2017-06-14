@@ -36,11 +36,11 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
         {
             var clearExtractsCommand = new ClearExtractsCommand(_emrRepository);
             var analyzeTempExtractsCommand=new AnalyzeTempExtractsCommand(_emrRepository,new DatabaseManager(_context));
-            var result= clearExtractsCommand.ExecuteAsync(_dprogress).Result;
-            var eventHistories=analyzeTempExtractsCommand.ExecuteAsync(_dprogress).Result;
+            var result= clearExtractsCommand.ExecuteAsync().Result;
+            var eventHistories=analyzeTempExtractsCommand.ExecuteAsync().Result;
                 
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            var summary= _extractCommand.ExecuteAsync().Result;
+            var summary= _extractCommand.ExecuteAsync(null,_dprogress).Result;
             watch.Stop();
             var records = _context.Database
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientExtract")

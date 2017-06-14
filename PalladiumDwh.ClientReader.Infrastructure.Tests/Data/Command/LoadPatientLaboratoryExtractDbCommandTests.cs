@@ -2,53 +2,70 @@
 using System.Linq;
 using NUnit.Framework;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
+using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Command;
 using PalladiumDwh.ClientReader.Infrastructure.Data.Repository;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Command
 {
     public class LoadPatientLaboratoryExtractDbCommandTests
     {
         private DwapiRemoteContext _context;
-        
         private ILoadPatientLaboratoryExtractCommand _extractCommand;
-        
+        private IEMRRepository _emrRepository;
+        private IProgress<DProgress> _dprogress;
 
         [SetUp]
         public void SetUp()
         {
-            _context = new DwapiRemoteContext();
-          
-            _extractCommand = new LoadPatientLaboratoryExtractCommand(new EMRRepository(_context));
+            _dprogress = new Progress<DProgress>(ReportDProgress);
 
+
+            _context = new DwapiRemoteContext();
+            _emrRepository = new EMRRepository(_context);
+
+            _extractCommand = new LoadPatientLaboratoryExtractCommand(_emrRepository);
+            _context.Database.ExecuteSqlCommand("DELETE FROM EventHistory");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientLaboratoryExtract");
-            
         }
 
         [Test]
         public void should_Execute_Load_PatientLaboratoryExtract_DbCommand()
         {
+            var clearExtractsCommand = new ClearExtractsCommand(_emrRepository);
+            var analyzeTempExtractsCommand = new AnalyzeTempExtractsCommand(_emrRepository, new DatabaseManager(_context));
+            var result = clearExtractsCommand.ExecuteAsync().Result;
+            var eventHistories = analyzeTempExtractsCommand.ExecuteAsync().Result;
+
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            _extractCommand.Execute();
+            var summary = _extractCommand.ExecuteAsync(null, _dprogress).Result;
             watch.Stop();
             var records = _context.Database
                 .SqlQuery<int>("SELECT COUNT(*) as NumOfRecords FROM TempPatientLaboratoryExtract")
                 .Single();
 
-            Assert.IsTrue(records >0);
+            Assert.IsTrue(records == summary.Loaded);
 
-            
+            Console.WriteLine($"Summary:{summary}");
+            Console.WriteLine($"Summary Error:{summary.ErrorStatus()}");
+
             var elapsedMs = watch.ElapsedMilliseconds;
             Console.WriteLine($"Loaded {records} records! in {elapsedMs}ms ({elapsedMs / 1000}s)");
-
         }
 
         [TearDown]
         public void TearDown()
         {
+            _context.Database.ExecuteSqlCommand("DELETE FROM EventHistory");
             _context.Database.ExecuteSqlCommand("DELETE FROM TempPatientLaboratoryExtract");
             _context.SaveChanges();
+        }
+
+        private void ReportDProgress(DProgress value)
+        {
+            Console.WriteLine(value);
         }
     }
 }

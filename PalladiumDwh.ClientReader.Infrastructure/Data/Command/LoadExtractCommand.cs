@@ -155,6 +155,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
             var extractName = typeof(T).Name;
             var commandText = string.Empty;
+            string statusUpdate = $"Loading Extracts [{extractName}]";
 
             Log.Debug($"Executing load {extractName} command...");
 
@@ -168,8 +169,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             if (string.IsNullOrWhiteSpace(commandText)) throw new Exception($"No sql command found for {extractName}");
 
             EventHistory currentHistory = _emrRepository.GetStats(_extractSetting.Id);
-            
-            progress?.ReportStatus($"Loading Extracts {extractName}...");
+
+            int totalRecords = currentHistory.Found ?? 0;
+
+            totalRecords += 1;
+
+            progress?.ReportStatus($"{statusUpdate}...");
+
             ShowPercentage(1);
 
             using (_emrConnection)
@@ -212,6 +218,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             {
 
                                 totalcount++;
+                                progress?.ReportStatus($"{statusUpdate}",totalcount,totalRecords);
+
                                 ShowPercentage(totalcount);
                                 count++;
 
@@ -299,10 +307,14 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                 }
                             }
 
+                            progress?.ReportStatus($"{statusUpdate}", 1, 1);
                             currentHistory = _emrRepository.GetStats(_extractSetting.Id);
 
                             _summary.Loaded = currentHistory.Loaded ?? loaded;
                             _summary.Total = currentHistory.Found ?? totalcount;
+
+                            
+                            progress?.ReportStatus($"{statusUpdate} Finished");
                         }
                     }
 
