@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
         private DwapiRemoteContext _context;
 
         private IClearCsvExtractsCommand _clearExtractsCommand;
+        private IAnalyzeCsvTempExtractsCommand _analyzeCsvTempExtractsCommand;
 
         private ILoadPatientExtractCommand _loadPatientExtractCommand;
         private ILoadPatientArtExtractCommand _loadPatientArtExtractCommand;
@@ -75,6 +77,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _context = new DwapiRemoteContext();
 
             _clearExtractsCommand = new ClearCsvExtractsCommand(new EMRRepository(_context));
+            _analyzeCsvTempExtractsCommand=new AnalyzeCsvTempExtractsCommand(new EMRRepository(_context));
 
             _loadPatientExtractCsvCommand = new LoadPatientExtractCsvCommand(new EMRRepository(_context));
             _loadPatientArtExtractCsvCommand = new LoadPatientArtExtractCsvCommand(new EMRRepository(_context));
@@ -102,6 +105,7 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
 
             _syncService = new SyncCsvService(
                 _clearExtractsCommand,
+                _analyzeCsvTempExtractsCommand,
                 _loadPatientExtractCsvCommand, _loadPatientArtExtractCsvCommand, _loadPatientBaselinesExtractCsvCommand, _loadPatientLaboratoryExtractCsvCommand, _loadPatientPharmacyExtractCsvCommand, _loadPatientStatusExtractCsvCommand, _loadPatientVisitExtractCsvCommand,
                 _validatePatientExtractCommand, _validatePatientArtExtractCommand, _validatePatientBaselinesExtractCommand, _validatePatientLaboratoryExtractCommand, _validatePatientPharmacyExtractCommand, _validatePatientStatusExtractCommand, _validatePatientVisitExtractCommand, _syncPatientExtractCommand, _syncPatientArtExtractCommand,
                 _syncPatientBaselinesExtractCommand, _syncPatientLaboratoryExtractCommand, _syncPatientPharmacyExtractCommand, _syncPatientVisitExtractCommand, _syncPatientStatusExtractCommand);
@@ -122,7 +126,17 @@ namespace PalladiumDwh.ClientReader.Core.Tests.Services
             _csvPatientVisitExtract = TestHelpers.GetCsv("PatientVisitExtract", "Extracts");
             _csvPatientWABWHOCD4Extract = TestHelpers.GetCsv("PatientWABWHOCD4Extract", "Extracts");
 
-            var ou= _syncService.InitializeAsync().Result;
+            var csvs = new List<string>
+            {
+                _csvARTPatientExtract,
+                _csvPatientExtract,
+                _csvPatientLaboratoryExtract,
+                _csvPatientPharmacyExtract,
+                _csvPatientStatusExtract,
+                _csvPatientVisitExtract,
+                _csvPatientWABWHOCD4Extract
+            };
+            var ou= _syncService.InitializeAsync(csvs).Result;
 
             var pextractSetting = new ExtractSetting(nameof(TempPatientExtract));
             var psummary = _syncService.SyncAsync(pextractSetting, _csvPatientExtract).Result;

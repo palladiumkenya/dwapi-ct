@@ -229,6 +229,8 @@ namespace PalladiumDwh.ClientApp.Presenters
         //TODO: consider Parallel processing
         public async void LoadExtracts(List<ExtractSetting> extracts)
         {
+            var dprogress = new Progress<DProgress>(ShowDProgress);
+
             string logMessages = "Loading EMR extracts";
             Log.Debug($"{logMessages}...");
 
@@ -243,7 +245,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             Log.Debug($"{logMessages} [Clearing database]...");
             try
             {
-                await _syncService.InitializeAsync();
+                await _syncService.InitializeAsync(dprogress);
             }
             catch (Exception e)
             {
@@ -254,7 +256,8 @@ namespace PalladiumDwh.ClientApp.Presenters
                 View.CanLoadEmr = true;
                 return;                
             }
-            
+
+            await Task.Delay(1);
 
             //Patient Extract
             var priorityExtracts = extracts.Where(x => x.IsPriority).OrderBy(x => x.Rank);
@@ -342,7 +345,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             Log.Debug($"{logMessages} [Clearing database]...");
             try
             {
-                await _syncCsvService.InitializeAsync();
+                await _syncCsvService.InitializeAsync(View.CsvFiles, dprogress);
             }
             catch (Exception e)
             {
@@ -354,6 +357,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 return;
             }
 
+            await Task.Delay(1);
 
             //Patient Extract
             var priorityExtracts = extracts.Where(x => x.IsPriority).OrderBy(x => x.Rank);
@@ -470,6 +474,16 @@ namespace PalladiumDwh.ClientApp.Presenters
             {
                 Total =processStatus.Progress,
                 Status = $"loaded {processStatus.Progress}"
+            };
+            View.UpdateStatus(vm);
+        }
+
+        private void ReportProgress(ProcessStatus processStatus,DProgress extractProgress)
+        {
+            var vm = new ExtractsViewModel(processStatus.ExtractSetting)
+            {
+                Total = processStatus.Progress,
+                Status = extractProgress.ShowProgress()
             };
             View.UpdateStatus(vm);
         }
@@ -924,6 +938,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         {
             View.Status = $"{value.ShowProgress()}";
         }
+     
         #endregion
     }
 }

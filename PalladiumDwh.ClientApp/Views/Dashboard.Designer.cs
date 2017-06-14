@@ -114,6 +114,7 @@
             this.panelExtractDataDetailTop = new System.Windows.Forms.Panel();
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
             this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -978,6 +979,10 @@
             this.openFileDialogCsv.Multiselect = true;
             this.openFileDialogCsv.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialogCsv_FileOk);
             // 
+            // folderBrowserDialog1
+            // 
+            this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1136,5 +1141,6 @@
         private System.Windows.Forms.ComboBox comboBoxPgSizeRecords;
         private System.Windows.Forms.Label labelRecordsShowing;
         private System.Windows.Forms.LinkLabel linkLabelEmrSetup;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

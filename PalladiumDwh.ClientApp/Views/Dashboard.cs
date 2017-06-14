@@ -809,5 +809,10 @@ namespace PalladiumDwh.ClientApp.Views
             Presenter.LoadEmrInfo();
             Presenter.LoadExtractSettings();
         }
+
+        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
+        {
+
+        }
     }
 }

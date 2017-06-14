@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
@@ -11,6 +12,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
     public class SyncCsvService : ISyncCsvService
     {
         private readonly IClearCsvExtractsCommand _clearCsvExtractsCommand;
+        private readonly IAnalyzeCsvTempExtractsCommand _analyzeCsvTempExtractsCommand;
 
         private readonly ILoadPatientExtractCsvCommand _loadPatientExtractCsvCommand;
         private readonly ILoadPatientArtExtractCsvCommand _loadPatientArtExtractCsvCommand;
@@ -39,6 +41,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
         private SyncSummary _summary;
 
         public SyncCsvService(IClearCsvExtractsCommand clearCsvExtractsCommand,
+            IAnalyzeCsvTempExtractsCommand analyzeCsvTempExtractsCommand,
             ILoadPatientExtractCsvCommand loadPatientExtractCsvCommand,
             ILoadPatientArtExtractCsvCommand loadPatientArtExtractCsvCommand,
             ILoadPatientBaselinesExtractCsvCommand loadPatientBaselinesExtractCsvCommand,
@@ -62,6 +65,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             ISyncPatientStatusExtractCommand syncPatientStatusExtractCommand)
         {
             _clearCsvExtractsCommand = clearCsvExtractsCommand;
+            _analyzeCsvTempExtractsCommand = analyzeCsvTempExtractsCommand;
 
             _loadPatientExtractCsvCommand = loadPatientExtractCsvCommand;
             _loadPatientArtExtractCsvCommand = loadPatientArtExtractCsvCommand;
@@ -88,9 +92,11 @@ namespace PalladiumDwh.ClientReader.Core.Services
             _syncPatientStatusExtractCommand = syncPatientStatusExtractCommand;
         }
 
-        public async Task<int> InitializeAsync()
+        public async Task<int> InitializeAsync(List<string> csvFiles,IProgress<DProgress> dprogress = null)
         {
-          return   await _clearCsvExtractsCommand.ExecuteAsync();
+            await _clearCsvExtractsCommand.ExecuteAsync(dprogress);
+            await _analyzeCsvTempExtractsCommand.ExecuteAsync(csvFiles, dprogress);
+            return 1;
         }
 
         public async Task<RunSummary> SyncAsync(ExtractSetting extract, string extractCsv, Progress<ProcessStatus> progressPercent = null,Progress < DProgress > progress = null)
