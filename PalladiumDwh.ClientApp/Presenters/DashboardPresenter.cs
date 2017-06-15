@@ -919,12 +919,17 @@ namespace PalladiumDwh.ClientApp.Presenters
                     Log.Debug(ex);
                 }
             }
+
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
             timeTaken += elapsedMs;
             var msg = $"Send Completed ({count} of {total}) Time: {elapsedMs * 0.001} s !";
+
+            await Task.Delay(1);
+
             UpdateUi(msg);
 
+            UpdateStatistics();
             this.View.EventSummaries = new List<string>() { msg, $"Total time taken: {timeTaken * 0.001} s" };
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
         }

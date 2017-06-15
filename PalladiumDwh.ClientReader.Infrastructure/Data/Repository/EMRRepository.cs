@@ -223,8 +223,45 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
             return -1;
         }
 
+        public int UpdateSendStats(Guid extractSettingId)
+        {
+            var db = Context.Database.Connection;
+            string tablename= db.QueryFirstOrDefault<string>(@"SELECT Destination FROM [ExtractSetting] where  Id=@Id",new {Id= extractSettingId});
+
+            if (string.IsNullOrWhiteSpace(tablename))
+                return 1;
+
+            tablename = tablename.ToLower().Replace("Temp".ToLower(), "").ToLower().Trim();
+
+            if (tablename == "PatientExtract".ToLower())
+            {
+
+                return db.Execute($@"
+                        UPDATE       
+	                        EventHistory
+                        SET 
+                            SendDate=(SELECT MAX(SendDate) AS SendDate FROM EventHistory),    
+	                        Sent =(SELECT COUNT(PatientPK) AS Sent FROM {tablename} WHERE (Processed = 1)), 
+	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE (Processed IS NULL) OR (Processed = 0))
+                        WHERE        
+	                        (ExtractSettingId ='{extractSettingId}')");
+            }
+           
+            return db.Execute($@"
+                        UPDATE       
+	                        EventHistory
+                        SET  
+                            SendDate=(SELECT MAX(StatusDate) StatusDate FROM {tablename} WHERE (Status = 'Sent')),    
+	                        Sent =(SELECT COUNT(PatientPK) AS Sent FROM {tablename} WHERE (Processed = 1)), 
+	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE (Processed IS NULL) OR (Processed = 0))
+                        WHERE        
+	                        (ExtractSettingId ='{extractSettingId}')");
+        }
+
         public EventHistory GetStats(Guid extractSettingId)
         {
+            UpdateSendStats(extractSettingId);
+
             var db = Context.Database.Connection;
             return db.QueryFirstOrDefault<EventHistory>(@"
                     SELECT        
@@ -247,32 +284,6 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 	                    (ExtractSettingId = @ExtractSettingId)
                     GROUP BY 
 	                    Display", new {ExtractSettingId = extractSettingId});
-        }
-
-        public Task<EventHistory> GetStatsAsync(Guid extractSettingId)
-        {
-            var db = Context.Database.Connection;
-            return db.QueryFirstOrDefaultAsync<EventHistory>(@"
-                    SELECT        
-	                    -1 AS SiteCode, 
-	                    Display, 
-	                    SUM(Found) AS Found, 
-	                    MAX(FoundDate) AS FoundDate, 
-	                    MAX(Loaded) AS Loaded, 
-	                    MAX(Rejected) AS Rejected, 
-	                    MAX(LoadDate) AS LoadDate, 
-                        MAX(Imported) AS Imported, 
-	                    MAX(NotImported) AS NotImported, 
-	                    MAX(ImportDate) AS ImportDate, 
-	                    MAX(Sent) AS Sent, 
-	                    MAX(NotSent) AS NotSent, 
-	                    MAX(SendDate) AS SendDate
-                    FROM            
-	                    EventHistory
-                    WHERE        
-	                    (ExtractSettingId = @ExtractSettingId)
-                    GROUP BY 
-	                    Display", new { ExtractSettingId = extractSettingId });
         }
     }
 }

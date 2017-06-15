@@ -29,26 +29,26 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Data
 
         public IPagedList<ClientPatientExtract> GetAll(int? page, int pageSize = 200)
         {
-            
+
             var list = _context.ClientPatientExtracts.AsNoTracking()
                 .OrderBy(x => x.PatientID);
 
             int totalUserCount = list.Count();
 
             if (pageSize == -1)
-                return new PagedList<ClientPatientExtract>(list,1,totalUserCount);
-                
-                
+                return new PagedList<ClientPatientExtract>(list, 1, totalUserCount);
+
+
 
             var pageNumber = page ?? 1;
             return new PagedList<ClientPatientExtract>(list, pageNumber, pageSize);
 
         }
 
-        
+
         public IEnumerable<Manifest> GetManifests()
         {
-            var manifests=new List<Manifest>();
+            var manifests = new List<Manifest>();
 
             var siteCodes = _context.ClientPatientExtracts.AsNoTracking()
                 .Select(x => x.SiteCode)
@@ -56,10 +56,10 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Data
 
             foreach (var s in siteCodes)
             {
-                var manifest=new Manifest(s);
+                var manifest = new Manifest(s);
 
                 var pks = _context.ClientPatientExtracts.AsNoTracking()
-                    .Where(x=>x.SiteCode==s)
+                    .Where(x => x.SiteCode == s)
                     .Select(x => x.PatientPK)
                     .Distinct()
                     .ToList();
@@ -78,14 +78,25 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Data
 
         public IEnumerable<ClientPatientExtract> GetAll(bool processed)
         {
-           return GetAll().Where(x => x.Processed == processed||x.Processed==null);
+            return GetAll().Where(x => x.Processed == processed || x.Processed == null);
         }
 
-        public void UpdatePush(ClientPatientExtract patient,string profileExtract, PushResponse response)
+        public void UpdatePush(ClientPatientExtract patient, string profileExtract, PushResponse response)
         {
+            //update stats
+
             //[QueueId] ,[Status] ,[StatusDate]
-        string query = $"UPDATE PatientExtract SET Processed = 1 WHERE PatientPK = @PatientPK AND SiteCode=@SiteCode AND (Processed=0 or Processed Is Null);";
-            if(!string.IsNullOrWhiteSpace(profileExtract))
+            string query = $@"
+                    UPDATE 
+                        PatientExtract 
+                    SET 
+                        Processed = 1 
+                    WHERE 
+                        PatientPK = @PatientPK AND SiteCode=@SiteCode AND (Processed=0 or Processed Is Null);
+
+                    ";
+
+            if (!string.IsNullOrWhiteSpace(profileExtract))
                 query += $"UPDATE {profileExtract} " +
                          $"SET Processed = 1,[QueueId]='{response.QueueId}',[Status]='{response.Status}',[StatusDate]='{response.StatusDate:yyyy-MMM-dd}' " +
                          $"WHERE PatientPK = @PatientPK AND SiteCode=@SiteCode AND (Processed=0 or Processed Is Null);";
