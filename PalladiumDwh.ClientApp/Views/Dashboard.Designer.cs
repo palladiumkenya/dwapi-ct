@@ -115,6 +115,10 @@
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
             this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.columnHeaderLoaded = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderRejected = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderSent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderQueued = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -414,8 +418,12 @@
             this.listViewExtract.AutoArrange = false;
             this.listViewExtract.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderExtract,
-            this.columnHeaderTotal,
             this.columnHeaderStatus,
+            this.columnHeaderTotal,
+            this.columnHeaderLoaded,
+            this.columnHeaderRejected,
+            this.columnHeaderQueued,
+            this.columnHeaderSent,
             this.columnHeaderId});
             this.listViewExtract.FullRowSelect = true;
             this.listViewExtract.HideSelection = false;
@@ -431,7 +439,7 @@
             // columnHeaderExtract
             // 
             this.columnHeaderExtract.Text = "Extract";
-            this.columnHeaderExtract.Width = 138;
+            this.columnHeaderExtract.Width = 127;
             // 
             // columnHeaderTotal
             // 
@@ -441,7 +449,7 @@
             // columnHeaderStatus
             // 
             this.columnHeaderStatus.Text = "Status";
-            this.columnHeaderStatus.Width = 304;
+            this.columnHeaderStatus.Width = 145;
             // 
             // columnHeaderId
             // 
@@ -983,6 +991,22 @@
             // 
             this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
             // 
+            // columnHeaderLoaded
+            // 
+            this.columnHeaderLoaded.Text = "Loaded";
+            // 
+            // columnHeaderRejected
+            // 
+            this.columnHeaderRejected.Text = "Rejected";
+            // 
+            // columnHeaderSent
+            // 
+            this.columnHeaderSent.Text = "Sent";
+            // 
+            // columnHeaderQueued
+            // 
+            this.columnHeaderQueued.Text = "Queue";
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1142,5 +1166,9 @@
         private System.Windows.Forms.Label labelRecordsShowing;
         private System.Windows.Forms.LinkLabel linkLabelEmrSetup;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.ColumnHeader columnHeaderLoaded;
+        private System.Windows.Forms.ColumnHeader columnHeaderRejected;
+        private System.Windows.Forms.ColumnHeader columnHeaderQueued;
+        private System.Windows.Forms.ColumnHeader columnHeaderSent;
     }
 }

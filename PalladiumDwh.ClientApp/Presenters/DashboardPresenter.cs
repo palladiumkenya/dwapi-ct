@@ -80,9 +80,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         {
           
         }
-
-    
-
+        
         public DashboardPresenter(IDashboardView view, IDatabaseManager databaseManager, IProjectRepository projectRepository, ISyncService syncService,
             IClientPatientRepository clientPatientRepository, IProfileManager profileManager,
             IPushProfileService pushService,

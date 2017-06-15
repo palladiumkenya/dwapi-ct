@@ -168,7 +168,7 @@ namespace PalladiumDwh.ClientApp.Views
                 {
                     if (listViewExtract.SelectedItems.Count > 0)
                     {
-                        var id = listViewExtract.SelectedItems[0].SubItems[3].Text;
+                        var id = listViewExtract.SelectedItems[0].SubItems[7].Text;
 
                         return _extracts.FirstOrDefault(x => x.Id == new Guid(id));
                     }
@@ -472,8 +472,12 @@ namespace PalladiumDwh.ClientApp.Views
             if (null != lvitem)
             {
                 //listViewExtract.BeginUpdate();
-                lvitem.SubItems[1].Text = viewModel.Total.ToString();
-                lvitem.SubItems[2].Text = viewModel.Status;
+                lvitem.SubItems[1].Text = viewModel.Status;
+                lvitem.SubItems[2].Text = viewModel.Total.ToString();
+                lvitem.SubItems[3].Text = viewModel.Loaded.ToString();
+                lvitem.SubItems[4].Text = viewModel.Rejected.ToString();
+                lvitem.SubItems[5].Text = viewModel.Queued.ToString();
+                lvitem.SubItems[6].Text = viewModel.Sent.ToString();
                 //listViewExtract.EndUpdate();
             }
 
@@ -502,8 +506,12 @@ namespace PalladiumDwh.ClientApp.Views
             {
                 var item = new ListViewItem();
                 item.Text = e.Extract;
-                item.SubItems.Add(e.Total.ToString());
                 item.SubItems.Add(e.Status);
+                item.SubItems.Add(e.Total.ToString());
+                item.SubItems.Add(e.Loaded.ToString());
+                item.SubItems.Add(e.Rejected.ToString());
+                item.SubItems.Add(e.Queued.ToString());
+                item.SubItems.Add(e.Sent.ToString());
                 item.SubItems.Add(e.Id.ToString());
                 listViewExtract.Items.Add(item);
             }

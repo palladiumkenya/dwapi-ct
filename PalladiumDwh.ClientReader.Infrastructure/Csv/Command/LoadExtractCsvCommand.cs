@@ -56,11 +56,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
             if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
 
             int totalRecords = 0;
-            progress?.ReportStatus($"Reading Csv...");
+            progress?.ReportStatus($"Reading Csv...",null,null,_extractSetting);
 
             EventHistory currentHistory = _emrRepository.GetStats(_extractSetting.Id);
 
             totalRecords = currentHistory.Found ?? await GetTotal(CommandText);
+            totalRecords += 1;
 
             using (TextReader txtReader = File.OpenText(CommandText))
             {
@@ -77,11 +78,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                     int totalcount = 0;
                     while (reader.Read())
                     {
+                        totalcount++;
                         count++;
+                        progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}]...", totalcount, totalRecords, _extractSetting);
 
                         try
                         {
-                            totalcount++;
                             extract = reader.GetRecord<T>();
                             //extract.Load(reader);
                         }
@@ -152,7 +154,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                             }
                         }
 
-                        progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}]...", loaded, totalRecords);
+                        
                     }
 
                     if (extracts.Count > 0)
@@ -175,13 +177,15 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                             Log.Debug(e);
                             throw;
                         }
-                        progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}]...", loaded, totalRecords);
+                        
                     }
-
+                    progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}]...", 1, 1);
                     currentHistory = _emrRepository.GetStats(_extractSetting.Id);
 
                     _summary.Loaded = currentHistory.Loaded ?? loaded;
                     _summary.Total = currentHistory.Found ?? totalcount;
+
+                    progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}] Finished", null, null, _extractSetting);
                 }
             }
 

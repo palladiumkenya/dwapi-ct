@@ -108,7 +108,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             {
                 summary.LoadSummary = await _loadPatientExtractCsvCommand.ExecuteAsync(extractCsv, progress);
                 summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteValidateAsync(progress);
-                summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync(progress);
             }
 
 
@@ -116,7 +116,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             {
                 summary.LoadSummary = await _loadPatientArtExtractCsvCommand.ExecuteAsync(extractCsv, progress);
                 summary.ValidationSummary = await _validatePatientArtExtractCommand.ExecuteValidateAsync(progress);
-                summary.SyncSummary = await _syncPatientArtExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientArtExtractCommand.ExecuteAsync(progress);
             }
 
 
@@ -124,14 +124,14 @@ namespace PalladiumDwh.ClientReader.Core.Services
             {
                 summary.LoadSummary = await _loadPatientBaselinesExtractCsvCommand.ExecuteAsync(extractCsv, progress);
                 summary.ValidationSummary = await _validatePatientBaselinesExtractCommand.ExecuteValidateAsync(progress);
-                summary.SyncSummary = await _syncPatientBaselinesExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientBaselinesExtractCommand.ExecuteAsync(progress);
             }
 
             if (extract.Destination == nameof(TempPatientStatusExtract))
             {
                 summary.LoadSummary = await _loadPatientStatusExtractCsvCommand.ExecuteAsync(extractCsv, progress);
                 summary.ValidationSummary = await _validatePatientStatusExtractCommand.ExecuteValidateAsync(progress);
-                summary.SyncSummary = await _syncPatientStatusExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientStatusExtractCommand.ExecuteAsync(progress);
 
             }
 
@@ -140,7 +140,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
             {
                 summary.LoadSummary = await _loadPatientVisitExtractCsvCommand.ExecuteAsync(extractCsv, progress);
                 summary.ValidationSummary = await _validatePatientVisitExtractCommand.ExecuteValidateAsync(progress);
-                summary.SyncSummary = await _syncPatientVisitExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientVisitExtractCommand.ExecuteAsync(progress);
             }
 
 

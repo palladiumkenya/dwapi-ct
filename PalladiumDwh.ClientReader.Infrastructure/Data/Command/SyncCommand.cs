@@ -67,7 +67,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             _extractSetting = emr.GetActiveExtractSetting($"{extractName}");
             if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
 
-            progress?.ReportStatus($"{statusUpdate}...");
+            progress?.ReportStatus($"{statusUpdate}...",null,null,_extractSetting);
 
             EventHistory currentHistory = _emrRepository.GetStats(_extractSetting.Id);
 
@@ -109,7 +109,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
             }
 
-            progress?.ReportStatus($"{statusUpdate} Finished");
+            progress?.ReportStatus($"{statusUpdate} Finished", null, null, _extractSetting);
 
             return _summary;
         }

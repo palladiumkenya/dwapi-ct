@@ -8,8 +8,12 @@ namespace PalladiumDwh.ClientApp.Model
     {
         public string Extract { get; set; }
         public string ExtractName { get; set; }
-        public int Total { get; set; }
         public string Status { get; set; }
+        public int Total { get; set; }
+        public int Loaded { get; set; }
+        public int Rejected { get; set; }
+        public int Sent { get; set; }
+        public int Queued { get; set; }
         public Guid Id { get; set; }
         
         public ExtractsViewModel()
