@@ -746,24 +746,24 @@ namespace PalladiumDwh.ClientApp.Presenters
             {
                 case "TempPatientStatusExtract":
                 {
-                    var summary = (List<TempPatientStatusExtractErrorSummary>)View.ClientExtractsValidations;
-                    _summaryReport = new SummaryReport();
+                    var summary = await Task.Run(() => _tempPatientStatusExtractErrorSummaryRepository.GetAll()); // (List<TempPatientStatusExtractErrorSummary>)View.ClientExtractsValidations;
+                        _summaryReport = new SummaryReport();
                         var summaryFile = await Task.Run(() => _summaryReport.CreateExcelErrorSummary(summary, "PatientStatusExtract", string.Empty, progress));
                     View.OpenFile(summaryFile);
                     break;
                 }
                 case "TempPatientArtExtract":
                 {
-                    var summary = (List<TempPatientArtExtractErrorSummary>)View.ClientExtractsValidations;
-                    _summaryReport = new SummaryReport();
+                    var summary = await Task.Run(() => _tempPatientArtExtractErrorSummaryRepository.GetAll()); // (List<TempPatientArtExtractErrorSummary>)View.ClientExtractsValidations;
+                        _summaryReport = new SummaryReport();
                         var summaryFile = await Task.Run(() => _summaryReport.CreateExcelErrorSummary(summary, "PatientArtExtract", string.Empty, progress));
                     View.OpenFile(summaryFile);
                         break;
                 }
                 case "TempPatientBaselinesExtract":
                 {
-                    var summary = (List<TempPatientBaselinesExtractErrorSummary>)View.ClientExtractsValidations;
-                    _summaryReport = new SummaryReport();
+                    var summary = await Task.Run(() => _tempPatientBaselinesExtractErrorSummaryRepository.GetAll()); // (List<TempPatientBaselinesExtractErrorSummary>)View.ClientExtractsValidations;
+                        _summaryReport = new SummaryReport();
                         var summaryFile = await Task.Run(() => _summaryReport.CreateExcelErrorSummary(summary, "PatientBaselinesExtract", string.Empty, progress));
                     View.OpenFile(summaryFile);
                         break;
@@ -771,8 +771,8 @@ namespace PalladiumDwh.ClientApp.Presenters
 
                 case "TempPatientVisitExtract":
                 {
-                    var summary = (List<TempPatientVisitExtractErrorSummary>)View.ClientExtractsValidations;
-                    _summaryReport = new SummaryReport();
+                    var summary = await Task.Run(() => _tempPatientVisitExtractErrorSummaryRepository.GetAll()); // (List<TempPatientVisitExtractErrorSummary>)View.ClientExtractsValidations;
+                        _summaryReport = new SummaryReport();
 
                         var summaryFile = await Task.Run(() => _summaryReport.CreateExcelErrorSummary(summary, "PatientVisitExtract", string.Empty, progress));
                     View.OpenFile(summaryFile);
@@ -780,8 +780,8 @@ namespace PalladiumDwh.ClientApp.Presenters
                 }
                 case "TempPatientPharmacyExtract":
                 {
-                    var summary = (List<TempPatientPharmacyExtractErrorSummary>)View.ClientExtractsValidations;
-                    _summaryReport = new SummaryReport();
+                    var summary = await Task.Run(() => _tempPatientPharmacyExtractErrorSummaryRepository.GetAll()); // (List<TempPatientPharmacyExtractErrorSummary>)View.ClientExtractsValidations;
+                        _summaryReport = new SummaryReport();
                         var summaryFile = await Task.Run(() => _summaryReport.CreateExcelErrorSummary(summary, "PatientPharmacyExtract", string.Empty, progress));
                     View.ShowMessage($"Summary Generated :{summaryFile}");
                     break;
@@ -789,8 +789,8 @@ namespace PalladiumDwh.ClientApp.Presenters
 
                 case "TempPatientLaboratoryExtract":
                 {
-                    var summary = (List<TempPatientLaboratoryExtractErrorSummary>)View.ClientExtractsValidations;
-                    _summaryReport = new SummaryReport();
+                    var summary = await Task.Run(() => _tempPatientLaboratoryExtractErrorSummaryRepository.GetAll()); // (List<TempPatientLaboratoryExtractErrorSummary>)View.ClientExtractsValidations;
+                        _summaryReport = new SummaryReport();
 
                         var summaryFile = await Task.Run(() => _summaryReport.CreateExcelErrorSummary(summary, "PatientLaboratoryExtract", string.Empty, progress));
                     View.OpenFile(summaryFile);
@@ -798,7 +798,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 }
                 default:
                 {
-                    var summary = (List<TempPatientExtractErrorSummary>)View.ClientExtractsValidations;
+                    var summary = await Task.Run(() => _tempPatientExtractErrorSummaryRepository.GetAll()); //(List<TempPatientExtractErrorSummary>)View.ClientExtractsValidations;
                     _summaryReport = new SummaryReport();
                         var summaryFile = await Task.Run(() => _summaryReport.CreateExcelErrorSummary(summary, "PatientExtact", string.Empty, progress));
                     View.OpenFile(summaryFile);
@@ -806,6 +806,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 }
             }
             View.ShowReady();
+            //await Task.Run(() => _tempPatientExtractErrorSummaryRepository.GetAll());
         }
 
         public async Task<bool> CheckSpot()
