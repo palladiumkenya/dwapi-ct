@@ -78,7 +78,12 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Data
 
         public IEnumerable<ClientPatientExtract> GetAll(bool processed)
         {
-            return GetAll().Where(x => x.Processed == processed || x.Processed == null);
+            var list = GetAll();
+            if (!processed)
+            {
+                list=list.Where(x => x.Status != "Sent");
+            }
+            return list;
         }
 
         public void UpdatePush(ClientPatientExtract patient, string profileExtract, PushResponse response)

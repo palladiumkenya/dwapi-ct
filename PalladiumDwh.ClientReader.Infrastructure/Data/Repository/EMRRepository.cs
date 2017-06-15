@@ -226,6 +226,18 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
         public int UpdateSendStats(Guid extractSettingId)
         {
             var db = Context.Database.Connection;
+
+            //update patients
+            string sqlPatients = @"
+SELECT distinct PatientPK,SiteCode FROM [PatientArtExtract]Where NOT(Status='Sent') union
+SELECT distinct PatientPK,SiteCode FROM [PatientBaselinesExtract] Where NOT(Status='Sent')  union
+SELECT distinct PatientPK,SiteCode FROM [PatientLaboratoryExtract] Where NOT(Status='Sent') union
+SELECT distinct PatientPK,SiteCode FROM [PatientPharmacyExtract] Where NOT(Status='Sent')  union
+SELECT distinct PatientPK,SiteCode FROM [PatientStatusExtract] Where NOT(Status='Sent') union
+SELECT distinct PatientPK,SiteCode FROM [PatientVisitExtract] Where NOT(Status='Sent')
+
+";
+
             string tablename= db.QueryFirstOrDefault<string>(@"SELECT Destination FROM [ExtractSetting] where  Id=@Id",new {Id= extractSettingId});
 
             if (string.IsNullOrWhiteSpace(tablename))
@@ -241,8 +253,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 	                        EventHistory
                         SET 
                             SendDate=(SELECT MAX(SendDate) AS SendDate FROM EventHistory),    
-	                        Sent =(SELECT COUNT(PatientPK) AS Sent FROM {tablename} WHERE (Processed = 1)), 
-	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE (Processed IS NULL) OR (Processed = 0))
+	                        Sent =(SELECT COUNT(PatientPK) AS Sent FROM {tablename} WHERE (Status='Sent')), 
+	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE NOT(Status='Sent'))
                         WHERE        
 	                        (ExtractSettingId ='{extractSettingId}')");
             }
@@ -252,8 +264,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 	                        EventHistory
                         SET  
                             SendDate=(SELECT MAX(StatusDate) StatusDate FROM {tablename} WHERE (Status = 'Sent')),    
-	                        Sent =(SELECT COUNT(PatientPK) AS Sent FROM {tablename} WHERE (Processed = 1)), 
-	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE (Processed IS NULL) OR (Processed = 0))
+	                        Sent =(SELECT COUNT(PatientPK) AS Sent FROM {tablename} WHERE (Status='Sent')), 
+	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE NOT(Status='Sent'))
                         WHERE        
 	                        (ExtractSettingId ='{extractSettingId}')");
         }

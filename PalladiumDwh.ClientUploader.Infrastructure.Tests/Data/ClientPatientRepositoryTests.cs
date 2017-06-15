@@ -30,6 +30,27 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Tests.Data
             _repository=new ClientPatientRepository(_context);
         }
 
+
+        [Test]
+        public void should_Get_All_Not_sent()
+        {
+            var patinets = _repository.GetAll(false).ToList();
+
+            Assert.IsNotEmpty(patinets);
+            var p = patinets.First();
+            Assert.IsNotNull(p);
+            Assert.IsTrue(p.Status.ToLower()!="Sent".ToLower());
+            Console.WriteLine(p.Status);
+
+            Assert.IsTrue(p.ClientPatientArtExtracts.Count > 0);
+            Assert.IsTrue(p.ClientPatientBaselinesExtracts.Count > 0);
+            Assert.IsTrue(p.ClientPatientLaboratoryExtracts.Count > 0);
+            Assert.IsTrue(p.ClientPatientPharmacyExtracts.Count > 0);
+            Assert.IsTrue(p.ClientPatientVisitExtracts.Count > 0);
+            Assert.IsTrue(p.ClientPatientStatusExtracts.Count > 0);
+
+        }
+
         [Test]
         public void should_Get_All_ClientPatientExtracts()
         {

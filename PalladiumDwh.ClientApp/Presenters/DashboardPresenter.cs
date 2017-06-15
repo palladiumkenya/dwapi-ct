@@ -892,46 +892,51 @@ namespace PalladiumDwh.ClientApp.Presenters
                 return;
             }
 
-            var list = _clientPatientRepository.GetAll(false).ToList();
-            var total = list.Count();
-            int count = 0;
+            var list = _clientPatientRepository.GetAll(false);
 
-            //SEND
-            foreach (var p in list)
+            if (null!=list)
             {
-                var tasks = new List<Task>();
+                var total = list.Count();
+                int count = 0;
 
-                count++;
-                var extractsToSend = _profileManager.Generate(p);
-                foreach (var e in extractsToSend)
+                //SEND
+                foreach (var p in list)
                 {
+                    var tasks = new List<Task>();
 
-                    tasks.Add(_pushService.PushAsync(e));
+                    count++;
+                    var extractsToSend = _profileManager.Generate(p);
+                    foreach (var e in extractsToSend)
+                    {
 
+                        tasks.Add(_pushService.PushAsync(e));
 
+                    }
+                    UpdateUi($"sending Patient Profile {count} of {total}");
+                    try
+                    {
+                        await Task.WhenAll(tasks.ToArray());
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Debug(ex);
+                    }
                 }
-                UpdateUi($"sending Patient Profile {count} of {total}");
-                try
-                {
-                    await Task.WhenAll(tasks.ToArray());
-                }
-                catch (Exception ex)
-                {
-                    Log.Debug(ex);
-                }
+
+                watch.Stop();
+                var elapsedMs = watch.ElapsedMilliseconds;
+                timeTaken += elapsedMs;
+                var msg = $"Send Completed ({count} of {total}) Time: {elapsedMs * 0.001} s !";
+
+                await Task.Delay(1);
+
+                UpdateUi(msg);
+
+                UpdateStatistics();
+                this.View.EventSummaries = new List<string>() { msg, $"Total time taken: {timeTaken * 0.001} s" };
             }
-
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-            timeTaken += elapsedMs;
-            var msg = $"Send Completed ({count} of {total}) Time: {elapsedMs * 0.001} s !";
-
-            await Task.Delay(1);
-
-            UpdateUi(msg);
-
+            View.Status = "Ready";
             UpdateStatistics();
-            this.View.EventSummaries = new List<string>() { msg, $"Total time taken: {timeTaken * 0.001} s" };
             View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
         }
 
