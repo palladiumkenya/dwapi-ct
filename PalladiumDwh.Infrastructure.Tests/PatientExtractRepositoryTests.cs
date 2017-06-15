@@ -135,6 +135,27 @@ namespace PalladiumDwh.Infrastructure.Tests
 
         }
 
+        [Test]
+        public void should_Verify_Old_MasterFacility()
+        {
+            int code = _masterFacilities.Last().Code;
+            code += 64800000;
+            var mflsite = _patientExtractRepository.VerifyFacility(code).Result;
+            Assert.IsNotNull(mflsite);
+            Console.WriteLine(mflsite);
+
+            code = _masterFacilities.Last().Code;
+            code += 25400000;
+            mflsite = _patientExtractRepository.VerifyFacility(code).Result;
+            Assert.IsNotNull(mflsite);
+            Console.WriteLine(mflsite);
+
+            var nonMflsite = _patientExtractRepository.VerifyFacility(-1100).Result;
+            Assert.IsNull(nonMflsite);
+
+
+        }
+
 
         [TearDown]
         public void TearDown()

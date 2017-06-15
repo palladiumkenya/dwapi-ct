@@ -13,7 +13,7 @@ namespace PalladiumDwh.Shared.Data.Repository
 {
     public abstract class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
-        internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        protected static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         internal DbContext Context;
         internal DbSet<TEntity> DbSet;
