@@ -16,6 +16,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
         int CreateStats(EventHistory eventHistory, StatAction action);
         int UpdateStats(Guid extractSettingId, StatAction action, int count);
         EventHistory GetStats(Guid extractSettingId);
+        Task<EventHistory> GetStatsAsync(Guid extractSettingId);
 
     }
 }

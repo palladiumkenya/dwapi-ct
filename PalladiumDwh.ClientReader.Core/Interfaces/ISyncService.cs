@@ -27,5 +27,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         Task<RunSummary> SynPatientsPharmacyAsync();
         Task<RunSummary> SynPatientsLabAsync();
         Task<RunSummary> SynPatientsVisitsAsync();
+
     }
 }

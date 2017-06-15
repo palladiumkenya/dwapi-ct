@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.ClientApp.Model
 {
@@ -21,6 +22,16 @@ namespace PalladiumDwh.ClientApp.Model
             Status = "Not Loaded";
         }
 
+        private ExtractsViewModel(string status, int? total, int? loaded, int? rejected, int? sent, int? queued, Guid id)
+        {
+            Status = status;
+            Total = total ?? 0;
+            Loaded = loaded ?? 0;
+            Rejected = rejected ?? 0;
+            Sent = sent ?? 0;
+            Queued = queued ?? 0;
+            Id = id;
+        }
 
 
         public ExtractsViewModel(ExtractSetting setting):this()
@@ -29,7 +40,6 @@ namespace PalladiumDwh.ClientApp.Model
             ExtractName = setting.Name;
             Id = setting.Id;
         }
-
         public EMR GetEmr()
         {
             return new EMR();
@@ -58,6 +68,43 @@ namespace PalladiumDwh.ClientApp.Model
             Status = status;
         }
 
-      
+
+        public static ExtractsViewModel CreateHistory(EventHistory eventHistory,Guid id)
+        {
+            /*
+            
+            Status = status;
+            Total = total ?? 0;
+            Loaded = loaded ?? 0;
+            Rejected = rejected ?? 0;
+            Sent = sent ?? 0;
+            Queued = queued ?? 0;
+            Id = id;
+
+               MAX(FoundDate) AS FoundDate, 
+               MAX(LoadDate) AS LoadDate, 
+	           MAX(ImportDate) AS ImportDate, 
+	           MAX(SendDate) AS SendDate
+            */
+            string status = "Not Loaded";
+            if (eventHistory.FoundDate.HasValue)
+            {
+                status = $"Updated, {eventHistory.FoundDate.GetTiming()}";
+            }
+            if (eventHistory.LoadDate.HasValue)
+            {
+                status = $"Loaded, {eventHistory.LoadDate.GetTiming()}";
+            }
+            if (eventHistory.ImportDate.HasValue)
+            {
+                status = $"Saved, {eventHistory.ImportDate.GetTiming()}";
+            }
+            if (eventHistory.SendDate.HasValue)
+            {
+                status = $"Sent, {eventHistory.SendDate.GetTiming()}";
+            }
+            
+            return new ExtractsViewModel(status, eventHistory.Found.Value, eventHistory.Imported.Value, eventHistory.Rejected, eventHistory.Sent, eventHistory.NotSent,id);
+        }
     }
 }

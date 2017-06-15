@@ -32,6 +32,7 @@ namespace PalladiumDwh.ClientApp.Views
         event EventHandler<ExtractSentEvent> ExtractSent;
         void ClearExtracts();
         void UpdateStatus(ExtractsViewModel viewModel);
+        void UpdateStats(ExtractsViewModel viewModel);
         #endregion
 
         #region ExtractsList

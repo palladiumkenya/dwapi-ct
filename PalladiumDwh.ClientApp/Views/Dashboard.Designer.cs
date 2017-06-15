@@ -60,8 +60,11 @@
             this.labelId = new System.Windows.Forms.Label();
             this.listViewExtract = new System.Windows.Forms.ListView();
             this.columnHeaderExtract = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderLoaded = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderRejected = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderQueued = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderSent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panelExtractDataStatus = new System.Windows.Forms.Panel();
             this.panelExtractAction = new System.Windows.Forms.Panel();
@@ -115,10 +118,6 @@
             this.labelExtractDataDetail = new System.Windows.Forms.Label();
             this.openFileDialogCsv = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.columnHeaderLoaded = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderRejected = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderSent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderQueued = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStripDashboard.SuspendLayout();
             this.statusStripDashboard.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -419,7 +418,6 @@
             this.listViewExtract.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderExtract,
             this.columnHeaderStatus,
-            this.columnHeaderTotal,
             this.columnHeaderLoaded,
             this.columnHeaderRejected,
             this.columnHeaderQueued,
@@ -441,15 +439,26 @@
             this.columnHeaderExtract.Text = "Extract";
             this.columnHeaderExtract.Width = 127;
             // 
-            // columnHeaderTotal
-            // 
-            this.columnHeaderTotal.Text = "Total Records";
-            this.columnHeaderTotal.Width = 83;
-            // 
             // columnHeaderStatus
             // 
             this.columnHeaderStatus.Text = "Status";
             this.columnHeaderStatus.Width = 145;
+            // 
+            // columnHeaderLoaded
+            // 
+            this.columnHeaderLoaded.Text = "Loaded";
+            // 
+            // columnHeaderRejected
+            // 
+            this.columnHeaderRejected.Text = "Rejected";
+            // 
+            // columnHeaderQueued
+            // 
+            this.columnHeaderQueued.Text = "Queue";
+            // 
+            // columnHeaderSent
+            // 
+            this.columnHeaderSent.Text = "Sent";
             // 
             // columnHeaderId
             // 
@@ -991,22 +1000,6 @@
             // 
             this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
             // 
-            // columnHeaderLoaded
-            // 
-            this.columnHeaderLoaded.Text = "Loaded";
-            // 
-            // columnHeaderRejected
-            // 
-            this.columnHeaderRejected.Text = "Rejected";
-            // 
-            // columnHeaderSent
-            // 
-            this.columnHeaderSent.Text = "Sent";
-            // 
-            // columnHeaderQueued
-            // 
-            this.columnHeaderQueued.Text = "Queue";
-            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1120,7 +1113,6 @@
         private System.Windows.Forms.Label labelId;
         private System.Windows.Forms.ListView listViewExtract;
         private System.Windows.Forms.ColumnHeader columnHeaderExtract;
-        private System.Windows.Forms.ColumnHeader columnHeaderTotal;
         private System.Windows.Forms.ColumnHeader columnHeaderStatus;
         private System.Windows.Forms.ColumnHeader columnHeaderId;
         private System.Windows.Forms.ListBox listBoxEventsSummary;

@@ -25,6 +25,7 @@ namespace PalladiumDwh.ClientApp.Views
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private List<ExtractsViewModel> _extracts=new List<ExtractsViewModel>();
+        private IEMRRepository _emrRepository;
         private IDatabaseManager _databaseManager;
         private IDatabaseSetupService _databaseSetupService;
         private  IProjectRepository _projectRepository;
@@ -168,7 +169,7 @@ namespace PalladiumDwh.ClientApp.Views
                 {
                     if (listViewExtract.SelectedItems.Count > 0)
                     {
-                        var id = listViewExtract.SelectedItems[0].SubItems[7].Text;
+                        var id = listViewExtract.SelectedItems[0].SubItems[6].Text;
 
                         return _extracts.FirstOrDefault(x => x.Id == new Guid(id));
                     }
@@ -272,6 +273,21 @@ namespace PalladiumDwh.ClientApp.Views
         #endregion
 
         #region ExtractSettingsList
+
+        public void UpdateStats(ExtractsViewModel viewModel)
+        {
+            var lvitem = listViewExtract.FindItemWithText(viewModel.Id.ToString());
+            if (null != lvitem)
+            {
+                //listViewExtract.BeginUpdate();
+                lvitem.SubItems[1].Text = viewModel.Status;
+                lvitem.SubItems[2].Text = viewModel.Loaded.ToString();
+                lvitem.SubItems[3].Text = viewModel.Rejected.ToString();
+                lvitem.SubItems[4].Text = viewModel.Queued.ToString();
+                lvitem.SubItems[5].Text = viewModel.Sent.ToString();
+                //listViewExtract.EndUpdate();
+            }
+        }
 
         public string SelectedExtractSetting
         {
@@ -473,11 +489,10 @@ namespace PalladiumDwh.ClientApp.Views
             {
                 //listViewExtract.BeginUpdate();
                 lvitem.SubItems[1].Text = viewModel.Status;
-                lvitem.SubItems[2].Text = viewModel.Total.ToString();
-                lvitem.SubItems[3].Text = viewModel.Loaded.ToString();
-                lvitem.SubItems[4].Text = viewModel.Rejected.ToString();
-                lvitem.SubItems[5].Text = viewModel.Queued.ToString();
-                lvitem.SubItems[6].Text = viewModel.Sent.ToString();
+                lvitem.SubItems[2].Text = viewModel.Loaded.ToString();
+                lvitem.SubItems[3].Text = viewModel.Rejected.ToString();
+                lvitem.SubItems[4].Text = viewModel.Queued.ToString();
+                lvitem.SubItems[5].Text = viewModel.Sent.ToString();
                 //listViewExtract.EndUpdate();
             }
 
@@ -507,7 +522,6 @@ namespace PalladiumDwh.ClientApp.Views
                 var item = new ListViewItem();
                 item.Text = e.Extract;
                 item.SubItems.Add(e.Status);
-                item.SubItems.Add(e.Total.ToString());
                 item.SubItems.Add(e.Loaded.ToString());
                 item.SubItems.Add(e.Rejected.ToString());
                 item.SubItems.Add(e.Queued.ToString());
@@ -654,6 +668,7 @@ namespace PalladiumDwh.ClientApp.Views
             await _databaseManager.RunUpdateAsync(progress);
 
             _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
+            _emrRepository = Program.IOC.GetInstance<IEMRRepository>();
             _syncService = Program.IOC.GetInstance<ISyncService>();
             _syncCsvService = Program.IOC.GetInstance<ISyncCsvService>();
 
@@ -709,7 +724,7 @@ namespace PalladiumDwh.ClientApp.Views
             _tempPatientStatusExtractErrorSummaryRepository,
             _tempPatientVisitExtractErrorSummaryRepository,
 
-                _exportService, _importService,_importCsvService, _syncCsvService
+                _exportService, _importService,_importCsvService, _syncCsvService,_emrRepository
             );
 
             Presenter.Initialize();
@@ -721,6 +736,9 @@ namespace PalladiumDwh.ClientApp.Views
             await Presenter.LoadEmrInfoAsync();
 
             Presenter.LoadExtractSettings();
+
+            Presenter.UpdateStatistics();
+
             Presenter.LoadExtractList();
         }
 

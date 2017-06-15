@@ -248,5 +248,31 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                     GROUP BY 
 	                    Display", new {ExtractSettingId = extractSettingId});
         }
+
+        public Task<EventHistory> GetStatsAsync(Guid extractSettingId)
+        {
+            var db = Context.Database.Connection;
+            return db.QueryFirstOrDefaultAsync<EventHistory>(@"
+                    SELECT        
+	                    -1 AS SiteCode, 
+	                    Display, 
+	                    SUM(Found) AS Found, 
+	                    MAX(FoundDate) AS FoundDate, 
+	                    MAX(Loaded) AS Loaded, 
+	                    MAX(Rejected) AS Rejected, 
+	                    MAX(LoadDate) AS LoadDate, 
+                        MAX(Imported) AS Imported, 
+	                    MAX(NotImported) AS NotImported, 
+	                    MAX(ImportDate) AS ImportDate, 
+	                    MAX(Sent) AS Sent, 
+	                    MAX(NotSent) AS NotSent, 
+	                    MAX(SendDate) AS SendDate
+                    FROM            
+	                    EventHistory
+                    WHERE        
+	                    (ExtractSettingId = @ExtractSettingId)
+                    GROUP BY 
+	                    Display", new { ExtractSettingId = extractSettingId });
+        }
     }
 }

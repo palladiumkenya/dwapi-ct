@@ -30,6 +30,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        private IEMRRepository _emrRepository;
         private IDatabaseManager _databaseManager;
 
         private IProjectRepository _projectRepository;
@@ -88,12 +89,14 @@ namespace PalladiumDwh.ClientApp.Presenters
         ITempPatientExtractRepository tempPatientExtractRepository, ITempPatientArtExtractRepository tempPatientArtExtractRepository, ITempPatientBaselinesExtractRepository tempPatientBaselinesExtractRepository, ITempPatientLaboratoryExtractRepository tempPatientLaboratoryExtractRepository, ITempPatientPharmacyExtractRepository tempPatientPharmacyExtractRepository, ITempPatientStatusExtractRepository tempPatientStatusExtractRepository, ITempPatientVisitExtractRepository tempPatientVisitExtractRepository,
             ITempPatientArtExtractErrorSummaryRepository tempPatientArtExtractErrorSummaryRepository, ITempPatientBaselinesExtractErrorSummaryRepository tempPatientBaselinesExtractErrorSummaryRepository, ITempPatientExtractErrorSummaryRepository tempPatientExtractErrorSummaryRepository, ITempPatientLaboratoryExtractErrorSummaryRepository tempPatientLaboratoryExtractErrorSummaryRepository, ITempPatientPharmacyExtractErrorSummaryRepository tempPatientPharmacyExtractErrorSummaryRepository, ITempPatientStatusExtractErrorSummaryRepository tempPatientStatusExtractErrorSummaryRepository, ITempPatientVisitExtractErrorSummaryRepository tempPatientVisitExtractErrorSummaryRepository,
             IExportService exportService,IImportService importService, IImportCsvService importCsvService,
-        ISyncCsvService syncCsvService
+        ISyncCsvService syncCsvService,
+            IEMRRepository emrRepository
             )
         {
             view.Presenter = this;
             View = view;
 
+            _emrRepository=emrRepository;
             _databaseManager = databaseManager;
 
             _projectRepository = projectRepository;
@@ -327,6 +330,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
 
             await LoadExtractDetail();
+            UpdateStatistics();
             View.CanLoadEmr = true;
             View.ShowReady();
         }
@@ -436,6 +440,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
 
             await LoadExtractDetail();
+            UpdateStatistics();
             View.CanLoadEmr = true;
             View.ShowReady();
         }
@@ -550,7 +555,37 @@ namespace PalladiumDwh.ClientApp.Presenters
             }
         }
 
-      
+        public void UpdateStatistics()
+        {
+
+            View.Status = "Updating dashboard...";
+            var progress = new Progress<DProgress>(ShowDProgress);
+
+            try
+            {
+                int total = View.ExtractSettings.Count;
+                int count = 0;
+                foreach (var extractSetting in View.ExtractSettings)
+                {
+                    var eventHistory= _emrRepository.GetStats(extractSetting.Id);
+                    if (null != eventHistory)
+                    {
+                        var vm = ExtractsViewModel.CreateHistory(eventHistory, extractSetting.Id);
+                        View.UpdateStats(vm);
+                    }
+                    View.Status = $"Updating dashboard {Utility.GetPercentage(count,total)}... ";
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+                View.ShowErrorMessage(Utility.GetErrorMessage(e));
+            }
+
+            View.Status = "Ready";
+            View.ShowReady();
+        }
+
 
         private  void View_EmrExtractLoaded(object sender, Events.EmrExtractLoadedEvent e)
         {
