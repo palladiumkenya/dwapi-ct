@@ -266,6 +266,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             {
                 Log.Debug($"{logMessages} [{extract}]...");
                 var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
+                var dpprogress = new Progress<DProgress>(ShowDProgressViewModel);
                 count++;
                 var vm = new ExtractsViewModel(extract) {Status = "loading..."};
                 View.UpdateStatus(vm);
@@ -277,7 +278,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
                 try
                 {
-                    summary = await _syncService.SyncAsync(extract, progressIndicator);
+                    summary = await _syncService.SyncAsync(extract, progressIndicator, dpprogress);
                 }
                 catch (Exception e)
                 {
@@ -294,6 +295,8 @@ namespace PalladiumDwh.ClientApp.Presenters
                 Log.Debug($"{logMessages} [{extract}] Complete");
             }
 
+            await Task.Delay(1);
+            Log.Debug($"Loading other extracts...");
 
             //Other Extracts
             var otherExtracts = extracts.Where(x => x.IsPriority == false).OrderBy(x => x.Rank);
@@ -311,6 +314,8 @@ namespace PalladiumDwh.ClientApp.Presenters
             }
                         
             await Task.WhenAll(tasks.ToArray());
+
+            await Task.Delay(1);
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
@@ -470,20 +475,11 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         private void ReportProgress(ProcessStatus processStatus)
         {
+            return;
             var vm = new ExtractsViewModel(processStatus.ExtractSetting)
             {
                 Total =processStatus.Progress,
                 Status = $"loaded {processStatus.Progress}"
-            };
-            View.UpdateStatus(vm);
-        }
-
-        private void ReportProgress(ProcessStatus processStatus,DProgress extractProgress)
-        {
-            var vm = new ExtractsViewModel(processStatus.ExtractSetting)
-            {
-                Total = processStatus.Progress,
-                Status = extractProgress.ShowProgress()
             };
             View.UpdateStatus(vm);
         }
@@ -494,6 +490,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
             var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
             var dprogress = new Progress<DProgress>(ShowDProgress);
+
             try
             {
                 summary = await service.SyncAsync(extractSetting,csvFile, progressIndicator,dprogress);
@@ -504,7 +501,6 @@ namespace PalladiumDwh.ClientApp.Presenters
                 View.ShowErrorMessage(e.Message);
                 View.Status = "Error loading data! Check logs for details";
             }
-
 
             var vm = new ExtractsViewModel(extractSetting)
             {
@@ -521,10 +517,11 @@ namespace PalladiumDwh.ClientApp.Presenters
             RunSummary summary = null;
 
             var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
+            var dpprogress = new Progress<DProgress>(ShowDProgressViewModel);
 
             try
             {
-                summary = await service.SyncAsync(extractSetting, progressIndicator);
+                summary = await service.SyncAsync(extractSetting, progressIndicator,dpprogress);
             }
             catch (Exception e)
             {
@@ -938,7 +935,21 @@ namespace PalladiumDwh.ClientApp.Presenters
         {
             View.Status = $"{value.ShowProgress()}";
         }
-     
+
+        private void ShowDProgressViewModel(DProgress value)
+        {
+            
+            View.Status = $"{value.ShowProgress()}";
+
+            var vm = new ExtractsViewModel(value.ValueObject as ExtractSetting)
+            {
+                //Total = processStatus.Progress,
+                Status = $"{value.ShowProgress()}"
+            };
+            View.UpdateStatus(vm);
+        }
+
+
         #endregion
     }
 }

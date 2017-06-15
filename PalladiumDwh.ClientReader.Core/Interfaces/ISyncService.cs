@@ -10,7 +10,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         void Initialize();
         Task<int> InitializeAsync(IProgress<DProgress> dprogress = null);
         RunSummary Sync(ExtractSetting extract);
-        Task<RunSummary> SyncAsync(ExtractSetting extract, Progress<ProcessStatus> progressPercent = null);
+        Task<RunSummary> SyncAsync(ExtractSetting extract, Progress<ProcessStatus> progressPercent = null, IProgress<DProgress> progress = null);
         void SyncAll();
         void SyncPatients();
         void SynPatientsArt();

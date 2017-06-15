@@ -182,15 +182,27 @@ namespace PalladiumDwh.Shared.Custom
             return finalString;
         }
 
+        public static void ReportStatus(this IProgress<DProgress> progress,string status, decimal? count = null, decimal? total = null,object valueObject= null)
+        {
+            var dp = DProgress.Report(status);
+            if (count.HasValue && total.HasValue)
+            {
+                decimal percentage = decimal.Divide(count.Value, total.Value) * 100;
+                dp = DProgress.Report(status, (int) percentage);
+            }
 
-        public static void ReportStatus(this IProgress<DProgress> progress,string status, decimal? count = null, decimal? total = null)
+            dp.ValueObject = valueObject;
+            progress.Report(dp);
+        }
+
+        public static void AttachValueObjectReportStatus(this IProgress<DProgress> progress, string status, decimal? count = null, decimal? total = null)
         {
             var dp = DProgress.Report(status);
 
             if (count.HasValue && total.HasValue)
             {
                 decimal percentage = decimal.Divide(count.Value, total.Value) * 100;
-                dp = DProgress.Report(status, (int) percentage);
+                dp = DProgress.Report(status, (int)percentage);
             }
 
             progress.Report(dp);

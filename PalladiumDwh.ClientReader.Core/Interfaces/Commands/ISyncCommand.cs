@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Core.Model.Source;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
 {
@@ -8,6 +10,6 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Commands
     {
         SyncSummary Summary { get; }
         void Execute();
-        Task<SyncSummary> ExecuteAsync();
+        Task<SyncSummary> ExecuteAsync(IProgress<DProgress> progress = null);
     }
 }

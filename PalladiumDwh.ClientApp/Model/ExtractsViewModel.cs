@@ -17,6 +17,8 @@ namespace PalladiumDwh.ClientApp.Model
             Status = "Not Loaded";
         }
 
+
+
         public ExtractsViewModel(ExtractSetting setting):this()
         {
             Extract = setting.Display;

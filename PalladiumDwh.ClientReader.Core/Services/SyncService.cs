@@ -179,65 +179,65 @@ namespace PalladiumDwh.ClientReader.Core.Services
             return summary;
         }
 
-        public async Task<RunSummary> SyncAsync(ExtractSetting extract, Progress<ProcessStatus> progressPercent = null)
+        public async Task<RunSummary> SyncAsync(ExtractSetting extract, Progress<ProcessStatus> progressPercent = null, IProgress<DProgress> progress = null)
         {
 
             var summary = new RunSummary {ExtractSetting = extract};
 
             if (extract.Destination == nameof(TempPatientExtract))
             {
-                summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync(progressPercent);
+                summary.LoadSummary = await _loadPatientExtractCommand.ExecuteAsync(progressPercent,progress);
                 summary.ValidationSummary = await _validatePatientExtractCommand.ExecuteAsync(progressPercent);
-                summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientExtractCommand.ExecuteAsync(progress);
             }
 
 
             if (extract.Destination == nameof(TempPatientArtExtract))
             {
-                summary.LoadSummary = await _loadPatientArtExtractCommand.ExecuteAsync(progressPercent);
+                summary.LoadSummary = await _loadPatientArtExtractCommand.ExecuteAsync(progressPercent,progress);
                 summary.ValidationSummary = await _validatePatientArtExtractCommand.ExecuteAsync(progressPercent);
-                summary.SyncSummary = await _syncPatientArtExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientArtExtractCommand.ExecuteAsync(progress);
             }
 
 
             if (extract.Destination == nameof(TempPatientBaselinesExtract))
             {
-                summary.LoadSummary = await _loadPatientBaselinesExtractCommand.ExecuteAsync(progressPercent);
+                summary.LoadSummary = await _loadPatientBaselinesExtractCommand.ExecuteAsync(progressPercent, progress);
                 summary.ValidationSummary = await _validatePatientBaselinesExtractCommand.ExecuteAsync(progressPercent);
-                summary.SyncSummary = await _syncPatientBaselinesExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientBaselinesExtractCommand.ExecuteAsync(progress);
             }
 
             if (extract.Destination == nameof(TempPatientStatusExtract))
             {
-                summary.LoadSummary = await _loadPatientStatusExtractCommand.ExecuteAsync(progressPercent);
+                summary.LoadSummary = await _loadPatientStatusExtractCommand.ExecuteAsync(progressPercent, progress);
                 summary.ValidationSummary = await _validatePatientStatusExtractCommand.ExecuteAsync(progressPercent);
-                summary.SyncSummary = await _syncPatientStatusExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientStatusExtractCommand.ExecuteAsync(progress);
 
             }
 
 
             if (extract.Destination == nameof(TempPatientVisitExtract))
             {
-                summary.LoadSummary = await _loadPatientVisitExtractCommand.ExecuteAsync(progressPercent);
+                summary.LoadSummary = await _loadPatientVisitExtractCommand.ExecuteAsync(progressPercent, progress);
                 summary.ValidationSummary = await _validatePatientVisitExtractCommand.ExecuteAsync(progressPercent);
-                summary.SyncSummary = await _syncPatientVisitExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientVisitExtractCommand.ExecuteAsync(progress);
             }
 
 
             if (extract.Destination == nameof(TempPatientLaboratoryExtract))
             {
-                summary.LoadSummary = await _loadPatientLaboratoryExtractCommand.ExecuteAsync(progressPercent);
+                summary.LoadSummary = await _loadPatientLaboratoryExtractCommand.ExecuteAsync(progressPercent, progress);
                 summary.ValidationSummary =
                     await _validatePatientLaboratoryExtractCommand.ExecuteAsync(progressPercent);
-                summary.SyncSummary = await _syncPatientLaboratoryExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientLaboratoryExtractCommand.ExecuteAsync(progress);
             }
 
 
             if (extract.Destination == nameof(TempPatientPharmacyExtract))
             {
-                summary.LoadSummary = await _loadPatientPharmacyExtractCommand.ExecuteAsync(progressPercent);
+                summary.LoadSummary = await _loadPatientPharmacyExtractCommand.ExecuteAsync(progressPercent, progress);
                 summary.ValidationSummary = await _validatePatientPharmacyExtractCommand.ExecuteAsync(progressPercent);
-                summary.SyncSummary = await _syncPatientPharmacyExtractCommand.ExecuteAsync();
+                summary.SyncSummary = await _syncPatientPharmacyExtractCommand.ExecuteAsync(progress);
             }
 
             return summary;

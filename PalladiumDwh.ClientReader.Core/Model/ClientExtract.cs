@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 using System.Text;
+using log4net;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 
@@ -10,6 +12,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
     public abstract class ClientExtract : IClientExtract
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public virtual Guid Id { get; set; }
         public virtual int PatientPK { get; set; }
@@ -72,6 +75,10 @@ namespace PalladiumDwh.ClientReader.Core.Model
                     scb.Append($" SELECT {Utility.GetColumns(columns)} FROM {source} "); //TEMPART
                 }
             }
+
+            Log.Debug(scb.ToString());
+
+
             return scb.ToString();
         }
     }

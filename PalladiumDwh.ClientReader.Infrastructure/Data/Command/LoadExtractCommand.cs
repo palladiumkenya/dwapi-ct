@@ -155,7 +155,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
             var extractName = typeof(T).Name;
             var commandText = string.Empty;
-            string statusUpdate = $"Loading Extracts [{extractName}]";
+            string statusUpdate = $"Loading";
 
             Log.Debug($"Executing load {extractName} command...");
 
@@ -164,7 +164,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
             _extractSetting = emr.GetActiveExtractSetting($"{extractName}");
             if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
-
+            
+            
             commandText = _extractSetting.ExtractSql;
             if (string.IsNullOrWhiteSpace(commandText)) throw new Exception($"No sql command found for {extractName}");
 
@@ -174,7 +175,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
             totalRecords += 1;
 
-            progress?.ReportStatus($"{statusUpdate}...");
+            progress?.ReportStatus($"{statusUpdate}...",null,null, _extractSetting);
 
             ShowPercentage(1);
 
@@ -218,7 +219,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             {
 
                                 totalcount++;
-                                progress?.ReportStatus($"{statusUpdate}",totalcount,totalRecords);
+                                progress?.ReportStatus($"{statusUpdate}",totalcount,totalRecords,_extractSetting);
 
                                 ShowPercentage(totalcount);
                                 count++;
@@ -307,14 +308,14 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                 }
                             }
 
-                            progress?.ReportStatus($"{statusUpdate}", 1, 1);
+                            progress?.ReportStatus($"{statusUpdate}", 1, 1, _extractSetting);
                             currentHistory = _emrRepository.GetStats(_extractSetting.Id);
 
                             _summary.Loaded = currentHistory.Loaded ?? loaded;
                             _summary.Total = currentHistory.Found ?? totalcount;
 
                             
-                            progress?.ReportStatus($"{statusUpdate} Finished");
+                            progress?.ReportStatus($"{statusUpdate} Finished",null,null, _extractSetting);
                         }
                     }
 

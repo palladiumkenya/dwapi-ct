@@ -5,6 +5,8 @@
         Found,
         Loaded,
         Rejected,
+        Imported,
+        NotImported,
         Sent,
         NotSent
     }

@@ -145,6 +145,44 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                 }
             }
 
+            if (action == StatAction.Imported)
+            {
+                eventHistoryToUpdate.Imported = count;
+                eventHistoryToUpdate.ImportDate = DateTime.Now;
+
+                try
+                {
+                    return db.Execute(@"
+                                UPDATE EventHistory 
+                                SET Imported=@Imported,ImportDate=@ImportDate
+                                WHERE (ExtractSettingId=@ExtractSettingId)
+                                ", eventHistoryToUpdate);
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                    throw;
+                }
+
+            }
+            if (action == StatAction.NotImported)
+            {
+                eventHistoryToUpdate.NotImported = count;
+                try
+                {
+                    return db.Execute(@"
+                                UPDATE EventHistory 
+                                SET NotImported=@NotImported
+                                WHERE (ExtractSettingId=@ExtractSettingId)
+                                ", eventHistoryToUpdate);
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                    throw;
+                }
+
+            }
             if (action == StatAction.Sent)
             {
                 eventHistoryToUpdate.Sent = count;
@@ -197,6 +235,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 	                    MAX(Loaded) AS Loaded, 
 	                    MAX(Rejected) AS Rejected, 
 	                    MAX(LoadDate) AS LoadDate, 
+                        MAX(Imported) AS Imported, 
+	                    MAX(NotImported) AS NotImported, 
+	                    MAX(ImportDate) AS ImportDate, 
 	                    MAX(Sent) AS Sent, 
 	                    MAX(NotSent) AS NotSent, 
 	                    MAX(SendDate) AS SendDate

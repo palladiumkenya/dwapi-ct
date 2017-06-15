@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace PalladiumDwh.Shared.Model
 {
     public class DProgress
-    {
+    { 
+        public object ValueObject { get; set; }
         public string Status { get; set; }
         public int? ValuePercentage { get; set; }
 
@@ -15,22 +16,23 @@ namespace PalladiumDwh.Shared.Model
         {
         }
 
-        private DProgress(string status)
+        private DProgress(string status, object valueObject=null)
         {
             Status = status;
+            ValueObject = valueObject;
         }
-        private DProgress(string status, int valuePercentage):this(status)
+        private DProgress(string status, int valuePercentage, object valueObject = null) :this(status,valueObject)
         {
             ValuePercentage = valuePercentage;
         }
 
-        public static DProgress Report(string status)
+        public static DProgress Report(string status, object valueObject = null)
         {
-            return new DProgress(status);
+            return new DProgress(status,valueObject);
         }
-        public static DProgress Report(string status, int valuePercentage)
+        public static DProgress Report(string status, int valuePercentage, object valueObject = null)
         {
-            return new DProgress(status,valuePercentage);
+            return new DProgress(status,valuePercentage,valueObject);
         }
 
         public string ShowProgress()

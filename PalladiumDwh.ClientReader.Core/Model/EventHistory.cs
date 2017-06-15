@@ -13,7 +13,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
 
         public int? Found { get; set; }
         public DateTime? FoundDate { get; set; }
-        public string FoundStatus { get; set; }
+        public string FoundStatus { get; set; } 
         public bool? IsFoundSuccess { get; set; }
 
         public int? Loaded { get; set; }
@@ -21,6 +21,13 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public DateTime? LoadDate { get; set; }
         public string LoadStatus { get; set; }
         public bool? IsLoadSuccess { get; set; }
+
+        public int? Imported { get; set; }
+        public int? NotImported { get; set; }
+        public DateTime? ImportDate { get; set; }
+        public string ImportStatus { get; set; }
+        public bool? IsImportSuccess { get; set; }
+
 
         public int? Sent { get; set; }
         public int? NotSent { get; set; }
@@ -68,6 +75,16 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string LoadInfo()
         {
             return $"{Display} > Loaded {Loaded}/{Found} {LoadDate.GetTiming("|")}";
+        }
+
+        public string ImportedInfo()
+        {
+            return $"{Display} > Imported {Imported}/{Loaded} {ImportDate.GetTiming("|")}";
+        }
+
+        public string NotImportedInfo()
+        {
+            return $"{Display} > Not Imported {NotImported}/{Imported} {ImportDate.GetTiming("|")}";
         }
 
         public string RejectedInfo()

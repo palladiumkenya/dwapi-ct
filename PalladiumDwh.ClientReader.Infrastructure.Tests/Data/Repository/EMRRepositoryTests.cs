@@ -153,6 +153,35 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data.Repository
         }
 
         [Test]
+        public void should_Update_Imported_Stats()
+        {
+            _extractSetting = _dbcontext.ExtractSettings.FirstOrDefault();
+            var foundEvent = _eventHistories.First();
+            foundEvent.ExtractSettingId = _extractSetting.Id;
+            foundEvent.FoundDate = DateTime.Now;
+            foundEvent.Found = 50;
+            _emrRepository = new EMRRepository(_dbcontext);
+            _emrRepository.CreateStats(foundEvent, StatAction.Found);
+            foundEvent.LoadDate = DateTime.Now;
+            _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Loaded, 10);
+
+            foundEvent.ImportDate = DateTime.Now;
+            _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Imported, 5);
+            _emrRepository.UpdateStats(_extractSetting.Id, StatAction.NotImported, 5);
+
+            var eventH = _emrRepository.GetStats(foundEvent.ExtractSettingId);
+            Assert.IsNotNull(eventH);
+            Assert.IsTrue(eventH.Imported == 5);
+            Assert.IsTrue(eventH.NotImported == 5);
+            Assert.IsTrue(eventH.Loaded == 10);
+            Assert.IsTrue(eventH.Found == 50);
+            Assert.IsTrue(eventH.LoadDate.HasValue);
+            Console.WriteLine(eventH.ImportedInfo());
+            Console.WriteLine(eventH.NotImportedInfo());
+        }
+
+      
+        [Test]
         public void should_Update_Sent_GetStats()
         {
             _extractSetting = _dbcontext.ExtractSettings.FirstOrDefault();
