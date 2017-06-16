@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure.Interception;
 using System.Data.Entity.Migrations;
 using System.Data.Sql;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Xsl;
@@ -66,12 +67,29 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         public Task RunUpdateAsync(IProgress<DProgress> progress = null)
         {
+            Log.Debug("Checking for database changes...");
             progress?.ReportStatus("checking database...");
             return Task.Run(() =>
             {
                 var configuration = new Configuration();
                 var migrator = new DbMigrator(configuration);
-                migrator.Update();
+                var mgs = migrator.GetPendingMigrations().ToList();
+
+                if (mgs.Count > 0)
+                {
+                    Log.Debug($"Found [{mgs.Count}] Changes !");
+                    foreach (var m in mgs)
+                    {
+                        Log.Debug($"Updating database with changes [{m}]");
+                        Log.Debug(m);
+                    }
+
+                    migrator.Update();
+                }
+                else
+                {
+                    Log.Debug("No changes Found");
+                }
             });
         }
         public IDbConnection GetConnection(string provider, string connectionString)
