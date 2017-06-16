@@ -1,18 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using PagedList;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Infrastructure.Data;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using Dapper;
+using log4net;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientUploader.Infrastructure.Data
 {
     public class ClientPatientRepository : IClientPatientRepository
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private readonly DwapiRemoteContext _context;
         private IDbConnection db;
 
@@ -88,24 +94,40 @@ namespace PalladiumDwh.ClientUploader.Infrastructure.Data
 
         public void UpdatePush(ClientPatientExtract patient, string profileExtract, PushResponse response)
         {
-            //update stats
-
-            //[QueueId] ,[Status] ,[StatusDate]
             string query = $@"
                     UPDATE 
                         PatientExtract 
                     SET 
-                        Processed = 1 
+                        Processed = 1,
+                        [Status]='{response.Status}',
+                        [StatusDate]='{response.StatusDate:yyyy-MMM-dd HH:mm:ss tt}' 
                     WHERE 
-                        PatientPK = @PatientPK AND SiteCode=@SiteCode AND (Processed=0 or Processed Is Null);
-
-                    ";
+                        PatientPK ={patient.PatientPK} AND SiteCode={patient.SiteCode};
+                    
+                    UPDATE 
+                        {profileExtract}
+                    SET 
+                        Processed = 1,
+                        [QueueId]='{response.QueueId}',
+                        [Status]='{response.Status}',
+                        [StatusDate]='{response.StatusDate:yyyy-MMM-dd HH:mm:ss tt}'
+                    WHERE 
+                        PatientPK ={patient.PatientPK} AND SiteCode={patient.SiteCode}";
 
             if (!string.IsNullOrWhiteSpace(profileExtract))
-                query += $"UPDATE {profileExtract} " +
-                         $"SET Processed = 1,[QueueId]='{response.QueueId}',[Status]='{response.Status}',[StatusDate]='{response.StatusDate:yyyy-MMM-dd}' " +
-                         $"WHERE PatientPK = @PatientPK AND SiteCode=@SiteCode AND (Processed=0 or Processed Is Null);";
-            var count = this.db.Execute(query, patient);
+            {
+
+                try
+                {
+                    db.Execute(query);
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                    throw;
+                }
+            }
+                
         }
     }
 }

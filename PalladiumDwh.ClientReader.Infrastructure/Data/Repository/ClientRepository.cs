@@ -9,7 +9,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 {
     public abstract class ClientRepository<TEntity> : IClientRepository<TEntity> where TEntity:class
     {
-        internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        
 
         internal DwapiRemoteContext Context;
         internal DbSet<TEntity> DbSet;

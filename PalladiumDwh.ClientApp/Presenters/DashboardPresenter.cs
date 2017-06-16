@@ -561,8 +561,12 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.Status = "Updating dashboard...";
             var progress = new Progress<DProgress>(ShowDProgress);
 
+            
+
             try
             {
+                _emrRepository.ResetSendStats();
+
                 int total = View.ExtractSettings.Count;
                 int count = 0;
                 foreach (var extractSetting in View.ExtractSettings)
