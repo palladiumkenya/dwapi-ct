@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Activities.Expressions;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
@@ -223,22 +224,44 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
             return -1;
         }
 
-        public int UpdateSendStats(Guid extractSettingId)
+        public async Task<int> UpdateSendStats(Guid extractSettingId)
         {
-            var db = Context.Database.Connection;
+            int result = -1;
+            var db = Context.Database.Connection as SqlConnection;
 
-            //update patients
-            string sqlPatients = @"
-SELECT distinct PatientPK,SiteCode FROM [PatientArtExtract]Where NOT(Status='Sent') union
-SELECT distinct PatientPK,SiteCode FROM [PatientBaselinesExtract] Where NOT(Status='Sent')  union
-SELECT distinct PatientPK,SiteCode FROM [PatientLaboratoryExtract] Where NOT(Status='Sent') union
-SELECT distinct PatientPK,SiteCode FROM [PatientPharmacyExtract] Where NOT(Status='Sent')  union
-SELECT distinct PatientPK,SiteCode FROM [PatientStatusExtract] Where NOT(Status='Sent') union
-SELECT distinct PatientPK,SiteCode FROM [PatientVisitExtract] Where NOT(Status='Sent')
+            if (db.State != ConnectionState.Closed)
+                await db.OpenAsync();
+            
+            //reset patients
+            result =await db.ExecuteAsync(@"UPDATE PatientExtract SET Status='Sent' WHERE Processed=1 AND NOT(coalesce([Status],'')='Sent')");
 
-";
+            //update NOT Sent patients
+            string sqlNotSentPatients = @"
+                        SELECT distinct PatientPK,SiteCode FROM [PatientArtExtract] Where NOT(coalesce([Status],'')='Sent') union
+                        SELECT distinct PatientPK,SiteCode FROM [PatientBaselinesExtract] Where NOT(coalesce([Status],'')='Sent')  union
+                        SELECT distinct PatientPK,SiteCode FROM [PatientLaboratoryExtract] Where NOT(coalesce([Status],'')='Sent') union
+                        SELECT distinct PatientPK,SiteCode FROM [PatientPharmacyExtract] Where NOT(coalesce([Status],'')='Sent')  union
+                        SELECT distinct PatientPK,SiteCode FROM [PatientStatusExtract] Where NOT(coalesce([Status],'')='Sent') union
+                        SELECT distinct PatientPK,SiteCode FROM [PatientVisitExtract] Where NOT(coalesce([Status],'')='Sent')
+                            ";
 
-            string tablename= db.QueryFirstOrDefault<string>(@"SELECT Destination FROM [ExtractSetting] where  Id=@Id",new {Id= extractSettingId});
+            using (var reader = await db.ExecuteReaderAsync(sqlNotSentPatients))
+            {
+                while (reader.Read())
+                {
+                    db.Execute(
+                        $@"
+                        UPDATE 
+                            PatientExtract 
+                        SET Status='Not Sent' 
+                        WHERE 
+                            Processed=1 AND 
+                            PatientPK={reader[0]} AND 
+                            SiteCode={reader[1]}");
+                }
+            }
+
+            string tablename = await db.QueryFirstOrDefaultAsync<string>(@"SELECT Destination FROM [ExtractSetting] WHERE Id=@Id", new {Id= extractSettingId});
 
             if (string.IsNullOrWhiteSpace(tablename))
                 return 1;
@@ -248,26 +271,29 @@ SELECT distinct PatientPK,SiteCode FROM [PatientVisitExtract] Where NOT(Status='
             if (tablename == "PatientExtract".ToLower())
             {
 
-                return db.Execute($@"
+                result= await db.ExecuteAsync($@"
                         UPDATE       
 	                        EventHistory
                         SET 
                             SendDate=(SELECT MAX(SendDate) AS SendDate FROM EventHistory),    
 	                        Sent =(SELECT COUNT(PatientPK) AS Sent FROM {tablename} WHERE (Status='Sent')), 
-	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE NOT(Status='Sent'))
+	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE NOT(coalesce([Status],'')='Sent'))
                         WHERE        
 	                        (ExtractSettingId ='{extractSettingId}')");
+                return result;
             }
            
-            return db.Execute($@"
+             result = await db.ExecuteAsync($@"
                         UPDATE       
 	                        EventHistory
                         SET  
                             SendDate=(SELECT MAX(StatusDate) StatusDate FROM {tablename} WHERE (Status = 'Sent')),    
 	                        Sent =(SELECT COUNT(PatientPK) AS Sent FROM {tablename} WHERE (Status='Sent')), 
-	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE NOT(Status='Sent'))
+	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE NOT(coalesce([Status],'')='Sent'))
                         WHERE        
 	                        (ExtractSettingId ='{extractSettingId}')");
+
+            return result;
         }
 
         public EventHistory GetStats(Guid extractSettingId)

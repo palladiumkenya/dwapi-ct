@@ -15,7 +15,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Repository
         IDbConnection GetEmrConnection();
         int CreateStats(EventHistory eventHistory, StatAction action);
         int UpdateStats(Guid extractSettingId, StatAction action, int count);
-        int UpdateSendStats(Guid extractSettingId);
+        Task<int> UpdateSendStats(Guid extractSettingId);
         EventHistory GetStats(Guid extractSettingId);
     }
 }
