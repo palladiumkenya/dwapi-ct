@@ -191,6 +191,7 @@
     <Compile Include="Model\ExtractSetting.cs" />
     <Compile Include="Model\EMR.cs" />
     <Compile Include="Model\ImportManifest.cs" />
+    <Compile Include="Model\LiveApp.cs" />
     <Compile Include="Model\ProcessStatus.cs" />
     <Compile Include="Model\Profile\ClientSitePatientProfile.cs" />
     <Compile Include="Model\PushResponse.cs" />

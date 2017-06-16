@@ -69,6 +69,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         public async Task PreserveLiveApp()
         {
+            Log.Debug("Reading custom settings...");
+
             var cn =  new SqlConnection(_context.Database.Connection.ConnectionString);
 
             _defaultEmrId=await cn.QueryFirstOrDefaultAsync<Guid>(@"SELECT [Id] FROM [EMR] where IsDefault=1");
@@ -76,6 +78,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         public async Task RestoreLiveApp()
         {
+            Log.Debug("Updating custom settings...");
+
             var cn = new SqlConnection(_context.Database.Connection.ConnectionString);
 
             await cn.ExecuteAsync($@"
