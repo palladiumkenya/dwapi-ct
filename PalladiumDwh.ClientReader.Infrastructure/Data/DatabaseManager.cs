@@ -8,8 +8,10 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using System.Xml.Xsl;
+using Dapper;
 using log4net;
 using MySql.Data.MySqlClient;
 using Npgsql;
@@ -27,7 +29,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly DwapiRemoteContext _context;
-
+        private Guid _defaultEmrId;
         public DatabaseManager(DwapiRemoteContext context)
         {
             _context = context;
@@ -65,11 +67,30 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             return exists;
         }
 
-        public Task RunUpdateAsync(IProgress<DProgress> progress = null)
+        public async Task PreserveLiveApp()
+        {
+            var cn =  new SqlConnection(_context.Database.Connection.ConnectionString);
+
+            _defaultEmrId=await cn.QueryFirstOrDefaultAsync<Guid>(@"SELECT [Id] FROM [EMR] where IsDefault=1");
+        }
+
+        public async Task RestoreLiveApp()
+        {
+            var cn = new SqlConnection(_context.Database.Connection.ConnectionString);
+
+            await cn.ExecuteAsync($@"
+                    UPDATE [EMR] set IsDefault=0;
+                    UPDATE [EMR] set IsDefault=1 WHERE Id='{_defaultEmrId}'");
+        }
+
+        public async Task RunUpdateAsync(IProgress<DProgress> progress = null)
         {
             Log.Debug("Checking for database changes...");
             progress?.ReportStatus("checking database...");
-            return Task.Run(() =>
+            
+            await PreserveLiveApp();
+
+            await Task.Run(() =>
             {
                 var configuration = new Configuration();
                 var migrator = new DbMigrator(configuration);
@@ -91,6 +112,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
                     Log.Debug("No changes Found");
                 }
             });
+
+            await RestoreLiveApp();
         }
         public IDbConnection GetConnection(string provider, string connectionString)
         {
