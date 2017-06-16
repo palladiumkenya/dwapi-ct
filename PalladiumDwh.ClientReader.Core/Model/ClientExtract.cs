@@ -76,7 +76,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
                 }
             }
 
-            Log.Debug(scb.ToString());
+            
 
 
             return scb.ToString();
