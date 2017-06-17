@@ -21,7 +21,7 @@ using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
 {
-    public abstract class LoadExtractCsvCommand<T> : ILoadCsvExtractCommand<T> where T : TempExtract
+    public abstract class LoadExtractCsvCommand<T> : ILoadCsvExtractCommand<T> where T : TempExtract, new()
     {
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -74,7 +74,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                     var extracts = new List<T>();
                     int count = 0;
                     int loaded = 0;
-                    var extract = (T)Activator.CreateInstance(typeof(T));
+                    var extract = new T();
                     string action = extract.GetAddAction();
                     int totalcount = 0;
                     while (reader.Read())

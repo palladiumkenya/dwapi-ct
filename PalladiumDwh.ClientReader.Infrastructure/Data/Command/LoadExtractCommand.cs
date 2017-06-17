@@ -221,6 +221,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                 totalcount++;
                                 progress?.ReportStatus($"{statusUpdate}",totalcount,totalRecords,_extractSetting);
 
+                                await Task.Delay(1);
+
                                 ShowPercentage(totalcount);
                                 count++;
 
