@@ -45,6 +45,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
         {
             _summary = new LoadSummary();
             var extractName = typeof(T).Name;
+            string statusUpdate = $"Loading";
 
             CommandText = csvExtract;
             if (string.IsNullOrWhiteSpace(CommandText)) throw new Exception($"missing csv file found!");
@@ -56,7 +57,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
             if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
 
             int totalRecords = 0;
-            progress?.ReportStatus($"Reading Csv...",null,null,_extractSetting);
+            progress?.ReportStatus($"{statusUpdate}...",null,null,_extractSetting);
 
             EventHistory currentHistory = _emrRepository.GetStats(_extractSetting.Id);
 
@@ -80,7 +81,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                     {
                         totalcount++;
                         count++;
-                        progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}]...", totalcount, totalRecords, _extractSetting);
+                        progress?.ReportStatus($"{statusUpdate}", totalcount, totalRecords, _extractSetting);
+
+                        await Task.Delay(1);
 
                         try
                         {
@@ -137,7 +140,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                                         await CleintConnection.OpenAsync();
                                     }
                                     var tx = CleintConnection.BeginTransaction(IsolationLevel.RepeatableRead);
-                                    loaded += await CleintConnection.ExecuteAsync(action, extract, tx, 0);
+                                    loaded += await CleintConnection.ExecuteAsync(action, extracts, tx, 0);
                                     tx.Commit();
 
                                     //update stats
@@ -166,7 +169,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                                 await CleintConnection.OpenAsync();
                             }
                             var tx = CleintConnection.BeginTransaction(IsolationLevel.RepeatableRead);
-                            loaded += await CleintConnection.ExecuteAsync(action, extract, tx, 0);
+                            loaded += await CleintConnection.ExecuteAsync(action, extracts, tx, 0);
                             tx.Commit();
 
                             //update stats
@@ -179,13 +182,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Csv.Command
                         }
                         
                     }
-                    progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}]...", 1, 1);
+                    progress?.ReportStatus($"{statusUpdate}", 1, 1,_extractSetting);
                     currentHistory = _emrRepository.GetStats(_extractSetting.Id);
 
                     _summary.Loaded = currentHistory.Loaded ?? loaded;
                     _summary.Total = currentHistory.Found ?? totalcount;
 
-                    progress?.ReportStatus($"Reading Csv [{Path.GetFileName(CommandText)}] Finished", null, null, _extractSetting);
+                    progress?.ReportStatus($"{statusUpdate} Finished", null, null, _extractSetting);
                 }
             }
 

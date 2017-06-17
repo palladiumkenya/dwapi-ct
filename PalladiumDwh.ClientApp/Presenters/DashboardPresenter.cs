@@ -378,6 +378,7 @@ namespace PalladiumDwh.ClientApp.Presenters
 
                 Log.Debug($"{logMessages} [{extract}]...");
                 var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
+                var dpprogress = new Progress<DProgress>(ShowDProgressViewModel);
                 count++;
                 var vm = new ExtractsViewModel(extract) { Status = "loading..." };
                 View.UpdateStatus(vm);
@@ -390,7 +391,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                 try
                 {
                     //csv priorities
-                    summary = await _syncCsvService.SyncAsync(extract, csv, progressIndicator,dprogress);
+                    summary = await _syncCsvService.SyncAsync(extract, csv, progressIndicator, dpprogress);
                 }
                 catch (Exception e)
                 {
@@ -407,6 +408,8 @@ namespace PalladiumDwh.ClientApp.Presenters
                 Log.Debug($"{logMessages} [{extract}] Complete");
             }
 
+            await Task.Delay(1);
+            Log.Debug($"Loading other extracts...");
 
             //Other Extracts
             var otherExtracts = extracts.Where(x => x.IsPriority == false).OrderBy(x => x.Rank);
@@ -427,7 +430,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             }
 
             await Task.WhenAll(tasks.ToArray());
-
+            await Task.Delay(1);
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
             timeTaken += elapsedMs;
@@ -492,7 +495,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             RunSummary summary = null;
 
             var progressIndicator = new Progress<ProcessStatus>(ReportProgress);
-            var dprogress = new Progress<DProgress>(ShowDProgress);
+            var dprogress = new Progress<DProgress>(ShowDProgressViewModel);
 
             try
             {

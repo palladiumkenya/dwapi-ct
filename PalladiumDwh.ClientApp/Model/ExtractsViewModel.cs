@@ -104,7 +104,7 @@ namespace PalladiumDwh.ClientApp.Model
                 status = $"Sent, {eventHistory.SendDate.GetTiming()}";
             }
             
-            return new ExtractsViewModel(status, eventHistory.Found.Value, eventHistory.Imported.Value, eventHistory.Rejected, eventHistory.Sent, eventHistory.NotSent,id);
+            return new ExtractsViewModel(status, eventHistory.Found, eventHistory.Imported, eventHistory.Rejected, eventHistory.Sent, eventHistory.NotSent,id);
         }
     }
 }
