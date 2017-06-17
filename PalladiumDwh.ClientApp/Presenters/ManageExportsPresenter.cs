@@ -9,6 +9,7 @@ using log4net;
 using PalladiumDwh.ClientApp.Model;
 using PalladiumDwh.ClientApp.Views;
 using PalladiumDwh.ClientReader.Core.Interfaces;
+using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientUploader.Core;
 using PalladiumDwh.ClientUploader.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
@@ -143,15 +144,20 @@ namespace PalladiumDwh.ClientApp.Presenters
 
                     if (siteOk)
                     {
-                        var tasks = new List<Task>();
+                        var tasks = new List<Task<PushResponse>>();
 
                         int patientTotal=siteProfile.ClientPatientExtracts.Count;
                         int patientCount = 0;
 
                         foreach (var p in siteProfile.ClientPatientExtracts)
                         {
+                            
+                            //save file and response then delete files
+
                             patientCount++;
                             var extractsToSend = _profileManager.Generate(p);
+
+                            PushResponse[] responses = null;
 
                             foreach (var e in extractsToSend)
                             {
@@ -161,19 +167,38 @@ namespace PalladiumDwh.ClientApp.Presenters
                             progress.ReportStatus($"{status} | Site:{siteProfile.Manifest.SiteCode}", patientCount,
                                 patientTotal);
 
+                            
                             try
                             {
-                                await Task.WhenAll(tasks.ToArray());
+                              responses=  await Task.WhenAll(tasks.ToArray());
                             }
                             catch (Exception ex)
                             {
                                 Log.Debug(ex);
                             }
+
+
+                            // delete if success for all 
+                            if (null != responses)
+                            {
+                                var badResponse = responses.FirstOrDefault(x => x.IsSuccess == false);
+                                if (null == badResponse)
+                                {
+                                    //delete file
+                                    var file = $"{export.Location.HasToEndsWith(@"\")}{p.Id}.dwh";
+                                    await _importService.DeleteProfile(file);
+                                }   
+                            }
+
+
                         }
                     }
                     
                 }
-                
+
+                await _importService.CleanUpExportsAsync(export.Location);
+
+                await LoadExportsAsync(false);
             }
 
             await Task.Delay(1);

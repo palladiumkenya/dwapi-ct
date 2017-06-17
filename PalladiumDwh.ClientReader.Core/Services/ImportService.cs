@@ -231,6 +231,8 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
                 if (exists)
                 {
+                    
+
                     await
                         Task.Run(() =>
                         {
@@ -241,6 +243,47 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 progress?.ReportStatus($"Deleting Export {count} of {folderCount}", count, folderCount);
             }
         }
+
+        public async Task CleanUpExportsAsync(string exportFolder, IProgress<DProgress> progress = null)
+        {
+            //remove folder
+
+            progress?.ReportStatus($"Cleaning Exports..");
+
+
+            bool exists = Directory.Exists(exportFolder);
+
+                if (exists)
+                {
+                    // if manifest remains only
+
+                    await
+                        Task.Run(() =>
+                        {
+                            var files = Directory.GetFiles(exportFolder, "*.dwh");
+                            if(files.Length==0)
+                                Directory.Delete(exportFolder, true);
+                        });
+                }
+
+                
+         
+        }
+
+        public async  Task DeleteProfile(string exportProfile, IProgress<DProgress> progress = null)
+        {
+            bool exists = File.Exists(exportProfile);
+
+            if (exists)
+            {
+                await
+                    Task.Run(() =>
+                    {
+                        File.Delete(exportProfile);
+                    });
+            }
+        }
+
         public  string Base64Decode(string base64EncodedData)
         {
             var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
