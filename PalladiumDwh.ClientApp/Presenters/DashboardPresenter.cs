@@ -560,27 +560,27 @@ namespace PalladiumDwh.ClientApp.Presenters
 
         public void UpdateStatistics()
         {
-
             View.Status = "Updating dashboard...";
-            var progress = new Progress<DProgress>(ShowDProgress);
-
-            
+            var progress = new Progress<DProgress>(ShowDProgress);          
 
             try
             {
                 _emrRepository.ResetSendStats();
 
-                int total = View.ExtractSettings.Count;
-                int count = 0;
-                foreach (var extractSetting in View.ExtractSettings)
+                if (null != View.ExtractSettings)
                 {
-                    var eventHistory= _emrRepository.GetStats(extractSetting.Id);
-                    if (null != eventHistory)
+                    int total = View.ExtractSettings.Count;
+                    int count = 0;
+                    foreach (var extractSetting in View.ExtractSettings)
                     {
-                        var vm = ExtractsViewModel.CreateHistory(eventHistory, extractSetting.Id);
-                        View.UpdateStats(vm);
+                        var eventHistory = _emrRepository.GetStats(extractSetting.Id);
+                        if (null != eventHistory)
+                        {
+                            var vm = ExtractsViewModel.CreateHistory(eventHistory, extractSetting.Id);
+                            View.UpdateStats(vm);
+                        }
+                        View.Status = $"Updating dashboard {Utility.GetPercentage(count, total)}... ";
                     }
-                    View.Status = $"Updating dashboard {Utility.GetPercentage(count,total)}... ";
                 }
             }
             catch (Exception e)

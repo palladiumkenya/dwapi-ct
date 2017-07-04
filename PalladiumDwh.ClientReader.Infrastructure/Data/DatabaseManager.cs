@@ -20,6 +20,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.ClientReader.Infrastructure.Migrations;
 using PalladiumDwh.Shared.Custom;
+using PalladiumDwh.Shared.Extentions;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data
@@ -78,11 +79,13 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         public async Task RestoreLiveApp()
         {
+
             Log.Debug("Updating custom settings...");
 
             var cn = new SqlConnection(_context.Database.Connection.ConnectionString);
 
-            await cn.ExecuteAsync($@"
+            if (!_defaultEmrId.IsNullOrEmpty())
+                await cn.ExecuteAsync($@"
                     UPDATE [EMR] set IsDefault=0;
                     UPDATE [EMR] set IsDefault=1 WHERE Id='{_defaultEmrId}'");
         }
@@ -99,22 +102,22 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
                 var configuration = new Configuration();
                 var migrator = new DbMigrator(configuration);
                 var mgs = migrator.GetPendingMigrations().ToList();
-
-                if (mgs.Count > 0)
-                {
-                    Log.Debug($"Found [{mgs.Count}] Changes !");
-                    foreach (var m in mgs)
-                    {
-                        Log.Debug($"Updating database with changes [{m}]");
-                        Log.Debug(m);
-                    }
-
-                    migrator.Update();
-                }
-                else
-                {
-                    Log.Debug("No changes Found");
-                }
+                migrator.Update();
+//                if (mgs.Count > 0)
+//                {
+//                    Log.Debug($"Found [{mgs.Count}] Changes !");
+//                    foreach (var m in mgs)
+//                    {
+//                        Log.Debug($"Updating database with changes [{m}]");
+//                        Log.Debug(m);
+//                    }
+//
+//                    migrator.Update();
+//                }
+//                else
+//                {
+//                    Log.Debug("No changes Found");
+//                }
             });
 
             await RestoreLiveApp();
@@ -227,6 +230,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
 
         public async Task<bool> CheckAppConnection(DatabaseConfig databaseConfig, IProgress<DProgress> progress = null)
         {
+            Log.Debug($"Checking database [{databaseConfig.Database}]...");
             progress?.ReportStatus($"Checking database [{databaseConfig.Database}]...");
 
             bool connectionOk = false;
@@ -242,9 +246,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
                     if (exists)
                     {
                         connectionOk = true;
+                        Log.Debug($"Database check OK");
                     }
                     else
                     {
+                        Log.Debug($"No Database found,attempting to create one...K");
+                        Log.Debug($"Creating database [{databaseConfig.Database}]...");
                         progress?.ReportStatus($"Creating database [{databaseConfig.Database}]...");
                         connectionOk = ctx.Database.CreateIfNotExists();
                     }
@@ -252,6 +259,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
             }
             catch (Exception e)
             {
+                Log.Debug($"Creating database Failed !");
                 Log.Debug(e);
                 throw;
             }

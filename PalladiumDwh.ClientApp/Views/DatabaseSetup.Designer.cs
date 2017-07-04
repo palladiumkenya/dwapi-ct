@@ -43,6 +43,8 @@
             this.panelMainTitle = new System.Windows.Forms.Panel();
             this.labelSectionTitle = new System.Windows.Forms.Label();
             this.groupBoxLogin = new System.Windows.Forms.GroupBox();
+            this.textBoxDatabase = new System.Windows.Forms.TextBox();
+            this.labelDatabase = new System.Windows.Forms.Label();
             this.textBoxUser = new System.Windows.Forms.TextBox();
             this.labelUser = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
@@ -50,14 +52,15 @@
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.labelServer = new System.Windows.Forms.Label();
             this.comboBoxServer = new System.Windows.Forms.ComboBox();
-            this.labelDatabase = new System.Windows.Forms.Label();
-            this.textBoxDatabase = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.panelAction.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.panelMainTitle.SuspendLayout();
             this.groupBoxLogin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -65,16 +68,16 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelStatus,
             this.pbSetup});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 224);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 250);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(394, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(398, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(277, 17);
+            this.labelStatus.Size = new System.Drawing.Size(281, 17);
             this.labelStatus.Spring = true;
             this.labelStatus.Text = "Ready";
             this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -92,7 +95,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(394, 10);
+            this.panelHeader.Size = new System.Drawing.Size(398, 10);
             this.panelHeader.TabIndex = 7;
             // 
             // labelHDescrption
@@ -120,9 +123,9 @@
             this.panelAction.Controls.Add(this.buttonSave);
             this.panelAction.Controls.Add(this.buttonTest);
             this.panelAction.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelAction.Location = new System.Drawing.Point(0, 197);
+            this.panelAction.Location = new System.Drawing.Point(0, 223);
             this.panelAction.Name = "panelAction";
-            this.panelAction.Size = new System.Drawing.Size(394, 27);
+            this.panelAction.Size = new System.Drawing.Size(398, 27);
             this.panelAction.TabIndex = 9;
             // 
             // buttonEdit
@@ -165,16 +168,18 @@
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(0, 10);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(394, 187);
+            this.panelMain.Size = new System.Drawing.Size(398, 213);
             this.panelMain.TabIndex = 11;
             // 
             // panelMainTitle
             // 
+            this.panelMainTitle.Controls.Add(this.label1);
+            this.panelMainTitle.Controls.Add(this.pictureBox1);
             this.panelMainTitle.Controls.Add(this.labelSectionTitle);
             this.panelMainTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMainTitle.Location = new System.Drawing.Point(0, 0);
             this.panelMainTitle.Name = "panelMainTitle";
-            this.panelMainTitle.Size = new System.Drawing.Size(394, 27);
+            this.panelMainTitle.Size = new System.Drawing.Size(398, 55);
             this.panelMainTitle.TabIndex = 0;
             // 
             // labelSectionTitle
@@ -194,12 +199,29 @@
             this.groupBoxLogin.Controls.Add(this.labelUser);
             this.groupBoxLogin.Controls.Add(this.labelPassword);
             this.groupBoxLogin.Controls.Add(this.textBoxPassword);
-            this.groupBoxLogin.Location = new System.Drawing.Point(8, 80);
+            this.groupBoxLogin.Location = new System.Drawing.Point(9, 102);
             this.groupBoxLogin.Name = "groupBoxLogin";
             this.groupBoxLogin.Size = new System.Drawing.Size(381, 105);
             this.groupBoxLogin.TabIndex = 10;
             this.groupBoxLogin.TabStop = false;
             this.groupBoxLogin.Text = "Provide database login credentials";
+            // 
+            // textBoxDatabase
+            // 
+            this.textBoxDatabase.Location = new System.Drawing.Point(128, 72);
+            this.textBoxDatabase.Name = "textBoxDatabase";
+            this.textBoxDatabase.ReadOnly = true;
+            this.textBoxDatabase.Size = new System.Drawing.Size(189, 20);
+            this.textBoxDatabase.TabIndex = 9;
+            // 
+            // labelDatabase
+            // 
+            this.labelDatabase.AutoSize = true;
+            this.labelDatabase.Location = new System.Drawing.Point(67, 75);
+            this.labelDatabase.Name = "labelDatabase";
+            this.labelDatabase.Size = new System.Drawing.Size(53, 13);
+            this.labelDatabase.TabIndex = 8;
+            this.labelDatabase.Text = "Database";
             // 
             // textBoxUser
             // 
@@ -236,7 +258,7 @@
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(328, 39);
+            this.buttonRefresh.Location = new System.Drawing.Point(329, 61);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(61, 23);
             this.buttonRefresh.TabIndex = 5;
@@ -247,7 +269,7 @@
             // labelServer
             // 
             this.labelServer.AutoSize = true;
-            this.labelServer.Location = new System.Drawing.Point(11, 44);
+            this.labelServer.Location = new System.Drawing.Point(12, 66);
             this.labelServer.Name = "labelServer";
             this.labelServer.Size = new System.Drawing.Size(69, 13);
             this.labelServer.TabIndex = 1;
@@ -256,33 +278,36 @@
             // comboBoxServer
             // 
             this.comboBoxServer.FormattingEnabled = true;
-            this.comboBoxServer.Location = new System.Drawing.Point(92, 41);
+            this.comboBoxServer.Location = new System.Drawing.Point(93, 63);
             this.comboBoxServer.Name = "comboBoxServer";
             this.comboBoxServer.Size = new System.Drawing.Size(232, 21);
             this.comboBoxServer.TabIndex = 4;
             // 
-            // labelDatabase
+            // pictureBox1
             // 
-            this.labelDatabase.AutoSize = true;
-            this.labelDatabase.Location = new System.Drawing.Point(67, 75);
-            this.labelDatabase.Name = "labelDatabase";
-            this.labelDatabase.Size = new System.Drawing.Size(53, 13);
-            this.labelDatabase.TabIndex = 8;
-            this.labelDatabase.Text = "Database";
+            this.pictureBox1.Image = global::PalladiumDwh.ClientApp.Properties.Resources.brake_warning;
+            this.pictureBox1.Location = new System.Drawing.Point(15, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(25, 17);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
             // 
-            // textBoxDatabase
+            // label1
             // 
-            this.textBoxDatabase.Location = new System.Drawing.Point(128, 72);
-            this.textBoxDatabase.Name = "textBoxDatabase";
-            this.textBoxDatabase.ReadOnly = true;
-            this.textBoxDatabase.Size = new System.Drawing.Size(189, 20);
-            this.textBoxDatabase.TabIndex = 9;
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.OrangeRed;
+            this.label1.Location = new System.Drawing.Point(46, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(288, 13);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "please note that you may require Administrative rights on PC";
             // 
             // DatabaseSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 246);
+            this.ClientSize = new System.Drawing.Size(398, 272);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelAction);
             this.Controls.Add(this.panelHeader);
@@ -306,6 +331,7 @@
             this.panelMainTitle.PerformLayout();
             this.groupBoxLogin.ResumeLayout(false);
             this.groupBoxLogin.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -336,5 +362,7 @@
         private System.Windows.Forms.Button buttonEdit;
         private System.Windows.Forms.TextBox textBoxDatabase;
         private System.Windows.Forms.Label labelDatabase;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

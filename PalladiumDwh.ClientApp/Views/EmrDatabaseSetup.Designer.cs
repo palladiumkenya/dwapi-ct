@@ -60,12 +60,15 @@
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.labelServer = new System.Windows.Forms.Label();
             this.comboBoxServer = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statusStripEmrDatabase.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.panelAction.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.panelMainTitle.SuspendLayout();
             this.groupBoxLogin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStripEmrDatabase
@@ -73,7 +76,7 @@
             this.statusStripEmrDatabase.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelStatus,
             this.pbSetup});
-            this.statusStripEmrDatabase.Location = new System.Drawing.Point(0, 341);
+            this.statusStripEmrDatabase.Location = new System.Drawing.Point(0, 355);
             this.statusStripEmrDatabase.Name = "statusStripEmrDatabase";
             this.statusStripEmrDatabase.Size = new System.Drawing.Size(415, 22);
             this.statusStripEmrDatabase.TabIndex = 0;
@@ -128,7 +131,7 @@
             this.panelAction.Controls.Add(this.buttonSave);
             this.panelAction.Controls.Add(this.buttonTest);
             this.panelAction.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelAction.Location = new System.Drawing.Point(0, 314);
+            this.panelAction.Location = new System.Drawing.Point(0, 328);
             this.panelAction.Name = "panelAction";
             this.panelAction.Size = new System.Drawing.Size(415, 27);
             this.panelAction.TabIndex = 9;
@@ -182,12 +185,12 @@
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(0, 10);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(415, 304);
+            this.panelMain.Size = new System.Drawing.Size(415, 318);
             this.panelMain.TabIndex = 11;
             // 
             // buttonRefreshDatabase
             // 
-            this.buttonRefreshDatabase.Location = new System.Drawing.Point(345, 263);
+            this.buttonRefreshDatabase.Location = new System.Drawing.Point(345, 286);
             this.buttonRefreshDatabase.Name = "buttonRefreshDatabase";
             this.buttonRefreshDatabase.Size = new System.Drawing.Size(61, 23);
             this.buttonRefreshDatabase.TabIndex = 18;
@@ -200,7 +203,7 @@
             this.labelEmrKey.AutoSize = true;
             this.labelEmrKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelEmrKey.ForeColor = System.Drawing.Color.Gray;
-            this.labelEmrKey.Location = new System.Drawing.Point(255, 36);
+            this.labelEmrKey.Location = new System.Drawing.Point(255, 59);
             this.labelEmrKey.Name = "labelEmrKey";
             this.labelEmrKey.Size = new System.Drawing.Size(43, 13);
             this.labelEmrKey.TabIndex = 17;
@@ -211,7 +214,7 @@
             // 
             this.labelEmrName.AutoSize = true;
             this.labelEmrName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelEmrName.Location = new System.Drawing.Point(104, 36);
+            this.labelEmrName.Location = new System.Drawing.Point(104, 59);
             this.labelEmrName.Name = "labelEmrName";
             this.labelEmrName.Size = new System.Drawing.Size(34, 13);
             this.labelEmrName.TabIndex = 15;
@@ -220,7 +223,7 @@
             // comboBoxDatabaseName
             // 
             this.comboBoxDatabaseName.FormattingEnabled = true;
-            this.comboBoxDatabaseName.Location = new System.Drawing.Point(12, 264);
+            this.comboBoxDatabaseName.Location = new System.Drawing.Point(12, 287);
             this.comboBoxDatabaseName.Name = "comboBoxDatabaseName";
             this.comboBoxDatabaseName.Size = new System.Drawing.Size(327, 21);
             this.comboBoxDatabaseName.TabIndex = 9;
@@ -228,7 +231,7 @@
             // labelDatabaseName
             // 
             this.labelDatabaseName.AutoSize = true;
-            this.labelDatabaseName.Location = new System.Drawing.Point(20, 248);
+            this.labelDatabaseName.Location = new System.Drawing.Point(20, 271);
             this.labelDatabaseName.Name = "labelDatabaseName";
             this.labelDatabaseName.Size = new System.Drawing.Size(126, 13);
             this.labelDatabaseName.TabIndex = 8;
@@ -236,7 +239,7 @@
             // 
             // textBoxPort
             // 
-            this.textBoxPort.Location = new System.Drawing.Point(107, 117);
+            this.textBoxPort.Location = new System.Drawing.Point(107, 140);
             this.textBoxPort.Name = "textBoxPort";
             this.textBoxPort.Size = new System.Drawing.Size(55, 20);
             this.textBoxPort.TabIndex = 14;
@@ -244,7 +247,7 @@
             // labelPort
             // 
             this.labelPort.AutoSize = true;
-            this.labelPort.Location = new System.Drawing.Point(74, 117);
+            this.labelPort.Location = new System.Drawing.Point(74, 140);
             this.labelPort.Name = "labelPort";
             this.labelPort.Size = new System.Drawing.Size(26, 13);
             this.labelPort.TabIndex = 13;
@@ -253,7 +256,7 @@
             // labelDatabaseType
             // 
             this.labelDatabaseType.AutoSize = true;
-            this.labelDatabaseType.Location = new System.Drawing.Point(20, 64);
+            this.labelDatabaseType.Location = new System.Drawing.Point(20, 87);
             this.labelDatabaseType.Name = "labelDatabaseType";
             this.labelDatabaseType.Size = new System.Drawing.Size(80, 13);
             this.labelDatabaseType.TabIndex = 11;
@@ -263,7 +266,7 @@
             // 
             this.comboBoxDatabaseType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxDatabaseType.FormattingEnabled = true;
-            this.comboBoxDatabaseType.Location = new System.Drawing.Point(107, 61);
+            this.comboBoxDatabaseType.Location = new System.Drawing.Point(107, 84);
             this.comboBoxDatabaseType.Name = "comboBoxDatabaseType";
             this.comboBoxDatabaseType.Size = new System.Drawing.Size(157, 21);
             this.comboBoxDatabaseType.TabIndex = 12;
@@ -271,12 +274,14 @@
             // 
             // panelMainTitle
             // 
+            this.panelMainTitle.Controls.Add(this.label1);
+            this.panelMainTitle.Controls.Add(this.pictureBox1);
             this.panelMainTitle.Controls.Add(this.labelEmrId);
             this.panelMainTitle.Controls.Add(this.labelSectionTitle);
             this.panelMainTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMainTitle.Location = new System.Drawing.Point(0, 0);
             this.panelMainTitle.Name = "panelMainTitle";
-            this.panelMainTitle.Size = new System.Drawing.Size(415, 27);
+            this.panelMainTitle.Size = new System.Drawing.Size(415, 49);
             this.panelMainTitle.TabIndex = 0;
             // 
             // labelEmrId
@@ -306,7 +311,7 @@
             this.groupBoxLogin.Controls.Add(this.labelUser);
             this.groupBoxLogin.Controls.Add(this.labelPassword);
             this.groupBoxLogin.Controls.Add(this.textBoxPassword);
-            this.groupBoxLogin.Location = new System.Drawing.Point(6, 152);
+            this.groupBoxLogin.Location = new System.Drawing.Point(6, 175);
             this.groupBoxLogin.Name = "groupBoxLogin";
             this.groupBoxLogin.Size = new System.Drawing.Size(400, 81);
             this.groupBoxLogin.TabIndex = 10;
@@ -348,7 +353,7 @@
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(345, 86);
+            this.buttonRefresh.Location = new System.Drawing.Point(345, 109);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(61, 23);
             this.buttonRefresh.TabIndex = 5;
@@ -359,7 +364,7 @@
             // labelServer
             // 
             this.labelServer.AutoSize = true;
-            this.labelServer.Location = new System.Drawing.Point(31, 91);
+            this.labelServer.Location = new System.Drawing.Point(31, 114);
             this.labelServer.Name = "labelServer";
             this.labelServer.Size = new System.Drawing.Size(69, 13);
             this.labelServer.TabIndex = 1;
@@ -368,16 +373,36 @@
             // comboBoxServer
             // 
             this.comboBoxServer.FormattingEnabled = true;
-            this.comboBoxServer.Location = new System.Drawing.Point(107, 88);
+            this.comboBoxServer.Location = new System.Drawing.Point(107, 111);
             this.comboBoxServer.Name = "comboBoxServer";
             this.comboBoxServer.Size = new System.Drawing.Size(232, 21);
             this.comboBoxServer.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.OrangeRed;
+            this.label1.Location = new System.Drawing.Point(51, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(288, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "please note that you may require Administrative rights on PC";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::PalladiumDwh.ClientApp.Properties.Resources.brake_warning;
+            this.pictureBox1.Location = new System.Drawing.Point(20, 23);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(25, 17);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 17;
+            this.pictureBox1.TabStop = false;
             // 
             // EmrDatabaseSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(415, 363);
+            this.ClientSize = new System.Drawing.Size(415, 377);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelAction);
             this.Controls.Add(this.panelHeader);
@@ -401,6 +426,7 @@
             this.panelMainTitle.PerformLayout();
             this.groupBoxLogin.ResumeLayout(false);
             this.groupBoxLogin.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -439,5 +465,7 @@
         private System.Windows.Forms.Label labelEmrId;
         private System.Windows.Forms.Label labelEmrKey;
         private System.Windows.Forms.Button buttonRefreshDatabase;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
