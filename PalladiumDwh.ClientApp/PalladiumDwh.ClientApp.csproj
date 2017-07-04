@@ -195,6 +195,7 @@
     <Compile Include="Views\Startup.Designer.cs">
       <DependentUpon>Startup.cs</DependentUpon>
     </Compile>
+    <None Include="Resources\brake-warning.png" />
     <None Include="Resources\app.ico" />
     <None Include="Resources\favicon.ico" />
     <None Include="Resources\ms-icon-310x310.png" />

@@ -61,6 +61,7 @@
     <Compile Include="Custom\NullDecimalConverter.cs" />
     <Compile Include="Custom\NullIntConverter.cs" />
     <Compile Include="Custom\NullStringConverter.cs" />
+    <Compile Include="Extentions\TypeExtentions.cs" />
     <Compile Include="Interfaces\IClearPatientRecords.cs" />
     <Compile Include="Interfaces\IPatient.cs" />
     <Compile Include="Interfaces\IBaseline.cs" />

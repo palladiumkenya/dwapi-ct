@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Common;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Wordprocessing;
+using log4net;
 using PalladiumDwh.ClientReader.Core.Interfaces;
 using PalladiumDwh.ClientReader.Core.Model;
 using PalladiumDwh.Shared.Model;
@@ -13,6 +15,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
 {
     public class DatabaseSetupService : IDatabaseSetupService
     {
+        internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly string _localKey = "DWAPIRemote";
         private readonly IDatabaseManager _databaseManager;
 
@@ -44,15 +47,43 @@ namespace PalladiumDwh.ClientReader.Core.Services
 
         public async Task Save(DatabaseConfig databaseConfig)
         {
-          var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var connectionStringsSection = (ConnectionStringsSection) config.GetSection("connectionStrings");
-            connectionStringsSection.ConnectionStrings[$"{_localKey}"].ConnectionString =
-                databaseConfig.GetConnectionString();
+            Log.Debug($"Saving database settings...");
+            Configuration config;
+            try
+            {
+                Log.Debug($"reading exisitng settings...");
+                config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
+                Log.Debug($"Changing from:");
+                Log.Debug(connectionStringsSection.ConnectionStrings[$"{_localKey}"].ConnectionString);
+                Log.Debug($"To:");
+                Log.Debug(databaseConfig.GetConnectionString());
+                connectionStringsSection.ConnectionStrings[$"{_localKey}"].ConnectionString =
+                    databaseConfig.GetConnectionString();
 
+            }
+            catch (Exception e)
+            {
+                Log.Debug($"Changing database settings Failed!");
+                Log.Debug(e);
+                throw;
+            }
+            
             await Task.Run(() =>
             {
-                config.Save();
-                ConfigurationManager.RefreshSection("connectionStrings");
+                try
+                {
+                    Log.Debug($"Saving database settings...");
+                    config.Save(ConfigurationSaveMode.Modified,false);
+                    //ConfigurationManager.RefreshSection("connectionStrings");
+                }
+                catch(Exception e)
+                {
+                    Log.Debug($"Saving database settings failed!");
+                    Log.Debug(e);
+                    throw;
+                }
+                
             });
         }
 
