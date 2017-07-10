@@ -15,6 +15,10 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source.Map
                 var map = new CsvPropertyMap(p);
                 map.Name(p.Name);
 
+                if (p.PropertyType == typeof(string))
+                {
+                    map.TypeConverter<StringConverter>();
+                }
                 if (p.PropertyType == typeof(DateTime?))
                 {
                     map.TypeConverter<NullDateConverter>();

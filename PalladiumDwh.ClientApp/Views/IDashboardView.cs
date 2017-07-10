@@ -21,10 +21,14 @@ namespace PalladiumDwh.ClientApp.Views
         List<ExtractsViewModel> Extracts { get; set; }
         ExtractsViewModel SelectedExtract { get;  }
         string Id { get; set; }
+
+        bool LoadEmrEnabled { get; set; }
+        bool CanChangeEmrSettings { get; set; }
         bool CanLoadEmr { get; set; }
         bool CanLoadCsv { get; set; }
         bool CanExport { get; set; }
         bool CanSend { get; set; }
+        bool CanSendExports { get; set; }
 
         event EventHandler<EmrExtractLoadedEvent> EmrExtractLoaded;
         event EventHandler<CsvExtractLoadedEvent> CsvExtractLoaded;

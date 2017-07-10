@@ -22,6 +22,7 @@ namespace PalladiumDwh.ClientApp.Views
 {
     public partial class Dashboard : Form,IDashboardView
     {
+        
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private List<ExtractsViewModel> _extracts=new List<ExtractsViewModel>();
@@ -186,6 +187,15 @@ namespace PalladiumDwh.ClientApp.Views
             set { labelId.Text = value; }
         }
 
+        public bool LoadEmrEnabled { get; set; }
+
+        public bool CanChangeEmrSettings
+        {
+            get { return linkLabelEmrSetup.Enabled; }
+            set { linkLabelEmrSetup.Enabled = value; }
+        }
+        
+
         public bool CanLoadEmr
         {
             get { return buttonLoad.Enabled; }
@@ -210,7 +220,11 @@ namespace PalladiumDwh.ClientApp.Views
             set { buttonSend.Enabled = value; }
         }
 
-
+        public bool CanSendExports
+        {
+            get { return buttonImport.Enabled; }
+            set { buttonImport.Enabled = value; }
+        }
         public string Status
         {
             get { return toolStripStatusLabelDashboard.Text; }
@@ -434,6 +448,7 @@ namespace PalladiumDwh.ClientApp.Views
 
         private async void Dashboard_Load(object sender, EventArgs e)
         {
+            CanChangeEmrSettings = CanLoadEmr = CanLoadCsv = CanExport = CanSend = CanSendExports = false;
             
             Cursor.Current = Cursors.WaitCursor;
             toolStripProgressBarDashboard.Style=ProgressBarStyle.Marquee;
@@ -442,6 +457,7 @@ namespace PalladiumDwh.ClientApp.Views
             try
             {
                 await StartUp();
+                
             }
             catch (Exception ex)
             {
@@ -451,7 +467,7 @@ namespace PalladiumDwh.ClientApp.Views
 
             }
 
-
+            CanChangeEmrSettings = CanLoadEmr = CanLoadCsv = CanExport = CanSend = CanSendExports = true;
 
             toolStripProgressBarDashboard.Style = ProgressBarStyle.Continuous;
             Cursor.Current = Cursors.Default;
@@ -575,8 +591,15 @@ namespace PalladiumDwh.ClientApp.Views
 
         private  void buttonLoad_Click(object sender, EventArgs e)
         {
-            OnEmrExtractLoaded(new EmrExtractLoadedEvent(ExtractSettings));
-            CanGenerateSummary = dataGridViewExtractValidations.Rows.Count > 0;
+            if (LoadEmrEnabled)
+            {
+                OnEmrExtractLoaded(new EmrExtractLoadedEvent(ExtractSettings));
+                CanGenerateSummary = dataGridViewExtractValidations.Rows.Count > 0;
+            }
+            else
+            {
+                ShowErrorMessage("Configurations to read from EMR Database do not exist");
+            }
         }
 
         private async void buttonLoadCsv_Click(object sender, EventArgs e)
@@ -634,6 +657,7 @@ namespace PalladiumDwh.ClientApp.Views
                 Process process = new Process();
                 process.StartInfo.FileName = @"updater.exe";
                 process.Start();
+                
                 process.WaitForExit();
             }
             catch (Exception ex)
@@ -650,6 +674,7 @@ namespace PalladiumDwh.ClientApp.Views
             try
             {
                 dbOnline = await _databaseSetupService.CanConnect();
+
             }
             catch (Exception e)
             {

@@ -148,3 +148,24 @@ From
 	tmp_ClinicalEncounters INNER JOIN 
 	tmp_PatientMaster On tmp_PatientMaster.PatientPK = tmp_ClinicalEncounters.PatientPK inner join 
 	dbo.[mst_Facility] b on b.FacilityID=tmp_PatientMaster.FacilityID"|TempPatientVisitExtract|0|1|7.0|86cf8038-52ba-11e7-b114-b2f933d5fe66
+86cf82cc-52ba-11e7-b115-b2f933d5fe66|PatientExtract|All Patients|PatientExtract||TempPatientExtract|1|1|1.0|0579b8ed-dc2d-47ff-9765-901529a20a5e
+86cf83e4-52ba-11e7-b116-b2f933d5fe66|ARTPatientExtract|ART Patients|ARTPatientExtract||TempPatientArtExtract|0|1|2.0|0579b8ed-dc2d-47ff-9765-901529a20a5e
+86cf8646-52ba-11e7-b117-b2f933d5fe66|PatientWABWHOCD4Extract|Patient Baselines|PatientWABWHOCD4Extract||TempPatientBaselinesExtract|0|1|3.0|0579b8ed-dc2d-47ff-9765-901529a20a5e
+86cf875e-52ba-11e7-b118-b2f933d5fe66|PatientStatusExtract|Patient Status|PatientStatusExtract||TempPatientStatusExtract|0|1|4.0|0579b8ed-dc2d-47ff-9765-901529a20a5e
+86cf89ac-52ba-11e7-b119-b2f933d5fe66|PatientLaboratoryExtract|Patient Labs|PatientLaboratoryExtract||TempPatientLaboratoryExtract|0|1|5.0|0579b8ed-dc2d-47ff-9765-901529a20a5e
+86cf8a9c-52ba-11e7-b110-b2f933d5fe66|PatientPharmacyExtract|Patient Pharmacy|PatientPharmacyExtract||TempPatientPharmacyExtract|0|1|6.0|0579b8ed-dc2d-47ff-9765-901529a20a5e
+86cf8cea-52ba-11e7-b111-b2f933d5fe66|PatientVisitExtract|Patient Visits|PatientVisitExtract||TempPatientVisitExtract|0|1|7.0|0579b8ed-dc2d-47ff-9765-901529a20a5e
+86cf82cc-52ba-11e7-b125-b2f933d5fe66|PatientExtract|All Patients|PatientExtract||TempPatientExtract|1|1|1.0|157c5da5-f075-42bd-bf4d-d1fbabb6344c
+86cf83e4-52ba-11e7-b126-b2f933d5fe66|ARTPatientExtract|ART Patients|ARTPatientExtract||TempPatientArtExtract|0|1|2.0|157c5da5-f075-42bd-bf4d-d1fbabb6344c
+86cf8646-52ba-11e7-b127-b2f933d5fe66|PatientWABWHOCD4Extract|Patient Baselines|PatientWABWHOCD4Extract||TempPatientBaselinesExtract|0|1|3.0|157c5da5-f075-42bd-bf4d-d1fbabb6344c
+86cf875e-52ba-11e7-b128-b2f933d5fe66|PatientStatusExtract|Patient Status|PatientStatusExtract||TempPatientStatusExtract|0|1|4.0|157c5da5-f075-42bd-bf4d-d1fbabb6344c
+86cf89ac-52ba-11e7-b129-b2f933d5fe66|PatientLaboratoryExtract|Patient Labs|PatientLaboratoryExtract||TempPatientLaboratoryExtract|0|1|5.0|157c5da5-f075-42bd-bf4d-d1fbabb6344c
+86cf8a9c-52ba-11e7-b120-b2f933d5fe66|PatientPharmacyExtract|Patient Pharmacy|PatientPharmacyExtract||TempPatientPharmacyExtract|0|1|6.0|157c5da5-f075-42bd-bf4d-d1fbabb6344c
+86cf8cea-52ba-11e7-b121-b2f933d5fe66|PatientVisitExtract|Patient Visits|PatientVisitExtract||TempPatientVisitExtract|0|1|7.0|157c5da5-f075-42bd-bf4d-d1fbabb6344c
+86cf82cc-52ba-11e7-b135-b2f933d5fe66|PatientExtract|All Patients|PatientExtract||TempPatientExtract|1|1|1.0|c434874d-c18c-46ed-b7db-8faff2139db7
+86cf83e4-52ba-11e7-b136-b2f933d5fe66|ARTPatientExtract|ART Patients|ARTPatientExtract||TempPatientArtExtract|0|1|2.0|c434874d-c18c-46ed-b7db-8faff2139db7
+86cf8646-52ba-11e7-b137-b2f933d5fe66|PatientWABWHOCD4Extract|Patient Baselines|PatientWABWHOCD4Extract||TempPatientBaselinesExtract|0|1|3.0|c434874d-c18c-46ed-b7db-8faff2139db7
+86cf875e-52ba-11e7-b138-b2f933d5fe66|PatientStatusExtract|Patient Status|PatientStatusExtract||TempPatientStatusExtract|0|1|4.0|c434874d-c18c-46ed-b7db-8faff2139db7
+86cf89ac-52ba-11e7-b139-b2f933d5fe66|PatientLaboratoryExtract|Patient Labs|PatientLaboratoryExtract||TempPatientLaboratoryExtract|0|1|5.0|c434874d-c18c-46ed-b7db-8faff2139db7
+86cf8a9c-52ba-11e7-b130-b2f933d5fe66|PatientPharmacyExtract|Patient Pharmacy|PatientPharmacyExtract||TempPatientPharmacyExtract|0|1|6.0|c434874d-c18c-46ed-b7db-8faff2139db7
+86cf8cea-52ba-11e7-b131-b2f933d5fe66|PatientVisitExtract|Patient Visits|PatientVisitExtract||TempPatientVisitExtract|0|1|7.0|c434874d-c18c-46ed-b7db-8faff2139db7
