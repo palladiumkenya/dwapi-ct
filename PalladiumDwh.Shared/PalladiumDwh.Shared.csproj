@@ -60,6 +60,7 @@
     <Compile Include="Custom\NullDateConverter.cs" />
     <Compile Include="Custom\NullDecimalConverter.cs" />
     <Compile Include="Custom\NullIntConverter.cs" />
+    <Compile Include="Custom\StringConverter.cs" />
     <Compile Include="Custom\NullStringConverter.cs" />
     <Compile Include="Extentions\TypeExtentions.cs" />
     <Compile Include="Interfaces\IClearPatientRecords.cs" />

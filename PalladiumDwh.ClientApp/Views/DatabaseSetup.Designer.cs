@@ -41,6 +41,8 @@
             this.buttonTest = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelMainTitle = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.labelSectionTitle = new System.Windows.Forms.Label();
             this.groupBoxLogin = new System.Windows.Forms.GroupBox();
             this.textBoxDatabase = new System.Windows.Forms.TextBox();
@@ -52,15 +54,13 @@
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.labelServer = new System.Windows.Forms.Label();
             this.comboBoxServer = new System.Windows.Forms.ComboBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.panelAction.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.panelMainTitle.SuspendLayout();
-            this.groupBoxLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBoxLogin.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -182,6 +182,26 @@
             this.panelMainTitle.Size = new System.Drawing.Size(398, 55);
             this.panelMainTitle.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.OrangeRed;
+            this.label1.Location = new System.Drawing.Point(46, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(288, 13);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "please note that you may require Administrative rights on PC";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::PalladiumDwh.ClientApp.Properties.Resources.brake_warning;
+            this.pictureBox1.Location = new System.Drawing.Point(15, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(25, 17);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
+            // 
             // labelSectionTitle
             // 
             this.labelSectionTitle.AutoSize = true;
@@ -283,26 +303,6 @@
             this.comboBoxServer.Size = new System.Drawing.Size(232, 21);
             this.comboBoxServer.TabIndex = 4;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::PalladiumDwh.ClientApp.Properties.Resources.brake_warning;
-            this.pictureBox1.Location = new System.Drawing.Point(15, 27);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(25, 17);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 11;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label1.Location = new System.Drawing.Point(46, 29);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(288, 13);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "please note that you may require Administrative rights on PC";
-            // 
             // DatabaseSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -329,9 +329,9 @@
             this.panelMain.PerformLayout();
             this.panelMainTitle.ResumeLayout(false);
             this.panelMainTitle.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBoxLogin.ResumeLayout(false);
             this.groupBoxLogin.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

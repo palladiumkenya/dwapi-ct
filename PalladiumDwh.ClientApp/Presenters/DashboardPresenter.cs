@@ -225,6 +225,17 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.CanLoadEmr = View.CanLoadCsv = View.CanExport = View.CanSend = View.ExtractSettings.Count > 0;
             View.CanExport = View.CanLoadCsv = View.CanSend = View.CanLoadEmr = true;
             View.Status = "Ready";
+            try
+            {
+                var extractWithSQL = extracts.First(x => x.ExtractSql.Trim().Length > 0);
+
+                View.LoadEmrEnabled = null != extractWithSQL;
+            }
+            catch
+            {
+                View.LoadEmrEnabled = false;
+            }
+            
         }
 
         //TODO: consider Parallel processing
@@ -394,7 +405,7 @@ namespace PalladiumDwh.ClientApp.Presenters
                     summary = await _syncCsvService.SyncAsync(extract, csv, progressIndicator, dpprogress);
                 }
                 catch (Exception e)
-                {
+                {                    
                     View.ShowErrorMessage(e.Message);
                     View.Status = "Error loading data! Check logs for details";
                 }
@@ -472,7 +483,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             }
 
             View.Status = "Copying Csv(s) Complete!";
-            View.CanLoadCsv = View.CanSend = View.CanExport = false;
+            View.CanLoadCsv = View.CanSend = View.CanExport = true;
 
             View.ShowReady();
 
@@ -744,6 +755,7 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.CanGenerateSummary = false;
             if (null == View.ClientExtractsValidations)
             {
+                View.CanGenerateSummary = true;
                 return;
             }
 
@@ -812,6 +824,8 @@ namespace PalladiumDwh.ClientApp.Presenters
                         break;
                 }
             }
+
+            View.CanGenerateSummary = true;
             View.ShowReady();
             //await Task.Run(() => _tempPatientExtractErrorSummaryRepository.GetAll());
         }
