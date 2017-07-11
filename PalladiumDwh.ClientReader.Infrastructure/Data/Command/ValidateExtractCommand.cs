@@ -49,7 +49,6 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
             _summary = new ValidationSummary();
 
             var extractName = typeof(T).Name;
-            var commandText = string.Empty;
 
             Log.Debug($"Executing Validate {extractName} command...");
 
@@ -57,10 +56,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
         if (null == emr) throw new Exception($"No Default EMR Setup !");
 
             _extractSetting = emr.GetActiveExtractSetting($"{extractName}");
-            if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");
-
-            commandText = _extractSetting.ExtractSql;
-            if (string.IsNullOrWhiteSpace(commandText)) throw new Exception($"No sql command found for {extractName}");
+            if (null == _extractSetting) throw new Exception($"No Extract Setting found for {emr}");        
 
             EventHistory currentHistory = _emrRepository.GetStats(_extractSetting.Id);
 
