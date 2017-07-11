@@ -138,7 +138,7 @@ namespace PalladiumDwh.ClientReader.Core.Services
                 {
                     var manifestFiles = Directory.GetFiles(siteFolder, "*.manifest");
 
-                    var manifestFile = manifestFiles.First();
+                    var manifestFile = manifestFiles.FirstOrDefault();
                     if (manifestFile != null)
                     {
                         var manifestFileContent = File.ReadAllText(manifestFile);
