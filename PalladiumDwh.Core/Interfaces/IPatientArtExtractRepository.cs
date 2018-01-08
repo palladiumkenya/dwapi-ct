@@ -9,5 +9,7 @@ namespace PalladiumDwh.Core.Interfaces
     public interface IPatientArtExtractRepository : IRepository<PatientArtExtract>,IClearPatientRecords
     {
         void Sync(Guid patientId,IEnumerable<PatientArtExtract> extracts);
-    }
+      void ClearNew(Guid patientId);
+      void SyncNew(Guid patientIdValue, IEnumerable<PatientArtExtract> extracts);
+  }
 }

@@ -88,32 +88,34 @@ namespace PalladiumDwh.Shared.Data.Repository
                 Context.Configuration.AutoDetectChangesEnabled = true;
             }
         }
-        public async Task<int> DeleteByAsync(Expression<Func<TEntity, bool>> predicate)
-        {
+
+        
+          public async Task<int> DeleteByAsync(Expression<Func<TEntity, bool>> predicate)
+          {
             int result = -1;
             try
             {
-                Context.Configuration.AutoDetectChangesEnabled = false;
-                var results = DbSet.Where(predicate);
-                if (null != results.FirstOrDefault())
-                {
-                    DbSet.RemoveRange(results);
-                }
-                result = await Context.SaveChangesAsync();
+              Context.Configuration.AutoDetectChangesEnabled = false;
+              var results = DbSet.Where(predicate);
+              if (null != results.FirstOrDefault())
+              {
+                DbSet.RemoveRange(results);
+              }
+              result = await Context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                Log.Debug(ex);
-                throw;
+              Log.Debug(ex);
+              throw;
             }
             finally
             {
-                Context.Configuration.AutoDetectChangesEnabled = true;
+              Context.Configuration.AutoDetectChangesEnabled = true;
             }
             return result;
-        }
+          }
 
-        public virtual void Execute(string sql)
+      public virtual void Execute(string sql)
         {
             Context.Database.ExecuteSqlCommand(sql);
         }

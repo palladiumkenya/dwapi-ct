@@ -1,14 +1,14 @@
-﻿using System;
-using System.Reflection;
-using log4net;
+﻿using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 using PalladiumDwh.Shared.Model.Profile;
+using System;
+using System.Reflection;
 
 namespace PalladiumDwh.Core.Services
 {
-    public class SyncService:ISyncService
+  public class SyncService:ISyncService
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IFacilityRepository _facilityRepository;
@@ -85,7 +85,7 @@ namespace PalladiumDwh.Core.Services
             if (!(patientId == Guid.Empty || null == patientId))
             {
                 profile.GenerateRecords(patientId.Value);
-                _patientArtExtractRepository.Sync(profile.PatientInfo.Id,profile.Extracts);
+                _patientArtExtractRepository.SyncNew(profile.PatientInfo.Id,profile.Extracts);
             }
         }
 
@@ -97,7 +97,7 @@ namespace PalladiumDwh.Core.Services
             if (!(patientId == Guid.Empty || null == patientId))
             {
                 profile.GenerateRecords(patientId.Value);
-                _patientBaseLinesRepository.Sync(patientId.Value, profile.Extracts);
+                _patientBaseLinesRepository.SyncNew(patientId.Value, profile.Extracts);
             }
         }
 
@@ -109,7 +109,7 @@ namespace PalladiumDwh.Core.Services
             if (!(patientId == Guid.Empty || null == patientId))
             {
                 profile.GenerateRecords(patientId.Value);
-                _patientLabRepository.Sync(patientId.Value, profile.Extracts);
+                _patientLabRepository.SyncNew(patientId.Value, profile.Extracts);
             }
         }
 
@@ -121,7 +121,7 @@ namespace PalladiumDwh.Core.Services
             if (!(patientId == Guid.Empty || null == patientId))
             {
                 profile.GenerateRecords(patientId.Value);
-                _patientPharmacyRepository.Sync(patientId.Value, profile.Extracts);
+                _patientPharmacyRepository.SyncNew(patientId.Value, profile.Extracts);
             }
         }
 
@@ -133,7 +133,7 @@ namespace PalladiumDwh.Core.Services
             if (!(patientId == Guid.Empty || null == patientId))
             {
                 profile.GenerateRecords(patientId.Value);
-                _patientStatusRepository.Sync(patientId.Value, profile.Extracts);
+                _patientStatusRepository.SyncNew(patientId.Value, profile.Extracts);
             }
         }
 
@@ -145,7 +145,7 @@ namespace PalladiumDwh.Core.Services
             if (!(patientId == Guid.Empty || null == patientId))
             {
                 profile.GenerateRecords(patientId.Value);
-                _patientVisitRepository.Sync(patientId.Value, profile.Extracts);
+                _patientVisitRepository.SyncNew(patientId.Value, profile.Extracts);
             }
         }
 
@@ -158,11 +158,11 @@ namespace PalladiumDwh.Core.Services
         {
             Guid? syncPatientId = null;
 
-            var facilityId = _facilityRepository.Sync(facility);
+            var facilityId = _facilityRepository.SyncNew(facility);
             if (!(facilityId == Guid.Empty || null == facilityId))
             {
                 patient.FacilityId = facilityId.Value;
-                syncPatientId = _patientExtractRepository.Sync(patient);
+                syncPatientId = _patientExtractRepository.SyncNew(patient);
             }
             return syncPatientId;
         }

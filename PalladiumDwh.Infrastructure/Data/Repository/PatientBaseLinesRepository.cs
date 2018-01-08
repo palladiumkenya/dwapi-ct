@@ -1,9 +1,11 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using Dapper;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model.Extract;
+using Z.Dapper.Plus;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {
@@ -20,9 +22,21 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         }
         public void Sync(Guid patientId, IEnumerable<PatientBaselinesExtract> extracts)
         {
-            Clear(patientId);
-            Insert(extracts);
-            CommitChanges();
+          Clear(patientId);
+          Insert(extracts);
+          CommitChanges();
+        }
+
+        public void ClearNew(Guid patientId)
+        {
+          string sql = "DELETE FROM PatientBaselinesExtract WHERE PatientId = @PatientId";
+          _context.GetConnection().Execute(sql, new { PatientId = patientId });
+        }
+
+        public void SyncNew(Guid patientId, IEnumerable<PatientBaselinesExtract> extracts)
+        {
+          ClearNew(patientId);
+          _context.GetConnection().BulkInsert(extracts);
         }
     }
 }

@@ -9,7 +9,9 @@ using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 using Dapper;
+using Dapper.Contrib.Extensions;
 using PalladiumDwh.Shared.Custom;
+using Z.Dapper.Plus;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {
@@ -39,6 +41,13 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             )?.Id;
         }
 
+        public Guid? GetPatientByIds(Guid facilityId, int patientPID)
+        {
+          string sql = "SELECT * FROM PatientExtract WHERE FacilityId=@FacilityId and PatientPID=@PatientPID;";
+          var facility = _context.GetConnection().QueryFirstOrDefault<PatientExtract>(sql, new { FacilityId=facilityId,PatientPID = patientPID});
+          return facility?.Id;
+        }
+
         public Guid? Sync(PatientExtract patient)
         {
             var patientId = GetPatientBy(patient.FacilityId, patient.PatientPID);
@@ -51,39 +60,58 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             }
             else
             {
-                Update(patient);
+                //TODO: check need to update patient
+                //Update(patient);
             }
 
             return patientId;
         }
 
-        public async Task ClearManifest(Manifest manifest)
+        public Guid? SyncNew(PatientExtract patient)
         {
-            var connection = _context.Database.Connection as SqlConnection;
-       
-            var sql = $@"
+          var patientId = GetPatientByIds(patient.FacilityId, patient.PatientPID);
+
+          if (patientId == Guid.Empty || null == patientId)
+          {
+            _context.GetConnection().BulkInsert(patient);
+            patientId = patient.Id;
+          }
+          else
+          {
+            //TODO: check need to update patient
+            //Update(patient);
+          }
+
+          return patientId;
+        }
+
+      public async Task ClearManifest(Manifest manifest)
+      {
+        var connection = _context.Database.Connection as SqlConnection;
+
+        var sql = $@"
                 DELETE FROM PatientExtract
                 WHERE        
 	                (FacilityId = (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode})) AND 
 	                (PatientPID NOT IN ({manifest.GetPatientPKsJoined()}))
             ";
 
-            if (null != connection)
+        if (null != connection)
+        {
+          using (connection)
+          {
+            connection.Open();
+
+            using (var transaction = connection.BeginTransaction())
             {
-                using (connection)
-                {
-                    connection.Open();
-
-                    using (var transaction = connection.BeginTransaction())
-                    {
-                        await connection.ExecuteAsync(sql, null, transaction, 0);
-                        transaction.Commit();
-                    }
-                }
+              await connection.ExecuteAsync(sql, null, transaction, 0);
+              transaction.Commit();
             }
+          }
         }
+      }
 
-        public Task<MasterFacility> VerifyFacility(int siteCode)
+      public Task<MasterFacility> VerifyFacility(int siteCode)
         {
             int originalSiteCode = siteCode;
 

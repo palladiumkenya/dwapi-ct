@@ -11,7 +11,9 @@ namespace PalladiumDwh.Core.Interfaces
     {
         Guid? GetPatientBy(Guid facilityId, string patientNumber);
         Guid? GetPatientBy(Guid facilityId, int patientPID);
+        Guid? GetPatientByIds(Guid facilityId, int patientPID);
         Guid? Sync(PatientExtract patient);
+        Guid? SyncNew(PatientExtract patient);
         Task ClearManifest(Manifest manifest);
         Task<MasterFacility> VerifyFacility(int siteCode);
     }
