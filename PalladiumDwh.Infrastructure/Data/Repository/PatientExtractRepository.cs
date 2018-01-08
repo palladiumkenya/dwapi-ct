@@ -60,8 +60,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             }
             else
             {
-                //TODO: check need to update patient
-                //Update(patient);
+            
+                Update(patient);
             }
 
             return patientId;
@@ -78,8 +78,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
           }
           else
           {
-            //TODO: check need to update patient
-            //Update(patient);
+            _context.GetConnection().BulkUpdate(patient);
           }
 
           return patientId;
