@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FastMember;
 using FizzWare.NBuilder;
@@ -148,7 +149,21 @@ namespace PalladiumDwh.Shared.Tests
             Assert.That(namesJoined, Does.StartWith("@"));
             Console.WriteLine(namesJoined);
         }
-        [Test]
+
+      [Test]
+      public void should_store_json_message()
+      {
+        var list = Builder<TestFacility>.CreateListOfSize(3).Build().ToList();
+
+        var filename = Guid.NewGuid().ToString();
+        var location = TestContext.CurrentContext.TestDirectory;
+        Utility.StoreMessage(list, location, filename);
+
+               
+        Assert.True(File.Exists($"{location}\\{filename}.backlog"));
+        Console.WriteLine(location);
+      }
+    [Test]
         public void should_Replace_End()
         {
             var list = @"C:\Export\01JAN16\";

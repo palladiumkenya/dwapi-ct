@@ -58,6 +58,8 @@ namespace PalladiumDwh.Core.Services
             {
                 Log.Debug($"Initializing MessagingService [{queueName}] ...");
                 queue = MessageQueue.Create(queueName, true);
+
+                queue.SetPermissions("Everyone",MessageQueueAccessRights.FullControl,AccessControlEntryType.Allow);
                 Log.Debug($"MessagingService {queueName} Initialized!");
             }
             else
