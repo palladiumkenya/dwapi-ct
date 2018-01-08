@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDWh.DwapiService.Job;
 using Quartz;
@@ -11,14 +13,18 @@ namespace PalladiumDWh.DwapiService.Scheduler
 
     public class ProfileScheduler : IProfileScheduler
     {
-        private IScheduler _scheduler;
+      private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+    private IScheduler _scheduler;
 
       public void Run()
       {
         _scheduler = StdSchedulerFactory.GetDefaultScheduler();
         _scheduler.Start();
 
-        var jobs = new List<Type>
+      Log.Debug("DWapiService started !");
+
+      var jobs = new List<Type>
         {
           typeof(SyncManifestJob),
           typeof(SyncPatientARTJob),

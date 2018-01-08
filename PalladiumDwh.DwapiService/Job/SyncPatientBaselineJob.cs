@@ -21,12 +21,14 @@ namespace PalladiumDWh.DwapiService.Job
             {
                 var reader = Program.IOC.GetInstance<IMessagingReaderService>();
                 reader.Initialize(profile);
-                reader.Read(profile);
-                reader.PrcocessBacklog(profile);
+                reader.ExpressRead(profile);
+        //reader.PrcocessBacklog(profile);
+        //Log.Debug($"finished {profile} job");
             }
             catch (Exception ex)
             {
-                Log.Debug(ex);
+              Log.Debug($"error executing {profile} job");
+        Log.Debug(ex);
                 JobExecutionException qe = new JobExecutionException(ex);
                 qe.RefireImmediately = true;  // this job will refire immediately
             }

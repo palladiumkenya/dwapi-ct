@@ -30,11 +30,28 @@ namespace PalladiumDwh.Core.Services
                 return;
             }
 
-            var count = msmq.Count();
+         Log.Debug($"Queue {QueueName} checking for messages...");
+      //var count = msmq.Count();
+          Message peekMessage = null;
+          try
+          {
+            peekMessage = msmq.Peek(new TimeSpan(0));
+          }
+          catch 
+          {
+            
+          }
 
-            if (count > 0)
+          if (null == peekMessage)
+          {
+            Log.Debug($"Queue {QueueName} 0 messages found !");
+      }
+
+
+          if (null!=peekMessage)
             {
-                var messageIds = msmq.GetAllMessages().Select(x => x.Id).ToList();
+                Log.Debug($"Queue {QueueName} getting message Ids...");
+              var messageIds = msmq.GetIds();
 
                 Log.Debug($"Queue {QueueName} has {messageIds.Count} !");
 
@@ -72,7 +89,69 @@ namespace PalladiumDwh.Core.Services
             }
         }
 
-        public void MoveToBacklog(object message)
+      public void ExpressRead(string gateway = "")
+      {
+        if (null == Queue)
+          Initialize(gateway);
+
+        var msmq = Queue as MessageQueue;
+
+        if (null == msmq)
+        {
+          return;
+        }
+
+        Log.Debug($"Queue {QueueName} checking for messages...");
+        Message peekMessage = null;
+        try
+        {
+          peekMessage = msmq.Peek(new TimeSpan(0));
+        }
+        catch
+        {
+        }
+
+        if (null == peekMessage)
+        {
+          Log.Debug($"Queue {QueueName} 0 messages found !");
+          return;
+        }
+
+        Log.Debug($"Queue {QueueName} processing...");
+        var enumerator = msmq.GetMessageEnumerator2();
+        int n = 0;
+        int count = 0;
+        while (enumerator.MoveNext())
+        {
+          if (null != enumerator.Current)
+          {
+            var msg = msmq.ReceiveById(enumerator.Current.Id);
+            n++;
+            count++;
+            try
+            {
+              var patientProfile = msg.BodyStream.ReadFromJson(msg.Label);
+              _syncService.Sync(patientProfile);
+
+            }
+            catch (Exception e)
+            {
+              Log.Debug(e);
+              MoveToBacklog(msg);
+            }
+            if (count == 1000)
+            {
+              Log.Debug($"Queue {QueueName} still processing, {n} so far...");
+              count = 0;
+            }
+          }
+
+        }
+        Log.Debug($"Queue {QueueName} processed {n}");
+        Log.Debug(new string('*', 30));
+      }
+
+      public void MoveToBacklog(object message)
         {
             var msmq=BacklogQueue as MessageQueue;
 
@@ -112,7 +191,7 @@ namespace PalladiumDwh.Core.Services
 
             if (count > 0)
             {
-                var messageIds = msmqBacklog.GetAllMessages().Select(x => x.Id).ToList();
+              var messageIds = msmqBacklog.GetIds();
 
                 Log.Debug($"Backlog-Queue {QueueName} has {messageIds.Count} !");
 

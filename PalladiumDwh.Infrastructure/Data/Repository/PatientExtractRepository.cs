@@ -61,7 +61,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             else
             {
             
-                Update(patient);
+                //Update(patient);
             }
 
             return patientId;
@@ -78,7 +78,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
           }
           else
           {
-            _context.GetConnection().BulkUpdate(patient);
+            //_context.GetConnection().BulkUpdate(patient);
           }
 
           return patientId;
