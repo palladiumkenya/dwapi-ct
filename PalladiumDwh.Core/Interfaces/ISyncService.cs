@@ -16,5 +16,7 @@ namespace PalladiumDwh.Core.Interfaces
         void SyncVisit(PatientVisitProfile patientVisitProfile);
         Facility GetFacility(int code);
         void SyncManifest(Manifest manifest);
+        void InitList(string queueName);
+        void Commit(string queueName);
     }
 }

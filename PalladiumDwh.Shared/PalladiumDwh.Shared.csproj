@@ -80,6 +80,7 @@
     <Compile Include="Interfaces\DTOs\IPatientStatusExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IPatientVisitExtractDTO.cs" />
+    <Compile Include="Model\DTO\PatientExtractId.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\DTO\FacilityDTO.cs" />
     <Compile Include="Model\DTO\PatientArtExtractDTO.cs" />
