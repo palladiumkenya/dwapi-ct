@@ -14,7 +14,7 @@ using PalladiumDwh.Shared.Model.Extract;
 namespace PalladiumDwh.Infrastructure.Tests
 {
     [TestFixture]
-    public class PatientExtractRepositoryTests 
+    public class PatientDapperExtractRepositoryTests 
     {
         private DwapiCentralContext _context;
         private DwapiCentralContext _dbcontext;
@@ -65,34 +65,6 @@ namespace PalladiumDwh.Infrastructure.Tests
             _patientExtractRepository = new PatientExtractRepository(_context);
         }
 
-      
-        [Test]
-        public void should_Sync_New()
-        {
-            var patientExtract = Builder<PatientExtract>.CreateNew().Build();
-            patientExtract.PatientPID = DateTime.UtcNow.Millisecond;
-            patientExtract.FacilityId = _facilityA.Id;
-            Console.WriteLine(patientExtract.PatientPID);
-
-            _patientExtractRepository.Sync(patientExtract);
-
-            var saved = _patientExtractRepository.Find(patientExtract.Id);
-            Assert.IsNotNull(saved);
-            Assert.AreEqual(saved.PatientPID, patientExtract.PatientPID);
-            Console.WriteLine(saved.PatientPID);
-        }
-
-        [Test]
-        public void should_Sync_Exisitng()
-        {
-            var patientExtract = _patients.Last();
-            var newPatientExtract = Builder<PatientExtract>.CreateNew().Build();
-            newPatientExtract.PatientPID = patientExtract.PatientPID;
-            newPatientExtract.FacilityId = patientExtract.FacilityId;
-            newPatientExtract.MaritalStatus = "divorced";
-            var id = _patientExtractRepository.Sync(newPatientExtract);
-            Assert.False(id.IsNullOrEmpty());
-        }
 
         [Test]
         public void should_Clear_Manifest()
@@ -104,15 +76,93 @@ namespace PalladiumDwh.Infrastructure.Tests
                 manifest.AddPatientPk(p.PatientPID);
             }
 
-            _patientExtractRepository =new PatientExtractRepository(_dbcontext);
+            _patientExtractRepository = new PatientExtractRepository(_dbcontext);
             _patientExtractRepository.ClearManifest(manifest);
 
-            _patientExtractRepository=new PatientExtractRepository(new DwapiCentralContext());
+            _patientExtractRepository = new PatientExtractRepository(new DwapiCentralContext());
 
-            var cleanPatients = _patientExtractRepository.GetAllBy(x=>x.FacilityId==_facilityA.Id).ToList();
+            var cleanPatients = _patientExtractRepository.GetAllBy(x => x.FacilityId == _facilityA.Id).ToList();
 
-            Assert.IsTrue(cleanPatients.Count==4);
+            Assert.IsTrue(cleanPatients.Count == 4);
         }
+
+        [Test]
+        public void should_GetPatientByIds()
+        {
+
+            _patientExtractRepository = new PatientExtractRepository(_dbcontext);
+            var id = _patientExtractRepository.GetPatientByIds(_facilityA.Id,1001);
+            Assert.False(id.IsNullOrEmpty());
+            Console.WriteLine($"Patien ID:{id}");
+        }
+
+
+
+        [Test]
+        public void should_Sync_New()
+        {
+            _patientExtractRepository = new PatientExtractRepository(_dbcontext);
+
+            var patientExtract = Builder<PatientExtract>.CreateNew().Build();
+            patientExtract.PatientPID = DateTime.UtcNow.Millisecond;
+            patientExtract.FacilityId = _facilityA.Id;
+            
+
+            var savedId= _patientExtractRepository.SyncNew(patientExtract);
+            Assert.False(savedId.IsNullOrEmpty());
+
+            _patientExtractRepository = new PatientExtractRepository(_dbcontext);
+            var saved = _patientExtractRepository.Find(patientExtract.Id);
+            Assert.IsNotNull(saved);
+            Assert.AreEqual(patientExtract.Id,saved.Id);
+            Assert.AreEqual(patientExtract.PatientPID,saved.PatientPID);
+            Console.WriteLine($"NEW:{saved.PatientPID}  | {saved.Id}");
+        }
+
+        [Test]
+        public void should_Sync_Exisitng()
+        {
+            var patientExtract = _patients.Last();
+            string old = patientExtract.MaritalStatus;
+            var newPatientExtract = Builder<PatientExtract>.CreateNew().Build();
+            newPatientExtract.PatientPID = patientExtract.PatientPID;
+            newPatientExtract.FacilityId = patientExtract.FacilityId;
+            newPatientExtract.MaritalStatus = "divorced";
+            _patientExtractRepository = new PatientExtractRepository(_dbcontext);
+
+            _patientExtractRepository.SyncNew(newPatientExtract);
+
+            
+            var saved = _patientExtractRepository.FindBy(patientExtract.Id);
+            Assert.IsNotNull(saved);
+            Assert.AreEqual(newPatientExtract.MaritalStatus, saved.MaritalStatus);
+            Assert.AreEqual(newPatientExtract.Id,saved.Id);
+            Assert.AreEqual(newPatientExtract.FacilityId, saved.FacilityId);
+            Assert.AreEqual(newPatientExtract.PatientPID, saved.PatientPID);
+
+            Console.WriteLine($"{saved.PatientPID} updates Martial Status:{saved.MaritalStatus} old:{old}");
+        }
+
+        [Test]
+        public void should_Sync_Exisitng_New_Guid()
+        {
+            var patientExtract = _patients.Last();
+            string old = patientExtract.MaritalStatus;
+            patientExtract.MaritalStatus = "divorced";
+
+
+            _patientExtractRepository.SyncNew(patientExtract);
+            _patientExtractRepository = new PatientExtractRepository(_dbcontext);
+            var saved = _patientExtractRepository.Find(patientExtract.Id);
+            Assert.IsNotNull(saved);
+            Assert.AreEqual(patientExtract.MaritalStatus, saved.MaritalStatus);
+            Assert.AreEqual(patientExtract.Id, saved.Id);
+            Assert.AreEqual(patientExtract.FacilityId, saved.FacilityId);
+            Assert.AreEqual(patientExtract.PatientPID, saved.PatientPID);
+
+            Console.WriteLine($"{saved.PatientPID} updates Martial Status:{saved.MaritalStatus} old:{old}");
+        }
+
 
         [Test]
         public void should_Verify_MasterFacility()

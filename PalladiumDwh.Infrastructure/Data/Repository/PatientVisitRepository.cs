@@ -108,7 +108,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                _context.GetConnection().BulkInsert(inserts);
 
               //TODO: UPDATES
-              //_context.GetConnection().BulkUpdate(updates);
+              _context.GetConnection().BulkUpdate(updates);
            }
         }
 

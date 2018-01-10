@@ -80,6 +80,8 @@
   <ItemGroup>
     <Compile Include="FacilityDapperRepositoryTests.cs" />
     <Compile Include="FacilityRepositoryTests.cs" />
+    <Compile Include="PatientVisitRepositoryTests.cs" />
+    <Compile Include="PatientDapperExtractRepositoryTests.cs" />
     <Compile Include="PatientExtractRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers.cs" />

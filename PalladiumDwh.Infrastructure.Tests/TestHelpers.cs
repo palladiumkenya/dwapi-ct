@@ -4,6 +4,7 @@ using System.Linq;
 using FizzWare.NBuilder;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
+using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.Infrastructure.Tests
 {
@@ -38,6 +39,11 @@ namespace PalladiumDwh.Infrastructure.Tests
                 p.AddPatientVisitExtracts(visits);
             }
             return patients;
+        }
+
+        public static void AddNew(List<PatientVisitProfile> visitProfiles, int i)
+        {
+         
         }
     }
 }
