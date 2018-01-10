@@ -4,7 +4,7 @@ using System.Messaging;
 
 namespace PalladiumDwh.Shared.Extentions
 {
-  public  static class MessageQueueExtentions
+    public static class MessageQueueExtentions
     {
         public static int Count(this MessageQueue queue)
         {
@@ -16,33 +16,26 @@ namespace PalladiumDwh.Shared.Extentions
             return count;
         }
 
-    public static List<string> GetIds(this MessageQueue queue)
-    {
-      List<string> ids = new List<string>();
-      var enumerator = queue.GetMessageEnumerator2();
-      while (enumerator.MoveNext())
-      {
-        if (enumerator.Current != null) ids.Add(enumerator.Current.Id);
-      }
-        
-        
-
-      return ids;
-    }
-      public static List<string> GetIds(this MessageQueue queue,int limit)
-      {
-        List<string> ids = new List<string>();
-        var enumerator = queue.GetMessageEnumerator2();
-        while (enumerator.MoveNext())
+        public static List<string> GetIds(this MessageQueue queue)
         {
-          if (enumerator.Current != null) ids.Add(enumerator.Current.Id);
-
-          
+            List<string> ids = new List<string>();
+            var enumerator = queue.GetMessageEnumerator2();
+            while (enumerator.MoveNext())
+            {
+                if (enumerator.Current != null) ids.Add(enumerator.Current.Id);
+            }
+            return ids;
         }
 
-
-
-        return ids;
-      }
-  }
+        public static List<string> GetIds(this MessageQueue queue, int limit)
+        {
+            List<string> ids = new List<string>();
+            var enumerator = queue.GetMessageEnumerator2();
+            while (enumerator.MoveNext())
+            {
+                if (enumerator.Current != null) ids.Add(enumerator.Current.Id);
+            }
+            return ids;
+        }
+    }
 }

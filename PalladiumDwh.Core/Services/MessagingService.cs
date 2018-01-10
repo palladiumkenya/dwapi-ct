@@ -14,9 +14,10 @@ namespace PalladiumDwh.Core.Services
 
         public virtual string QueueName { get; private set; }
         public string BacklogQueueName { get; private set; }
+        public string BacklogDeadQueueName { get; private set; }
         public virtual object Queue { get; private set; }
         public virtual object BacklogQueue { get; private set; }
-
+        public virtual object BacklogDeadQueue { get; private set; }
         protected MessagingService(string queueName)
         {
             _queueName = queueName;
@@ -27,10 +28,11 @@ namespace PalladiumDwh.Core.Services
 
             QueueName = string.IsNullOrWhiteSpace(gateway) ? $"{_queueName}" : $"{_queueName}.{gateway}";
             BacklogQueueName =  $"{QueueName}.backlog";
+            BacklogDeadQueueName = $"{QueueName}.dead";
 
             try
             {
-                Queue = GetQueue(QueueName);
+                Queue = GetQueue(QueueName, gateway);
             }
             catch (Exception ex)
             {
@@ -48,9 +50,20 @@ namespace PalladiumDwh.Core.Services
                 Log.Debug(ex);
                 throw;
             }
+
+            try
+            {
+                BacklogDeadQueue = GetQueue(BacklogDeadQueueName);
+            }
+            catch (Exception ex)
+            {
+                Log.Debug($"MessagingService:{BacklogDeadQueueName} error:!");
+                Log.Debug(ex);
+                throw;
+            }
         }
 
-        private MessageQueue GetQueue(string queueName)
+        private MessageQueue GetQueue(string queueName,string label="")
         {
             MessageQueue queue;
 
@@ -58,13 +71,17 @@ namespace PalladiumDwh.Core.Services
             {
                 Log.Debug($"Initializing MessagingService [{queueName}] ...");
                 queue = MessageQueue.Create(queueName, true);
+                if (!string.IsNullOrWhiteSpace(label))
+                    queue.Label = label;
 
-                queue.SetPermissions("Everyone",MessageQueueAccessRights.FullControl,AccessControlEntryType.Allow);
+                queue.SetPermissions("Everyone", MessageQueueAccessRights.FullControl, AccessControlEntryType.Allow);
                 Log.Debug($"MessagingService {queueName} Initialized!");
             }
             else
             {
                 queue = new MessageQueue(queueName);
+                if (!string.IsNullOrWhiteSpace(label)&&string.IsNullOrWhiteSpace(queue.Label))
+                    queue.Label = label;
             }
 
             return queue;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Messaging;
+using System.Runtime.Remoting.Messaging;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Extentions;
@@ -21,190 +23,274 @@ namespace PalladiumDwh.Core.Services
 
         public void Read(string gateway)
         {
+            //initialize Queue
+
+            #region Queue Init
+
             if (null == Queue)
                 Initialize(gateway);
 
             var msmq = Queue as MessageQueue;
 
             if (null == msmq)
+                return;
+
+            #endregion
+
+            //check if Queue has messages
+
+            #region Queue check
+
+            Message peekMessage = null;
+            try
+            {
+                peekMessage = msmq.Peek(new TimeSpan(0));
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+            }
+
+            if (null == peekMessage)
             {
                 return;
             }
 
-         Log.Debug($"Queue {QueueName} checking for messages...");
-      //var count = msmq.Count();
-          Message peekMessage = null;
-          try
-          {
-            peekMessage = msmq.Peek(new TimeSpan(0));
-          }
-          catch 
-          {
-            
-          }
+            #endregion
 
-          if (null == peekMessage)
-          {
-            Log.Debug($"Queue {QueueName} 0 messages found !");
-      }
+            //process Queue
 
+            Log.Debug($"Queue {QueueName} getting message Ids...");
+            var messageIds = msmq.GetIds();
 
-          if (null!=peekMessage)
+            Log.Debug($"Queue {QueueName} has {messageIds.Count} !");
+
+            var batches = messageIds.Split(_queueBatch).ToList();
+            var batchCount = batches.Count;
+
+            Log.Debug($"Queue {QueueName} will be processed in {batchCount} batches");
+
+            int n = 0;
+            foreach (var batch in batches)
             {
-                Log.Debug($"Queue {QueueName} getting message Ids...");
-              var messageIds = msmq.GetIds();
-
-                Log.Debug($"Queue {QueueName} has {messageIds.Count} !");
-
-                var batches = messageIds.Split(_queueBatch).ToList();
-                var batchCount = batches.Count;
-
-                Log.Debug($"Queue {QueueName} will be processed in {batchCount} batches");
-
-                int n = 0;
-                foreach (var batch in batches)
+                n++;
+                Log.Debug($"processing {QueueName} {n} of {batchCount} batches...");
+                foreach (var m in batch.ToList())
                 {
-                    n++;
-                    Log.Debug($"processing {QueueName} {n} of {batchCount} batches...");
-                    foreach (var m in batch.ToList())
+
+                    var msg = msmq.ReceiveById(m);
+                    if (null != msg)
                     {
-
-                        var msg = msmq.ReceiveById(m);
-                        if (null != msg)
+                        try
                         {
-                            try
-                            {
-                                var patientProfile = msg.BodyStream.ReadFromJson(msg.Label);
-                                _syncService.Sync(patientProfile);
-                                
-                            }
-                            catch (Exception e)
-                            {
-                                Log.Debug(e);
-                                MoveToBacklog(msg);
-                            }
+                            var patientProfile = msg.BodyStream.ReadFromJson(msg.Label);
+                            _syncService.Sync(patientProfile);
 
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Debug(e);
+                            MoveToBacklog(msg);
                         }
                     }
                 }
-                Log.Debug(new string('*', 30));
+            }
+            Log.Debug(new string('*', 30));
+
+        }
+
+        public void ExpressRead(string gateway = "")
+        {
+            //initialize Queue
+
+            #region Queue Init
+
+            if (null == Queue)
+                Initialize(gateway);
+
+            var msmq = Queue as MessageQueue;
+
+            if (null == msmq)
+                return;
+
+            #endregion
+
+            //check if Queue has messages
+
+            #region Queue check
+
+            Message peekMessage = null;
+            try
+            {
+                peekMessage = msmq.Peek(new TimeSpan(0));
+            }
+            catch (MessageQueueException ex)
+            {
+                
+            }
+            catch (Exception e)
+            {
+                Log.Debug($"Queue {QueueName} peek error!");
+                Log.Debug(e);
+            }
+
+            if (null == peekMessage)
+            {
+                return;
+            }
+
+            #endregion
+
+            //process Queue
+
+            Log.Debug($"Queue {QueueName} processing...");
+
+            int count = 0;
+            int batchCount = 0;
+            var messages = new List<Message>();
+            var messageEnumerator = msmq.GetMessageEnumerator2();
+
+            //initialize Sync
+            _syncService.InitList(QueueName);
+            
+            while (messageEnumerator.MoveNext())
+            {
+                if (null != messageEnumerator.Current)
+                {
+                    #region Read Message
+
+                    Message message = null;
+                    string messageId = messageEnumerator.Current.Id;
+                    try
+                    {
+                        message = msmq.ReceiveById(messageId, new TimeSpan(0));
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Debug($"Queue {QueueName} Message {messageId} Not Found...");
+                        Log.Debug(e);
+                    }
+
+                    #endregion
+
+                    #region Proccess Message
+
+                    if (null != message)
+                    {
+                        count++;
+                        batchCount++;
+                        messages.Add(message);
+
+                        try
+                        {
+                            var patientProfile = message.BodyStream.ReadFromJson(message.Label);
+                            _syncService.Sync(patientProfile);
+
+                            #region Batch Sync profiles
+
+                            try
+                            {
+                                if (batchCount == 1000)
+                                {
+                                    // reset batch Count
+                                    batchCount = 0;
+
+                                    // commit sync
+                                    _syncService.Commit(QueueName);
+
+                                    // reset sync
+                                    _syncService.InitList(QueueName);
+                                    messages = new List<Message>();
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Debug("moving to Batch >> BACKLOG caused by Error:");
+                                Log.Debug(e);
+                                MoveToBacklog(messages);
+
+                                // reset sync
+                                _syncService.InitList(QueueName);
+                                messages = new List<Message>();
+                            }
+
+                            #endregion
+
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Debug("moving to BACKLOG caused by Error:");
+                            Log.Debug(e);
+                            MoveToBacklog(message);
+
+                            // remove bad message from batch
+                            messages.Remove(message);
+                        }
+                    }
+
+                    #endregion
+                }
+            }
+
+            #region Process last Messages
+
+            try
+            {
+                // commit sync
+                _syncService.Commit(QueueName);
+
+                // reset sync
+                _syncService.InitList(QueueName);
+                messages = new List<Message>();
+            }
+            catch (Exception e)
+            {
+                Log.Debug("moving to BACKLOG caused by Error:");
+                Log.Debug(e);
+                MoveToBacklog(messages);
+            }
+
+            #endregion
+
+            msmq.Close();
+
+            Log.Debug($"Queue {QueueName} processed {count}");
+            Log.Debug(new string('*', 30));
+        }
+
+        public void MoveToBacklog(object message)
+        {
+            var messages = new List<Message> {message as Message};
+            MoveToBacklog(messages);
+        }
+
+        public void MoveToBacklog(List<Message> messages)
+        {
+            if(null==messages)
+                return;
+            if (messages.Count==0)
+                return;
+
+            var msmq = BacklogQueue as MessageQueue;
+            if (null != msmq)
+            {
+                var tx = new MessageQueueTransaction();
+                tx.Begin();
+                foreach (var message in messages)
+                {
+                    if (null != message)
+                    {
+                        msmq.Send(message, tx);
+                    }
+                }
+                tx.Commit();
+                msmq.Close();
             }
         }
 
-       public void ExpressRead(string gateway = "")
-       {
-          if (null == Queue)
-             Initialize(gateway);
-
-          var msmq = Queue as MessageQueue;
-
-          if (null == msmq)
-          {
-             return;
-          }
-
-          Log.Debug($"Queue {QueueName} checking for messages...");
-          Message peekMessage = null;
-          try
-          {
-             peekMessage = msmq.Peek(new TimeSpan(0));
-          }
-          catch
-          {
-          }
-
-          if (null == peekMessage)
-          {
-             Log.Debug($"Queue {QueueName} 0 messages found !");
-             return;
-          }
-
-          Log.Debug($"Queue {QueueName} processing...");
-          var enumerator = msmq.GetMessageEnumerator2();
-          int n = 0;
-          int count = 0;
-          _syncService.InitList(QueueName);
-          var msgs = new List<Message>();
-          while (enumerator.MoveNext())
-          {
-             if (null != enumerator.Current)
-             {
-                var msg = msmq.ReceiveById(enumerator.Current.Id);
-                n++;
-                count++;
-                try
-                {
-                   msgs.Add(msg);
-                   var patientProfile = msg.BodyStream.ReadFromJson(msg.Label);
-
-                   _syncService.Sync(patientProfile);
-                   try
-                   {
-                      if (count == 1000)
-                      {
-                         _syncService.Commit(QueueName);
-                         _syncService.InitList(QueueName);
-                         msgs = new List<Message>();
-                     }
-                   }
-                   catch (Exception e)
-                  {
-                     Log.Debug("moving to BACKLOG caused by Error:");
-                     Log.Debug(e);
-                      MoveToBacklog(msgs);
-                   }
-                }
-                catch (Exception e)
-               {
-                  Log.Debug("moving to BACKLOG caused by Error:");
-                  Log.Debug(e);
-                   MoveToBacklog(msg);
-                }
-                if (count == 1000)
-                {
-                   Log.Debug($"Queue {QueueName} still processing, {n} so far...");
-                   count = 0;
-                }
-             }
-
-          }
-          try
-         {
-            _syncService.Commit(QueueName);
-            _syncService.InitList(QueueName);
-            msgs=new List<Message>();
-
-         }
-          catch (Exception e)
-          {
-            Log.Debug("moving to BACKLOG caused by Error:");
-            Log.Debug(e);
-             MoveToBacklog(msgs);
-          }
-      
-
-          Log.Debug($"Queue {QueueName} processed {n}");
-          Log.Debug(new string('*', 30));
-       }
-
-       public void MoveToBacklog(List<Message> messages)
-       {
-          var msmq = BacklogQueue as MessageQueue;
-          foreach (var message in messages)
-          {
-            if (null != message && null != msmq)
-            {
-               var tx = new MessageQueueTransaction();
-               tx.Begin();
-               msmq.Send(message, tx);
-               tx.Commit();
-            }
-         }
-       }
-
-      public void MoveToBacklog(object message)
+        public void MoveToBacklogDead(object message)
         {
-            var msmq=BacklogQueue as MessageQueue;
+            var msmq = BacklogDeadQueue as MessageQueue;
 
             if (null != message && null != msmq)
             {
@@ -212,11 +298,13 @@ namespace PalladiumDwh.Core.Services
                 tx.Begin();
                 msmq.Send(message, tx);
                 tx.Commit();
+                msmq.Close();
             }
         }
 
-        public void PrcocessBacklog(string gateway="")
+        public void PrcocessBacklog(string gateway = "")
         {
+
             if (null == Queue)
                 Initialize(gateway);
 
@@ -236,13 +324,13 @@ namespace PalladiumDwh.Core.Services
             if (null == msmqBacklog)
             {
                 return;
-            }           
+            }
 
             var count = msmqBacklog.Count();
 
             if (count > 0)
             {
-              var messageIds = msmqBacklog.GetIds();
+                var messageIds = msmqBacklog.GetIds();
 
                 Log.Debug($"Backlog-Queue {QueueName} has {messageIds.Count} !");
 
@@ -278,6 +366,109 @@ namespace PalladiumDwh.Core.Services
                 }
                 Log.Debug(new string('*', 30));
             }
+        }
+
+        public void ExpressPrcocessBacklog(string gateway = "")
+        {
+            //initialize Queue
+
+            #region Queue Init
+
+            if (null == BacklogQueue)
+                Initialize(gateway);
+
+            var msmq = BacklogQueue as MessageQueue;
+
+            if (null == msmq)
+                return;
+
+            #endregion
+
+            //check if Queue has messages
+
+            #region Queue check
+
+            Message peekMessage = null;
+            try
+            {
+                peekMessage = msmq.Peek(new TimeSpan(0));
+            }
+            catch (MessageQueueException ex)
+            {
+            }
+            catch (Exception e)
+            {
+                Log.Debug($"Queue {QueueName} peek error!");
+                Log.Debug(e);
+            }
+
+            if (null == peekMessage)
+            {
+                return;
+            }
+
+            #endregion
+
+            //process Queue
+
+            Log.Debug($"Queue {QueueName} processing...");
+
+            int count = 0;
+            var messages = new List<Message>();
+            var messageEnumerator = msmq.GetMessageEnumerator2();
+
+            while (messageEnumerator.MoveNext())
+            {
+                if (null != messageEnumerator.Current)
+                {
+                    #region Read Message
+
+                    Message message = null;
+                    string messageId = messageEnumerator.Current.Id;
+                    try
+                    {
+                        message = msmq.ReceiveById(messageId, new TimeSpan(0));
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Debug($"Queue {QueueName} Message {messageId} Not Found...");
+                        Log.Debug(e);
+                    }
+
+                    #endregion
+
+                    #region Proccess Message
+
+                    if (null != message)
+                    {
+                        count++;
+                
+                        messages.Add(message);
+
+                        try
+                        {
+                            var patientProfile = message.BodyStream.ReadFromJson(message.Label);
+                            _syncService.Sync(patientProfile);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Debug("moving to DEAD BACKLOG caused by Error:");
+                            Log.Debug(e);
+                            MoveToBacklogDead(message);
+
+                            // remove bad message from batch
+                            messages.Remove(message);
+                        }
+                    }
+
+                    #endregion
+                }
+            }
+
+            msmq.Close();
+
+            Log.Debug($"Queue {QueueName} processed {count}");
+            Log.Debug(new string('*', 30));
         }
     }
 }

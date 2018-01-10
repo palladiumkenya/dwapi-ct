@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using PalladiumDwh.Core.Interfaces;
@@ -48,7 +49,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
           if (facilityId == Guid.Empty || null == facilityId)
           {
-            _context.GetConnection().BulkInsert(facility);
+            _context.GetConnection().BulkInsert(new List<Facility>{facility});
             facilityId = facility.Id;
           }
           return facilityId;

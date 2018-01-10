@@ -60,8 +60,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             }
             else
             {
-            
-                //Update(patient);
+                patient.Id = patientId.Value;
+                Update(patient);
             }
 
             return patientId;
@@ -71,17 +71,18 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         {
           var patientId = GetPatientByIds(patient.FacilityId, patient.PatientPID);
 
-          if (patientId == Guid.Empty || null == patientId)
-          {
-            _context.GetConnection().BulkInsert(patient);
-            patientId = patient.Id;
-          }
-          else
-          {
-            //_context.GetConnection().BulkUpdate(patient);
-          }
+            if (patientId == Guid.Empty || null == patientId)
+            {
+                _context.GetConnection().BulkInsert(patient);
+                patientId = patient.Id;
+            }
+            else
+            {
+                patient.Id = patientId.Value;
+                _context.GetConnection().BulkUpdate(patient);
+            }
 
-          return patientId;
+            return patientId;
         }
 
       public async Task ClearManifest(Manifest manifest)

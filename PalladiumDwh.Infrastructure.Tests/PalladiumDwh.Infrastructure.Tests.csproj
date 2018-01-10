@@ -78,6 +78,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="FacilityDapperRepositoryTests.cs" />
     <Compile Include="FacilityRepositoryTests.cs" />
     <Compile Include="PatientExtractRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

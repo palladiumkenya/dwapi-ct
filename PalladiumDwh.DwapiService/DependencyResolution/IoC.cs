@@ -7,7 +7,7 @@ namespace PalladiumDWh.DwapiService.DependencyResolution {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public static IContainer Initialize() {
             var container= new Container(c => c.AddRegistry<DefaultRegistry>());
-            Log.Debug(container.WhatDoIHave());
+            //Log.Debug(container.WhatDoIHave());
             return container;
         }
     }
