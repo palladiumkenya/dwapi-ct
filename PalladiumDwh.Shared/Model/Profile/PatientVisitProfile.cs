@@ -35,6 +35,7 @@ namespace PalladiumDwh.Shared.Model.Profile
         public override void GenerateRecords(Guid patientId)
         {
             base.GenerateRecords(patientId);
+
             foreach (var e in VisitExtracts)
                 Extracts.Add(e.GeneratePatientVisitExtract(PatientInfo.Id));
         }
