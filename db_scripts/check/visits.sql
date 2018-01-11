@@ -4,6 +4,6 @@ SELECT        Facility.Id, Facility.Code, Facility.Name, PatientExtract.PatientP
 FROM            Facility INNER JOIN
                          PatientExtract ON Facility.Id = PatientExtract.FacilityId INNER JOIN
                          PatientVisitExtract ON PatientExtract.Id = PatientVisitExtract.PatientId
-						 WHERE PatientPID=1000
+						 WHERE PatientId='{81528a2b-45a2-4664-b756-a865004de7ee}'
 
 
