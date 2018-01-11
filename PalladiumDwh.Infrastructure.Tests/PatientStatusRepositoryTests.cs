@@ -19,7 +19,7 @@ using PalladiumDwh.Shared.Model.Profile;
 namespace PalladiumDwh.Infrastructure.Tests
 {
     [TestFixture]
-    public class PatientVisitRepositoryTests
+    public class PatientStatusRepositoryTests
     {
         private DwapiCentralContext _context;
         private DwapiCentralContext _dbcontext;
@@ -31,22 +31,22 @@ namespace PalladiumDwh.Infrastructure.Tests
 
        
         private List<PatientExtract> _patients = new List<PatientExtract>();
-        private List<PatientVisitProfile> _visitProfiles=new List<PatientVisitProfile>();
-        private List<PatientVisitProfile> _newVisitProfiles = new List<PatientVisitProfile>();
-        private List<PatientVisitProfile> _updatedVisitProfiles = new List<PatientVisitProfile>();
+        private List<PatientStatusProfile> _visitProfiles=new List<PatientStatusProfile>();
+        private List<PatientStatusProfile> _newVisitProfiles = new List<PatientStatusProfile>();
+        private List<PatientStatusProfile> _updatedVisitProfiles = new List<PatientStatusProfile>();
 
         private FacilityRepository _facilityRepository;
-        private PatientVisitRepository _patientVisitRepository;
+        private  PatientStatusRepository _patientStatusRepository;
         private Facility _newFacility;
         private List<PatientExtract> _newFacilityPatients;
-        private List<PatientVisitExtract> _newVisitExtracts = new List<PatientVisitExtract>();
+        private List<PatientStatusExtract> _newStatusExtracts = new List<PatientStatusExtract>();
 
         [SetUp]
         public void SetUp()
         {
-            _context = new DwapiCentralContext();
             _patients=new List<PatientExtract>();
-            _visitProfiles=new List<PatientVisitProfile>();
+            _context = new DwapiCentralContext();
+            _visitProfiles=new List<PatientStatusProfile>();
 
             #region Test data
             //  facility
@@ -58,9 +58,11 @@ namespace PalladiumDwh.Infrastructure.Tests
             //  patient
             foreach (var facility in _facilities)
             {
-                var patients = TestHelpers.GetTestPatientVisitsData(facility, 2, 2).ToList();
+                var patients = TestHelpers.GetTestPatientStatusData(facility, 3).ToList();
+             
                 _patients.AddRange(patients);
             }
+            _patients.Last().PatientStatusExtracts = new List<PatientStatusExtract>();
             int pid = 1000;
             foreach (var p in _patients)
             {
@@ -75,18 +77,19 @@ namespace PalladiumDwh.Infrastructure.Tests
             var ids = _facilities.Select(x => x.Id).ToList();
             var facilities = _context.Facilities
                 .Where(x => ids.Contains(x.Id))
-                .Include(d => d.PatientExtracts.Select(v => v.PatientVisitExtracts));
+                .Include(d => d.PatientExtracts.Select(v => v.PatientStatusExtracts));
 
             foreach (var facility in facilities)
             {
                 foreach (var patientExtract in facility.PatientExtracts)
                 {
-                    var v = new PatientVisitProfile();
+                    var v = new PatientStatusProfile();
                     v.PatientInfo = patientExtract;
                     v.FacilityInfo = facility;
-                    v.VisitExtracts =
-                        new PatientVisitExtractDTO().GeneratePatientVisitExtractDtOs(
-                            patientExtract.PatientVisitExtracts).ToList();
+                    
+                    v.StatusExtracts =
+                        new PatientStatusExtractDTO().GeneratePatientStatusExtractDtOs(
+                            patientExtract.PatientStatusExtracts).ToList();
                     _visitProfiles.Add(v);
                 }
             }
@@ -99,10 +102,10 @@ namespace PalladiumDwh.Infrastructure.Tests
             _newFacility = TestHelpers.GetTestData<Facility>(1).ToList().First();
             _newFacility.Name = "Migori County Hospital";
             _newFacility.Code = 300;
-            _newFacility.Id=new Guid("73F27F28-B38C-4FE3-9234-A865008C9717");
+            _newFacility.Id = new Guid("73F27F28-B38C-4FE3-9234-A865008C9717");
 
             //  NEW patients
-            _newFacilityPatients = TestHelpers.GetTestPatientVisitsData(_newFacility, 2, 1).ToList();
+            _newFacilityPatients = TestHelpers.GetTestPatientStatusData(_newFacility, 2).ToList();
             pid = 2000;
             foreach (var p in _newFacilityPatients)
             {
@@ -118,12 +121,12 @@ namespace PalladiumDwh.Infrastructure.Tests
             #region NEW Test Data visit profiles
             foreach (var patientExtract in _newFacility.PatientExtracts)
             {
-                var v = new PatientVisitProfile();
+                var v = new PatientStatusProfile();
                 v.PatientInfo = patientExtract;
                 v.FacilityInfo = _newFacility;
-                v.VisitExtracts =
-                    new PatientVisitExtractDTO().GeneratePatientVisitExtractDtOs(
-                        patientExtract.PatientVisitExtracts).ToList();
+                v.StatusExtracts =
+                    new PatientStatusExtractDTO().GeneratePatientStatusExtractDtOs(
+                        patientExtract.PatientStatusExtracts).ToList();
                 _newVisitProfiles.Add(v);
             }
             #endregion
@@ -131,33 +134,33 @@ namespace PalladiumDwh.Infrastructure.Tests
             // UPDATE visits for exisiting patient
         
             #region Updated visits
-            _updatedVisitProfiles = new List<PatientVisitProfile>();
+            _updatedVisitProfiles = new List<PatientStatusProfile>();
             _updatedVisitProfiles.AddRange(_visitProfiles);
-            _newVisitExtracts = TestHelpers.GetTestData<PatientVisitExtract>(2).ToList();
-            foreach (var extract in _newVisitExtracts)
+            _newStatusExtracts = TestHelpers.GetTestData<PatientStatusExtract>(1).ToList();
+            foreach (var extract in _newStatusExtracts)
             {
-                extract.PatientId = _patients[0].Id;
+                extract.PatientId = _patients[5].Id;
             }
             #endregion
 
             _facilityRepository = new FacilityRepository(_context);
             _patientExtractRepository = new PatientExtractRepository(_context);
-            _patientVisitRepository = new PatientVisitRepository(_context);
+            _patientStatusRepository = new PatientStatusRepository(_context);
 
         }
 
         [Test]
-        public void should_Clear_Visits()
+        public void should_Clear_Statuss()
         {
             var patientExtract = _patients.First();
 
-            var visits = _context.PatientVisitExtracts.Where(x => x.PatientId.Equals(patientExtract.Id)).ToList();
+            var visits = _context.PatientStatusExtracts.Where(x => x.PatientId.Equals(patientExtract.Id)).ToList();
             Assert.True(visits.Count>0);
             
-            _patientVisitRepository.ClearNew(patientExtract.Id);
-            _patientVisitRepository=new PatientVisitRepository(_context);
+            _patientStatusRepository.ClearNew(patientExtract.Id);
+            _patientStatusRepository=new PatientStatusRepository(_context);
 
-            visits = _context.PatientVisitExtracts.Where(x => x.PatientId.Equals(patientExtract.Id)).ToList();
+            visits = _context.PatientStatusExtracts.Where(x => x.PatientId.Equals(patientExtract.Id)).ToList();
             Assert.True(visits.Count == 0);
         }
         [Test]
@@ -165,7 +168,7 @@ namespace PalladiumDwh.Infrastructure.Tests
         {
             var facility = _facilities[0];
             int pid = 1;
-            var newPatients = TestHelpers.GetTestPatientVisitsData(facility, 2, 3).ToList();
+            var newPatients = TestHelpers.GetTestPatientStatusData(facility, 1).ToList();
             foreach (var patientExtract in newPatients)
             {
                 patientExtract.PatientCccNumber =$"10000/18/{pid}";
@@ -174,106 +177,109 @@ namespace PalladiumDwh.Infrastructure.Tests
             }
             foreach (var patientExtract in facility.PatientExtracts)
             {
-                var v = new PatientVisitProfile();
+                var v = new PatientStatusProfile();
                 v.PatientInfo = patientExtract;
                 v.FacilityInfo = _facilities[0];
-                v.VisitExtracts =
-                    new PatientVisitExtractDTO().GeneratePatientVisitExtractDtOs(
-                        patientExtract.PatientVisitExtracts).ToList();
+                v.StatusExtracts =
+                    new PatientStatusExtractDTO().GeneratePatientStatusExtractDtOs(
+                        patientExtract.PatientStatusExtracts).ToList();
                 _visitProfiles.Add(v);
             }
             
-            _patientVisitRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
+            _patientStatusRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Id == facility.Id)
-                .Include(p => p.PatientExtracts.Select(v => v.PatientVisitExtracts)).FirstOrDefault();
+                .Include(p => p.PatientExtracts.Select(v => v.PatientStatusExtracts)).FirstOrDefault();
             Assert.NotNull(facilty);
             var patient = facilty.PatientExtracts.First(x=>x.Id==newPatients[0].Id);
             Assert.NotNull(patient);
-            var visitis = patient.PatientVisitExtracts.Count;
-            Assert.IsTrue(visitis == 3);
+            var visitis = patient.PatientStatusExtracts.Count;
+            Assert.IsTrue(visitis == 1);
             Console.WriteLine($"Faciltiy:{facilty}| Patient:{patient.PatientCccNumber}| Visits:{visitis}");
         }
         [Test]
         public void should_Sync_With_Updated_Patients_Updated()
         {
-            var patientInfo = _visitProfiles.Last().PatientInfo;
+            var patientInfo = _visitProfiles.First(x=>x.PatientInfo.Id==_patients[1].Id).PatientInfo;
             patientInfo.MaritalStatus = "Married";
             patientInfo.PatientCccNumber = "15701-0001";
 
-            _patientVisitRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
+            _patientStatusRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Id == patientInfo.FacilityId)
-                .Include(p => p.PatientExtracts.Select(v => v.PatientVisitExtracts)).FirstOrDefault();
+                .Include(p => p.PatientExtracts.Select(v => v.PatientStatusExtracts)).FirstOrDefault();
             Assert.NotNull(facilty);
             var patient = facilty.PatientExtracts.First(x => x.Id == patientInfo.Id);
             Assert.NotNull(patient);
             Assert.AreEqual("Married", patient.MaritalStatus);
             Assert.AreEqual("15701-0001", patient.PatientCccNumber);
-            var visitis = patient.PatientVisitExtracts.Count;
+            var visitis = patient.PatientStatusExtracts.Count;
             Assert.IsTrue(visitis >0);
             Console.WriteLine($"Faciltiy:{facilty}| Patient:{patient.PatientCccNumber}| Visits:{visitis}");
         }
         [Test]
         public void should_Sync_New_Facilty_With_Patients()
         {
-            _patientVisitRepository.SyncNewPatients(_newVisitProfiles, _facilityRepository);
+            _patientStatusRepository.SyncNewPatients(_newVisitProfiles, _facilityRepository);
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Code == _newFacility.Code)
-                .Include(p => p.PatientExtracts.Select(v => v.PatientVisitExtracts)).FirstOrDefault();
+                .Include(p => p.PatientExtracts.Select(v => v.PatientStatusExtracts)).FirstOrDefault();
             Assert.NotNull(facilty);
             var patient = facilty.PatientExtracts.First();
             Assert.NotNull(patient);
-            var visitis = patient.PatientVisitExtracts.Count;
+            var visitis = patient.PatientStatusExtracts.Count;
             Assert.IsTrue(visitis == 1);
             Console.WriteLine($"Faciltiy:{facilty}| Patient:{patient.PatientCccNumber}| Visits:{visitis}");
         }
         [Test]
-        public void should_Sync_Patient_With_Updated_Visits_Added()
+        public void should_Sync_Patient_With_Updated_Statuss_Added()
         {
-            _updatedVisitProfiles
-                .First(x => x.PatientInfo.Id == _patients[0].Id)
-                .VisitExtracts
-                .AddRange(new PatientVisitExtractDTO().GeneratePatientVisitExtractDtOs(_newVisitExtracts).ToList());
-            _patientVisitRepository.SyncNewPatients(_updatedVisitProfiles, _facilityRepository);
+            var vv = _updatedVisitProfiles.First(x => x.StatusExtracts.Count == 0);
+            _newStatusExtracts.First().PatientId = vv.PatientInfo.Id;
+
+            vv.StatusExtracts
+                .AddRange(new PatientStatusExtractDTO().GeneratePatientStatusExtractDtOs(_newStatusExtracts).ToList());
+
+            
+            _patientStatusRepository.SyncNewPatients(_updatedVisitProfiles, _facilityRepository);
             _context = new DwapiCentralContext();
 
-            var facilty = _context.Facilities.Where(x => x.Code == 100)
-                .Include(p => p.PatientExtracts.Select(v => v.PatientVisitExtracts)).FirstOrDefault();
+            var facilty = _context.Facilities.Where(x => x.Id == vv.PatientInfo.FacilityId)
+                .Include(p => p.PatientExtracts.Select(v => v.PatientStatusExtracts)).FirstOrDefault();
             Assert.NotNull(facilty);
-            var patient = facilty.PatientExtracts.First(x => x.Id == _patients[0].Id);
+            var patient = facilty.PatientExtracts.First(x => x.Id == vv.PatientInfo.Id);
             Assert.NotNull(patient);
-            var visits = patient.PatientVisitExtracts.Count;
-            Assert.IsTrue(visits == 4);
+            var visits = patient.PatientStatusExtracts.Count;
+            Assert.IsTrue(visits == 1);
             Console.WriteLine($"Faciltiy:{facilty}| Patient:{patient.PatientCccNumber}| Visits:{visits}");
         }
         [Test]
-        public void should_Sync_Patient_With_Updated_Visits_Modified()
+        public void should_Sync_Patient_With_Updated_Statuss_Modified()
         {
-            var visit = _visitProfiles.Last().VisitExtracts.First();
+            var visit = _visitProfiles.First().StatusExtracts.First();
 
-            _visitProfiles.Last().VisitExtracts.First().Service = "MAUN";
-            _patientVisitRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
+            visit.ExitReason = "MAUN";
+            _patientStatusRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
             _context = new DwapiCentralContext();
-            var patientExtract = _context.PatientExtracts.Where(x => x.Id == visit.PatientId).Include(v=>v.PatientVisitExtracts).FirstOrDefault();
+            var patientExtract = _context.PatientExtracts.Where(x => x.Id == visit.PatientId).Include(v=>v.PatientStatusExtracts).FirstOrDefault();
             Assert.NotNull(patientExtract);
      
-            var visits = patientExtract.PatientVisitExtracts.FirstOrDefault(x=>x.VisitId==visit.VisitId);
+            var visits = patientExtract.PatientStatusExtracts.FirstOrDefault();
             Assert.NotNull(visits);
-            Assert.AreEqual("MAUN",visits.Service);
+            Assert.AreEqual("MAUN",visits.ExitReason);
         }
         [Test]
-        public void should_Sync_Patient_With_Updated_Visits_Deleted()
+        public void should_Sync_Patient_With_Updated_Statuss_Deleted()
         {
-            var visit = _visitProfiles.Last().VisitExtracts.First();
-
-            _visitProfiles.Last().VisitExtracts.Remove(visit);
-            _patientVisitRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
+            var visit = _visitProfiles.First();
+            Assert.True(visit.StatusExtracts.Count>0);
+           visit.StatusExtracts.Remove(visit.StatusExtracts.First());
+            _patientStatusRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
             _context = new DwapiCentralContext();
-            var patientExtract = _context.PatientExtracts.Where(x => x.Id == visit.PatientId).Include(v => v.PatientVisitExtracts).FirstOrDefault();
+            var patientExtract = _context.PatientExtracts.Where(x => x.Id == visit.PatientInfo.Id).Include(v => v.PatientStatusExtracts).FirstOrDefault();
             Assert.NotNull(patientExtract);
 
-            var visits = patientExtract.PatientVisitExtracts.FirstOrDefault(x => x.VisitId == visit.VisitId);
+            var visits = patientExtract.PatientStatusExtracts.FirstOrDefault();
             Assert.Null(visits);
         }
         

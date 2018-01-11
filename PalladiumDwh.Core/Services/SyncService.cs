@@ -20,13 +20,15 @@ namespace PalladiumDwh.Core.Services
       private readonly IPatientPharmacyRepository _patientPharmacyRepository;
       private readonly IPatientStatusRepository _patientStatusRepository;
       private readonly IPatientVisitRepository _patientVisitRepository;
-     
-      private List<PatientVisitProfile> _visitProfiles = new List<PatientVisitProfile>();
+     private List<PatientVisitProfile> _visitProfiles = new List<PatientVisitProfile>();
+       private List<PatientARTProfile> _artProfiles=new List<PatientARTProfile>();
+       private List<PatientBaselineProfile> _baselineProfiles=new List<PatientBaselineProfile>();
+       private List<PatientLabProfile> _labProfiles=new List<PatientLabProfile>();
+       private List<PatientPharmacyProfile> _pharmacyProfiles=new List<PatientPharmacyProfile>();
+       private List<PatientStatusProfile> _statusProfiles=new List<PatientStatusProfile>();
 
-      
 
-
-      public SyncService(IFacilityRepository facilityRepository, IPatientExtractRepository patientExtractRepository,
+       public SyncService(IFacilityRepository facilityRepository, IPatientExtractRepository patientExtractRepository,
          IPatientArtExtractRepository patientArtExtractRepository,
          IPatientBaseLinesRepository patientBaseLinesRepository, IPatientLabRepository patientLabRepository,
          IPatientPharmacyRepository patientPharmacyRepository, IPatientStatusRepository patientStatusRepository,
@@ -43,55 +45,106 @@ namespace PalladiumDwh.Core.Services
       }
 
 
-      public void Sync(object profile)
-      {
-         if (profile.GetType() == typeof(Manifest))
-         {
-            SyncManifest(profile as Manifest);
-         }
+       public void Sync(object profile)
+       {
+           if (profile.GetType() == typeof(Manifest))
+           {
+               SyncManifest(profile as Manifest);
+           }
 
-         if (profile.GetType() == typeof(PatientARTProfile))
-         {
-            SyncArt(profile as PatientARTProfile);
-         }
-         else if (profile.GetType() == typeof(PatientBaselineProfile))
-         {
-            SyncBaseline(profile as PatientBaselineProfile);
-         }
-         else if (profile.GetType() == typeof(PatientLabProfile))
-         {
-            SyncLab(profile as PatientLabProfile);
-         }
-         else if (profile.GetType() == typeof(PatientPharmacyProfile))
-         {
-            SyncPharmacy(profile as PatientPharmacyProfile);
-         }
-         else if (profile.GetType() == typeof(PatientStatusProfile))
-         {
-            SyncStatus(profile as PatientStatusProfile);
-         }
-         else if (profile.GetType() == typeof(PatientVisitProfile))
-         {
-            SyncVisitNew(profile as PatientVisitProfile);
-         }
-      }
+           if (profile.GetType() == typeof(PatientARTProfile))
+           {
+               SyncArtNew(profile as PatientARTProfile);
+           }
+           else if (profile.GetType() == typeof(PatientBaselineProfile))
+           {
+               SyncBaselineNew(profile as PatientBaselineProfile);
+           }
+           else if (profile.GetType() == typeof(PatientLabProfile))
+           {
+               SyncLabNew(profile as PatientLabProfile);
+           }
+           else if (profile.GetType() == typeof(PatientPharmacyProfile))
+           {
+               SyncPharmacyNew(profile as PatientPharmacyProfile);
+           }
+           else if (profile.GetType() == typeof(PatientStatusProfile))
+           {
+               SyncStatusNew(profile as PatientStatusProfile);
+           }
+           else if (profile.GetType() == typeof(PatientVisitProfile))
+           {
+               SyncVisitNew(profile as PatientVisitProfile);
+           }
+       }
 
-      public void SyncManifest(Manifest manifest)
+       public void SyncManifest(Manifest manifest)
       {
          _patientExtractRepository.ClearManifest(manifest);
       }
 
       public void InitList(string queueName)
       {
-         if (queueName.ToLower().Contains("PatientVisitProfile".ToLower()))
-         {
-            _visitProfiles = new List<PatientVisitProfile>();
-         }
-      }
+          if (queueName.ToLower().Contains("PatientARTProfile".ToLower()))
+          {
+              _artProfiles = new List<PatientARTProfile>();
+          }
+
+          if (queueName.ToLower().Contains("PatientBaselineProfile".ToLower()))
+          {
+              _baselineProfiles= new List<PatientBaselineProfile>();
+          }
+
+          if (queueName.ToLower().Contains("PatientLabProfile".ToLower()))
+          {
+              _labProfiles = new List<PatientLabProfile>();
+          }
+
+          if (queueName.ToLower().Contains("PatientPharmacyProfile".ToLower()))
+          {
+              _pharmacyProfiles = new List<PatientPharmacyProfile>();
+          }
+
+          if (queueName.ToLower().Contains("PatientStatusProfile".ToLower()))
+          {
+              _statusProfiles = new List<PatientStatusProfile>();
+          }
+
+          if (queueName.ToLower().Contains("PatientVisitProfile".ToLower()))
+          {
+              _visitProfiles = new List<PatientVisitProfile>();
+          }
+        
+        }
 
       public void Commit(string queueName)
       {
-         if (queueName.ToLower().Contains("PatientVisitProfile".ToLower()))
+          if (queueName.ToLower().Contains("PatientARTProfile".ToLower()))
+          {
+              Log.Debug($"batch processing {queueName}...");
+              _patientArtExtractRepository.SyncNewPatients(_artProfiles, _facilityRepository);
+          }
+          if (queueName.ToLower().Contains("PatientBaselineProfile".ToLower()))
+          {
+              Log.Debug($"batch processing {queueName}...");
+              _patientBaseLinesRepository.SyncNewPatients(_baselineProfiles, _facilityRepository);
+          }
+          if (queueName.ToLower().Contains("PatientLabProfile".ToLower()))
+          {
+              Log.Debug($"batch processing {queueName}...");
+              _patientLabRepository.SyncNewPatients(_labProfiles, _facilityRepository);
+          }
+          if (queueName.ToLower().Contains("PatientPharmacyProfile".ToLower()))
+          {
+              Log.Debug($"batch processing {queueName}...");
+              _patientPharmacyRepository.SyncNewPatients(_pharmacyProfiles, _facilityRepository);
+          }
+          if (queueName.ToLower().Contains("PatientStatusProfile".ToLower()))
+          {
+              Log.Debug($"batch processing {queueName}...");
+              _patientStatusRepository.SyncNewPatients(_statusProfiles, _facilityRepository);
+          }
+            if (queueName.ToLower().Contains("PatientVisitProfile".ToLower()))
          {
             Log.Debug($"batch processing {queueName}...");
             _patientVisitRepository.SyncNewPatients(_visitProfiles,_facilityRepository);
@@ -178,7 +231,37 @@ namespace PalladiumDwh.Core.Services
          }
       }
 
-      public void SyncVisitNew(PatientVisitProfile profile)
+       public void SyncArtNew(PatientARTProfile profile)
+       {
+           profile.GeneratePatientRecord();
+           _artProfiles.Add(profile);
+        }
+
+       public void SyncBaselineNew(PatientBaselineProfile baselineProfile)
+       {
+           baselineProfile.GeneratePatientRecord();
+            _baselineProfiles.Add(baselineProfile);
+        }
+
+       public void SyncLabNew(PatientLabProfile labProfile)
+       {
+           labProfile.GeneratePatientRecord();
+            _labProfiles.Add(labProfile);
+        }
+
+       public void SyncPharmacyNew(PatientPharmacyProfile patientPharmacyProfile)
+       {
+           patientPharmacyProfile.GeneratePatientRecord();
+           _pharmacyProfiles.Add(patientPharmacyProfile);
+        }
+
+       public void SyncStatusNew(PatientStatusProfile patientStatusProfile)
+       {
+           patientStatusProfile.GeneratePatientRecord();
+           _statusProfiles.Add(patientStatusProfile); ;
+       }
+
+       public void SyncVisitNew(PatientVisitProfile profile)
       {
          profile.GeneratePatientRecord();
          _visitProfiles.Add(profile);

@@ -29,7 +29,65 @@ namespace PalladiumDwh.Infrastructure.Tests
             return patients;
         }
 
-        public static IEnumerable<PatientExtract> GetTestPatientVisitsData(Facility facility,int patientCount,int visitCount)
+        public static IEnumerable<PatientExtract> GetTestPatientARTData(Facility facility, int patientCount, int visitCount=1)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+                var visits = Builder<PatientArtExtract>.CreateListOfSize(visitCount).Build().ToList();
+                p.AddPatientArtExtracts(visits);
+            }
+            return patients;
+        }
+        public static IEnumerable<PatientExtract> GetTestPatientBaselinesData(Facility facility, int patientCount, int visitCount = 1)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+                var visits = Builder<PatientBaselinesExtract>.CreateListOfSize(visitCount).Build().ToList();
+                p.AddPatientBaselinesExtracts(visits);
+            }
+            return patients;
+        }
+
+        public static IEnumerable<PatientExtract> GetTestPatientStatusData(Facility facility, int patientCount, int visitCount = 1)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+                var visits = Builder<PatientStatusExtract>.CreateListOfSize(visitCount).Build().ToList();
+                p.AddPatientStatusExtracts(visits);
+            }
+            return patients;
+        }
+
+        public static IEnumerable<PatientExtract> GetTestPatientPharmacyData(Facility facility, int patientCount, int visitCount = 2)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+                var visits = Builder<PatientPharmacyExtract>.CreateListOfSize(visitCount).Build().ToList();
+                p.AddPatientPharmacyExtracts(visits);
+            }
+            return patients;
+        }
+
+        public static IEnumerable<PatientExtract> GetTestPatientLaboratoryData(Facility facility, int patientCount, int visitCount = 2)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+                var visits = Builder<PatientLaboratoryExtract>.CreateListOfSize(visitCount).Build().ToList();
+                p.AddPatientLaboratoryExtracts(visits);
+            }
+            return patients;
+        }
+        public static IEnumerable<PatientExtract> GetTestPatientVisitsData(Facility facility,int patientCount,int visitCount=2)
         {
             var patients=Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
             foreach (var p in patients)

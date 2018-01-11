@@ -95,7 +95,6 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                             {
                                 inserts.Add(profile.PatientInfo);
                             }
-
                         }
                         updatedProfiles.AddRange(facilityUpdatedProfiles);
                     }
@@ -113,7 +112,6 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 patientVisitProfile.GenerateRecords(patientVisitProfile.PatientInfo.Id);
             }
 
-            Log.Debug($"Visit extracts processing...");
             SyncNew(updatedProfiles);
         }
 
@@ -127,13 +125,11 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 ids.Add($"'{p.PatientInfo.Id}'");
                 extracts.AddRange(p.Extracts);
             }
+
             //clear patient data
 
             if (ids.Count > 0)
             {
-
-                Log.Debug($"Visit extracts processing clearing for {ids.Count} patients");
-
                 var connection = _context.GetConnection();
                 var allIds = string.Join(",", ids);
 
@@ -150,12 +146,9 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 {
                     Log.Debug(e);
                 }
-
-
             }
 
             //process extracts
-
 
             if (extracts.Count > 0)
             {
@@ -169,7 +162,6 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 }
 
             }
-            Log.Debug($"Visit extracts processing processed {extracts.Count} extracts");
         }
     }
 }
