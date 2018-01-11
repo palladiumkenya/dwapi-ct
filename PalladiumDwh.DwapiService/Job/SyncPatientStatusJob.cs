@@ -15,24 +15,20 @@ namespace PalladiumDWh.DwapiService.Job
         public void Execute(IJobExecutionContext context)
         {
             var profile = typeof(PatientStatusProfile).Name;
-           // Log.Debug($"Execting {profile} Job...");
             try
             {
                 var reader = Program.IOC.GetInstance<IMessagingReaderService>();
                 reader.Initialize(profile);
-                reader.Read(profile);
-                reader.PrcocessBacklog(profile);
+                reader.ExpressRead(profile);
+                reader.ExpressPrcocessBacklog(profile);
             }
             catch (Exception ex)
             {
-
+                Log.Debug($"error executing {profile} job");
                 Log.Debug(ex);
                 JobExecutionException qe = new JobExecutionException(ex);
-                qe.RefireImmediately = true;  // this job will refire immediately
-                
+                qe.RefireImmediately = true; // this job will refire immediately
             }
-            
-            
         }
     }
 }

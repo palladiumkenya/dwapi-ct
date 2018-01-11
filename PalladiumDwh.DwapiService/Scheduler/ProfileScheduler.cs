@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDWh.DwapiService.Job;
 using Quartz;
@@ -11,29 +13,33 @@ namespace PalladiumDWh.DwapiService.Scheduler
 
     public class ProfileScheduler : IProfileScheduler
     {
-        private IScheduler _scheduler;
-        
-        public void Run()
+      private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+    private IScheduler _scheduler;
+
+      public void Run()
+      {
+        _scheduler = StdSchedulerFactory.GetDefaultScheduler();
+        _scheduler.Start();
+
+      Log.Debug("DWapiService started !");
+
+      var jobs = new List<Type>
         {
-            _scheduler = StdSchedulerFactory.GetDefaultScheduler();
-            _scheduler.Start();
+          typeof(SyncManifestJob),
+          typeof(SyncPatientARTJob),
+          typeof(SyncPatientBaselineJob),
+          typeof(SyncPatientPharmacyJob),
+          typeof(SyncPatientLabJob),
+          typeof(SyncPatientVisitJob),
+          typeof(SyncPatientStatusJob)
+        };
 
-            var jobs = new List<Type>
-            {
-                typeof(SyncManifestJob),
-                typeof(SyncPatientARTJob),
-                typeof(SyncPatientBaselineJob),
-                typeof(SyncPatientPharmacyJob),
-                typeof(SyncPatientLabJob),
-                typeof(SyncPatientVisitJob),
-                typeof(SyncPatientStatusJob)
-            };
+        foreach (var job in jobs)
+          _scheduler.ScheduleJob(GetJobDetail(job), GeTrigger(job));
+      }
 
-            foreach (var job in jobs)
-                _scheduler.ScheduleJob(GetJobDetail(job), GeTrigger(job));
-        }
-
-        private IJobDetail GetJobDetail(Type jobType)
+      private IJobDetail GetJobDetail(Type jobType)
         {
             string jobName = $"j{jobType.Name}";
             string jobGroup = $"j{jobType.Name}group";

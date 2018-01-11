@@ -1,8 +1,11 @@
-﻿using System.Data.Common;
+﻿using System.Data;
+using System.Data.Common;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using PalladiumDwh.Shared.Data;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
+using Z.Dapper.Plus;
 
 namespace PalladiumDwh.Infrastructure.Data
 {
@@ -13,9 +16,11 @@ namespace PalladiumDwh.Infrastructure.Data
         {
         }
 
-        public DwapiCentralContext(DbConnection existingConnection, bool contextOwnsConnection) : base(existingConnection, contextOwnsConnection)
+        public DwapiCentralContext(DbConnection existingConnection, bool contextOwnsConnection) : base(
+            existingConnection, contextOwnsConnection)
         {
         }
+
         public virtual DbSet<Facility> Facilities { get; set; }
         public virtual DbSet<PatientExtract> PatientExtracts { get; set; }
         public virtual DbSet<PatientArtExtract> PatientArtExtracts { get; set; }
@@ -24,7 +29,6 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<PatientPharmacyExtract> PatientPharmacyExtracts { get; set; }
         public virtual DbSet<PatientStatusExtract> PatientStatusExtracts { get; set; }
         public virtual DbSet<PatientVisitExtract> PatientVisitExtracts { get; set; }
-
         public virtual DbSet<MasterFacility> MasterFacilities { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -36,34 +40,63 @@ namespace PalladiumDwh.Infrastructure.Data
                 .HasForeignKey(f => f.FacilityId);
 
             modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientArtExtracts)
-               .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+                .HasMany(c => c.PatientArtExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
 
             modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientBaselinesExtracts)
-               .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+                .HasMany(c => c.PatientBaselinesExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
 
             modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientLaboratoryExtracts)
-               .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+                .HasMany(c => c.PatientLaboratoryExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
 
             modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientPharmacyExtracts)
-               .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+                .HasMany(c => c.PatientPharmacyExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
 
             modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientStatusExtracts)
-               .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+                .HasMany(c => c.PatientStatusExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
 
             modelBuilder.Entity<PatientExtract>()
-               .HasMany(c => c.PatientVisitExtracts)
-               .WithRequired()
-               .HasForeignKey(f => f.PatientId);
+                .HasMany(c => c.PatientVisitExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+
+            DapperPlusManager.Entity<Facility>().Table("Facility").Key(x => x.Id);
+            DapperPlusManager.Entity<PatientExtract>().Table("PatientExtract").Key(x => x.Id);
+            DapperPlusManager.Entity<PatientArtExtract>().Table("PatientArtExtract").Key(x => x.Id);
+            DapperPlusManager.Entity<PatientBaselinesExtract>().Table("PatientBaselinesExtract").Key(x => x.Id);
+            DapperPlusManager.Entity<PatientLaboratoryExtract>().Table("PatientLaboratoryExtract").Key(x => x.Id);
+            DapperPlusManager.Entity<PatientPharmacyExtract>().Table("PatientPharmacyExtract").Key(x => x.Id);
+            DapperPlusManager.Entity<PatientStatusExtract>().Table("PatientStatusExtract").Key(x => x.Id);
+            DapperPlusManager.Entity<PatientVisitExtract>().Table("PatientVisitExtract").Key(x => x.Id);
+
+        }
+
+        public SqlConnection GetConnection()
+        {
+      
+
+            var cn = Database.Connection as SqlConnection;
+
+            if (null == cn)
+            {
+                cn = new SqlConnection(this.Database.Connection.ConnectionString);
+            }
+
+            if (cn.State == ConnectionState.Open)
+            {
+                return cn;
+            }
+            cn.Open();
+            return cn;
         }
     }
 }

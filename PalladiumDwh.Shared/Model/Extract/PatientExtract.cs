@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Dapper.Contrib.Extensions;
 using PalladiumDwh.Shared.Interfaces.Extracts;
 
 namespace PalladiumDwh.Shared.Model.Extract
 {
+    
     public class PatientExtract:Entity, IPatientExtract
     {
         public int PatientPID { get; set; }

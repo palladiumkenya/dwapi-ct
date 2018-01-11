@@ -283,6 +283,41 @@ namespace PalladiumDwh.Shared.Custom
                 return years <= 1 ? "one year ago" : years + " years ago";
             }
         }
-    }
+
+      public static string StoreMessage(object objMessage, string objLocation, string objFile)
+      {
+        string result;
+        objLocation = objLocation.EndsWith(@"\") ? objLocation : $"{objLocation}{@"\"}";
+        string msgFile = $"{objLocation}{objFile}.backlog";
+        try
+        {
+          Directory.CreateDirectory(objLocation);
+        }
+        catch (Exception ex)
+        {
+
+          Log.Debug(ex);
+        }
+
+        using (StreamWriter file = File.CreateText(msgFile))
+        {
+          try
+          {
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            serializer.Serialize(file, objMessage);
+            result = $"{msgFile} | OK";
+          }
+          catch (Exception ex)
+          {
+            result = $"{msgFile} | FAIL";
+            Log.Debug($"Error creating message store {msgFile}");
+            Log.Debug(ex);
+          }
+        }
+
+        return result;
+      }
+  }
 }
 

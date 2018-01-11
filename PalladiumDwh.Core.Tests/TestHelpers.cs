@@ -72,6 +72,8 @@ namespace PalladiumDwh.Core.Tests
             {
                 gateways.Add($"{g}");
                 gateways.Add($"{g}.backlog");
+                gateways.Add($"{g}.backlog.dead");
+                gateways.Add($"{g}.dead");
             }
             return gateways;
         }
