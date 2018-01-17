@@ -12,38 +12,38 @@ using Z.Dapper.Plus;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {
-  public class PatientArtExtractRepository : GenericRepository<PatientArtExtract>, IPatientArtExtractRepository
-  {
-    private readonly DwapiCentralContext _context;
-
-    public PatientArtExtractRepository(DwapiCentralContext context) : base(context)
+    public class PatientArtExtractRepository : GenericRepository<PatientArtExtract>, IPatientArtExtractRepository
     {
-      _context = context;
-    }
+        private readonly DwapiCentralContext _context;
 
-    public void Clear(Guid patientId)
-    {
-      DeleteBy(x => x.PatientId == patientId);
-    }
+        public PatientArtExtractRepository(DwapiCentralContext context) : base(context)
+        {
+            _context = context;
+        }
 
-    public void Sync(Guid patientId, IEnumerable<PatientArtExtract> extracts)
-    {
-      Clear(patientId);
-      Insert(extracts);
-      CommitChanges();
-    }
+        public void Clear(Guid patientId)
+        {
+            DeleteBy(x => x.PatientId == patientId);
+        }
 
-    public void ClearNew(Guid patientId)
-    {
-      string sql = "DELETE FROM PatientArtExtract WHERE PatientId = @PatientId";
-      _context.GetConnection().Execute(sql, new {PatientId = patientId});
-    }
+        public void Sync(Guid patientId, IEnumerable<PatientArtExtract> extracts)
+        {
+            Clear(patientId);
+            Insert(extracts);
+            CommitChanges();
+        }
 
-    public void SyncNew(Guid patientId, IEnumerable<PatientArtExtract> extracts)
-    {
-      ClearNew(patientId);
-      _context.GetConnection().BulkInsert(extracts);
-    }
+        public void ClearNew(Guid patientId)
+        {
+            string sql = "DELETE FROM PatientArtExtract WHERE PatientId = @PatientId";
+            _context.GetConnection().Execute(sql, new {PatientId = patientId});
+        }
+
+        public void SyncNew(Guid patientId, IEnumerable<PatientArtExtract> extracts)
+        {
+            ClearNew(patientId);
+            _context.GetConnection().BulkInsert(extracts);
+        }
 
         public void SyncNewPatients(IEnumerable<PatientARTProfile> profiles, IFacilityRepository facilityRepository)
         {
@@ -79,12 +79,14 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                         //sync patients
 
                         //Get Exisitng
-                        string exisitingSql = $"SELECT Id,PatientPID,FacilityId FROM PatientExtract WHERE FacilityId='{facilityId}' and PatientPID in ({allpatientPIds});";
+                        string exisitingSql =
+                            $"SELECT Id,PatientPID,FacilityId FROM PatientExtract WHERE FacilityId='{facilityId}' and PatientPID in ({allpatientPIds});";
                         var exisitingPatients = _context.GetConnection().Query<PatientExtractId>(exisitingSql).ToList();
 
                         foreach (var profile in facilityUpdatedProfiles)
                         {
-                            var p = exisitingPatients.FirstOrDefault(x => x.PatientPID == profile.PatientInfo.PatientPID);
+                            var p = exisitingPatients.FirstOrDefault(
+                                x => x.PatientPID == profile.PatientInfo.PatientPID);
 
                             if (null != p)
                             {

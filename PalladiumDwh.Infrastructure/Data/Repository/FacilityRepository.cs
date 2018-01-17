@@ -31,6 +31,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
             if (facilityId == Guid.Empty || null == facilityId)
             {
+                Log.Debug($"NEW FACILITY {facility}");
                 _context.GetConnection().BulkInsert(facility);
                 facilityId = facility.Id;
             }
