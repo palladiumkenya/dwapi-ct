@@ -6,7 +6,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
   public  class LoadPatientStatusExtractCommand : LoadExtractCommand<TempPatientStatusExtract>, ILoadPatientStatusExtractCommand
   {
-      public LoadPatientStatusExtractCommand(IEMRRepository emrRepository, int batchSize = 100) : base(emrRepository, batchSize)
+      public LoadPatientStatusExtractCommand(IEMRRepository emrRepository, int batchSize = 1000) : base(emrRepository, batchSize)
       {
       }
   }

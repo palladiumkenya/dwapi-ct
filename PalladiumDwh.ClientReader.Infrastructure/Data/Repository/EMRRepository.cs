@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Dapper;
 using log4net;
+using Z.Dapper.Plus;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 {
@@ -23,6 +24,15 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public EMRRepository(DwapiRemoteContext context) : base(context)
         {
+            //TODO : Dapper+
+            DapperPlusManager.Entity<ClientPatientExtract>().Table("PatientExtract").Identity(x => x.Id);
+            DapperPlusManager.Entity<ClientPatientArtExtract>().Table("PatientArtExtract").Identity(x => x.Id);
+            DapperPlusManager.Entity<ClientPatientBaselinesExtract>().Table("PatientBaselinesExtract").Identity(x => x.Id);
+            DapperPlusManager.Entity<ClientPatientLaboratoryExtract>().Table("PatientLaboratoryExtract").Identity(x => x.Id);
+            DapperPlusManager.Entity<ClientPatientPharmacyExtract>().Table("PatientPharmacyExtract").Identity(x => x.Id);
+            DapperPlusManager.Entity<ClientPatientStatusExtract>().Table("PatientStatusExtract").Identity(x => x.Id);
+            DapperPlusManager.Entity<ClientPatientVisitExtract>().Table("PatientVisitExtract").Identity(x => x.Id);
+         
         }
 
         public void SetEmrAsDefault(Guid id)
@@ -44,6 +54,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
 
         public IDbConnection GetConnection()
         {
+
             return new SqlConnection(Context.Database.Connection.ConnectionString);
         }
 

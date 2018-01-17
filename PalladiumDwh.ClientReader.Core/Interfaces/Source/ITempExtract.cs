@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace PalladiumDwh.ClientReader.Core.Interfaces.Source
@@ -15,6 +16,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces.Source
         bool CheckError { get; set; }
         bool HasError { get; set; }
         void Load(IDataReader reader);
+        void Load(IDataReader reader, PropertyInfo[] propertyInfos);
         Task LoadAsync(IDataReader reader);
         bool IsValid();
         string GetAddAction();
