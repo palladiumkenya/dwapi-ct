@@ -604,6 +604,31 @@ namespace PalladiumDwh.ClientApp.Presenters
             View.ShowReady();
         }
 
+        public void ShowStatistics()
+        {
+            try
+            {
+                if (null != View.ExtractSettings)
+                {
+                    int total = View.ExtractSettings.Count;
+                    int count = 0;
+                    foreach (var extractSetting in View.ExtractSettings)
+                    {
+                        var eventHistory = _emrRepository.GetStats(extractSetting.Id);
+                        if (null != eventHistory)
+                        {
+                            var vm = ExtractsViewModel.CreateHistory(eventHistory, extractSetting.Id);
+                            View.UpdateStats(vm);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+            }
+        }
+
 
         private  void View_EmrExtractLoaded(object sender, Events.EmrExtractLoadedEvent e)
         {

@@ -198,9 +198,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                     try
                     {
-                        Log.Debug($"Executing reader {extractName}");
-                        Log.Debug($"command: {commandText}");
+                        Log.Debug($"reading {extractName} from EMR");
                         reader = await GetTask(command);
+                        Log.Debug($"reading {extractName} complete!");
                     }
                     catch (Exception e)
                     {
@@ -293,8 +293,6 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                                 await _connection.OpenAsync();
                                             }
 
-                                            Log.Debug($"{extractName} batch {count}");
-
                                             //TODO: Dapper+
                                             _connection.BulkInsert(extracts);
                                             loaded += count;
@@ -312,6 +310,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                         catch (Exception e)
                                         {
                                             Log.Debug(e);
+
+                                            //TODO: move to backlog
                                             throw;
                                         }
                                         extracts = new List<T>();
