@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201705251225248_CentralInitial.Designer.cs">
       <DependentUpon>201705251225248_CentralInitial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801250514444_MFLReview001.cs" />
+    <Compile Include="Migrations\201801250514444_MFLReview001.Designer.cs">
+      <DependentUpon>201801250514444_MFLReview001.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +93,9 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="Migrations\201705251225248_CentralInitial.resx">
       <DependentUpon>201705251225248_CentralInitial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801250514444_MFLReview001.resx">
+      <DependentUpon>201801250514444_MFLReview001.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

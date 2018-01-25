@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Model;
@@ -31,6 +32,7 @@ namespace PalladiumDWh.DwapiService.Job
                 qe.RefireImmediately = true; // this job will refire immediately
             }
         }
-        
+
+       
     }
 }
