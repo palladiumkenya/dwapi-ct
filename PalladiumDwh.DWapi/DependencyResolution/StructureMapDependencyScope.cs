@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using StructureMap;
 
 namespace PalladiumDwh.DWapi.DependencyResolution
@@ -93,6 +93,7 @@ namespace PalladiumDwh.DWapi.DependencyResolution
 
         #region Methods
 
+        
         protected override IEnumerable<object> DoGetAllInstances(Type serviceType)
         {
             return (CurrentNestedContainer ?? Container).GetAllInstances(serviceType).Cast<object>();

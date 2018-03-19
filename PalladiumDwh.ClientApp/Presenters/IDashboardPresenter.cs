@@ -23,6 +23,7 @@ namespace PalladiumDwh.ClientApp.Presenters
         Task CopyCsvAsync();
         void ShowSelectedExtract();
         void UpdateStatistics();
+        void ShowStatistics();
 
         #endregion
 

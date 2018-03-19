@@ -6,6 +6,7 @@ using PalladiumDwh.Shared.Model.Profile;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.Core.Services
 {
@@ -50,6 +51,7 @@ namespace PalladiumDwh.Core.Services
            if (profile.GetType() == typeof(Manifest))
            {
                SyncManifest(profile as Manifest);
+               
            }
 
            if (profile.GetType() == typeof(PatientARTProfile))

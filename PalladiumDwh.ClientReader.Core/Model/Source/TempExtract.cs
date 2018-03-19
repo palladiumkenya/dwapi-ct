@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using FastMember;
 using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 using PalladiumDwh.Shared.Custom;
+using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.ClientReader.Core.Model.Source
 {
@@ -42,6 +46,17 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         {
             HasError = false;
             foreach (var p in GetType().GetProperties())
+            {
+                if (!Attribute.IsDefined(p, typeof(DoNotReadAttribute)))
+                    p.SetValue(this, reader.Get(p.Name, p.PropertyType));
+            }
+            HasError = !IsValid();
+        }
+
+        public void Load(IDataReader reader, PropertyInfo[] propertyInfos)
+        {
+            HasError = false;
+            foreach (var p in propertyInfos)
             {
                 if (!Attribute.IsDefined(p, typeof(DoNotReadAttribute)))
                     p.SetValue(this, reader.Get(p.Name, p.PropertyType));
@@ -104,6 +119,23 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
             }
 
             return scb.ToString();
+        }
+
+        public void Load(IDataReader reader,TypeAccessor typeAccessor, List<Member> fmembers, List<ExMap> exMaps)
+        {
+            foreach (var p in fmembers)
+            {
+
+                var ordinal = GetOrdinal(p.Name, exMaps);
+                if (ordinal>-1)
+                    typeAccessor[this, p.Name] = reader.Get(p.Name, p.Type, ordinal);
+            }
+        }
+
+        private int GetOrdinal(string name, List<ExMap> exMaps)
+        {
+            var ordinal = exMaps.FirstOrDefault(x => x.Name.ToLower().Equals(name.ToLower()));
+            return ordinal?.Ordinal ?? -1;
         }
     }
 }

@@ -71,11 +71,11 @@ namespace PalladiumDwh.Shared.Custom
             return $"{type.FullName}, {type.Assembly.GetName().Name}";
         }
 
-        public static object Get(this IDataRecord row, string fieldName, Type type)
+        public static object Get(this IDataRecord row, string fieldName, Type type, int ord = -1)
         {
             try
             {
-                int ordinal = row.GetOrdinal(fieldName);
+                int ordinal = ord == -1 ? row.GetOrdinal(fieldName) : ord;
                 var value = row.IsDBNull(ordinal) ? GetDefault(type) : row.GetValue(ordinal);
                 if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
@@ -92,7 +92,7 @@ namespace PalladiumDwh.Shared.Custom
                 }
                 else
                 {
-                    Log.Debug(ex);                    
+                    Log.Debug(ex);
                 }
             }
             return GetDefault(type);
@@ -100,10 +100,27 @@ namespace PalladiumDwh.Shared.Custom
 
         public static object GetDefault(Type type)
         {
-            if (type.IsValueType)
-            {
-                return Activator.CreateInstance(type);
-            }
+            if (type == typeof(string))
+                return string.Empty;
+
+            if (type == typeof(int))
+                return default(int);
+
+            if (type == typeof(int?))
+                return default(int?);
+
+            if (type == typeof(decimal))
+                return default(decimal);
+
+            if (type == typeof(decimal?))
+                return default(decimal?);
+
+            if (type == typeof(DateTime))
+                return new DateTime(1900, 1, 1);
+
+            if (type == typeof(DateTime?))
+                return default(DateTime?);
+
             return null;
         }
 

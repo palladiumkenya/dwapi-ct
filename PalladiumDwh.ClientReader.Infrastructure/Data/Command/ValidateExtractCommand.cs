@@ -148,6 +148,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                 {
                     using (var command = _connection.CreateCommand())
                     {
+                        Log.Debug($"Executing Validate {extractName} | {v.Id}...");
                         command.CommandText = v.GenerateValidateSql();
 
                         try

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,7 +12,7 @@ namespace PalladiumDwh.Shared.Model
         public int Code { get; set; }
         public string Name { get; set; }
         public string County { get; set; }
-
+        public Guid? FacilityId { get; set; }
         public MasterFacility()
         {
         }

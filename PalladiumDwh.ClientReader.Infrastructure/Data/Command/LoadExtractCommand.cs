@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using PalladiumDwh.ClientReader.Core.Interfaces.Commands;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model.Source;
 using Dapper;
+using FastMember;
 using log4net;
 using PalladiumDwh.ClientReader.Core.Enums;
 using PalladiumDwh.ClientReader.Core.Model;
+using PalladiumDwh.ClientReader.Core.Model.Source.Map;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model;
+using Z.Dapper.Plus;
 
 namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 {
@@ -194,7 +198,9 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
                     try
                     {
+                        Log.Debug($"reading {extractName} from EMR");
                         reader = await GetTask(command);
+                        Log.Debug($"reading {extractName} complete!");
                     }
                     catch (Exception e)
                     {
@@ -213,11 +219,28 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                             int loaded = 0;
                             var extract = new T();
                             string action = extract.GetAddAction();
-                            
-
+                            var props = extract.GetType().GetProperties();
+                            var fmember = TypeAccessor.Create(extract.GetType());
+                            var fmembers = fmember.GetMembers().Where(x => !x.IsDefined(typeof(DoNotReadAttribute))).ToList();
+                            var exMaps = new List<ExMap>();
                             while (reader.Read())
                             {
-
+                                if (exMaps.Count == 0)
+                                {
+                                    foreach (var member in fmembers)
+                                    {
+                                        try
+                                        {
+                                            exMaps.Add(new ExMap(reader.GetOrdinal(member.Name), member.Name, member.Type));
+                                        }
+                                        catch 
+                                        {
+                                          
+                                        }
+                                      
+                                    }
+                                        
+                                }
                                 totalcount++;
                                 progress?.ReportStatus($"{statusUpdate}",totalcount,totalRecords,_extractSetting);
 
@@ -228,7 +251,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
 
 
                                 extract = new T();
-                                await extract.LoadAsync(reader);
+                                extract.Load(reader, fmember, fmembers, exMaps);
 
                                 //loaded++;
 
@@ -240,6 +263,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                         {
                                             await _connection.OpenAsync();
                                         }
+                                        Log.Debug($"{extractName} single...");
                                         var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
                                         loaded += await _connection.ExecuteAsync(action, extract, tx, 0);
                                         tx.Commit();
@@ -268,9 +292,17 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                             {
                                                 await _connection.OpenAsync();
                                             }
+
+                                            //TODO: Dapper+
+                                            _connection.BulkInsert(extracts);
+                                            loaded += count;
+
+                                            //TODO: Restore
+                                            /*
                                             var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
                                             loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
                                             tx.Commit();
+                                            */
 
                                             //update stats
                                             _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Loaded, loaded);
@@ -278,6 +310,8 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                         catch (Exception e)
                                         {
                                             Log.Debug(e);
+
+                                            //TODO: move to backlog
                                             throw;
                                         }
                                         extracts = new List<T>();
@@ -296,9 +330,19 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Command
                                     {
                                         await _connection.OpenAsync();
                                     }
+
+                                    Log.Debug($"{extractName} last batch {extracts.Count}");
+
+                                    //TODO: Dapper+
+                                    _connection.BulkInsert(extracts);
+                                    loaded += count;
+
+                                    //TODO: Restore
+                                    /*
                                     var tx = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
                                     loaded += await _connection.ExecuteAsync(action, extracts, tx, 0);
                                     tx.Commit();
+                                    */
 
                                     //update stats
                                     _emrRepository.UpdateStats(_extractSetting.Id, StatAction.Loaded, loaded);
