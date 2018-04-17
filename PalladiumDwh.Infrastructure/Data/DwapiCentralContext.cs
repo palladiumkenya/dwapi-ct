@@ -11,7 +11,6 @@ namespace PalladiumDwh.Infrastructure.Data
 {
     public class DwapiCentralContext : DwapiBaseContext
     {
-
         public DwapiCentralContext() : base("name=DWAPICentral")
         {
         }

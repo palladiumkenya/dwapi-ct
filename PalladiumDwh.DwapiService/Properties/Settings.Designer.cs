@@ -12,7 +12,7 @@ namespace PalladiumDWh.DwapiService.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -34,7 +34,7 @@ namespace PalladiumDWh.DwapiService.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
         public int QueueBatch {
             get {
                 return ((int)(this["QueueBatch"]));
@@ -43,10 +43,28 @@ namespace PalladiumDWh.DwapiService.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
         public int QueuePoll {
             get {
                 return ((int)(this["QueuePoll"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1755;701-ThePalladiumGroup")]
+        public string Z_Dapper_Plus_LicenseName {
+            get {
+                return ((string)(this["Z_Dapper_Plus_LicenseName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9005d618-3965-8877-97a5-7a27cbb21c8f")]
+        public string Z_Dapper_Plus_LicenseKey {
+            get {
+                return ((string)(this["Z_Dapper_Plus_LicenseKey"]));
             }
         }
     }
