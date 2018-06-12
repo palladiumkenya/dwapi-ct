@@ -11,14 +11,14 @@ using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.DWapi.Controllers
 {
-    public class DwhController : ApiController
+    public class NdwhController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IPatientExtractRepository _patientExtractRepository;
         private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(Manifest).Name.ToLower();
 
-        public DwhController(IMessagingSenderService messagingService, IPatientExtractRepository patientExtractRepository)
+        public NdwhController(IMessagingSenderService messagingService, IPatientExtractRepository patientExtractRepository)
         {
             _messagingService = messagingService;
             _messagingService.Initialize(_gateway);

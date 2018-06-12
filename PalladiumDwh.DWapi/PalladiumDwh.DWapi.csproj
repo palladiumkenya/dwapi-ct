@@ -197,7 +197,7 @@
     <Compile Include="Controllers\PatientStatusController.cs" />
     <Compile Include="Controllers\PatientVisitsController.cs" />
     <Compile Include="Controllers\SpotController.cs" />
-    <Compile Include="Controllers\DwhController.cs" />
+    <Compile Include="Controllers\NDWHController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
