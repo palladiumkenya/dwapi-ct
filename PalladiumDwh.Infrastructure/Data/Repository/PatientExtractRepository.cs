@@ -110,8 +110,15 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             return patientId;
         }
 
-      public async Task ClearManifest(Manifest manifest)
-      {
+        public void SaveManifest(FacilityManifest facilityManifest)
+        {
+            _context.GetConnection()
+                .BulkInsert(facilityManifest)
+                .AlsoBulkInsert(f => f.Cargoes);
+        }
+
+        public async Task ClearManifest(Manifest manifest)
+        {
         var connection = _context.Database.Connection as SqlConnection;
 
         var sql = $@"

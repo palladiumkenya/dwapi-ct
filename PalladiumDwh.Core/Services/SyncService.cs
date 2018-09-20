@@ -81,11 +81,12 @@ namespace PalladiumDwh.Core.Services
        }
 
        public void SyncManifest(Manifest manifest)
-      {
-         _patientExtractRepository.ClearManifest(manifest);
-      }
+       {
+           _patientExtractRepository.SaveManifest(FacilityManifest.Create(manifest));
+           _patientExtractRepository.ClearManifest(manifest);
+       }
 
-      public void InitList(string queueName)
+       public void InitList(string queueName)
       {
           if (queueName.ToLower().Contains("PatientARTProfile".ToLower()))
           {

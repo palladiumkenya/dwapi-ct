@@ -30,6 +30,9 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<PatientVisitExtract> PatientVisitExtracts { get; set; }
         public virtual DbSet<MasterFacility> MasterFacilities { get; set; }
 
+        public virtual DbSet<FacilityManifest> Manifests { get; set; }
+        public virtual DbSet<FacilityManifestCargo> Cargoes { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -77,6 +80,8 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<PatientStatusExtract>().Table("PatientStatusExtract").Key(x => x.Id);
             DapperPlusManager.Entity<PatientVisitExtract>().Table("PatientVisitExtract").Key(x => x.Id);
 
+            DapperPlusManager.Entity<FacilityManifest>().Table("FacilityManifest").Key(x => x.Id);
+            DapperPlusManager.Entity<FacilityManifestCargo>().Table("FacilityManifestCargo").Key(x => x.Id);
         }
 
         public SqlConnection GetConnection()

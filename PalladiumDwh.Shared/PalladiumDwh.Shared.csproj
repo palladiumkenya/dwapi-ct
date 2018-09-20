@@ -102,6 +102,8 @@
     <Compile Include="Model\DTO\PatientStatusExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientVisitExtractDTO.cs" />
     <Compile Include="Model\ExrtactMap.cs" />
+    <Compile Include="Model\FacilityManifest.cs" />
+    <Compile Include="Model\FacilityManifestCargo.cs" />
     <Compile Include="Model\MasterFacility.cs" />
     <Compile Include="Model\Facility.cs" />
     <Compile Include="Interfaces\Extracts\IExtract.cs" />
