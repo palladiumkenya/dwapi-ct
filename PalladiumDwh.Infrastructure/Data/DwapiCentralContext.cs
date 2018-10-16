@@ -86,8 +86,6 @@ namespace PalladiumDwh.Infrastructure.Data
 
         public SqlConnection GetConnection()
         {
-      
-
             var cn = Database.Connection as SqlConnection;
 
             if (null == cn)

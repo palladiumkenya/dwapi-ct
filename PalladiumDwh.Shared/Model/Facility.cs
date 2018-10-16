@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Shared.Model
@@ -52,6 +53,30 @@ namespace PalladiumDwh.Shared.Model
          return hashProductCode;
       }
 
+       public string SqlInsert()
+       {
+           return $@"
+Insert into Facility(
+    {nameof(Id)},
+    {nameof(Code)},
+    {nameof(Name)},
+    {nameof(Emr)},
+    {nameof(Project)},
+    {nameof(Voided)},
+    {nameof(Processed)},
+    {nameof(Created)}
+    ) 
+values(
+    '{Id}',
+     {Code},
+    '{Name}',
+    '{Emr}',
+    '{Project}',
+    0,
+    0,
+    GetDate()
+    )";
+       }
       public string GetStatus()
         {
             return $"{Name} ({Code}) | Patients:{PatientExtracts.Count}";

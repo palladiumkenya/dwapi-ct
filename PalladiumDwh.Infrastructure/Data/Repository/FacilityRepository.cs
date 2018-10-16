@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using PalladiumDwh.Core.Interfaces;
@@ -22,25 +23,27 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         public Guid? GetFacilityIdByCode(int code)
         {
             string sql = "SELECT Id FROM Facility WHERE Code = @Code;";
+            Thread.Sleep(2000);
             var facility = _context.GetConnection().QueryFirstOrDefault<FacilityId>(sql, new {Code = code});
             return facility?.Id;
         }
         public Guid? SyncNew(Facility facility)
         {
             var facilityId = GetFacilityIdByCode(facility.Code);
-
             if (facilityId == Guid.Empty || null == facilityId)
             {
                 Log.Debug($"NEW FACILITY {facility}");
-                _context.GetConnection().BulkInsert(facility);
+                _context.GetConnection().Execute(facility.SqlInsert());
                 facilityId = facility.Id;
             }
             return facilityId;
         }
+
         public Guid? GetFacilityIdBCode(int code)
         {
             return Find(x => x.Code == code)?.Id;
         }
+
         public Guid? Sync(Facility facility)
         {
             var facilityId = GetFacilityIdBCode(facility.Code);

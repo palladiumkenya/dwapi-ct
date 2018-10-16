@@ -124,7 +124,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         var sql = $@"
                 DELETE FROM PatientExtract
                 WHERE        
-	                (FacilityId = (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode})) AND 
+	                (FacilityId IN (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode})) AND 
 	                (PatientPID NOT IN ({manifest.GetPatientPKsJoined()}))
                   ";
 
