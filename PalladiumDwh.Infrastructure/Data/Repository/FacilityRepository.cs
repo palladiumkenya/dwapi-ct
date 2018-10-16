@@ -23,7 +23,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         public Guid? GetFacilityIdByCode(int code)
         {
             string sql = "SELECT Id FROM Facility WHERE Code = @Code;";
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
             var facility = _context.GetConnection().QueryFirstOrDefault<FacilityId>(sql, new {Code = code});
             return facility?.Id;
         }
