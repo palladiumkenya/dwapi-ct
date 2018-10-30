@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PalladiumDwh.Shared.Interfaces.DTOs;
 using PalladiumDwh.Shared.Interfaces.Profiles;
 using PalladiumDwh.Shared.Model.DTO;
 using PalladiumDwh.Shared.Model.Extract;

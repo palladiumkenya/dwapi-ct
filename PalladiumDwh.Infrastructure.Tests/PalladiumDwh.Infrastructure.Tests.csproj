@@ -89,6 +89,7 @@
     <Compile Include="PatientBaseLinesRepositoryTests.cs" />
     <Compile Include="PatientStatusRepositoryTests.cs" />
     <Compile Include="PatientArtRepositoryTests.cs" />
+    <Compile Include="PatientAdverseEventRepositoryTests.cs" />
     <Compile Include="PatientVisitRepositoryTests.cs" />
     <Compile Include="PatientDapperExtractRepositoryTests.cs" />
     <Compile Include="PatientExtractRepositoryTests.cs" />

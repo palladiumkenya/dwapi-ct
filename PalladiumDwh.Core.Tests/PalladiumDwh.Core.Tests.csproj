@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Model\DTO\FacilityDTOTests.cs" />
     <Compile Include="Model\DTO\PatientExtractDTOTests.cs" />
+    <Compile Include="Model\Profiles\PatientAdverseEventProfileTests.cs" />
     <Compile Include="Model\Profiles\PatientStatusProfileTests.cs" />
     <Compile Include="Model\Profiles\PatientLabProfileTests.cs" />
     <Compile Include="Model\Profiles\PatientPharmacyProfileTests.cs" />

@@ -29,6 +29,7 @@ namespace PalladiumDwh.DWapi.Tests
 
         private IPatientStatusRepository _patientStatusRepository;
         private IPatientVisitRepository _patientVisitRepository;
+        private IPatientAdverseEventRepository _patientAdverseEventRepository;
 
         private FacilitiesController _facilitiesController;
 
@@ -48,7 +49,8 @@ namespace PalladiumDwh.DWapi.Tests
                 _patientLabRepository = new PatientLabRepository(_context),
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
-                _patientVisitRepository = new PatientVisitRepository(_context)
+                _patientVisitRepository = new PatientVisitRepository(_context),
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context)
             );
 
             _facilitiesController = new FacilitiesController(_syncService);

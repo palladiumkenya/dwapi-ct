@@ -98,10 +98,24 @@ namespace PalladiumDwh.Infrastructure.Tests
             }
             return patients;
         }
+        public static IEnumerable<PatientExtract> GetTestPatientAdverseEventData(Facility facility, int patientCount, int visitCount = 2)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+                var visits = Builder<PatientAdverseEventExtract>.CreateListOfSize(visitCount).Build().ToList();
+                p.AddPatientAdverseEventExtracts(visits);
+            }
+            return patients;
+        }
+
 
         public static void AddNew(List<PatientVisitProfile> visitProfiles, int i)
         {
          
         }
+
+        
     }
 }

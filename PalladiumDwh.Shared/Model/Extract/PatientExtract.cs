@@ -39,6 +39,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public virtual ICollection<PatientPharmacyExtract> PatientPharmacyExtracts { get; set; }=new List<PatientPharmacyExtract>();
         public virtual ICollection<PatientStatusExtract> PatientStatusExtracts { get; set; }=new List<PatientStatusExtract>();
         public virtual ICollection<PatientVisitExtract> PatientVisitExtracts { get; set; }=new List<PatientVisitExtract>();
+        public virtual ICollection<PatientAdverseEventExtract> PatientAdverseEventExtracts { get; set; } = new List<PatientAdverseEventExtract>();
 
         public PatientExtract()
         {
@@ -121,6 +122,15 @@ namespace PalladiumDwh.Shared.Model.Extract
             {
                 e.PatientId = Id;
                 PatientVisitExtracts.Add(e);
+            }
+        }
+
+        public void AddPatientAdverseEventExtracts(IEnumerable<PatientAdverseEventExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientId = Id;
+                PatientAdverseEventExtracts.Add(e);
             }
         }
     }

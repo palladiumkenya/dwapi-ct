@@ -28,6 +28,7 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<PatientPharmacyExtract> PatientPharmacyExtracts { get; set; }
         public virtual DbSet<PatientStatusExtract> PatientStatusExtracts { get; set; }
         public virtual DbSet<PatientVisitExtract> PatientVisitExtracts { get; set; }
+        public virtual DbSet<PatientAdverseEventExtract> PatientAdverseEventExtracts { get; set; }
         public virtual DbSet<MasterFacility> MasterFacilities { get; set; }
 
         public virtual DbSet<FacilityManifest> Manifests { get; set; }
@@ -71,6 +72,11 @@ namespace PalladiumDwh.Infrastructure.Data
                 .WithRequired()
                 .HasForeignKey(f => f.PatientId);
 
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.PatientAdverseEventExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+
             DapperPlusManager.Entity<Facility>().Table("Facility").Key(x => x.Id);
             DapperPlusManager.Entity<PatientExtract>().Table("PatientExtract").Key(x => x.Id);
             DapperPlusManager.Entity<PatientArtExtract>().Table("PatientArtExtract").Key(x => x.Id);
@@ -79,6 +85,7 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<PatientPharmacyExtract>().Table("PatientPharmacyExtract").Key(x => x.Id);
             DapperPlusManager.Entity<PatientStatusExtract>().Table("PatientStatusExtract").Key(x => x.Id);
             DapperPlusManager.Entity<PatientVisitExtract>().Table("PatientVisitExtract").Key(x => x.Id);
+            DapperPlusManager.Entity<PatientAdverseEventExtract>().Table("PatientAdverseEventExtract").Key(x => x.Id);
 
             DapperPlusManager.Entity<FacilityManifest>().Table("FacilityManifest").Key(x => x.Id);
             DapperPlusManager.Entity<FacilityManifestCargo>().Table("FacilityManifestCargo").Key(x => x.Id);

@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Data\DwapiCentralContext.cs" />
     <Compile Include="Data\Repository\FacilityRepository.cs" />
+    <Compile Include="Data\Repository\PatientAdverseEventRepository.cs" />
     <Compile Include="Data\Repository\PatientArtExtractRepository.cs" />
     <Compile Include="Data\Repository\PatientBaseLinesRepository.cs" />
     <Compile Include="Data\Repository\PatientExtractRepository.cs" />
@@ -88,6 +89,10 @@
     <Compile Include="Migrations\201809201129359_Manfiesta.Designer.cs">
       <DependentUpon>201809201129359_Manfiesta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810300648529_AdverseEvent.cs" />
+    <Compile Include="Migrations\201810300648529_AdverseEvent.Designer.cs">
+      <DependentUpon>201810300648529_AdverseEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809201129359_Manfiesta.resx">
       <DependentUpon>201809201129359_Manfiesta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810300648529_AdverseEvent.resx">
+      <DependentUpon>201810300648529_AdverseEvent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

@@ -73,6 +73,9 @@
     <Compile Include="Custom\StringConverter.cs" />
     <Compile Include="Custom\NullStringConverter.cs" />
     <Compile Include="Extentions\TypeExtentions.cs" />
+    <Compile Include="Interfaces\DTOs\IPatientAdverseEventExtractDTO.cs" />
+    <Compile Include="Interfaces\Extracts\IAdverseEventExtract.cs" />
+    <Compile Include="Interfaces\IAdverseEvent.cs" />
     <Compile Include="Interfaces\IClearPatientRecords.cs" />
     <Compile Include="Interfaces\IPatient.cs" />
     <Compile Include="Interfaces\IBaseline.cs" />
@@ -90,7 +93,9 @@
     <Compile Include="Interfaces\DTOs\IPatientStatusExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IPatientVisitExtractDTO.cs" />
+    <Compile Include="Interfaces\Profiles\IPatientAdverseEventProfile.cs" />
     <Compile Include="Model\DTO\FacilityId.cs" />
+    <Compile Include="Model\DTO\PatientAdverseEventExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientExtractId.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\DTO\FacilityDTO.cs" />
@@ -102,6 +107,7 @@
     <Compile Include="Model\DTO\PatientStatusExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientVisitExtractDTO.cs" />
     <Compile Include="Model\ExrtactMap.cs" />
+    <Compile Include="Model\Extract\PatientAdverseEventExtract.cs" />
     <Compile Include="Model\FacilityManifest.cs" />
     <Compile Include="Model\FacilityManifestCargo.cs" />
     <Compile Include="Model\MasterFacility.cs" />
@@ -132,6 +138,7 @@
     <Compile Include="Interfaces\Profiles\IPatientVisitProfile.cs" />
     <Compile Include="Model\Manifest.cs" />
     <Compile Include="Model\Profile\ExtractProfile.cs" />
+    <Compile Include="Model\Profile\PatientAdverseEventProfile.cs" />
     <Compile Include="Model\Profile\PatientARTProfile.cs" />
     <Compile Include="Model\Profile\PatientBaselineProfile.cs" />
     <Compile Include="Model\Profile\PatientLabProfile.cs" />
