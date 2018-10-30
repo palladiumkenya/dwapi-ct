@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.DTO;
@@ -33,7 +35,9 @@ namespace PalladiumDwh.Core.Tests.Model.Profiles
             Assert.IsNotNull(profile.Facility);
             Assert.That(profile.AdverseEventExtracts.Count, Is.EqualTo(10));
             Assert.IsNull(profile.Extracts);
+            Console.WriteLine(JsonConvert.SerializeObject(profile, Formatting.Indented));
         }
+
 
         [Test]
         public void should_CheckValidity()

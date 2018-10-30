@@ -59,6 +59,9 @@
       <HintPath>..\packages\NBuilder.5.0.0\lib\net40\FizzWare.NBuilder.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
       <HintPath>..\packages\NMemory.1.1.2\lib\net45\NMemory.dll</HintPath>
       <Private>True</Private>

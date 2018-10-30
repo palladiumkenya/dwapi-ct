@@ -124,6 +124,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FacilitiesControllerTests.cs" />
+    <Compile Include="PatientAdverseEventsControllerTests.cs" />
     <Compile Include="SpotControllerTests.cs" />
     <Compile Include="PatientVisitsControllerTests.cs" />
     <Compile Include="PatientStatusControllerTests.cs" />

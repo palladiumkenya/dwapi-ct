@@ -10,12 +10,12 @@ using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Controllers
 {
-    public class PatientAdverseEventController : ApiController
+    public class PatientAdverseEventsController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(PatientAdverseEventProfile).Name.ToLower();
-        public PatientAdverseEventController(IMessagingSenderService messagingService)
+        public PatientAdverseEventsController(IMessagingSenderService messagingService)
         {
             _messagingService = messagingService;
             _messagingService.Initialize(_gateway);

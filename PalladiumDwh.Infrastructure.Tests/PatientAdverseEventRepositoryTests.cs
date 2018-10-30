@@ -247,6 +247,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             Assert.IsTrue(AdverseEvents == 4);
             Console.WriteLine($"Faciltiy:{facilty}| Patient:{patient.PatientCccNumber}| AdverseEvents:{AdverseEvents}");
         }
+
         [Test]
         public void should_Sync_Patient_With_Updated_AdverseEvents_Modified()
         {
@@ -255,13 +256,16 @@ namespace PalladiumDwh.Infrastructure.Tests
             _AdverseEventProfiles.Last().AdverseEventExtracts.First().Severity = "MAUN";
             _patientAdverseEventRepository.SyncNewPatients(_AdverseEventProfiles, _facilityRepository);
             _context = new DwapiCentralContext();
-            var patientExtract = _context.PatientExtracts.Where(x => x.Id == AdverseEvent.PatientId).Include(v=>v.PatientAdverseEventExtracts).FirstOrDefault();
+            var patientExtract = _context.PatientExtracts.Where(x => x.Id == AdverseEvent.PatientId)
+                .Include(v => v.PatientAdverseEventExtracts).FirstOrDefault();
             Assert.NotNull(patientExtract);
-     
-            var AdverseEvents = patientExtract.PatientAdverseEventExtracts.FirstOrDefault(x=>x.PatientId == AdverseEvent.PatientId);
+
+            var AdverseEvents = patientExtract.PatientAdverseEventExtracts.FirstOrDefault(x =>
+                x.PatientId == AdverseEvent.PatientId && x.AdverseEvent == AdverseEvent.AdverseEvent);
             Assert.NotNull(AdverseEvents);
-            Assert.AreEqual("MAUN",AdverseEvents.Severity);
+            Assert.AreEqual("MAUN", AdverseEvents.Severity);
         }
+
         [Test]
         public void should_Sync_Patient_With_Updated_AdverseEvents_Deleted()
         {
@@ -273,7 +277,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             var patientExtract = _context.PatientExtracts.Where(x => x.Id == AdverseEvent.PatientId).Include(v => v.PatientAdverseEventExtracts).FirstOrDefault();
             Assert.NotNull(patientExtract);
 
-            var AdverseEvents = patientExtract.PatientAdverseEventExtracts.FirstOrDefault(x => x.PatientId == AdverseEvent.PatientId);
+            var AdverseEvents = patientExtract.PatientAdverseEventExtracts.FirstOrDefault(x => x.PatientId == AdverseEvent.PatientId && x.AdverseEvent == AdverseEvent.AdverseEvent);
             Assert.Null(AdverseEvents);
         }
         
