@@ -11,6 +11,8 @@ namespace PalladiumDwh.Infrastructure.Data
 {
     public class DwapiCentralContext : DwapiBaseContext
     {
+        private SqlConnection connection;
+
         public DwapiCentralContext() : base("name=DWAPICentral")
         {
         }
@@ -93,19 +95,14 @@ namespace PalladiumDwh.Infrastructure.Data
 
         public SqlConnection GetConnection()
         {
-            var cn = Database.Connection as SqlConnection;
+            if (null == connection)
+                connection = new SqlConnection(Database.Connection.ConnectionString);
 
-            if (null == cn)
-            {
-                cn = new SqlConnection(this.Database.Connection.ConnectionString);
-            }
-
-            if (cn.State == ConnectionState.Open)
-            {
-                return cn;
-            }
-            cn.Open();
-            return cn;
+            if (connection.State == ConnectionState.Open)
+                return connection;
+ 
+            connection.Open();
+            return connection;
         }
     }
 }
