@@ -32,6 +32,7 @@ namespace PalladiumDWh.DwapiService.Scheduler
           typeof(SyncPatientPharmacyJob),
           typeof(SyncPatientLabJob),
           typeof(SyncPatientVisitJob),
+          typeof(SyncPatientAdverseEventJob),
           typeof(SyncPatientStatusJob)
         };
 

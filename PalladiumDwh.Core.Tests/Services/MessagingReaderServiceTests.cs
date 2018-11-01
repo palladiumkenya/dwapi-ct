@@ -34,6 +34,7 @@ namespace PalladiumDwh.Core.Tests.Services
 
         private IPatientStatusRepository _patientStatusRepository;
         private IPatientVisitRepository _patientVisitRepository;
+        private IPatientAdverseEventRepository _patientAdverseEventRepository;
         private SyncService _syncService;
         private PatientARTProfile _profile;
         private List<Facility> _facilities;
@@ -53,7 +54,8 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientLabRepository = new PatientLabRepository(_context),
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
-                _patientVisitRepository = new PatientVisitRepository(_context)
+                _patientVisitRepository = new PatientVisitRepository(_context),
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context)
             );
 
             _newFacility = _facilities.Last();

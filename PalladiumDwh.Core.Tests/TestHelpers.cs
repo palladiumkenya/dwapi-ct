@@ -43,6 +43,7 @@ namespace PalladiumDwh.Core.Tests
                 p.AddPatientPharmacyExtracts(Builder<PatientPharmacyExtract>.CreateListOfSize(count).Build().ToList());
                 p.AddPatientStatusExtracts(Builder<PatientStatusExtract>.CreateListOfSize(count).Build().ToList());
                 p.AddPatientVisitExtracts(Builder<PatientVisitExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddPatientAdverseEventExtracts(Builder<PatientAdverseEventExtract>.CreateListOfSize(count).Build().ToList());
 
             }
             return patients;
@@ -59,7 +60,8 @@ namespace PalladiumDwh.Core.Tests
                 $"{queueName}{typeof(PatientLabProfile).Name.ToLower()}",
                 $"{queueName}{typeof(PatientPharmacyProfile).Name.ToLower()}",
                 $"{queueName}{typeof(PatientVisitProfile).Name.ToLower()}",
-                $"{queueName}{typeof(PatientStatusProfile).Name.ToLower()}"
+                $"{queueName}{typeof(PatientStatusProfile).Name.ToLower()}",
+                $"{queueName}{typeof(PatientAdverseEventProfile).Name.ToLower()}"
             };
             return gateways;
         }

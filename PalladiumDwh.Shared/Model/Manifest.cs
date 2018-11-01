@@ -11,6 +11,9 @@ namespace PalladiumDwh.Shared.Model
         public int SiteCode { get; set; }
         public List<int> PatientPKs { get; set; }=new List<int>();
 
+        public int PatientCount => PatientPKs.Count;
+        public string Items => string.Join(",", PatientPKs);
+
         public Manifest()
         {
         }

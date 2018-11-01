@@ -11,7 +11,7 @@ namespace PalladiumDwh.Infrastructure.Migrations
 
         protected override void Seed(PalladiumDwh.Infrastructure.Data.DwapiCentralContext context)
         {
-            //LiveSeeder.Plant(context);
+          //  LiveSeeder.Plant(context);
         }
     }
 }

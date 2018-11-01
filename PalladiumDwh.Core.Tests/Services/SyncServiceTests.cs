@@ -27,6 +27,7 @@ namespace PalladiumDwh.Core.Tests.Services
         private IPatientBaseLinesRepository _patientBaseLinesRepository;
         private IPatientLabRepository _patientLabRepository;
         private IPatientPharmacyRepository _patientPharmacyRepository;
+        private IPatientAdverseEventRepository _patientAdverseEventRepository;
 
         private IPatientStatusRepository _patientStatusRepository;
         private IPatientVisitRepository _patientVisitRepository;
@@ -66,7 +67,8 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientLabRepository = new PatientLabRepository(_context),
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
-                _patientVisitRepository = new PatientVisitRepository(_context)
+                _patientVisitRepository = new PatientVisitRepository(_context),
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context)
             );
 
             _newFacility = Builder<Facility>.CreateNew().Build();
@@ -123,7 +125,8 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientLabRepository = new PatientLabRepository(_context),
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
-                _patientVisitRepository = new PatientVisitRepository(_context)
+                _patientVisitRepository = new PatientVisitRepository(_context),
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context)
             );
 
             var manifest = new Manifest(_facilityA.Code);
@@ -214,7 +217,18 @@ namespace PalladiumDwh.Core.Tests.Services
             Assert.IsNotNull(savedPatient);
             Assert.IsTrue(savedPatient.PatientVisitExtracts.Count > 0);
         }
+        [Test]
+        public void should_SyncAdeversEvents()
+        {
+            var patient = _patientWithAllExtracts.First();
+            var profile = PatientAdverseEventProfile.Create(_newFacility, patient);
 
+            _syncService.SyncAdverseEvent(profile);
+
+            var savedPatient = _patientExtractRepository.Find(profile.PatientInfo.Id);
+            Assert.IsNotNull(savedPatient);
+            Assert.IsTrue(savedPatient.PatientAdverseEventExtracts.Count > 0);
+        }
         [TearDown]
         public void TearDown()
         {

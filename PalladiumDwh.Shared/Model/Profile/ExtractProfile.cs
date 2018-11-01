@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Interfaces.Profiles;
 using PalladiumDwh.Shared.Model.DTO;
 using PalladiumDwh.Shared.Model.Extract;
@@ -12,6 +13,7 @@ namespace PalladiumDwh.Shared.Model.Profile
         public PatientExtractDTO Demographic { get; set; }
         public Facility FacilityInfo { get;  set; }
         public PatientExtract PatientInfo { get;  set; }
+        //public Guid ProfileId => LiveGuid.NewGuid();
         public List<T> Extracts { get;  set; }
 
         public virtual bool IsValid()

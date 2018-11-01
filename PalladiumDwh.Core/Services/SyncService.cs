@@ -21,19 +21,22 @@ namespace PalladiumDwh.Core.Services
       private readonly IPatientPharmacyRepository _patientPharmacyRepository;
       private readonly IPatientStatusRepository _patientStatusRepository;
       private readonly IPatientVisitRepository _patientVisitRepository;
+       private readonly IPatientAdverseEventRepository _patientAdverseEventRepository;
+
      private List<PatientVisitProfile> _visitProfiles = new List<PatientVisitProfile>();
        private List<PatientARTProfile> _artProfiles=new List<PatientARTProfile>();
        private List<PatientBaselineProfile> _baselineProfiles=new List<PatientBaselineProfile>();
        private List<PatientLabProfile> _labProfiles=new List<PatientLabProfile>();
        private List<PatientPharmacyProfile> _pharmacyProfiles=new List<PatientPharmacyProfile>();
        private List<PatientStatusProfile> _statusProfiles=new List<PatientStatusProfile>();
+       private List<PatientAdverseEventProfile> _adverseEventProfiles=new List<PatientAdverseEventProfile>();
 
 
        public SyncService(IFacilityRepository facilityRepository, IPatientExtractRepository patientExtractRepository,
          IPatientArtExtractRepository patientArtExtractRepository,
          IPatientBaseLinesRepository patientBaseLinesRepository, IPatientLabRepository patientLabRepository,
          IPatientPharmacyRepository patientPharmacyRepository, IPatientStatusRepository patientStatusRepository,
-         IPatientVisitRepository patientVisitRepository)
+         IPatientVisitRepository patientVisitRepository, IPatientAdverseEventRepository patientAdverseEventRepository)
       {
          _facilityRepository = facilityRepository;
          _patientExtractRepository = patientExtractRepository;
@@ -43,6 +46,7 @@ namespace PalladiumDwh.Core.Services
          _patientPharmacyRepository = patientPharmacyRepository;
          _patientStatusRepository = patientStatusRepository;
          _patientVisitRepository = patientVisitRepository;
+          _patientAdverseEventRepository = patientAdverseEventRepository;
       }
 
 
@@ -78,14 +82,19 @@ namespace PalladiumDwh.Core.Services
            {
                SyncVisitNew(profile as PatientVisitProfile);
            }
-       }
+           else if (profile.GetType() == typeof(PatientAdverseEventProfile))
+           {
+               SyncvAdverseEventNew(profile as PatientAdverseEventProfile);
+           }
+        }
 
        public void SyncManifest(Manifest manifest)
-      {
-         _patientExtractRepository.ClearManifest(manifest);
-      }
+       {
+           _patientExtractRepository.SaveManifest(FacilityManifest.Create(manifest));
+           _patientExtractRepository.ClearManifest(manifest);
+       }
 
-      public void InitList(string queueName)
+       public void InitList(string queueName)
       {
           if (queueName.ToLower().Contains("PatientARTProfile".ToLower()))
           {
@@ -116,7 +125,11 @@ namespace PalladiumDwh.Core.Services
           {
               _visitProfiles = new List<PatientVisitProfile>();
           }
-        
+          if (queueName.ToLower().Contains("PatientAdverseEventProfile".ToLower()))
+          {
+              _adverseEventProfiles = new List<PatientAdverseEventProfile>();
+          }
+
         }
 
       public void Commit(string queueName)
@@ -151,7 +164,13 @@ namespace PalladiumDwh.Core.Services
             Log.Debug($"batch processing {queueName}...");
             _patientVisitRepository.SyncNewPatients(_visitProfiles,_facilityRepository);
          }
-      }
+
+          if (queueName.ToLower().Contains("PatientAdverseEventProfile".ToLower()))
+          {
+              Log.Debug($"batch processing {queueName}...");
+              _patientAdverseEventRepository.SyncNewPatients(_adverseEventProfiles, _facilityRepository);
+          }
+        }
 
       public Guid? SyncPatient(PatientProfile profile)
       {
@@ -233,6 +252,20 @@ namespace PalladiumDwh.Core.Services
          }
       }
 
+       public void SyncAdverseEvent(PatientAdverseEventProfile profile)
+       {
+           profile.GeneratePatientRecord();
+
+           var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+           if (!(patientId == Guid.Empty || null == patientId))
+           {
+               profile.GenerateRecords(patientId.Value);
+               _adverseEventProfiles.Add(profile);
+               //_patientStatusRepository.SyncNew(patientId.Value, profile.Extracts);
+           }
+        }
+
        public void SyncArtNew(PatientARTProfile profile)
        {
            profile.GeneratePatientRecord();
@@ -268,7 +301,14 @@ namespace PalladiumDwh.Core.Services
          profile.GeneratePatientRecord();
          _visitProfiles.Add(profile);
       }
-      public Facility GetFacility(int code)
+
+       public void SyncvAdverseEventNew(PatientAdverseEventProfile profile)
+       {
+           profile.GeneratePatientRecord();
+           _adverseEventProfiles.Add(profile);
+        }
+
+       public Facility GetFacility(int code)
       {
          return _facilityRepository.Find(x => x.Code == code);
       }

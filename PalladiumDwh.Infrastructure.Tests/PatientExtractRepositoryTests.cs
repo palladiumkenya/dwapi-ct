@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using System.Security.Cryptography.X509Certificates;
 using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.Core.Interfaces;
@@ -92,6 +95,33 @@ namespace PalladiumDwh.Infrastructure.Tests
             newPatientExtract.MaritalStatus = "divorced";
             var id = _patientExtractRepository.Sync(newPatientExtract);
             Assert.False(id.IsNullOrEmpty());
+        }
+
+        [Test]
+        public void should_Save_Manifest_Cargo()
+        {
+            var manifest = new Manifest(_facilityA.Code);
+            var currentPatients = _patients.Where(x => x.PatientPID > 1000);
+            foreach (var p in currentPatients)
+            {
+                manifest.AddPatientPk(p.PatientPID);
+            }
+
+            _patientExtractRepository = new PatientExtractRepository(_dbcontext);
+            _patientExtractRepository.SaveManifest(FacilityManifest.Create(manifest));
+
+            var manifests = _dbcontext.Manifests.Include(x=>x.Cargoes).ToList();
+            Assert.True(manifests.Any());
+            Assert.True(manifests.First().Cargoes.Any());
+
+            foreach (var facilityManifest in manifests)
+            {
+                Console.WriteLine(facilityManifest);
+                foreach (var facilityManifestCargo in facilityManifest.Cargoes)
+                {
+                    Console.WriteLine($" >> {facilityManifestCargo}");
+                }
+            }
         }
 
         [Test]

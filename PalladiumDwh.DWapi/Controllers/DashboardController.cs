@@ -31,6 +31,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 $"{queueName}.{typeof(PatientPharmacyProfile).Name.ToLower()}",
                 $"{queueName}.{typeof(PatientVisitProfile).Name.ToLower()}",
                 $"{queueName}.{typeof(PatientStatusProfile).Name.ToLower()}",
+                $"{queueName}.{typeof(PatientAdverseEventProfile).Name.ToLower()}",
                 $"{queueName}.{typeof(Manifest).Name.ToLower()}"
             };
 
@@ -56,6 +57,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 $"{queueName}.{typeof(PatientPharmacyProfile).Name.ToLower()}",
                 $"{queueName}.{typeof(PatientVisitProfile).Name.ToLower()}",
                 $"{queueName}.{typeof(PatientStatusProfile).Name.ToLower()}",
+                $"{queueName}.{typeof(PatientAdverseEventProfile).Name.ToLower()}",
                 $"{queueName}.{typeof(Manifest).Name.ToLower()}"
             };
 

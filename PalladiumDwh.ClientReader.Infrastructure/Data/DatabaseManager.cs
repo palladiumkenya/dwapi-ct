@@ -28,12 +28,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
     public class DatabaseManager : IDatabaseManager
     {
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         private readonly DwapiRemoteContext _context;
         private Guid _defaultEmrId;
         public DatabaseManager(DwapiRemoteContext context)
         {
             _context = context;
+
         }
 
         public string DatabaseName { get; private set; }
@@ -90,38 +90,25 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data
                     UPDATE [EMR] set IsDefault=1 WHERE Id='{_defaultEmrId}'");
         }
 
-        public async Task RunUpdateAsync(IProgress<DProgress> progress = null)
+        public async Task RunUpdateAsync(IProgress<DProgress> progress = null, bool seed = true)
         {
             Log.Debug("Checking for database changes...");
             progress?.ReportStatus("checking database...");
-            
-            await PreserveLiveApp();
 
-            await Task.Run(() =>
-            {
-                var configuration = new Configuration();
-                var migrator = new DbMigrator(configuration);
-                var mgs = migrator.GetPendingMigrations().ToList();
-                migrator.Update();
-//                if (mgs.Count > 0)
-//                {
-//                    Log.Debug($"Found [{mgs.Count}] Changes !");
-//                    foreach (var m in mgs)
-//                    {
-//                        Log.Debug($"Updating database with changes [{m}]");
-//                        Log.Debug(m);
-//                    }
-//
-//                    migrator.Update();
-//                }
-//                else
-//                {
-//                    Log.Debug("No changes Found");
-//                }
-            });
+            await PreserveLiveApp();
+            Log.Debug($"Seed Data:{seed}");
+            if (seed)
+                await Task.Run(() =>
+                {
+                    var configuration = new Configuration();
+                    var migrator = new DbMigrator(configuration);
+                    var mgs = migrator.GetPendingMigrations().ToList();
+                    migrator.Update();
+                });
 
             await RestoreLiveApp();
         }
+
         public IDbConnection GetConnection(string provider, string connectionString)
         {
             DbConnection connection = null;
