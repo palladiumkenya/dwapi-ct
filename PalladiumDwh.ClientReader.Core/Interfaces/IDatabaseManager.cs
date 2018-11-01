@@ -13,7 +13,7 @@ namespace PalladiumDwh.ClientReader.Core.Interfaces
         bool CheckDatabaseExist(string provider, string connectionString);
         Task PreserveLiveApp();
         Task RestoreLiveApp();
-        Task RunUpdateAsync(IProgress<DProgress> progress=null);
+        Task RunUpdateAsync(IProgress<DProgress> progress=null,bool seed=true);
         IDbConnection GetConnection(string provider, string connectionString);
         IDbConnection GetConnection(DatabaseConfig databaseConfig);
         DatabaseConfig GetDatabaseConfig(string provider, string connectionString);

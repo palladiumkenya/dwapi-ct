@@ -37,7 +37,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 if (!manifest.IsValid())
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                        new HttpError($"Invalid Manifest,Please ensure the SiteCode [{manifest.SiteCode}] is valid and there exists atlease one (1) Patient record"));
+                        new HttpError($"Invalid Manifest,Please ensure the SiteCode [{manifest.SiteCode}] is valid and there exists at least one (1) Patient record"));
                 }
 
                 try

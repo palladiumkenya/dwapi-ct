@@ -59,6 +59,9 @@
       <HintPath>..\packages\NBuilder.5.0.0\lib\net40\FizzWare.NBuilder.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
       <HintPath>..\packages\NMemory.1.1.2\lib\net45\NMemory.dll</HintPath>
       <Private>True</Private>
@@ -74,8 +77,8 @@
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Z.Dapper.Plus, Version=1.3.13.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Z.Dapper.Plus.1.3.13\lib\net45\Z.Dapper.Plus.dll</HintPath>
+    <Reference Include="Z.Dapper.Plus, Version=1.3.25.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.Dapper.Plus.1.3.25\lib\net45\Z.Dapper.Plus.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
@@ -89,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Model\DTO\FacilityDTOTests.cs" />
     <Compile Include="Model\DTO\PatientExtractDTOTests.cs" />
+    <Compile Include="Model\Profiles\PatientAdverseEventProfileTests.cs" />
     <Compile Include="Model\Profiles\PatientStatusProfileTests.cs" />
     <Compile Include="Model\Profiles\PatientLabProfileTests.cs" />
     <Compile Include="Model\Profiles\PatientPharmacyProfileTests.cs" />

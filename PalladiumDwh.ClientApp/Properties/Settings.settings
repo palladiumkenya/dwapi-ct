@@ -8,5 +8,8 @@
     <Setting Name="dwapiUrl" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://data.kenyahmis.org:81/dwapi/api</Value>
     </Setting>
+    <Setting Name="seedSetting" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

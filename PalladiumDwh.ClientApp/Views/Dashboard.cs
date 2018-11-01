@@ -690,7 +690,7 @@ namespace PalladiumDwh.ClientApp.Views
 
 
             var progress = new Progress<DProgress>(ViewProgress);
-            await _databaseManager.RunUpdateAsync(progress);
+            await _databaseManager.RunUpdateAsync(progress,Properties.Settings.Default.seedSetting);
 
             _projectRepository = Program.IOC.GetInstance<IProjectRepository>();
             _emrRepository = Program.IOC.GetInstance<IEMRRepository>();

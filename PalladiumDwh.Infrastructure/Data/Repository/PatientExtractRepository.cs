@@ -110,14 +110,21 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             return patientId;
         }
 
-      public async Task ClearManifest(Manifest manifest)
-      {
+        public void SaveManifest(FacilityManifest facilityManifest)
+        {
+            _context.GetConnection()
+                .BulkInsert(facilityManifest)
+                .AlsoBulkInsert(f => f.Cargoes);
+        }
+
+        public async Task ClearManifest(Manifest manifest)
+        {
         var connection = _context.Database.Connection as SqlConnection;
 
         var sql = $@"
                 DELETE FROM PatientExtract
                 WHERE        
-	                (FacilityId = (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode})) AND 
+	                (FacilityId IN (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode})) AND 
 	                (PatientPID NOT IN ({manifest.GetPatientPKsJoined()}))
                   ";
 
@@ -141,10 +148,11 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             int originalSiteCode = siteCode;
 
             string fcode = siteCode.ToString();
-            if (fcode.Length == 8)
+            if (fcode.Length != 5)
             {
                 Log.Debug(new string('^', 40));
                 Log.Debug($"Invalid SiteCode:{siteCode}");
+                /*
                 if (fcode.StartsWith("648"))
                 {
                     siteCode =  siteCode- 64800000;
@@ -154,10 +162,10 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 {
                     siteCode =  siteCode- 25400000;
                 }
+                */
+                //Log.Debug($"Invalid SiteCode {originalSiteCode} Fixed to:{siteCode}");
 
-                Log.Debug($"Invalid SiteCode {originalSiteCode} Fixed to:{siteCode}");
-
-                Log.Debug(new string('^',40));
+                Log.Debug(new string('^', 40));
             }
 
             return _context.MasterFacilities

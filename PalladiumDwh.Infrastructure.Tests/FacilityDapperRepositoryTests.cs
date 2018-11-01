@@ -23,10 +23,16 @@ namespace PalladiumDwh.Infrastructure.Tests
         public void SetUp()
         {
             _context = new DwapiCentralContext();
-            _facilities = TestHelpers.GetTestData<Facility>(5).ToList();
-            TestHelpers.CreateTestData(_context, _facilities);
+            _facilities = new List<Facility>
+            {
+                new Facility(22704, @"Meditrust HCS", "IQCare", "Kenya HMIS II"),
+                new Facility(22696, @"Meditrust HCS", "IQCare", "Kenya HMIS II"),
+                new Facility(22691, @"Meditrust HCS", "IQCare", "Kenya HMIS II")
+            };
 
-            _facilityRepository=new FacilityRepository(_context);
+            //_facilities = TestHelpers.GetTestData<Facility>(5).ToList();
+            TestHelpers.CreateTestData(_context, _facilities);
+            _facilityRepository = new FacilityRepository(_context);
         }
 
         [Test]
