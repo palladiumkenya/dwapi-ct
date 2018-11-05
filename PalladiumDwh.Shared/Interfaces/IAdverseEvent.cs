@@ -12,5 +12,7 @@ namespace PalladiumDwh.Shared.Interfaces
         string AdverseEventActionTaken { get; set; }
         bool? AdverseEventIsPregnant { get; set; }
         DateTime? VisitDate { get; set; }
+        string AdverseEventRegimen { get; set; }
+        string AdverseEventCause { get; set; }
     }
 }
