@@ -13,6 +13,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string AdverseEventActionTaken { get; set; }
         public bool? AdverseEventIsPregnant { get; set; }
         public DateTime? VisitDate { get; set; }
+        public string AdverseEventRegimen { get; set; }
+        public string AdverseEventCause { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
 
@@ -21,8 +23,11 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-        public PatientAdverseEventExtract(string adverseEvent, DateTime? adverseEventStartDate, DateTime? adverseEventEndDate, string severity, string adverseEventClinicalOutcome, 
-            string adverseEventActionTaken, bool? adverseEventIsPregnant, DateTime? visitDate, Guid patientId, string emr, string project)
+        public PatientAdverseEventExtract(string adverseEvent, DateTime? adverseEventStartDate,
+            DateTime? adverseEventEndDate, string severity, string adverseEventClinicalOutcome,
+            string adverseEventActionTaken, bool? adverseEventIsPregnant, DateTime? visitDate,
+            string adverseEventRegimen, string adverseEventCause, Guid patientId,
+            string emr, string project)
         {
             AdverseEvent = adverseEvent;
             AdverseEventStartDate = adverseEventStartDate;
@@ -32,6 +37,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             AdverseEventActionTaken = adverseEventActionTaken;
             AdverseEventIsPregnant = adverseEventIsPregnant;
             VisitDate = visitDate;
+            AdverseEventRegimen = adverseEventRegimen;
+            AdverseEventCause = adverseEventCause;
             PatientId = patientId;
             Emr = emr;
             Project = project;

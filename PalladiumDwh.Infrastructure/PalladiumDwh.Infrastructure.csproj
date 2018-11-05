@@ -93,6 +93,10 @@
     <Compile Include="Migrations\201810300648529_AdverseEvent.Designer.cs">
       <DependentUpon>201810300648529_AdverseEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811050838531_AdverseReview.cs" />
+    <Compile Include="Migrations\201811050838531_AdverseReview.Designer.cs">
+      <DependentUpon>201811050838531_AdverseReview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810300648529_AdverseEvent.resx">
       <DependentUpon>201810300648529_AdverseEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811050838531_AdverseReview.resx">
+      <DependentUpon>201811050838531_AdverseReview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>
