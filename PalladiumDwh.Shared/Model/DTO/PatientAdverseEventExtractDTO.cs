@@ -16,6 +16,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string AdverseEventActionTaken { get; set; }
         public bool? AdverseEventIsPregnant { get; set; }
         public DateTime? VisitDate { get; set; }
+        public string AdverseEventRegimen { get; set; }
+        public string AdverseEventCause { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
@@ -24,8 +26,12 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public PatientAdverseEventExtractDTO(string adverseEvent, DateTime? adverseEventStartDate, DateTime? adverseEventEndDate, string severity, string adverseEventClinicalOutcome, string adverseEventActionTaken, 
-            bool? adverseEventIsPregnant, DateTime? visitDate,string emr, string project, Guid patientId)
+        public PatientAdverseEventExtractDTO(string adverseEvent, DateTime? adverseEventStartDate,
+            DateTime? adverseEventEndDate, string severity, string adverseEventClinicalOutcome,
+            string adverseEventActionTaken,
+            bool? adverseEventIsPregnant, DateTime? visitDate, string adverseEventRegimen, string adverseEventCause,
+            string emr, string project, Guid patientId
+        )
         {
             AdverseEvent = adverseEvent;
             AdverseEventStartDate = adverseEventStartDate;
@@ -35,6 +41,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             AdverseEventActionTaken = adverseEventActionTaken;
             AdverseEventIsPregnant = adverseEventIsPregnant;
             VisitDate = visitDate;
+            AdverseEventRegimen = adverseEventRegimen;
+            AdverseEventCause = adverseEventCause;
             Emr = emr;
             Project = project;
             PatientId = patientId;
@@ -50,6 +58,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             AdverseEventClinicalOutcome = patientStatusExtract.AdverseEventClinicalOutcome;
             AdverseEventActionTaken = patientStatusExtract.AdverseEventActionTaken;
             AdverseEventIsPregnant = patientStatusExtract.AdverseEventIsPregnant;
+            VisitDate = patientStatusExtract.VisitDate;
+            AdverseEventRegimen = patientStatusExtract.AdverseEventRegimen;
+            AdverseEventCause = patientStatusExtract.AdverseEventCause;
             Emr = patientStatusExtract.Emr;
             Project = patientStatusExtract.Project;
             PatientId = patientStatusExtract.PatientId;
@@ -57,13 +68,15 @@ namespace PalladiumDwh.Shared.Model.DTO
 
 
 
-        public IEnumerable<PatientAdverseEventExtractDTO> GeneratePatientAdverseEventExtractDtOs(IEnumerable<PatientAdverseEventExtract> extracts)
+        public IEnumerable<PatientAdverseEventExtractDTO> GeneratePatientAdverseEventExtractDtOs(
+            IEnumerable<PatientAdverseEventExtract> extracts)
         {
             var statusExtractDtos = new List<PatientAdverseEventExtractDTO>();
             foreach (var e in extracts.ToList())
             {
                 statusExtractDtos.Add(new PatientAdverseEventExtractDTO(e));
             }
+
             return statusExtractDtos;
         }
 
@@ -79,6 +92,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 AdverseEventActionTaken,
                 AdverseEventIsPregnant,
                 VisitDate,
+                AdverseEventRegimen, AdverseEventCause,
                 PatientId, Emr, Project);
         }
     }
