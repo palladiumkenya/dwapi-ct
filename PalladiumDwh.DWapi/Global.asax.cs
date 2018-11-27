@@ -15,6 +15,7 @@ namespace PalladiumDwh.DWapi
             Log.Debug("PalladiumDwh.DWapi starting...");
 
             AreaRegistration.RegisterAllAreas();
+            SwaggerConfig.Register();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
