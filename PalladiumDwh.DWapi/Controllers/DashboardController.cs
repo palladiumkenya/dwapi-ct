@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.Http.Description;
 using System.Web.Mvc;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.DWapi.Models;
@@ -7,6 +8,7 @@ using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class DashboardController : Controller
     {
         private readonly IMessagingSenderService _service;

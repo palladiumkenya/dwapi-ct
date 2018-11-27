@@ -2,11 +2,13 @@
 using System.Net.Http;
 using System.Reflection;
 using System.Web.Http;
+using System.Web.Http.Description;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 
 namespace PalladiumDwh.DWapi.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class FacilitiesController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
