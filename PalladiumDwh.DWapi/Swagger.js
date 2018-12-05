@@ -1,0 +1,1 @@
+﻿$("#logo").replaceWith("<span>NDWH API</span>");

@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.DWapi.Models;
@@ -11,6 +12,12 @@ using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.DWapi.Controllers
 {
+    /// <summary>
+    /// NDWH
+    /// </summary>
+    /// <remarks>
+    /// DWAPI Client Service Regirstration and Discovery
+    /// </remarks>
     public class NdwhController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -24,7 +31,13 @@ namespace PalladiumDwh.DWapi.Controllers
             _messagingService.Initialize(_gateway);
             _patientExtractRepository = patientExtractRepository;
         }
-
+      
+        /// <summary>
+        /// Subscriber Self Registration and verification
+        /// </summary>
+        /// <param name="subscriber"></param>
+        /// <returns></returns>
+        /// <response code="200"></response>
         [HttpPost]
         public IHttpActionResult Verify([FromBody] Subscriber subscriber)
         {

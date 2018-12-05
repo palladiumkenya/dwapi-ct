@@ -6,12 +6,14 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class PatientController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
