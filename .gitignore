@@ -245,3 +245,6 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /PalladiumDwh.DwapiService/App - Copy.config
+
+# JetBrains Rider
+.idea/

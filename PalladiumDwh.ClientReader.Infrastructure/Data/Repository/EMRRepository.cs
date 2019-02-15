@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Activities.Expressions;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
@@ -10,9 +9,7 @@ using Npgsql;
 using PalladiumDwh.ClientReader.Core.Enums;
 using PalladiumDwh.ClientReader.Core.Interfaces.Repository;
 using PalladiumDwh.ClientReader.Core.Model;
-using System.Data.Entity;
 using System.Reflection;
-using System.Threading.Tasks;
 using Dapper;
 using log4net;
 using Z.Dapper.Plus;
@@ -32,7 +29,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
             DapperPlusManager.Entity<ClientPatientPharmacyExtract>().Table("PatientPharmacyExtract").Identity(x => x.Id);
             DapperPlusManager.Entity<ClientPatientStatusExtract>().Table("PatientStatusExtract").Identity(x => x.Id);
             DapperPlusManager.Entity<ClientPatientVisitExtract>().Table("PatientVisitExtract").Identity(x => x.Id);
-         
+
         }
 
         public void SetEmrAsDefault(Guid id)
@@ -87,7 +84,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
             return connection;
         }
 
-     
+
 
         public EMR GetDefault()
         {
@@ -130,7 +127,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                 try
                 {
                     return db.Execute(@"
-                                UPDATE EventHistory 
+                                UPDATE EventHistory
                                 SET Loaded=@Loaded,LoadDate=@LoadDate
                                 WHERE (ExtractSettingId=@ExtractSettingId)
                                 ", eventHistoryToUpdate);
@@ -140,7 +137,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                     Log.Debug(e);
                     throw;
                 }
-                
+
             }
             if (action == StatAction.Rejected)
             {
@@ -148,7 +145,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                 try
                 {
                     return db.Execute(@"
-                                UPDATE EventHistory 
+                                UPDATE EventHistory
                                 SET Rejected=@Rejected
                                 WHERE (ExtractSettingId=@ExtractSettingId)
                                 ", eventHistoryToUpdate);
@@ -168,7 +165,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                 try
                 {
                     return db.Execute(@"
-                                UPDATE EventHistory 
+                                UPDATE EventHistory
                                 SET Imported=@Imported,ImportDate=@ImportDate
                                 WHERE (ExtractSettingId=@ExtractSettingId)
                                 ", eventHistoryToUpdate);
@@ -186,7 +183,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                 try
                 {
                     return db.Execute(@"
-                                UPDATE EventHistory 
+                                UPDATE EventHistory
                                 SET NotImported=@NotImported
                                 WHERE (ExtractSettingId=@ExtractSettingId)
                                 ", eventHistoryToUpdate);
@@ -205,7 +202,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                 try
                 {
                     return db.Execute(@"
-                                UPDATE EventHistory 
+                                UPDATE EventHistory
                                 SET Sent=@Sent,SendDate=@SendDate
                                 WHERE (ExtractSettingId=@ExtractSettingId)
                                 ", eventHistoryToUpdate);
@@ -224,7 +221,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                 try
                 {
                     return db.Execute(@"
-                                UPDATE EventHistory 
+                                UPDATE EventHistory
                                 SET NotSent=@NotSent
                                 WHERE (ExtractSettingId=@ExtractSettingId)
                                 ", eventHistoryToUpdate);
@@ -252,7 +249,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                 Log.Debug(e);
                 throw;
             }
-            
+
 
             using (db)
             {
@@ -279,12 +276,12 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                         {
                             db.Execute(
                                 $@"
-                                    UPDATE 
-                                        PatientExtract 
-                                    SET Status='Not Sent' 
-                                    WHERE 
-                                        Processed=1 AND 
-                                        PatientPK={reader[0]} AND 
+                                    UPDATE
+                                        PatientExtract
+                                    SET Status='Not Sent'
+                                    WHERE
+                                        Processed=1 AND
+                                        PatientPK={reader[0]} AND
                                         SiteCode={reader[1]}");
                         }
                         catch (Exception e)
@@ -315,7 +312,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
                 Log.Debug(e);
                 throw;
             }
-             
+
 
             if (string.IsNullOrWhiteSpace(tablename))
                 return;
@@ -325,14 +322,14 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
             try
             {
                 db.Execute($@"
-                        
-                        UPDATE       
+
+                        UPDATE
 	                        EventHistory
-                        SET  
-                            SendDate=(SELECT MAX(StatusDate) StatusDate FROM {tablename} WHERE (Status = 'Sent')),    
-	                        Sent =(SELECT COUNT(PatientPK) AS Sent FROM {tablename} WHERE (Status='Sent')), 
-	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE NOT(coalesce([Status],'')='Sent'))                        
-                        WHERE        
+                        SET
+                            SendDate=(SELECT MAX(StatusDate) StatusDate FROM {tablename} WHERE (Status = 'Sent')),
+	                        Sent =(SELECT COUNT(PatientPK) AS Sent FROM {tablename} WHERE (Status='Sent')),
+	                        NotSent =(SELECT COUNT(PatientPK) AS NotSent FROM {tablename} WHERE NOT(coalesce([Status],'')='Sent'))
+                        WHERE
 	                        (ExtractSettingId ='{extractSettingId}')");
             }
             catch (Exception e)
@@ -351,25 +348,25 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Data.Repository
             try
             {
                 return db.QueryFirstOrDefault<EventHistory>(@"
-                    SELECT        
-	                    -1 AS SiteCode, 
-	                    Display, 
-	                    SUM(Found) AS Found, 
-	                    MAX(FoundDate) AS FoundDate, 
-	                    MAX(Loaded) AS Loaded, 
-	                    MAX(Rejected) AS Rejected, 
-	                    MAX(LoadDate) AS LoadDate, 
-                        MAX(Imported) AS Imported, 
-	                    MAX(NotImported) AS NotImported, 
-	                    MAX(ImportDate) AS ImportDate, 
-	                    MAX(Sent) AS Sent, 
-	                    MAX(NotSent) AS NotSent, 
+                    SELECT
+	                    -1 AS SiteCode,
+	                    Display,
+	                    SUM(Found) AS Found,
+	                    MAX(FoundDate) AS FoundDate,
+	                    MAX(Loaded) AS Loaded,
+	                    MAX(Rejected) AS Rejected,
+	                    MAX(LoadDate) AS LoadDate,
+                        MAX(Imported) AS Imported,
+	                    MAX(NotImported) AS NotImported,
+	                    MAX(ImportDate) AS ImportDate,
+	                    MAX(Sent) AS Sent,
+	                    MAX(NotSent) AS NotSent,
 	                    MAX(SendDate) AS SendDate
-                    FROM            
+                    FROM
 	                    EventHistory
-                    WHERE        
+                    WHERE
 	                    (ExtractSettingId = @ExtractSettingId)
-                    GROUP BY 
+                    GROUP BY
 	                    Display", new { ExtractSettingId = extractSettingId });
 
             }
