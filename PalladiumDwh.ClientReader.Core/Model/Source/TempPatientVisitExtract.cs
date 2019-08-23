@@ -43,5 +43,9 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string PwP { get; set; }
         public decimal? GestationAge { get; set; }
         public DateTime? NextAppointmentDate { get; set; }
+        public string StabilityAssessment { get; set; }
+        public string DifferentiatedCare { get; set; }
+        public string PopulationType { get; set; }
+        public string KeyPopulationType { get; set; }
     }
 }

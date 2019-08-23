@@ -46,7 +46,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public PatientVisitExtractDTO(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr, string project, Guid patientId)
+        public PatientVisitExtractDTO(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr, string project, Guid patientId,
+        string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -77,6 +78,10 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = emr;
             Project = project;
             PatientId = patientId;
+            StabilityAssessment = stabilityAssessment;
+            DifferentiatedCare = differentiatedCare;
+            PopulationType = populationType;
+            KeyPopulationType = keyPopulationType;
         }
 
         public PatientVisitExtractDTO(PatientVisitExtract patientVisitExtract)
@@ -110,6 +115,10 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = patientVisitExtract.Emr;
             Project = patientVisitExtract.Project;
             PatientId = patientVisitExtract.PatientId;
+            StabilityAssessment = patientVisitExtract.StabilityAssessment;
+            DifferentiatedCare = patientVisitExtract.DifferentiatedCare;
+            PopulationType = patientVisitExtract.PopulationType;
+            KeyPopulationType = patientVisitExtract.KeyPopulationType;
         }
 
         
@@ -131,7 +140,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 SubstitutionFirstlineRegimenDate, SubstitutionFirstlineRegimenReason, SubstitutionSecondlineRegimenDate,
                 SubstitutionSecondlineRegimenReason, SecondlineRegimenChangeDate,
                 SecondlineRegimenChangeReason, Adherence, AdherenceCategory, FamilyPlanningMethod, PwP, GestationAge,
-                NextAppointmentDate, PatientId,Emr, Project);
+                NextAppointmentDate, PatientId,Emr, Project,StabilityAssessment,DifferentiatedCare, PopulationType,KeyPopulationType);
         }
     }
 }
