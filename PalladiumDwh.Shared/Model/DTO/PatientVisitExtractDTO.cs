@@ -34,6 +34,10 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string PwP { get; set; }
         public decimal? GestationAge { get; set; }
         public DateTime? NextAppointmentDate { get; set; }
+        public string StabilityAssessment { get; set; }
+        public string DifferentiatedCare { get; set; }
+        public string PopulationType { get; set; }
+        public string KeyPopulationType { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }

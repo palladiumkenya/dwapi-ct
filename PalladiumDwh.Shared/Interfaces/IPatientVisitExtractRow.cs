@@ -30,5 +30,14 @@ namespace PalladiumDwh.Shared.Interfaces
         string PwP { get; set; }
         decimal? GestationAge { get; set; }
         DateTime? NextAppointmentDate { get; set; }
+
+         string StabilityAssessment { get; set; }
+         string DifferentiatedCare { get; set; }
+         string PopulationType { get; set; }
+         string KeyPopulationType { get; set; }
+
+
+
+
     }
 }

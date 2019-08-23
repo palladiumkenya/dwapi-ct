@@ -4,7 +4,7 @@ namespace PalladiumDwh.Shared.Interfaces
 {
     public interface IPatient
     {
-  
+
         string Gender { get; set; }
         DateTime? DOB { get; set; }
         DateTime? RegistrationDate { get; set; }
@@ -25,6 +25,19 @@ namespace PalladiumDwh.Shared.Interfaces
         string StatusAtCCC { get; set; }
         string StatusAtPMTCT { get; set; }
         string StatusAtTBClinic { get; set; }
-      
+        string Orphan { get; set; }
+        string Inschool { get; set; }
+        string PatientType { get; set; }
+        string PopulationType { get; set; }
+        string KeyPopulationType { get; set; }
+        string PatientResidentCounty { get; set; }
+        string PatientResidentSubCounty { get; set; }
+        string PatientResidentLocation { get; set; }
+        string PatientResidentSubLocation { get; set; }
+        string PatientResidentWard { get; set; }
+        string PatientResidentVillage { get; set; }
+        DateTime? TransferInDate { get; set; }
+
     }
 }
+
