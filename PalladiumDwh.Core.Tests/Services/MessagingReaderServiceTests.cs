@@ -55,7 +55,8 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
                 _patientVisitRepository = new PatientVisitRepository(_context),
-                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context)
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context),
+                null
             );
 
             _newFacility = _facilities.Last();

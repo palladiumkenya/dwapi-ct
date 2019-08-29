@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Dapper;
 using Dapper.Contrib.Extensions;
+using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;
@@ -44,6 +46,13 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             return Find(x => x.Code == code)?.Id;
         }
 
+        public MasterFacility GetFacilityByCode(int code)
+        {
+            string sql = "SELECT * FROM MasterFacility WHERE Code = @Code;";
+            var facility = _context.GetConnection().QueryFirstOrDefault<MasterFacility>(sql, new { Code = code });
+            return facility;
+        }
+
         public Guid? Sync(Facility facility)
         {
             var facilityId = GetFacilityIdBCode(facility.Code);
@@ -55,6 +64,64 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 facilityId = facility.Id;
             }
             return facilityId;
-        }      
+        }
+
+        public IEnumerable<StatsDto> GetFacStats(IEnumerable<Guid> facilityIds)
+        {
+            var list = new List<StatsDto>();
+            foreach (var facilityId in facilityIds)
+            {
+                try
+                {
+                    var stat = GetFacStats(facilityId);
+                    if (null != stat)
+                        list.Add(stat);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e.Message);
+                }
+
+
+            }
+            return list;
+        }
+
+        public StatsDto GetFacStats(Guid facilityId)
+        {
+            string sql = $@"
+select
+(select top 1 Code from Facility where id='{facilityId}') FacilityCode,
+(select max(Created) from PatientExtract where facilityid='{facilityId}') Updated,
+(select count(id) from PatientExtract where facilityid='{facilityId}') PatientExtract,
+(select count(id) from PatientAdverseEventExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientAdverseEventExtract,
+(select count(id) from PatientArtExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientArtExtract,
+(select count(id) from PatientBaselinesExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientBaselineExtract,
+(select count(id) from PatientLaboratoryExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientLabExtract,
+(select count(id) from PatientPharmacyExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientPharmacyExtract,
+(select count(id) from PatientStatusExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientStatusExtract,
+(select count(id) from PatientVisitExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientStatusExtract
+
+                ";
+
+            var result = _context.GetConnection().Query<dynamic>(sql).FirstOrDefault();
+
+            if (null != result)
+            {
+                var stats = new StatsDto(result.FacilityCode, result.Updated);
+                stats.AddStats("PatientExtract", result.PatientExtract);
+                stats.AddStats("PatientAdverseEventExtract", result.PatientAdverseEventExtract);
+                stats.AddStats("PatientArtExtract", result.PatientArtExtract);
+                stats.AddStats("PatientBaselineExtract", result.PatientBaselineExtract);
+                stats.AddStats("PatientLabExtract", result.PatientLabExtract);
+                stats.AddStats("PatientPharmacyExtract", result.PatientPharmacyExtract);
+                stats.AddStats("PatientStatusExtract", result.PatientStatusExtract);
+                stats.AddStats("PatientVisitExtract", result.PatientVisitExtract);
+
+                return stats;
+            }
+
+            return null;
+        }
     }
 }

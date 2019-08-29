@@ -22,12 +22,13 @@ namespace PalladiumDWh.DwapiService.DependencyResolution {
 
             For<DwapiCentralContext>().Use<DwapiCentralContext>()
                 .SelectConstructor(() => new DwapiCentralContext());
-
-
+           
             For<IMessagingReaderService>().Use<MessagingReaderService>()
                 .Ctor<string>("queueName").Is(Properties.Settings.Default.QueueName)
                 .Ctor<int>("queueBatch").Is(Properties.Settings.Default.QueueBatch);
-            
+
+            For<ILiveSyncService>().Use<LiveSyncService>()
+                .Ctor<string>("baseUrl").Is(Properties.Settings.Default.LiveSync);
 
         }
 
