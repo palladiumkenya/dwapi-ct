@@ -31,6 +31,10 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string PwP { get; set; }
         public decimal? GestationAge { get; set; }
         public DateTime? NextAppointmentDate { get; set; }
+        public string StabilityAssessment { get; set; }
+        public string DifferentiatedCare { get; set; }
+        public string PopulationType { get; set; }
+        public string KeyPopulationType { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
 
@@ -39,7 +43,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-        public PatientVisitExtract(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, Guid patientId, string emr, string project)
+        public PatientVisitExtract(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, Guid patientId, string emr, string project,
+            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -71,6 +76,10 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+            StabilityAssessment = stabilityAssessment;
+            DifferentiatedCare = differentiatedCare;
+            PopulationType = populationType;
+            KeyPopulationType = keyPopulationType;
         }
     }
 }

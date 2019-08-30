@@ -65,5 +65,12 @@ namespace PalladiumDwh.Infrastructure.Tests
             Assert.AreEqual(saved.Code, newFacility.Code);
             Assert.AreNotEqual(saved.Id, newFacility.Id);
         }
+
+        [Test]
+        public void should_Get_Stats()
+        {
+            var stats = _facilityRepository.GetFacStats(_facilities.First().Id).ToString();
+            Assert.NotNull(stats);
+        }
     }
 }

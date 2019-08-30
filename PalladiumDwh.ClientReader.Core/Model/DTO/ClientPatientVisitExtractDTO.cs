@@ -33,6 +33,10 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string PwP { get; set; }
         public decimal? GestationAge { get; set; }
         public DateTime? NextAppointmentDate { get; set; }
+        public string StabilityAssessment { get; set; }
+        public string DifferentiatedCare { get; set; }
+        public string PopulationType { get; set; }
+        public string KeyPopulationType { get; set; }
         public int PatientPID { get; set; }
         public string PatientCccNumber { get; set; }
         public int FacilityId { get; set; }

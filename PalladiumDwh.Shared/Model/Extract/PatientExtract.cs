@@ -30,6 +30,18 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string StatusAtCCC { get; set; }
         public string StatusAtPMTCT { get; set; }
         public string StatusAtTBClinic { get; set; }
+        public string Orphan { get; set; }
+        public string Inschool { get; set; }
+        public string PatientType { get; set; }
+        public string PopulationType { get; set; }
+        public string KeyPopulationType { get; set; }
+        public string PatientResidentCounty { get; set; }
+        public string PatientResidentSubCounty { get; set; }
+        public string PatientResidentLocation { get; set; }
+        public string PatientResidentSubLocation { get; set; }
+        public string PatientResidentWard { get; set; }
+        public string PatientResidentVillage { get; set; }
+        public DateTime? TransferInDate { get; set; }
         public Guid FacilityId { get; set; }
         public DateTime? Created { get; set; }
 
@@ -46,7 +58,10 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-        public PatientExtract(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, Guid facilityId,string emr,string project)
+      
+        public PatientExtract(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, Guid facilityId,string emr,string project,
+            string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate)
+
         {
             PatientPID = patientPid;
             PatientCccNumber = patientCccNumber;
@@ -74,6 +89,18 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+            Orphan = orphan;
+            Inschool = inschool;
+            PatientType = patientType;
+            PopulationType = populationType;
+            KeyPopulationType = keyPopulationType;
+            PatientResidentCounty = patientResidentCounty;
+            PatientResidentSubCounty = patientResidentSubCounty;
+            PatientResidentLocation = patientResidentLocation;
+            PatientResidentSubLocation = patientResidentSubLocation;
+            PatientResidentWard = patientResidentWard;
+            PatientResidentVillage = patientResidentVillage;
+            TransferInDate = transferInDate;
         }
 
         public void AddPatientArtExtracts(IEnumerable<PatientArtExtract> extracts)

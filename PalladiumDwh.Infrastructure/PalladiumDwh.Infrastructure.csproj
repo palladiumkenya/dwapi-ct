@@ -97,6 +97,10 @@
     <Compile Include="Migrations\201811050838531_AdverseReview.Designer.cs">
       <DependentUpon>201811050838531_AdverseReview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908230747516_CCCNewFields.cs" />
+    <Compile Include="Migrations\201908230747516_CCCNewFields.Designer.cs">
+      <DependentUpon>201908230747516_CCCNewFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811050838531_AdverseReview.resx">
       <DependentUpon>201811050838531_AdverseReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908230747516_CCCNewFields.resx">
+      <DependentUpon>201908230747516_CCCNewFields.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

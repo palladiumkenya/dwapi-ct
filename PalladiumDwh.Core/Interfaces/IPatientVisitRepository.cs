@@ -13,6 +13,7 @@ namespace PalladiumDwh.Core.Interfaces
       void SyncNew(Guid patientIdValue, IEnumerable<PatientVisitExtract> extracts);
       void SyncNew(IEnumerable<PatientVisitProfile> profiles);
 
-      void SyncNewPatients(IEnumerable<PatientVisitProfile> profiles, IFacilityRepository facilityRepository);
+      void SyncNewPatients(IEnumerable<PatientVisitProfile> profiles, IFacilityRepository facilityRepository,
+          List<Guid> facIds);
    }
 }
