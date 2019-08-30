@@ -72,6 +72,7 @@
     <Compile Include="Custom\NullIntConverter.cs" />
     <Compile Include="Custom\StringConverter.cs" />
     <Compile Include="Custom\NullStringConverter.cs" />
+    <Compile Include="Enum\CargoType.cs" />
     <Compile Include="Extentions\TypeExtentions.cs" />
     <Compile Include="Interfaces\DTOs\IPatientAdverseEventExtractDTO.cs" />
     <Compile Include="Interfaces\Extracts\IAdverseEventExtract.cs" />
