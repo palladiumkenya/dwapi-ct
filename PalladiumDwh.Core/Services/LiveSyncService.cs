@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using log4net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -32,7 +33,7 @@ namespace PalladiumDwh.Core.Services
         }
 
 
-        public async void SyncManifest(ManifestDto dto)
+        public async Task<Result> SyncManifest(ManifestDto dto)
         {
             string requestEndpoint = "manifest";
 
@@ -43,16 +44,19 @@ namespace PalladiumDwh.Core.Services
                 var response = await _httpClient.PostAsync(requestEndpoint, toSend
                 );
                 response.EnsureSuccessStatusCode();
+                return Result.Ok();
             }
             catch (Exception e)
             {
                 Log.Error(e.Message);
+                return Result.Fail(e.Message);
             }
         }
 
-        public async void SyncStats(IFacilityRepository facilityRepository, List<Guid> facilityId)
+        public async Task<Result> SyncStats(IFacilityRepository facilityRepository, List<Guid> facilityId)
         {
             string requestEndpoint = "stats";
+            var results=new List<Result>();
 
             var stats = facilityRepository.GetFacStats(facilityId);
             foreach (var stat in stats)
@@ -63,12 +67,18 @@ namespace PalladiumDwh.Core.Services
                     var toSend = new StringContent(content, Encoding.UTF8, "application/json");
                     var response = await _httpClient.PostAsync(requestEndpoint, toSend);
                     response.EnsureSuccessStatusCode();
+                    results.Add(Result.Ok());
                 }
                 catch (Exception e)
                 {
                     Log.Error(e.Message);
+                    results.Add(Result.Fail(e.Message));
                 }
             }
+            if(results.Any(x=>x.IsFailure))
+                return Result.Fail(results.First(x=>x.IsFailure).Error);
+
+            return Result.Ok();
         }
     }
 }

@@ -97,13 +97,6 @@ namespace PalladiumDwh.Core.Services
            var facManifest = FacilityManifest.Create(manifest);
            _patientExtractRepository.SaveManifest(facManifest);
            _patientExtractRepository.ClearManifest(manifest);
-
-           var fac = _facilityRepository.GetFacilityByCode(manifest.SiteCode);
-           if (null != fac)
-           {
-               var manifestDto=new ManifestDto(fac, facManifest);
-               _liveSyncService?.SyncManifest(manifestDto);
-           }
        }
 
        public void InitList(string queueName)
