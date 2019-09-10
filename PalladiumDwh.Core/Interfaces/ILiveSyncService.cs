@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Shared.Model;
 
@@ -7,7 +9,7 @@ namespace PalladiumDwh.Core.Interfaces
 {
     public interface ILiveSyncService
     {
-        void SyncManifest(ManifestDto manifest);
-        void SyncStats(IFacilityRepository facilityRepository, List<Guid> facilityId);
+        Task<Result> SyncManifest(ManifestDto manifest);
+        Task<Result> SyncStats(IFacilityRepository facilityRepository, List<Guid> facilityId);
     }
 }

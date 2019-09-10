@@ -25,5 +25,16 @@ namespace PalladiumDwh.Core.Exchange
             BuildDate = manifest.DateRecieved;
             PatientCount = manifest.PatientCount;
         }
+
+         public ManifestDto(int code,string fac, FacilityManifest manifest)
+        {
+              Id = manifest.Id;
+              FacilityCode = code;
+            FacilityName = fac;
+            Docket = "NDWH";
+            LogDate = manifest.DateRecieved;
+            BuildDate = manifest.DateRecieved;
+            PatientCount = manifest.PatientCount;
+        }
     }
 }
