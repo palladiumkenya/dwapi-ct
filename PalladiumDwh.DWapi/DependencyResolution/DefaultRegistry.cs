@@ -29,6 +29,9 @@ namespace PalladiumDwh.DWapi.DependencyResolution
 
             For<IMessagingSenderService>().Use<MessagingSenderService>()
                 .Ctor<string>("queueName").Is(Properties.Settings.Default.QueueName);
+
+            For<ILiveSyncService>().Use<LiveSyncService>()
+                .Ctor<string>("baseUrl").Is(Properties.Settings.Default.LiveSync);
         }
     }
 }
