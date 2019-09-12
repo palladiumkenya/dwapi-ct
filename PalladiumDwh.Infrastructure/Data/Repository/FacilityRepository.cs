@@ -29,6 +29,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             var facility = _context.GetConnection().QueryFirstOrDefault<FacilityId>(sql, new {Code = code});
             return facility?.Id;
         }
+
         public Guid? SyncNew(Facility facility)
         {
             var facilityId = GetFacilityIdByCode(facility.Code);
@@ -38,6 +39,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 _context.GetConnection().Execute(facility.SqlInsert());
                 facilityId = facility.Id;
             }
+
             return facilityId;
         }
 
@@ -49,7 +51,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         public MasterFacility GetFacilityByCode(int code)
         {
             string sql = "SELECT * FROM MasterFacility WHERE Code = @Code;";
-            var facility = _context.GetConnection().QueryFirstOrDefault<MasterFacility>(sql, new { Code = code });
+            var facility = _context.GetConnection().QueryFirstOrDefault<MasterFacility>(sql, new {Code = code});
             return facility;
         }
 
@@ -63,6 +65,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 CommitChanges();
                 facilityId = facility.Id;
             }
+
             return facilityId;
         }
 
@@ -84,6 +87,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
 
             }
+
             return list;
         }
 
@@ -100,7 +104,7 @@ select
 (select count(id) from PatientLaboratoryExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientLabExtract,
 (select count(id) from PatientPharmacyExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientPharmacyExtract,
 (select count(id) from PatientStatusExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientStatusExtract,
-(select count(id) from PatientVisitExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientStatusExtract
+(select count(id) from PatientVisitExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientVisitExtract
 
                 ";
 
