@@ -32,7 +32,7 @@ namespace PalladiumDwh.DWapi.Controllers
         }
 
         public async Task<HttpResponseMessage> Post([FromBody] Manifest manifest)
-        {           
+        {
             MasterFacility masterFacility = null;
 
             if (null != manifest)
@@ -62,7 +62,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 {
                     var facManifest = FacilityManifest.Create(manifest);
                     var manifestDto = new ManifestDto(masterFacility, facManifest);
-                    _liveSyncService.SyncManifest(manifestDto);
+                    var result= await _liveSyncService.SyncManifest(manifestDto);
                 }
                 catch (Exception e)
                 {

@@ -20,7 +20,7 @@ namespace PalladiumDwh.Core.Services
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerSettings _serializerSettings;
-      
+
         public LiveSyncService(string baseUrl)
         {
             Uri endPointA = new Uri(baseUrl); // this is the endpoint HttpClient will hit
@@ -40,6 +40,7 @@ namespace PalladiumDwh.Core.Services
             try
             {
                 var content = JsonConvert.SerializeObject(dto, _serializerSettings);
+
                 var toSend = new StringContent(content, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(requestEndpoint, toSend
                 );

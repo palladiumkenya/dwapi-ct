@@ -34,6 +34,7 @@ namespace PalladiumDwh.DWapi.Tests
         private List<PatientExtract> _patients;
         private PatientExtractRepository _patientExtractRepository;
         private IMessagingSenderService _messagingService;
+        private readonly ILiveSyncService _liveSyncService;
         [SetUp]
         public void SetUp()
         {
@@ -65,7 +66,7 @@ namespace PalladiumDwh.DWapi.Tests
 
             
 
-            _controller = new SpotController(_messagingService,_patientExtractRepository);
+            _controller = new SpotController(_messagingService,_patientExtractRepository,_liveSyncService);
             TestHelpers.SetupControllerForTests(_controller, baseUrl, "Spot");
 
              _manifest = new Manifest(_facilityA.Code);

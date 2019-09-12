@@ -13,7 +13,7 @@ namespace PalladiumDwh.Core.Exchange
         public StatsDto(int facilityCode, DateTime updated)
         {
             FacilityCode = facilityCode;
-            Docket = new DocketDto("HTS");
+            Docket = new DocketDto("NDWH");
             Updated = updated;
         }
 
