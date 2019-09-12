@@ -45,7 +45,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             _context.GetConnection().BulkInsert(extracts);
         }
 
-        public void SyncNewPatients(IEnumerable<PatientVisitProfile> profiles, IFacilityRepository facilityRepository)
+        public void SyncNewPatients(IEnumerable<PatientVisitProfile> profiles, IFacilityRepository facilityRepository,
+            List<Guid> facIds)
         {
             var updates = new List<PatientExtract>();
             var inserts = new List<PatientExtract>();
@@ -63,6 +64,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 //update profiles with facilityId.
                 if (!(facilityId == Guid.Empty || null == facilityId))
                 {
+                    facIds.Add(facilityId.Value);
                     var facilityProfiles = profiles.Where(x => x.FacilityInfo.Code == facility.Code).ToList();
 
                     foreach (var profile in facilityProfiles)

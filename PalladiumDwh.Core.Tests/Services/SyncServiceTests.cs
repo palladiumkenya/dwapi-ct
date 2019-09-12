@@ -68,7 +68,7 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
                 _patientVisitRepository = new PatientVisitRepository(_context),
-                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context)
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context), null
             );
 
             _newFacility = Builder<Facility>.CreateNew().Build();
@@ -126,7 +126,7 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
                 _patientVisitRepository = new PatientVisitRepository(_context),
-                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context)
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context), null
             );
 
             var manifest = new Manifest(_facilityA.Code);

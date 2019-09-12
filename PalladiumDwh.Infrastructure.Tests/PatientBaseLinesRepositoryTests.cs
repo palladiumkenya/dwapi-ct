@@ -186,7 +186,7 @@ namespace PalladiumDwh.Infrastructure.Tests
                 _visitProfiles.Add(v);
             }
             
-            _patientBaselinesRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
+            _patientBaselinesRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>());
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Id == facility.Id)
                 .Include(p => p.PatientExtracts.Select(v => v.PatientBaselinesExtracts)).FirstOrDefault();
@@ -204,7 +204,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             patientInfo.MaritalStatus = "Married";
             patientInfo.PatientCccNumber = "15701-0001";
 
-            _patientBaselinesRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
+            _patientBaselinesRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>());
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Id == patientInfo.FacilityId)
                 .Include(p => p.PatientExtracts.Select(v => v.PatientBaselinesExtracts)).FirstOrDefault();
@@ -220,7 +220,7 @@ namespace PalladiumDwh.Infrastructure.Tests
         [Test]
         public void should_Sync_New_Facilty_With_Patients()
         {
-            _patientBaselinesRepository.SyncNewPatients(_newVisitProfiles, _facilityRepository);
+            _patientBaselinesRepository.SyncNewPatients(_newVisitProfiles, _facilityRepository, new List<Guid>());
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Code == _newFacility.Code)
                 .Include(p => p.PatientExtracts.Select(v => v.PatientBaselinesExtracts)).FirstOrDefault();
@@ -241,7 +241,7 @@ namespace PalladiumDwh.Infrastructure.Tests
                 .AddRange(new PatientBaselinesExtractDTO().GeneratePatientBaselinesExtractDtOs(_newBaselinesExtracts).ToList());
 
             
-            _patientBaselinesRepository.SyncNewPatients(_updatedVisitProfiles, _facilityRepository);
+            _patientBaselinesRepository.SyncNewPatients(_updatedVisitProfiles, _facilityRepository, new List<Guid>());
             _context = new DwapiCentralContext();
 
             var facilty = _context.Facilities.Where(x => x.Id == vv.PatientInfo.FacilityId)
@@ -259,7 +259,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             var visit = _visitProfiles.First().BaselinesExtracts.First();
 
             visit.bCD4 = 750;
-            _patientBaselinesRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
+            _patientBaselinesRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>());
             _context = new DwapiCentralContext();
             var patientExtract = _context.PatientExtracts.Where(x => x.Id == visit.PatientId).Include(v=>v.PatientBaselinesExtracts).FirstOrDefault();
             Assert.NotNull(patientExtract);
@@ -274,7 +274,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             var visit = _visitProfiles.First();
             Assert.True(visit.BaselinesExtracts.Count>0);
            visit.BaselinesExtracts.Remove(visit.BaselinesExtracts.First());
-            _patientBaselinesRepository.SyncNewPatients(_visitProfiles, _facilityRepository);
+            _patientBaselinesRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>());
             _context = new DwapiCentralContext();
             var patientExtract = _context.PatientExtracts.Where(x => x.Id == visit.PatientInfo.Id).Include(v => v.PatientBaselinesExtracts).FirstOrDefault();
             Assert.NotNull(patientExtract);

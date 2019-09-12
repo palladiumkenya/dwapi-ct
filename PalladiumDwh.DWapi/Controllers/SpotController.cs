@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using log4net;
 using Newtonsoft.Json;
+using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Profile;
@@ -20,16 +21,18 @@ namespace PalladiumDwh.DWapi.Controllers
         private readonly IPatientExtractRepository _patientExtractRepository;
         private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(Manifest).Name.ToLower();
+        private readonly ILiveSyncService _liveSyncService;
 
-        public SpotController(IMessagingSenderService messagingService,IPatientExtractRepository patientExtractRepository)
+        public SpotController(IMessagingSenderService messagingService,IPatientExtractRepository patientExtractRepository, ILiveSyncService liveSyncService)
         {
             _messagingService = messagingService;
             _messagingService.Initialize(_gateway);
             _patientExtractRepository = patientExtractRepository;
+            _liveSyncService = liveSyncService;
         }
 
         public async Task<HttpResponseMessage> Post([FromBody] Manifest manifest)
-        {           
+        {
             MasterFacility masterFacility = null;
 
             if (null != manifest)
@@ -46,11 +49,24 @@ namespace PalladiumDwh.DWapi.Controllers
                     if (null == masterFacility)
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                             new HttpError($"SiteCode [{manifest.SiteCode}] NOT FOUND in Master Facility List"));
+
+
                 }
                 catch (Exception e)
                 {
                     Log.Debug(e);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+                }
+
+                try
+                {
+                    var facManifest = FacilityManifest.Create(manifest);
+                    var manifestDto = new ManifestDto(masterFacility, facManifest);
+                    var result= await _liveSyncService.SyncManifest(manifestDto);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e.Message);
                 }
 
                 try
