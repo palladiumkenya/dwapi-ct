@@ -33,7 +33,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         public Guid? SyncNew(Facility facility)
         {
             var facilityId = GetFacilityIdByCode(facility.Code);
-            if (facilityId == Guid.Empty || null == facilityId)
+            if (null == facilityId)
             {
                 Log.Debug($"NEW FACILITY {facility}");
                 _context.GetConnection().Execute(facility.SqlInsert());

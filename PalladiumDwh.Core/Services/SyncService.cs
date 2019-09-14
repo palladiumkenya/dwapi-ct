@@ -32,7 +32,7 @@ namespace PalladiumDwh.Core.Services
         private List<PatientPharmacyProfile> _pharmacyProfiles = new List<PatientPharmacyProfile>();
         private List<PatientStatusProfile> _statusProfiles = new List<PatientStatusProfile>();
         private List<PatientAdverseEventProfile> _adverseEventProfiles = new List<PatientAdverseEventProfile>();
-        private ILiveSyncService _liveSyncService;
+        private readonly ILiveSyncService _liveSyncService;
 
 
         public SyncService(IFacilityRepository facilityRepository, IPatientExtractRepository patientExtractRepository,
@@ -54,13 +54,15 @@ namespace PalladiumDwh.Core.Services
             _liveSyncService = liveSyncService;
         }
 
-
+        /// <summary>
+        /// Sync Profile
+        /// </summary>
+        /// <param name="profile"></param>
         public void Sync(object profile)
         {
             if (profile.GetType() == typeof(Manifest))
             {
                 SyncManifest(profile as Manifest);
-
             }
 
             if (profile.GetType() == typeof(PatientARTProfile))

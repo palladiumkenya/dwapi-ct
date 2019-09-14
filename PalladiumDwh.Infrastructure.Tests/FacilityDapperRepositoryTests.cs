@@ -46,6 +46,18 @@ namespace PalladiumDwh.Infrastructure.Tests
         }
 
         [Test]
+        public void should_GetFacilityIdByCode_HandleNull()
+        {
+            var id = _facilityRepository.GetFacilityIdByCode(12);
+
+            Assert.IsNull(id);
+        }
+
+
+
+
+
+        [Test]
         public void should_Sync_New()
         {
             var newFacility = Builder<Facility>.CreateNew().Build();

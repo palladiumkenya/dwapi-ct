@@ -55,27 +55,35 @@ namespace PalladiumDwh.Shared.Model
 
        public string SqlInsert()
        {
-           return $@"
-Insert into Facility(
-    {nameof(Id)},
-    {nameof(Code)},
-    {nameof(Name)},
-    {nameof(Emr)},
-    {nameof(Project)},
-    {nameof(Voided)},
-    {nameof(Processed)},
-    {nameof(Created)}
-    ) 
-values(
-    '{Id}',
-     {Code},
-    '{Name}',
-    '{Emr}',
-    '{Project}',
-    0,
-    0,
-    GetDate()
-    )";
+           var sql= $@"
+BEGIN
+   IF NOT EXISTS (SELECT id FROM Facility 
+                   WHERE Code = {Code})
+   BEGIN
+    Insert into Facility(
+        {nameof(Id)},
+        {nameof(Code)},
+        {nameof(Name)},
+        {nameof(Emr)},
+        {nameof(Project)},
+        {nameof(Voided)},
+        {nameof(Processed)},
+        {nameof(Created)}
+        ) 
+    values(
+        '{Id}',
+         {Code},
+        '{Name}',
+        '{Emr}',
+        '{Project}',
+        0,
+        0,
+        GetDate()
+    )
+  END
+END
+";
+           return sql;
        }
       public string GetStatus()
         {
