@@ -36,6 +36,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             Assert.IsTrue(id != Guid.Empty);
         }
 
+   
         [Test]
         public void should_Sync_New()
         {

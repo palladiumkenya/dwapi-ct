@@ -6,7 +6,7 @@ using PalladiumDwh.Shared.Model.Extract;
 namespace PalladiumDwh.Shared.Model
 {
     public class Facility : Entity, IEquatable<Facility>
-   {
+    {
         public int Code { get; set; }
         public string Name { get; set; }
         public DateTime? Created { get; set; }
@@ -27,35 +27,40 @@ namespace PalladiumDwh.Shared.Model
             Project = project;
         }
 
-      public bool Equals(Facility other)
-      {
+        public void UpdateProfile(string emr, string project)
+        {
+            Emr = emr;
+            Project = project;
+        }
+        public bool Equals(Facility other)
+        {
 
-         //Check whether the compared object is null. 
-         if (Object.ReferenceEquals(other, null)) return false;
+            //Check whether the compared object is null. 
+            if (Object.ReferenceEquals(other, null)) return false;
 
-         //Check whether the compared object references the same data. 
-         if (Object.ReferenceEquals(this, other)) return true;
+            //Check whether the compared object references the same data. 
+            if (Object.ReferenceEquals(this, other)) return true;
 
-         //Check whether the products' properties are equal. 
-         return Code.Equals(other.Code);
-      }
+            //Check whether the products' properties are equal. 
+            return Code.Equals(other.Code);
+        }
 
-      // If Equals() returns true for a pair of objects  
-      // then GetHashCode() must return the same value for these objects. 
+        // If Equals() returns true for a pair of objects  
+        // then GetHashCode() must return the same value for these objects. 
 
-      public override int GetHashCode()
-      {
+        public override int GetHashCode()
+        {
 
-         //Get hash code for the Code field. 
-         int hashProductCode = Code.GetHashCode();
+            //Get hash code for the Code field. 
+            int hashProductCode = Code.GetHashCode();
 
-         //Calculate the hash code for the product. 
-         return hashProductCode;
-      }
+            //Calculate the hash code for the product. 
+            return hashProductCode;
+        }
 
-       public string SqlInsert()
-       {
-           var sql= $@"
+        public string SqlInsert()
+        {
+            var sql = $@"
 BEGIN
    IF NOT EXISTS (SELECT id FROM Facility 
                    WHERE Code = {Code})
@@ -83,15 +88,37 @@ BEGIN
   END
 END
 ";
-           return sql;
-       }
-      public string GetStatus()
+            return sql;
+        }
+
+        public bool ProfileMissing()
+        {
+            return string.IsNullOrWhiteSpace(Emr) || string.IsNullOrWhiteSpace(Project);
+        }
+
+        public string SqlUpdateProfile()
+        {
+            var sql = $@"
+    Update Facility
+    set {nameof(Emr)}='{Emr}',
+        {nameof(Project)}='{Project}'
+";
+            return sql;
+        }
+
+        public string GetStatus()
         {
             return $"{Name} ({Code}) | Patients:{PatientExtracts.Count}";
         }
+
         public override string ToString()
         {
             return $"{Name} ({Code})";
+        }
+
+        public static Facility create(MasterFacility masterFacility)
+        {
+            return new Facility(masterFacility.Code, masterFacility.Name, "", "");
         }
     }
 }

@@ -22,13 +22,15 @@ namespace PalladiumDwh.DWapi.Controllers
         private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(Manifest).Name.ToLower();
         private readonly ILiveSyncService _liveSyncService;
+        private readonly IFacilityRepository _facilityRepository;
 
-        public SpotController(IMessagingSenderService messagingService,IPatientExtractRepository patientExtractRepository, ILiveSyncService liveSyncService)
+        public SpotController(IMessagingSenderService messagingService,IPatientExtractRepository patientExtractRepository, ILiveSyncService liveSyncService, IFacilityRepository facilityRepository)
         {
             _messagingService = messagingService;
             _messagingService.Initialize(_gateway);
             _patientExtractRepository = patientExtractRepository;
             _liveSyncService = liveSyncService;
+            _facilityRepository = facilityRepository;
         }
 
         public async Task<HttpResponseMessage> Post([FromBody] Manifest manifest)
@@ -56,6 +58,15 @@ namespace PalladiumDwh.DWapi.Controllers
                 {
                     Log.Debug(e);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+                }
+
+                try
+                {
+                    _facilityRepository.Enroll(masterFacility);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e.Message);
                 }
 
                 try

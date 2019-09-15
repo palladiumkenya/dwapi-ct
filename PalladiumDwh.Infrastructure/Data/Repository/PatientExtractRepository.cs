@@ -119,31 +119,129 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
         public async Task ClearManifest(Manifest manifest)
         {
-        var connection = _context.Database.Connection as SqlConnection;
+            Log.Debug($"clearing {manifest.SiteCode}...");
+            var cons = _context.Database.Connection.ConnectionString;
 
-        var sql = $@"
+            var sql = $@"
                 DELETE FROM PatientExtract
                 WHERE        
 	                (FacilityId IN (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode})) AND 
-	                (PatientPID NOT IN ({manifest.GetPatientPKsJoined()}))
-                  ";
+	                (PatientPID NOT IN ({manifest.GetPatientPKsJoined()}));";
 
-        if (null != connection)
-        {
-          using (connection)
-          {
-            connection.Open();
 
-            using (var transaction = connection.BeginTransaction())
+            using (var connection=new SqlConnection(cons))
             {
-              await connection.ExecuteAsync(sql, null, transaction, 0);
-              transaction.Commit();
-            }
-          }
-        }
-      }
+                try
+                {
+                    connection.Open();
 
-      public Task<MasterFacility> VerifyFacility(int siteCode)
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        await connection.ExecuteAsync($"{sql}", null, transaction, 0);
+                        transaction.Commit();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e.Message);
+                }
+                
+            }
+
+        }
+
+        public async Task RemoveDuplicates(int siteCode)
+        {
+            Log.Debug($"deduplicating {siteCode}...");
+
+            var cons = _context.Database.Connection.ConnectionString;
+
+            var cleanUpSql = $@"
+                DELETE FROM PatientExtract 
+                WHERE 
+	                Id IN (
+	                SELECT 
+		                Id
+	                FROM 
+		                PatientExtract p inner join
+		                (
+		                SELECT        
+			                FacilityId, PatientPID, COUNT(Id) AS PCount
+		                FROM            
+			                PatientExtract
+		                WHERE
+			                FacilityId IN (SELECT ID FROM Facility WHERE [Code]={siteCode})
+		                GROUP BY 
+			                FacilityId, PatientPID
+		                HAVING        
+			                (COUNT(*) > 1)
+		                ) d on p.PatientPID=d.PatientPID and p.FacilityId=d.FacilityId
+                );";
+
+            using (var connection=new SqlConnection(cons))
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        await connection.ExecuteAsync($"{cleanUpSql}", null, transaction, 0);
+                        transaction.Commit();
+                    }
+                }
+                catch (Exception e)
+                {
+                  Log.Error(e.Message);
+                }
+                
+            }
+
+        }
+
+        public Guid? GetFacilityId(int siteCode)
+        {
+            var cons = _context.Database.Connection.ConnectionString;
+            string sql = " SELECT TOP 1 ID FROM Facility WHERE [Code]=@Code AND Voided=0;";
+            var patientFacility = _context.GetConnection()
+                .QueryFirstOrDefault<PatientFacilityId>(sql, new {Code = siteCode});
+            return patientFacility?.Id;
+        }
+
+        public async Task InitializeManifest(Manifest manifest)
+        {
+            Log.Debug($"intializing {manifest.SiteCode}...");
+
+            var cons = _context.Database.Connection.ConnectionString;
+            var facId = GetFacilityId(manifest.SiteCode);
+
+            if (null != facId)
+            {
+                var sql = manifest.GetInitExtracts(facId.Value);
+
+                try
+                {
+                    using (var connection=new  SqlConnection(cons))
+                    {
+                        connection.Open();
+
+                        using (var transaction = connection.BeginTransaction())
+                        {
+                            await connection.ExecuteAsync($"{sql}", null, transaction, 0);
+                            transaction.Commit();
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e.Message);
+                }
+
+            }
+
+        }
+
+        public Task<MasterFacility> VerifyFacility(int siteCode)
         {
             int originalSiteCode = siteCode;
 

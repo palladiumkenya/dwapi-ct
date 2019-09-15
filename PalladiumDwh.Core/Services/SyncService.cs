@@ -95,11 +95,13 @@ namespace PalladiumDwh.Core.Services
             }
         }
 
-        public void SyncManifest(Manifest manifest)
+        public async void SyncManifest(Manifest manifest)
         {
             var facManifest = FacilityManifest.Create(manifest);
             _patientExtractRepository.SaveManifest(facManifest);
-            _patientExtractRepository.ClearManifest(manifest);
+            await _patientExtractRepository.ClearManifest(manifest);
+            await _patientExtractRepository.RemoveDuplicates(manifest.SiteCode);
+            await _patientExtractRepository.InitializeManifest(manifest);
         }
 
         public void InitList(string queueName)

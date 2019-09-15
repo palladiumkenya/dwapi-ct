@@ -59,7 +59,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 var facilityId = facilityRepository.SyncNew(facility);
 
                 //update profiles with facilityId.
-                if (!(facilityId == Guid.Empty || null == facilityId))
+                if (null != facilityId)
                 {
                     facIds.Add(facilityId.Value);
                     var facilityProfiles = profiles.Where(x => x.FacilityInfo.Code == facility.Code).ToList();
