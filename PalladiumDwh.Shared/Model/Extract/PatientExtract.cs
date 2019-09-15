@@ -160,5 +160,11 @@ namespace PalladiumDwh.Shared.Model.Extract
                 PatientAdverseEventExtracts.Add(e);
             }
         }
+
+        public bool IsInitialized()
+        {
+            return string.IsNullOrWhiteSpace(Gender);
+        }
+
     }
 }

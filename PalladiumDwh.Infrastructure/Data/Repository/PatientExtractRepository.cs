@@ -210,7 +210,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
         public async Task InitializeManifest(Manifest manifest)
         {
-            Log.Debug($"intializing {manifest.SiteCode}...");
+            Log.Debug($"initializing {manifest.SiteCode}...");
 
             var cons = _context.Database.Connection.ConnectionString;
             var facId = GetFacilityId(manifest.SiteCode);

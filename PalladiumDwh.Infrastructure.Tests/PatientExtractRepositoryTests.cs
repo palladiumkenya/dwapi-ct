@@ -168,22 +168,20 @@ namespace PalladiumDwh.Infrastructure.Tests
         [Test]
         public void should_Init_Manifest()
         {
-            var manifest = new Manifest(_facilityA.Code);
+            var fac = _facilities[0];
+            _dbcontext.Database.ExecuteSqlCommand($@"DELETE FROM PatientExtract");
+            var manifest = new Manifest(fac.Code);
             var currentPatients = _patients.Where(x => x.PatientPID > 1000);
             foreach (var p in currentPatients)
             {
                 manifest.AddPatientPk(p.PatientPID);
             }
-
             _patientExtractRepository = new PatientExtractRepository(_dbcontext);
-            _patientExtractRepository.ClearManifest(manifest);
-
-            _patientExtractRepository = new PatientExtractRepository(new DwapiCentralContext());
             _patientExtractRepository.InitializeManifest(manifest);
 
-            var cleanPatients = _patientExtractRepository.GetAllBy(x => x.FacilityId == _facilityA.Id).ToList();
+            var cleanPatients = _patientExtractRepository.GetAllBy(x => x.FacilityId == fac.Id).ToList();
 
-            Assert.IsTrue(cleanPatients.Count == 4);
+            Assert.False(cleanPatients.Any(x=>!x.IsInitialized()));
         }
         [Test]
         public void should_Verify_MasterFacility()
