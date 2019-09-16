@@ -29,23 +29,44 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             var facility = _context.GetConnection().QueryFirstOrDefault<FacilityId>(sql, new {Code = code});
             return facility?.Id;
         }
+        private Facility GetFacility(int code)
+        {
+            string sql = "SELECT * FROM Facility WHERE Code = @Code;";
+            //Thread.Sleep(2000);
+            var facility = _context.GetConnection().QueryFirstOrDefault<Facility>(sql, new { Code = code });
+            return facility;
+        }
 
         public Guid? SyncNew(Facility facility)
         {
-            var facilityId = GetFacilityIdByCode(facility.Code);
-            if (facilityId == Guid.Empty || null == facilityId)
+            var fac = GetFacility(facility.Code);
+            if (null == fac)
             {
                 Log.Debug($"NEW FACILITY {facility}");
                 _context.GetConnection().Execute(facility.SqlInsert());
-                facilityId = facility.Id;
+                return facility.Id;
             }
 
-            return facilityId;
+            if (fac.ProfileMissing())
+            {
+                Log.Debug($"UPDATE FACILITY {facility} Profile");
+                _context.GetConnection().Execute(facility.SqlUpdateProfile());
+            }
+
+            return fac.Id;
         }
 
         public Guid? GetFacilityIdBCode(int code)
         {
             return Find(x => x.Code == code)?.Id;
+        }
+
+        private Facility GetFacilityToEnroll(int code)
+        {
+            string sql = "SELECT * FROM Facility WHERE Code = @Code;";
+            //Thread.Sleep(2000);
+            var facility = _context.GetConnection().QueryFirstOrDefault<Facility>(sql, new { Code = code });
+            return facility;
         }
 
         public MasterFacility GetFacilityByCode(int code)
@@ -97,7 +118,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 select
 (select top 1 Code from Facility where id='{facilityId}') FacilityCode,
 (select max(Created) from PatientExtract where facilityid='{facilityId}') Updated,
-(select count(id) from PatientExtract where facilityid='{facilityId}') PatientExtract,
+(select count(id) from PatientExtract where facilityid='{facilityId}' and Gender is not null) PatientExtract,
 (select count(id) from PatientAdverseEventExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientAdverseEventExtract,
 (select count(id) from PatientArtExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientArtExtract,
 (select count(id) from PatientBaselinesExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientBaselineExtract,
@@ -126,6 +147,17 @@ select
             }
 
             return null;
+        }
+
+        public void Enroll(MasterFacility masterFacility)
+        {
+            var toEnroll = GetFacilityToEnroll(masterFacility.Code);
+            if (null == toEnroll)
+            {
+                var facility = Facility.create(masterFacility);
+                Log.Debug($"NEW FACILITY {facility}");
+                _context.GetConnection().Execute(facility.SqlInsert());
+            }
         }
     }
 }

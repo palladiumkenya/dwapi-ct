@@ -17,5 +17,6 @@ namespace PalladiumDwh.Core.Interfaces
 
         IEnumerable<StatsDto> GetFacStats(IEnumerable<Guid> facilityIds);
         StatsDto GetFacStats(Guid facilityId);
+        void Enroll(MasterFacility masterFacility);
     }
 }

@@ -19,6 +19,8 @@ namespace PalladiumDwh.Core.Interfaces
         Guid? SyncNew(PatientExtract patient);
         void SaveManifest(FacilityManifest facilityManifest);
         Task ClearManifest(Manifest manifest);
+        Task RemoveDuplicates(int siteCode);
+        Task InitializeManifest(Manifest manifest);
         Task<MasterFacility> VerifyFacility(int siteCode);
     }
 }
