@@ -248,3 +248,4 @@ ModelManifest.xml
 
 # JetBrains Rider
 .idea/
+*.DS_Store
