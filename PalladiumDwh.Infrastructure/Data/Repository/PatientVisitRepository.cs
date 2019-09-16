@@ -104,7 +104,15 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             }
 
             if (inserts.Count > 0)
+            {
+                foreach (var p in inserts)
+                {
+                    Log.Debug(new string('*', 40));
+                    Log.Debug($"{p.PatientPID} {p.PatientCccNumber}");
+                    Log.Debug(new string('*', 40));
+                }
                 _context.GetConnection().BulkInsert(inserts);
+            }
 
             if (updates.Count > 0)
                 _context.GetConnection().BulkUpdate(updates);
