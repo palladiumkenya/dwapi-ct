@@ -32,6 +32,7 @@ namespace PalladiumDWh.DwapiService
                 }
                 Log.Debug("Loading DWapiService [Dapper.Plus]...OK");
             }
+
             catch (Exception e)
             {
                 Log.Debug(e);
