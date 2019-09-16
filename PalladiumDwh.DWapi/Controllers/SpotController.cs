@@ -89,15 +89,6 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
-                    await _patientExtractRepository.InitializeManifest(manifest);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e.Message);
-                }
-
-                try
-                {
                     var facManifest = FacilityManifest.Create(manifest);
                     var manifestDto = new ManifestDto(masterFacility, facManifest);
                     var result= await _liveSyncService.SyncManifest(manifestDto);

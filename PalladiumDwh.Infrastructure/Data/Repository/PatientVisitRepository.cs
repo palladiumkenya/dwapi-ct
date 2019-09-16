@@ -81,12 +81,14 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                         //sync patients
 
                         //Get Exisitng
-                        string exisitingSql =$"SELECT Id,PatientPID,FacilityId FROM PatientExtract WHERE FacilityId='{facilityId}' and PatientPID in ({allpatientPIds});";
+                        string exisitingSql =
+                            $"SELECT Id,PatientPID,FacilityId FROM PatientExtract WHERE FacilityId='{facilityId}' and PatientPID in ({allpatientPIds});";
                         var exisitingPatients = _context.GetConnection().Query<PatientExtractId>(exisitingSql).ToList();
 
                         foreach (var profile in facilityUpdatedProfiles)
                         {
-                            var p = exisitingPatients.FirstOrDefault(x => x.PatientPID == profile.PatientInfo.PatientPID);
+                            var p = exisitingPatients.FirstOrDefault(
+                                x => x.PatientPID == profile.PatientInfo.PatientPID);
 
                             if (null != p)
                             {
@@ -98,21 +100,15 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                                 inserts.Add(profile.PatientInfo);
                             }
                         }
+
                         updatedProfiles.AddRange(facilityUpdatedProfiles);
                     }
                 }
             }
 
             if (inserts.Count > 0)
-            {
-                foreach (var p in inserts)
-                {
-                    Log.Debug(new string('*', 40));
-                    Log.Debug($"{p.PatientPID} {p.PatientCccNumber}");
-                    Log.Debug(new string('*', 40));
-                }
-                _context.GetConnection().BulkInsert(inserts);
-            }
+                _context.GetConnection().BulkMerge(inserts);
+
 
             if (updates.Count > 0)
                 _context.GetConnection().BulkUpdate(updates);

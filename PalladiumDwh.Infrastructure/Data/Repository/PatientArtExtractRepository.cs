@@ -60,7 +60,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 var facilityUpdatedProfiles = new List<PatientARTProfile>();
                 //sync facility
                 var facilityId = facilityRepository.SyncNew(facility);
-                
+
 
                 //update profiles with facilityId.
                 if (null != facilityId)
@@ -108,15 +108,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             }
 
             if (inserts.Count > 0)
-            {
-                foreach(var p in inserts)
-                {
-                    Log.Debug(new string('*', 40));
-                    Log.Debug($"{p.PatientPID} {p.PatientCccNumber}");
-                    Log.Debug(new string('*', 40));
-                }
-                _context.GetConnection().BulkInsert(inserts);
-            }
+                _context.GetConnection().BulkMerge(inserts);
+
 
             if (updates.Count > 0)
                 _context.GetConnection().BulkUpdate(updates);

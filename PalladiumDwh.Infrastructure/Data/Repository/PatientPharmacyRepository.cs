@@ -42,87 +42,83 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         ClearNew(patientId);
         _context.GetConnection().BulkInsert(extracts);
       }
-        public void SyncNewPatients(IEnumerable<PatientPharmacyProfile> profiles,
-            IFacilityRepository facilityRepository, List<Guid> facIds)
-        {
-            var updates = new List<PatientExtract>();
-            var inserts = new List<PatientExtract>();
-            var updatedProfiles = new List<PatientPharmacyProfile>();
 
-            //  get facilities from profiles
-            var facilities = profiles.Select(x => x.FacilityInfo).ToList().Distinct();
+      public void SyncNewPatients(IEnumerable<PatientPharmacyProfile> profiles,
+          IFacilityRepository facilityRepository, List<Guid> facIds)
+      {
+          var updates = new List<PatientExtract>();
+          var inserts = new List<PatientExtract>();
+          var updatedProfiles = new List<PatientPharmacyProfile>();
 
-            foreach (var facility in facilities)
-            {
-                var facilityUpdatedProfiles = new List<PatientPharmacyProfile>();
-                //sync facility
-                var facilityId = facilityRepository.SyncNew(facility);
+          //  get facilities from profiles
+          var facilities = profiles.Select(x => x.FacilityInfo).ToList().Distinct();
 
-                //update profiles with facilityId.
-                if (null != facilityId)
-                {
-                    facIds.Add(facilityId.Value);
-                    var facilityProfiles = profiles.Where(x => x.FacilityInfo.Code == facility.Code).ToList();
+          foreach (var facility in facilities)
+          {
+              var facilityUpdatedProfiles = new List<PatientPharmacyProfile>();
+              //sync facility
+              var facilityId = facilityRepository.SyncNew(facility);
 
-                    foreach (var profile in facilityProfiles)
-                    {
-                        profile.PatientInfo.FacilityId = facilityId.Value;
-                        facilityUpdatedProfiles.Add(profile);
-                    }
+              //update profiles with facilityId.
+              if (null != facilityId)
+              {
+                  facIds.Add(facilityId.Value);
+                  var facilityProfiles = profiles.Where(x => x.FacilityInfo.Code == facility.Code).ToList();
 
-                    if (facilityUpdatedProfiles.Count > 0)
-                    {
-                        var patientPIds = facilityUpdatedProfiles.Select(x => x.PatientInfo.PatientPID).ToList();
-                        var allpatientPIds = string.Join(",", patientPIds);
+                  foreach (var profile in facilityProfiles)
+                  {
+                      profile.PatientInfo.FacilityId = facilityId.Value;
+                      facilityUpdatedProfiles.Add(profile);
+                  }
 
-                        //sync patients
+                  if (facilityUpdatedProfiles.Count > 0)
+                  {
+                      var patientPIds = facilityUpdatedProfiles.Select(x => x.PatientInfo.PatientPID).ToList();
+                      var allpatientPIds = string.Join(",", patientPIds);
 
-                        //Get Exisitng
-                        string exisitingSql = $"SELECT Id,PatientPID,FacilityId FROM PatientExtract WHERE FacilityId='{facilityId}' and PatientPID in ({allpatientPIds});";
-                        var exisitingPatients = _context.GetConnection().Query<PatientExtractId>(exisitingSql).ToList();
+                      //sync patients
 
-                        foreach (var profile in facilityUpdatedProfiles)
-                        {
-                            var p = exisitingPatients.FirstOrDefault(x => x.PatientPID == profile.PatientInfo.PatientPID);
+                      //Get Exisitng
+                      string exisitingSql =
+                          $"SELECT Id,PatientPID,FacilityId FROM PatientExtract WHERE FacilityId='{facilityId}' and PatientPID in ({allpatientPIds});";
+                      var exisitingPatients = _context.GetConnection().Query<PatientExtractId>(exisitingSql).ToList();
 
-                            if (null != p)
-                            {
-                                profile.PatientInfo.Id = p.Id;
-                                updates.Add(profile.PatientInfo);
-                            }
-                            else
-                            {
-                                inserts.Add(profile.PatientInfo);
-                            }
-                        }
-                        updatedProfiles.AddRange(facilityUpdatedProfiles);
-                    }
-                }
-            }
+                      foreach (var profile in facilityUpdatedProfiles)
+                      {
+                          var p = exisitingPatients.FirstOrDefault(x => x.PatientPID == profile.PatientInfo.PatientPID);
 
-            if (inserts.Count > 0)
-            {
-                foreach (var p in inserts)
-                {
-                    Log.Debug(new string('*', 40));
-                    Log.Debug($"{p.PatientPID} {p.PatientCccNumber}");
-                    Log.Debug(new string('*', 40));
-                }
-                _context.GetConnection().BulkInsert(inserts);
-            }
+                          if (null != p)
+                          {
+                              profile.PatientInfo.Id = p.Id;
+                              updates.Add(profile.PatientInfo);
+                          }
+                          else
+                          {
+                              inserts.Add(profile.PatientInfo);
+                          }
+                      }
 
-            if (updates.Count > 0)
-                _context.GetConnection().BulkUpdate(updates);
+                      updatedProfiles.AddRange(facilityUpdatedProfiles);
+                  }
+              }
+          }
 
-            foreach (var patientVisitProfile in updatedProfiles)
-            {
-                patientVisitProfile.GenerateRecords(patientVisitProfile.PatientInfo.Id);
-            }
+          if (inserts.Count > 0)
+              _context.GetConnection().BulkMerge(inserts);
 
-            SyncNew(updatedProfiles);
-        }
 
-        public void SyncNew(IEnumerable<PatientPharmacyProfile> profiles)
+          if (updates.Count > 0)
+              _context.GetConnection().BulkUpdate(updates);
+
+          foreach (var patientVisitProfile in updatedProfiles)
+          {
+              patientVisitProfile.GenerateRecords(patientVisitProfile.PatientInfo.Id);
+          }
+
+          SyncNew(updatedProfiles);
+      }
+
+      public void SyncNew(IEnumerable<PatientPharmacyProfile> profiles)
         {
             var ids = new List<string>();
             var extracts = new List<PatientPharmacyExtract>();
