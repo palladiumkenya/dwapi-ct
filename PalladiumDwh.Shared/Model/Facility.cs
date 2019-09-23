@@ -35,26 +35,26 @@ namespace PalladiumDwh.Shared.Model
         public bool Equals(Facility other)
         {
 
-            //Check whether the compared object is null. 
+            //Check whether the compared object is null.
             if (Object.ReferenceEquals(other, null)) return false;
 
-            //Check whether the compared object references the same data. 
+            //Check whether the compared object references the same data.
             if (Object.ReferenceEquals(this, other)) return true;
 
-            //Check whether the products' properties are equal. 
+            //Check whether the products' properties are equal.
             return Code.Equals(other.Code);
         }
 
-        // If Equals() returns true for a pair of objects  
-        // then GetHashCode() must return the same value for these objects. 
+        // If Equals() returns true for a pair of objects
+        // then GetHashCode() must return the same value for these objects.
 
         public override int GetHashCode()
         {
 
-            //Get hash code for the Code field. 
+            //Get hash code for the Code field.
             int hashProductCode = Code.GetHashCode();
 
-            //Calculate the hash code for the product. 
+            //Calculate the hash code for the product.
             return hashProductCode;
         }
 
@@ -102,6 +102,7 @@ END
     Update Facility
     set {nameof(Emr)}='{Emr}',
         {nameof(Project)}='{Project}'
+    where {nameof(Id)}='{Id}'
 ";
             return sql;
         }
