@@ -64,6 +64,17 @@ WHERE
         {
             return string.Join(",", PatientPKs);
         }
+
+        public List<string> GetBatchPatientPKsJoined(int batchCount)
+        {
+            var list=new List<string>();
+            var batches = PatientPKs.Split(batchCount).ToList();
+            foreach (var batch in batches)
+            {
+               list.Add(string.Join(",", batch));
+            }
+            return list;
+        }
         public override string ToString()
         {
             return $"{SiteCode} AllowedToSend ({PatientPKs.Count})";

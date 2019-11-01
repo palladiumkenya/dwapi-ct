@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.Shared.Model;
@@ -31,6 +32,14 @@ namespace PalladiumDwh.Shared.Tests.Model
             var joined = _manifest.GetInitExtracts(Guid.NewGuid());
             Assert.False(string.IsNullOrWhiteSpace(joined));
             Console.WriteLine(joined);
+        }
+
+        [Test]
+        public void should_Get_BatchPatientPKsJoined()
+        {
+            var joined = _manifest.GetBatchPatientPKsJoined(2);
+            Assert.True(joined.Any());
+            joined.ForEach(Console.WriteLine);
         }
     }
 }

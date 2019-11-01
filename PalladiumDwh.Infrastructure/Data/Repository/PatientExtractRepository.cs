@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 {
     public class PatientExtractRepository : GenericRepository<PatientExtract>, IPatientExtractRepository
     {
-        
+
         private readonly DwapiCentralContext _context;
 
         public PatientExtractRepository(DwapiCentralContext context) : base(context)
@@ -34,7 +35,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                      x.PatientPID == patientPID
             );
         }
-        
+
         public PatientExtract FindBy(Guid id)
         {
             string sql = "SELECT * FROM PatientExtract WHERE Id=@Id";
@@ -119,14 +120,46 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
         public async Task ClearManifest(Manifest manifest)
         {
+            var commands = new List<string>();
+
             Log.Debug($"clearing {manifest.SiteCode}...");
             var cons = _context.Database.Connection.ConnectionString;
 
-            var sql = $@"
-                DELETE FROM PatientExtract
-                WHERE        
-	                (FacilityId IN (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode})) AND 
-	                (PatientPID NOT IN ({manifest.GetPatientPKsJoined()}));";
+            var updateProcessedSql = $@"
+                UPDATE 
+	                PatientExtract 
+                SET 
+	                Processed = 0  
+                WHERE
+	                FacilityId IN (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode})";
+
+            commands.Add(updateProcessedSql);
+
+            var batchPks = manifest.GetBatchPatientPKsJoined(5000);
+
+            foreach (var batchPk in batchPks)
+            {
+                var sql = $@"
+                    UPDATE 
+	                    PatientExtract 
+                    SET 
+	                    Processed = 1  
+                    WHERE        
+	                    (FacilityId IN (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode})) AND 
+	                    (PatientPID IN ({batchPk}));";
+
+                commands.Add(sql);
+            }
+
+            var cleanUp = $@"
+               DELETE FROM PatientExtract
+               WHERE
+	                FacilityId IN (SELECT ID FROM Facility WHERE [Code]={manifest.SiteCode}) AND
+	                Processed = 0
+             ";
+
+
+            commands.Add(cleanUp);
 
 
             using (var connection=new SqlConnection(cons))
@@ -135,17 +168,20 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 {
                     connection.Open();
 
-                    using (var transaction = connection.BeginTransaction())
+                    foreach (var sql in commands)
                     {
-                        await connection.ExecuteAsync($"{sql}", null, transaction, 0);
-                        transaction.Commit();
+                        using (var transaction = connection.BeginTransaction())
+                        {
+                            await connection.ExecuteAsync($"{sql}", null, transaction, 0);
+                            transaction.Commit();
+                        }
                     }
                 }
                 catch (Exception e)
                 {
                     Log.Error(e.Message);
                 }
-                
+
             }
 
         }
@@ -194,7 +230,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 {
                   Log.Error(e.Message);
                 }
-                
+
             }
 
         }
