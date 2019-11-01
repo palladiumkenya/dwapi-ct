@@ -47,6 +47,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
+                    Log.Debug("checking SiteCode...");
                     masterFacility = await _patientExtractRepository.VerifyFacility(manifest.SiteCode);
                     if (null == masterFacility)
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
@@ -62,6 +63,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
+                    Log.Debug("checking SiteCode Enrollment...");
                     _facilityRepository.Enroll(masterFacility);
                 }
                 catch (Exception e)
@@ -71,6 +73,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
+                    Log.Debug("clearing Site Manifest...");
                     await _patientExtractRepository.ClearManifest(manifest);
                 }
                 catch (Exception e)
@@ -80,6 +83,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
+                    Log.Debug("removing Site Duplicates...");
                     await _patientExtractRepository.RemoveDuplicates(manifest.SiteCode);
                 }
                 catch (Exception e)
@@ -89,6 +93,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
+                    Log.Debug("posting to SPOT...");
                     var facManifest = FacilityManifest.Create(manifest);
                     var manifestDto = new ManifestDto(masterFacility, facManifest);
                     var result= await _liveSyncService.SyncManifest(manifestDto);
@@ -100,12 +105,13 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
+                    Log.Debug("sending to Queue");
                     await _messagingService.SendAsync(manifest, _gateway);
                     return Request.CreateResponse(HttpStatusCode.OK, $"{masterFacility}");
                 }
                 catch (Exception ex)
                 {
-                    Log.Debug(ex);
+                    Log.Error(ex.Message);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
             }
