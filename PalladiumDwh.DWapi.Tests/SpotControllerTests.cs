@@ -23,12 +23,13 @@ namespace PalladiumDwh.DWapi.Tests
 
         private static readonly string baseUrl = "http://localhost:88/api/Spot";
         private static readonly string syncUrl = "http://localhost:4777/stages/";
+        private static readonly string metric ="{\"EmrName\":\"Demo EMR\",\"EmrVersion\":\"v1.0.0.0\",\"LastLoginDate\":\"1983-07-04T00:00:00\",\"LastMoH731RunDate\":\"1983-07-04T00:00:00\",\"DateExtracted\":\"2019-12-03T14:49:01.703992\",\"Id\":\"0f78f8fe-6396-4bf1-91da-ab1800c2bd90\"}";
 
         private SpotController _controller;
         private List<PatientExtract> _patientWithAllExtracts;
         private Manifest _manifest, _manifestNew;
 
-        
+
         private DwapiCentralContext _dbcontext;
         private List<Facility> _facilities;
         private Facility _facilityA;
@@ -45,6 +46,7 @@ namespace PalladiumDwh.DWapi.Tests
             _dbcontext.Database.ExecuteSqlCommand($@"DELETE FROM [Facility] where Code in (20612,10001)");
 
 
+
             _facilities = TestHelpers.GetTestData<Facility>(2).ToList();
             foreach (var f in _facilities)
             {
@@ -54,7 +56,7 @@ namespace PalladiumDwh.DWapi.Tests
             _facilities[1].Code = 10001;
 
             TestHelpers.CreateTestData(_dbcontext, _facilities.Where(x => x.Code != 10001));
-            _facilityA = _facilities.First();           
+            _facilityA = _facilities.First();
             _patients = TestHelpers.GetTestPatientData(_facilityA, 5).ToList();
             int pid = 1000;
             foreach (var p in _patients)
@@ -64,7 +66,7 @@ namespace PalladiumDwh.DWapi.Tests
             }
 
             TestHelpers.CreateTestData(_dbcontext, _patients);
-            
+
 
             _patientExtractRepository = new PatientExtractRepository(_dbcontext);
             _facilityRepository=new FacilityRepository(_dbcontext);
@@ -76,12 +78,14 @@ namespace PalladiumDwh.DWapi.Tests
             TestHelpers.SetupControllerForTests(_controller, baseUrl, "Spot");
 
              _manifest = new Manifest(_facilityA.Code);
+             _manifest.Metrics = metric;
             var currentPatients = _patients.Where(x => x.PatientPID > 1000).ToList();
             foreach (var p in currentPatients)
             {
                 _manifest.AddPatientPk(p.PatientPID);
             }
             _manifestNew=new Manifest(_facilities[1].Code);
+            _manifestNew.Metrics = metric;
             foreach (var p in currentPatients)
             {
                 _manifestNew.AddPatientPk(p.PatientPID);
@@ -127,7 +131,7 @@ namespace PalladiumDwh.DWapi.Tests
         public void should_Not_Post_InvalidMFL()
         {
             _manifest.SiteCode = 111;
-          
+
             var result = _controller.Post(_manifest).Result;
 
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
