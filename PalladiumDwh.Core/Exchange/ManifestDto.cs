@@ -17,24 +17,26 @@ namespace PalladiumDwh.Core.Exchange
 
         public ManifestDto(MasterFacility facility, FacilityManifest manifest)
         {
-              Id = manifest.Id;
+            Id = manifest.Id;
             FacilityCode = manifest.SiteCode;
             FacilityName = facility.Name;
             Docket = "NDWH";
             LogDate = manifest.DateRecieved;
             BuildDate = manifest.DateRecieved;
             PatientCount = manifest.PatientCount;
+            Cargo = manifest.Metrics;
         }
 
-         public ManifestDto(int code,string fac, FacilityManifest manifest)
+        public ManifestDto(int code, string fac, FacilityManifest manifest)
         {
-              Id = manifest.Id;
-              FacilityCode = code;
+            Id = manifest.Id;
+            FacilityCode = code;
             FacilityName = fac;
             Docket = "NDWH";
             LogDate = manifest.DateRecieved;
             BuildDate = manifest.DateRecieved;
             PatientCount = manifest.PatientCount;
+            Cargo = manifest.Metrics;
         }
     }
 }
