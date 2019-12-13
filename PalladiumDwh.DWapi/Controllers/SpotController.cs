@@ -52,8 +52,6 @@ namespace PalladiumDwh.DWapi.Controllers
                     if (null == masterFacility)
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                             new HttpError($"SiteCode [{manifest.SiteCode}] NOT FOUND in Master Facility List"));
-
-
                 }
                 catch (Exception e)
                 {
@@ -96,7 +94,9 @@ namespace PalladiumDwh.DWapi.Controllers
                     Log.Debug("posting to SPOT...");
                     var facManifest = FacilityManifest.Create(manifest);
                     var manifestDto = new ManifestDto(masterFacility, facManifest);
+                    var metricDtos = MetricDto.Generate(masterFacility, facManifest);
                     var result= await _liveSyncService.SyncManifest(manifestDto);
+                    await _liveSyncService.SyncMetrics(metricDtos);
                 }
                 catch (Exception e)
                 {

@@ -49,6 +49,7 @@ namespace PalladiumDwh.Core.Services
             }
             catch (Exception e)
             {
+                Log.Error($"{requestEndpoint} POST...");
                 Log.Error(e.Message);
                 return Result.Fail(e.Message);
             }
@@ -72,6 +73,7 @@ namespace PalladiumDwh.Core.Services
                 }
                 catch (Exception e)
                 {
+                    Log.Error($"{requestEndpoint} POST...");
                     Log.Error(e.Message);
                     results.Add(Result.Fail(e.Message));
                 }
@@ -80,6 +82,29 @@ namespace PalladiumDwh.Core.Services
                 return Result.Fail(results.First(x=>x.IsFailure).Error);
 
             return Result.Ok();
+        }
+
+        public async Task<Result> SyncMetrics(List<MetricDto> metrics)
+        {
+
+            string requestEndpoint = "metric";
+
+            try
+            {
+                var content = JsonConvert.SerializeObject(metrics, _serializerSettings);
+
+                var toSend = new StringContent(content, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(requestEndpoint, toSend
+                );
+                response.EnsureSuccessStatusCode();
+                return Result.Ok();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"{requestEndpoint} POST...");
+                Log.Error(e.Message);
+                return Result.Fail(e.Message);
+            }
         }
     }
 }

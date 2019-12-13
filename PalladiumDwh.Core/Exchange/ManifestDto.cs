@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
+using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.DTO;
 
 namespace PalladiumDwh.Core.Exchange
 {
@@ -15,6 +19,8 @@ namespace PalladiumDwh.Core.Exchange
         public int PatientCount { get; set; }
         public string Cargo { get; set; }
 
+        public List<FacilityManifestCargo> Metrics { get; set; } = new List<FacilityManifestCargo>();
+
         public ManifestDto(MasterFacility facility, FacilityManifest manifest)
         {
             Id = manifest.Id;
@@ -25,6 +31,7 @@ namespace PalladiumDwh.Core.Exchange
             BuildDate = manifest.DateRecieved;
             PatientCount = manifest.PatientCount;
             Cargo = manifest.Metrics;
+            Metrics = manifest.Cargoes.Where(x => x.CargoType != CargoType.Patient).ToList();
         }
 
         public ManifestDto(int code, string fac, FacilityManifest manifest)
@@ -37,6 +44,7 @@ namespace PalladiumDwh.Core.Exchange
             BuildDate = manifest.DateRecieved;
             PatientCount = manifest.PatientCount;
             Cargo = manifest.Metrics;
+            Metrics = manifest.Cargoes.Where(x => x.CargoType != CargoType.Patient).ToList();
         }
     }
 }

@@ -11,5 +11,6 @@ namespace PalladiumDwh.Core.Interfaces
     {
         Task<Result> SyncManifest(ManifestDto manifest);
         Task<Result> SyncStats(IFacilityRepository facilityRepository, List<Guid> facilityId);
+        Task<Result> SyncMetrics(List<MetricDto> metrics);
     }
 }

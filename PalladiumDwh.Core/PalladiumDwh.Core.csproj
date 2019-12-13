@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Exchange\DocketDto.cs" />
     <Compile Include="Exchange\ManifestDto.cs" />
+    <Compile Include="Exchange\MetricDto.cs" />
     <Compile Include="Exchange\StatDto.cs" />
     <Compile Include="Exchange\StatsDto.cs" />
     <Compile Include="Interfaces\ILiveSyncService.cs" />
