@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PalladiumDwh.Shared.Custom;
+using PalladiumDwh.Shared.Model.DTO;
 
 namespace PalladiumDwh.Shared.Model
 {
@@ -14,6 +15,7 @@ namespace PalladiumDwh.Shared.Model
         public int SiteCode { get; set; }
         public List<int> PatientPKs { get; set; }=new List<int>();
         public string Metrics { get; set; }
+        public List<FacMetric> FacMetrics { get; set; } = new List<FacMetric>();
         public int PatientCount => PatientPKs.Count;
         public string Items => string.Join(",", PatientPKs);
 

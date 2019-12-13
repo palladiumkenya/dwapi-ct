@@ -22,7 +22,7 @@ namespace PalladiumDwh.DWapi.Tests
         private readonly string _queueName = $@".\private$\dwapi.emr.concept";
 
         private static readonly string baseUrl = "http://localhost:88/api/Spot";
-        private static readonly string syncUrl = "http://localhost:4777/stages/";
+        private static readonly string syncUrl = "http://koske-mac:4777/stages/";
         private static readonly string metric ="{\"EmrName\":\"Demo EMR\",\"EmrVersion\":\"v1.0.0.0\",\"LastLoginDate\":\"1983-07-04T00:00:00\",\"LastMoH731RunDate\":\"1983-07-04T00:00:00\",\"DateExtracted\":\"2019-12-03T14:49:01.703992\",\"Id\":\"0f78f8fe-6396-4bf1-91da-ab1800c2bd90\"}";
 
         private SpotController _controller;

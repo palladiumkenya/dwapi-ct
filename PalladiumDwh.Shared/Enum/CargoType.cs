@@ -3,6 +3,7 @@
     public enum CargoType
     {
         Patient,
-        Metrics
+        Metrics,
+        AppMetrics
     }
 }

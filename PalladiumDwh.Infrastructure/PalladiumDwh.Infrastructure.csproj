@@ -104,6 +104,10 @@
     <Compile Include="Migrations\201908230747516_CCCNewFields.Designer.cs">
       <DependentUpon>201908230747516_CCCNewFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912091240219_Cargoz.cs" />
+    <Compile Include="Migrations\201912091240219_Cargoz.Designer.cs">
+      <DependentUpon>201912091240219_Cargoz.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908230747516_CCCNewFields.resx">
       <DependentUpon>201908230747516_CCCNewFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912091240219_Cargoz.resx">
+      <DependentUpon>201912091240219_Cargoz.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

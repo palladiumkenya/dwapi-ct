@@ -1,6 +1,8 @@
-﻿using System;
+﻿using PalladiumDwh.Shared.Model.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace PalladiumDwh.Shared.Model
 {
@@ -26,7 +28,7 @@ namespace PalladiumDwh.Shared.Model
 
         public void AddCargo(string items)
         {
-            var cargo=new FacilityManifestCargo(items,Id);
+            var cargo=new FacilityManifestCargo(items,Id,Enum.CargoType.Patient);
             Cargoes.Add(cargo);
         }
 
@@ -37,13 +39,24 @@ namespace PalladiumDwh.Shared.Model
             Metrics = items;
         }
 
+        public void AddMetricsCargo(FacMetric metric)
+        {
+            var cargo = new FacilityManifestCargo(metric.Metric, Id,metric.CargoType);
+            Cargoes.Add(cargo);
+        }
+
         public static FacilityManifest Create(Manifest manifest)
         {
             var fm = new FacilityManifest(manifest.SiteCode, manifest.PatientCount);
             fm.AddCargo(manifest.Items);
-            if (!string.IsNullOrWhiteSpace(manifest.Metrics))
-                fm.AddMetricsCargo(manifest.Metrics);
 
+            if (manifest.FacMetrics.Any())
+            {
+                foreach (var m in manifest.FacMetrics)
+                {
+                    fm.AddMetricsCargo(m);
+                }
+            }
             return fm;
         }
 

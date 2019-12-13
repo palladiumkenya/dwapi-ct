@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PalladiumDwh.Shared.Enum;
+using System;
 
 namespace PalladiumDwh.Shared.Model
 {
@@ -6,6 +7,7 @@ namespace PalladiumDwh.Shared.Model
     {
         public string Items { get; set; }
         public Guid FacilityManifestId { get; set; }
+        public CargoType CargoType { get; set; } = CargoType.Patient;
 
         public FacilityManifestCargo()
         {
@@ -15,6 +17,11 @@ namespace PalladiumDwh.Shared.Model
         {
             Items = items;
             FacilityManifestId = facilityManifestId;
+        }
+
+        public FacilityManifestCargo(string items, Guid facilityManifestId,CargoType cargoType) : this(items,facilityManifestId)
+        {
+            CargoType = cargoType;
         }
 
         public override string ToString()

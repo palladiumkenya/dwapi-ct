@@ -99,6 +99,7 @@
     <Compile Include="Interfaces\DTOs\IPatientVisitExtractDTO.cs" />
     <Compile Include="Interfaces\Profiles\IPatientAdverseEventProfile.cs" />
     <Compile Include="Model\DTO\FacilityId.cs" />
+    <Compile Include="Model\DTO\FacMetric.cs" />
     <Compile Include="Model\DTO\PatientAdverseEventExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientExtractId.cs" />
     <Compile Include="Model\DTO\PatientFacilityId.cs" />
