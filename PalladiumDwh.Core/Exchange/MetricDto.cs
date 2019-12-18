@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Model;
 
@@ -36,12 +37,15 @@ namespace PalladiumDwh.Core.Exchange
 
         public static List<MetricDto> Generate(MasterFacility masterFacility, FacilityManifest facManifest)
         {
-           var  metrics=new List<MetricDto>();
-           foreach (var cargo in facManifest.Cargoes)
-           {
-               metrics.Add(new MetricDto(masterFacility, cargo));
-           }
-           return metrics;
+            var metrics = new List<MetricDto>();
+            foreach (var cargo in facManifest.Cargoes)
+            {
+                metrics.Add(new MetricDto(masterFacility, cargo));
+            }
+
+            return metrics
+                .Where(x => x.CargoType != CargoType.Patient)
+                .ToList();
         }
     }
 }
