@@ -24,13 +24,16 @@ namespace PalladiumDwh.Core.Tests.Services
         public void SetUp()
         {
             _liveSyncService = new LiveSyncService("http://localhost:4777/stages/");
-            _manifestDtos.Add(new ManifestDto(10000, "Demo Fac 00", new FacilityManifest(10000, 120)));
-            _manifestDtos.Add(new ManifestDto(10001, "Demo Fac 01", new FacilityManifest(10001, 1120)));
+            FacilityManifest manifest = new FacilityManifest(12618, 120);
+            manifest.Id = fmId;
+            _manifestDtos.Add(new ManifestDto(14950, "Demo Fac 00",manifest));
+                //    _manifestDtos.Add(new ManifestDto(14950, "Demo Fac 01", new FacilityManifest(14950, 1120)));
 
-            _metricDtos.Add(new MetricDto(10001, "Demo Fac 01",
-                new FacilityManifestCargo("{\"EmrName\":\"Demo EMR\",\"EmrVersion\":\"v1.0.0.0\",\"LastLoginDate\":\"1983-07-04T00:00:00\",\"LastMoH731RunDate\":\"1983-07-04T00:00:00\",\"DateExtracted\":\"2019-12-13T16:12:21.159234\",\"Id\":\"ff22cd7c-083e-4d6d-b800-ab2200d9a053\"}", fmId, CargoType.AppMetrics)));
-            _metricDtos.Add(new MetricDto(10001, "Demo Fac 01",
-                new FacilityManifestCargo("{\"Version\":\"2.3.9\",\"Name\":\"MasterPatientIndex\",\"LogDate\":\"2019-12-13T12:04:07.536592\",\"LogValue\":\"{\\\"Name\\\":\\\"MasterPatientIndex\\\",\\\"NoLoaded\\\":0,\\\"Version\\\":\\\"2.3.9\\\",\\\"ActionDate\\\":\\\"2019-12-13T12:04:07.535936+03:00\\\"}\",\"Status\":0,\"Display\":\"Master Patient Index\",\"Action\":\"Loaded\",\"Rank\":5,\"Id\":\"b9ae5ec8-bc7f-411e-9ab0-ab22009572d5\"}", fmId, CargoType.Metrics)));
+            _metricDtos.Add(new MetricDto(14950, "Demo Fac 01",
+                new FacilityManifestCargo("{\"EmrName\":\"Demo EMR\",\"EmrVersion\":\"v1.0.0.0\",\"LastLoginDate\":\"1983-07-04T00:00:00\",\"LastMoH731RunDate\":\"1983-07-04T00:00:00\",\"DateExtracted\":\"2019-12-13T16:12:21.159234\",\"Id\":\"ff22cd7c-083e-4d6d-b800-ab2200d9a053\"}", fmId, CargoType.Metrics)));
+
+            _metricDtos.Add(new MetricDto(14950, "Demo Fac 01",
+                new FacilityManifestCargo("{\"Version\":\"2.3.9\",\"Name\":\"MasterPatientIndex\",\"LogDate\":\"2019-12-13T12:04:07.536592\",\"LogValue\":\"{\\\"Name\\\":\\\"MasterPatientIndex\\\",\\\"NoLoaded\\\":0,\\\"Version\\\":\\\"2.3.9\\\",\\\"ActionDate\\\":\\\"2019-12-13T12:04:07.535936+03:00\\\"}\",\"Status\":0,\"Display\":\"Master Patient Index\",\"Action\":\"Loaded\",\"Rank\":5,\"Id\":\"b9ae5ec8-bc7f-411e-9ab0-ab22009572d5\"}", fmId, CargoType.AppMetrics)));
         }
 
         [Test]
@@ -48,7 +51,7 @@ namespace PalladiumDwh.Core.Tests.Services
         {
             var facIds = _manifestDtos.Select(x => x.Id).ToList();
             var facStats = new List<StatsDto>();
-            int fcode = 10000;
+            int fcode = 14950;
             int pCount = 120;
 
             facIds.ToList().ForEach(f =>
@@ -63,7 +66,7 @@ namespace PalladiumDwh.Core.Tests.Services
                 stats.AddStats("PatientStatusExtract", pCount - (pCount * 50) / 100);
                 stats.AddStats("PatientVisitExtract", pCount * 30);
                 facStats.Add(stats);
-                fcode++;
+                // fcode++;
                 pCount = pCount * 10;
             });
 
@@ -79,7 +82,6 @@ namespace PalladiumDwh.Core.Tests.Services
         {
             var result = _liveSyncService.SyncMetrics(_metricDtos).Result;
             Assert.True(result.IsSuccess);
-
         }
     }
 }
