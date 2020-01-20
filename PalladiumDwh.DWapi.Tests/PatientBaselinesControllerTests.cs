@@ -51,10 +51,7 @@ namespace PalladiumDwh.DWapi.Tests
             var messageId = result.Content.ReadAsStringAsync().Result;
             Assert.IsTrue(!string.IsNullOrWhiteSpace(messageId));
 
-            foreach (var m in messageId)
-            {
-                Console.WriteLine($"Message Id [{m}]");
-            }
+            Console.WriteLine($"Message Id [{messageId}]");
         }
 
         [Test]
@@ -68,7 +65,10 @@ namespace PalladiumDwh.DWapi.Tests
             var messageId = result.Content.ReadAsStringAsync().Result;
             Assert.IsTrue(!string.IsNullOrWhiteSpace(messageId));
 
-            Console.WriteLine($"Message Id [{messageId}]");
+            foreach (var m in messageId)
+            {
+                Console.WriteLine($"Message Id [{m}]");
+            }
         }
 
         [TearDown]
