@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
 using log4net;
+using Newtonsoft.Json;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Model.Profile;
 
@@ -64,7 +65,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 try
                 {
                     var messageRef = await _messagingService.SendBatchAsync(patientProfile, _gateway);
-                    return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
+                    return Request.CreateResponse(HttpStatusCode.OK, $"{JsonConvert.SerializeObject(messageRef)}");
                 }
                 catch (Exception ex)
                 {

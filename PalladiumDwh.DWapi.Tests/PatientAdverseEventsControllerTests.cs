@@ -64,10 +64,8 @@ namespace PalladiumDwh.DWapi.Tests
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
             var messageId = result.Content.ReadAsStringAsync().Result;
             Assert.IsTrue(!string.IsNullOrWhiteSpace(messageId));
-            foreach (var m in messageId)
-            {
-                Console.WriteLine($"Message Id [{m}]");
-            }
+
+            Console.WriteLine($"Message Ids [{messageId}]");
         }
 
         [TearDown]
