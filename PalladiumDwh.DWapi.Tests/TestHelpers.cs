@@ -45,7 +45,7 @@ namespace PalladiumDwh.DWapi.Tests
             }
             return patients;
         }
-     
+
 
         public static IEnumerable<PatientExtract> GetTestPatientWithExtracts(Facility facility, int patientCount, int count)
         {
@@ -59,6 +59,7 @@ namespace PalladiumDwh.DWapi.Tests
                 p.AddPatientPharmacyExtracts(Builder<PatientPharmacyExtract>.CreateListOfSize(count).Build().ToList());
                 p.AddPatientStatusExtracts(Builder<PatientStatusExtract>.CreateListOfSize(count).Build().ToList());
                 p.AddPatientVisitExtracts(Builder<PatientVisitExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddPatientAdverseEventExtracts(Builder<PatientAdverseEventExtract>.CreateListOfSize(count).Build().ToList());
 
             }
             return patients;
