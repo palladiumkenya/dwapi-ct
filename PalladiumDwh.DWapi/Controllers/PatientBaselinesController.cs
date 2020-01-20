@@ -52,7 +52,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
         [HttpPost]
         [ActionName("batch")]
-        public async Task<HttpResponseMessage> PostBatch([FromBody] List<PatientAdverseEventProfile> patientProfile)
+        public async Task<HttpResponseMessage> PostBatch([FromBody] List<PatientBaselineProfile> patientProfile)
         {
             if (null != patientProfile && patientProfile.Any())
             {

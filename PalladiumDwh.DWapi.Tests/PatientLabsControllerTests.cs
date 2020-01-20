@@ -54,6 +54,20 @@ namespace PalladiumDwh.DWapi.Tests
             Console.WriteLine($"Message Id [{messageId}]");
         }
 
+        [Test]
+        public void should_PostBatch()
+        {
+            var profile = PatientLabProfile.Create(_facility, _patientWithAllExtracts);
+
+            var result = _controller.PostBatch(profile).Result;
+
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            var messageId = result.Content.ReadAsStringAsync().Result;
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(messageId));
+
+            Console.WriteLine($"Message Id [{messageId}]");
+        }
+
         [TearDown]
         public void TearDown()
         {

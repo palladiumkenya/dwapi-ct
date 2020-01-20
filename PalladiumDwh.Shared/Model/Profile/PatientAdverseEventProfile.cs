@@ -35,6 +35,7 @@ namespace PalladiumDwh.Shared.Model.Profile
 
             return patientProfiles;
         }
+
         public override bool IsValid()
         {
             return base.IsValid() && AdverseEventExtracts.Count > 0;

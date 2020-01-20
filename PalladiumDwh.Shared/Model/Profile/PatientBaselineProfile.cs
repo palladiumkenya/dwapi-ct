@@ -26,6 +26,17 @@ namespace PalladiumDwh.Shared.Model.Profile
             return patientProfile;
         }
 
+        public static List<PatientBaselineProfile> Create(Facility facility, List<PatientExtract> patients)
+        {
+            var patientProfiles=new List<PatientBaselineProfile>();
+            foreach (var patient in patients)
+            {
+                var patientProfile = Create(facility, patient);
+                patientProfiles.Add(patientProfile);
+            }
+
+            return patientProfiles;
+        }
         public override bool IsValid()
         {
             return base.IsValid() && BaselinesExtracts.Count > 0;
