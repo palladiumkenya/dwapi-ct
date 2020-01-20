@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Messaging;
 using System.Threading.Tasks;
 using PalladiumDwh.Core.Interfaces;
@@ -47,6 +48,20 @@ namespace PalladiumDwh.Core.Services
             return refId;
         }
 
+        public List<string> SendBatch(IEnumerable<dynamic> messages, string gateway = "")
+        {
+            var list = new List<string>();
+
+            foreach (var m in messages)
+            {
+                m.GeneratePatientRecord();
+                string id = Send(m);
+                list.Add(id);
+            }
+
+            return list;
+        }
+
         public Message CreateMessage(object message)
         {
             return Utility.CreateMessage(message);
@@ -55,6 +70,11 @@ namespace PalladiumDwh.Core.Services
         public Task<string> SendAsync(object message, string gateway = "")
         {
             return Task.Run(() => Send(message, gateway));
+        }
+
+        public Task<List<string>> SendBatchAsync(IEnumerable<dynamic>  messages, string gateway = "")
+        {
+            return Task.Run(() => SendBatch(messages, gateway));
         }
     }
 }

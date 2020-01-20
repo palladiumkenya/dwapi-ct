@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -42,6 +44,35 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
             }
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new PatientLabProfile().GetType().Name}' is null"));
+        }
+
+        [HttpPost]
+        [ActionName("batch")]
+        public async Task<HttpResponseMessage> PostBatch([FromBody] List<PatientLabProfile> patientProfile)
+        {
+            if (null != patientProfile && patientProfile.Any())
+            {
+                if (patientProfile.Any(x => !x.IsValid()))
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                        new HttpError(
+                            "Invalid data,Please ensure its has Patient,Facility and atleast one (1) Extract"));
+                }
+
+                try
+                {
+                    var messageRef = await _messagingService.SendBatchAsync(patientProfile, _gateway);
+                    return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
+                }
+                catch (Exception ex)
+                {
+                    Log.Debug(ex);
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                }
+            }
+
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                new HttpError($"The expected '{new PatientLabProfile().GetType().Name}' is null"));
         }
     }
 }
