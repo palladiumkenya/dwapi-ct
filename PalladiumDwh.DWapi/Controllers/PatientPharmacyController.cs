@@ -18,6 +18,7 @@ namespace PalladiumDwh.DWapi.Controllers
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(PatientPharmacyProfile).Name.ToLower();
+
         public PatientPharmacyController(IMessagingSenderService messagingService)
         {
             _messagingService = messagingService;
