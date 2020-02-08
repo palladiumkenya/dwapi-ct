@@ -25,7 +25,6 @@ namespace PalladiumDwh.DWapi.Controllers
             _messagingService.Initialize(_gateway);
         }
 
-        [Route("PatientArt")]
         public async Task<HttpResponseMessage> Post([FromBody] PatientARTProfile patientProfile)
         {
             if (null != patientProfile)
@@ -50,8 +49,7 @@ namespace PalladiumDwh.DWapi.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new PatientARTProfile().GetType().Name}' is null") );
         }
 
-        [Route("PatientArt")]
-        [Route("v2/PatientArt")]
+        [Route("api/v2/PatientArt")]
         public async Task<HttpResponseMessage> PostBatch([FromBody] List<PatientARTProfile> patientProfile)
         {
             if (null != patientProfile && patientProfile.Any())

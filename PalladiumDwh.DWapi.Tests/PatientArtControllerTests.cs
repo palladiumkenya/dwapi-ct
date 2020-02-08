@@ -4,6 +4,7 @@ using System.Linq;
 using System.Messaging;
 using System.Net;
 using FizzWare.NBuilder;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Services;
@@ -58,7 +59,7 @@ namespace PalladiumDwh.DWapi.Tests
         public void should_PostBatch()
         {
             var profile = PatientARTProfile.Create(_facility, _patientWithAllExtracts);
-
+            var json = JsonConvert.SerializeObject(profile);
             var result = _controller.PostBatch(profile).Result;
 
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
