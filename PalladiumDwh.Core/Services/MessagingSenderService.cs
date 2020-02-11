@@ -48,15 +48,15 @@ namespace PalladiumDwh.Core.Services
             return refId;
         }
 
-        public List<string> SendBatch(IEnumerable<dynamic> messages, string gateway = "")
+        public List<Guid> SendBatch(IEnumerable<dynamic> messages, string gateway = "")
         {
-            var list = new List<string>();
+            var list = new List<Guid>();
 
             foreach (var m in messages)
             {
                 m.GeneratePatientRecord();
                 string id = Send(m);
-                list.Add(id);
+                list.Add(m.Id);
             }
 
             return list;
@@ -72,7 +72,7 @@ namespace PalladiumDwh.Core.Services
             return Task.Run(() => Send(message, gateway));
         }
 
-        public Task<List<string>> SendBatchAsync(IEnumerable<dynamic>  messages, string gateway = "")
+        public Task<List<Guid>> SendBatchAsync(IEnumerable<dynamic>  messages, string gateway = "")
         {
             return Task.Run(() => SendBatch(messages, gateway));
         }

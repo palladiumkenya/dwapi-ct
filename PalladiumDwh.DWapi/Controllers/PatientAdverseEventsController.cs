@@ -54,8 +54,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 new HttpError($"The expected '{new PatientAdverseEventProfile().GetType().Name}' is null"));
         }
 
-        [HttpPost]
-        [ActionName("batch")]
+        [Route("api/v2/PatientAdverseEvents")]
         public async Task<HttpResponseMessage> PostBatch([FromBody] List<PatientAdverseEventProfile> patientProfile)
         {
             if (null != patientProfile && patientProfile.Any())
@@ -70,7 +69,8 @@ namespace PalladiumDwh.DWapi.Controllers
                 try
                 {
                     var messageRef = await _messagingService.SendBatchAsync(patientProfile, _gateway);
-                    return Request.CreateResponse(HttpStatusCode.OK, $"{JsonConvert.SerializeObject(messageRef)}");
+                    return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
+                        new {BatchKey = messageRef});
                 }
                 catch (Exception ex)
                 {
