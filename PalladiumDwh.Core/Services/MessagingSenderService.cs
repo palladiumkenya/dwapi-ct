@@ -4,6 +4,7 @@ using System.Messaging;
 using System.Reflection;
 using System.Threading.Tasks;
 using Hangfire;
+using Hangfire.SqlServer;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
@@ -57,6 +58,15 @@ namespace PalladiumDwh.Core.Services
             var list = new List<string> {Guid.NewGuid().ToString()};
             try
             {
+                JobStorage.Current = new SqlServerStorage("DWAPICentral", new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true
+                });
                 BackgroundJob.Enqueue(() =>SendBatchMessages(messages));
             }
             catch (Exception ex)
