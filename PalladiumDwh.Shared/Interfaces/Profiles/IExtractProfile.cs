@@ -9,7 +9,6 @@ namespace PalladiumDwh.Shared.Interfaces.Profiles
         List<T> Extracts { get; set; }
         bool IsValid();
         bool HasData();
-        void GeneratePatientRecord();
         void GenerateRecords(Guid patientId);
     }
 }

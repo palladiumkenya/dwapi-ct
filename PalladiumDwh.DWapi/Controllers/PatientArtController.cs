@@ -6,9 +6,11 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Hangfire;
 using log4net;
 using Newtonsoft.Json;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.DWapi.Helpers;
 using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Controllers
@@ -63,7 +65,10 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
-                    var messageRef = await _messagingService.SendBatchAsync(patientProfile, _gateway);
+                    var messenger = new Messenger();
+                    BackgroundJob.Enqueue(() => messenger.Send(_gateway, _messagingService, patientProfile));
+                    
+                    var messageRef =await Task.FromResult(new List<string> { Guid.NewGuid().ToString() });
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
                         new {BatchKey = messageRef});
                 }
