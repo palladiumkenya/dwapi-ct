@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Messaging;
 using System.Threading.Tasks;
+using Hangfire;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 
@@ -50,16 +51,20 @@ namespace PalladiumDwh.Core.Services
 
         public List<string> SendBatch(IEnumerable<dynamic> messages, string gateway = "")
         {
-            var list = new List<string>();
+            var list = new List<string> {Guid.NewGuid().ToString()};
 
+            BackgroundJob.Enqueue(() =>SendBatchMessages(messages));
+
+            return list;
+        }
+
+        public void SendBatchMessages(IEnumerable<dynamic> messages)
+        {
             foreach (var m in messages)
             {
                 m.GeneratePatientRecord();
                 string id = Send(m);
-                list.Add(id);
             }
-
-            return list;
         }
 
         public Message CreateMessage(object message)
