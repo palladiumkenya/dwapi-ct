@@ -1,7 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net.Http.Extensions.Compression.Core.Compressors;
 using System.Web.Http;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
+using GlobalConfiguration = System.Web.Http.GlobalConfiguration;
 
 namespace PalladiumDwh.DWapi
 {
@@ -11,6 +15,16 @@ namespace PalladiumDwh.DWapi
         {
             // Web API configuration and services
             GlobalConfiguration.Configuration.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
+
+            Hangfire.GlobalConfiguration.Configuration.UseSqlServerStorage("DWAPICentral", new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true
+                });
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -25,9 +39,9 @@ namespace PalladiumDwh.DWapi
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
-            
+
             StructuremapWebApi.Start();
-            
+
         }
     }
 }
