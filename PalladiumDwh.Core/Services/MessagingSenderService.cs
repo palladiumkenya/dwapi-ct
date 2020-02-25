@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Messaging;
+using System.Reflection;
 using System.Threading.Tasks;
 using Hangfire;
+using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 
@@ -10,6 +12,7 @@ namespace PalladiumDwh.Core.Services
 {
     public class MessagingSenderService :MessagingService, IMessagingSenderService
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public MessagingSenderService(string queueName) : base(queueName)
         {
         }
@@ -52,8 +55,16 @@ namespace PalladiumDwh.Core.Services
         public List<string> SendBatch(IEnumerable<dynamic> messages, string gateway = "")
         {
             var list = new List<string> {Guid.NewGuid().ToString()};
-
-            BackgroundJob.Enqueue(() =>SendBatchMessages(messages));
+            try
+            {
+                BackgroundJob.Enqueue(() =>SendBatchMessages(messages));
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Batch POST Error...");
+                Log.Error(ex.Message);
+                throw;
+            }
 
             return list;
         }
