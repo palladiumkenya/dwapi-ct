@@ -18,6 +18,10 @@ namespace PalladiumDwh.Core.Services
         {
         }
 
+        public MessagingSenderService(string queueName, string backlogQueueName, string backlogDeadQueueName, object queue, object backlogQueue, object backlogDeadQueue) : base(queueName, backlogQueueName, backlogDeadQueueName, queue, backlogQueue, backlogDeadQueue)
+        {
+        }
+
         public string Send(object message, string gateway = "")
         {
             string refId;

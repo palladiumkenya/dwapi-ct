@@ -10,7 +10,7 @@ namespace PalladiumDwh.Core.Services
     public abstract class MessagingService : IMessagingService
     {
         internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly string _queueName;
+        protected readonly string _queueName;
 
         public virtual string QueueName { get; private set; }
         public string BacklogQueueName { get; private set; }
@@ -18,9 +18,20 @@ namespace PalladiumDwh.Core.Services
         public virtual object Queue { get; private set; }
         public virtual object BacklogQueue { get; private set; }
         public virtual object BacklogDeadQueue { get; private set; }
+
         protected MessagingService(string queueName)
         {
             _queueName = queueName;
+        }
+
+        protected MessagingService(string queueName, string backlogQueueName, string backlogDeadQueueName, object queue, object backlogQueue, object backlogDeadQueue)
+        {
+            QueueName = queueName;
+            BacklogQueueName = backlogQueueName;
+            BacklogDeadQueueName = backlogDeadQueueName;
+            Queue = queue;
+            BacklogQueue = backlogQueue;
+            BacklogDeadQueue = backlogDeadQueue;
         }
 
         public void Initialize(string gateway = "")
@@ -109,7 +120,7 @@ namespace PalladiumDwh.Core.Services
 
         public int GetNumberOfMessages(string gateway, bool isJournal=false)
         {
-            
+
             if (isJournal)
                 gateway= $@"{gateway}\Journal$";
 
