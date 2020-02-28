@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Reflection;
 using System.Threading.Tasks;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Interfaces.Profiles;
-using PalladiumDwh.Shared.Model.Profile;
 using Quartz;
 using Quartz.Impl;
 
@@ -16,15 +14,11 @@ namespace PalladiumDwh.DWapi.Helpers
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private IScheduler scheduler;
-        private NameValueCollection props;
         private StdSchedulerFactory factory;
+
         public MessengerScheduler()
         {
-            props= new NameValueCollection
-            {
-                { "quartz.serializer.type", "binary" }
-            };
-            factory = new StdSchedulerFactory(props);
+            factory = new StdSchedulerFactory();
         }
 
         public async void Start()
@@ -52,7 +46,7 @@ namespace PalladiumDwh.DWapi.Helpers
         }
         public async void Shutdown()
         {
-            await scheduler.Shutdown();
+            await scheduler.Shutdown(true);
         }
     }
 }

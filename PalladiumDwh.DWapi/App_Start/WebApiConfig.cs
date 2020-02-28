@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http.Extensions.Compression.Core.Compressors;
 using System.Web.Http;
-using Hangfire;
-using Hangfire.SqlServer;
 using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
 using GlobalConfiguration = System.Web.Http.GlobalConfiguration;
 

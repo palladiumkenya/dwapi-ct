@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using PalladiumDwh.Core.Exchange;
-using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Core.Interfaces
 {

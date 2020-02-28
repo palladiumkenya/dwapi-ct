@@ -3,8 +3,6 @@ using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Hangfire;
-using Hangfire.SqlServer;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using GlobalConfiguration = System.Web.Http.GlobalConfiguration;

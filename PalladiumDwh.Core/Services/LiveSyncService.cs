@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.Core.Services
 {

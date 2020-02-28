@@ -1,5 +1,4 @@
-﻿using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Services;
+﻿using PalladiumDwh.Core.Services;
 using PalladiumDwh.Shared.Interfaces.Profiles;
 using System.Collections.Generic;
 

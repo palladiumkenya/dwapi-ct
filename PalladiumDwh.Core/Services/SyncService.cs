@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using PalladiumDwh.Core.Exchange;
-using PalladiumDwh.Shared.Custom;
 
 namespace PalladiumDwh.Core.Services
 {
