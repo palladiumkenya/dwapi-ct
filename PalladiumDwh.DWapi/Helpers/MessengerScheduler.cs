@@ -37,7 +37,7 @@ namespace PalladiumDwh.DWapi.Helpers
         public async Task Run<T>(List<T> patientProfile,string gateway) where T :IProfile
         {
             IJobDetail job = JobBuilder
-                .Create<MessengerJob>()
+                .Create<MessengerJob<T>>()
                 .Build();
 
             job.JobDataMap["profilez"] = patientProfile;

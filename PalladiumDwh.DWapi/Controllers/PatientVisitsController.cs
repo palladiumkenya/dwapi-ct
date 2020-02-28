@@ -18,9 +18,11 @@ namespace PalladiumDwh.DWapi.Controllers
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(PatientVisitProfile).Name.ToLower();
-        public PatientVisitsController(IMessagingSenderService messagingService)
+        private readonly IMessengerScheduler _messengerScheduler;
+        public PatientVisitsController(IMessagingSenderService messagingService,IMessengerScheduler messengerScheduler)
         {
             _messagingService = messagingService;
+            _messengerScheduler = messengerScheduler;
             _messagingService.Initialize(_gateway);
         }
 
@@ -62,7 +64,9 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
-                    var messageRef = await _messagingService.SendBatchAsync(patientProfile, _gateway);
+                    await _messengerScheduler.Run(patientProfile, _gateway);
+
+                    var messageRef =await Task.FromResult(new List<string> { Guid.NewGuid().ToString() });
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
                         new {BatchKey = messageRef});
                 }
