@@ -8,6 +8,7 @@ using NUnit.Framework;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.DWapi.Controllers;
+using PalladiumDwh.DWapi.Helpers;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 using PalladiumDwh.Shared.Model.Profile;
@@ -32,7 +33,7 @@ namespace PalladiumDwh.DWapi.Tests
         {
             _messagingService = new MessagingSenderService(_queueName);
 
-            _controller = new PatientPharmacyController(_messagingService);
+            _controller = new PatientPharmacyController(_messagingService,new MessengerScheduler());
             TestHelpers.SetupControllerForTests(_controller, baseUrl, "PatientPharmacy");
 
             _facility = Builder<Facility>.CreateNew().Build();
