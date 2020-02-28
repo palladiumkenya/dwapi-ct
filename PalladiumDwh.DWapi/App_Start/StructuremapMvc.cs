@@ -30,20 +30,22 @@ namespace PalladiumDwh.DWapi {
         #region Public Properties
 
         public static StructureMapDependencyScope StructureMapDependencyScope { get; set; }
+        public static IContainer DwapiIContainer;
 
         #endregion
-		
+
 		#region Public Methods and Operators
-		
+
 		public static void End() {
             StructureMapDependencyScope.Dispose();
         }
-		
+
         public static void Start() {
-            IContainer container = IoC.Initialize();
+            var container = IoC.Initialize();
             StructureMapDependencyScope = new StructureMapDependencyScope(container);
             DependencyResolver.SetResolver(StructureMapDependencyScope);
             DynamicModuleUtility.RegisterModule(typeof(StructureMapScopeModule));
+            DwapiIContainer = container;
         }
 
         #endregion

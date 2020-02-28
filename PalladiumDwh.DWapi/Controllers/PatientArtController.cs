@@ -21,11 +21,13 @@ namespace PalladiumDwh.DWapi.Controllers
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(PatientARTProfile).Name.ToLower();
+        private readonly ProfileScheduler _profileScheduler;
 
         public PatientArtController(IMessagingSenderService messagingService)
         {
             _messagingService = messagingService;
             _messagingService.Initialize(_gateway);
+            _profileScheduler=new ProfileScheduler();
         }
 
         public async Task<HttpResponseMessage> Post([FromBody] PatientARTProfile patientProfile)
@@ -66,16 +68,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
-                    var mss=new MessagingSenderService(
-                        _messagingService.QueueName,
-                        _messagingService.BacklogQueueName,
-                        _messagingService.BacklogDeadQueueName,
-                        _messagingService.Queue,
-                        _messagingService.BacklogQueue,
-                        _messagingService.BacklogDeadQueue);
-
-                    var messenger = new Messenger();
-                    BackgroundJob.Enqueue(() => messenger.Send(_gateway, mss, patientProfile));
+                    await _profileScheduler.Run(patientProfile);
 
                     var messageRef =await Task.FromResult(new List<string> { Guid.NewGuid().ToString() });
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,

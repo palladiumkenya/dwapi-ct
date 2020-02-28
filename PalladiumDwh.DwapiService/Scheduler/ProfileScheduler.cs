@@ -13,56 +13,57 @@ namespace PalladiumDWh.DwapiService.Scheduler
 
     public class ProfileScheduler : IProfileScheduler
     {
-      private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-    private IScheduler _scheduler;
+        private IScheduler _scheduler;
 
-      public void Run()
-      {
-        _scheduler = StdSchedulerFactory.GetDefaultScheduler();
-        _scheduler.Start();
-
-      Log.Debug("DWapiService started !");
-
-      var jobs = new List<Type>
+        public void Run()
         {
-          typeof(SyncManifestJob),
-          typeof(SyncPatientARTJob),
-          typeof(SyncPatientBaselineJob),
-          typeof(SyncPatientPharmacyJob),
-          typeof(SyncPatientLabJob),
-          typeof(SyncPatientVisitJob),
-          typeof(SyncPatientAdverseEventJob),
-          typeof(SyncPatientStatusJob)
-        };
+            _scheduler = StdSchedulerFactory.GetDefaultScheduler();
+            _scheduler.Start();
 
-        foreach (var job in jobs)
-          _scheduler.ScheduleJob(GetJobDetail(job), GeTrigger(job));
-      }
+            Log.Debug("DWapiService started !");
 
-      private IJobDetail GetJobDetail(Type jobType)
+            var jobs = new List<Type>
+            {
+                typeof(SyncManifestJob),
+                typeof(SyncPatientARTJob),
+                typeof(SyncPatientBaselineJob),
+                typeof(SyncPatientPharmacyJob),
+                typeof(SyncPatientLabJob),
+                typeof(SyncPatientVisitJob),
+                typeof(SyncPatientAdverseEventJob),
+                typeof(SyncPatientStatusJob)
+            };
+
+            foreach (var job in jobs)
+                _scheduler.ScheduleJob(GetJobDetail(job), GeTrigger(job));
+        }
+
+        private IJobDetail GetJobDetail(Type jobType)
         {
             string jobName = $"j{jobType.Name}";
             string jobGroup = $"j{jobType.Name}group";
 
             var job = JobBuilder.Create(jobType)
-                 .WithIdentity($"{jobName}", $"{jobGroup}")
-                 .Build();
+                .WithIdentity($"{jobName}", $"{jobGroup}")
+                .Build();
 
             return job;
         }
+
         private ITrigger GeTrigger(Type jobType)
         {
             string triggerName = $"t{jobType.Name}";
             string triggerGroup = $"t{jobType.Name}group";
 
             var trigger = TriggerBuilder.Create()
-              .WithIdentity($"{triggerName}", $"{triggerGroup}")
-              .StartNow()
-              .WithSimpleSchedule(x => x
-                  .WithIntervalInSeconds(Properties.Settings.Default.QueuePoll)
-                  .RepeatForever())
-              .Build();
+                .WithIdentity($"{triggerName}", $"{triggerGroup}")
+                .StartNow()
+                .WithSimpleSchedule(x => x
+                    .WithIntervalInSeconds(Properties.Settings.Default.QueuePoll)
+                    .RepeatForever())
+                .Build();
 
             return trigger;
         }
@@ -71,5 +72,5 @@ namespace PalladiumDWh.DwapiService.Scheduler
         {
             _scheduler.Shutdown(true);
         }
-    } 
+    }
 }

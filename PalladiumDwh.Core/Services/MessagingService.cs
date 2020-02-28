@@ -24,16 +24,6 @@ namespace PalladiumDwh.Core.Services
             _queueName = queueName;
         }
 
-        protected MessagingService(string queueName, string backlogQueueName, string backlogDeadQueueName, object queue, object backlogQueue, object backlogDeadQueue)
-        {
-            QueueName = queueName;
-            BacklogQueueName = backlogQueueName;
-            BacklogDeadQueueName = backlogDeadQueueName;
-            Queue = queue;
-            BacklogQueue = backlogQueue;
-            BacklogDeadQueue = backlogDeadQueue;
-        }
-
         public void Initialize(string gateway = "")
         {
 
