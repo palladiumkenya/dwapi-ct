@@ -30,6 +30,7 @@ namespace PalladiumDwh.DWapi
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
+            /*
             Hangfire.GlobalConfiguration.Configuration.UseSqlServerStorage("DWAPICentral", new SqlServerStorageOptions
             {
                 CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
@@ -39,7 +40,7 @@ namespace PalladiumDwh.DWapi
                 UsePageLocksOnDequeue = true,
                 DisableGlobalLocks = true
             });
-
+            */
             StructuremapWebApi.Start();
 
         }
