@@ -12,41 +12,47 @@ using Quartz.Impl;
 
 namespace PalladiumDwh.DWapi.Helpers
 {
-    public class ProfileScheduler
+    public class MessengerScheduler:IMessengerScheduler
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-        public async Task Run<T>(List<T> patientProfile) where T :IProfile
+        private IScheduler scheduler;
+        private NameValueCollection props;
+        private StdSchedulerFactory factory;
+        public MessengerScheduler()
         {
-
-            NameValueCollection props = new NameValueCollection
+            props= new NameValueCollection
             {
                 { "quartz.serializer.type", "binary" }
             };
-            StdSchedulerFactory factory = new StdSchedulerFactory(props);
-            IScheduler scheduler = await factory.GetScheduler();
+            factory = new StdSchedulerFactory(props);
+        }
 
+        public async void Start()
+        {
+            scheduler = await factory.GetScheduler();
             // and start it off
             await scheduler.Start();
+        }
 
-            // define the job and tie it to our HelloJob class
-            IJobDetail job = JobBuilder.Create<MessengerJob>()
-                .WithIdentity("job1", "group1")
+        public async Task Run<T>(List<T> patientProfile,string gateway) where T :IProfile
+        {
+            IJobDetail job = JobBuilder
+                .Create<MessengerJob>()
                 .Build();
 
             job.JobDataMap["profilez"] = patientProfile;
+            job.JobDataMap["gateway"] =gateway;
 
-            // Trigger the job to run now, and then repeat every 10 seconds
-            ITrigger trigger = TriggerBuilder.Create()
-                .WithIdentity("trigger1", "group1")
+            ITrigger trigger = TriggerBuilder
+                .Create()
                 .StartNow()
                 .Build();
 
-            // Tell quartz to schedule the job using our trigger
             await scheduler.ScheduleJob(job, trigger);
-
-            // and last shut down the scheduler when you are ready to close your program
+        }
+        public async void Shutdown()
+        {
             await scheduler.Shutdown();
         }
- }
+    }
 }

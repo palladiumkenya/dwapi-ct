@@ -248,7 +248,7 @@
     </Compile>
     <Compile Include="Helpers\Messenger.cs" />
     <Compile Include="Helpers\MessengerJob.cs" />
-    <Compile Include="Helpers\ProfileScheduler.cs" />
+    <Compile Include="Helpers\MessengerScheduler.cs" />
     <Compile Include="Models\Subscriber.cs" />
     <Compile Include="Models\Queues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
