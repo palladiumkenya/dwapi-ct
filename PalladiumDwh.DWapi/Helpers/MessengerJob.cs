@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Interfaces.Profiles;
+using PalladiumDwh.Shared.Model.Profile;
 using Quartz;
 
 namespace PalladiumDwh.DWapi.Helpers
@@ -16,14 +17,11 @@ namespace PalladiumDwh.DWapi.Helpers
         public Task Execute(IJobExecutionContext context)
         {
             var senderService = StructuremapMvc.DwapiIContainer.GetInstance<IMessagingSenderService>();
-            var profiles = (List<IProfile>) context.JobDetail.JobDataMap["profilez"];
+            var profiles = (List<PatientARTProfile>) context.JobDetail.JobDataMap["profilez"];
             var gateway = context.JobDetail.JobDataMap.GetString("gateway");
 
             foreach (var profile in profiles)
             {
-                Log.Debug(
-                    $"Executed Job {profile.PatientInfo.PatientCccNumber} - {senderService.QueueName} @{DateTime.Now:h:mm:ss tt zz}");
-
                 profile.GeneratePatientRecord();
                 senderService.Send(profile, gateway);
             }
