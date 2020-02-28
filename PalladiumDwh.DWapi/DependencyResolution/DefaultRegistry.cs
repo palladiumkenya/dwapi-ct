@@ -1,5 +1,6 @@
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Services;
+using PalladiumDwh.DWapi.Helpers;
 using PalladiumDwh.Infrastructure.Data;
 using StructureMap;
 
@@ -29,6 +30,10 @@ namespace PalladiumDwh.DWapi.DependencyResolution
 
             For<ILiveSyncService>().Use<LiveSyncService>()
                 .Ctor<string>("baseUrl").Is(Properties.Settings.Default.LiveSync);
+
+            For<IMessengerScheduler>().Use<MessengerScheduler>().Singleton();
+
+
         }
     }
 }
