@@ -108,6 +108,10 @@
     <Compile Include="Migrations\201912091240219_Cargoz.Designer.cs">
       <DependentUpon>201912091240219_Cargoz.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002281458008_QuartzJobDb.cs" />
+    <Compile Include="Migrations\202002281458008_QuartzJobDb.Designer.cs">
+      <DependentUpon>202002281458008_QuartzJobDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -135,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912091240219_Cargoz.resx">
       <DependentUpon>201912091240219_Cargoz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002281458008_QuartzJobDb.resx">
+      <DependentUpon>202002281458008_QuartzJobDb.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

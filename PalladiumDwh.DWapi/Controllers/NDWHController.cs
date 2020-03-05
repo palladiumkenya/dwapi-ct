@@ -1,10 +1,5 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using System.Web.Http;
-using System.Web.Http.Description;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.DWapi.Models;

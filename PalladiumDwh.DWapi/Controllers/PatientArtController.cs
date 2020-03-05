@@ -6,12 +6,8 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Hangfire;
 using log4net;
-using Newtonsoft.Json;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Services;
-using PalladiumDwh.DWapi.Helpers;
 using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Controllers

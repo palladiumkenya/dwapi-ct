@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Messaging;
-using System.Runtime.Remoting.Messaging;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Extentions;

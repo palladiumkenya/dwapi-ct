@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Interfaces.Profiles;
-using PalladiumDwh.Shared.Model.Profile;
 using Quartz;
 
 namespace PalladiumDwh.DWapi.Helpers

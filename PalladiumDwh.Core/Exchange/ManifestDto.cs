@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Model;
-using PalladiumDwh.Shared.Model.DTO;
 
 namespace PalladiumDwh.Core.Exchange
 {
