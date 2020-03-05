@@ -118,7 +118,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 select
 (select top 1 Code from Facility where id='{facilityId}') FacilityCode,
 (select max(Created) from PatientExtract where facilityid='{facilityId}') Updated,
-(select count(id) from PatientExtract where facilityid='{facilityId}' and Gender is not null) PatientExtract,
+(select count(Distinct PatientPID) from PatientExtract where facilityid='{facilityId}' and Gender is not null) PatientExtract,
 (select count(id) from PatientAdverseEventExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientAdverseEventExtract,
 (select count(id) from PatientArtExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientArtExtract,
 (select count(id) from PatientBaselinesExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientBaselineExtract,
