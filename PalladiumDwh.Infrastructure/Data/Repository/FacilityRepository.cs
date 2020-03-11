@@ -131,7 +131,7 @@ select
 
             var result = _context.GetConnection().Query<dynamic>(sql).FirstOrDefault();
 
-            if (null != result)
+            if (null != result && result.PatientExtract > 0)
             {
                 var stats = new StatsDto(result.FacilityCode, result.Updated);
                 stats.AddStats("PatientExtract", result.PatientExtract);
