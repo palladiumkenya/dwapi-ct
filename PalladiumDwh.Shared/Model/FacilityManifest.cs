@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using PalladiumDwh.Shared.Enum;
 
 namespace PalladiumDwh.Shared.Model
 {
@@ -11,6 +12,10 @@ namespace PalladiumDwh.Shared.Model
         public int SiteCode { get; set; }
         public int PatientCount { get; set; }
         public DateTime DateRecieved { get; set; }
+        public string Name { get; set; }
+        public Guid? EmrId { get; set; }
+        public string EmrName { get; set; }
+        public EmrSetup EmrSetup { get; set; }
         public ICollection<FacilityManifestCargo> Cargoes { get; set; }=new List<FacilityManifestCargo>();
         [NotMapped]
         public string Metrics { get; private set; }
@@ -48,6 +53,12 @@ namespace PalladiumDwh.Shared.Model
         public static FacilityManifest Create(Manifest manifest)
         {
             var fm = new FacilityManifest(manifest.SiteCode, manifest.PatientCount);
+            
+            fm.EmrId = manifest.EmrId;
+            fm.EmrName = manifest.EmrName;
+            fm.EmrSetup = manifest.EmrSetup;
+            fm.Name = manifest.Name;
+
             fm.AddCargo(manifest.Items);
 
             if (manifest.FacMetrics.Any())
