@@ -6,4 +6,10 @@
         Metrics,
         AppMetrics
     }
+
+    public enum EmrSetup
+    {
+        SingleFacility,
+        MultiFacility
+    }
 }

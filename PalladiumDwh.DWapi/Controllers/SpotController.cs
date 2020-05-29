@@ -58,7 +58,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 try
                 {
                     Log.Debug("checking SiteCode Enrollment...");
-                    _facilityRepository.Enroll(masterFacility);
+                    _facilityRepository.Enroll(masterFacility,manifest.EmrName);
                 }
                 catch (Exception e)
                 {

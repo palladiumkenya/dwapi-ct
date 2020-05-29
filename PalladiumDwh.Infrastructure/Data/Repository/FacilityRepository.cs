@@ -149,15 +149,58 @@ select
             return null;
         }
 
-        public void Enroll(MasterFacility masterFacility)
+        public void Enroll(MasterFacility masterFacility,string emr)
         {
             var toEnroll = GetFacilityToEnroll(masterFacility.Code);
             if (null == toEnroll)
             {
                 var facility = Facility.create(masterFacility);
+                facility.Emr = emr;
                 Log.Debug($"NEW FACILITY {facility}");
                 _context.GetConnection().Execute(facility.SqlInsert());
+                return;
+
             }
+
+            // Take Facility SnapShot
+            if (toEnroll.EmrChanged(emr))
+            {
+
+                // SNAP MASTER
+
+                #region SNAP MASTER
+
+                var mfl = _context.MasterFacilities.FirstOrDefault(x => x.Code == masterFacility.Code);
+                var mflSnaps = _context.MasterFacilities.Where(x =>  x.SnapshotSiteCode == masterFacility.Code)
+                    .ToList();
+
+                if (null == mfl)
+                    return;
+
+                var snapMfl=mfl.TakeSnap(mflSnaps);
+                _context.Database.Connection.BulkInsert(snapMfl);
+
+
+                #endregion
+
+                #region SNAP FACILITY
+
+                var fl = _context.Facilities.FirstOrDefault(x => x.Code == masterFacility.Code);
+
+                if (null == fl)
+                    return;
+
+                var snapfl=fl.TakeSnapFrom(snapMfl);
+                _context.Database.Connection.BulkUpdate(snapfl);
+
+                #endregion
+
+                var facility = Facility.create(masterFacility);
+                facility.Emr = emr;
+                Log.Debug($"SNAPSHOT FROM FACILITY {facility}");
+                _context.GetConnection().Execute(facility.SqlInsert());
+            }
+
         }
     }
 }

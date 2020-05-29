@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PalladiumDwh.Shared.Custom;
+using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Model.DTO;
 
 namespace PalladiumDwh.Shared.Model
@@ -13,6 +14,10 @@ namespace PalladiumDwh.Shared.Model
     public class Manifest
     {
         public int SiteCode { get; set; }
+        public string Name { get; set; }
+        public Guid? EmrId { get; set; }
+        public string EmrName { get; set; }
+        public EmrSetup EmrSetup { get; set; }
         public List<int> PatientPKs { get; set; }=new List<int>();
         public string Metrics { get; set; }
         public List<FacMetric> FacMetrics { get; set; } = new List<FacMetric>();

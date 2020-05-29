@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Shared.Model
@@ -10,6 +11,10 @@ namespace PalladiumDwh.Shared.Model
         public int Code { get; set; }
         public string Name { get; set; }
         public DateTime? Created { get; set; }
+
+        public DateTime? SnapshotDate { get; set; }
+        public int? SnapshotSiteCode { get; set; }
+        public int? SnapshotVersion { get; set; }
 
         public virtual ICollection<PatientExtract> PatientExtracts { get; set; } = new List<PatientExtract>();
 
@@ -110,6 +115,25 @@ END
         public string GetStatus()
         {
             return $"{Name} ({Code}) | Patients:{PatientExtracts.Count}";
+        }
+
+        public bool EmrChanged(string requestEmr)
+        {
+            if (string.IsNullOrWhiteSpace(Emr))
+                return false;
+
+            return !Emr.IsSameAs(requestEmr);
+        }
+        public Facility TakeSnapFrom(MasterFacility snapMfl)
+        {
+            var fac = this;
+
+            fac.SnapshotDate = DateTime.Now;
+            fac.Code = snapMfl.Code;
+            fac.SnapshotSiteCode = snapMfl.SnapshotSiteCode;
+            fac.SnapshotVersion = snapMfl.SnapshotVersion;
+
+            return fac;
         }
 
         public override string ToString()

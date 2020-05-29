@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Shared.Model
@@ -13,6 +14,10 @@ namespace PalladiumDwh.Shared.Model
         public string Name { get; set; }
         public string County { get; set; }
         public Guid? FacilityId { get; set; }
+
+        public DateTime? SnapshotDate { get; set; }
+        public int? SnapshotSiteCode { get; set; }
+        public int? SnapshotVersion { get; set; }
         public MasterFacility()
         {
         }
@@ -21,6 +26,36 @@ namespace PalladiumDwh.Shared.Model
             Code = code;
             Name = name;
             County = county;
+        }
+
+        public MasterFacility TakeSnap(List<MasterFacility> mflSnaps)
+        {
+            MasterFacility lastSnap = null;
+
+            if (mflSnaps.Any())
+                lastSnap = mflSnaps
+                    .OrderBy(x => x.SnapshotDate)
+                    .ThenBy(x=>x.SnapshotVersion)
+                    .Last();
+
+            var snapVersion = null == lastSnap ? 1 : lastSnap.GetNextSnapshotVersion();
+
+            var snapSiteCode = Convert.ToInt32($"-{100 + snapVersion}{Code}");
+
+            var fac = this;
+            fac.SnapshotSiteCode = Code;
+            fac.Code =snapSiteCode;
+            fac.SnapshotDate = DateTime.Now;
+            fac.SnapshotVersion = snapVersion;
+            return fac;
+        }
+
+        private int GetNextSnapshotVersion()
+        {
+            if (SnapshotVersion.HasValue)
+                return SnapshotVersion.Value + 1;
+
+            return 0;
         }
         public override string ToString()
         {

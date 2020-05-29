@@ -14,6 +14,7 @@ namespace PalladiumDwh.Shared.Custom
     public static class Utility
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public static IEnumerable<IEnumerable<T>> Split<T>(this IEnumerable<T> fullBatch, int chunkSize)
         {
             if (chunkSize <= 0)
@@ -66,6 +67,7 @@ namespace PalladiumDwh.Shared.Custom
 
             return msmqMessage;
         }
+
         public static string GetMessageType(Type type)
         {
             return $"{type.FullName}, {type.Assembly.GetName().Name}";
@@ -82,6 +84,7 @@ namespace PalladiumDwh.Shared.Custom
                     if (null == value)
                         return null;
                 }
+
                 return Convert.ChangeType(value, Nullable.GetUnderlyingType(type) ?? type);
             }
             catch (Exception ex)
@@ -95,6 +98,7 @@ namespace PalladiumDwh.Shared.Custom
                     Log.Debug(ex);
                 }
             }
+
             return GetDefault(type);
         }
 
@@ -124,7 +128,7 @@ namespace PalladiumDwh.Shared.Custom
             return null;
         }
 
-        public static T Get<T>(this IDataRecord row, string fieldName) 
+        public static T Get<T>(this IDataRecord row, string fieldName)
         {
             int ordinal = row.GetOrdinal(fieldName);
             return row.Get<T>(ordinal);
@@ -133,20 +137,24 @@ namespace PalladiumDwh.Shared.Custom
         public static T Get<T>(this IDataRecord row, int ordinal)
         {
             var value = row.IsDBNull(ordinal) ? default(T) : row.GetValue(ordinal);
-            return (T)Convert.ChangeType(value, typeof(T));
+            return (T) Convert.ChangeType(value, typeof(T));
         }
+
         public static string GetColumns(List<string> columnList)
         {
-            return  string.Join(",", columnList.ToArray());
+            return string.Join(",", columnList.ToArray());
         }
-        public static string GetColumns(List<string> columnList,string alias)
+
+        public static string GetColumns(List<string> columnList, string alias)
         {
             return $"{alias}.{string.Join($",{alias}.", columnList.ToArray())}";
         }
+
         public static string GetParameters(List<string> columnList)
         {
             return $"@{string.Join(",@", columnList.ToArray())}";
         }
+
         public static DataTable ToDataTable<T>(this List<T> items)
         {
             var tb = new DataTable(typeof(T).Name);
@@ -156,7 +164,7 @@ namespace PalladiumDwh.Shared.Custom
             foreach (var prop in props)
             {
                 if (prop.PropertyType.Name.Contains("Nullable"))
-                    tb.Columns.Add(prop.Name,typeof(string));
+                    tb.Columns.Add(prop.Name, typeof(string));
                 else
                     tb.Columns.Add(prop.Name, prop.PropertyType);
             }
@@ -186,20 +194,21 @@ namespace PalladiumDwh.Shared.Custom
             return value.EndsWith(end) ? value : $"{value}{end}";
         }
 
-        public static string ReplaceFromEnd(this string s, string suffix,string replaceWith, int number = 1)
+        public static string ReplaceFromEnd(this string s, string suffix, string replaceWith, int number = 1)
         {
             var finalString = s;
 
             if (s.EndsWith(suffix))
             {
-                finalString= s.Substring(0, s.Length - number);
+                finalString = s.Substring(0, s.Length - number);
                 finalString = $@"{finalString}.zip";
             }
-            
+
             return finalString;
         }
 
-        public static void ReportStatus(this IProgress<DProgress> progress,string status, decimal? count = null, decimal? total = null,object valueObject= null)
+        public static void ReportStatus(this IProgress<DProgress> progress, string status, decimal? count = null,
+            decimal? total = null, object valueObject = null)
         {
             var dp = DProgress.Report(status);
             if (count.HasValue && total.HasValue)
@@ -212,22 +221,23 @@ namespace PalladiumDwh.Shared.Custom
             progress.Report(dp);
         }
 
-        public static void AttachValueObjectReportStatus(this IProgress<DProgress> progress, string status, decimal? count = null, decimal? total = null)
+        public static void AttachValueObjectReportStatus(this IProgress<DProgress> progress, string status,
+            decimal? count = null, decimal? total = null)
         {
             var dp = DProgress.Report(status);
 
             if (count.HasValue && total.HasValue)
             {
                 decimal percentage = decimal.Divide(count.Value, total.Value) * 100;
-                dp = DProgress.Report(status, (int)percentage);
+                dp = DProgress.Report(status, (int) percentage);
             }
 
             progress.Report(dp);
         }
 
-        public static int GetPercentage(decimal count,decimal total)
+        public static int GetPercentage(decimal count, decimal total)
         {
-                decimal percentage = decimal.Divide(count, total) * 100;
+            decimal percentage = decimal.Divide(count, total) * 100;
             return (int) percentage;
         }
 
@@ -237,6 +247,7 @@ namespace PalladiumDwh.Shared.Custom
             {
                 return ex.Message;
             }
+
             return ex.InnerException.Message;
         }
 
@@ -250,14 +261,16 @@ namespace PalladiumDwh.Shared.Custom
 
             return $" {prefix} {CalculateTiming(yourDate.Value)}";
         }
+
         public static string GetTiming(this DateTime yourDate, string prefix = "")
         {
-            if(string.IsNullOrWhiteSpace(prefix))
+            if (string.IsNullOrWhiteSpace(prefix))
                 return $"{CalculateTiming(yourDate)}";
 
             return $" {prefix} {CalculateTiming(yourDate)}";
         }
-        private static string CalculateTiming( DateTime yourDate)
+
+        private static string CalculateTiming(DateTime yourDate)
         {
             const int second = 1;
             const int minute = 60 * second;
@@ -291,50 +304,58 @@ namespace PalladiumDwh.Shared.Custom
 
             if (delta < 12 * month)
             {
-                int months = Convert.ToInt32(Math.Floor((double)ts.Days / 30));
+                int months = Convert.ToInt32(Math.Floor((double) ts.Days / 30));
                 return months <= 1 ? "one month ago" : months + " months ago";
             }
             else
             {
-                int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
+                int years = Convert.ToInt32(Math.Floor((double) ts.Days / 365));
                 return years <= 1 ? "one year ago" : years + " years ago";
             }
         }
 
-      public static string StoreMessage(object objMessage, string objLocation, string objFile)
-      {
-        string result;
-        objLocation = objLocation.EndsWith(@"\") ? objLocation : $"{objLocation}{@"\"}";
-        string msgFile = $"{objLocation}{objFile}.backlog";
-        try
+        public static string StoreMessage(object objMessage, string objLocation, string objFile)
         {
-          Directory.CreateDirectory(objLocation);
+            string result;
+            objLocation = objLocation.EndsWith(@"\") ? objLocation : $"{objLocation}{@"\"}";
+            string msgFile = $"{objLocation}{objFile}.backlog";
+            try
+            {
+                Directory.CreateDirectory(objLocation);
+            }
+            catch (Exception ex)
+            {
+
+                Log.Debug(ex);
+            }
+
+            using (StreamWriter file = File.CreateText(msgFile))
+            {
+                try
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    serializer.Serialize(file, objMessage);
+                    result = $"{msgFile} | OK";
+                }
+                catch (Exception ex)
+                {
+                    result = $"{msgFile} | FAIL";
+                    Log.Debug($"Error creating message store {msgFile}");
+                    Log.Debug(ex);
+                }
+            }
+
+            return result;
         }
-        catch (Exception ex)
+
+        public static bool IsSameAs(this string value, string end)
         {
-
-          Log.Debug(ex);
+            if((null!=value)&&(null!=end))
+                return value.ToLower().Trim() == end.ToLower().Trim();
+            return false;
         }
 
-        using (StreamWriter file = File.CreateText(msgFile))
-        {
-          try
-          {
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            serializer.Serialize(file, objMessage);
-            result = $"{msgFile} | OK";
-          }
-          catch (Exception ex)
-          {
-            result = $"{msgFile} | FAIL";
-            Log.Debug($"Error creating message store {msgFile}");
-            Log.Debug(ex);
-          }
-        }
-
-        return result;
-      }
-  }
+    }
 }
 
