@@ -146,8 +146,10 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 // clear patient data not in register
 
                 var sql = $@"  DELETE FROM {nameof(PatientVisitExtract)} 
-                                WHERE PatientId NOT In (        
-                                    SELECT PatientId FROM {nameof(ActionRegister)}
+                                WHERE  PatientId IN @patientId AND
+
+                                PatientId NOT In (        
+                                    SELECT DISTINCT PatientId FROM {nameof(ActionRegister)}
                                     WHERE  Action=@action AND Area=@area AND PatientId IN @patientId
                                 ) 
                                 ";
