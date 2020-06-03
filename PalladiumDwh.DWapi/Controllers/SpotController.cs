@@ -20,7 +20,7 @@ namespace PalladiumDwh.DWapi.Controllers
         private readonly ILiveSyncService _liveSyncService;
         private readonly IFacilityRepository _facilityRepository;
 
-        public SpotController(IMessagingSenderService messagingService,IPatientExtractRepository patientExtractRepository, ILiveSyncService liveSyncService, IFacilityRepository facilityRepository)
+        public SpotController(IMessagingSenderService messagingService,IPatientExtractRepository patientExtractRepository, ILiveSyncService liveSyncService, IFacilityRepository facilityRepository, IActionRegisterRepository actionRegisterRepository)
         {
             _messagingService = messagingService;
             _messagingService.Initialize(_gateway);

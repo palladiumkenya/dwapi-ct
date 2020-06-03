@@ -2,6 +2,7 @@
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared.Data;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
@@ -35,6 +36,7 @@ namespace PalladiumDwh.Infrastructure.Data
 
         public virtual DbSet<FacilityManifest> Manifests { get; set; }
         public virtual DbSet<FacilityManifestCargo> Cargoes { get; set; }
+        public virtual DbSet<ActionRegister> ActionRegisters { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -103,6 +103,7 @@
     <Compile Include="Model\DTO\PatientAdverseEventExtractDTO.cs" />
     <Compile Include="Model\DTO\PatientExtractId.cs" />
     <Compile Include="Model\DTO\PatientFacilityId.cs" />
+    <Compile Include="Model\DTO\PatientFacilityProfile.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\DTO\FacilityDTO.cs" />
     <Compile Include="Model\DTO\PatientArtExtractDTO.cs" />

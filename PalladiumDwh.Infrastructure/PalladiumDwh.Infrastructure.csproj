@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DwapiCentralContext.cs" />
+    <Compile Include="Data\Repository\ActionRegisterRepository.cs" />
     <Compile Include="Data\Repository\FacilityRepository.cs" />
     <Compile Include="Data\Repository\PatientAdverseEventRepository.cs" />
     <Compile Include="Data\Repository\PatientArtExtractRepository.cs" />
@@ -116,6 +117,10 @@
     <Compile Include="Migrations\202005292032209_DwapiSnaps.Designer.cs">
       <DependentUpon>202005292032209_DwapiSnaps.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006031512230_ActionRegistas.cs" />
+    <Compile Include="Migrations\202006031512230_ActionRegistas.Designer.cs">
+      <DependentUpon>202006031512230_ActionRegistas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005292032209_DwapiSnaps.resx">
       <DependentUpon>202005292032209_DwapiSnaps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006031512230_ActionRegistas.resx">
+      <DependentUpon>202006031512230_ActionRegistas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

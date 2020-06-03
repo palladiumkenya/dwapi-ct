@@ -50,7 +50,7 @@ namespace PalladiumDwh.DWapi.Tests
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
                 _patientVisitRepository = new PatientVisitRepository(_context),
-                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context), null
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context), null,new ActionRegisterRepository(_context)
             );
 
             _facilitiesController = new FacilitiesController(_syncService);
