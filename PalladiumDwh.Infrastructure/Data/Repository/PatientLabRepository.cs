@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model.DTO;
 using PalladiumDwh.Shared.Model.Extract;
@@ -43,7 +45,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
       }
 
         public void SyncNewPatients(IEnumerable<PatientLabProfile> profiles, IFacilityRepository facilityRepository,
-            List<Guid> facIds)
+            List<Guid> facIds, IActionRegisterRepository actionRegisterRepository)
         {
             var updates = new List<PatientExtract>();
             var inserts = new List<PatientExtract>();
@@ -59,7 +61,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 var facilityId = facilityRepository.SyncNew(facility);
 
                 //update profiles with facilityId.
-                if (null != facilityId)
+                if (!(facilityId == Guid.Empty || null == facilityId))
                 {
                     facIds.Add(facilityId.Value);
                     var facilityProfiles = profiles.Where(x => x.FacilityInfo.Code == facility.Code).ToList();
@@ -112,42 +114,57 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 patientVisitProfile.GenerateRecords(patientVisitProfile.PatientInfo.Id);
             }
 
-            SyncNew(updatedProfiles);
+            SyncNew(updatedProfiles, actionRegisterRepository);
         }
 
-        public void SyncNew(IEnumerable<PatientLabProfile> profiles)
+        public void SyncNew(IEnumerable<PatientLabProfile> profiles, IActionRegisterRepository actionRegisterRepository)
         {
-            var ids = new List<string>();
             var extracts = new List<PatientLaboratoryExtract>();
+            var action = "DELETE";
+            var area = $"{nameof(PatientLaboratoryExtract)}";
 
-            foreach (var p in profiles)
+            if (profiles.Any())
             {
-                ids.Add($"'{p.PatientInfo.Id}'");
-                extracts.AddRange(p.Extracts);
-            }
+                extracts.AddRange(profiles.SelectMany(x => x.Extracts));
 
-            //clear patient data
+                var patientFacProfiles = profiles
+                    .Select(x => new PatientFacilityProfile(x.PatientInfo.Id, x.PatientInfo.FacilityId))
+                    .Distinct()
+                    .ToList();
 
-            if (ids.Count > 0)
-            {
-                var connection = _context.GetConnection();
-                var allIds = string.Join(",", ids);
+                var patientIds = patientFacProfiles.Select(x => x.Id).ToArray();
 
-                var sql = $@" DELETE FROM PatientLaboratoryExtract WHERE (PatientId In ({allIds}))";
+                var connectionString = _context.GetConnection().ConnectionString;
+
+
+                // clear patient data not in register
+
+                var sql = $@"  DELETE FROM {nameof(PatientLaboratoryExtract)} 
+                                WHERE PatientId NOT In (        
+                                    SELECT PatientId FROM {nameof(ActionRegister)}
+                                    WHERE  Action=@action AND Area=@area AND PatientId IN @patientId
+                                ) 
+                                ";
+
                 try
                 {
-                    using (var transaction = connection.BeginTransaction())
+                    using (var connection = new SqlConnection(connectionString))
                     {
-                        connection.Execute(sql, null, transaction, 0);
-                        transaction.Commit();
+
+                        connection.Execute(sql,
+                            new {action, area, patientId = patientIds});
+
                     }
+
+                    // markregister
+
+                    actionRegisterRepository.CreateAction(ActionRegister.Generate(patientFacProfiles, action, area));
                 }
                 catch (Exception e)
                 {
-                    Log.Debug(e);
+                    Log.Error(e);
                 }
             }
-
             //process extracts
 
             if (extracts.Count > 0)

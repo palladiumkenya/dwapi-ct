@@ -183,7 +183,7 @@ namespace PalladiumDwh.Infrastructure.Tests
                 _visitProfiles.Add(v);
             }
 
-            _patientPharmacyRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>());
+            _patientPharmacyRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>(), null);
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Id == facility.Id)
                 .Include(p => p.PatientExtracts.Select(v => v.PatientPharmacyExtracts)).FirstOrDefault();
@@ -201,7 +201,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             patientInfo.MaritalStatus = "Married";
             patientInfo.PatientCccNumber = "15701-0001";
 
-            _patientPharmacyRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>());
+            _patientPharmacyRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>(), null);
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Id == patientInfo.FacilityId)
                 .Include(p => p.PatientExtracts.Select(v => v.PatientPharmacyExtracts)).FirstOrDefault();
@@ -217,7 +217,7 @@ namespace PalladiumDwh.Infrastructure.Tests
         [Test]
         public void should_Sync_New_Facilty_With_Patients()
         {
-            _patientPharmacyRepository.SyncNewPatients(_newPharmacyProfiles, _facilityRepository, new List<Guid>());
+            _patientPharmacyRepository.SyncNewPatients(_newPharmacyProfiles, _facilityRepository, new List<Guid>(), null);
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Code == _newFacility.Code)
                 .Include(p => p.PatientExtracts.Select(v => v.PatientPharmacyExtracts)).FirstOrDefault();
@@ -235,7 +235,7 @@ namespace PalladiumDwh.Infrastructure.Tests
                 .First(x => x.PatientInfo.Id == _patients[0].Id)
                 .PharmacyExtracts
                 .AddRange(new PatientPharmacyExtractDTO().GeneratePatientPharmacyExtractDtOs(_newPharmacyExtracts).ToList());
-            _patientPharmacyRepository.SyncNewPatients(_updatedPharmacyProfiles, _facilityRepository, new List<Guid>());
+            _patientPharmacyRepository.SyncNewPatients(_updatedPharmacyProfiles, _facilityRepository, new List<Guid>(), null);
             _context = new DwapiCentralContext();
 
             var facilty = _context.Facilities.Where(x => x.Code == 100)
@@ -253,7 +253,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             var visit = _visitProfiles.Last().PharmacyExtracts.First();
 
             _visitProfiles.Last().PharmacyExtracts.First().RegimenLine = "MAUN";
-            _patientPharmacyRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>());
+            _patientPharmacyRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>(), null);
             _context = new DwapiCentralContext();
             var patientExtract = _context.PatientExtracts.Where(x => x.Id == visit.PatientId).Include(v => v.PatientPharmacyExtracts).FirstOrDefault();
             Assert.NotNull(patientExtract);
@@ -268,7 +268,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             var visit = _visitProfiles.Last().PharmacyExtracts.First();
 
             _visitProfiles.Last().PharmacyExtracts.Remove(visit);
-            _patientPharmacyRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>());
+            _patientPharmacyRepository.SyncNewPatients(_visitProfiles, _facilityRepository, new List<Guid>(), null);
             _context = new DwapiCentralContext();
             var patientExtract = _context.PatientExtracts.Where(x => x.Id == visit.PatientId).Include(v => v.PatientPharmacyExtracts).FirstOrDefault();
             Assert.NotNull(patientExtract);

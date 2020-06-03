@@ -30,9 +30,9 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
             using (var connection = new SqlConnection(connString))
             {
-               await  connection.ExecuteAsync(
+                await connection.ExecuteAsync(
                     sql,
-                    new { siteCode });
+                    new {siteCode});
             }
 
             return true;
@@ -40,38 +40,40 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
         public void CreateAction(List<ActionRegister> actionRegisters)
         {
+            if(!actionRegisters.Any())
+                return;
+            
+            var action = actionRegisters.First().Action;
+            var area = actionRegisters.First().Area;
             var connString = _context.GetConnection().ConnectionString;
 
             using (var connection = new SqlConnection(connString))
             {
-                List<ActionRegister> actions=new List<ActionRegister>();
+                // checkExisitng
 
-                foreach (var actionRegister in actionRegisters)
-                {
+                var patientIds = actionRegisters.Select(x => x.PatientId).ToList();
 
-                    // check if exists
-
-                    var sql = $@"SELECT * FROM {nameof(ActionRegister)} 
-                      WHERE {nameof(ActionRegister.PatientId)} = @patientId AND
+                var sqlCheck = $@"SELECT DISTINCT {nameof(ActionRegister.PatientId)} FROM {nameof(ActionRegister)} 
+                      WHERE {nameof(ActionRegister.PatientId)} IN @patientIds AND
                             {nameof(ActionRegister.Action)} = @action AND
                             {nameof(ActionRegister.Area)} = @area
                         ";
 
-                    var action =
-                        connection.QueryFirstOrDefault<ActionRegister>(sql,
-                            new
-                            {
-                                patientId = actionRegister.PatientId, action = actionRegister.Action,
-                                area = actionRegister.Area
-                            });
+                var actionPatientIds =
+                    connection.Query<Guid>(sqlCheck,
+                        new {patientIds, action, area}).ToList();
 
-                    if (null == action)
-                    {
-                        actions.Add(actionRegister);
-                    }
+                if (actionPatientIds.Any())
+                {
+                    var newActions = actionRegisters.Where(x => !actionPatientIds.Contains(x.PatientId)).ToList();
+
+                    if (newActions.Any())
+                        connection.BulkInsert(newActions);
                 }
-
-                connection.BulkInsert(actions);
+                else
+                {
+                    connection.BulkInsert(actionRegisters);
+                }
             }
         }
     }

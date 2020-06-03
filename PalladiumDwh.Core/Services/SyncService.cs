@@ -163,13 +163,13 @@ namespace PalladiumDwh.Core.Services
             if (queueName.ToLower().Contains("PatientLabProfile".ToLower()))
             {
                 Log.Debug($"batch processing {queueName}...");
-                _patientLabRepository.SyncNewPatients(_labProfiles, _facilityRepository, facIds);
+                _patientLabRepository.SyncNewPatients(_labProfiles, _facilityRepository, facIds, _actionRegisterRepository);
             }
 
             if (queueName.ToLower().Contains("PatientPharmacyProfile".ToLower()))
             {
                 Log.Debug($"batch processing {queueName}...");
-                _patientPharmacyRepository.SyncNewPatients(_pharmacyProfiles, _facilityRepository, facIds);
+                _patientPharmacyRepository.SyncNewPatients(_pharmacyProfiles, _facilityRepository, facIds, _actionRegisterRepository);
             }
 
             if (queueName.ToLower().Contains("PatientStatusProfile".ToLower()))
