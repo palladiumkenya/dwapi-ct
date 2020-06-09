@@ -149,7 +149,7 @@ select
             return null;
         }
 
-        public void Enroll(MasterFacility masterFacility,string emr)
+        public void Enroll(MasterFacility masterFacility,string emr,bool allowSnapshot)
         {
             var toEnroll = GetFacilityToEnroll(masterFacility.Code);
             if (null == toEnroll)
@@ -163,7 +163,7 @@ select
             }
 
             // Take Facility SnapShot
-            if (toEnroll.EmrChanged(emr))
+            if (toEnroll.EmrChanged(emr) && allowSnapshot)
             {
 
                 // SNAP MASTER

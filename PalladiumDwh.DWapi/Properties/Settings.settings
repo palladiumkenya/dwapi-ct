@@ -14,5 +14,8 @@
     <Setting Name="Z_Dapper_Plus_LicenseKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">9005d618-3965-8877-97a5-7a27cbb21c8f</Value>
     </Setting>
+    <Setting Name="AllowSnapshot" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
