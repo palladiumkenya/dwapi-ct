@@ -6,6 +6,7 @@ using Dapper;
 using Dapper.Contrib.Extensions;
 using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.DTO;
@@ -151,6 +152,8 @@ select
 
         public void Enroll(MasterFacility masterFacility,string emr,bool allowSnapshot)
         {
+            emr = emr.IsSameAs("CHAK") ? "IQCare" : emr;
+
             var toEnroll = GetFacilityToEnroll(masterFacility.Code);
             if (null == toEnroll)
             {

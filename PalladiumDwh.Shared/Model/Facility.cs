@@ -125,6 +125,12 @@ END
             if (string.IsNullOrWhiteSpace(Emr))
                 return false;
 
+            if (requestEmr.IsSameAs("CHAK"))
+                requestEmr = "IQCare";
+
+            if (requestEmr.IsSameAs("IQCare") || requestEmr.IsSameAs("KenyaEMR"))
+                return !Emr.IsSameAs(requestEmr);
+
             return !Emr.IsSameAs(requestEmr);
         }
         public Facility TakeSnapFrom(MasterFacility snapMfl)
