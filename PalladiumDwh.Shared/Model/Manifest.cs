@@ -22,6 +22,8 @@ namespace PalladiumDwh.Shared.Model
         public string Metrics { get; set; }
         public List<FacMetric> FacMetrics { get; set; } = new List<FacMetric>();
         public int PatientCount => PatientPKs.Count;
+        public UploadMode UploadMode { get; set; }
+
         public string Items => string.Join(",", PatientPKs);
 
         public Manifest()

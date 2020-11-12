@@ -13,4 +13,9 @@
         MultiFacility
     }
 
+    public enum UploadMode
+    {
+        Normal,
+        Differential
+    }
 }
