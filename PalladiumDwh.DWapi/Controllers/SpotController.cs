@@ -7,6 +7,7 @@ using System.Web.Http;
 using log4net;
 using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Model;
 
 namespace PalladiumDwh.DWapi.Controllers
@@ -77,8 +78,11 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
-                    Log.Debug("removing Site Duplicates...");
-                    await _patientExtractRepository.RemoveDuplicates(manifest.SiteCode);
+                    if (manifest.UploadMode == UploadMode.Normal)
+                    {
+                        Log.Debug("removing Site Duplicates...");
+                        await _patientExtractRepository.RemoveDuplicates(manifest.SiteCode);
+                    }
                 }
                 catch (Exception e)
                 {

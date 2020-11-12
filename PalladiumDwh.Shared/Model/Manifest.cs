@@ -54,7 +54,7 @@ SELECT
 FROM            
 	(
     {sb}
-    ) AS e LEFT OUTER JOIN PatientExtract AS p ON e.PatientPID = p.PatientPID
+    ) AS e LEFT OUTER JOIN PatientExtract AS p ON e.PatientPID = p.PatientPID AND e.FacilityID=p.FacilityID
 WHERE        
 	(p.Id IS NULL)
 ";
