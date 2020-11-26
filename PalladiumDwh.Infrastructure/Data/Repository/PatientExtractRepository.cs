@@ -161,7 +161,11 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
             commands.Add(cleanUp);
 
+            //TODO: Find better way
+
+            /*
             await InitializeManifest(manifest);
+            */
 
             using (var connection=new SqlConnection(cons))
             {

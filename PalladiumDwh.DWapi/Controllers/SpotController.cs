@@ -68,6 +68,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
+
                     Log.Debug("clearing Site Manifest...");
                     await _patientExtractRepository.ClearManifest(manifest);
                 }
