@@ -93,6 +93,16 @@ namespace PalladiumDwh.Infrastructure.Data
 
             DapperPlusManager.Entity<FacilityManifest>().Table("FacilityManifest").Key(x => x.Id);
             DapperPlusManager.Entity<FacilityManifestCargo>().Table("FacilityManifestCargo").Key(x => x.Id);
+
+
+            DapperPlusManager.Entity<PatientExtract>().BatchDelayInterval(1000);
+            DapperPlusManager.Entity<PatientArtExtract>().BatchDelayInterval(1000);
+            DapperPlusManager.Entity<PatientBaselinesExtract>().BatchDelayInterval(1000);
+            DapperPlusManager.Entity<PatientLaboratoryExtract>().BatchDelayInterval(1000);
+            DapperPlusManager.Entity<PatientPharmacyExtract>().BatchDelayInterval(1000);
+            DapperPlusManager.Entity<PatientStatusExtract>().BatchDelayInterval(1000);
+            DapperPlusManager.Entity<PatientVisitExtract>().BatchDelayInterval(1000);
+            DapperPlusManager.Entity<PatientAdverseEventExtract>().BatchDelayInterval(1000);
         }
 
         public SqlConnection GetConnection()
