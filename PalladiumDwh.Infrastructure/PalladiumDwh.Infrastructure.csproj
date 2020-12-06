@@ -121,6 +121,10 @@
     <Compile Include="Migrations\202006031512230_ActionRegistas.Designer.cs">
       <DependentUpon>202006031512230_ActionRegistas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012060846587_ManifestUpload.cs" />
+    <Compile Include="Migrations\202012060846587_ManifestUpload.Designer.cs">
+      <DependentUpon>202012060846587_ManifestUpload.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006031512230_ActionRegistas.resx">
       <DependentUpon>202006031512230_ActionRegistas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012060846587_ManifestUpload.resx">
+      <DependentUpon>202012060846587_ManifestUpload.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>
