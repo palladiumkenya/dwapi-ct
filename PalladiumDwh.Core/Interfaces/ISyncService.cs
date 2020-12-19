@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Profile;
 
@@ -24,6 +25,14 @@ namespace PalladiumDwh.Core.Interfaces
         void SyncStatusNew(PatientStatusProfile patientStatusProfile);
         void SyncVisitNew(PatientVisitProfile profile);
         void SyncvAdverseEventNew(PatientAdverseEventProfile profile);
+
+        void SyncArtNew(List<PatientARTProfile> profile);
+        void SyncBaselineNew(List<PatientBaselineProfile> baselineProfile);
+        void SyncLabNew(List<PatientLabProfile> labProfile);
+        void SyncPharmacyNew(List<PatientPharmacyProfile> patientPharmacyProfile);
+        void SyncStatusNew(List<PatientStatusProfile> patientStatusProfile);
+        void SyncVisitNew(List<PatientVisitProfile> profile);
+        void SyncvAdverseEventNew(List<PatientAdverseEventProfile> profile);
 
         Facility GetFacility(int code);
         void SyncManifest(Manifest manifest);

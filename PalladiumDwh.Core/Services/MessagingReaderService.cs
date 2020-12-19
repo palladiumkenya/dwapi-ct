@@ -100,7 +100,7 @@ namespace PalladiumDwh.Core.Services
         public void ExpressRead(string gateway = "")
         {
             //initialize Queue
-
+            bool isBatch = gateway.EndsWith(".batch");
             #region Queue Init
 
             if (null == Queue)
@@ -124,7 +124,7 @@ namespace PalladiumDwh.Core.Services
             }
             catch (MessageQueueException ex)
             {
-                
+
             }
             catch (Exception e)
             {
@@ -150,7 +150,7 @@ namespace PalladiumDwh.Core.Services
 
             //initialize Sync
             _syncService.InitList(QueueName);
-            
+
             while (messageEnumerator.MoveNext())
             {
                 if (null != messageEnumerator.Current)
@@ -177,6 +177,7 @@ namespace PalladiumDwh.Core.Services
                     {
                         count++;
                         batchCount++;
+
                         messages.Add(message);
 
                         try
@@ -188,7 +189,7 @@ namespace PalladiumDwh.Core.Services
 
                             try
                             {
-                                if (batchCount == 1000)
+                                if (batchCount == 1000 || isBatch)
                                 {
                                     // reset batch Count
                                     batchCount = 0;
@@ -369,6 +370,7 @@ namespace PalladiumDwh.Core.Services
         public void ExpressPrcocessBacklog(string gateway = "")
         {
             //initialize Queue
+            bool isBatch = gateway.EndsWith(".batch");
 
             #region Queue Init
 
@@ -440,7 +442,7 @@ namespace PalladiumDwh.Core.Services
                     if (null != message)
                     {
                         count++;
-                
+
                         messages.Add(message);
 
                         try

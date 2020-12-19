@@ -15,6 +15,7 @@ namespace PalladiumDWh.DwapiService.Job
         public void Execute(IJobExecutionContext context)
         {
             var profile = typeof(PatientLabProfile).Name;
+            var profileBatch = $"{profile}.batch";
 
             try
             {
@@ -22,6 +23,9 @@ namespace PalladiumDWh.DwapiService.Job
                 reader.Initialize(profile);
                 reader.ExpressRead(profile);
                 reader.ExpressPrcocessBacklog(profile);
+                reader.Initialize(profileBatch);
+                reader.ExpressRead(profileBatch);
+                reader.ExpressPrcocessBacklog(profileBatch);
             }
             catch (Exception ex)
             {

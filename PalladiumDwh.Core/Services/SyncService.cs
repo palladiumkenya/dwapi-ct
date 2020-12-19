@@ -93,6 +93,35 @@ namespace PalladiumDwh.Core.Services
             {
                 SyncvAdverseEventNew(profile as PatientAdverseEventProfile);
             }
+
+            else if (profile.GetType() == typeof(List<PatientARTProfile>))
+            {
+                SyncArtNew(profile as List<PatientARTProfile>);
+            }
+            else if (profile.GetType() == typeof(List<PatientBaselineProfile>))
+            {
+                SyncBaselineNew(profile as List<PatientBaselineProfile>);
+            }
+            else if (profile.GetType() == typeof(List<PatientLabProfile>))
+            {
+                SyncLabNew(profile as List<PatientLabProfile>);
+            }
+            else if (profile.GetType() == typeof(List<PatientPharmacyProfile>))
+            {
+                SyncPharmacyNew(profile as List<PatientPharmacyProfile>);
+            }
+            else if (profile.GetType() == typeof(List<PatientStatusProfile>))
+            {
+                SyncStatusNew(profile as List<PatientStatusProfile>);
+            }
+            else if (profile.GetType() == typeof(List<PatientVisitProfile>))
+            {
+                SyncVisitNew(profile as List<PatientVisitProfile>);
+            }
+            else if (profile.GetType() == typeof(List<PatientAdverseEventProfile>))
+            {
+                SyncvAdverseEventNew(profile as List<PatientAdverseEventProfile>);
+            }
         }
 
         public async void SyncManifest(Manifest manifest)
@@ -330,6 +359,23 @@ namespace PalladiumDwh.Core.Services
             profile.GeneratePatientRecord();
             _adverseEventProfiles.Add(profile);
         }
+
+
+
+        public void SyncArtNew(List<PatientARTProfile> profile) => profile.ForEach(SyncArtNew);
+
+        public void SyncBaselineNew(List<PatientBaselineProfile> baselineProfile) => baselineProfile.ForEach(SyncBaselineNew);
+
+        public void SyncLabNew(List<PatientLabProfile> labProfile) => labProfile.ForEach(SyncLabNew);
+
+        public void SyncPharmacyNew(List<PatientPharmacyProfile> patientPharmacyProfile) => patientPharmacyProfile.ForEach(SyncPharmacyNew);
+
+        public void SyncStatusNew(List<PatientStatusProfile> patientStatusProfile) => patientStatusProfile.ForEach(SyncStatusNew);
+
+        public void SyncVisitNew(List<PatientVisitProfile> profile) => profile.ForEach(SyncVisitNew);
+
+        public void SyncvAdverseEventNew(List<PatientAdverseEventProfile> profile) => profile.ForEach(SyncvAdverseEventNew);
+
 
         public Facility GetFacility(int code)
         {

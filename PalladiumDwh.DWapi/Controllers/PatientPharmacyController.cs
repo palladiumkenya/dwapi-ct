@@ -17,6 +17,7 @@ namespace PalladiumDwh.DWapi.Controllers
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(PatientPharmacyProfile).Name.ToLower();
+        private readonly string _gatewayBatch;
         private readonly IMessengerScheduler _messengerScheduler;
 
         public PatientPharmacyController(IMessagingSenderService messagingService,IMessengerScheduler messengerScheduler)
@@ -24,6 +25,8 @@ namespace PalladiumDwh.DWapi.Controllers
             _messagingService = messagingService;
             _messengerScheduler = messengerScheduler;
             _messagingService.Initialize(_gateway);
+            _gatewayBatch = $"{_gateway}.batch";
+            _messagingService.Initialize(_gatewayBatch);
         }
 
         public async Task<HttpResponseMessage> Post([FromBody] PatientPharmacyProfile patientProfile)
@@ -64,9 +67,8 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
-                    await _messengerScheduler.Run(patientProfile, _gateway);
-
-                    var messageRef =await Task.FromResult(new List<string> { Guid.NewGuid().ToString() });
+                    var messageRef =
+                        await _messagingService.SendAsync(patientProfile, _gatewayBatch, patientProfile.GetType());
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
                         new {BatchKey = messageRef});
                 }

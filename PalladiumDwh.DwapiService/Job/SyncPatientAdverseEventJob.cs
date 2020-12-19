@@ -14,13 +14,17 @@ namespace PalladiumDWh.DwapiService.Job
 
         public void Execute(IJobExecutionContext context)
         {
-            var profile = typeof(PatientAdverseEventProfile).Name;
+            var profile = nameof(PatientAdverseEventProfile);
+            var profileBatch = $"{profile}.batch";
             try
             {
                 var reader = Program.IOC.GetInstance<IMessagingReaderService>();
                 reader.Initialize(profile);
                 reader.ExpressRead(profile);
                 reader.ExpressPrcocessBacklog(profile);
+                reader.Initialize(profileBatch);
+                reader.ExpressRead(profileBatch);
+                reader.ExpressPrcocessBacklog(profileBatch);
             }
             catch (Exception ex)
             {

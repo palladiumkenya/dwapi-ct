@@ -48,14 +48,14 @@ namespace PalladiumDwh.Shared.Custom
             yield return chunk;
         }
 
-        public static Message CreateMessage(object message)
+        public static Message CreateMessage(object message,Type messageType=null)
         {
             Message msmqMessage;
 
             try
             {
                 msmqMessage = new Message();
-                msmqMessage.Label = Utility.GetMessageType(message.GetType());
+                msmqMessage.Label = Utility.GetMessageType(null != messageType ? messageType : message.GetType());
                 var jsonBody = JsonConvert.SerializeObject(message);
                 msmqMessage.BodyStream = new MemoryStream(Encoding.Default.GetBytes(jsonBody));
             }

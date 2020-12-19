@@ -16,7 +16,7 @@ namespace PalladiumDwh.Core.Services
         {
         }
 
-        public string Send(object message, string gateway = "")
+        public string Send(object message, string gateway = "",Type messageType = null)
         {
             string refId;
 
@@ -25,7 +25,9 @@ namespace PalladiumDwh.Core.Services
 
             var msmq = Queue as MessageQueue;
 
-            var messageToSend = CreateMessage(message);
+            Message messageToSend = null;
+
+            messageToSend = CreateMessage(message,messageType);
 
             if (null != messageToSend && null != msmq)
             {
@@ -77,14 +79,14 @@ namespace PalladiumDwh.Core.Services
             }
         }
 
-        public Message CreateMessage(object message)
+        public Message CreateMessage(object message,Type messageType=null)
         {
-            return Utility.CreateMessage(message);
+            return Utility.CreateMessage(message,messageType);
         }
 
-        public Task<string> SendAsync(object message, string gateway = "")
+        public Task<string> SendAsync(object message, string gateway = "", Type messageType = null)
         {
-            return Task.Run(() => Send(message, gateway));
+            return Task.Run(() => Send(message, gateway,messageType));
         }
 
         public Task<List<string>> SendBatchAsync(IEnumerable<dynamic>  messages, string gateway = "")
