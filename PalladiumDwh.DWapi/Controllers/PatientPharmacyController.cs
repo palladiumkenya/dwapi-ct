@@ -73,7 +73,7 @@ namespace PalladiumDwh.DWapi.Controllers
                     var messageRef =
                         await _messagingService.SendAsync(patientProfile, _gatewayBatch, patientProfile.GetType());
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
-                        new {BatchKey = LiveGuid.NewGuid()});
+                        new { BatchKey = new List<Guid>() {LiveGuid.NewGuid()}});
                 }
                 catch (Exception ex)
                 {
