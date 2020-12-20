@@ -38,19 +38,20 @@ namespace PalladiumDwh.DWapi
 
             catch (Exception e)
             {
-                Log.Debug(e);
+                Log.Error("[Dapper.Plus]",e);
                 throw;
             }
 
-
+            /*
             _scheduler = StructuremapMvc.DwapiIContainer.GetInstance<IMessengerScheduler>();
             _scheduler.Start();
+            */
             Log.Debug("PalladiumDwh.DWapi started!");
         }
 
         protected void Application_End(object sender, EventArgs e)
         {
-            _scheduler.Shutdown();
+            _scheduler?.Shutdown();
         }
 
     }

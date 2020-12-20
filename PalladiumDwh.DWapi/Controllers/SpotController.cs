@@ -52,7 +52,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception e)
                 {
-                    Log.Debug(e);
+                    Log.Error("SiteCode Error",e);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
                 }
 
@@ -63,7 +63,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception e)
                 {
-                    Log.Error(e.Message);
+                    Log.Error("SiteCode Enroll Error",e);
                 }
 
                 try
@@ -74,7 +74,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception e)
                 {
-                    Log.Error(e.Message);
+                    Log.Error("Clear Site Manifest Error",e);
                 }
 
                 try
@@ -87,7 +87,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception e)
                 {
-                    Log.Error(e.Message);
+                    Log.Error("Removing Site Duplicates Error", e);
                 }
 
                 try
@@ -101,7 +101,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception e)
                 {
-                    Log.Error(e.Message);
+                    Log.Error("Posting to SPOT Error",e);
                 }
 
                 try
@@ -112,7 +112,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex.Message);
+                    Log.Error("Sending to QueueError",ex);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
             }

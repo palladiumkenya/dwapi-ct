@@ -46,7 +46,9 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Debug(ex);
+                    Log.Error(new string('*',30));
+                    Log.Error(nameof(PatientARTProfile),ex);
+                    Log.Error(new string('*',30));
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
             }
@@ -75,7 +77,9 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Debug(ex);
+                    Log.Error(new string('*',30));
+                    Log.Error(nameof(PatientARTProfile),ex);
+                    Log.Error(new string('*',30));
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
             }
