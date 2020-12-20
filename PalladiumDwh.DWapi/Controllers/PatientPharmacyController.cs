@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Controllers
@@ -72,7 +73,7 @@ namespace PalladiumDwh.DWapi.Controllers
                     var messageRef =
                         await _messagingService.SendAsync(patientProfile, _gatewayBatch, patientProfile.GetType());
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
-                        new {BatchKey = messageRef});
+                        new {BatchKey = LiveGuid.NewGuid()});
                 }
                 catch (Exception ex)
                 {
