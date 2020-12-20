@@ -41,7 +41,7 @@ namespace PalladiumDwh.Core.Services
                 }
                 catch (Exception ex)
                 {
-                    Log.Debug(ex);
+                    Log.Error("Send Error",ex);
                     throw;
                 }
             }
