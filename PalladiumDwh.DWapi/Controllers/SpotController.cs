@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -95,13 +96,22 @@ namespace PalladiumDwh.DWapi.Controllers
                     Log.Debug("posting to SPOT...");
                     var facManifest = FacilityManifest.Create(manifest);
                     var manifestDto = new ManifestDto(masterFacility, facManifest);
-                    var metricDtos = MetricDto.Generate(masterFacility, facManifest);
-                    var result= await _liveSyncService.SyncManifest(manifestDto);
-                    await _liveSyncService.SyncMetrics(metricDtos);
+                    var metrics = MetricDto.Generate(masterFacility, facManifest);
+                    var metricDtos = metrics.Where(x => x.CargoType != CargoType.Indicator).ToList();
+                    var indicatorDtos = metrics.Where(x => x.CargoType == CargoType.Indicator).ToList();
+                    var result = await _liveSyncService.SyncManifest(manifestDto);
+                    
+                    if (metricDtos.Any())
+                        await _liveSyncService.SyncMetrics(metricDtos);
+                    if (indicatorDtos.Any())
+                    {
+                        var indstats = IndicatorDto.Generate(indicatorDtos);
+                        await _liveSyncService.SyncIndicators(indstats);
+                    }
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Posting to SPOT Error",e);
+                    Log.Error("Posting to SPOT Error", e);
                 }
 
                 try

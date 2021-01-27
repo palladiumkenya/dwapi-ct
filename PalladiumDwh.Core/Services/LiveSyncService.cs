@@ -85,8 +85,29 @@ namespace PalladiumDwh.Core.Services
 
         public async Task<Result> SyncMetrics(List<MetricDto> metrics)
         {
-
             string requestEndpoint = "metric";
+
+            try
+            {
+                var content = JsonConvert.SerializeObject(metrics, _serializerSettings);
+
+                var toSend = new StringContent(content, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(requestEndpoint, toSend
+                );
+                response.EnsureSuccessStatusCode();
+                return Result.Ok();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"{requestEndpoint} POST...");
+                Log.Error(e.Message);
+                return Result.Fail(e.Message);
+            }
+        }
+
+        public async Task<Result> SyncIndicators(List<IndicatorDto> metrics)
+        {
+            string requestEndpoint = "indicator";
 
             try
             {

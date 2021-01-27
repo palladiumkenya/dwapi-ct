@@ -4,7 +4,9 @@
     {
         Patient,
         Metrics,
-        AppMetrics
+        AppMetrics,
+        Migration,
+        Indicator
     }
 
     public enum EmrSetup
