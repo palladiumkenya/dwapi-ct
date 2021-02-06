@@ -24,6 +24,11 @@ namespace PalladiumDwh.Shared.Model
         public int PatientCount => PatientPKs.Count;
         public UploadMode UploadMode { get; set; }
 
+        public Guid? Session { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
+        public string Tag { get; set; }
+
         public string Items => string.Join(",", PatientPKs);
 
         public Manifest()

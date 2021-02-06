@@ -23,45 +23,20 @@ namespace PalladiumDwh.DWapi.Controllers
         {
             List<Queues> list=new List<Queues>();
 
-            string queueName = Properties.Settings.Default.QueueName;
-
-            var gateways = new List<string>
-            {
-                $"{queueName}.{typeof(PatientARTProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientBaselineProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientLabProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientPharmacyProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientVisitProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientStatusProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientAdverseEventProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(Manifest).Name.ToLower()}"
-            };
-
+            var gateways = GenerateGatewayList();
 
             foreach (var g in gateways)
             {
+
                 list.Add(new Queues(g, _service.GetNumberOfMessages(g), _service.GetNumberOfMessages(g,true)));
             }
             
             return View(list);
         }
 
-
         public ActionResult PurgeAll()
         {
-            string queueName = Properties.Settings.Default.QueueName;
-
-            var gateways = new List<string>
-            {
-                $"{queueName}.{typeof(PatientARTProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientBaselineProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientLabProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientPharmacyProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientVisitProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientStatusProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(PatientAdverseEventProfile).Name.ToLower()}",
-                $"{queueName}.{typeof(Manifest).Name.ToLower()}"
-            };
+            var gateways = GenerateGatewayList();
 
             foreach (var g in gateways)
             {
@@ -69,6 +44,36 @@ namespace PalladiumDwh.DWapi.Controllers
                 _service.Purge(g,true);
             }
             return RedirectToAction("Index");
+        }
+
+        public List<string> GenerateGatewayList()
+        {
+            string queueName = Properties.Settings.Default.QueueName;
+
+            var gateways = new List<string>
+            {
+                $"{queueName}.{nameof(Manifest).ToLower()}"
+            };
+
+            var baseGateways = new List<string>
+            {
+                $"{queueName}.{nameof(PatientARTProfile).ToLower()}",
+                $"{queueName}.{nameof(PatientBaselineProfile).ToLower()}",
+                $"{queueName}.{nameof(PatientLabProfile).ToLower()}",
+                $"{queueName}.{nameof(PatientPharmacyProfile).ToLower()}",
+                $"{queueName}.{nameof(PatientVisitProfile).ToLower()}",
+                $"{queueName}.{nameof(PatientStatusProfile).ToLower()}",
+                $"{queueName}.{nameof(PatientAdverseEventProfile).ToLower()}",
+            };
+
+            gateways.AddRange(baseGateways);
+
+            foreach (var gateway in baseGateways)
+            {
+                gateways.Add($"{gateway}.batch");
+            }
+
+            return gateways;
         }
     }
 }

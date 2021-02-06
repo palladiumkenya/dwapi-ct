@@ -205,5 +205,12 @@ select
             }
 
         }
+
+        public void EndSession(Guid session)
+        {
+            var end = DateTime.Now;
+            var sql = $"UPDATE {nameof(FacilityManifest)} SET [{nameof(FacilityManifest.End)}]=@end WHERE [{nameof(FacilityManifest.Session)}]=@session";
+            _context.GetConnection().Execute(sql, new {session, end});
+        }
     }
 }

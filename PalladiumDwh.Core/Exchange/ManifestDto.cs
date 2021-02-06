@@ -16,6 +16,10 @@ namespace PalladiumDwh.Core.Exchange
         public DateTime BuildDate { get; set; }
         public int PatientCount { get; set; }
         public string Cargo { get; set; }
+        public Guid? Session { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
+        public string Tag { get; set; }
 
         public List<FacilityManifestCargo> Metrics { get; set; } = new List<FacilityManifestCargo>();
 
@@ -29,6 +33,10 @@ namespace PalladiumDwh.Core.Exchange
             BuildDate = manifest.DateRecieved;
             PatientCount = manifest.PatientCount;
             Cargo = manifest.Metrics;
+            Session = manifest.Session;
+            Start = manifest.Start;
+            End = manifest.End;
+            Tag = manifest.Tag;
             Metrics = manifest.Cargoes.Where(x => x.CargoType != CargoType.Patient).ToList();
         }
 
@@ -42,6 +50,10 @@ namespace PalladiumDwh.Core.Exchange
             BuildDate = manifest.DateRecieved;
             PatientCount = manifest.PatientCount;
             Cargo = manifest.Metrics;
+            Session = manifest.Session;
+            Start = manifest.Start;
+            End = manifest.End;
+            Tag = manifest.Tag;
             Metrics = manifest.Cargoes.Where(x => x.CargoType != CargoType.Patient).ToList();
         }
     }
