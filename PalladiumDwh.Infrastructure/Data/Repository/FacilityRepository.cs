@@ -212,5 +212,15 @@ select
             var sql = $"UPDATE {nameof(FacilityManifest)} SET [{nameof(FacilityManifest.End)}]=@end WHERE [{nameof(FacilityManifest.Session)}]=@session";
             _context.GetConnection().Execute(sql, new {session, end});
         }
+
+        public IEnumerable<HandshakeDto> GetSessionHandshakes(Guid session)
+        {
+            var sql = $"SELECT * FROM {nameof(FacilityManifest)} WHERE [{nameof(FacilityManifest.Session)}]=@session";
+            var manifests = _context.GetConnection().Query<FacilityManifest>(sql,new{session}).ToList();
+            return manifests.Select(x => new HandshakeDto()
+            {
+                Id = x.Id, End = x.End, Session = x.Session, Start = x.Start
+            });
+        }
     }
 }

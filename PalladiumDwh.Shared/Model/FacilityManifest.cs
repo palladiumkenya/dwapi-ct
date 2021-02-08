@@ -24,7 +24,7 @@ namespace PalladiumDwh.Shared.Model
         public ICollection<FacilityManifestCargo> Cargoes { get; set; }=new List<FacilityManifestCargo>();
         [NotMapped]
         public string Metrics { get; private set; }
-        
+
         public FacilityManifest()
         {
         }
@@ -58,7 +58,7 @@ namespace PalladiumDwh.Shared.Model
         public static FacilityManifest Create(Manifest manifest)
         {
             var fm = new FacilityManifest(manifest.SiteCode, manifest.PatientCount);
-            
+
             fm.EmrId = manifest.EmrId;
             fm.EmrName = manifest.EmrName;
             fm.EmrSetup = manifest.EmrSetup;
@@ -89,5 +89,6 @@ namespace PalladiumDwh.Shared.Model
         {
             End = end;
         }
+
     }
 }

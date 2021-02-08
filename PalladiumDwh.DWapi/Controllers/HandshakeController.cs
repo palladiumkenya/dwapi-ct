@@ -16,17 +16,20 @@ namespace PalladiumDwh.DWapi.Controllers
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IFacilityRepository _facilityRepository;
-
-        public HandshakeController(IFacilityRepository facilityRepository)
+        private readonly ILiveSyncService _liveSyncService;
+        public HandshakeController(IFacilityRepository facilityRepository, ILiveSyncService liveSyncService)
         {
             _facilityRepository = facilityRepository;
+            _liveSyncService = liveSyncService;
         }
 
-        public HttpResponseMessage Post(Guid session)
+        public async Task<HttpResponseMessage> Post(Guid session)
         {
             try
             {
                 _facilityRepository.EndSession(session);
+                var handshakes = _facilityRepository.GetSessionHandshakes(session).ToList();
+                await _liveSyncService.SyncHandshake(handshakes);
                 return Request.CreateResponse(HttpStatusCode.OK, $"{session}");
             }
             catch (Exception e)

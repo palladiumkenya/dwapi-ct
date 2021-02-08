@@ -126,5 +126,27 @@ namespace PalladiumDwh.Core.Services
                 return Result.Fail(e.Message);
             }
         }
+
+        public async Task<Result> SyncHandshake(List<HandshakeDto> handshakeDtos)
+        {
+            string requestEndpoint = "handshake";
+
+            try
+            {
+                var content = JsonConvert.SerializeObject(handshakeDtos, _serializerSettings);
+
+                var toSend = new StringContent(content, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(requestEndpoint, toSend
+                );
+                response.EnsureSuccessStatusCode();
+                return Result.Ok();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"{requestEndpoint} POST...");
+                Log.Error(e.Message);
+                return Result.Fail(e.Message);
+            }
+        }
     }
 }

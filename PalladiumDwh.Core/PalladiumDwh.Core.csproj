@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exchange\DocketDto.cs" />
+    <Compile Include="Exchange\HandshakeDto.cs" />
     <Compile Include="Exchange\IndicatorDto.cs" />
     <Compile Include="Exchange\ManifestDto.cs" />
     <Compile Include="Exchange\MetricDto.cs" />

@@ -19,5 +19,6 @@ namespace PalladiumDwh.Core.Interfaces
         StatsDto GetFacStats(Guid facilityId);
         void Enroll(MasterFacility masterFacility,string emr,bool allowSnapshot);
         void EndSession(Guid session);
+        IEnumerable<HandshakeDto> GetSessionHandshakes(Guid session);
     }
 }
