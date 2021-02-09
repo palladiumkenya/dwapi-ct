@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System.Net;
+using System.Net.Http;
+using System.Reflection;
 using System.Web.Http;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
@@ -26,7 +28,7 @@ namespace PalladiumDwh.DWapi.Controllers
             _messagingService.Initialize(_gateway);
             _patientExtractRepository = patientExtractRepository;
         }
-      
+
         /// <summary>
         /// Subscriber Self Registration and verification
         /// </summary>
@@ -48,6 +50,17 @@ namespace PalladiumDwh.DWapi.Controllers
                     });
 
             return Unauthorized();
+        }
+
+        [HttpGet]
+        public HttpResponseMessage Index()
+        {
+            var   response = Request.CreateResponse(HttpStatusCode.OK, new
+            {
+                name="Dwapi Central - API (CT)",status="runnning",build="09FEB211339"
+            });
+
+            return response;
         }
     }
 }

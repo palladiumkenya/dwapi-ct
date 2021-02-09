@@ -13,6 +13,7 @@ namespace PalladiumDwh.Shared.Model
 {
     public class Manifest
     {
+        public Guid? Id { get; set; }
         public int SiteCode { get; set; }
         public string Name { get; set; }
         public Guid? EmrId { get; set; }
@@ -28,7 +29,7 @@ namespace PalladiumDwh.Shared.Model
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public string Tag { get; set; }
-
+        
         public string Items => string.Join(",", PatientPKs);
 
         public Manifest()

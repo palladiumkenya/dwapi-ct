@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Enum;
+using PalladiumDwh.Shared.Extentions;
 
 namespace PalladiumDwh.Shared.Model
 {
@@ -29,11 +31,19 @@ namespace PalladiumDwh.Shared.Model
         {
         }
 
-        public FacilityManifest(int siteCode, int patientCount) : this()
+        public FacilityManifest(int siteCode, int patientCount, Guid? id) : this()
         {
             SiteCode = siteCode;
             PatientCount = patientCount;
-            DateRecieved =DateTime.Now;
+            DateRecieved = DateTime.Now;
+            if (null != id)
+            {
+                Id = id.IsNullOrEmpty() ? LiveGuid.NewGuid() : id.Value;
+            }
+            else
+            {
+                Id = LiveGuid.NewGuid();
+            }
         }
 
         public void AddCargo(string items)
@@ -57,7 +67,7 @@ namespace PalladiumDwh.Shared.Model
 
         public static FacilityManifest Create(Manifest manifest)
         {
-            var fm = new FacilityManifest(manifest.SiteCode, manifest.PatientCount);
+            var fm = new FacilityManifest(manifest.SiteCode, manifest.PatientCount, manifest.Id);
 
             fm.EmrId = manifest.EmrId;
             fm.EmrName = manifest.EmrName;

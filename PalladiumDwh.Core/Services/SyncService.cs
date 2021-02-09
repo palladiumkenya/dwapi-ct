@@ -415,7 +415,17 @@ namespace PalladiumDwh.Core.Services
         private async void SyncStats(List<Guid> facilities)
         {
             if (null != _liveSyncService)
-                await _liveSyncService.SyncStats(_facilityRepository, facilities.Distinct().ToList());
+            {
+                try
+                {
+                    await _liveSyncService.SyncStats(_facilityRepository, facilities.Distinct().ToList());
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Stats",e);
+                }
+            }
+                
         }
     }
 }

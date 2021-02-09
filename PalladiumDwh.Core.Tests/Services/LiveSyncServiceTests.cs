@@ -6,6 +6,7 @@ using NUnit.Framework;
 using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Services;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Model;
 
@@ -24,7 +25,7 @@ namespace PalladiumDwh.Core.Tests.Services
         public void SetUp()
         {
             _liveSyncService = new LiveSyncService("http://localhost:4777/stages/");
-            FacilityManifest manifest = new FacilityManifest(12618, 120);
+            FacilityManifest manifest = new FacilityManifest(12618, 120,LiveGuid.NewGuid());
             manifest.Id = fmId;
             _manifestDtos.Add(new ManifestDto(14950, "Demo Fac 00",manifest));
                 //    _manifestDtos.Add(new ManifestDto(14950, "Demo Fac 01", new FacilityManifest(14950, 1120)));
