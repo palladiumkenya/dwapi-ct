@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
 using log4net;
+using Newtonsoft.Json;
 using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Enum;
@@ -99,8 +100,10 @@ namespace PalladiumDwh.DWapi.Controllers
                     var metrics = MetricDto.Generate(masterFacility, facManifest);
                     var metricDtos = metrics.Where(x => x.CargoType != CargoType.Indicator).ToList();
                     var indicatorDtos = metrics.Where(x => x.CargoType == CargoType.Indicator).ToList();
+                    var extractDto=ExtractDto.Generate(metricDtos);
+                    manifestDto.Cargo = JsonConvert.SerializeObject(extractDto.ExtractCargos);
                     var result = await _liveSyncService.SyncManifest(manifestDto);
-                    
+
                     if (metricDtos.Any())
                         await _liveSyncService.SyncMetrics(metricDtos);
                     if (indicatorDtos.Any())

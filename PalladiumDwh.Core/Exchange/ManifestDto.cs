@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Model;
 
@@ -56,5 +57,47 @@ namespace PalladiumDwh.Core.Exchange
             Tag = manifest.Tag;
             Metrics = manifest.Cargoes.Where(x => x.CargoType != CargoType.Patient).ToList();
         }
+    }
+
+    public class ExtractDto
+    {
+        public string Name { get; set; }
+        public int? NoLoaded { get; set; }
+        public string Version { get; set; }
+        public string LogValue { get; set; }
+        public DateTime? ActionDate { get; set; }
+        public List<ExtractCargoDto> ExtractCargos { get; set; } = new List<ExtractCargoDto>();
+
+        public static ExtractDto Generate(List<MetricDto> metricDtos)
+        {
+            var extractDto = new ExtractDto();
+
+            var cargoes = metricDtos.Where(x =>
+                    x.CargoType == CargoType.AppMetrics &&
+                    x.Cargo.Contains("CareTreatment") &&
+                    x.Cargo.Contains("ExtractCargos"))
+                .Select(c => c.Cargo)
+                .ToList();
+
+            foreach (var cargo in cargoes)
+            {
+                var temp = JsonConvert.DeserializeObject<ExtractDto>(cargo);
+                if (null != temp && !string.IsNullOrWhiteSpace(temp.LogValue))
+                {
+                    extractDto = JsonConvert.DeserializeObject<ExtractDto>(temp.LogValue);
+                    if (extractDto.ExtractCargos.Any())
+                        return extractDto;
+                }
+            }
+
+            return extractDto;
+        }
+    }
+
+    public class ExtractCargoDto
+    {
+        public string DocketId { get; set; }
+        public string Name { get; set; }
+        public int? Stats { get; set; }
     }
 }
