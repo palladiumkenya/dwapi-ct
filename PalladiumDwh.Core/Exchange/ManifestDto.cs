@@ -57,6 +57,11 @@ namespace PalladiumDwh.Core.Exchange
             Tag = manifest.Tag;
             Metrics = manifest.Cargoes.Where(x => x.CargoType != CargoType.Patient).ToList();
         }
+
+        public void AddCargo()
+        {
+
+        }
     }
 
     public class ExtractDto
@@ -91,6 +96,12 @@ namespace PalladiumDwh.Core.Exchange
             }
 
             return extractDto;
+        }
+
+        public static List<ExtractCargoDto> GenerateCargo(List<MetricDto> metricDtos)
+        {
+            var extractDto = Generate(metricDtos);
+            return extractDto.ExtractCargos;
         }
     }
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using log4net;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Enum;
@@ -22,14 +23,19 @@ namespace PalladiumDwh.DWapi.Controllers
         private readonly string _gateway = typeof(Manifest).Name.ToLower();
         private readonly ILiveSyncService _liveSyncService;
         private readonly IFacilityRepository _facilityRepository;
+        private readonly JsonSerializerSettings _serializerSettings;
 
-        public SpotController(IMessagingSenderService messagingService,IPatientExtractRepository patientExtractRepository, ILiveSyncService liveSyncService, IFacilityRepository facilityRepository)
+        public SpotController(IMessagingSenderService messagingService,
+            IPatientExtractRepository patientExtractRepository, ILiveSyncService liveSyncService,
+            IFacilityRepository facilityRepository)
         {
             _messagingService = messagingService;
             _messagingService.Initialize(_gateway);
             _patientExtractRepository = patientExtractRepository;
             _liveSyncService = liveSyncService;
             _facilityRepository = facilityRepository;
+            _serializerSettings = new JsonSerializerSettings()
+                {ContractResolver = new CamelCasePropertyNamesContractResolver()};
         }
 
         public async Task<HttpResponseMessage> Post([FromBody] Manifest manifest)
@@ -41,7 +47,8 @@ namespace PalladiumDwh.DWapi.Controllers
                 if (!manifest.IsValid())
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                        new HttpError($"Invalid Manifest,Please ensure the SiteCode [{manifest.SiteCode}] is valid and there exists at least one (1) Patient record"));
+                        new HttpError(
+                            $"Invalid Manifest,Please ensure the SiteCode [{manifest.SiteCode}] is valid and there exists at least one (1) Patient record"));
                 }
 
                 try
@@ -54,18 +61,19 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception e)
                 {
-                    Log.Error("SiteCode Error",e);
+                    Log.Error("SiteCode Error", e);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
                 }
 
                 try
                 {
                     Log.Debug("checking SiteCode Enrollment...");
-                    _facilityRepository.Enroll(masterFacility, manifest.EmrName, Properties.Settings.Default.AllowSnapshot);
+                    _facilityRepository.Enroll(masterFacility, manifest.EmrName,
+                        Properties.Settings.Default.AllowSnapshot);
                 }
                 catch (Exception e)
                 {
-                    Log.Error("SiteCode Enroll Error",e);
+                    Log.Error("SiteCode Enroll Error", e);
                 }
 
                 try
@@ -76,7 +84,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Clear Site Manifest Error",e);
+                    Log.Error("Clear Site Manifest Error", e);
                 }
 
                 try
@@ -100,8 +108,9 @@ namespace PalladiumDwh.DWapi.Controllers
                     var metrics = MetricDto.Generate(masterFacility, facManifest);
                     var metricDtos = metrics.Where(x => x.CargoType != CargoType.Indicator).ToList();
                     var indicatorDtos = metrics.Where(x => x.CargoType == CargoType.Indicator).ToList();
-                    var extractDto=ExtractDto.Generate(metricDtos);
-                    manifestDto.Cargo = JsonConvert.SerializeObject(extractDto.ExtractCargos);
+                    manifestDto.Cargo =
+                        JsonConvert.SerializeObject(ExtractDto.GenerateCargo(metricDtos), _serializerSettings);
+
                     var result = await _liveSyncService.SyncManifest(manifestDto);
 
                     if (metricDtos.Any())
@@ -125,12 +134,13 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Sending to QueueError",ex);
+                    Log.Error("Sending to QueueError", ex);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
             }
 
-            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new Manifest().GetType().Name}' is null"));
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                new HttpError($"The expected '{new Manifest().GetType().Name}' is null"));
         }
     }
 }
