@@ -129,6 +129,10 @@
     <Compile Include="Migrations\202102061007010_ManifestTag.Designer.cs">
       <DependentUpon>202102061007010_ManifestTag.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103020616497_NewCT.cs" />
+    <Compile Include="Migrations\202103020616497_NewCT.Designer.cs">
+      <DependentUpon>202103020616497_NewCT.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -171,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102061007010_ManifestTag.resx">
       <DependentUpon>202102061007010_ManifestTag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103020616497_NewCT.resx">
+      <DependentUpon>202103020616497_NewCT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

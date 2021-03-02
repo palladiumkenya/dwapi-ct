@@ -38,6 +38,22 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<FacilityManifestCargo> Cargoes { get; set; }
         public virtual DbSet<ActionRegister> ActionRegisters { get; set; }
 
+        public virtual DbSet<AllergiesChronicIllnessExtract> AllergiesChronicIllnessExtracts { get; set; }
+
+        public virtual DbSet<ContactListingExtract> ContactListingExtracts { get; set; } 
+
+        public virtual DbSet<DepressionScreeningExtract> DepressionScreeningExtracts { get; set; } 
+
+        public virtual DbSet<EnhancedAdherenceCounsellingExtract> EnhancedAdherenceCounsellingExtracts { get; set; } 
+
+        public virtual DbSet<DrugAlcoholScreeningExtract> DrugAlcoholScreeningExtracts { get; set; } 
+
+        public virtual DbSet<GbvScreeningExtract> GbvScreeningExtracts { get; set; } 
+        public virtual DbSet<IptExtract> IptExtracts { get; set; } 
+        public virtual DbSet<OtzExtract> OtzExtracts { get; set; } 
+        public virtual DbSet<OvcExtract> OvcExtracts { get; set; } 
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -81,6 +97,44 @@ namespace PalladiumDwh.Infrastructure.Data
                 .WithRequired()
                 .HasForeignKey(f => f.PatientId);
 
+
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.AllergiesChronicIllnessExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.ContactListingExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.PatientAdverseEventExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.DrugAlcoholScreeningExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.EnhancedAdherenceCounsellingExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.GbvScreeningExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.IptExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.OtzExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.OvcExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+
             DapperPlusManager.Entity<Facility>().Table("Facility").Key(x => x.Id);
             DapperPlusManager.Entity<PatientExtract>().Table("PatientExtract").Key(x => x.Id);
             DapperPlusManager.Entity<PatientArtExtract>().Table("PatientArtExtract").Key(x => x.Id);
@@ -95,14 +149,24 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<FacilityManifestCargo>().Table("FacilityManifestCargo").Key(x => x.Id);
 
 
-            DapperPlusManager.Entity<PatientExtract>().BatchDelayInterval(1000);
-            DapperPlusManager.Entity<PatientArtExtract>().BatchDelayInterval(1000);
-            DapperPlusManager.Entity<PatientBaselinesExtract>().BatchDelayInterval(1000);
-            DapperPlusManager.Entity<PatientLaboratoryExtract>().BatchDelayInterval(1000);
-            DapperPlusManager.Entity<PatientPharmacyExtract>().BatchDelayInterval(1000);
-            DapperPlusManager.Entity<PatientStatusExtract>().BatchDelayInterval(1000);
-            DapperPlusManager.Entity<PatientVisitExtract>().BatchDelayInterval(1000);
-            DapperPlusManager.Entity<PatientAdverseEventExtract>().BatchDelayInterval(1000);
+            DapperPlusManager.Entity<PatientExtract>().BatchDelayInterval(500);
+            DapperPlusManager.Entity<PatientArtExtract>().BatchDelayInterval(500);
+            DapperPlusManager.Entity<PatientBaselinesExtract>().BatchDelayInterval(500);
+            DapperPlusManager.Entity<PatientLaboratoryExtract>().BatchDelayInterval(500);
+            DapperPlusManager.Entity<PatientPharmacyExtract>().BatchDelayInterval(500);
+            DapperPlusManager.Entity<PatientStatusExtract>().BatchDelayInterval(500);
+            DapperPlusManager.Entity<PatientVisitExtract>().BatchDelayInterval(500);
+            DapperPlusManager.Entity<PatientAdverseEventExtract>().BatchDelayInterval(500);
+
+            DapperPlusManager.Entity<AllergiesChronicIllnessExtract>().Key(x => x.Id).Table($"AllergiesChronicIllnessExtract").BatchDelayInterval(500);
+            DapperPlusManager.Entity<IptExtract>().Key(x => x.Id).Table($"IptExtract").BatchDelayInterval(500);
+            DapperPlusManager.Entity<DepressionScreeningExtract>().Key(x => x.Id).Table($"DepressionScreeningExtract").BatchDelayInterval(500);
+            DapperPlusManager.Entity<ContactListingExtract>().Key(x => x.Id).Table($"ContactListingExtract").BatchDelayInterval(500);
+            DapperPlusManager.Entity<GbvScreeningExtract>().Key(x => x.Id).Table($"GbvScreeningExtract").BatchDelayInterval(500);
+            DapperPlusManager.Entity<EnhancedAdherenceCounsellingExtract>().Key(x => x.Id).Table($"EnhancedAdherenceCounsellingExtract").BatchDelayInterval(500);
+            DapperPlusManager.Entity<DrugAlcoholScreeningExtract>().Key(x => x.Id).Table($"DrugAlcoholScreeningExtract").BatchDelayInterval(500);
+            DapperPlusManager.Entity<OvcExtract>().Key(x => x.Id).Table($"OvcExtract").BatchDelayInterval(500);
+            DapperPlusManager.Entity<OtzExtract>().Key(x => x.Id).Table($"OtzExtract").BatchDelayInterval(500);
         }
 
         public SqlConnection GetConnection()
