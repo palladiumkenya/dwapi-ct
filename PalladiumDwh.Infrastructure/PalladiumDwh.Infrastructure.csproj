@@ -142,6 +142,10 @@
     <Compile Include="Migrations\202103020616497_NewCT.Designer.cs">
       <DependentUpon>202103020616497_NewCT.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103031637190_CTReview.cs" />
+    <Compile Include="Migrations\202103031637190_CTReview.Designer.cs">
+      <DependentUpon>202103031637190_CTReview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -187,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103020616497_NewCT.resx">
       <DependentUpon>202103020616497_NewCT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103031637190_CTReview.resx">
+      <DependentUpon>202103031637190_CTReview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>
