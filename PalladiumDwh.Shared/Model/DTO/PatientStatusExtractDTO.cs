@@ -14,7 +14,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
-
+        public string TOVerified { get; set; }
+        public DateTime? TOVerifiedDate { get; set; }
         public PatientStatusExtractDTO()
         {
         }
@@ -39,7 +40,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientStatusExtract.PatientId;
         }
 
-     
+
 
         public IEnumerable<PatientStatusExtractDTO> GeneratePatientStatusExtractDtOs(IEnumerable<PatientStatusExtract> extracts)
         {
@@ -56,5 +57,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
         }
+
+       
     }
 }

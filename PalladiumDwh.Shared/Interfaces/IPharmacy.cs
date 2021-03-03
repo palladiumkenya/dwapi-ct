@@ -1,8 +1,9 @@
 using System;
+using Dwapi.Contracts.Ct;
 
 namespace PalladiumDwh.Shared.Interfaces
 {
-    public interface IPharmacy
+    public interface IPharmacy:IPharmacyNew
     {
         int? VisitID { get; set; }
         string Drug { get; set; }

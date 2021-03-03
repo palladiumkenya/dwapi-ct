@@ -1,8 +1,9 @@
 using System;
+using Dwapi.Contracts.Ct;
 
 namespace PalladiumDwh.Shared.Interfaces
 {
-    public interface IVisit
+    public interface IVisit:IVisitNew
     {
         int? VisitId { get; set; }
         DateTime? VisitDate { get; set; }

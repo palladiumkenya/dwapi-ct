@@ -42,6 +42,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Emr = extract.Emr;
             Project = extract.Project;
         }
-    
+
+        public string TOVerified { get; set; }
+        public DateTime? TOVerifiedDate { get; set; }
     }
 }

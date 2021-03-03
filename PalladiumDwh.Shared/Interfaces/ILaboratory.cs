@@ -1,8 +1,9 @@
 using System;
+using Dwapi.Contracts.Ct;
 
 namespace PalladiumDwh.Shared.Interfaces
 {
-    public interface ILaboratory
+    public interface ILaboratory :ILabNew
     {
         int? VisitId { get; set; }
         DateTime? OrderedByDate { get; set; }

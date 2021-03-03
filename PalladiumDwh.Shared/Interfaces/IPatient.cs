@@ -1,8 +1,9 @@
 ﻿using System;
+using Dwapi.Contracts.Ct;
 
 namespace PalladiumDwh.Shared.Interfaces
 {
-    public interface IPatient
+    public interface IPatient:IPatientNew
     {
 
         string Gender { get; set; }

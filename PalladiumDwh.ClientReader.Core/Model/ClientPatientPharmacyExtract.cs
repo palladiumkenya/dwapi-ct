@@ -64,5 +64,10 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = extract.Project;
 
         }
+
+        public string RegimenChangedSwitched { get; set; }
+        public string RegimenChangeSwitchReason { get; set; }
+        public string StopRegimenReason { get; set; }
+        public DateTime? StopRegimenDate { get; set; }
     }
 }

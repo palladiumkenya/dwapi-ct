@@ -52,5 +52,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = extract.Project;
 
         }
+
+        public DateTime? DateSampleTaken { get; set; }
+        public string SampleType { get; set; }
     }
 }

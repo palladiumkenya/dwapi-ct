@@ -8,7 +8,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
     [Table("vTempPatientStatusExtractError")]
     public class TempPatientStatusExtractError : TempExtract, ITempPatientStatusExtract
     {
-        
+
 
         public override string ToString()
         {
@@ -23,5 +23,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string ExitReason { get; set; }
 
         public virtual ICollection<TempPatientStatusExtractErrorSummary> TempPatientStatusExtractErrorSummaries { get; set; } = new List<TempPatientStatusExtractErrorSummary>();
+        public string TOVerified { get; set; }
+        public DateTime? TOVerifiedDate { get; set; }
     }
 }

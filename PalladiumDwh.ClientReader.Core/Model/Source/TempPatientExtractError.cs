@@ -51,6 +51,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         {
             return $"{SiteCode}-{PatientID}";
         }
-        
+
+        public string Pkv { get; set; }
+        public string Occupation { get; set; }
     }
 }

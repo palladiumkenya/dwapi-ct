@@ -21,6 +21,10 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+        public string RegimenChangedSwitched { get; set; }
+        public string RegimenChangeSwitchReason { get; set; }
+        public string StopRegimenReason { get; set; }
+        public DateTime? StopRegimenDate { get; set; }
 
         public PatientPharmacyExtractDTO()
         {
@@ -77,5 +81,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 RegimenLine,
                 PeriodTaken, ProphylaxisType, PatientId,Emr, Project);
         }
+
+
     }
 }

@@ -77,5 +77,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             Project = extract.Project;
             FacilityId = extract.SiteCode; //TODO FacilityId = extract.SiteCode
         }
+
+        public string Pkv { get; set; }
+        public string Occupation { get; set; }
     }
 }

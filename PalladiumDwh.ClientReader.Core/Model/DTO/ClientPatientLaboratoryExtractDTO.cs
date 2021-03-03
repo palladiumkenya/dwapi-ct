@@ -18,7 +18,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public int FacilityId { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        
+
 
         public ClientPatientLaboratoryExtractDTO()
         {
@@ -50,12 +50,12 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             TestName = extract.TestName;
             EnrollmentTest = extract.EnrollmentTest;
             TestResult = extract.TestResult;
-            
+
             Emr = extract.Emr;
             Project = extract.Project;
 
 
-            
+
         }
 
         public IEnumerable<ClientPatientLaboratoryExtractDTO> GenerateLaboratoryExtractDtOs(IEnumerable<ClientPatientLaboratoryExtract> extracts)
@@ -67,5 +67,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             }
             return laboratoryExtractDtos;
         }
+
+        public DateTime? DateSampleTaken { get; set; }
+        public string SampleType { get; set; }
     }
 }

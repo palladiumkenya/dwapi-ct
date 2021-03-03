@@ -10,7 +10,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string ExitReason { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
-
+        public string TOVerified { get; set; }
+        public DateTime? TOVerifiedDate { get; set; }
         public PatientStatusExtract()
         {
             Created = DateTime.Now;
@@ -26,5 +27,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             Project = project;
             Created = DateTime.Now;
         }
+
+
     }
 }

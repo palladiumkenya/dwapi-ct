@@ -13,6 +13,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string TestResult { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
+        public DateTime? DateSampleTaken { get; set; }
+        public string SampleType { get; set; }
 
         public PatientLaboratoryExtract()
         {
@@ -32,5 +34,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             Project = project;
             Created = DateTime.Now;
         }
+
+
     }
 }

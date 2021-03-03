@@ -8,7 +8,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
     [Table("vTempPatientPharmacyExtractError")]
     public class TempPatientPharmacyExtractError : TempExtract, ITempPatientPharmacyExtract
     {
-     
+
 
 
         public override string ToString()
@@ -30,5 +30,9 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string Project { get; set; }
 
         public virtual ICollection<TempPatientPharmacyExtractErrorSummary> TempPatientPharmacyExtractErrorSummaries { get; set; } = new List<TempPatientPharmacyExtractErrorSummary>();
+        public string RegimenChangedSwitched { get; set; }
+        public string RegimenChangeSwitchReason { get; set; }
+        public string StopRegimenReason { get; set; }
+        public DateTime? StopRegimenDate { get; set; }
     }
 }

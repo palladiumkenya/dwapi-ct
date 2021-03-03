@@ -44,6 +44,9 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Project { get; set; }
         public Guid FacilityId { get; set; }
 
+        public string Pkv { get; set; }
+        public string Occupation { get; set; }
+
         public PatientExtractDTO()
         {
 
@@ -184,7 +187,6 @@ namespace PalladiumDwh.Shared.Model.DTO
             return !string.IsNullOrWhiteSpace(PatientCccNumber);
         }
 
-     
-      
+
     }
 }

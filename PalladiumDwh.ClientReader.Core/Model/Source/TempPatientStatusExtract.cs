@@ -3,10 +3,10 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model.Source
 {
-    
+
     public class TempPatientStatusExtract : TempExtract, ITempPatientStatusExtract
     {
-        
+
 
         public override string ToString()
         {
@@ -20,6 +20,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public DateTime? ExitDate { get; set; }
         public string ExitReason { get; set; }
 
-        
+
+        public string TOVerified { get; set; }
+        public DateTime? TOVerifiedDate { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public int FacilityId { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        
+
 
         public ClientPatientStatusExtractDTO()
         {
@@ -56,6 +56,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             }
             return statusExtractDtos;
         }
-        
+
+        public string TOVerified { get; set; }
+        public DateTime? TOVerifiedDate { get; set; }
     }
 }

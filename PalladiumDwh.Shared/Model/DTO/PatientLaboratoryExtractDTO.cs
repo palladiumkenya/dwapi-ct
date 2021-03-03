@@ -17,6 +17,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? DateSampleTaken { get; set; }
+        public string SampleType { get; set; }
 
         public PatientLaboratoryExtractDTO()
         {
@@ -49,7 +51,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientLaboratoryExtract.PatientId;
         }
 
-      
+
         public IEnumerable<PatientLaboratoryExtractDTO> GenerateLaboratoryExtractDtOs(IEnumerable<PatientLaboratoryExtract> extracts)
         {
             var laboratoryExtractDtos = new List<PatientLaboratoryExtractDTO>();
@@ -65,5 +67,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             return new PatientLaboratoryExtract(VisitId, OrderedByDate, ReportedByDate, TestName,EnrollmentTest, TestResult, PatientId, Emr, Project);
         }
+
+
     }
 }

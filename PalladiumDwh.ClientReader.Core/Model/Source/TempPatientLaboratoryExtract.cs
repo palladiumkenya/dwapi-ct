@@ -3,7 +3,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model.Source
 {
-    
+
     public class TempPatientLaboratoryExtract : TempExtract, ITempPatientLaboratoryExtract
     {
 
@@ -22,5 +22,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string TestName { get; set; }
         public int? EnrollmentTest { get; set; }
         public string TestResult { get; set; }
+        public DateTime? DateSampleTaken { get; set; }
+        public string SampleType { get; set; }
     }
 }

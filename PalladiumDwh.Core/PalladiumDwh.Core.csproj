@@ -71,6 +71,15 @@
     <Compile Include="Interfaces\IMessengerScheduler.cs" />
     <Compile Include="Interfaces\Interface1.cs" />
     <Compile Include="Interfaces\IPatientAdverseEventRepository.cs" />
+    <Compile Include="Interfaces\IGbvScreeningRepository.cs" />
+    <Compile Include="Interfaces\IDrugAlcoholScreeningRepository.css.cs" />
+    <Compile Include="Interfaces\IContactListingRepository.cs" />
+    <Compile Include="Interfaces\IOvcRepository.cs" />
+    <Compile Include="Interfaces\IIptRepository.cs" />
+    <Compile Include="Interfaces\IOtzRepository.cs" />
+    <Compile Include="Interfaces\IEnhancedAdherenceCounsellingRepository.cs" />
+    <Compile Include="Interfaces\IAllergiesChronicIllnessRepository.cs" />
+    <Compile Include="Interfaces\IDepressionScreeningRepository.cs" />
     <Compile Include="Interfaces\IProfileScheduler.cs" />
     <Compile Include="Interfaces\IPatientArtExtractRepository.cs" />
     <Compile Include="Interfaces\IPatientBaseLinesRepository.cs" />

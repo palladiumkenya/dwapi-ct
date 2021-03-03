@@ -3,7 +3,7 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model.Source
 {
-    
+
     public class TempPatientExtract : TempExtract, ITempPatientExtract
     {
 
@@ -48,6 +48,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         {
             return $"{SiteCode}-{PatientID}";
         }
-        
+
+        public string Pkv { get; set; }
+        public string Occupation { get; set; }
     }
 }

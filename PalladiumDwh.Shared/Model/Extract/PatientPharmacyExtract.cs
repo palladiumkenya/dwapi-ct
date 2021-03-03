@@ -18,6 +18,11 @@ namespace PalladiumDwh.Shared.Model.Extract
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
 
+        public string RegimenChangedSwitched { get; set; }
+        public string RegimenChangeSwitchReason { get; set; }
+        public string StopRegimenReason { get; set; }
+        public DateTime? StopRegimenDate { get; set; }
+
         public PatientPharmacyExtract()
         {
             Created = DateTime.Now;
@@ -40,5 +45,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             Project = project;
             Created = DateTime.Now;
         }
+
+
     }
 }

@@ -11,7 +11,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
     [Table("PatientExtract")]
     public class ClientPatientExtract: ClientExtract, IClientPatientExtract
     {
-        
+
         [Key, Column(Order = 1)]
         public override int PatientPK { get; set; }
         [Key, Column(Order = 2)]
@@ -98,7 +98,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Emr = emr;
             Project = project;
         }
-        
+
         public ClientPatientExtract(TempPatientExtract extract)
         {
             PatientPK = extract.PatientPK.Value;
@@ -129,7 +129,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = extract.Project;
         }
 
-       
+
 
         public override string GetAddAction(string source, bool lookup = true)
         {
@@ -237,5 +237,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
             return $"{PatientID}";
         }
+
+        public string Pkv { get; set; }
+        public string Occupation { get; set; }
     }
 }

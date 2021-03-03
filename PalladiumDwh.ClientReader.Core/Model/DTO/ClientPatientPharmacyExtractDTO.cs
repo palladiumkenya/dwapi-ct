@@ -22,7 +22,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public int FacilityId { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        
+
 
         public ClientPatientPharmacyExtractDTO()
         {
@@ -62,7 +62,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             RegimenLine = extract.RegimenLine;
             PeriodTaken = extract.PeriodTaken;
             ProphylaxisType = extract.ProphylaxisType;
-            
+
             Emr = extract.Emr;
             Project = extract.Project;
 
@@ -77,6 +77,10 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             }
             return pharmacyExtractDtos;
         }
-        
+
+        public string RegimenChangedSwitched { get; set; }
+        public string RegimenChangeSwitchReason { get; set; }
+        public string StopRegimenReason { get; set; }
+        public DateTime? StopRegimenDate { get; set; }
     }
 }

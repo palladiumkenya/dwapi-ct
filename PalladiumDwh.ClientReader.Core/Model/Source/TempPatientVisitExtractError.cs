@@ -8,7 +8,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
     [Table("vTempPatientVisitExtractError")]
     public class TempPatientVisitExtractError : TempExtract, ITempPatientVisitExtract
     {
-       
+
 
 
         public override string ToString()
@@ -51,5 +51,22 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string KeyPopulationType { get; set; }
 
         public virtual ICollection<TempPatientVisitExtractErrorSummary> TempPatientVisitExtractErrorSummaries { get; set; } = new List<TempPatientVisitExtractErrorSummary>();
+        public string VisitBy { get; set; }
+        public decimal? Temp { get; set; }
+        public int? PulseRate { get; set; }
+        public int? RespiratoryRate { get; set; }
+        public decimal? OxygenSaturation { get; set; }
+        public int? Muac { get; set; }
+        public string NutritionalStatus { get; set; }
+        public string EverHadMenses { get; set; }
+        public string Breastfeeding { get; set; }
+        public string Menopausal { get; set; }
+        public string NoFPReason { get; set; }
+        public string ProphylaxisUsed { get; set; }
+        public string CTXAdherence { get; set; }
+        public string CurrentRegimen { get; set; }
+        public string HCWConcern { get; set; }
+        public string TCAReason { get; set; }
+        public string ClinicalNotes { get; set; }
     }
 }

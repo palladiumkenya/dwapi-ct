@@ -4,7 +4,7 @@ using PalladiumDwh.Shared.Interfaces.Extracts;
 
 namespace PalladiumDwh.Shared.Model.Extract
 {
-    public class IptExtract : Entity,IIPtExtract
+    public class IptExtract : Entity,IIptExtract
     {
         public string FacilityName { get; set; }
         public int ? VisitID { get; set; }

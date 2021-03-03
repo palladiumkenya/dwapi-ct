@@ -5,7 +5,7 @@ using PalladiumDwh.Shared.Interfaces.Extracts;
 
 namespace PalladiumDwh.Shared.Model.Extract
 {
-    
+
     public class PatientExtract:Entity, IPatientExtract
     {
         public int PatientPID { get; set; }
@@ -44,6 +44,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? TransferInDate { get; set; }
         public Guid FacilityId { get; set; }
         public DateTime? Created { get; set; }
+        public string Pkv { get; set; }
+        public string Occupation { get; set; }
 
         public virtual ICollection<PatientArtExtract> PatientArtExtracts { get; set; }=new List<PatientArtExtract>();
         public virtual ICollection<PatientBaselinesExtract> PatientBaselinesExtracts { get; set; }=new List<PatientBaselinesExtract>();
@@ -83,7 +85,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-      
+
         public PatientExtract(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, Guid facilityId,string emr,string project,
             string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate)
 
@@ -190,6 +192,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         {
             return string.IsNullOrWhiteSpace(Gender);
         }
+
 
     }
 }

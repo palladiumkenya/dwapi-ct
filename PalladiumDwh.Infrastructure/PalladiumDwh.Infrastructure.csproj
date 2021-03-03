@@ -79,7 +79,16 @@
     <Compile Include="Data\Repository\PatientExtractRepository.cs" />
     <Compile Include="Data\Repository\PatientLabRepository.cs" />
     <Compile Include="Data\Repository\PatientPharmacyRepository.cs" />
+    <Compile Include="Data\Repository\DepressionScreeningRepository.cs" />
+    <Compile Include="Data\Repository\GbvScreeningRepository.cs" />
+    <Compile Include="Data\Repository\DrugAlcoholScreeningRepository.cs" />
+    <Compile Include="Data\Repository\IptRepository.css.cs" />
+    <Compile Include="Data\Repository\EnhancedAdherenceCounsellingRepository.cs" />
     <Compile Include="Data\Repository\PatientStatusRepository.cs" />
+    <Compile Include="Data\Repository\OvcRepository.cs" />
+    <Compile Include="Data\Repository\OtzRepository.cs" />
+    <Compile Include="Data\Repository\ContactListingRepository.cs" />
+    <Compile Include="Data\Repository\AllergiesChronicIllnessRepository.cs" />
     <Compile Include="Data\Repository\PatientVisitRepository.cs" />
     <Compile Include="Migrations\201705251225248_CentralInitial.cs" />
     <Compile Include="Migrations\201705251225248_CentralInitial.Designer.cs">

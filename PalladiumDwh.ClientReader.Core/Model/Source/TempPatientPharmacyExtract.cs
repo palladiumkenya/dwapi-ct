@@ -3,10 +3,10 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model.Source
 {
-    
+
     public class TempPatientPharmacyExtract : TempExtract, ITempPatientPharmacyExtract
     {
-     
+
 
 
         public override string ToString()
@@ -26,5 +26,9 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string ProphylaxisType { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
+        public string RegimenChangedSwitched { get; set; }
+        public string RegimenChangeSwitchReason { get; set; }
+        public string StopRegimenReason { get; set; }
+        public DateTime? StopRegimenDate { get; set; }
     }
 }
