@@ -57,6 +57,7 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientStatusRepository = new PatientStatusRepository(_context),
                 _patientVisitRepository = new PatientVisitRepository(_context),
                 _patientAdverseEventRepository=new PatientAdverseEventRepository(_context),
+                null,null,null,null,null,null,null,null,null,
                 null,
                 _actionRegisterRepository=new ActionRegisterRepository(_context)
             );
@@ -161,6 +162,6 @@ namespace PalladiumDwh.Core.Tests.Services
             var msmqBacklog = _messagingReaderService.BacklogQueue as MessageQueue;
             msmqBacklog.Purge();
         }
-        
+
     }
 }

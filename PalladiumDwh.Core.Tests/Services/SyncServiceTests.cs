@@ -68,7 +68,9 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
                 _patientVisitRepository = new PatientVisitRepository(_context),
-                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context), null,new ActionRegisterRepository(_context)
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context),
+                null,null,null,null,null,null,null,null,null,null,
+                new ActionRegisterRepository(_context)
             );
 
             _newFacility = Builder<Facility>.CreateNew().Build();
@@ -111,7 +113,7 @@ namespace PalladiumDwh.Core.Tests.Services
 
             var facility = _facilityRepository.Find(savedPatient.FacilityId);
             Assert.IsNotNull(facility);
-            Assert.AreEqual(_newFacility.Code,facility.Code);       
+            Assert.AreEqual(_newFacility.Code,facility.Code);
         }
 
         [Test]
@@ -126,7 +128,10 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
                 _patientVisitRepository = new PatientVisitRepository(_context),
-                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context), null,new ActionRegisterRepository(_context)
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context),
+                null,null,null,null,null,null,null,null,null,
+                null,
+                new ActionRegisterRepository(_context)
             );
 
             var manifest = new Manifest(_facilityA.Code);
@@ -156,7 +161,7 @@ namespace PalladiumDwh.Core.Tests.Services
             Assert.IsTrue(savedPatient.PatientArtExtracts.Count>0);
         }
 
-        
+
         [Test]
         public void should_SynBaseline()
         {

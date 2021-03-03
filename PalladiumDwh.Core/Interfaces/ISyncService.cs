@@ -17,6 +17,17 @@ namespace PalladiumDwh.Core.Interfaces
         void SyncVisit(PatientVisitProfile patientVisitProfile);
         void SyncAdverseEvent(PatientAdverseEventProfile patientVisitProfile);
 
+        void SyncAllergiesChronicIllness(AllergiesChronicIllnessProfile allergiesChronicIllnessprofile);
+        void SyncIpt(IptProfile iptprofile);
+        void SyncDepressionScreening(DepressionScreeningProfile depressionScreeningprofile);
+        void SyncContactListing(ContactListingProfile contactListingprofile);
+        void SyncGbvScreening(GbvScreeningProfile gbvScreeningprofile);
+        void SyncEnhancedAdherenceCounselling(EnhancedAdherenceCounsellingProfile enhancedAdherenceCounsellingprofile);
+        void SyncDrugAlcoholScreening(DrugAlcoholScreeningProfile drugAlcoholScreeningprofile);
+        void SyncOvc(OvcProfile ovcprofile);
+        void SyncOtz(OtzProfile otzprofile);
+
+
 
         void SyncArtNew(PatientARTProfile profile);
         void SyncBaselineNew(PatientBaselineProfile baselineProfile);
@@ -25,6 +36,16 @@ namespace PalladiumDwh.Core.Interfaces
         void SyncStatusNew(PatientStatusProfile patientStatusProfile);
         void SyncVisitNew(PatientVisitProfile profile);
         void SyncvAdverseEventNew(PatientAdverseEventProfile profile);
+        void SyncAllergiesChronicIllnessNew(AllergiesChronicIllnessProfile profile);
+        void SyncIptNew(IptProfile profile);
+        void SyncDepressionScreeningNew(DepressionScreeningProfile profile);
+        void SyncContactListingNew(ContactListingProfile profile);
+        void SyncGbvScreeningNew(GbvScreeningProfile profile);
+        void SyncEnhancedAdherenceCounsellingNew(EnhancedAdherenceCounsellingProfile profile);
+        void SyncDrugAlcoholScreeningNew(DrugAlcoholScreeningProfile profile);
+        void SyncOvcNew(OvcProfile profile);
+        void SyncOtzNew(OtzProfile profile);
+
 
         void SyncArtNew(List<PatientARTProfile> profile);
         void SyncBaselineNew(List<PatientBaselineProfile> baselineProfile);
@@ -33,6 +54,16 @@ namespace PalladiumDwh.Core.Interfaces
         void SyncStatusNew(List<PatientStatusProfile> patientStatusProfile);
         void SyncVisitNew(List<PatientVisitProfile> profile);
         void SyncvAdverseEventNew(List<PatientAdverseEventProfile> profile);
+        void SyncAllergiesChronicIllnessNew(List<AllergiesChronicIllnessProfile> profile);
+        void SyncIptNew(List<IptProfile> profile);
+        void SyncDepressionScreeningNew(List<DepressionScreeningProfile> profile);
+        void SyncContactListingNew(List<ContactListingProfile> profile);
+        void SyncGbvScreeningNew(List<GbvScreeningProfile> profile);
+        void SyncEnhancedAdherenceCounsellingNew(List<EnhancedAdherenceCounsellingProfile> profile);
+        void SyncDrugAlcoholScreeningNew(List<DrugAlcoholScreeningProfile> profile);
+        void SyncOvcNew(List<OvcProfile> profile);
+        void SyncOtzNew(List<OtzProfile> profile);
+
 
         Facility GetFacility(int code);
         void SyncManifest(Manifest manifest);

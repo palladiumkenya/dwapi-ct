@@ -231,8 +231,17 @@
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PatientLabsController.cs" />
     <Compile Include="Controllers\PatientPharmacyController.cs" />
+    <Compile Include="Controllers\IptController.cs" />
+    <Compile Include="Controllers\EnhancedAdherenceCounsellingController.cs" />
+    <Compile Include="Controllers\OtzController.cs" />
+    <Compile Include="Controllers\OvcController.cs" />
+    <Compile Include="Controllers\DepressionScreeningController.cs" />
+    <Compile Include="Controllers\DrugAlcoholScreeningController.cs" />
     <Compile Include="Controllers\PatientStatusController.cs" />
+    <Compile Include="Controllers\AllergiesChronicIllnessController.cs" />
+    <Compile Include="Controllers\GbvScreeningController.cs" />
     <Compile Include="Controllers\PatientVisitsController.cs" />
+    <Compile Include="Controllers\ContactListingController.cs" />
     <Compile Include="Controllers\SpotController.cs" />
     <Compile Include="Controllers\NDWHController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />

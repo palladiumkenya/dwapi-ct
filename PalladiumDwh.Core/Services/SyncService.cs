@@ -23,6 +23,17 @@ namespace PalladiumDwh.Core.Services
         private readonly IPatientVisitRepository _patientVisitRepository;
         private readonly IPatientAdverseEventRepository _patientAdverseEventRepository;
 
+        private readonly IAllergiesChronicIllnessRepository _allergiesChronicIllnessRepository;
+        private readonly IIptRepository _iptRepository;
+        private readonly IDepressionScreeningRepository _depressionScreeningRepository;
+        private readonly IContactListingRepository _contactListingRepository;
+        private readonly IGbvScreeningRepository _gbvScreeningRepository;
+        private readonly IEnhancedAdherenceCounsellingRepository _enhancedAdherenceCounsellingRepository;
+        private readonly IDrugAlcoholScreeningRepository _drugAlcoholScreeningRepository;
+        private readonly IOvcRepository _ovcRepository;
+        private readonly IOtzRepository _otzRepository;
+
+
         private List<PatientVisitProfile> _visitProfiles = new List<PatientVisitProfile>();
         private List<PatientARTProfile> _artProfiles = new List<PatientARTProfile>();
         private List<PatientBaselineProfile> _baselineProfiles = new List<PatientBaselineProfile>();
@@ -30,16 +41,40 @@ namespace PalladiumDwh.Core.Services
         private List<PatientPharmacyProfile> _pharmacyProfiles = new List<PatientPharmacyProfile>();
         private List<PatientStatusProfile> _statusProfiles = new List<PatientStatusProfile>();
         private List<PatientAdverseEventProfile> _adverseEventProfiles = new List<PatientAdverseEventProfile>();
+
+        private List<AllergiesChronicIllnessProfile> _allergiesChronicIllnessProfiles =
+            new List<AllergiesChronicIllnessProfile>();
+
+        private List<IptProfile> _iptProfiles = new List<IptProfile>();
+        private List<DepressionScreeningProfile> _depressionScreeningProfiles = new List<DepressionScreeningProfile>();
+        private List<ContactListingProfile> _contactListingProfiles = new List<ContactListingProfile>();
+        private List<GbvScreeningProfile> _gbvScreeningProfiles = new List<GbvScreeningProfile>();
+
+        private List<EnhancedAdherenceCounsellingProfile> _enhancedAdherenceCounsellingProfiles =
+            new List<EnhancedAdherenceCounsellingProfile>();
+
+        private List<DrugAlcoholScreeningProfile> _drugAlcoholScreeningProfiles =
+            new List<DrugAlcoholScreeningProfile>();
+
+        private List<OvcProfile> _ovcProfiles = new List<OvcProfile>();
+        private List<OtzProfile> _otzProfiles = new List<OtzProfile>();
+
         private readonly ILiveSyncService _liveSyncService;
         private readonly IActionRegisterRepository _actionRegisterRepository;
-
 
         public SyncService(IFacilityRepository facilityRepository, IPatientExtractRepository patientExtractRepository,
             IPatientArtExtractRepository patientArtExtractRepository,
             IPatientBaseLinesRepository patientBaseLinesRepository, IPatientLabRepository patientLabRepository,
             IPatientPharmacyRepository patientPharmacyRepository, IPatientStatusRepository patientStatusRepository,
             IPatientVisitRepository patientVisitRepository,
-            IPatientAdverseEventRepository patientAdverseEventRepository, ILiveSyncService liveSyncService, IActionRegisterRepository actionRegisterRepository)
+            IPatientAdverseEventRepository patientAdverseEventRepository,
+            IAllergiesChronicIllnessRepository allergiesChronicIllnessRepository, IIptRepository iptRepository,
+            IDepressionScreeningRepository depressionScreeningRepository,
+            IContactListingRepository contactListingRepository, IGbvScreeningRepository gbvScreeningRepository,
+            IEnhancedAdherenceCounsellingRepository enhancedAdherenceCounsellingRepository,
+            IDrugAlcoholScreeningRepository drugAlcoholScreeningRepository, IOvcRepository ovcRepository,
+            IOtzRepository otzRepository, ILiveSyncService liveSyncService,
+            IActionRegisterRepository actionRegisterRepository)
         {
             _facilityRepository = facilityRepository;
             _patientExtractRepository = patientExtractRepository;
@@ -50,6 +85,15 @@ namespace PalladiumDwh.Core.Services
             _patientStatusRepository = patientStatusRepository;
             _patientVisitRepository = patientVisitRepository;
             _patientAdverseEventRepository = patientAdverseEventRepository;
+            _allergiesChronicIllnessRepository = allergiesChronicIllnessRepository;
+            _iptRepository = iptRepository;
+            _depressionScreeningRepository = depressionScreeningRepository;
+            _contactListingRepository = contactListingRepository;
+            _gbvScreeningRepository = gbvScreeningRepository;
+            _enhancedAdherenceCounsellingRepository = enhancedAdherenceCounsellingRepository;
+            _drugAlcoholScreeningRepository = drugAlcoholScreeningRepository;
+            _ovcRepository = ovcRepository;
+            _otzRepository = otzRepository;
             _liveSyncService = liveSyncService;
             _actionRegisterRepository = actionRegisterRepository;
         }
@@ -93,6 +137,43 @@ namespace PalladiumDwh.Core.Services
             {
                 SyncvAdverseEventNew(profile as PatientAdverseEventProfile);
             }
+            else if (profile.GetType() == typeof(AllergiesChronicIllnessProfile))
+            {
+                SyncAllergiesChronicIllness(profile as AllergiesChronicIllnessProfile);
+            }
+            else if (profile.GetType() == typeof(IptProfile))
+            {
+                SyncIpt(profile as IptProfile);
+            }
+            else if (profile.GetType() == typeof(DepressionScreeningProfile))
+            {
+                SyncDepressionScreening(profile as DepressionScreeningProfile);
+            }
+            else if (profile.GetType() == typeof(ContactListingProfile))
+            {
+                SyncContactListing(profile as ContactListingProfile);
+            }
+            else if (profile.GetType() == typeof(GbvScreeningProfile))
+            {
+                SyncGbvScreening(profile as GbvScreeningProfile);
+            }
+            else if (profile.GetType() == typeof(EnhancedAdherenceCounsellingProfile))
+            {
+                SyncEnhancedAdherenceCounselling(profile as EnhancedAdherenceCounsellingProfile);
+            }
+            else if (profile.GetType() == typeof(DrugAlcoholScreeningProfile))
+            {
+                SyncDrugAlcoholScreening(profile as DrugAlcoholScreeningProfile);
+            }
+            else if (profile.GetType() == typeof(OvcProfile))
+            {
+                SyncOvc(profile as OvcProfile);
+            }
+            else if (profile.GetType() == typeof(OtzProfile))
+            {
+                SyncOtz(profile as OtzProfile);
+            }
+
 
             else if (profile.GetType() == typeof(List<PatientARTProfile>))
             {
@@ -122,6 +203,43 @@ namespace PalladiumDwh.Core.Services
             {
                 SyncvAdverseEventNew(profile as List<PatientAdverseEventProfile>);
             }
+            else if (profile.GetType() == typeof(List<AllergiesChronicIllnessProfile>))
+            {
+                SyncAllergiesChronicIllnessNew(profile as List<AllergiesChronicIllnessProfile>);
+            }
+            else if (profile.GetType() == typeof(List<IptProfile>))
+            {
+                SyncIptNew(profile as List<IptProfile>);
+            }
+            else if (profile.GetType() == typeof(List<DepressionScreeningProfile>))
+            {
+                SyncDepressionScreeningNew(profile as List<DepressionScreeningProfile>);
+            }
+            else if (profile.GetType() == typeof(List<ContactListingProfile>))
+            {
+                SyncContactListingNew(profile as List<ContactListingProfile>);
+            }
+            else if (profile.GetType() == typeof(List<GbvScreeningProfile>))
+            {
+                SyncGbvScreeningNew(profile as List<GbvScreeningProfile>);
+            }
+            else if (profile.GetType() == typeof(List<EnhancedAdherenceCounsellingProfile>))
+            {
+                SyncEnhancedAdherenceCounsellingNew(profile as List<EnhancedAdherenceCounsellingProfile>);
+            }
+            else if (profile.GetType() == typeof(List<DrugAlcoholScreeningProfile>))
+            {
+                SyncDrugAlcoholScreeningNew(profile as List<DrugAlcoholScreeningProfile>);
+            }
+            else if (profile.GetType() == typeof(List<OvcProfile>))
+            {
+                SyncOvcNew(profile as List<OvcProfile>);
+            }
+            else if (profile.GetType() == typeof(List<OtzProfile>))
+            {
+                SyncOtzNew(profile as List<OtzProfile>);
+            }
+
         }
 
         public async void SyncManifest(Manifest manifest)
@@ -192,13 +310,15 @@ namespace PalladiumDwh.Core.Services
             if (queueName.ToLower().Contains("PatientLabProfile".ToLower()))
             {
                 Log.Debug($"batch processing {queueName}...");
-                _patientLabRepository.SyncNewPatients(_labProfiles, _facilityRepository, facIds, _actionRegisterRepository);
+                _patientLabRepository.SyncNewPatients(_labProfiles, _facilityRepository, facIds,
+                    _actionRegisterRepository);
             }
 
             if (queueName.ToLower().Contains("PatientPharmacyProfile".ToLower()))
             {
                 Log.Debug($"batch processing {queueName}...");
-                _patientPharmacyRepository.SyncNewPatients(_pharmacyProfiles, _facilityRepository, facIds, _actionRegisterRepository);
+                _patientPharmacyRepository.SyncNewPatients(_pharmacyProfiles, _facilityRepository, facIds,
+                    _actionRegisterRepository);
             }
 
             if (queueName.ToLower().Contains("PatientStatusProfile".ToLower()))
@@ -317,6 +437,114 @@ namespace PalladiumDwh.Core.Services
             }
         }
 
+        public void SyncAllergiesChronicIllness(AllergiesChronicIllnessProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _allergiesChronicIllnessRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+
+        public void SyncIpt(IptProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _iptRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+
+        public void SyncDepressionScreening(DepressionScreeningProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _depressionScreeningRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+
+        public void SyncContactListing(ContactListingProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _contactListingRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+
+        public void SyncGbvScreening(GbvScreeningProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _gbvScreeningRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+
+        public void SyncEnhancedAdherenceCounselling(EnhancedAdherenceCounsellingProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _enhancedAdherenceCounsellingRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+
+        public void SyncDrugAlcoholScreening(DrugAlcoholScreeningProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _drugAlcoholScreeningRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+
+        public void SyncOvc(OvcProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _ovcRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+
+        public void SyncOtz(OtzProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _otzRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+
         public void SyncArtNew(PatientARTProfile profile)
         {
             profile.GeneratePatientRecord();
@@ -364,17 +592,99 @@ namespace PalladiumDwh.Core.Services
 
         public void SyncArtNew(List<PatientARTProfile> profile) => profile.ForEach(SyncArtNew);
 
-        public void SyncBaselineNew(List<PatientBaselineProfile> baselineProfile) => baselineProfile.ForEach(SyncBaselineNew);
+        public void SyncBaselineNew(List<PatientBaselineProfile> baselineProfile) =>
+            baselineProfile.ForEach(SyncBaselineNew);
 
         public void SyncLabNew(List<PatientLabProfile> labProfile) => labProfile.ForEach(SyncLabNew);
 
-        public void SyncPharmacyNew(List<PatientPharmacyProfile> patientPharmacyProfile) => patientPharmacyProfile.ForEach(SyncPharmacyNew);
+        public void SyncPharmacyNew(List<PatientPharmacyProfile> patientPharmacyProfile) =>
+            patientPharmacyProfile.ForEach(SyncPharmacyNew);
 
-        public void SyncStatusNew(List<PatientStatusProfile> patientStatusProfile) => patientStatusProfile.ForEach(SyncStatusNew);
+        public void SyncStatusNew(List<PatientStatusProfile> patientStatusProfile) =>
+            patientStatusProfile.ForEach(SyncStatusNew);
 
         public void SyncVisitNew(List<PatientVisitProfile> profile) => profile.ForEach(SyncVisitNew);
 
-        public void SyncvAdverseEventNew(List<PatientAdverseEventProfile> profile) => profile.ForEach(SyncvAdverseEventNew);
+        public void SyncAllergiesChronicIllnessNew(AllergiesChronicIllnessProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _allergiesChronicIllnessProfiles.Add(profile);
+        }
+
+        public void SyncIptNew(IptProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _iptProfiles.Add(profile);
+        }
+
+        public void SyncDepressionScreeningNew(DepressionScreeningProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _depressionScreeningProfiles.Add(profile);
+        }
+
+        public void SyncContactListingNew(ContactListingProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _contactListingProfiles.Add(profile);
+        }
+
+        public void SyncGbvScreeningNew(GbvScreeningProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _gbvScreeningProfiles.Add(profile);
+        }
+
+        public void SyncEnhancedAdherenceCounsellingNew(EnhancedAdherenceCounsellingProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _enhancedAdherenceCounsellingProfiles.Add(profile);
+        }
+
+        public void SyncDrugAlcoholScreeningNew(DrugAlcoholScreeningProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _drugAlcoholScreeningProfiles.Add(profile);
+        }
+
+        public void SyncOvcNew(OvcProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _ovcProfiles.Add(profile);
+        }
+
+        public void SyncOtzNew(OtzProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _otzProfiles.Add(profile);
+        }
+
+
+        public void SyncvAdverseEventNew(List<PatientAdverseEventProfile> profile) =>
+            profile.ForEach(SyncvAdverseEventNew);
+
+        public void SyncAllergiesChronicIllnessNew(List<AllergiesChronicIllnessProfile> profile) =>
+            profile.ForEach(SyncAllergiesChronicIllnessNew);
+
+        public void SyncIptNew(List<IptProfile> profile) => profile.ForEach(SyncIptNew);
+
+        public void SyncDepressionScreeningNew(List<DepressionScreeningProfile> profile) =>
+            profile.ForEach(SyncDepressionScreeningNew);
+
+        public void SyncContactListingNew(List<ContactListingProfile> profile) =>
+            profile.ForEach(SyncContactListingNew);
+
+        public void SyncGbvScreeningNew(List<GbvScreeningProfile> profile) => profile.ForEach(SyncGbvScreeningNew);
+
+        public void SyncEnhancedAdherenceCounsellingNew(List<EnhancedAdherenceCounsellingProfile> profile) =>
+            profile.ForEach(SyncEnhancedAdherenceCounsellingNew);
+
+        public void SyncDrugAlcoholScreeningNew(List<DrugAlcoholScreeningProfile> profile) =>
+            profile.ForEach(SyncDrugAlcoholScreeningNew);
+
+        public void SyncOvcNew(List<OvcProfile> profile) => profile.ForEach(SyncOvcNew);
+        public void SyncOtzNew(List<OtzProfile> profile) => profile.ForEach(SyncOtzNew);
+
 
 
         public Facility GetFacility(int code)
@@ -422,10 +732,10 @@ namespace PalladiumDwh.Core.Services
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Stats",e);
+                    Log.Error("Stats", e);
                 }
             }
-                
+
         }
     }
 }

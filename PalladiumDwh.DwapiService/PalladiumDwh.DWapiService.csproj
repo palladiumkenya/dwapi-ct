@@ -115,6 +115,15 @@
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Job\SyncManifestJob.cs" />
     <Compile Include="Job\SyncPatientAdverseEventJob.cs" />
+    <Compile Include="Job\SyncDrugAlcoholScreeningJob.cs" />
+    <Compile Include="Job\SyncGbvScreeningJob.cs" />
+    <Compile Include="Job\SyncDepressionScreeningJob.cs" />
+    <Compile Include="Job\SyncContactListingJob.cs" />
+    <Compile Include="Job\SyncOtzJob.cs" />
+    <Compile Include="Job\SyncOvcJob.cs" />
+    <Compile Include="Job\SyncIptJob.cs" />
+    <Compile Include="Job\SyncAllergiesChronicIllnessJob.cs" />
+    <Compile Include="Job\SyncEnhancedAdherenceCounsellingJob.cs" />
     <Compile Include="Scheduler\ProfileScheduler.cs" />
     <Compile Include="Job\SyncPatientLabJob.cs" />
     <Compile Include="Job\SyncPatientPharmacyJob.cs" />

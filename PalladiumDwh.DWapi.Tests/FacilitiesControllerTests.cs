@@ -50,7 +50,9 @@ namespace PalladiumDwh.DWapi.Tests
                 _patientPharmacyRepository = new PatientPharmacyRepository(_context),
                 _patientStatusRepository = new PatientStatusRepository(_context),
                 _patientVisitRepository = new PatientVisitRepository(_context),
-                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context), null,new ActionRegisterRepository(_context)
+                _patientAdverseEventRepository=new PatientAdverseEventRepository(_context),
+                null,null,null,null,null,null,null,null,null,null,
+                new ActionRegisterRepository(_context)
             );
 
             _facilitiesController = new FacilitiesController(_syncService);
@@ -61,8 +63,8 @@ namespace PalladiumDwh.DWapi.Tests
         public void should_Get()
         {
             var facility = _facilities.First();
-            
-            
+
+
             var result = _facilitiesController.Get(facility.Code);
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
             var savedFacility = result.Content.ReadAsAsync<Facility>().Result;
