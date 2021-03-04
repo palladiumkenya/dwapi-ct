@@ -64,6 +64,15 @@ namespace PalladiumDwh.DWapi.Controllers
                 $"{queueName}.{nameof(PatientVisitProfile).ToLower()}",
                 $"{queueName}.{nameof(PatientStatusProfile).ToLower()}",
                 $"{queueName}.{nameof(PatientAdverseEventProfile).ToLower()}",
+                $"{queueName}.{nameof(AllergiesChronicIllnessProfile).ToLower()}",
+                $"{queueName}.{nameof(IptProfile).ToLower()}",
+                $"{queueName}.{nameof(DepressionScreeningProfile).ToLower()}",
+                $"{queueName}.{nameof(ContactListingProfile).ToLower()}",
+                $"{queueName}.{nameof(GbvScreeningProfile).ToLower()}",
+                $"{queueName}.{nameof(EnhancedAdherenceCounsellingProfile).ToLower()}",
+                $"{queueName}.{nameof(DrugAlcoholScreeningProfile).ToLower()}",
+                $"{queueName}.{nameof(OvcProfile).ToLower()}",
+                $"{queueName}.{nameof(OtzProfile).ToLower()}"
             };
 
             gateways.AddRange(baseGateways);
