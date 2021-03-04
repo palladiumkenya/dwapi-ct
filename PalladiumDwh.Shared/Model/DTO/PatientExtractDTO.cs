@@ -135,6 +135,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientResidentWard = patient.PatientResidentWard;
             PatientResidentVillage = patient.PatientResidentVillage;
             TransferInDate = patient.TransferInDate;
+
+            Occupation = patient.Occupation;
+            Pkv = patient.Pkv;
         }
 
         public PatientExtract GeneratePatient(Guid facilityId)
@@ -178,7 +181,8 @@ namespace PalladiumDwh.Shared.Model.DTO
                 PatientResidentSubLocation,
                 PatientResidentWard,
                 PatientResidentVillage,
-                TransferInDate
+                TransferInDate,
+                Pkv,Occupation
             );
         }
 

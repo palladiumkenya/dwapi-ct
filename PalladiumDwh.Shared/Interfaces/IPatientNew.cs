@@ -1,4 +1,4 @@
-namespace Dwapi.Contracts.Ct
+namespace PalladiumDwh.Shared.Interfaces
 {
     public interface IPatientNew
     {

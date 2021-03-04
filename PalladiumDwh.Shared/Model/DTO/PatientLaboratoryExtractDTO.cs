@@ -49,6 +49,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = patientLaboratoryExtract.Emr;
             Project = patientLaboratoryExtract.Project;
             PatientId = patientLaboratoryExtract.PatientId;
+            DateSampleTaken = patientLaboratoryExtract.DateSampleTaken;
+            SampleType = patientLaboratoryExtract.SampleType;
         }
 
 
@@ -65,7 +67,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public PatientLaboratoryExtract GeneratePatientLaboratoryExtract(Guid patientId)
         {
             PatientId = patientId;
-            return new PatientLaboratoryExtract(VisitId, OrderedByDate, ReportedByDate, TestName,EnrollmentTest, TestResult, PatientId, Emr, Project);
+            return new PatientLaboratoryExtract(VisitId, OrderedByDate, ReportedByDate, TestName,EnrollmentTest, TestResult, PatientId, Emr, Project,DateSampleTaken,SampleType);
         }
 
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using Dwapi.Contracts.Ct;
 
 namespace PalladiumDwh.Shared.Interfaces
 {

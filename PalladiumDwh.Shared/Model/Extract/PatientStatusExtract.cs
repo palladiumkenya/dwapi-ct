@@ -17,7 +17,10 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-        public PatientStatusExtract(string exitDescription, DateTime? exitDate, string exitReason, Guid patientId, string emr, string project)
+
+
+        public PatientStatusExtract(string exitDescription, DateTime? exitDate, string exitReason, Guid patientId, string emr, string project,
+            string toVerified, DateTime? toVerifiedDate)
         {
             ExitDescription = exitDescription;
             ExitDate = exitDate;
@@ -26,6 +29,9 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+
+            TOVerified = toVerified;
+            TOVerifiedDate = toVerifiedDate;
         }
 
 

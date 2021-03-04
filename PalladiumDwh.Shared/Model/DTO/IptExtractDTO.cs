@@ -8,56 +8,6 @@ namespace PalladiumDwh.Shared.Model.DTO
 {
     public class IptExtractDTO : IIptExtractDTO
     {
-        // public string ExitDescription { get; set; }
-        // public DateTime? ExitDate { get; set; }
-        // public string ExitReason { get; set; }
-        public string Emr { get; set; }
-        public string Project { get; set; }
-        public Guid PatientId { get; set; }
-        public IptExtractDTO()
-        {
-        }
-
-        public IptExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId)
-        {
-            // ExitDescription = exitDescription;
-            // ExitDate = exitDate;
-            // ExitReason = exitReason;
-            Emr = emr;
-            Project = project;
-            PatientId = patientId;
-        }
-
-        public IptExtractDTO(IptExtract IptExtract)
-        {
-            // ExitDescription = IptExtract.ExitDescription;
-            // ExitDate = IptExtract.ExitDate;
-            // ExitReason = IptExtract.ExitReason;
-            Emr = IptExtract.Emr;
-            Project = IptExtract.Project;
-            PatientId = IptExtract.PatientId;
-        }
-
-
-
-        public IEnumerable<IptExtractDTO> GenerateIptExtractDtOs(IEnumerable<IptExtract> extracts)
-        {
-            var statusExtractDtos = new List<IptExtractDTO>();
-            foreach (var e in extracts.ToList())
-            {
-                statusExtractDtos.Add(new IptExtractDTO(e));
-            }
-            return statusExtractDtos;
-        }
-
-        public IptExtract GenerateIptExtract(Guid patientId)
-        {
-            PatientId = patientId;
-            // return new IptExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
-            return new IptExtract();
-        }
-
-
         public string FacilityName { get; set; }
         public int? VisitID { get; set; }
         public DateTime? VisitDate { get; set; }
@@ -80,5 +30,87 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string IPTClientWorkUp { get; set; }
         public string StartIPT { get; set; }
         public string IndicationForIPT { get; set; }
+        public string Emr { get; set; }
+        public string Project { get; set; }
+        public Guid PatientId { get; set; }
+        public IptExtractDTO()
+        {
+        }
+
+        public IptExtractDTO(IptExtract IptExtract)
+        {
+            FacilityName=IptExtract.FacilityName;
+            VisitID=IptExtract.VisitID;
+            VisitDate=IptExtract.VisitDate;
+            OnTBDrugs=IptExtract.OnTBDrugs;
+            OnIPT=IptExtract.OnIPT;
+            EverOnIPT=IptExtract.EverOnIPT;
+            Cough=IptExtract.Cough;
+            Fever=IptExtract.Fever;
+            NoticeableWeightLoss=IptExtract.NoticeableWeightLoss;
+            NightSweats=IptExtract.NightSweats;
+            Lethargy=IptExtract.Lethargy;
+            ICFActionTaken=IptExtract.ICFActionTaken;
+            TestResult=IptExtract.TestResult;
+            TBClinicalDiagnosis=IptExtract.TBClinicalDiagnosis;
+            ContactsInvited=IptExtract.ContactsInvited;
+            EvaluatedForIPT=IptExtract.EvaluatedForIPT;
+            StartAntiTBs=IptExtract.StartAntiTBs;
+            TBRxStartDate=IptExtract.TBRxStartDate;
+            TBScreening=IptExtract.TBScreening;
+            IPTClientWorkUp=IptExtract.IPTClientWorkUp;
+            StartIPT=IptExtract.StartIPT;
+            IndicationForIPT=IptExtract.IndicationForIPT;
+
+            Emr = IptExtract.Emr;
+            Project = IptExtract.Project;
+            PatientId = IptExtract.PatientId;
+        }
+
+
+
+        public IEnumerable<IptExtractDTO> GenerateIptExtractDtOs(IEnumerable<IptExtract> extracts)
+        {
+            var statusExtractDtos = new List<IptExtractDTO>();
+            foreach (var e in extracts.ToList())
+            {
+                statusExtractDtos.Add(new IptExtractDTO(e));
+            }
+            return statusExtractDtos;
+        }
+
+        public IptExtract GenerateIptExtract(Guid patientId)
+        {
+            PatientId = patientId;
+            return new IptExtract(
+                FacilityName,
+                VisitID,
+                VisitDate,
+                OnTBDrugs,
+                OnIPT,
+                EverOnIPT,
+                Cough,
+                Fever,
+                NoticeableWeightLoss,
+                NightSweats,
+                Lethargy,
+                ICFActionTaken,
+                TestResult,
+                TBClinicalDiagnosis,
+                ContactsInvited,
+                EvaluatedForIPT,
+                StartAntiTBs,
+                TBRxStartDate,
+                TBScreening,
+                IPTClientWorkUp,
+                StartIPT,
+                IndicationForIPT,
+                PatientId,
+Emr,Project
+                );
+        }
+
+
+
     }
 }

@@ -8,6 +8,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
     public class PatientExtract:Entity, IPatientExtract
     {
+
         public int PatientPID { get; set; }
         public string PatientCccNumber { get; set; }
         public string Gender { get; set; }
@@ -87,7 +88,8 @@ namespace PalladiumDwh.Shared.Model.Extract
 
 
         public PatientExtract(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, Guid facilityId,string emr,string project,
-            string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate)
+            string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate,
+            string pkv,string occupation)
 
         {
             PatientPID = patientPid;
@@ -128,6 +130,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             PatientResidentWard = patientResidentWard;
             PatientResidentVillage = patientResidentVillage;
             TransferInDate = transferInDate;
+            Pkv = pkv;
+            Occupation = occupation;
         }
 
         public void AddPatientArtExtracts(IEnumerable<PatientArtExtract> extracts)

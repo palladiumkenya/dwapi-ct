@@ -30,5 +30,42 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string IndicationForIPT { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
+
+        public IptExtract()
+        {
+            Created = DateTime.Now;
+        }
+
+        public IptExtract(string facilityName, int? visitId, DateTime? visitDate, string onTbDrugs, string onIpt, string everOnIpt, string cough, string fever, string noticeableWeightLoss, string nightSweats, string lethargy, string icfActionTaken, string testResult, string tbClinicalDiagnosis, string contactsInvited, string evaluatedForIpt, string startAntiTBs, DateTime? tbRxStartDate, string tbScreening, string iptClientWorkUp, string startIpt, string indicationForIpt,
+            Guid patientId, string emr, string project)
+        {
+            FacilityName = facilityName;
+            VisitID = visitId;
+            VisitDate = visitDate;
+            OnTBDrugs = onTbDrugs;
+            OnIPT = onIpt;
+            EverOnIPT = everOnIpt;
+            Cough = cough;
+            Fever = fever;
+            NoticeableWeightLoss = noticeableWeightLoss;
+            NightSweats = nightSweats;
+            Lethargy = lethargy;
+            ICFActionTaken = icfActionTaken;
+            TestResult = testResult;
+            TBClinicalDiagnosis = tbClinicalDiagnosis;
+            ContactsInvited = contactsInvited;
+            EvaluatedForIPT = evaluatedForIpt;
+            StartAntiTBs = startAntiTBs;
+            TBRxStartDate = tbRxStartDate;
+            TBScreening = tbScreening;
+            IPTClientWorkUp = iptClientWorkUp;
+            StartIPT = startIpt;
+            IndicationForIPT = indicationForIpt;
+
+            PatientId = patientId;
+            Emr = emr;
+            Project = project;
+            Created = DateTime.Now;
+        }
     }
 }

@@ -38,6 +38,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = patientStatusExtract.Emr;
             Project = patientStatusExtract.Project;
             PatientId = patientStatusExtract.PatientId;
+
+            TOVerified = patientStatusExtract.TOVerified;
+            TOVerifiedDate = patientStatusExtract.TOVerifiedDate;
         }
 
 
@@ -55,9 +58,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public PatientStatusExtract GeneratePatientStatusExtract(Guid patientId)
         {
             PatientId = patientId;
-            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
+            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project,TOVerified,TOVerifiedDate);
         }
-
-       
     }
 }

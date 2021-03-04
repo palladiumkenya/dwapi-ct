@@ -63,6 +63,11 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = patientPharmacyExtract.Emr;
             Project = patientPharmacyExtract.Project;
             PatientId = patientPharmacyExtract.PatientId;
+
+            RegimenChangedSwitched =patientPharmacyExtract. RegimenChangedSwitched;
+            RegimenChangeSwitchReason =patientPharmacyExtract. RegimenChangeSwitchReason;
+            StopRegimenReason = patientPharmacyExtract.StopRegimenReason;
+            StopRegimenDate = patientPharmacyExtract.StopRegimenDate;
         }
 
         public IEnumerable<PatientPharmacyExtractDTO> GeneratePatientPharmacyExtractDtOs(IEnumerable<PatientPharmacyExtract> extracts)
@@ -79,7 +84,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             return new PatientPharmacyExtract(VisitID, Drug,Provider, DispenseDate, Duration, ExpectedReturn, TreatmentType,
                 RegimenLine,
-                PeriodTaken, ProphylaxisType, PatientId,Emr, Project);
+                PeriodTaken, ProphylaxisType, PatientId,Emr, Project,RegimenChangedSwitched,RegimenChangeSwitchReason,StopRegimenReason,StopRegimenDate);
         }
 
 

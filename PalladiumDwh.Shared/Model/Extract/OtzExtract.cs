@@ -19,5 +19,31 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? OutcomeDate { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
+
+        public OtzExtract()
+        {
+            Created = DateTime.Now;
+        }
+
+        public OtzExtract(string facilityName, int? visitId, DateTime? visitDate, DateTime? otzEnrollmentDate, string transferInStatus, string modulesPreviouslyCovered, string modulesCompletedToday, string supportGroupInvolvement, string remarks, string transitionAttritionReason, DateTime? outcomeDate,
+            Guid patientId, string emr, string project)
+        {
+            FacilityName = facilityName;
+            VisitID = visitId;
+            VisitDate = visitDate;
+            OTZEnrollmentDate = otzEnrollmentDate;
+            TransferInStatus = transferInStatus;
+            ModulesPreviouslyCovered = modulesPreviouslyCovered;
+            ModulesCompletedToday = modulesCompletedToday;
+            SupportGroupInvolvement = supportGroupInvolvement;
+            Remarks = remarks;
+            TransitionAttritionReason = transitionAttritionReason;
+            OutcomeDate = outcomeDate;
+
+            PatientId = patientId;
+            Emr = emr;
+            Project = project;
+            Created = DateTime.Now;
+        }
     }
 }

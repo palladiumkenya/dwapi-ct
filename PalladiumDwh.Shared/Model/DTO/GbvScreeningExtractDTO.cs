@@ -8,9 +8,14 @@ namespace PalladiumDwh.Shared.Model.DTO
 {
     public class GbvScreeningExtractDTO : IGbvScreeningExtractDTO
     {
-        // public string ExitDescription { get; set; }
-        // public DateTime? ExitDate { get; set; }
-        // public string ExitReason { get; set; }
+        public string FacilityName { get; set; }
+        public int? VisitID { get; set; }
+        public DateTime? VisitDate { get; set; }
+        public string IPV { get; set; }
+        public string PhysicalIPV { get; set; }
+        public string EmotionalIPV { get; set; }
+        public string SexualIPV { get; set; }
+        public string IPVRelationship { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
@@ -18,21 +23,17 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public GbvScreeningExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId)
-        {
-            // ExitDescription = exitDescription;
-            // ExitDate = exitDate;
-            // ExitReason = exitReason;
-            Emr = emr;
-            Project = project;
-            PatientId = patientId;
-        }
-
         public GbvScreeningExtractDTO(GbvScreeningExtract GbvScreeningExtract)
         {
-            // ExitDescription = GbvScreeningExtract.ExitDescription;
-            // ExitDate = GbvScreeningExtract.ExitDate;
-            // ExitReason = GbvScreeningExtract.ExitReason;
+            FacilityName=GbvScreeningExtract.FacilityName;
+            VisitID=GbvScreeningExtract.VisitID;
+            VisitDate=GbvScreeningExtract.VisitDate;
+            IPV=GbvScreeningExtract.IPV;
+            PhysicalIPV=GbvScreeningExtract.PhysicalIPV;
+            EmotionalIPV=GbvScreeningExtract.EmotionalIPV;
+            SexualIPV=GbvScreeningExtract.SexualIPV;
+            IPVRelationship=GbvScreeningExtract.IPVRelationship;
+
             Emr = GbvScreeningExtract.Emr;
             Project = GbvScreeningExtract.Project;
             PatientId = GbvScreeningExtract.PatientId;
@@ -53,18 +54,17 @@ namespace PalladiumDwh.Shared.Model.DTO
         public GbvScreeningExtract GenerateGbvScreeningExtract(Guid patientId)
         {
             PatientId = patientId;
-            // return new GbvScreeningExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
-            return new GbvScreeningExtract();
+            return new GbvScreeningExtract(
+                FacilityName,
+                VisitID,
+                VisitDate,
+                IPV,
+                PhysicalIPV,
+                EmotionalIPV,
+                SexualIPV,
+                IPVRelationship,
+                PatientId,
+                Emr,Project);
         }
-
-
-        public string FacilityName { get; set; }
-        public int? VisitID { get; set; }
-        public DateTime? VisitDate { get; set; }
-        public string IPV { get; set; }
-        public string PhysicalIPV { get; set; }
-        public string EmotionalIPV { get; set; }
-        public string SexualIPV { get; set; }
-        public string IPVRelationship { get; set; }
     }
 }

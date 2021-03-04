@@ -63,7 +63,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public PatientVisitExtract(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, Guid patientId, string emr, string project,
-            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType)
+            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType,
+            string visitBy, decimal? temp, int? pulseRate, int? respiratoryRate, decimal? oxygenSaturation, int? muac, string nutritionalStatus, string everHadMenses, string breastfeeding, string menopausal, string noFpReason, string prophylaxisUsed, string ctxAdherence, string currentRegimen, string hcwConcern, string tcaReason, string clinicalNotes)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -99,7 +100,24 @@ namespace PalladiumDwh.Shared.Model.Extract
             DifferentiatedCare = differentiatedCare;
             PopulationType = populationType;
             KeyPopulationType = keyPopulationType;
-        }
 
+            VisitBy = visitBy;
+            Temp = temp;
+            PulseRate = pulseRate;
+            RespiratoryRate = respiratoryRate;
+            OxygenSaturation = oxygenSaturation;
+            Muac = muac;
+            NutritionalStatus = nutritionalStatus;
+            EverHadMenses = everHadMenses;
+            Breastfeeding = breastfeeding;
+            Menopausal = menopausal;
+            NoFPReason = noFpReason;
+            ProphylaxisUsed = prophylaxisUsed;
+            CTXAdherence = ctxAdherence;
+            CurrentRegimen = currentRegimen;
+            HCWConcern = hcwConcern;
+            TCAReason = tcaReason;
+            ClinicalNotes = clinicalNotes;
+        }
     }
 }

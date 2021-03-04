@@ -24,8 +24,40 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string Abdomen { get; set; }
         public string CNS { get; set; }
         public string Genitourinary { get; set; }
-
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
+
+        public AllergiesChronicIllnessExtract()
+        {
+            Created = DateTime.Now;
+        }
+
+        public AllergiesChronicIllnessExtract(string facilityName, int? visitId, DateTime? visitDate, string chronicIllness, DateTime? chronicOnsetDate, string knownAllergies, string allergyCausativeAgent, string allergicReaction, string allergySeverity, DateTime? allergyOnsetDate, string skin, string eyes, string ent, string chest, string cvs, string abdomen, string cns, string genitourinary,
+            Guid patientId, string emr, string project)
+        {
+            FacilityName = facilityName;
+            VisitID = visitId;
+            VisitDate = visitDate;
+            ChronicIllness = chronicIllness;
+            ChronicOnsetDate = chronicOnsetDate;
+            this.knownAllergies = knownAllergies;
+            AllergyCausativeAgent = allergyCausativeAgent;
+            AllergicReaction = allergicReaction;
+            AllergySeverity = allergySeverity;
+            AllergyOnsetDate = allergyOnsetDate;
+            Skin = skin;
+            Eyes = eyes;
+            ENT = ent;
+            Chest = chest;
+            CVS = cvs;
+            Abdomen = abdomen;
+            CNS = cns;
+            Genitourinary = genitourinary;
+
+            PatientId = patientId;
+            Emr = emr;
+            Project = project;
+            Created = DateTime.Now;
+        }
     }
 }

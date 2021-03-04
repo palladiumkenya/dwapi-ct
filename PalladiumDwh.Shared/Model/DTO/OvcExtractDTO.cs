@@ -8,9 +8,16 @@ namespace PalladiumDwh.Shared.Model.DTO
 {
     public class OvcExtractDTO : IOvcExtractDTO
     {
-        // public string ExitDescription { get; set; }
-        // public DateTime? ExitDate { get; set; }
-        // public string ExitReason { get; set; }
+        public string FacilityName { get; set; }
+        public int? VisitID { get; set; }
+        public DateTime? VisitDate { get; set; }
+        public DateTime? OVCEnrollmentDate { get; set; }
+        public string RelationshipToClient { get; set; }
+        public string EnrolledinCPIMS { get; set; }
+        public string CPIMSUniqueIdentifier { get; set; }
+        public string PartnerOfferingOVCServices { get; set; }
+        public string OVCExitReason { get; set; }
+        public DateTime? ExitDate { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
@@ -18,27 +25,23 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public OvcExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId)
-        {
-            // ExitDescription = exitDescription;
-            // ExitDate = exitDate;
-            // ExitReason = exitReason;
-            Emr = emr;
-            Project = project;
-            PatientId = patientId;
-        }
-
         public OvcExtractDTO(OvcExtract OvcExtract)
         {
-            // ExitDescription = OvcExtract.ExitDescription;
-            // ExitDate = OvcExtract.ExitDate;
-            // ExitReason = OvcExtract.ExitReason;
+            FacilityName=OvcExtract.FacilityName;
+            VisitID=OvcExtract.VisitID;
+            VisitDate=OvcExtract.VisitDate;
+            OVCEnrollmentDate=OvcExtract.OVCEnrollmentDate;
+            RelationshipToClient=OvcExtract.RelationshipToClient;
+            EnrolledinCPIMS=OvcExtract.EnrolledinCPIMS;
+            CPIMSUniqueIdentifier=OvcExtract.CPIMSUniqueIdentifier;
+            PartnerOfferingOVCServices=OvcExtract.PartnerOfferingOVCServices;
+            OVCExitReason=OvcExtract.OVCExitReason;
+            ExitDate=OvcExtract.ExitDate;
+
+            PatientId=OvcExtract.PatientId;
             Emr = OvcExtract.Emr;
             Project = OvcExtract.Project;
-            PatientId = OvcExtract.PatientId;
         }
-
-
 
         public IEnumerable<OvcExtractDTO> GenerateOvcExtractDtOs(IEnumerable<OvcExtract> extracts)
         {
@@ -53,20 +56,19 @@ namespace PalladiumDwh.Shared.Model.DTO
         public OvcExtract GenerateOvcExtract(Guid patientId)
         {
             PatientId = patientId;
-            // return new OvcExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
-            return new OvcExtract();
+            return new OvcExtract(
+                FacilityName,
+                VisitID,
+                VisitDate,
+                OVCEnrollmentDate,
+                RelationshipToClient,
+                EnrolledinCPIMS,
+                CPIMSUniqueIdentifier,
+                PartnerOfferingOVCServices,
+                OVCExitReason,
+                ExitDate,
+                PatientId,Emr,Project
+                );
         }
-
-
-        public string FacilityName { get; set; }
-        public int? VisitID { get; set; }
-        public DateTime? VisitDate { get; set; }
-        public DateTime? OVCEnrollmentDate { get; set; }
-        public string RelationshipToClient { get; set; }
-        public string EnrolledinCPIMS { get; set; }
-        public string CPIMSUniqueIdentifier { get; set; }
-        public string PartnerOfferingOVCServices { get; set; }
-        public string OVCExitReason { get; set; }
-        public DateTime? ExitDate { get; set; }
     }
 }

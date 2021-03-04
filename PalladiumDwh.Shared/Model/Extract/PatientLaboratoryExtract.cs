@@ -21,7 +21,9 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-        public PatientLaboratoryExtract(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, Guid patientId, string emr, string project)
+        public PatientLaboratoryExtract(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, Guid patientId, string emr, string project,
+            DateTime? dateSampleTaken,string sampleType
+            )
         {
             VisitId = visitId;
             OrderedByDate = orderedByDate;
@@ -33,8 +35,9 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+
+            DateSampleTaken = dateSampleTaken;
+            SampleType = sampleType;
         }
-
-
     }
 }

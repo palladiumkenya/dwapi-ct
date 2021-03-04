@@ -8,9 +8,20 @@ namespace PalladiumDwh.Shared.Model.DTO
 {
     public class DepressionScreeningExtractDTO : IDepressionScreeningExtractDTO
     {
-        // public string ExitDescription { get; set; }
-        // public DateTime? ExitDate { get; set; }
-        // public string ExitReason { get; set; }
+        public string FacilityName { get; set; }
+        public int? VisitID { get; set; }
+        public DateTime? VisitDate { get; set; }
+        public string PHQ9_1 { get; set; }
+        public string PHQ9_2 { get; set; }
+        public string PHQ9_3 { get; set; }
+        public string PHQ9_4 { get; set; }
+        public string PHQ9_5 { get; set; }
+        public string PHQ9_6 { get; set; }
+        public string PHQ9_7 { get; set; }
+        public string PHQ9_8 { get; set; }
+        public string PHQ9_9 { get; set; }
+        public string PHQ_9_rating { get; set; }
+        public int? DepressionAssesmentScore { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
@@ -18,21 +29,23 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public DepressionScreeningExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId)
-        {
-            // ExitDescription = exitDescription;
-            // ExitDate = exitDate;
-            // ExitReason = exitReason;
-            Emr = emr;
-            Project = project;
-            PatientId = patientId;
-        }
-
         public DepressionScreeningExtractDTO(DepressionScreeningExtract DepressionScreeningExtract)
         {
-            // ExitDescription = DepressionScreeningExtract.ExitDescription;
-            // ExitDate = DepressionScreeningExtract.ExitDate;
-            // ExitReason = DepressionScreeningExtract.ExitReason;
+            FacilityName=DepressionScreeningExtract.FacilityName;
+            VisitID=DepressionScreeningExtract.VisitID;
+            VisitDate=DepressionScreeningExtract.VisitDate;
+            PHQ9_1=DepressionScreeningExtract.PHQ9_1;
+            PHQ9_2=DepressionScreeningExtract.PHQ9_2;
+            PHQ9_3=DepressionScreeningExtract.PHQ9_3;
+            PHQ9_4=DepressionScreeningExtract.PHQ9_4;
+            PHQ9_5=DepressionScreeningExtract.PHQ9_5;
+            PHQ9_6=DepressionScreeningExtract.PHQ9_6;
+            PHQ9_7=DepressionScreeningExtract.PHQ9_7;
+            PHQ9_8=DepressionScreeningExtract.PHQ9_8;
+            PHQ9_9=DepressionScreeningExtract.PHQ9_9;
+            PHQ_9_rating=DepressionScreeningExtract.PHQ_9_rating;
+            DepressionAssesmentScore=DepressionScreeningExtract.DepressionAssesmentScore;
+
             Emr = DepressionScreeningExtract.Emr;
             Project = DepressionScreeningExtract.Project;
             PatientId = DepressionScreeningExtract.PatientId;
@@ -53,24 +66,25 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DepressionScreeningExtract GenerateDepressionScreeningExtract(Guid patientId)
         {
             PatientId = patientId;
-            // return new DepressionScreeningExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
-            return new DepressionScreeningExtract();
+            return new DepressionScreeningExtract(
+                FacilityName,
+                VisitID,
+                VisitDate,
+                PHQ9_1,
+                PHQ9_2,
+                PHQ9_3,
+                PHQ9_4,
+                PHQ9_5,
+                PHQ9_6,
+                PHQ9_7,
+                PHQ9_8,
+                PHQ9_9,
+                PHQ_9_rating,
+                DepressionAssesmentScore,
+                PatientId,
+                Emr,
+                Project
+                );
         }
-
-
-        public string FacilityName { get; set; }
-        public int? VisitID { get; set; }
-        public DateTime? VisitDate { get; set; }
-        public string PHQ9_1 { get; set; }
-        public string PHQ9_2 { get; set; }
-        public string PHQ9_3 { get; set; }
-        public string PHQ9_4 { get; set; }
-        public string PHQ9_5 { get; set; }
-        public string PHQ9_6 { get; set; }
-        public string PHQ9_7 { get; set; }
-        public string PHQ9_8 { get; set; }
-        public string PHQ9_9 { get; set; }
-        public string PHQ_9_rating { get; set; }
-        public int? DepressionAssesmentScore { get; set; }
     }
 }

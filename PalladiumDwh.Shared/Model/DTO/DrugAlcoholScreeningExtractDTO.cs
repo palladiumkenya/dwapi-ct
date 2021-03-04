@@ -8,9 +8,12 @@ namespace PalladiumDwh.Shared.Model.DTO
 {
     public class DrugAlcoholScreeningExtractDTO : IDrugAlcoholScreeningExtractDTO
     {
-        // public string ExitDescription { get; set; }
-        // public DateTime? ExitDate { get; set; }
-        // public string ExitReason { get; set; }
+        public string FacilityName { get; set; }
+        public int? VisitID { get; set; }
+        public DateTime? VisitDate { get; set; }
+        public string DrinkingAlcohol { get; set; }
+        public string Smoking { get; set; }
+        public string DrugUse { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
@@ -18,27 +21,19 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public DrugAlcoholScreeningExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId)
-        {
-            // ExitDescription = exitDescription;
-            // ExitDate = exitDate;
-            // ExitReason = exitReason;
-            Emr = emr;
-            Project = project;
-            PatientId = patientId;
-        }
-
         public DrugAlcoholScreeningExtractDTO(DrugAlcoholScreeningExtract DrugAlcoholScreeningExtract)
         {
-            // ExitDescription = DrugAlcoholScreeningExtract.ExitDescription;
-            // ExitDate = DrugAlcoholScreeningExtract.ExitDate;
-            // ExitReason = DrugAlcoholScreeningExtract.ExitReason;
+            FacilityName=DrugAlcoholScreeningExtract.FacilityName;
+            VisitID=DrugAlcoholScreeningExtract.VisitID;
+            VisitDate=DrugAlcoholScreeningExtract.VisitDate;
+            DrinkingAlcohol=DrugAlcoholScreeningExtract.DrinkingAlcohol;
+            Smoking=DrugAlcoholScreeningExtract.Smoking;
+            DrugUse=DrugAlcoholScreeningExtract.DrugUse;
+
             Emr = DrugAlcoholScreeningExtract.Emr;
             Project = DrugAlcoholScreeningExtract.Project;
             PatientId = DrugAlcoholScreeningExtract.PatientId;
         }
-
-
 
         public IEnumerable<DrugAlcoholScreeningExtractDTO> GenerateDrugAlcoholScreeningExtractDtOs(IEnumerable<DrugAlcoholScreeningExtract> extracts)
         {
@@ -53,16 +48,18 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DrugAlcoholScreeningExtract GenerateDrugAlcoholScreeningExtract(Guid patientId)
         {
             PatientId = patientId;
-            // return new DrugAlcoholScreeningExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
-            return new DrugAlcoholScreeningExtract();
+            return new DrugAlcoholScreeningExtract(
+                FacilityName,
+                VisitID,
+                VisitDate,
+                DrinkingAlcohol,
+                Smoking,
+                DrugUse,
+                PatientId,
+                Emr,Project
+                );
         }
 
 
-        public string FacilityName { get; set; }
-        public int? VisitID { get; set; }
-        public DateTime? VisitDate { get; set; }
-        public string DrinkingAlcohol { get; set; }
-        public string Smoking { get; set; }
-        public string DrugUse { get; set; }
     }
 }

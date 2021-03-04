@@ -54,5 +54,65 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? EACFollowupDate { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
+
+        public EnhancedAdherenceCounsellingExtract()
+        {
+            Created = DateTime.Now;
+        }
+
+        public EnhancedAdherenceCounsellingExtract(string facilityName, int? visitId, DateTime? visitDate, int? sessionNumber, DateTime? dateOfFirstSession, int? pillCountAdherence, string mmas41, string mmas42, string mmas43, string mmas44, string mmsa81, string mmsa82, string mmsa83, string mmsa84, string mmsaScore, string eacRecievedVl, string eacvl, string eacvlConcerns, string eacvlThoughts, string eacWayForward, string eacCognitiveBarrier, string eacBehaviouralBarrier1, string eacBehaviouralBarrier2, string eacBehaviouralBarrier3, string eacBehaviouralBarrier4, string eacBehaviouralBarrier5, string eacEmotionalBarriers1, string eacEmotionalBarriers2, string eacEconBarrier1, string eacEconBarrier2, string eacEconBarrier3, string eacEconBarrier4, string eacEconBarrier5, string eacEconBarrier6, string eacEconBarrier7, string eacEconBarrier8, string eacReviewImprovement, string eacReviewMissedDoses, string eacReviewStrategy, string eacReferral, string eacReferralApp, string eacReferralExperience, string eacHomevisit, string eacAdherencePlan, DateTime? eacFollowupDate,
+            Guid patientId, string emr, string project)
+        {
+            FacilityName = facilityName;
+            VisitID = visitId;
+            VisitDate = visitDate;
+            SessionNumber = sessionNumber;
+            DateOfFirstSession = dateOfFirstSession;
+            PillCountAdherence = pillCountAdherence;
+            MMAS4_1 = mmas41;
+            MMAS4_2 = mmas42;
+            MMAS4_3 = mmas43;
+            MMAS4_4 = mmas44;
+            MMSA8_1 = mmsa81;
+            MMSA8_2 = mmsa82;
+            MMSA8_3 = mmsa83;
+            MMSA8_4 = mmsa84;
+            MMSAScore = mmsaScore;
+            EACRecievedVL = eacRecievedVl;
+            EACVL = eacvl;
+            EACVLConcerns = eacvlConcerns;
+            EACVLThoughts = eacvlThoughts;
+            EACWayForward = eacWayForward;
+            EACCognitiveBarrier = eacCognitiveBarrier;
+            EACBehaviouralBarrier_1 = eacBehaviouralBarrier1;
+            EACBehaviouralBarrier_2 = eacBehaviouralBarrier2;
+            EACBehaviouralBarrier_3 = eacBehaviouralBarrier3;
+            EACBehaviouralBarrier_4 = eacBehaviouralBarrier4;
+            EACBehaviouralBarrier_5 = eacBehaviouralBarrier5;
+            EACEmotionalBarriers_1 = eacEmotionalBarriers1;
+            EACEmotionalBarriers_2 = eacEmotionalBarriers2;
+            EACEconBarrier_1 = eacEconBarrier1;
+            EACEconBarrier_2 = eacEconBarrier2;
+            EACEconBarrier_3 = eacEconBarrier3;
+            EACEconBarrier_4 = eacEconBarrier4;
+            EACEconBarrier_5 = eacEconBarrier5;
+            EACEconBarrier_6 = eacEconBarrier6;
+            EACEconBarrier_7 = eacEconBarrier7;
+            EACEconBarrier_8 = eacEconBarrier8;
+            EACReviewImprovement = eacReviewImprovement;
+            EACReviewMissedDoses = eacReviewMissedDoses;
+            EACReviewStrategy = eacReviewStrategy;
+            EACReferral = eacReferral;
+            EACReferralApp = eacReferralApp;
+            EACReferralExperience = eacReferralExperience;
+            EACHomevisit = eacHomevisit;
+            EACAdherencePlan = eacAdherencePlan;
+            EACFollowupDate = eacFollowupDate;
+
+            PatientId = patientId;
+            Emr = emr;
+            Project = project;
+            Created = DateTime.Now;
+        }
     }
 }

@@ -8,7 +8,6 @@ namespace PalladiumDwh.Shared.Model.DTO
 {
     public class AllergiesChronicIllnessExtractDTO : IAllergiesChronicIllnessExtractDTO
     {
-
         public string FacilityName { get; set; }
         public int? VisitID { get; set; }
         public DateTime? VisitDate { get; set; }
@@ -34,27 +33,30 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public AllergiesChronicIllnessExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId)
-        {
-            // ExitDescription = exitDescription;
-            // ExitDate = exitDate;
-            // ExitReason = exitReason;
-            Emr = emr;
-            Project = project;
-            PatientId = patientId;
-        }
-
         public AllergiesChronicIllnessExtractDTO(AllergiesChronicIllnessExtract AllergiesChronicIllnessExtract)
         {
-            // ExitDescription = AllergiesChronicIllnessExtract.ExitDescription;
-            // ExitDate = AllergiesChronicIllnessExtract.ExitDate;
-            // ExitReason = AllergiesChronicIllnessExtract.ExitReason;
-            Emr = AllergiesChronicIllnessExtract.Emr;
-            Project = AllergiesChronicIllnessExtract.Project;
-            PatientId = AllergiesChronicIllnessExtract.PatientId;
+            FacilityName=AllergiesChronicIllnessExtract.FacilityName;
+            VisitID=AllergiesChronicIllnessExtract.VisitID;
+            VisitDate=AllergiesChronicIllnessExtract.VisitDate;
+            ChronicIllness=AllergiesChronicIllnessExtract.ChronicIllness;
+            ChronicOnsetDate=AllergiesChronicIllnessExtract.ChronicOnsetDate;
+            knownAllergies=AllergiesChronicIllnessExtract.knownAllergies;
+            AllergyCausativeAgent=AllergiesChronicIllnessExtract.AllergyCausativeAgent;
+            AllergicReaction=AllergiesChronicIllnessExtract.AllergicReaction;
+            AllergySeverity=AllergiesChronicIllnessExtract.AllergySeverity;
+            AllergyOnsetDate=AllergiesChronicIllnessExtract.AllergyOnsetDate;
+            Skin=AllergiesChronicIllnessExtract.Skin;
+            Eyes=AllergiesChronicIllnessExtract.Eyes;
+            ENT=AllergiesChronicIllnessExtract.ENT;
+            Chest=AllergiesChronicIllnessExtract.Chest;
+            CVS=AllergiesChronicIllnessExtract.CVS;
+            Abdomen=AllergiesChronicIllnessExtract.Abdomen;
+            CNS=AllergiesChronicIllnessExtract.CNS;
+            Genitourinary=AllergiesChronicIllnessExtract.Genitourinary;
+            Emr=AllergiesChronicIllnessExtract.Emr;
+            Project=AllergiesChronicIllnessExtract.Project;
+            PatientId=AllergiesChronicIllnessExtract.PatientId;
         }
-
-
 
         public IEnumerable<AllergiesChronicIllnessExtractDTO> GenerateAllergiesChronicIllnessExtractDtOs(IEnumerable<AllergiesChronicIllnessExtract> extracts)
         {
@@ -69,8 +71,29 @@ namespace PalladiumDwh.Shared.Model.DTO
         public AllergiesChronicIllnessExtract GenerateAllergiesChronicIllnessExtract(Guid patientId)
         {
             PatientId = patientId;
-            // return new AllergiesChronicIllnessExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
-            return new AllergiesChronicIllnessExtract();
+            return new AllergiesChronicIllnessExtract(
+                FacilityName,
+                VisitID,
+                VisitDate,
+                ChronicIllness,
+                ChronicOnsetDate,
+                knownAllergies,
+                AllergyCausativeAgent,
+                AllergicReaction,
+                AllergySeverity,
+                AllergyOnsetDate,
+                Skin,
+                Eyes,
+                ENT,
+                Chest,
+                CVS,
+                Abdomen,
+                CNS,
+                Genitourinary,
+                PatientId,
+                Emr,
+                Project
+            );
         }
 
     }

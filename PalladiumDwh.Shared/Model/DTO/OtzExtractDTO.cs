@@ -8,9 +8,17 @@ namespace PalladiumDwh.Shared.Model.DTO
 {
     public class OtzExtractDTO : IOtzExtractDTO
     {
-        // public string ExitDescription { get; set; }
-        // public DateTime? ExitDate { get; set; }
-        // public string ExitReason { get; set; }
+        public string FacilityName { get; set; }
+        public int? VisitID { get; set; }
+        public DateTime? VisitDate { get; set; }
+        public DateTime? OTZEnrollmentDate { get; set; }
+        public string TransferInStatus { get; set; }
+        public string ModulesPreviouslyCovered { get; set; }
+        public string ModulesCompletedToday { get; set; }
+        public string SupportGroupInvolvement { get; set; }
+        public string Remarks { get; set; }
+        public string TransitionAttritionReason { get; set; }
+        public DateTime? OutcomeDate { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
@@ -18,24 +26,23 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public OtzExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId)
-        {
-            // ExitDescription = exitDescription;
-            // ExitDate = exitDate;
-            // ExitReason = exitReason;
-            Emr = emr;
-            Project = project;
-            PatientId = patientId;
-        }
-
         public OtzExtractDTO(OtzExtract OtzExtract)
         {
-            // ExitDescription = OtzExtract.ExitDescription;
-            // ExitDate = OtzExtract.ExitDate;
-            // ExitReason = OtzExtract.ExitReason;
+            FacilityName=OtzExtract.FacilityName;
+            VisitID=OtzExtract.VisitID;
+            VisitDate=OtzExtract.VisitDate;
+            OTZEnrollmentDate=OtzExtract.OTZEnrollmentDate;
+            TransferInStatus=OtzExtract.TransferInStatus;
+            ModulesPreviouslyCovered=OtzExtract.ModulesPreviouslyCovered;
+            ModulesCompletedToday=OtzExtract.ModulesCompletedToday;
+            SupportGroupInvolvement=OtzExtract.SupportGroupInvolvement;
+            Remarks=OtzExtract.Remarks;
+            TransitionAttritionReason=OtzExtract.TransitionAttritionReason;
+            OutcomeDate=OtzExtract.OutcomeDate;
+
+            PatientId = OtzExtract.PatientId;
             Emr = OtzExtract.Emr;
             Project = OtzExtract.Project;
-            PatientId = OtzExtract.PatientId;
         }
 
 
@@ -54,20 +61,20 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
             PatientId = patientId;
             // return new OtzExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project);
-            return new OtzExtract();
+            return new OtzExtract(
+                FacilityName,
+                VisitID,
+                VisitDate,
+                OTZEnrollmentDate,
+                TransferInStatus,
+                ModulesPreviouslyCovered,
+                ModulesCompletedToday,
+                SupportGroupInvolvement,
+                Remarks,
+                TransitionAttritionReason,
+                OutcomeDate,
+                PatientId,Emr,Project
+                );
         }
-
-
-        public string FacilityName { get; set; }
-        public int? VisitID { get; set; }
-        public DateTime? VisitDate { get; set; }
-        public DateTime? OTZEnrollmentDate { get; set; }
-        public string TransferInStatus { get; set; }
-        public string ModulesPreviouslyCovered { get; set; }
-        public string ModulesCompletedToday { get; set; }
-        public string SupportGroupInvolvement { get; set; }
-        public string Remarks { get; set; }
-        public string TransitionAttritionReason { get; set; }
-        public DateTime? OutcomeDate { get; set; }
     }
 }

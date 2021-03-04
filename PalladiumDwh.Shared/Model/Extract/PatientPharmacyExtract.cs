@@ -28,7 +28,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-        public PatientPharmacyExtract(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, Guid patientId, string emr, string project)
+        public PatientPharmacyExtract(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, Guid patientId, string emr, string project,
+            string regimenChangedSwitched, string regimenChangeSwitchReason, string stopRegimenReason, DateTime? stopRegimenDate)
         {
             VisitID = visitId;
             Drug = drug;
@@ -44,6 +45,11 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+
+            RegimenChangedSwitched = regimenChangedSwitched;
+            RegimenChangeSwitchReason = regimenChangeSwitchReason;
+            StopRegimenReason = stopRegimenReason;
+            StopRegimenDate = stopRegimenDate;
         }
 
 
