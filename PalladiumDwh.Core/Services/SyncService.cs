@@ -351,15 +351,63 @@ namespace PalladiumDwh.Core.Services
                 _patientAdverseEventRepository.SyncNewPatients(_adverseEventProfiles, _facilityRepository, facIds);
             }
 
-            if (queueName.ToLower().Contains("AllergiesChronicIllnessProfile".ToLower())) { Log.Debug($"batch processing {queueName}..."); _allergiesChronicIllnessRepository.SyncNewPatients(_allergiesChronicIllnessProfiles, _facilityRepository, facIds); }
-            if (queueName.ToLower().Contains("IptProfile".ToLower())) { Log.Debug($"batch processing {queueName}..."); _iptRepository.SyncNewPatients(_iptProfiles, _facilityRepository, facIds); }
-            if (queueName.ToLower().Contains("DepressionScreeningProfile".ToLower())) { Log.Debug($"batch processing {queueName}..."); _depressionScreeningRepository.SyncNewPatients(_depressionScreeningProfiles, _facilityRepository, facIds); }
-            if (queueName.ToLower().Contains("ContactListingProfile".ToLower())) { Log.Debug($"batch processing {queueName}..."); _contactListingRepository.SyncNewPatients(_contactListingProfiles, _facilityRepository, facIds); }
-            if (queueName.ToLower().Contains("GbvScreeningProfile".ToLower())) { Log.Debug($"batch processing {queueName}..."); _gbvScreeningRepository.SyncNewPatients(_gbvScreeningProfiles, _facilityRepository, facIds); }
-            if (queueName.ToLower().Contains("EnhancedAdherenceCounsellingProfile".ToLower())) { Log.Debug($"batch processing {queueName}..."); _enhancedAdherenceCounsellingRepository.SyncNewPatients(_enhancedAdherenceCounsellingProfiles, _facilityRepository, facIds); }
-            if (queueName.ToLower().Contains("DrugAlcoholScreeningProfile".ToLower())) { Log.Debug($"batch processing {queueName}..."); _drugAlcoholScreeningRepository.SyncNewPatients(_drugAlcoholScreeningProfiles, _facilityRepository, facIds); }
-            if (queueName.ToLower().Contains("OvcProfile".ToLower())) { Log.Debug($"batch processing {queueName}..."); _ovcRepository.SyncNewPatients(_ovcProfiles, _facilityRepository, facIds); }
-            if (queueName.ToLower().Contains("OtzProfile".ToLower())) { Log.Debug($"batch processing {queueName}..."); _otzRepository.SyncNewPatients(_otzProfiles, _facilityRepository, facIds); }
+            if (queueName.ToLower().Contains("AllergiesChronicIllnessProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _allergiesChronicIllnessRepository.SyncNewPatients(_allergiesChronicIllnessProfiles,
+                    _facilityRepository, facIds);
+            }
+
+            if (queueName.ToLower().Contains("IptProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _iptRepository.SyncNewPatients(_iptProfiles, _facilityRepository, facIds);
+            }
+
+            if (queueName.ToLower().Contains("DepressionScreeningProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _depressionScreeningRepository.SyncNewPatients(_depressionScreeningProfiles, _facilityRepository,
+                    facIds);
+            }
+
+            if (queueName.ToLower().Contains("ContactListingProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _contactListingRepository.SyncNewPatients(_contactListingProfiles, _facilityRepository, facIds);
+            }
+
+            if (queueName.ToLower().Contains("GbvScreeningProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _gbvScreeningRepository.SyncNewPatients(_gbvScreeningProfiles, _facilityRepository, facIds);
+            }
+
+            if (queueName.ToLower().Contains("EnhancedAdherenceCounsellingProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _enhancedAdherenceCounsellingRepository.SyncNewPatients(_enhancedAdherenceCounsellingProfiles,
+                    _facilityRepository, facIds);
+            }
+
+            if (queueName.ToLower().Contains("DrugAlcoholScreeningProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _drugAlcoholScreeningRepository.SyncNewPatients(_drugAlcoholScreeningProfiles, _facilityRepository,
+                    facIds);
+            }
+
+            if (queueName.ToLower().Contains("OvcProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _ovcRepository.SyncNewPatients(_ovcProfiles, _facilityRepository, facIds);
+            }
+
+            if (queueName.ToLower().Contains("OtzProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _otzRepository.SyncNewPatients(_otzProfiles, _facilityRepository, facIds);
+            }
 
 
             SyncStats(facIds);
