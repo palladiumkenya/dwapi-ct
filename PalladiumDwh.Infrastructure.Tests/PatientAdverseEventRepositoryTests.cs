@@ -40,6 +40,7 @@ namespace PalladiumDwh.Infrastructure.Tests
         private Facility _newFacility;
         private List<PatientExtract> _newFacilityPatients;
         private List<PatientAdverseEventExtract> _newAdverseEventExtracts = new List<PatientAdverseEventExtract>();
+        private ActionRegisterRepository _actionRegisterRepository;
 
         [SetUp]
         public void SetUp()
@@ -143,6 +144,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             _facilityRepository = new FacilityRepository(_context);
             _patientExtractRepository = new PatientExtractRepository(_context);
             _patientAdverseEventRepository = new PatientAdverseEventRepository(_context);
+            _actionRegisterRepository = new ActionRegisterRepository(_context);
 
         }
 
@@ -183,7 +185,7 @@ namespace PalladiumDwh.Infrastructure.Tests
                 _AdverseEventProfiles.Add(v);
             }
             
-            _patientAdverseEventRepository.SyncNewPatients(_AdverseEventProfiles, _facilityRepository, new List<Guid>());
+            _patientAdverseEventRepository.SyncNewPatients(_AdverseEventProfiles, _facilityRepository, new List<Guid>(), _actionRegisterRepository);
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Id == facility.Id)
                 .Include(p => p.PatientExtracts.Select(v => v.PatientAdverseEventExtracts)).FirstOrDefault();
@@ -201,7 +203,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             patientInfo.MaritalStatus = "Married";
             patientInfo.PatientCccNumber = "15701-0001";
 
-            _patientAdverseEventRepository.SyncNewPatients(_AdverseEventProfiles, _facilityRepository, new List<Guid>());
+            _patientAdverseEventRepository.SyncNewPatients(_AdverseEventProfiles, _facilityRepository, new List<Guid>(), _actionRegisterRepository);
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Id == patientInfo.FacilityId)
                 .Include(p => p.PatientExtracts.Select(v => v.PatientAdverseEventExtracts)).FirstOrDefault();
@@ -217,7 +219,7 @@ namespace PalladiumDwh.Infrastructure.Tests
         [Test]
         public void should_Sync_New_Facilty_With_Patients()
         {
-            _patientAdverseEventRepository.SyncNewPatients(_newAdverseEventProfiles, _facilityRepository, new List<Guid>());
+            _patientAdverseEventRepository.SyncNewPatients(_newAdverseEventProfiles, _facilityRepository, new List<Guid>(), _actionRegisterRepository);
             _context = new DwapiCentralContext();
             var facilty = _context.Facilities.Where(x => x.Code == _newFacility.Code)
                 .Include(p => p.PatientExtracts.Select(v => v.PatientAdverseEventExtracts)).FirstOrDefault();
@@ -235,7 +237,7 @@ namespace PalladiumDwh.Infrastructure.Tests
                 .First(x => x.PatientInfo.Id == _patients[0].Id)
                 .AdverseEventExtracts
                 .AddRange(new PatientAdverseEventExtractDTO().GeneratePatientAdverseEventExtractDtOs(_newAdverseEventExtracts).ToList());
-            _patientAdverseEventRepository.SyncNewPatients(_updatedAdverseEventProfiles, _facilityRepository, new List<Guid>());
+            _patientAdverseEventRepository.SyncNewPatients(_updatedAdverseEventProfiles, _facilityRepository, new List<Guid>(), _actionRegisterRepository);
             _context = new DwapiCentralContext();
 
             var facilty = _context.Facilities.Where(x => x.Code == 100)
@@ -254,7 +256,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             var AdverseEvent = _AdverseEventProfiles.Last().AdverseEventExtracts.First();
 
             _AdverseEventProfiles.Last().AdverseEventExtracts.First().Severity = "MAUN";
-            _patientAdverseEventRepository.SyncNewPatients(_AdverseEventProfiles, _facilityRepository, new List<Guid>());
+            _patientAdverseEventRepository.SyncNewPatients(_AdverseEventProfiles, _facilityRepository, new List<Guid>(), _actionRegisterRepository);
             _context = new DwapiCentralContext();
             var patientExtract = _context.PatientExtracts.Where(x => x.Id == AdverseEvent.PatientId)
                 .Include(v => v.PatientAdverseEventExtracts).FirstOrDefault();
@@ -272,7 +274,7 @@ namespace PalladiumDwh.Infrastructure.Tests
             var AdverseEvent = _AdverseEventProfiles.Last().AdverseEventExtracts.First();
 
             _AdverseEventProfiles.Last().AdverseEventExtracts.Remove(AdverseEvent);
-            _patientAdverseEventRepository.SyncNewPatients(_AdverseEventProfiles, _facilityRepository, new List<Guid>());
+            _patientAdverseEventRepository. SyncNewPatients(_AdverseEventProfiles, _facilityRepository, new List<Guid>(), _actionRegisterRepository);
             _context = new DwapiCentralContext();
             var patientExtract = _context.PatientExtracts.Where(x => x.Id == AdverseEvent.PatientId).Include(v => v.PatientAdverseEventExtracts).FirstOrDefault();
             Assert.NotNull(patientExtract);

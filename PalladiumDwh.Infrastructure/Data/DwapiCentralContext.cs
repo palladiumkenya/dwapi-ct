@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.SqlClient;
@@ -148,25 +149,24 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<FacilityManifest>().Table("FacilityManifest").Key(x => x.Id);
             DapperPlusManager.Entity<FacilityManifestCargo>().Table("FacilityManifestCargo").Key(x => x.Id);
 
+            DapperPlusManager.Entity<PatientExtract>().BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<PatientArtExtract>().BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<PatientBaselinesExtract>().BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<PatientLaboratoryExtract>().BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<PatientPharmacyExtract>().BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<PatientStatusExtract>().BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<PatientVisitExtract>().BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<PatientAdverseEventExtract>().BatchDelayInterval(Shared.Custom.Utility.GenDelay());
 
-            DapperPlusManager.Entity<PatientExtract>().BatchDelayInterval(500);
-            DapperPlusManager.Entity<PatientArtExtract>().BatchDelayInterval(500);
-            DapperPlusManager.Entity<PatientBaselinesExtract>().BatchDelayInterval(500);
-            DapperPlusManager.Entity<PatientLaboratoryExtract>().BatchDelayInterval(500);
-            DapperPlusManager.Entity<PatientPharmacyExtract>().BatchDelayInterval(500);
-            DapperPlusManager.Entity<PatientStatusExtract>().BatchDelayInterval(500);
-            DapperPlusManager.Entity<PatientVisitExtract>().BatchDelayInterval(500);
-            DapperPlusManager.Entity<PatientAdverseEventExtract>().BatchDelayInterval(500);
-
-            DapperPlusManager.Entity<AllergiesChronicIllnessExtract>().Key(x => x.Id).Table($"AllergiesChronicIllnessExtract").BatchDelayInterval(500);
-            DapperPlusManager.Entity<IptExtract>().Key(x => x.Id).Table($"IptExtract").BatchDelayInterval(500);
-            DapperPlusManager.Entity<DepressionScreeningExtract>().Key(x => x.Id).Table($"DepressionScreeningExtract").BatchDelayInterval(500);
-            DapperPlusManager.Entity<ContactListingExtract>().Key(x => x.Id).Table($"ContactListingExtract").BatchDelayInterval(500);
-            DapperPlusManager.Entity<GbvScreeningExtract>().Key(x => x.Id).Table($"GbvScreeningExtract").BatchDelayInterval(500);
-            DapperPlusManager.Entity<EnhancedAdherenceCounsellingExtract>().Key(x => x.Id).Table($"EnhancedAdherenceCounsellingExtract").BatchDelayInterval(500);
-            DapperPlusManager.Entity<DrugAlcoholScreeningExtract>().Key(x => x.Id).Table($"DrugAlcoholScreeningExtract").BatchDelayInterval(500);
-            DapperPlusManager.Entity<OvcExtract>().Key(x => x.Id).Table($"OvcExtract").BatchDelayInterval(500);
-            DapperPlusManager.Entity<OtzExtract>().Key(x => x.Id).Table($"OtzExtract").BatchDelayInterval(500);
+            DapperPlusManager.Entity<AllergiesChronicIllnessExtract>().Key(x => x.Id).Table($"AllergiesChronicIllnessExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<IptExtract>().Key(x => x.Id).Table($"IptExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<DepressionScreeningExtract>().Key(x => x.Id).Table($"DepressionScreeningExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<ContactListingExtract>().Key(x => x.Id).Table($"ContactListingExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<GbvScreeningExtract>().Key(x => x.Id).Table($"GbvScreeningExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<EnhancedAdherenceCounsellingExtract>().Key(x => x.Id).Table($"EnhancedAdherenceCounsellingExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<DrugAlcoholScreeningExtract>().Key(x => x.Id).Table($"DrugAlcoholScreeningExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<OvcExtract>().Key(x => x.Id).Table($"OvcExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<OtzExtract>().Key(x => x.Id).Table($"OtzExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
         }
 
         public SqlConnection GetConnection()

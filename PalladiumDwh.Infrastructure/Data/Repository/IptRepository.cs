@@ -14,10 +14,10 @@ using Z.Dapper.Plus;
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {
 
-    public class DrugAlcoholScreeningRepository : GenericRepository<DrugAlcoholScreeningExtract>, IDrugAlcoholScreeningRepository
+    public class IptRepository : GenericRepository<IptExtract>, IIptRepository
     {
         private readonly DwapiCentralContext _context;
-        public DrugAlcoholScreeningRepository(DwapiCentralContext context) : base(context)
+        public IptRepository(DwapiCentralContext context) : base(context)
         {
             _context = context;
         }
@@ -25,7 +25,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         {
             DeleteBy(x => x.PatientId == patientId);
         }
-        public void Sync(Guid patientId, IEnumerable<DrugAlcoholScreeningExtract> extracts)
+        public void Sync(Guid patientId, IEnumerable<IptExtract> extracts)
         {
             Clear(patientId);
             Insert(extracts);
@@ -34,31 +34,30 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
     public void ClearNew(Guid patientId)
       {
-        string sql = "DELETE FROM DrugAlcoholScreeningExtract WHERE PatientId = @PatientId";
+        string sql = "DELETE FROM IptExtract WHERE PatientId = @PatientId";
         _context.GetConnection().Execute(sql, new { PatientId = patientId });
       }
 
-      public void SyncNew(Guid patientId, IEnumerable<DrugAlcoholScreeningExtract> extracts)
+      public void SyncNew(Guid patientId, IEnumerable<IptExtract> extracts)
       {
         ClearNew(patientId);
         _context.GetConnection().BulkInsert(extracts);
       }
 
 
-
-        public void SyncNewPatients(IEnumerable<DrugAlcoholScreeningProfile> profiles, IFacilityRepository facilityRepository,
+        public void SyncNewPatients(IEnumerable<IptProfile> profiles, IFacilityRepository facilityRepository,
             List<Guid> facIds, IActionRegisterRepository actionRegisterRepository)
         {
             var updates = new List<PatientExtract>();
             var inserts = new List<PatientExtract>();
-            var updatedProfiles = new List<DrugAlcoholScreeningProfile>();
+            var updatedProfiles = new List<IptProfile>();
 
             //  get facilities from profiles
             var facilities = profiles.Select(x => x.FacilityInfo).ToList().Distinct();
 
             foreach (var facility in facilities)
             {
-                var facilityUpdatedProfiles = new List<DrugAlcoholScreeningProfile>();
+                var facilityUpdatedProfiles = new List<IptProfile>();
                 //sync facility
                 var facilityId = facilityRepository.SyncNew(facility);
 
@@ -114,20 +113,20 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             if (updates.Count > 0)
                 _context.GetConnection().BulkUpdate(updates);
 
-            foreach (var DrugAlcoholScreeningProfile in updatedProfiles)
+            foreach (var IptProfile in updatedProfiles)
             {
-                DrugAlcoholScreeningProfile.GenerateRecords(DrugAlcoholScreeningProfile.PatientInfo.Id);
+                IptProfile.GenerateRecords(IptProfile.PatientInfo.Id);
             }
 
             SyncNew(updatedProfiles,actionRegisterRepository);
         }
 
-        public void SyncNew(List<DrugAlcoholScreeningProfile> profiles, IActionRegisterRepository actionRegisterRepository)
+        public void SyncNew(List<IptProfile> profiles, IActionRegisterRepository actionRegisterRepository)
         {
 
-            var extracts = new List<DrugAlcoholScreeningExtract>();
+            var extracts = new List<IptExtract>();
             var action = "DELETE";
-            var area = $"{nameof(DrugAlcoholScreeningExtract)}";
+            var area = $"{nameof(IptExtract)}";
 
             if (profiles.Any())
             {
@@ -145,7 +144,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
                 // clear patient data not in register
 
-                var sql = $@"  DELETE FROM {nameof(DrugAlcoholScreeningExtract)} 
+                var sql = $@"  DELETE FROM {nameof(IptExtract)} 
                                     WHERE  PatientId IN @patientId AND
                                     PatientId NOT In (        
                                         SELECT DISTINCT PatientId FROM {nameof(ActionRegister)}

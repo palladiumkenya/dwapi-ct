@@ -13,9 +13,9 @@ namespace PalladiumDwh.Core.Interfaces
       void ClearNew(Guid patientId);
       void SyncNew(Guid patientIdValue, IEnumerable<EnhancedAdherenceCounsellingExtract> extracts);
 
-        void SyncNew(IEnumerable<EnhancedAdherenceCounsellingProfile> profiles);
+        void SyncNew(List<EnhancedAdherenceCounsellingProfile> profiles, IActionRegisterRepository repo);
 
         void SyncNewPatients(IEnumerable<EnhancedAdherenceCounsellingProfile> profiles, IFacilityRepository facilityRepository,
-            List<Guid> facIds);
+            List<Guid> facIds, IActionRegisterRepository repo);
     }
 }

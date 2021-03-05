@@ -82,7 +82,7 @@
     <Compile Include="Data\Repository\DepressionScreeningRepository.cs" />
     <Compile Include="Data\Repository\GbvScreeningRepository.cs" />
     <Compile Include="Data\Repository\DrugAlcoholScreeningRepository.cs" />
-    <Compile Include="Data\Repository\IptRepository.css.cs" />
+    <Compile Include="Data\Repository\IptRepository.cs" />
     <Compile Include="Data\Repository\EnhancedAdherenceCounsellingRepository.cs" />
     <Compile Include="Data\Repository\PatientStatusRepository.cs" />
     <Compile Include="Data\Repository\OvcRepository.cs" />

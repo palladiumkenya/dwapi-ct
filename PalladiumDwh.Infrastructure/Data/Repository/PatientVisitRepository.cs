@@ -124,7 +124,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
         public void SyncNew(List<PatientVisitProfile> profiles, IActionRegisterRepository actionRegisterRepository)
         {
-            
+
             var extracts = new List<PatientVisitExtract>();
             var action = "DELETE";
             var area = $"{nameof(PatientVisitExtract)}";
@@ -187,5 +187,6 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 }
             }
         }
+
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model.DTO;
 using PalladiumDwh.Shared.Model.Extract;
@@ -42,110 +44,132 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         _context.GetConnection().BulkInsert(extracts);
       }
 
-      public void SyncNewPatients(IEnumerable<GbvScreeningProfile> profiles, IFacilityRepository facilityRepository,
-          List<Guid> facIds)
-      {
-          var updates = new List<PatientExtract>();
-          var inserts = new List<PatientExtract>();
-          var updatedProfiles = new List<GbvScreeningProfile>();
 
-          //  get facilities from profiles
-          var facilities = profiles.Select(x => x.FacilityInfo).ToList().Distinct();
 
-          foreach (var facility in facilities)
-          {
-              var facilityUpdatedProfiles = new List<GbvScreeningProfile>();
-              //sync facility
-              var facilityId = facilityRepository.SyncNew(facility);
-
-              //update profiles with facilityId.
-              if (null != facilityId)
-              {
-                  facIds.Add(facilityId.Value);
-                  var facilityProfiles = profiles.Where(x => x.FacilityInfo.Code == facility.Code).ToList();
-
-                  foreach (var profile in facilityProfiles)
-                  {
-                      profile.PatientInfo.FacilityId = facilityId.Value;
-                      facilityUpdatedProfiles.Add(profile);
-                  }
-
-                  if (facilityUpdatedProfiles.Count > 0)
-                  {
-                      var patientPIds = facilityUpdatedProfiles.Select(x => x.PatientInfo.PatientPID).ToList();
-                      var allpatientPIds = string.Join(",", patientPIds);
-
-                      //sync patients
-
-                      //Get Exisitng
-                      string exisitingSql =
-                          $"SELECT Id,PatientPID,FacilityId FROM PatientExtract WHERE FacilityId='{facilityId}' and PatientPID in ({allpatientPIds});";
-                      var exisitingPatients = _context.GetConnection().Query<PatientExtractId>(exisitingSql).ToList();
-
-                      foreach (var profile in facilityUpdatedProfiles)
-                      {
-                          var p = exisitingPatients.FirstOrDefault(x => x.PatientPID == profile.PatientInfo.PatientPID);
-
-                          if (null != p)
-                          {
-                              profile.PatientInfo.Id = p.Id;
-                              updates.Add(profile.PatientInfo);
-                          }
-                          else
-                          {
-                              inserts.Add(profile.PatientInfo);
-                          }
-                      }
-
-                      updatedProfiles.AddRange(facilityUpdatedProfiles);
-                  }
-              }
-          }
-
-          if (inserts.Count > 0)
-              _context.GetConnection().BulkMerge(inserts);
-
-          if (updates.Count > 0)
-              _context.GetConnection().BulkUpdate(updates);
-
-          foreach (var GbvScreeningProfile in updatedProfiles)
-          {
-              GbvScreeningProfile.GenerateRecords(GbvScreeningProfile.PatientInfo.Id);
-          }
-
-          SyncNew(updatedProfiles);
-      }
-
-      public void SyncNew(IEnumerable<GbvScreeningProfile> profiles)
+        public void SyncNewPatients(IEnumerable<GbvScreeningProfile> profiles, IFacilityRepository facilityRepository,
+            List<Guid> facIds, IActionRegisterRepository actionRegisterRepository)
         {
-            var ids = new List<string>();
-            var extracts = new List<GbvScreeningExtract>();
+            var updates = new List<PatientExtract>();
+            var inserts = new List<PatientExtract>();
+            var updatedProfiles = new List<GbvScreeningProfile>();
 
-            foreach (var p in profiles)
+            //  get facilities from profiles
+            var facilities = profiles.Select(x => x.FacilityInfo).ToList().Distinct();
+
+            foreach (var facility in facilities)
             {
-                ids.Add($"'{p.PatientInfo.Id}'");
-                extracts.AddRange(p.Extracts);
+                var facilityUpdatedProfiles = new List<GbvScreeningProfile>();
+                //sync facility
+                var facilityId = facilityRepository.SyncNew(facility);
+
+                //update profiles with facilityId.
+                if (!(facilityId == Guid.Empty || null == facilityId))
+                {
+                    facIds.Add(facilityId.Value);
+                    var facilityProfiles = profiles.Where(x => x.FacilityInfo.Code == facility.Code).ToList();
+
+                    foreach (var profile in facilityProfiles)
+                    {
+                        profile.PatientInfo.FacilityId = facilityId.Value;
+                        facilityUpdatedProfiles.Add(profile);
+                    }
+
+                    if (facilityUpdatedProfiles.Count > 0)
+                    {
+                        var patientPIds = facilityUpdatedProfiles.Select(x => x.PatientInfo.PatientPID).ToList();
+                        var allpatientPIds = string.Join(",", patientPIds);
+
+                        //sync patients
+
+                        //Get Exisitng
+                        string exisitingSql =
+                            $"SELECT Id,PatientPID,FacilityId FROM PatientExtract WHERE FacilityId='{facilityId}' and PatientPID in ({allpatientPIds});";
+                        var exisitingPatients = _context.GetConnection().Query<PatientExtractId>(exisitingSql).ToList();
+
+                        foreach (var profile in facilityUpdatedProfiles)
+                        {
+                            var p = exisitingPatients.FirstOrDefault(
+                                x => x.PatientPID == profile.PatientInfo.PatientPID);
+
+                            if (null != p)
+                            {
+                                profile.PatientInfo.Id = p.Id;
+                                updates.Add(profile.PatientInfo);
+                            }
+                            else
+                            {
+                                inserts.Add(profile.PatientInfo);
+                            }
+                        }
+
+                        updatedProfiles.AddRange(facilityUpdatedProfiles);
+                    }
+                }
             }
 
-            //clear patient data
+            if (inserts.Count > 0)
+                _context.GetConnection().BulkMerge(inserts);
 
-            if (ids.Count > 0)
+
+            if (updates.Count > 0)
+                _context.GetConnection().BulkUpdate(updates);
+
+            foreach (var GbvScreeningProfile in updatedProfiles)
             {
-                var connection = _context.GetConnection();
-                var allIds = string.Join(",", ids);
+                GbvScreeningProfile.GenerateRecords(GbvScreeningProfile.PatientInfo.Id);
+            }
 
-                var sql = $@" DELETE FROM GbvScreeningExtract WHERE (PatientId In ({allIds}))";
+            SyncNew(updatedProfiles,actionRegisterRepository);
+        }
+
+        public void SyncNew(List<GbvScreeningProfile> profiles, IActionRegisterRepository actionRegisterRepository)
+        {
+
+            var extracts = new List<GbvScreeningExtract>();
+            var action = "DELETE";
+            var area = $"{nameof(GbvScreeningExtract)}";
+
+            if (profiles.Any())
+            {
+                extracts.AddRange(profiles.SelectMany(x => x.Extracts));
+
+                var patientFacProfiles = profiles
+                    .Select(x => new PatientFacilityProfile(x.PatientInfo.Id, x.PatientInfo.FacilityId))
+                    .Distinct()
+                    .ToList();
+
+                var patientIds = patientFacProfiles.Select(x => x.Id).ToArray();
+
+                var connectionString = _context.GetConnection().ConnectionString;
+
+
+                // clear patient data not in register
+
+                var sql = $@"  DELETE FROM {nameof(GbvScreeningExtract)} 
+                                    WHERE  PatientId IN @patientId AND
+                                    PatientId NOT In (        
+                                        SELECT DISTINCT PatientId FROM {nameof(ActionRegister)}
+                                        WHERE  Action=@action AND Area=@area AND PatientId IN @patientId
+                                    ) 
+                                ";
+
                 try
                 {
-                    using (var transaction = connection.BeginTransaction())
+                    using (var connection = new SqlConnection(connectionString))
                     {
-                        connection.Execute(sql, null, transaction, 0);
-                        transaction.Commit();
+
+                        connection.Execute(sql,
+                            new {action, area, patientId = patientIds});
+
                     }
+
+                    // markregister
+
+                    actionRegisterRepository.CreateAction(ActionRegister.Generate(patientFacProfiles, action, area));
                 }
                 catch (Exception e)
                 {
-                    Log.Debug(e);
+                    Log.Error(e);
                 }
             }
 
@@ -161,8 +185,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 {
                     Log.Debug(e);
                 }
-
             }
         }
+
     }
 }

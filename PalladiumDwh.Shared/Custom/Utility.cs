@@ -356,6 +356,7 @@ namespace PalladiumDwh.Shared.Custom
             return false;
         }
 
+        public static int GenDelay() => new Random().Next(999, 1199);
     }
 }
 
