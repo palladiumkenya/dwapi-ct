@@ -14,7 +14,9 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string ExitDescription { get; set; }
         public DateTime? ExitDate { get; set; }
         public string ExitReason { get; set; }
-
+        public string TOVerified { get; set; }
+        public DateTime? TOVerifiedDate { get; set; }
+        public DateTime? ReEnrollmentDate { get; set; }
         public ClientPatientStatusExtract()
         {
         }
@@ -43,7 +45,6 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = extract.Project;
         }
 
-        public string TOVerified { get; set; }
-        public DateTime? TOVerifiedDate { get; set; }
+
     }
 }

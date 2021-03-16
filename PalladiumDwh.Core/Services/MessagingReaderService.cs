@@ -75,7 +75,6 @@ namespace PalladiumDwh.Core.Services
                 Log.Debug($"processing {QueueName} {n} of {batchCount} batches...");
                 foreach (var m in batch.ToList())
                 {
-
                     var msg = msmq.ReceiveById(m);
                     if (null != msg)
                     {
@@ -83,7 +82,6 @@ namespace PalladiumDwh.Core.Services
                         {
                             var patientProfile = msg.BodyStream.ReadFromJson(msg.Label);
                             _syncService.Sync(patientProfile);
-
                         }
                         catch (Exception e)
                         {
@@ -93,14 +91,15 @@ namespace PalladiumDwh.Core.Services
                     }
                 }
             }
-            Log.Debug(new string('*', 30));
 
+            Log.Debug(new string('*', 30));
         }
 
         public void ExpressRead(string gateway = "")
         {
             //initialize Queue
             bool isBatch = gateway.EndsWith(".batch");
+
             #region Queue Init
 
             if (null == Queue)
@@ -124,7 +123,6 @@ namespace PalladiumDwh.Core.Services
             }
             catch (MessageQueueException ex)
             {
-
             }
             catch (Exception e)
             {
@@ -145,6 +143,7 @@ namespace PalladiumDwh.Core.Services
 
             int count = 0;
             int batchCount = 0;
+            bool batchComplete = false;
             var messages = new List<Message>();
             var messageEnumerator = msmq.GetMessageEnumerator2();
 
@@ -189,11 +188,21 @@ namespace PalladiumDwh.Core.Services
 
                             try
                             {
-                                if (batchCount == 1000 || isBatch)
+
+                                if (isBatch)
+                                {
+                                    batchComplete = batchCount == 4;
+                                }
+                                else
+                                {
+                                    batchComplete = batchCount == 1000;
+                                }
+
+                                if (batchComplete)
                                 {
                                     // reset batch Count
                                     batchCount = 0;
-
+                                    batchComplete = false;
                                     // commit sync
                                     _syncService.Commit(QueueName);
 
@@ -214,7 +223,6 @@ namespace PalladiumDwh.Core.Services
                             }
 
                             #endregion
-
                         }
                         catch (Exception e)
                         {
@@ -265,9 +273,9 @@ namespace PalladiumDwh.Core.Services
 
         public void MoveToBacklog(List<Message> messages)
         {
-            if(null==messages)
+            if (null == messages)
                 return;
-            if (messages.Count==0)
+            if (messages.Count == 0)
                 return;
 
             var msmq = BacklogQueue as MessageQueue;
@@ -282,6 +290,7 @@ namespace PalladiumDwh.Core.Services
                         msmq.Send(message, tx);
                     }
                 }
+
                 tx.Commit();
                 msmq.Close();
             }
@@ -303,7 +312,6 @@ namespace PalladiumDwh.Core.Services
 
         public void PrcocessBacklog(string gateway = "")
         {
-
             if (null == Queue)
                 Initialize(gateway);
 
@@ -363,6 +371,7 @@ namespace PalladiumDwh.Core.Services
                         }
                     }
                 }
+
                 Log.Debug(new string('*', 30));
             }
         }

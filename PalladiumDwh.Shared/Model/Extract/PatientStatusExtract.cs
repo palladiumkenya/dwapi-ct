@@ -12,6 +12,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Created { get; set; }
         public string TOVerified { get; set; }
         public DateTime? TOVerifiedDate { get; set; }
+        public DateTime? ReEnrollmentDate { get; set; }
+
         public PatientStatusExtract()
         {
             Created = DateTime.Now;
@@ -20,7 +22,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
 
         public PatientStatusExtract(string exitDescription, DateTime? exitDate, string exitReason, Guid patientId, string emr, string project,
-            string toVerified, DateTime? toVerifiedDate)
+            string toVerified, DateTime? toVerifiedDate,DateTime? reEnrollmentDate)
         {
             ExitDescription = exitDescription;
             ExitDate = exitDate;
@@ -32,6 +34,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
             TOVerified = toVerified;
             TOVerifiedDate = toVerifiedDate;
+            ReEnrollmentDate = reEnrollmentDate;
         }
 
 

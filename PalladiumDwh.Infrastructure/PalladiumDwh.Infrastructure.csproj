@@ -146,6 +146,10 @@
     <Compile Include="Migrations\202103031637190_CTReview.Designer.cs">
       <DependentUpon>202103031637190_CTReview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103161053386_StatusReview.cs" />
+    <Compile Include="Migrations\202103161053386_StatusReview.Designer.cs">
+      <DependentUpon>202103161053386_StatusReview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -194,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103031637190_CTReview.resx">
       <DependentUpon>202103031637190_CTReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103161053386_StatusReview.resx">
+      <DependentUpon>202103161053386_StatusReview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

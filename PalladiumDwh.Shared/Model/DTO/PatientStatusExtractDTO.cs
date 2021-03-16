@@ -16,6 +16,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public Guid PatientId { get; set; }
         public string TOVerified { get; set; }
         public DateTime? TOVerifiedDate { get; set; }
+        public DateTime? ReEnrollmentDate { get; set; }
+
         public PatientStatusExtractDTO()
         {
         }
@@ -41,6 +43,7 @@ namespace PalladiumDwh.Shared.Model.DTO
 
             TOVerified = patientStatusExtract.TOVerified;
             TOVerifiedDate = patientStatusExtract.TOVerifiedDate;
+            ReEnrollmentDate = patientStatusExtract.ReEnrollmentDate;
         }
 
 
@@ -58,7 +61,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public PatientStatusExtract GeneratePatientStatusExtract(Guid patientId)
         {
             PatientId = patientId;
-            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project,TOVerified,TOVerifiedDate);
+            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project,TOVerified,TOVerifiedDate,ReEnrollmentDate);
         }
     }
 }

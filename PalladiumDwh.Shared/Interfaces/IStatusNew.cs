@@ -6,5 +6,6 @@ namespace PalladiumDwh.Shared.Interfaces
     {
         string TOVerified { get; set; }
         DateTime? TOVerifiedDate { get; set; }
+        DateTime? ReEnrollmentDate { get; set; }
     }
 }
