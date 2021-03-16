@@ -12,11 +12,16 @@ namespace PalladiumDwh.Core.Services
     {
         private readonly ISyncService _syncService;
         private readonly int _queueBatch;
+        private readonly int _profileCount;
+        private readonly int _profileBatchCount;
 
-        public MessagingReaderService(ISyncService syncService, string queueName, int queueBatch = 50) : base(queueName)
+        public MessagingReaderService(ISyncService syncService, string queueName, int queueBatch = 50,
+            int profileCount = 4, int profileBatchCount = 1000) : base(queueName)
         {
             _syncService = syncService;
             _queueBatch = queueBatch;
+            _profileCount = profileCount;
+            _profileBatchCount = profileBatchCount;
         }
 
         public void Read(string gateway)
@@ -188,14 +193,13 @@ namespace PalladiumDwh.Core.Services
 
                             try
                             {
-
                                 if (isBatch)
                                 {
-                                    batchComplete = batchCount == 4;
+                                    batchComplete = batchCount == _profileBatchCount;
                                 }
                                 else
                                 {
-                                    batchComplete = batchCount == 1000;
+                                    batchComplete = batchCount == _profileCount;
                                 }
 
                                 if (batchComplete)
@@ -261,7 +265,7 @@ namespace PalladiumDwh.Core.Services
 
             msmq.Close();
 
-            Log.Debug($"Queue {QueueName} processed {count}");
+            Log.Debug($"Queue {QueueName} processed {count} {(isBatch ? "Batches":"")}");
             Log.Debug(new string('*', 30));
         }
 
@@ -478,6 +482,11 @@ namespace PalladiumDwh.Core.Services
 
             Log.Debug($"Queue {QueueName} processed {count}");
             Log.Debug(new string('*', 30));
+        }
+
+        public void SetBatches(int profile, int profileBatch)
+        {
+            throw new NotImplementedException();
         }
     }
 }

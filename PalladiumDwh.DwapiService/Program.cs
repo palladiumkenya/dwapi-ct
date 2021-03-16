@@ -20,6 +20,11 @@ namespace PalladiumDWh.DwapiService
         /// </summary>
         static void Main()
         {
+            Log.Debug(new string('*',40));
+            Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Name}");
+            Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Version}");
+            Log.Debug($"Rel: 16MAR21 1451");
+            Log.Debug(new string('*', 40));
             Log.Debug("Loading DWapiService...");
 
             // CHECK if the license if valid for the default provider (SQL Server)
@@ -31,6 +36,7 @@ namespace PalladiumDWh.DwapiService
                     throw new Exception(licenseErrorMessage);
                 }
                 Log.Debug("Loading DWapiService [Dapper.Plus]...OK");
+               
             }
 
             catch (Exception e)

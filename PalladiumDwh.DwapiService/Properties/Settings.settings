@@ -15,10 +15,16 @@
       <Value Profile="(Default)">9005d618-3965-8877-97a5-7a27cbb21c8f</Value>
     </Setting>
     <Setting Name="QueuePoll" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">120</Value>
     </Setting>
     <Setting Name="LiveSync" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://koske-mac:4777/stages/</Value>
+      <Value Profile="(Default)">http://koske-pc01:4777/stages/</Value>
+    </Setting>
+    <Setting Name="ProfileCount" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="ProfileBatchCount" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">4</Value>
     </Setting>
   </Settings>
 </SettingsFile>

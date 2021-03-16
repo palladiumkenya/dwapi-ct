@@ -25,7 +25,9 @@ namespace PalladiumDWh.DwapiService.DependencyResolution {
            
             For<IMessagingReaderService>().Use<MessagingReaderService>()
                 .Ctor<string>("queueName").Is(Properties.Settings.Default.QueueName)
-                .Ctor<int>("queueBatch").Is(Properties.Settings.Default.QueueBatch);
+                .Ctor<int>("queueBatch").Is(Properties.Settings.Default.QueueBatch)
+                .Ctor<int>("profileCount").Is(Properties.Settings.Default.ProfileCount)
+                .Ctor<int>("profileBatchCount").Is(Properties.Settings.Default.ProfileBatchCount);
 
             For<ILiveSyncService>().Use<LiveSyncService>()
                 .Ctor<string>("baseUrl").Is(Properties.Settings.Default.LiveSync);

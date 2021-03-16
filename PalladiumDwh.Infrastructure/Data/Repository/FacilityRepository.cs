@@ -126,7 +126,17 @@ select
 (select count(id) from PatientLaboratoryExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientLabExtract,
 (select count(id) from PatientPharmacyExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientPharmacyExtract,
 (select count(id) from PatientStatusExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientStatusExtract,
-(select count(id) from PatientVisitExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientVisitExtract
+(select count(id) from PatientVisitExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) PatientVisitExtract,
+(select count(id) from AllergiesChronicIllnessExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) AllergiesChronicIllnessExtract,
+(select count(id) from IptExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) IptExtract,
+(select count(id) from DepressionScreeningExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) DepressionScreeningExtract,
+(select count(id) from ContactListingExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) ContactListingExtract,
+(select count(id) from GbvScreeningExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) GbvScreeningExtract,
+(select count(id) from EnhancedAdherenceCounsellingExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) EnhancedAdherenceCounsellingExtract,
+(select count(id) from DrugAlcoholScreeningExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) DrugAlcoholScreeningExtract,
+(select count(id) from OvcExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) OvcExtract,
+(select count(id) from OtzExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) OtzExtract
+
 
                 ";
 
@@ -143,6 +153,16 @@ select
                 stats.AddStats("PatientPharmacyExtract", result.PatientPharmacyExtract);
                 stats.AddStats("PatientStatusExtract", result.PatientStatusExtract);
                 stats.AddStats("PatientVisitExtract", result.PatientVisitExtract);
+
+                stats.AddStats("AllergiesChronicIllnessExtract", result.AllergiesChronicIllnessExtract);
+                stats.AddStats("IptExtract", result.IptExtract);
+                stats.AddStats("DepressionScreeningExtract", result.DepressionScreeningExtract);
+                stats.AddStats("ContactListingExtract", result.ContactListingExtract);
+                stats.AddStats("GbvScreeningExtract", result.GbvScreeningExtract);
+                stats.AddStats("EnhancedAdherenceCounsellingExtract", result.EnhancedAdherenceCounsellingExtract);
+                stats.AddStats("DrugAlcoholScreeningExtract", result.DrugAlcoholScreeningExtract);
+                stats.AddStats("OvcExtract", result.OvcExtract);
+                stats.AddStats("OtzExtract", result.OtzExtract);
 
                 return stats;
             }
