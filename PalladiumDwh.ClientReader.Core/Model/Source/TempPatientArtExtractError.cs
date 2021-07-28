@@ -8,7 +8,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
     [Table("vTempPatientArtExtractError")]
     public class TempPatientArtExtractError : TempExtract, ITempPatientArtExtract
     {
-      
+
         public override string ToString()
         {
             return $"{SiteCode}-{PatientID}";
@@ -41,5 +41,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public DateTime? ExitDate { get; set; }
 
         public virtual ICollection<TempPatientArtExtractErrorSummary> TempPatientArtExtractErrorSummaries { get; set; } = new List<TempPatientArtExtractErrorSummary>();
+        public string PreviousARTUse { get; set; }
+        public string PreviousARTPurpose { get; set; }
+        public DateTime? DateLastUsed { get; set; }
     }
 }

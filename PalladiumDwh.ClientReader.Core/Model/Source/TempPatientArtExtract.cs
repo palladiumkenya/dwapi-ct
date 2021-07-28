@@ -3,10 +3,10 @@ using PalladiumDwh.ClientReader.Core.Interfaces.Source;
 
 namespace PalladiumDwh.ClientReader.Core.Model.Source
 {
-    
+
     public class TempPatientArtExtract : TempExtract, ITempPatientArtExtract
     {
-      
+
         public override string ToString()
         {
             return $"{SiteCode}-{PatientID}";
@@ -37,5 +37,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public DateTime? LastVisit { get; set; }
         public string ExitReason { get; set; }
         public DateTime? ExitDate { get; set; }
+        public string PreviousARTUse { get; set; }
+        public string PreviousARTPurpose { get; set; }
+        public DateTime? DateLastUsed { get; set; }
     }
 }

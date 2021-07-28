@@ -59,6 +59,17 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string TCAReason { get; set; }
         public string ClinicalNotes { get; set; }
 
+        public string GeneralExamination { get; set; }
+        public string SystemExamination { get; set; }
+        public string Skin { get; set; }
+        public string Eyes { get; set; }
+        public string ENT { get; set; }
+        public string Chest { get; set; }
+        public string CVS { get; set; }
+        public string Abdomen { get; set; }
+        public string CNS { get; set; }
+        public string Genitourinary { get; set; }
+
         public PatientVisitExtractDTO()
         {
         }
@@ -172,7 +183,8 @@ namespace PalladiumDwh.Shared.Model.DTO
                 KeyPopulationType,
                 VisitBy, Temp, PulseRate, RespiratoryRate, OxygenSaturation, Muac, NutritionalStatus, EverHadMenses,
                 Breastfeeding, Menopausal, NoFPReason, ProphylaxisUsed, CTXAdherence, CurrentRegimen, HCWConcern,
-                TCAReason, ClinicalNotes
+                TCAReason, ClinicalNotes,
+                GeneralExamination, SystemExamination, Skin, Eyes, ENT, Chest, CVS, Abdomen, CNS, Genitourinary
             );
         }
     }

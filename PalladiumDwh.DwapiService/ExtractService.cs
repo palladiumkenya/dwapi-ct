@@ -16,11 +16,9 @@ namespace PalladiumDWh.DwapiService
             InitializeComponent();
         }
 
-
-        protected override void OnStart(string[] args)
+        public void RunSvc()
         {
             Log.Debug("DWapiService starting...");
-
             try
             {
                 _profileScheduler = Program.IOC.GetInstance<IProfileScheduler>();
@@ -30,16 +28,24 @@ namespace PalladiumDWh.DwapiService
             {
                 Log.Debug(se);
             }
-
         }
 
-        protected override void OnStop()
+        public void StopSvc()
         {
             Log.Debug("DWapiService stopping...");
             _profileScheduler.Shutdown();
             Log.Debug("DWapiService stopped!");
         }
+
+        protected override void OnStart(string[] args)
+        {
+            RunSvc();
+        }
+        protected override void OnStop()
+        {
+            StopSvc();
+        }
     }
-  
-    
+
+
 }

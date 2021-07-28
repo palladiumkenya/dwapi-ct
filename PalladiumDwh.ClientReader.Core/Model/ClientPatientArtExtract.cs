@@ -105,5 +105,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = extract.Project;
         }
 
+        public string PreviousARTUse { get; set; }
+        public string PreviousARTPurpose { get; set; }
+        public DateTime? DateLastUsed { get; set; }
     }
 }

@@ -57,6 +57,17 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string TCAReason { get; set; }
         public string ClinicalNotes { get; set; }
 
+        public string GeneralExamination { get; set; }
+        public string SystemExamination { get; set; }
+        public string Skin { get; set; }
+        public string Eyes { get; set; }
+        public string ENT { get; set; }
+        public string Chest { get; set; }
+        public string CVS { get; set; }
+        public string Abdomen { get; set; }
+        public string CNS { get; set; }
+        public string Genitourinary { get; set; }
+
         public PatientVisitExtract()
         {
             Created = DateTime.Now;
@@ -64,7 +75,8 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public PatientVisitExtract(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, Guid patientId, string emr, string project,
             string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType,
-            string visitBy, decimal? temp, int? pulseRate, int? respiratoryRate, decimal? oxygenSaturation, int? muac, string nutritionalStatus, string everHadMenses, string breastfeeding, string menopausal, string noFpReason, string prophylaxisUsed, string ctxAdherence, string currentRegimen, string hcwConcern, string tcaReason, string clinicalNotes)
+            string visitBy, decimal? temp, int? pulseRate, int? respiratoryRate, decimal? oxygenSaturation, int? muac, string nutritionalStatus, string everHadMenses, string breastfeeding, string menopausal, string noFpReason, string prophylaxisUsed, string ctxAdherence, string currentRegimen, string hcwConcern, string tcaReason, string clinicalNotes,
+            string generalExamination,	string systemExamination,	string skin,	string eyes,	string ent,	string chest,	string cvs,	string abdomen,	string cns,	string genitourinary)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -118,6 +130,18 @@ namespace PalladiumDwh.Shared.Model.Extract
             HCWConcern = hcwConcern;
             TCAReason = tcaReason;
             ClinicalNotes = clinicalNotes;
+
+            GeneralExamination=generalExamination;
+            SystemExamination=systemExamination;
+            Skin=skin;
+            Eyes=eyes;
+            ENT=ent;
+            Chest=chest;
+            CVS=cvs;
+            Abdomen=abdomen;
+            CNS=cns;
+            Genitourinary=genitourinary;
+
         }
     }
 }

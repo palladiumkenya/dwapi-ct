@@ -8,7 +8,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? DOB { get; set; }
         public decimal? AgeEnrollment { get; set; }
         public decimal? AgeARTStart { get; set; }
-        public decimal? AgeLastVisit { get; set; }       
+        public decimal? AgeLastVisit { get; set; }
         public DateTime? RegistrationDate { get; set; }
         public string Gender { get; set; }
         public string PatientSource { get; set; }
@@ -30,12 +30,18 @@ namespace PalladiumDwh.Shared.Model.Extract
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
 
+        public string PreviousARTUse { get; set; }
+        public string PreviousARTPurpose { get; set; }
+        public DateTime? DateLastUsed { get; set; }
+
         public PatientArtExtract()
         {
             Created=DateTime.Now;
         }
 
-        public PatientArtExtract(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, Guid patientId, string emr, string project)
+        public PatientArtExtract(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, Guid patientId, string emr, string project,
+        string previousARTUse,	string previousARTPurpose,	DateTime? dateLastUsed
+        )
         {
             DOB = dob;
             AgeEnrollment = ageEnrollment;
@@ -63,6 +69,10 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+            PreviousARTUse = previousARTUse;
+            PreviousARTPurpose = previousARTPurpose;
+            DateLastUsed = dateLastUsed;
+
         }
     }
 }

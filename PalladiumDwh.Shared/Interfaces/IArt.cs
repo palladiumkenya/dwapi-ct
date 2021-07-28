@@ -2,7 +2,7 @@ using System;
 
 namespace PalladiumDwh.Shared.Interfaces
 {
-    public interface IArt
+    public interface IArt:IArtNew
     {
         DateTime? DOB { get; set; }
         decimal? AgeEnrollment { get; set; }
@@ -26,6 +26,5 @@ namespace PalladiumDwh.Shared.Interfaces
         DateTime? LastVisit { get; set; }
         string ExitReason { get; set; }
         DateTime? ExitDate { get; set; }
-       
     }
 }

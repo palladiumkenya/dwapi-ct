@@ -5,7 +5,7 @@ using PalladiumDwh.Shared.Interfaces.DTOs;
 using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Shared.Model.DTO
-{    
+{
     public class PatientArtExtractDTO : IPatientArtExtractDTO
     {
         public DateTime? DOB { get; set; }
@@ -33,6 +33,10 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+
+        public string PreviousARTUse { get; set; }
+        public string PreviousARTPurpose { get; set; }
+        public DateTime? DateLastUsed { get; set; }
 
         public PatientArtExtractDTO()
         {
@@ -109,9 +113,10 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
 
             return new PatientArtExtract(DOB,
-                AgeEnrollment, AgeARTStart, AgeLastVisit, RegistrationDate,Gender, PatientSource, StartARTDate,PreviousARTStartDate, 
-                PreviousARTRegimen, StartARTAtThisFacility,StartRegimen, StartRegimenLine, LastARTDate, LastRegimen, 
-                LastRegimenLine, Duration, ExpectedReturn,Provider,LastVisit, ExitReason, ExitDate, PatientId,Emr, Project );
-        }       
+                AgeEnrollment, AgeARTStart, AgeLastVisit, RegistrationDate,Gender, PatientSource, StartARTDate,PreviousARTStartDate,
+                PreviousARTRegimen, StartARTAtThisFacility,StartRegimen, StartRegimenLine, LastARTDate, LastRegimen,
+                LastRegimenLine, Duration, ExpectedReturn,Provider,LastVisit, ExitReason, ExitDate, PatientId,Emr, Project,
+                PreviousARTUse,PreviousARTPurpose,DateLastUsed);
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace PalladiumDWh.DwapiService
         public static IContainer IOC;
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -36,7 +36,7 @@ namespace PalladiumDWh.DwapiService
                     throw new Exception(licenseErrorMessage);
                 }
                 Log.Debug("Loading DWapiService [Dapper.Plus]...OK");
-               
+
             }
 
             catch (Exception e)
@@ -44,18 +44,22 @@ namespace PalladiumDWh.DwapiService
                 Log.Debug(e);
                 throw;
             }
-            
 
-            
+
+
 
             IOC = IoC.Initialize();
-
+#if(!DEBUG)
             var servicesToRun = new ServiceBase[]
             {
                 new ExtractService()
             };
 
             ServiceBase.Run(servicesToRun);
+#else
+            ExtractService myServ = new ExtractService();
+            myServ.RunSvc();
+#endif
         }
     }
 }

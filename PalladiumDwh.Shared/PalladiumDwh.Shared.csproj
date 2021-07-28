@@ -99,6 +99,7 @@
     <Compile Include="Interfaces\Extracts\IOvcExtract.cs" />
     <Compile Include="Interfaces\IAdverseEvent.cs" />
     <Compile Include="Interfaces\IAllergiesChronicIllness.cs" />
+    <Compile Include="Interfaces\IArtNew.cs" />
     <Compile Include="Interfaces\IClearPatientRecords.cs" />
     <Compile Include="Interfaces\IContactListing.cs" />
     <Compile Include="Interfaces\IDepressionScreening.cs" />

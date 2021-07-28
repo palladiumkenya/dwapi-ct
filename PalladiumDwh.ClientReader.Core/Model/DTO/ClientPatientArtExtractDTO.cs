@@ -4,7 +4,7 @@ using System.Linq;
 using PalladiumDwh.ClientReader.Core.Interfaces.DTOs;
 
 namespace PalladiumDwh.ClientReader.Core.Model.DTO
-{    
+{
     public class ClientPatientArtExtractDTO : IClientPatientArtExtractDTO
     {
         public int PatientPID { get; set; }
@@ -111,5 +111,9 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             }
             return artExtracts;
         }
+
+        public string PreviousARTUse { get; set; }
+        public string PreviousARTPurpose { get; set; }
+        public DateTime? DateLastUsed { get; set; }
     }
 }
