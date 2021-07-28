@@ -5,6 +5,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Infrastructure.Data;
 using Z.Dapper.Plus;
 using GlobalConfiguration = System.Web.Http.GlobalConfiguration;
 
@@ -41,6 +42,19 @@ namespace PalladiumDwh.DWapi
                 Log.Error("[Dapper.Plus]",e);
                 throw;
             }
+
+            try
+            {
+                Log.Debug("Upgrading DB..");
+                var service = StructuremapMvc.DwapiIContainer.GetInstance<IAppService>();
+                service.UpgradeDatabase();
+                Log.Debug("DB up-to-date");
+            }
+            catch (Exception e)
+            {
+                Log.Error("CANNOT UPGRADE DATABASE !",e);
+            }
+            
 
             /*
             _scheduler = StructuremapMvc.DwapiIContainer.GetInstance<IMessengerScheduler>();

@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.ServiceProcess;
 using log4net;
+using PalladiumDwh.Core.Interfaces;
 using PalladiumDWh.DwapiService.DependencyResolution;
 using StructureMap;
 using Z.BulkOperations;
@@ -44,11 +45,20 @@ namespace PalladiumDWh.DwapiService
                 Log.Debug(e);
                 throw;
             }
-
-
-
-
+            
             IOC = IoC.Initialize();
+
+            try
+            {
+                Log.Debug("Upgrading DB..");
+                var service = IOC.GetInstance<IAppService>();
+                service.UpgradeDatabase();
+                Log.Debug("DB up-to-date");
+            }
+            catch (Exception e)
+            {
+                Log.Error("CANNOT UPGRADE DATABASE !", e);
+            }
 #if(!DEBUG)
             var servicesToRun = new ServiceBase[]
             {

@@ -64,6 +64,8 @@
     <Compile Include="Exchange\StatDto.cs" />
     <Compile Include="Exchange\StatsDto.cs" />
     <Compile Include="Interfaces\IActionRegisterRepository.cs" />
+    <Compile Include="Interfaces\IAppRepository.cs" />
+    <Compile Include="Interfaces\IAppService.cs" />
     <Compile Include="Interfaces\ILiveSyncService.cs" />
     <Compile Include="Interfaces\IMessagingReaderService.cs" />
     <Compile Include="Interfaces\IMessagingSenderService.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Interfaces\ISyncService.cs" />
     <Compile Include="Model\ActionRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AppServices.cs" />
     <Compile Include="Services\LiveSyncService.cs" />
     <Compile Include="Services\MessagingReaderService.cs" />
     <Compile Include="Services\MessagingSenderService.cs" />

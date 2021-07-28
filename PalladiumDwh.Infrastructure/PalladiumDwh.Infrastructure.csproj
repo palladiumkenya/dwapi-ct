@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Data\DwapiCentralContext.cs" />
     <Compile Include="Data\Repository\ActionRegisterRepository.cs" />
+    <Compile Include="Data\Repository\AppRepository.cs" />
     <Compile Include="Data\Repository\FacilityRepository.cs" />
     <Compile Include="Data\Repository\PatientAdverseEventRepository.cs" />
     <Compile Include="Data\Repository\PatientArtExtractRepository.cs" />
@@ -150,6 +151,10 @@
     <Compile Include="Migrations\202103161053386_StatusReview.Designer.cs">
       <DependentUpon>202103161053386_StatusReview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107280944105_CTExtractUpdate.cs" />
+    <Compile Include="Migrations\202107280944105_CTExtractUpdate.Designer.cs">
+      <DependentUpon>202107280944105_CTExtractUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103161053386_StatusReview.resx">
       <DependentUpon>202103161053386_StatusReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107280944105_CTExtractUpdate.resx">
+      <DependentUpon>202107280944105_CTExtractUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

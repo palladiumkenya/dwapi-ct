@@ -28,6 +28,11 @@ namespace PalladiumDwh.Shared.Model
             County = county;
         }
 
+        public static MasterFacility GenFacility()
+        {
+            return new MasterFacility(-1, "x", "x");
+        }
+
         public MasterFacility TakeSnap(List<MasterFacility> mflSnaps)
         {
             MasterFacility lastSnap = null;

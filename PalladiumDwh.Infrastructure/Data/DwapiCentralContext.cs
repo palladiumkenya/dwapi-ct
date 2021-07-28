@@ -2,8 +2,10 @@
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using PalladiumDwh.Core.Model;
+using PalladiumDwh.Infrastructure.Migrations;
 using PalladiumDwh.Shared.Data;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
@@ -179,6 +181,13 @@ namespace PalladiumDwh.Infrastructure.Data
  
             connection.Open();
             return connection;
+        }
+
+        public void UpgradeDb()
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DwapiCentralContext, Configuration>());
+            MasterFacilities.AddOrUpdate(MasterFacility.GenFacility());
+            SaveChanges();
         }
     }
 }
