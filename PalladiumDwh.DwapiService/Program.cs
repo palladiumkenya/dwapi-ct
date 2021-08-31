@@ -51,25 +51,25 @@ namespace PalladiumDWh.DwapiService
             try
             {
                 Log.Debug("Upgrading DB..");
-                var service = IOC.GetInstance<IAppService>();
-                service.UpgradeDatabase();
+                // var service = IOC.GetInstance<IAppService>();
+                // service.UpgradeDatabase();
                 Log.Debug("DB up-to-date");
             }
             catch (Exception e)
             {
                 Log.Error("CANNOT UPGRADE DATABASE !", e);
             }
-#if(!DEBUG)
-            var servicesToRun = new ServiceBase[]
-            {
-                new ExtractService()
-            };
+// #if(!DEBUG)
+             var servicesToRun = new ServiceBase[]
+             {
+                 new ExtractService()
+             };
 
-            ServiceBase.Run(servicesToRun);
-#else
-            ExtractService myServ = new ExtractService();
-            myServ.RunSvc();
-#endif
+             ServiceBase.Run(servicesToRun);
+// #else
+            //ExtractService myServ = new ExtractService();
+            //myServ.RunSvc();
+// #endif
         }
     }
 }

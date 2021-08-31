@@ -46,8 +46,8 @@ namespace PalladiumDwh.DWapi
             try
             {
                 Log.Debug("Upgrading DB..");
-                var service = StructuremapMvc.DwapiIContainer.GetInstance<IAppService>();
-                service.UpgradeDatabase();
+                //var service = StructuremapMvc.DwapiIContainer.GetInstance<IAppService>();
+                //service.UpgradeDatabase();
                 Log.Debug("DB up-to-date");
             }
             catch (Exception e)
