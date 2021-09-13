@@ -13,6 +13,9 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string TOVerified { get; set; }
         public DateTime? TOVerifiedDate { get; set; }
         public DateTime? ReEnrollmentDate { get; set; }
+        public string ReasonForDeath { get; set; }
+        public string SpecificDeathReason { get; set; }
+        public DateTime? DeathDate { get; set; }
 
         public PatientStatusExtract()
         {

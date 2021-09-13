@@ -79,6 +79,8 @@
     <Compile Include="Extentions\TypeExtentions.cs" />
     <Compile Include="Interfaces\DTOs\IAllergiesChronicIllnessExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IContactListingExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\ICovidExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IDefaulterTracingExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IDepressionScreeningExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IDrugAlcoholScreeningExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IEnhancedAdherenceCounsellingExtractDTO.cs" />
@@ -90,6 +92,8 @@
     <Compile Include="Interfaces\Extracts\IAdverseEventExtract.cs" />
     <Compile Include="Interfaces\Extracts\IAllergiesChronicIllnessExtract.cs" />
     <Compile Include="Interfaces\Extracts\IContactListingExtract.cs" />
+    <Compile Include="Interfaces\Extracts\ICovidExtract.cs" />
+    <Compile Include="Interfaces\Extracts\IDefaulterTracingExtract.cs" />
     <Compile Include="Interfaces\Extracts\IDepressionScreeningExtract.cs" />
     <Compile Include="Interfaces\Extracts\IDrugAlcoholScreeningExtract.cs" />
     <Compile Include="Interfaces\Extracts\IEnhancedAdherenceCounsellingExtract.cs" />
@@ -102,6 +106,8 @@
     <Compile Include="Interfaces\IArtNew.cs" />
     <Compile Include="Interfaces\IClearPatientRecords.cs" />
     <Compile Include="Interfaces\IContactListing.cs" />
+    <Compile Include="Interfaces\ICovid.cs" />
+    <Compile Include="Interfaces\IDefaulterTracing.cs" />
     <Compile Include="Interfaces\IDepressionScreening.cs" />
     <Compile Include="Interfaces\IDrugAlcoholScreening.cs" />
     <Compile Include="Interfaces\IEnhancedAdherenceCounselling.cs" />
@@ -167,6 +173,8 @@
     <Compile Include="Model\ExrtactMap.cs" />
     <Compile Include="Model\Extract\AllergiesChronicIllnessExtract.cs" />
     <Compile Include="Model\Extract\ContactListingExtract.cs" />
+    <Compile Include="Model\Extract\CovidExtract.cs" />
+    <Compile Include="Model\Extract\DefaulterTracingExtract.cs" />
     <Compile Include="Model\Extract\DepressionScreeningExtract.cs" />
     <Compile Include="Model\Extract\DrugAlcoholScreeningExtract.cs" />
     <Compile Include="Model\Extract\EnhancedAdherenceCounsellingExtract.cs" />

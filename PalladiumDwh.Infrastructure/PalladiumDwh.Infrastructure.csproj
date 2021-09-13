@@ -155,6 +155,10 @@
     <Compile Include="Migrations\202107280944105_CTExtractUpdate.Designer.cs">
       <DependentUpon>202107280944105_CTExtractUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109131402043_CTCovid.cs" />
+    <Compile Include="Migrations\202109131402043_CTCovid.Designer.cs">
+      <DependentUpon>202109131402043_CTCovid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -209,6 +213,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107280944105_CTExtractUpdate.resx">
       <DependentUpon>202107280944105_CTExtractUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109131402043_CTCovid.resx">
+      <DependentUpon>202109131402043_CTCovid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

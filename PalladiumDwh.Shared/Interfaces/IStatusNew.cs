@@ -7,5 +7,9 @@ namespace PalladiumDwh.Shared.Interfaces
         string TOVerified { get; set; }
         DateTime? TOVerifiedDate { get; set; }
         DateTime? ReEnrollmentDate { get; set; }
+
+        string ReasonForDeath { get; set; }
+        string SpecificDeathReason { get; set; }
+        DateTime? DeathDate { get; set; }
     }
 }

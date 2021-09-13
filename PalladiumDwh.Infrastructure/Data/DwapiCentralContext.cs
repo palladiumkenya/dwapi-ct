@@ -56,6 +56,9 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<OtzExtract> OtzExtracts { get; set; } 
         public virtual DbSet<OvcExtract> OvcExtracts { get; set; } 
 
+        public virtual DbSet<CovidExtract> CovidExtracts { get; set; }
+        public virtual DbSet<DefaulterTracingExtract> DefaulterTracingExtracts { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -138,6 +141,16 @@ namespace PalladiumDwh.Infrastructure.Data
                 .WithRequired()
                 .HasForeignKey(f => f.PatientId);
 
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.CovidExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.DefaulterTracingExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+
             DapperPlusManager.Entity<Facility>().Table("Facility").Key(x => x.Id);
             DapperPlusManager.Entity<PatientExtract>().Table("PatientExtract").Key(x => x.Id);
             DapperPlusManager.Entity<PatientArtExtract>().Table("PatientArtExtract").Key(x => x.Id);
@@ -169,6 +182,8 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<DrugAlcoholScreeningExtract>().Key(x => x.Id).Table($"DrugAlcoholScreeningExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             DapperPlusManager.Entity<OvcExtract>().Key(x => x.Id).Table($"OvcExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             DapperPlusManager.Entity<OtzExtract>().Key(x => x.Id).Table($"OtzExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<CovidExtract>().Key(x => x.Id).Table($"CovidExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<DefaulterTracingExtract>().Key(x => x.Id).Table($"DefaulterTracingExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
         }
 
         public SqlConnection GetConnection()
