@@ -225,6 +225,8 @@
     <Compile Include="Controllers\FacilitiesController.cs" />
     <Compile Include="Controllers\HandshakeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CovidController.cs" />
+    <Compile Include="Controllers\DefaulterTracingController.cs" />
     <Compile Include="Controllers\PatientAdverseEventsController.cs" />
     <Compile Include="Controllers\PatientArtController.cs" />
     <Compile Include="Controllers\PatientBaselinesController.cs" />

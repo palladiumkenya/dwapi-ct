@@ -2,7 +2,7 @@ namespace PalladiumDwh.Infrastructure.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class CTCovid : DbMigration
     {
         public override void Up()
@@ -52,7 +52,7 @@ namespace PalladiumDwh.Infrastructure.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PatientExtract", t => t.PatientId, cascadeDelete: true)
                 .Index(t => t.PatientId);
-            
+
             CreateTable(
                 "dbo.DefaulterTracingExtract",
                 c => new
@@ -63,7 +63,7 @@ namespace PalladiumDwh.Infrastructure.Migrations
                         Processed = c.Boolean(nullable: false),
                         Id = c.Guid(nullable: false),
                         Created = c.DateTime(),
-                        FacilityName = c.DateTime(),
+                        FacilityName =c.String(maxLength: 150),
                         VisitID = c.Int(),
                         VisitDate = c.DateTime(),
                         EncounterId = c.Int(),
@@ -80,12 +80,12 @@ namespace PalladiumDwh.Infrastructure.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PatientExtract", t => t.PatientId, cascadeDelete: true)
                 .Index(t => t.PatientId);
-            
+
             AddColumn("dbo.PatientStatusExtract", "ReasonForDeath", c => c.String(maxLength: 150));
             AddColumn("dbo.PatientStatusExtract", "SpecificDeathReason", c => c.String(maxLength: 150));
             AddColumn("dbo.PatientStatusExtract", "DeathDate", c => c.DateTime());
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.DefaulterTracingExtract", "PatientId", "dbo.PatientExtract");

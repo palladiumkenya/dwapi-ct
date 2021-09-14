@@ -114,6 +114,8 @@
     </Compile>
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="Job\SyncManifestJob.cs" />
+    <Compile Include="Job\SyncDefaulterTracingJob.cs" />
+    <Compile Include="Job\SyncCovidJob.cs" />
     <Compile Include="Job\SyncPatientAdverseEventJob.cs" />
     <Compile Include="Job\SyncDrugAlcoholScreeningJob.cs" />
     <Compile Include="Job\SyncGbvScreeningJob.cs" />

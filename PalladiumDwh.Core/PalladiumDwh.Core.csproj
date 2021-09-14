@@ -71,7 +71,8 @@
     <Compile Include="Interfaces\IMessagingSenderService.cs" />
     <Compile Include="Interfaces\IMessagingService.cs" />
     <Compile Include="Interfaces\IMessengerScheduler.cs" />
-    <Compile Include="Interfaces\Interface1.cs" />
+    <Compile Include="Interfaces\IDefaulterTracingRepository.cs" />
+    <Compile Include="Interfaces\ICovidRepository.cs" />
     <Compile Include="Interfaces\IPatientAdverseEventRepository.cs" />
     <Compile Include="Interfaces\IGbvScreeningRepository.cs" />
     <Compile Include="Interfaces\IDrugAlcoholScreeningRepository.css.cs" />

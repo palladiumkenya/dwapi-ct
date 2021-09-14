@@ -144,12 +144,16 @@
     <Compile Include="Interfaces\Profiles\IGbvScreeningProfile.cs" />
     <Compile Include="Interfaces\Profiles\IIptProfile.cs" />
     <Compile Include="Interfaces\Profiles\IOtzProfile.cs" />
+    <Compile Include="Interfaces\Profiles\ICovidProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IDefaulterTracingProfile.cs" />
     <Compile Include="Interfaces\Profiles\IOvcProfile.cs" />
     <Compile Include="Interfaces\Profiles\IPatientAdverseEventProfile.cs" />
     <Compile Include="Model\DTO\FacilityId.cs" />
     <Compile Include="Model\DTO\FacMetric.cs" />
     <Compile Include="Model\DTO\IptExtractDTO.cs" />
     <Compile Include="Model\DTO\AllergiesChronicIllnessExtractDTO.cs" />
+    <Compile Include="Model\DTO\DefaulterTracingExtractDTO.cs" />
+    <Compile Include="Model\DTO\CovidExtractDTO.cs" />
     <Compile Include="Model\DTO\OvcExtractDTO.cs" />
     <Compile Include="Model\DTO\DepressionScreeningExtractDTO.cs" />
     <Compile Include="Model\DTO\ContactListingExtractDTO.cs" />
@@ -213,6 +217,8 @@
     <Compile Include="Interfaces\Profiles\IPatientVisitProfile.cs" />
     <Compile Include="Model\Manifest.cs" />
     <Compile Include="Model\Profile\ExtractProfile.cs" />
+    <Compile Include="Model\Profile\DefaulterTracingProfile.cs" />
+    <Compile Include="Model\Profile\CovidProfile.cs" />
     <Compile Include="Model\Profile\PatientAdverseEventProfile.cs" />
     <Compile Include="Model\Profile\PatientARTProfile.cs" />
     <Compile Include="Model\Profile\PatientBaselineProfile.cs" />

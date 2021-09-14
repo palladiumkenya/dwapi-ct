@@ -24,7 +24,7 @@ namespace PalladiumDWh.DwapiService
             Log.Debug(new string('*',40));
             Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Name}");
             Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Version}");
-            Log.Debug($"Rel: 16MAR21 1451");
+            Log.Debug($"Rel: 15SEP21 0132");
             Log.Debug(new string('*', 40));
             Log.Debug("Loading DWapiService...");
 
@@ -45,7 +45,7 @@ namespace PalladiumDWh.DwapiService
                 Log.Debug(e);
                 throw;
             }
-            
+
             IOC = IoC.Initialize();
 
             try

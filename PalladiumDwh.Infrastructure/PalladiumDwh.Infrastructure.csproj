@@ -74,6 +74,8 @@
     <Compile Include="Data\Repository\ActionRegisterRepository.cs" />
     <Compile Include="Data\Repository\AppRepository.cs" />
     <Compile Include="Data\Repository\FacilityRepository.cs" />
+    <Compile Include="Data\Repository\CovidRepository.cs" />
+    <Compile Include="Data\Repository\DefaulterTracingRepository.cs" />
     <Compile Include="Data\Repository\PatientAdverseEventRepository.cs" />
     <Compile Include="Data\Repository\PatientArtExtractRepository.cs" />
     <Compile Include="Data\Repository\PatientBaseLinesRepository.cs" />

@@ -5,12 +5,6 @@ namespace PalladiumDwh.Shared.Model.Extract
 {
     public class CovidExtract : Entity,ICovidExtract
     {
-        public DateTime? Created { get; set; }
-        public CovidExtract()
-        {
-            Created = DateTime.Now;
-        }
-
         public string FacilityName { get; set; }
         public int? VisitID { get; set; }
         public DateTime? Covid19AssessmentDate { get; set; }
@@ -42,5 +36,50 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string TracingFinalOutcome { get; set; }
         public string CauseOfDeath { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Created { get; set; }
+        public CovidExtract()
+        {
+            Created = DateTime.Now;
+        }
+
+        public CovidExtract(string facilityName, int? visitId, DateTime? covid19AssessmentDate, string receivedCovid19Vaccine, DateTime? dateGivenFirstDose, string firstDoseVaccineAdministered, DateTime? dateGivenSecondDose, string secondDoseVaccineAdministered, string vaccinationStatus, string vaccineVerification, string boosterGiven, string boosterDose, DateTime? boosterDoseDate, string everCovid19Positive, DateTime? covid19TestDate, string patientStatus, string admissionStatus, string admissionUnit, string missedAppointmentDueToCovid19, string covid19PositiveSinceLasVisit, DateTime? covid19TestDateSinceLastVisit, string patientStatusSinceLastVisit, string admissionStatusSinceLastVisit, DateTime? admissionStartDate, DateTime? admissionEndDate, string admissionUnitSinceLastVisit, string supplementalOxygenReceived, string patientVentilated, string tracingFinalOutcome, string causeOfDeath, Guid patientId,
+            string emr, string project)
+        {
+            FacilityName = facilityName;
+            VisitID = visitId;
+            Covid19AssessmentDate = covid19AssessmentDate;
+            ReceivedCOVID19Vaccine = receivedCovid19Vaccine;
+            DateGivenFirstDose = dateGivenFirstDose;
+            FirstDoseVaccineAdministered = firstDoseVaccineAdministered;
+            DateGivenSecondDose = dateGivenSecondDose;
+            SecondDoseVaccineAdministered = secondDoseVaccineAdministered;
+            VaccinationStatus = vaccinationStatus;
+            VaccineVerification = vaccineVerification;
+            BoosterGiven = boosterGiven;
+            BoosterDose = boosterDose;
+            BoosterDoseDate = boosterDoseDate;
+            EverCOVID19Positive = everCovid19Positive;
+            COVID19TestDate = covid19TestDate;
+            PatientStatus = patientStatus;
+            AdmissionStatus = admissionStatus;
+            AdmissionUnit = admissionUnit;
+            MissedAppointmentDueToCOVID19 = missedAppointmentDueToCovid19;
+            COVID19PositiveSinceLasVisit = covid19PositiveSinceLasVisit;
+            COVID19TestDateSinceLastVisit = covid19TestDateSinceLastVisit;
+            PatientStatusSinceLastVisit = patientStatusSinceLastVisit;
+            AdmissionStatusSinceLastVisit = admissionStatusSinceLastVisit;
+            AdmissionStartDate = admissionStartDate;
+            AdmissionEndDate = admissionEndDate;
+            AdmissionUnitSinceLastVisit = admissionUnitSinceLastVisit;
+            SupplementalOxygenReceived = supplementalOxygenReceived;
+            PatientVentilated = patientVentilated;
+            TracingFinalOutcome = tracingFinalOutcome;
+            CauseOfDeath = causeOfDeath;
+
+            PatientId = patientId;
+            Emr = emr;
+            Project = project;
+            Created = DateTime.Now;
+        }
     }
 }

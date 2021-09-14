@@ -22,7 +22,6 @@ namespace PalladiumDwh.Core.Services
         private readonly IPatientStatusRepository _patientStatusRepository;
         private readonly IPatientVisitRepository _patientVisitRepository;
         private readonly IPatientAdverseEventRepository _patientAdverseEventRepository;
-
         private readonly IAllergiesChronicIllnessRepository _allergiesChronicIllnessRepository;
         private readonly IIptRepository _iptRepository;
         private readonly IDepressionScreeningRepository _depressionScreeningRepository;
@@ -33,6 +32,9 @@ namespace PalladiumDwh.Core.Services
         private readonly IOvcRepository _ovcRepository;
         private readonly IOtzRepository _otzRepository;
 
+        private readonly ICovidRepository _covidRepository;
+        private readonly IDefaulterTracingRepository _defaulterTracingRepository;
+
 
         private List<PatientVisitProfile> _visitProfiles = new List<PatientVisitProfile>();
         private List<PatientARTProfile> _artProfiles = new List<PatientARTProfile>();
@@ -41,23 +43,21 @@ namespace PalladiumDwh.Core.Services
         private List<PatientPharmacyProfile> _pharmacyProfiles = new List<PatientPharmacyProfile>();
         private List<PatientStatusProfile> _statusProfiles = new List<PatientStatusProfile>();
         private List<PatientAdverseEventProfile> _adverseEventProfiles = new List<PatientAdverseEventProfile>();
-
         private List<AllergiesChronicIllnessProfile> _allergiesChronicIllnessProfiles =
             new List<AllergiesChronicIllnessProfile>();
-
         private List<IptProfile> _iptProfiles = new List<IptProfile>();
         private List<DepressionScreeningProfile> _depressionScreeningProfiles = new List<DepressionScreeningProfile>();
         private List<ContactListingProfile> _contactListingProfiles = new List<ContactListingProfile>();
         private List<GbvScreeningProfile> _gbvScreeningProfiles = new List<GbvScreeningProfile>();
-
         private List<EnhancedAdherenceCounsellingProfile> _enhancedAdherenceCounsellingProfiles =
             new List<EnhancedAdherenceCounsellingProfile>();
-
         private List<DrugAlcoholScreeningProfile> _drugAlcoholScreeningProfiles =
             new List<DrugAlcoholScreeningProfile>();
-
         private List<OvcProfile> _ovcProfiles = new List<OvcProfile>();
         private List<OtzProfile> _otzProfiles = new List<OtzProfile>();
+
+        private List<CovidProfile> _covidProfiles = new List<CovidProfile>();
+        private List<DefaulterTracingProfile> _defaulterTracingProfiles = new List<DefaulterTracingProfile>();
 
         private readonly ILiveSyncService _liveSyncService;
         private readonly IActionRegisterRepository _actionRegisterRepository;
@@ -73,7 +73,7 @@ namespace PalladiumDwh.Core.Services
             IContactListingRepository contactListingRepository, IGbvScreeningRepository gbvScreeningRepository,
             IEnhancedAdherenceCounsellingRepository enhancedAdherenceCounsellingRepository,
             IDrugAlcoholScreeningRepository drugAlcoholScreeningRepository, IOvcRepository ovcRepository,
-            IOtzRepository otzRepository, ILiveSyncService liveSyncService,
+            IOtzRepository otzRepository, ICovidRepository covidRepository,IDefaulterTracingRepository defaulterTracingRepository, ILiveSyncService liveSyncService,
             IActionRegisterRepository actionRegisterRepository)
         {
             _facilityRepository = facilityRepository;
@@ -96,6 +96,10 @@ namespace PalladiumDwh.Core.Services
             _otzRepository = otzRepository;
             _liveSyncService = liveSyncService;
             _actionRegisterRepository = actionRegisterRepository;
+
+            _covidRepository = covidRepository;
+            _defaulterTracingRepository = defaulterTracingRepository;
+
         }
 
         /// <summary>
@@ -172,6 +176,14 @@ namespace PalladiumDwh.Core.Services
             {
                 SyncOtz(profile as OtzProfile);
             }
+            else if (profile.GetType() == typeof(CovidProfile))
+            {
+                SyncCovid(profile as CovidProfile);
+            }
+            else if (profile.GetType() == typeof(DefaulterTracingProfile))
+            {
+                SyncDefaulterTracing(profile as DefaulterTracingProfile);
+            }
             else if (profile.GetType() == typeof(List<PatientARTProfile>))
             {
                 SyncArtNew(profile as List<PatientARTProfile>);
@@ -236,6 +248,14 @@ namespace PalladiumDwh.Core.Services
             {
                 SyncOtzNew(profile as List<OtzProfile>);
             }
+            else if (profile.GetType() == typeof(List<CovidProfile>))
+            {
+                SyncCovidNew(profile as List<CovidProfile>);
+            }
+            else if (profile.GetType() == typeof(List<DefaulterTracingProfile>))
+            {
+                SyncDefaulterTracingNew(profile as List<DefaulterTracingProfile>);
+            }
         }
 
         public async void SyncManifest(Manifest manifest)
@@ -295,7 +315,8 @@ namespace PalladiumDwh.Core.Services
             if (queueName.ToLower().Contains("OvcProfile".ToLower())) { _ovcProfiles = new List<OvcProfile>(); }
             if (queueName.ToLower().Contains("OtzProfile".ToLower())) { _otzProfiles = new List<OtzProfile>(); }
 
-
+            if (queueName.ToLower().Contains("CovidProfile".ToLower())) { _covidProfiles = new List<CovidProfile>(); }
+            if (queueName.ToLower().Contains("DefaulterTracingProfile".ToLower())) { _defaulterTracingProfiles = new List<DefaulterTracingProfile>(); }
         }
 
         public void Commit(string queueName)
@@ -404,6 +425,18 @@ namespace PalladiumDwh.Core.Services
                 Log.Debug($"batch processing {queueName}...");
                 _otzRepository.SyncNewPatients(_otzProfiles, _facilityRepository, facIds,_actionRegisterRepository);
             }
+
+            if (queueName.ToLower().Contains("DefaulterTracingProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _defaulterTracingRepository.SyncNewPatients(_defaulterTracingProfiles, _facilityRepository, facIds,_actionRegisterRepository);
+            }
+            if (queueName.ToLower().Contains("CovidProfile".ToLower()))
+            {
+                Log.Debug($"batch processing {queueName}...");
+                _covidRepository.SyncNewPatients(_covidProfiles, _facilityRepository, facIds,_actionRegisterRepository);
+            }
+
             SyncStats(facIds);
         }
 
@@ -609,6 +642,29 @@ namespace PalladiumDwh.Core.Services
             }
         }
 
+        public void SyncCovid(CovidProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _covidRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+        public void SyncDefaulterTracing(DefaulterTracingProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            var patientId = SyncCurrentPatient(profile.FacilityInfo, profile.PatientInfo);
+
+            if (!(patientId == Guid.Empty || null == patientId))
+            {
+                profile.GenerateRecords(patientId.Value);
+                _defaulterTracingRepository.SyncNew(patientId.Value, profile.Extracts);
+            }
+        }
+
         public void SyncArtNew(PatientARTProfile profile)
         {
             profile.GeneratePatientRecord();
@@ -655,99 +711,91 @@ namespace PalladiumDwh.Core.Services
 
 
         public void SyncArtNew(List<PatientARTProfile> profile) => profile.ForEach(SyncArtNew);
-
         public void SyncBaselineNew(List<PatientBaselineProfile> baselineProfile) =>
             baselineProfile.ForEach(SyncBaselineNew);
-
         public void SyncLabNew(List<PatientLabProfile> labProfile) => labProfile.ForEach(SyncLabNew);
-
         public void SyncPharmacyNew(List<PatientPharmacyProfile> patientPharmacyProfile) =>
             patientPharmacyProfile.ForEach(SyncPharmacyNew);
-
         public void SyncStatusNew(List<PatientStatusProfile> patientStatusProfile) =>
             patientStatusProfile.ForEach(SyncStatusNew);
-
         public void SyncVisitNew(List<PatientVisitProfile> profile) => profile.ForEach(SyncVisitNew);
-
         public void SyncAllergiesChronicIllnessNew(AllergiesChronicIllnessProfile profile)
         {
             profile.GeneratePatientRecord();
             _allergiesChronicIllnessProfiles.Add(profile);
         }
-
         public void SyncIptNew(IptProfile profile)
         {
             profile.GeneratePatientRecord();
             _iptProfiles.Add(profile);
         }
-
         public void SyncDepressionScreeningNew(DepressionScreeningProfile profile)
         {
             profile.GeneratePatientRecord();
             _depressionScreeningProfiles.Add(profile);
         }
-
         public void SyncContactListingNew(ContactListingProfile profile)
         {
             profile.GeneratePatientRecord();
             _contactListingProfiles.Add(profile);
         }
-
         public void SyncGbvScreeningNew(GbvScreeningProfile profile)
         {
             profile.GeneratePatientRecord();
             _gbvScreeningProfiles.Add(profile);
         }
-
         public void SyncEnhancedAdherenceCounsellingNew(EnhancedAdherenceCounsellingProfile profile)
         {
             profile.GeneratePatientRecord();
             _enhancedAdherenceCounsellingProfiles.Add(profile);
         }
-
         public void SyncDrugAlcoholScreeningNew(DrugAlcoholScreeningProfile profile)
         {
             profile.GeneratePatientRecord();
             _drugAlcoholScreeningProfiles.Add(profile);
         }
-
         public void SyncOvcNew(OvcProfile profile)
         {
             profile.GeneratePatientRecord();
             _ovcProfiles.Add(profile);
         }
-
         public void SyncOtzNew(OtzProfile profile)
         {
             profile.GeneratePatientRecord();
             _otzProfiles.Add(profile);
         }
 
+        public void SyncCovidNew(CovidProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _covidProfiles.Add(profile);
+        }
+        public void SyncDefaulterTracingNew(DefaulterTracingProfile profile)
+        {
+            profile.GeneratePatientRecord();
+            _defaulterTracingProfiles.Add(profile);
+        }
+
         public void SyncvAdverseEventNew(List<PatientAdverseEventProfile> profile) =>
             profile.ForEach(SyncvAdverseEventNew);
-
         public void SyncAllergiesChronicIllnessNew(List<AllergiesChronicIllnessProfile> profile) =>
             profile.ForEach(SyncAllergiesChronicIllnessNew);
-
         public void SyncIptNew(List<IptProfile> profile) => profile.ForEach(SyncIptNew);
-
         public void SyncDepressionScreeningNew(List<DepressionScreeningProfile> profile) =>
             profile.ForEach(SyncDepressionScreeningNew);
-
         public void SyncContactListingNew(List<ContactListingProfile> profile) =>
             profile.ForEach(SyncContactListingNew);
-
         public void SyncGbvScreeningNew(List<GbvScreeningProfile> profile) => profile.ForEach(SyncGbvScreeningNew);
-
         public void SyncEnhancedAdherenceCounsellingNew(List<EnhancedAdherenceCounsellingProfile> profile) =>
             profile.ForEach(SyncEnhancedAdherenceCounsellingNew);
-
         public void SyncDrugAlcoholScreeningNew(List<DrugAlcoholScreeningProfile> profile) =>
             profile.ForEach(SyncDrugAlcoholScreeningNew);
-
         public void SyncOvcNew(List<OvcProfile> profile) => profile.ForEach(SyncOvcNew);
         public void SyncOtzNew(List<OtzProfile> profile) => profile.ForEach(SyncOtzNew);
 
+
+        public void SyncCovidNew(List<CovidProfile> profile) => profile.ForEach(SyncCovidNew);
+        public void SyncDefaulterTracingNew(List<DefaulterTracingProfile> profile) => profile.ForEach(SyncDefaulterTracingNew);
 
 
         public Facility GetFacility(int code)
