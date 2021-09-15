@@ -59,6 +59,7 @@ namespace PalladiumDwh.Shared.Model.DTO
 
         public DefaulterTracingExtract GenerateDefaulterTracingExtract(Guid patientId)
         {
+            PatientId = patientId;
             return new DefaulterTracingExtract(
                 FacilityName,
                 VisitID,

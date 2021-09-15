@@ -95,6 +95,7 @@ namespace PalladiumDwh.Shared.Model.DTO
 
         public CovidExtract GenerateCovidExtract(Guid patientId)
         {
+            PatientId = patientId;
             return new CovidExtract(
                 FacilityName,
                 VisitID,
