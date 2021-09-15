@@ -7,13 +7,13 @@ namespace PalladiumDwh.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class CTCovid : IMigrationMetadata
+    public sealed partial class CTNewCovid : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CTCovid));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CTNewCovid));
         
         string IMigrationMetadata.Id
         {
-            get { return "202109131402043_CTCovid"; }
+            get { return "202109142306426_CTNewCovid"; }
         }
         
         string IMigrationMetadata.Source

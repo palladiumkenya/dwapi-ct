@@ -157,9 +157,9 @@
     <Compile Include="Migrations\202107280944105_CTExtractUpdate.Designer.cs">
       <DependentUpon>202107280944105_CTExtractUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202109131402043_CTCovid.cs" />
-    <Compile Include="Migrations\202109131402043_CTCovid.Designer.cs">
-      <DependentUpon>202109131402043_CTCovid.cs</DependentUpon>
+    <Compile Include="Migrations\202109142306426_CTNewCovid.cs" />
+    <Compile Include="Migrations\202109142306426_CTNewCovid.Designer.cs">
+      <DependentUpon>202109142306426_CTNewCovid.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
@@ -216,8 +216,8 @@
     <EmbeddedResource Include="Migrations\202107280944105_CTExtractUpdate.resx">
       <DependentUpon>202107280944105_CTExtractUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109131402043_CTCovid.resx">
-      <DependentUpon>202109131402043_CTCovid.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109142306426_CTNewCovid.resx">
+      <DependentUpon>202109142306426_CTNewCovid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>
