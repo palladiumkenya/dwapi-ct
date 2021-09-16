@@ -135,9 +135,9 @@ select
 (select count(id) from EnhancedAdherenceCounsellingExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) EnhancedAdherenceCounsellingExtract,
 (select count(id) from DrugAlcoholScreeningExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) DrugAlcoholScreeningExtract,
 (select count(id) from OvcExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) OvcExtract,
-(select count(id) from OtzExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) OtzExtract
-
-
+(select count(id) from OtzExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) OtzExtract,
+(select count(id) from CovidExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) CovidExtract,
+(select count(id) from DefaulterTracingExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) DefaulterTracingExtract
                 ";
 
             var result = _context.GetConnection().Query<dynamic>(sql).FirstOrDefault();
@@ -163,6 +163,9 @@ select
                 stats.AddStats("DrugAlcoholScreeningExtract", result.DrugAlcoholScreeningExtract);
                 stats.AddStats("OvcExtract", result.OvcExtract);
                 stats.AddStats("OtzExtract", result.OtzExtract);
+
+                stats.AddStats("CovidExtract", result.CovidExtract);
+                stats.AddStats("DefaulterTracingExtract", result.DefaulterTracingExtract);
 
                 return stats;
             }
