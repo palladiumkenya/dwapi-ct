@@ -38,6 +38,9 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string PatientVentilated { get; set; }
         public string TracingFinalOutcome { get; set; }
         public string CauseOfDeath { get; set; }
+        public string COVID19TestResult { get; set; }
+        public string Sequence { get; set; }
+        public string BoosterDoseVerified { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }

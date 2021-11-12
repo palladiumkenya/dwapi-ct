@@ -35,6 +35,9 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string PatientVentilated { get; set; }
         public string TracingFinalOutcome { get; set; }
         public string CauseOfDeath { get; set; }
+        public string COVID19TestResult { get; set; }
+        public string Sequence { get; set; }
+        public string BoosterDoseVerified { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
         public CovidExtract()

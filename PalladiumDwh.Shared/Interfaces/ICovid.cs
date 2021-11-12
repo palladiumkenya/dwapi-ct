@@ -34,5 +34,9 @@ namespace PalladiumDwh.Shared.Interfaces
         string PatientVentilated { get; set; }
         string TracingFinalOutcome { get; set; }
         string CauseOfDeath { get; set; }
+
+        string COVID19TestResult { get; set; }
+        string Sequence { get; set; }
+        string BoosterDoseVerified { get; set; }
     }
 }
