@@ -45,8 +45,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-        public CovidExtract(string facilityName, int? visitId, DateTime? covid19AssessmentDate, string receivedCovid19Vaccine, DateTime? dateGivenFirstDose, string firstDoseVaccineAdministered, DateTime? dateGivenSecondDose, string secondDoseVaccineAdministered, string vaccinationStatus, string vaccineVerification, string boosterGiven, string boosterDose, DateTime? boosterDoseDate, string everCovid19Positive, DateTime? covid19TestDate, string patientStatus, string admissionStatus, string admissionUnit, string missedAppointmentDueToCovid19, string covid19PositiveSinceLasVisit, DateTime? covid19TestDateSinceLastVisit, string patientStatusSinceLastVisit, string admissionStatusSinceLastVisit, DateTime? admissionStartDate, DateTime? admissionEndDate, string admissionUnitSinceLastVisit, string supplementalOxygenReceived, string patientVentilated, string tracingFinalOutcome, string causeOfDeath, Guid patientId,
-            string emr, string project)
+        public CovidExtract(string facilityName, int? visitId, DateTime? covid19AssessmentDate, string receivedCovid19Vaccine, DateTime? dateGivenFirstDose, string firstDoseVaccineAdministered, DateTime? dateGivenSecondDose, string secondDoseVaccineAdministered, string vaccinationStatus, string vaccineVerification, string boosterGiven, string boosterDose, DateTime? boosterDoseDate, string everCovid19Positive, DateTime? covid19TestDate, string patientStatus, string admissionStatus, string admissionUnit, string missedAppointmentDueToCovid19, string covid19PositiveSinceLasVisit, DateTime? covid19TestDateSinceLastVisit, string patientStatusSinceLastVisit, string admissionStatusSinceLastVisit, DateTime? admissionStartDate, DateTime? admissionEndDate, string admissionUnitSinceLastVisit, string supplementalOxygenReceived, string patientVentilated, string tracingFinalOutcome, string causeOfDeath,string covid19TestResult,string sequence,string boosterDoseVerified,
+            Guid patientId,string emr, string project)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -78,6 +78,9 @@ namespace PalladiumDwh.Shared.Model.Extract
             PatientVentilated = patientVentilated;
             TracingFinalOutcome = tracingFinalOutcome;
             CauseOfDeath = causeOfDeath;
+            COVID19TestResult = covid19TestResult;
+            Sequence = sequence;
+            BoosterDoseVerified = boosterDoseVerified;
 
             PatientId = patientId;
             Emr = emr;

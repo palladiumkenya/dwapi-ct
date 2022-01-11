@@ -80,6 +80,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientVentilated =CovidExtract.PatientVentilated;
             TracingFinalOutcome =CovidExtract.TracingFinalOutcome;
             CauseOfDeath =CovidExtract.CauseOfDeath;
+            COVID19TestResult = CovidExtract.COVID19TestResult;
+            Sequence =CovidExtract.Sequence;
+            BoosterDoseVerified = CovidExtract.BoosterDoseVerified;
 
             PatientId=CovidExtract.PatientId;
             Emr =CovidExtract.Emr;
@@ -130,6 +133,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientVentilated,
             TracingFinalOutcome ,
             CauseOfDeath ,
+            COVID19TestResult,Sequence,BoosterDoseVerified,
 
                 PatientId,Emr,Project
                 );
