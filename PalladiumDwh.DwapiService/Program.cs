@@ -59,17 +59,17 @@ namespace PalladiumDWh.DwapiService
             {
                 Log.Error("CANNOT UPGRADE DATABASE !", e);
             }
- //#if(!DEBUG)
+#if(!DEBUG)
              var servicesToRun = new ServiceBase[]
              {
                  new ExtractService()
              };
-
+ 
              ServiceBase.Run(servicesToRun);
- //#else
-            //ExtractService myServ = new ExtractService();
-            //myServ.RunSvc();
- //#endif
+#else
+            ExtractService myServ = new ExtractService();
+            myServ.RunSvc();
+#endif
         }
     }
 }
