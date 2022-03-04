@@ -1,6 +1,8 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared.Interfaces;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
@@ -22,5 +24,7 @@ namespace PalladiumDwh.Core.Interfaces
         Task RemoveDuplicates(int siteCode);
         Task InitializeManifest(Manifest manifest);
         Task<MasterFacility> VerifyFacility(int siteCode);
+        Task BulkInsertOrUpdate(List<PatientExtract> extracts);
+        Task BulkInit(List<PatientPlaceHolderDto> placeHolderDtos);
     }
 }

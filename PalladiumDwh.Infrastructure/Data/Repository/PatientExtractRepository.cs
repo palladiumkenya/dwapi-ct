@@ -13,6 +13,7 @@ using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 using Dapper;
 using Dapper.Contrib.Extensions;
+using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model.DTO;
 using Z.Dapper.Plus;
@@ -311,6 +312,16 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             return _context.MasterFacilities
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Code == siteCode);
+        }
+
+        public Task BulkInsertOrUpdate(List<PatientExtract> extracts)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task BulkInit(List<PatientPlaceHolderDto> placeHolderDtos)
+        {
+            throw new NotImplementedException();
         }
     }
 }
