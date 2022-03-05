@@ -4,7 +4,9 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using FizzWare.NBuilder;
+using PalladiumDwh.Core.Model;
 using PalladiumDwh.Infrastructure.Data;
+using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 using PalladiumDwh.Shared.Model.Profile;
@@ -154,5 +156,29 @@ namespace PalladiumDwh.Infrastructure.Tests
             context.Facilities.AddOrUpdate(new Facility() {Id = id, Code = code, Name = name});
             context.SaveChanges();
         }
+
+        public static void CreateTestFacilityStage(Guid facilityId)
+        {
+            var stages = Builder<StagePatientExtract>.CreateListOfSize(5).All()
+                .With(x => x.FacilityId = facilityId)
+                .With(x => x.LiveSession=Guid.NewGuid()).Build()
+                .ToList();
+            var context = TestInitializer.Container.GetInstance<DwapiCentralContext>();
+            stages.ForEach(s => context.StagePatientExtracts.AddOrUpdate(s));
+            context.SaveChanges();
+        }
+
+        public static List<StagePatientExtract> CreateTestFacilityStagePatient(Guid facilityId)
+        {
+            var stages = Builder<StagePatientExtract>.CreateListOfSize(5).All()
+                .With(x => x.CurrentPatientId =null)
+                .With(x => x.LiveStage =LiveStage.Rest)
+                .With(x => x.FacilityId = facilityId)
+                .With(x => x.LiveSession=Guid.NewGuid()).Build()
+                .ToList();
+            return stages;
+        }
+
+
     }
 }
