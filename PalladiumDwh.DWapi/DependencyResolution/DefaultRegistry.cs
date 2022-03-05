@@ -1,4 +1,6 @@
+using AutoMapper;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Core.Model.Profiles;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.DWapi.Helpers;
 using PalladiumDwh.Infrastructure.Data;
@@ -33,7 +35,13 @@ namespace PalladiumDwh.DWapi.DependencyResolution
 
             For<IMessengerScheduler>().Use<MessengerScheduler>().Singleton();
 
+            MapperConfiguration config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new CtProfile());
+            });
 
+            var mapper = config.CreateMapper();
+            For<IMapper>().Use(mapper);
         }
     }
 }

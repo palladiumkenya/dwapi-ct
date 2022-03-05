@@ -1,32 +1,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Interfaces.Sync;
 using PalladiumDwh.Core.Model;
+using PalladiumDwh.Core.Model.Bag;
 using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Core.Services.Sync
 {
     public class SmartSyncExtract:ISyncExtract
     {
-        private readonly IPatientExtractRepository _patientExtractRepository;
+        private readonly IMapper _mapper;
+        private readonly IStagePatientExtractRepository _patientExtractRepository;
 
-        public SmartSyncExtract(IPatientExtractRepository patientExtractRepository)
+
+        public SmartSyncExtract(IStagePatientExtractRepository patientExtractRepository)
         {
             _patientExtractRepository = patientExtractRepository;
         }
 
-        public async Task ProcessPrimary(List<PatientExtractDto> patients)
+        public async Task ClearFacilitySession(PatientSourceBag patientSourceBag)
         {
-            var sitePatients = patients
-                .GroupBy(x => x.SiteCode)
-                .ToList();
+            await _patientExtractRepository.ClearSite(patientSourceBag.FacilityId.Value, patientSourceBag.SessionId.Value);
+        }
 
-            foreach (var site in sitePatients)
-            {
-                await _patientExtractRepository.BulkInsertOrUpdate(null);
-            }
+        public async Task ProcessPrimary(PatientSourceBag patientSourceBag)
+        {
+            // standardize
+
+            var extracts = _mapper.Map<List<StagePatientExtract>>(patientSourceBag.Extracts);
+
+            if (extracts.Any())
+                extracts.ForEach(x =>x.Standardize(patientSourceBag));
+
+            //stage
+
+            await _patientExtractRepository.Stage(extracts, patientSourceBag.SessionId.Value);
+
         }
     }
 }

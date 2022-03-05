@@ -313,15 +313,5 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Code == siteCode);
         }
-
-        public Task BulkInsertOrUpdate(List<PatientExtract> extracts)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task BulkInit(List<PatientPlaceHolderDto> placeHolderDtos)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

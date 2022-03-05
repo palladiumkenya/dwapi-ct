@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Hangfire;
+using Hangfire.SqlServer;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Infrastructure.Data;
 using Z.Dapper.Plus;
-using GlobalConfiguration = System.Web.Http.GlobalConfiguration;
 
 namespace PalladiumDwh.DWapi
 {
@@ -21,10 +24,15 @@ namespace PalladiumDwh.DWapi
             Log.Debug("PalladiumDwh.DWapi starting...");
 
             AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            System.Web.Http.GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            HangfireAspNet.Use(GetHangfireServers);
+
+            // Let's also create a sample background job
+            BackgroundJob.Enqueue(() => Debug.WriteLine("Hangfire running!"));
 
             // CHECK if the license if valid for the default provider (SQL Server)
             try
@@ -68,5 +76,24 @@ namespace PalladiumDwh.DWapi
             _scheduler?.Shutdown();
         }
 
+
+        private IEnumerable<IDisposable> GetHangfireServers()
+        {
+            Hangfire.GlobalConfiguration.Configuration
+                .UseBatches()
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage("DWAPICentralHangfire", new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true
+                });
+
+            yield return new BackgroundJobServer();
+        }
     }
 }

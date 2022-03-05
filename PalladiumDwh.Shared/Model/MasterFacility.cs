@@ -18,6 +18,10 @@ namespace PalladiumDwh.Shared.Model
         public DateTime? SnapshotDate { get; set; }
         public int? SnapshotSiteCode { get; set; }
         public int? SnapshotVersion { get; set; }
+        [NotMapped]
+        public Guid? SessionId { get; set; }
+        [NotMapped]
+        public Guid? ManifestId { get; set; }
         public MasterFacility()
         {
         }

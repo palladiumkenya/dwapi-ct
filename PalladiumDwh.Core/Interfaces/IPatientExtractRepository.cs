@@ -24,7 +24,5 @@ namespace PalladiumDwh.Core.Interfaces
         Task RemoveDuplicates(int siteCode);
         Task InitializeManifest(Manifest manifest);
         Task<MasterFacility> VerifyFacility(int siteCode);
-        Task BulkInsertOrUpdate(List<PatientExtract> extracts);
-        Task BulkInit(List<PatientPlaceHolderDto> placeHolderDtos);
     }
 }

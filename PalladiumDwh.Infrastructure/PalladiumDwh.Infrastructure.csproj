@@ -93,6 +93,7 @@
     <Compile Include="Data\Repository\ContactListingRepository.cs" />
     <Compile Include="Data\Repository\AllergiesChronicIllnessRepository.cs" />
     <Compile Include="Data\Repository\PatientVisitRepository.cs" />
+    <Compile Include="Data\Repository\Sync\StagePatientExtractRepository.cs" />
     <Compile Include="Migrations\201705251225248_CentralInitial.cs" />
     <Compile Include="Migrations\201705251225248_CentralInitial.Designer.cs">
       <DependentUpon>201705251225248_CentralInitial.cs</DependentUpon>
@@ -165,6 +166,10 @@
     <Compile Include="Migrations\202109171334493_CovidNewColsRev.Designer.cs">
       <DependentUpon>202109171334493_CovidNewColsRev.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203051415282_StagePatient.cs" />
+    <Compile Include="Migrations\202203051415282_StagePatient.Designer.cs">
+      <DependentUpon>202203051415282_StagePatient.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -225,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109171334493_CovidNewColsRev.resx">
       <DependentUpon>202109171334493_CovidNewColsRev.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203051415282_StagePatient.resx">
+      <DependentUpon>202203051415282_StagePatient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

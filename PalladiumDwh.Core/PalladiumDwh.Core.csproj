@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CSharpFunctionalExtensions, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CSharpFunctionalExtensions.2.0.0\lib\net461\CSharpFunctionalExtensions.dll</HintPath>
     </Reference>
@@ -93,10 +97,15 @@
     <Compile Include="Interfaces\IFacilityRepository.cs" />
     <Compile Include="Interfaces\IPatientVisitRepository.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
+    <Compile Include="Interfaces\Sync\IStagePatientExtractRepository.cs" />
     <Compile Include="Interfaces\Sync\ISyncExtract.cs" />
     <Compile Include="Model\ActionRegister.cs" />
-    <Compile Include="Model\PatientExtractDto.cs" />
-    <Compile Include="Model\PatientPlaceHolderDto.cs" />
+    <Compile Include="Model\Dto\Bag\PatientSourceBag.cs" />
+    <Compile Include="Model\Dto\ISourceBag.cs" />
+    <Compile Include="Model\Dto\PatientSourceDto.cs" />
+    <Compile Include="Model\Dto\PatientPlaceHolderDto.cs" />
+    <Compile Include="Model\MapProfiles\CtProfile.cs" />
+    <Compile Include="Model\StagePatientExtract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AppServices.cs" />
     <Compile Include="Services\LiveSyncService.cs" />

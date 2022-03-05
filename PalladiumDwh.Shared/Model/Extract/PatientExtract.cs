@@ -45,9 +45,9 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? TransferInDate { get; set; }
         public Guid FacilityId { get; set; }
         public DateTime? Created { get; set; }
-        public DateTime? Updated { get; set; }
         public string Pkv { get; set; }
         public string Occupation { get; set; }
+        public DateTime? Updated { get; set; }
 
         public virtual ICollection<PatientArtExtract> PatientArtExtracts { get; set; }=new List<PatientArtExtract>();
         public virtual ICollection<PatientBaselinesExtract> PatientBaselinesExtracts { get; set; }=new List<PatientBaselinesExtract>();

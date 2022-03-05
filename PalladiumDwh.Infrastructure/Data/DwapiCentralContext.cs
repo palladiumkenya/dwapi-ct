@@ -43,21 +43,23 @@ namespace PalladiumDwh.Infrastructure.Data
 
         public virtual DbSet<AllergiesChronicIllnessExtract> AllergiesChronicIllnessExtracts { get; set; }
 
-        public virtual DbSet<ContactListingExtract> ContactListingExtracts { get; set; } 
+        public virtual DbSet<ContactListingExtract> ContactListingExtracts { get; set; }
 
-        public virtual DbSet<DepressionScreeningExtract> DepressionScreeningExtracts { get; set; } 
+        public virtual DbSet<DepressionScreeningExtract> DepressionScreeningExtracts { get; set; }
 
-        public virtual DbSet<EnhancedAdherenceCounsellingExtract> EnhancedAdherenceCounsellingExtracts { get; set; } 
+        public virtual DbSet<EnhancedAdherenceCounsellingExtract> EnhancedAdherenceCounsellingExtracts { get; set; }
 
-        public virtual DbSet<DrugAlcoholScreeningExtract> DrugAlcoholScreeningExtracts { get; set; } 
+        public virtual DbSet<DrugAlcoholScreeningExtract> DrugAlcoholScreeningExtracts { get; set; }
 
-        public virtual DbSet<GbvScreeningExtract> GbvScreeningExtracts { get; set; } 
-        public virtual DbSet<IptExtract> IptExtracts { get; set; } 
-        public virtual DbSet<OtzExtract> OtzExtracts { get; set; } 
-        public virtual DbSet<OvcExtract> OvcExtracts { get; set; } 
+        public virtual DbSet<GbvScreeningExtract> GbvScreeningExtracts { get; set; }
+        public virtual DbSet<IptExtract> IptExtracts { get; set; }
+        public virtual DbSet<OtzExtract> OtzExtracts { get; set; }
+        public virtual DbSet<OvcExtract> OvcExtracts { get; set; }
 
         public virtual DbSet<CovidExtract> CovidExtracts { get; set; }
         public virtual DbSet<DefaulterTracingExtract> DefaulterTracingExtracts { get; set; }
+
+        public virtual DbSet<StagePatientExtract> StagePatientExtracts { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -184,6 +186,8 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<OtzExtract>().Key(x => x.Id).Table($"OtzExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             DapperPlusManager.Entity<CovidExtract>().Key(x => x.Id).Table($"CovidExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             DapperPlusManager.Entity<DefaulterTracingExtract>().Key(x => x.Id).Table($"DefaulterTracingExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+
+            DapperPlusManager.Entity<StagePatientExtract>().Key(x => x.Id).Table($"StagePatientExtract");
         }
 
         public SqlConnection GetConnection()
@@ -193,7 +197,7 @@ namespace PalladiumDwh.Infrastructure.Data
 
             if (connection.State == ConnectionState.Open)
                 return connection;
- 
+
             connection.Open();
             return connection;
         }

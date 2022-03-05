@@ -1,20 +1,19 @@
 using System;
-using PalladiumDwh.Shared.Interfaces;
+using PalladiumDwh.Core.Model.Bag;
+using PalladiumDwh.Shared.Enum;
+using PalladiumDwh.Shared.Interfaces.Extracts;
+using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Core.Model
 {
-    public class PatientExtractDto:IPatient
+    public class StagePatientExtract:IStagePatientExtract
     {
         public Guid Id { get; set; }
-        public int? SiteCode { get; set; }
-        public int? PatientPK { get; set; }
-        public string PatientID { get; set; }
-        public DateTime DateExtracted { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public DateTime? Created { get; set; }
-        public DateTime? Updated { get; set; }
-
+        public bool Voided { get; set; }
+        public bool Processed { get; set; }
         public string Pkv { get; set; }
         public string Occupation { get; set; }
         public string Gender { get; set; }
@@ -49,5 +48,17 @@ namespace PalladiumDwh.Core.Model
         public string PatientResidentWard { get; set; }
         public string PatientResidentVillage { get; set; }
         public DateTime? TransferInDate { get; set; }
+        public int PatientPID { get; set; }
+        public string PatientCccNumber { get; set; }
+        public Guid FacilityId { get; set; }
+        public Guid? CurrentPatientId  { get; set; }
+        public Guid? LiveSession { get; set; }
+        public LiveStage LiveStage { get; set; }
+
+        public void Standardize(PatientSourceBag patientSourceBag)
+        {
+            LiveSession = patientSourceBag.ManifestId;
+            FacilityId = patientSourceBag.FacilityId.Value;
+        }
     }
 }

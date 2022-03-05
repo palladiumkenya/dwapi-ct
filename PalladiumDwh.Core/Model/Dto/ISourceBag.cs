@@ -1,0 +1,20 @@
+using System;
+using System.Collections.Generic;
+using PalladiumDwh.Shared.Enum;
+
+namespace PalladiumDwh.Core.Model.Bag
+{
+    public interface ISourceBag<T>
+    {
+        EmrSetup EmrSetup { get; set; }
+        UploadMode Mode { get; set; }
+        string DwapiVersion { get; set; }
+        int SiteCode { get; set; }
+        string Facility { get; set; }
+        Guid? ManifestId { get; set; }
+        Guid? SessionId { get; set; }
+        Guid? FacilityId { get; set; }
+        string Tag { get; set; }
+        List<T> Extracts { get; set; }
+    }
+}

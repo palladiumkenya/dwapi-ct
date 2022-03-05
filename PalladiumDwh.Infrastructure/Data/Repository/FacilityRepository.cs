@@ -184,10 +184,11 @@ select
                 facility.Emr = emr;
                 Log.Debug($"NEW FACILITY {facility}");
                 _context.GetConnection().Execute(facility.SqlInsert());
+                masterFacility.FacilityId = facility.Id;
                 return;
 
             }
-
+            masterFacility.FacilityId = toEnroll.Id;
             // Take Facility SnapShot
             if (toEnroll.EmrChanged(emr) && allowSnapshot)
             {
@@ -224,6 +225,7 @@ select
                 var facility = Facility.create(masterFacility);
                 facility.Emr = emr;
                 Log.Debug($"SNAPSHOT FROM FACILITY {facility}");
+                masterFacility.FacilityId = facility.Id;
                 _context.GetConnection().Execute(facility.SqlInsert());
             }
 

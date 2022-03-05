@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -7,6 +9,9 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Core.Model;
+using PalladiumDwh.Core.Model.Bag;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Controllers
@@ -17,10 +22,12 @@ namespace PalladiumDwh.DWapi.Controllers
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(PatientARTProfile).Name.ToLower();
+        private readonly ISyncService _syncService;
 
-        public PatientController(IMessagingSenderService messagingService)
+        public PatientController(IMessagingSenderService messagingService, ISyncService syncService)
         {
             _messagingService = messagingService;
+            _syncService = syncService;
         }
         public async Task<HttpResponseMessage> Post([FromBody] SitePatientProfile patientProfile)
         {
@@ -43,6 +50,40 @@ namespace PalladiumDwh.DWapi.Controllers
                 }
             }
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new PatientARTProfile().GetType().Name}' is null"));
+        }
+
+        [Route("api/v3/Patient")]
+        public async Task<HttpResponseMessage> PostBatch([FromBody] PatientSourceBag patientProfile)
+        {
+
+            if (null != patientProfile && patientProfile.Extracts.Any())
+            {
+                if (patientProfile.Extracts.Any(x => !x.IsValid()))
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                        new HttpError(
+                            "Invalid data,Please ensure its has Patient,Facility and atleast one (1) Extract"));
+                }
+
+                try
+                {
+                    // var messageRef =
+                       // await _messagingService.SendAsync(patientProfile, _gatewayBatch, patientProfile.GetType());
+
+                    return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
+                        new { BatchKey = new List<Guid>() { LiveGuid.NewGuid() } });
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(new string('*', 30));
+                    Log.Error(nameof(PatientSourceDto), ex);
+                    Log.Error(new string('*', 30));
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                }
+            }
+
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                new HttpError($"The expected '{new PatientLabProfile().GetType().Name}' is null"));
         }
     }
 }

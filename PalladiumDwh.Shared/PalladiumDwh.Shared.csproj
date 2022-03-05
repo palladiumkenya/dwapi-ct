@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CSharpFunctionalExtensions, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CSharpFunctionalExtensions.2.0.0\lib\net461\CSharpFunctionalExtensions.dll</HintPath>
     </Reference>
@@ -101,6 +105,7 @@
     <Compile Include="Interfaces\Extracts\IIptExtract.cs" />
     <Compile Include="Interfaces\Extracts\IOtzExtract.cs" />
     <Compile Include="Interfaces\Extracts\IOvcExtract.cs" />
+    <Compile Include="Interfaces\Extracts\IStagePatientExtract.cs" />
     <Compile Include="Interfaces\IAdverseEvent.cs" />
     <Compile Include="Interfaces\IAllergiesChronicIllness.cs" />
     <Compile Include="Interfaces\IArtNew.cs" />
@@ -111,6 +116,7 @@
     <Compile Include="Interfaces\IDepressionScreening.cs" />
     <Compile Include="Interfaces\IDrugAlcoholScreening.cs" />
     <Compile Include="Interfaces\IEnhancedAdherenceCounselling.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IGbvScreening.cs" />
     <Compile Include="Interfaces\IIpt.cs" />
     <Compile Include="Interfaces\ILabNew.cs" />

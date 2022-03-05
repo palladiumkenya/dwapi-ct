@@ -19,6 +19,14 @@
     public enum UploadMode
     {
         Normal,
-        Differential
+        Differential,
+        Smart
+    }
+
+    public enum LiveStage
+    {
+        Rest,
+        Assigned,
+        Merged
     }
 }
