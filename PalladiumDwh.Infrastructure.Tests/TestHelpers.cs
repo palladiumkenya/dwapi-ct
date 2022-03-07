@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Text;
+using Dapper;
 using FizzWare.NBuilder;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Infrastructure.Data;
@@ -168,17 +170,64 @@ namespace PalladiumDwh.Infrastructure.Tests
             context.SaveChanges();
         }
 
-        public static List<StagePatientExtract> CreateTestFacilityStagePatient(Guid facilityId)
+        public static List<StagePatientExtract> CreateTestFacilityStagePatient(Guid facilityId,Guid session)
         {
             var stages = Builder<StagePatientExtract>.CreateListOfSize(5).All()
                 .With(x => x.CurrentPatientId =null)
                 .With(x => x.LiveStage =LiveStage.Rest)
                 .With(x => x.FacilityId = facilityId)
-                .With(x => x.LiveSession=Guid.NewGuid()).Build()
+                .With(x=>x.Voided=false)
+                .With(x=>x.Processed=false)
+                .With(x => x.LiveSession=session).Build()
                 .ToList();
+
+            for (int i = 0; i < stages.Count; i++)
+            {
+                stages[i].PatientPID = i+1;
+                stages[i].PatientCccNumber = $"999900000{stages[i].PatientPID}";
+            }
+
             return stages;
         }
 
+        public static void CreateTestFacilityPatient(Guid facilityId)
+        {
+            var patientExtracts = Builder<PatientExtract>.CreateListOfSize(3).All()
+                .With(x => x.FacilityId = facilityId)
+                .With(x=>x.Created=DateTime.Now.AddDays(-2).Date)
+                .With(x=>x.Updated=null)
+                .With(x=>x.Voided=false)
+                .With(x=>x.Processed=false)
+                .Build()
+                .ToList();
 
+            for (int i = 0; i < patientExtracts.Count; i++)
+            {
+                patientExtracts[i].PatientPID = i+1;
+                patientExtracts[i].PatientCccNumber = $"999900000{patientExtracts[i].PatientPID}";
+            }
+
+            var context = TestInitializer.Container.GetInstance<DwapiCentralContext>();
+            patientExtracts.ForEach(s => context.PatientExtracts.AddOrUpdate(s));
+            context.SaveChanges();
+        }
+
+        public static void ClearDb()
+        {
+            var sql = @"DELETE FROM Facility;DELETE FROM FacilityManifest;TRUNCATE TABLE ActionRegister;DELETE FROM StagePatientExtract";
+            var context = TestInitializer.Container.GetInstance<DwapiCentralContext>();
+            context.Database.ExecuteSqlCommand(sql);
+        }
+
+        public static void ClearDb(params string[] tables)
+        {
+            var sql = new StringBuilder();
+            foreach (var tbl in tables)
+            {
+                sql.AppendLine($"DELETE FROM {tbl};");
+            }
+            var context = TestInitializer.Container.GetInstance<DwapiCentralContext>();
+            context.Database.ExecuteSqlCommand(sql.ToString());
+        }
     }
 }

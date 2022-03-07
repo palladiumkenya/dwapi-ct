@@ -52,6 +52,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             catch (Exception e)
             {
                 Log.Error(e);
+                throw;
             }
         }
 
@@ -91,6 +92,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             catch (Exception e)
             {
                 Log.Error(e);
+                throw;
             }
         }
 
@@ -109,7 +111,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                             LiveSession = @session AND 
                             LiveStage= @livestage AND 
                             FacilityId= @facilityId AND
-                            PatientPID IN @patientPIDs AND";
+                            PatientPID IN @patientPIDs";
             try
             {
 
@@ -133,6 +135,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             catch (Exception e)
             {
                 Log.Error(e);
+                throw;
             }
         }
 
@@ -173,6 +176,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             catch (Exception e)
             {
                 Log.Error(e);
+                throw;
             }
         }
 
@@ -201,6 +205,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             catch (Exception e)
             {
                 Log.Error(e);
+                throw;
             }
 
             return Task.CompletedTask;
@@ -225,6 +230,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             catch (Exception e)
             {
                 Log.Error(e);
+                throw;
             }
 
             return Task.CompletedTask;
@@ -245,7 +251,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                             LiveSession = @session AND 
                             LiveStage= @livestage AND 
                             FacilityId= @facilityId AND
-                            PatientPID IN @patientPIDs AND";
+                            PatientPID IN @patientPIDs";
             try
             {
 
@@ -269,6 +275,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             catch (Exception e)
             {
                 Log.Error(e);
+                throw;
             }
         }
     }

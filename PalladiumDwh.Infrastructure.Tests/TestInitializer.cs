@@ -15,7 +15,7 @@ namespace PalladiumDwh.Infrastructure.Tests
         [OneTimeSetUp]
         public void Init()
         {
-            FacilityId = Guid.NewGuid();
+            FacilityId = new Guid("C2F718E7-CCC1-471F-9A87-33B96CBFE519");
             Effort.Provider.EffortProviderConfiguration.RegisterProvider();
             DapperPlusManager.AddLicense("1755;701-ThePalladiumGroup", "9005d618-3965-8877-97a5-7a27cbb21c8f");
             Container = IoC.Initialize();
@@ -24,6 +24,7 @@ namespace PalladiumDwh.Infrastructure.Tests
 
         private void InitSites(Guid facilityId)
         {
+            TestHelpers.ClearDb();
             TestHelpers.CreateTestMasterFacility();
             TestHelpers.CreateTestFacility(facilityId);
         }
