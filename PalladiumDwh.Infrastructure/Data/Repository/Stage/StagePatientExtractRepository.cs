@@ -24,7 +24,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             _context = context;
         }
 
-        public async Task ClearSite(Guid facilityId, Guid sessionId)
+        public async Task ClearSite(Guid facilityId, Guid manifestId)
         {
             var cons = _context.Database.Connection.ConnectionString;
 
@@ -32,7 +32,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                     DELETE FROM StagePatientExtract 
                     WHERE 
                             FacilityId = @facilityId AND
-                            LiveSession != @sessionId";
+                            LiveSession != @manifestId";
 
             try
             {
@@ -44,7 +44,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
 
                     using (var transaction = connection.BeginTransaction())
                     {
-                        await connection.ExecuteAsync($"{sql}", new {sessionId, facilityId}, transaction, 0);
+                        await connection.ExecuteAsync($"{sql}", new {manifestId = manifestId, facilityId}, transaction, 0);
                         transaction.Commit();
                     }
                 }
@@ -56,7 +56,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             }
         }
 
-        public async Task Stage(List<StagePatientExtract> extracts, Guid session)
+        public async Task SyncStage(List<StagePatientExtract> extracts, Guid manifestId)
         {
             try
             {
@@ -68,23 +68,23 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                 foreach (var site in siteGroup)
                 {
                     var pks = site.Select(x => x.PatientPID).ToList();
-                    await AssignAll(session, site.Key, pks);
+                    await AssignAll(manifestId, site.Key, pks);
                 }
 
                 //assign > Assigned
-                await AssignId(session);
+                await AssignId(manifestId);
 
                 //assign > New
-                await CreatNew(session);
+                await CreatNew(manifestId);
 
                 //assign > Ups
-                await UpdateExisting(session);
+                await UpdateExisting(manifestId);
 
                 //assign > Merged
                 foreach (var site in siteGroup)
                 {
                     var pks = site.Select(x => x.PatientPID).ToList();
-                    await MergeAll(session, site.Key, pks);
+                    await MergeAll(manifestId, site.Key, pks);
                 }
 
 
@@ -96,7 +96,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             }
         }
 
-        private async Task AssignAll(Guid session, Guid facilityId, List<int> patientPIDs)
+        private async Task AssignAll(Guid manifestId, Guid facilityId, List<int> patientPIDs)
         {
             var cons = _context.Database.Connection.ConnectionString;
 
@@ -108,7 +108,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                     FROM 
                             StagePatientExtract 
                     WHERE 
-                            LiveSession = @session AND 
+                            LiveSession = @manifestId AND 
                             LiveStage= @livestage AND 
                             FacilityId= @facilityId AND
                             PatientPID IN @patientPIDs";
@@ -125,7 +125,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                         await connection.ExecuteAsync($"{sql}",
                             new
                             {
-                                session, livestage = LiveStage.Rest, nextlivestage = LiveStage.Assigned, facilityId,
+                                manifestId, livestage = LiveStage.Rest, nextlivestage = LiveStage.Assigned, facilityId,
                                 patientPIDs
                             }, transaction, 0);
                         transaction.Commit();
@@ -139,7 +139,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             }
         }
 
-        private async Task AssignId(Guid session)
+        private async Task AssignId(Guid manifestId)
         {
             var cons = _context.Database.Connection.ConnectionString;
 
@@ -153,7 +153,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                                     stg.PatientPID = p.PatientPID AND 
                                     stg.FacilityId = p.FacilityId 
                     WHERE 
-                            stg.LiveSession = @session AND 
+                            stg.LiveSession = @manifestId AND 
                             stg.LiveStage= @livestage AND 
                             stg.CurrentPatientId is Null ";
 
@@ -167,7 +167,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
 
                     using (var transaction = connection.BeginTransaction())
                     {
-                        await connection.ExecuteAsync($"{sql}", new {session, livestage = LiveStage.Assigned},
+                        await connection.ExecuteAsync($"{sql}", new {manifestId, livestage = LiveStage.Assigned},
                             transaction, 0);
                         transaction.Commit();
                     }
@@ -180,7 +180,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             }
         }
 
-        public Task UpdateExisting(Guid session)
+        public Task UpdateExisting(Guid manifestId)
         {
             var sqlUpdates = @"
                     SELECT        CurrentPatientId Id, Emr, Project, Voided, Processed, Pkv, Occupation, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationATPMTCT, RegistrationAtTBClinic, Region, PatientSource, District, Village, ContactRelation, LastVisit, 
@@ -189,7 +189,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                          CurrentPatientId, LiveSession, LiveStage,GETDATE() Updated
                     FROM            StagePatientExtract
                     WHERE 
-                          LiveSession = @session AND 
+                          LiveSession = @manifestId AND 
                           LiveStage = @livestage AND
                           CurrentPatientId IS NOT NULL";
 
@@ -198,7 +198,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
 
                 //get updates
                 var updates = _context.GetConnection()
-                    .Query<PatientExtract>(sqlUpdates, new {session, livestage = LiveStage.Assigned});
+                    .Query<PatientExtract>(sqlUpdates, new {manifestId, livestage = LiveStage.Assigned});
                 _context.GetConnection().BulkUpdate(updates);
 
             }
@@ -211,20 +211,20 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             return Task.CompletedTask;
         }
 
-        private Task CreatNew(Guid session)
+        private Task CreatNew(Guid manifestId)
         {
             var sqlNew = @"
                     SELECT 
                            *,GETDATE() Created FROM StagePatientExtract
                     WHERE 
-                          LiveSession = @session AND
+                          LiveSession = @manifestId AND
                           LiveStage = @livestage AND
                           CurrentPatientId IS NULL";
             try
             {
                 //  get new
                 var inserts = _context.GetConnection()
-                    .Query<PatientExtract>(sqlNew, new {session, livestage = LiveStage.Assigned});
+                    .Query<PatientExtract>(sqlNew, new {manifestId, livestage = LiveStage.Assigned});
                 _context.GetConnection().BulkInsert(inserts);
             }
             catch (Exception e)
@@ -236,7 +236,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
             return Task.CompletedTask;
         }
 
-        private async Task MergeAll(Guid session, Guid facilityId, List<int> patientPIDs)
+        private async Task MergeAll(Guid manifestId, Guid facilityId, List<int> patientPIDs)
         {
             var cons = _context.Database.Connection.ConnectionString;
 
@@ -248,7 +248,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                     FROM 
                             StagePatientExtract 
                     WHERE 
-                            LiveSession = @session AND 
+                            LiveSession = @manifestId AND 
                             LiveStage= @livestage AND 
                             FacilityId= @facilityId AND
                             PatientPID IN @patientPIDs";
@@ -265,7 +265,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                         await connection.ExecuteAsync($"{sql}",
                             new
                             {
-                                session, livestage = LiveStage.Assigned, nextlivestage = LiveStage.Merged, facilityId,
+                                manifestId, livestage = LiveStage.Assigned, nextlivestage = LiveStage.Merged, facilityId,
                                 patientPIDs
                             }, transaction, 0);
                         transaction.Commit();

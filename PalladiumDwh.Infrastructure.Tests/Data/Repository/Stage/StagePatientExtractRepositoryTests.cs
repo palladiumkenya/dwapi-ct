@@ -33,30 +33,30 @@ namespace PalladiumDwh.Infrastructure.Tests.Data.Repository.Sync
         [Test]
         public void should_Stage_New()
         {
-            var csession = Guid.NewGuid();
-            var stages = TestHelpers.CreateTestFacilityStagePatient(TestInitializer.FacilityId,csession);
+            var currentSession = Guid.NewGuid();
+            var stages = TestHelpers.CreateTestFacilityStagePatient(TestInitializer.FacilityId,currentSession);
 
 
-            _stagePatientExtractRepository.Stage(stages, csession).Wait();
+            _stagePatientExtractRepository.SyncStage(stages, currentSession).Wait();
 
             var ctx = TestInitializer.Container.GetInstance<DwapiCentralContext>();
             Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.FacilityId==TestInitializer.FacilityId));
-            Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.LiveSession==csession));
+            Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.LiveSession==currentSession));
         }
 
         [Test]
         public void should_Stage_Mixed()
         {
-            var csession = Guid.NewGuid();
+            var currentSession = Guid.NewGuid();
             _stagePatientExtractRepository.ClearSite(TestInitializer.FacilityId,session).Wait();
             TestHelpers.CreateTestFacilityPatient(TestInitializer.FacilityId);
-            var stages = TestHelpers.CreateTestFacilityStagePatient(TestInitializer.FacilityId,csession);
+            var stages = TestHelpers.CreateTestFacilityStagePatient(TestInitializer.FacilityId,currentSession);
 
-            _stagePatientExtractRepository.Stage(stages, csession).Wait();
+            _stagePatientExtractRepository.SyncStage(stages, currentSession).Wait();
 
             var ctx = TestInitializer.Container.GetInstance<DwapiCentralContext>();
             Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.FacilityId==TestInitializer.FacilityId));
-            Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.LiveSession==csession));
+            Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.LiveSession==currentSession));
             Assert.True(ctx.PatientExtracts.ToList().Any(x=>x.Updated.HasValue));
         }
     }

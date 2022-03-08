@@ -8,7 +8,7 @@ namespace PalladiumDwh.Core.Interfaces.Sync
 {
     public interface IStagePatientExtractRepository
     {
-        Task ClearSite(Guid facilityId, Guid sessionId);
-        Task Stage(List<StagePatientExtract> extracts, Guid session);
+        Task ClearSite(Guid facilityId, Guid manifestId);
+        Task SyncStage(List<StagePatientExtract> extracts, Guid manifestId);
     }
 }
