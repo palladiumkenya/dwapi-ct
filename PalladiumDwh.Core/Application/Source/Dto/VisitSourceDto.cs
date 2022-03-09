@@ -3,18 +3,8 @@ using PalladiumDwh.Shared.Interfaces;
 
 namespace PalladiumDwh.Core.Model
 {
-    public class VisitSourceDto:IVisit
+    public class VisitSourceDto:SourceDto, IVisit
     {
-        public Guid Id { get; set; }
-        public int SiteCode { get; set; }
-        public int PatientPK { get; set; }
-        public DateTime DateExtracted { get; set; }
-        public string Emr { get; set; }
-        public string Project { get; set; }
-        public DateTime? Created { get; set; }
-        public DateTime? Updated { get; set; }
-        public Guid? PatientId { get; set; }
-
         public string VisitBy { get; set; }
         public decimal? Temp { get; set; }
         public int? PulseRate { get; set; }
@@ -72,11 +62,5 @@ namespace PalladiumDwh.Core.Model
         public string DifferentiatedCare { get; set; }
         public string PopulationType { get; set; }
         public string KeyPopulationType { get; set; }
-
-        public bool IsValid()
-        {
-            return SiteCode > 0 &&
-                   PatientPK > 0;
-        }
     }
 }

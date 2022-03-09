@@ -3,18 +3,9 @@ using PalladiumDwh.Shared.Interfaces;
 
 namespace PalladiumDwh.Core.Model
 {
-    public class PatientSourceDto : IPatient
+    public class PatientSourceDto :SourceDto, IPatient
     {
-        public Guid Id { get; set; }
-        public int SiteCode { get; set; }
-        public int PatientPK { get; set; }
         public string PatientID { get; set; }
-        public DateTime DateExtracted { get; set; }
-        public string Emr { get; set; }
-        public string Project { get; set; }
-        public DateTime? Created { get; set; }
-        public DateTime? Updated { get; set; }
-
         public string Pkv { get; set; }
         public string Occupation { get; set; }
         public string Gender { get; set; }
@@ -50,7 +41,7 @@ namespace PalladiumDwh.Core.Model
         public string PatientResidentVillage { get; set; }
         public DateTime? TransferInDate { get; set; }
 
-        public bool IsValid()
+        public override bool IsValid()
         {
             return SiteCode > 0 &&
                    PatientPK > 0 &&

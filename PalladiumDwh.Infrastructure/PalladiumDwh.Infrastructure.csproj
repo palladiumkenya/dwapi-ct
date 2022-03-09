@@ -193,6 +193,10 @@
     <Compile Include="Migrations\202109171334493_CovidNewColsRev.Designer.cs">
       <DependentUpon>202109171334493_CovidNewColsRev.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203091640558_ExtractStaging.cs" />
+    <Compile Include="Migrations\202203091640558_ExtractStaging.designer.cs">
+      <DependentUpon>202203091640558_ExtractStaging.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -253,6 +257,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109171334493_CovidNewColsRev.resx">
       <DependentUpon>202109171334493_CovidNewColsRev.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203091640558_ExtractStaging.resx">
+      <DependentUpon>202203091640558_ExtractStaging.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>
