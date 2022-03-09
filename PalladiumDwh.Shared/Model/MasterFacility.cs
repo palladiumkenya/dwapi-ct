@@ -22,6 +22,8 @@ namespace PalladiumDwh.Shared.Model
         public Guid? SessionId { get; set; }
         [NotMapped]
         public Guid? ManifestId { get; set; }
+        [NotMapped]
+        public string JobId { get; set; }
         public MasterFacility()
         {
         }

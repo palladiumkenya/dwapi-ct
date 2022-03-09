@@ -145,6 +145,7 @@ namespace PalladiumDwh.DWapi.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                 new HttpError($"The expected '{new Manifest().GetType().Name}' is null"));
         }
+
         [Route("api/v3/Spot")]
         public async Task<HttpResponseMessage> PostManifest([FromBody] Manifest manifest)
         {
@@ -152,13 +153,14 @@ namespace PalladiumDwh.DWapi.Controllers
 
             if (null != manifest)
             {
+                #region Validate Site
+
                 if (!manifest.IsValid())
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                         new HttpError(
                             $"Invalid Manifest,Please ensure the SiteCode [{manifest.SiteCode}] is valid and there exists at least one (1) Patient record"));
                 }
-
                 try
                 {
                     Log.Debug("checking SiteCode...");
@@ -173,6 +175,7 @@ namespace PalladiumDwh.DWapi.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
                 }
 
+
                 try
                 {
                     Log.Debug("checking SiteCode Enrollment...");
@@ -184,9 +187,11 @@ namespace PalladiumDwh.DWapi.Controllers
                     Log.Error("SiteCode Enroll Error", e);
                 }
 
+                #endregion
+
+                #region Clear Manifest
                 try
                 {
-
                     Log.Debug("clearing Site Manifest...");
                     await _patientExtractRepository.ClearManifest(manifest);
                 }
@@ -194,7 +199,9 @@ namespace PalladiumDwh.DWapi.Controllers
                 {
                     Log.Error("Clear Site Manifest Error", e);
                 }
+                #endregion"
 
+                #region Removed Duplicates
                 try
                 {
                     if (manifest.UploadMode == UploadMode.Normal)
@@ -207,7 +214,9 @@ namespace PalladiumDwh.DWapi.Controllers
                 {
                     Log.Error("Removing Site Duplicates Error", e);
                 }
+                #endregion
 
+                #region Send to SPOT
                 try
                 {
                     Log.Debug("posting to SPOT...");
@@ -233,7 +242,9 @@ namespace PalladiumDwh.DWapi.Controllers
                 {
                     Log.Error("Posting to SPOT Error", e);
                 }
+                #endregion
 
+                #region Sync Manifest
                 try
                 {
                     Log.Debug("sending to Queue");
@@ -247,6 +258,7 @@ namespace PalladiumDwh.DWapi.Controllers
                     Log.Error("Sending to QueueError", ex);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
+                #endregion
             }
 
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,

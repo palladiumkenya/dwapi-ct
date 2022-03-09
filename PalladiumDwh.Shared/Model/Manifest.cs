@@ -29,7 +29,7 @@ namespace PalladiumDwh.Shared.Model
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public string Tag { get; set; }
-        
+
         public string Items => string.Join(",", PatientPKs);
 
         public Manifest()
@@ -90,6 +90,13 @@ WHERE
             }
             return list;
         }
+
+        public void Validate()
+        {
+            if (!IsValid())
+                throw new Exception($"Invalid Manifest,Please ensure the SiteCode [{SiteCode}] is valid and there exists at least one (1) Patient record");
+        }
+
         public override string ToString()
         {
             return $"{SiteCode} AllowedToSend ({PatientPKs.Count})";

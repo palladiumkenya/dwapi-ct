@@ -80,6 +80,7 @@
     <Compile Include="Application\Commands\SyncGbvScreening.cs" />
     <Compile Include="Application\Commands\SyncIpt.cs" />
     <Compile Include="Application\Commands\SyncLaboratory.cs" />
+    <Compile Include="Application\Commands\SyncManifest.cs" />
     <Compile Include="Application\Commands\SyncOtz.cs" />
     <Compile Include="Application\Commands\SyncOvc.cs" />
     <Compile Include="Application\Commands\SyncPatient.cs" />

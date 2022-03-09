@@ -94,7 +94,7 @@ namespace PalladiumDwh.DWapi.Controllers
         }
 
         [Route("api/v3/ContactListing")]
-        public async Task<HttpResponseMessage> PostBatch([FromBody] ContactListingSourceBag sourceBag)
+        public async Task<HttpResponseMessage> PostBatchNew([FromBody] ContactListingSourceBag sourceBag)
         {
 
             if (null != sourceBag && sourceBag.Extracts.Any())

@@ -95,7 +95,7 @@ namespace PalladiumDwh.DWapi.Controllers
         }
 
         [Route("api/v3/AllergiesChronicIllness")]
-        public async Task<HttpResponseMessage> PostBatch([FromBody] AllergiesChronicIllnessSourceBag sourceBag)
+        public async Task<HttpResponseMessage> PostBatchNew([FromBody] AllergiesChronicIllnessSourceBag sourceBag)
         {
 
             if (null != sourceBag && sourceBag.Extracts.Any())
