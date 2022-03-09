@@ -1,7 +1,6 @@
 ﻿using System;
 using AutoMapper;
 using NUnit.Framework;
-using PalladiumDwh.Core.Model.Profiles;
 using PalladiumDwh.Core.Tests.DependencyResolution;
 using StructureMap;
 using Z.Dapper.Plus;

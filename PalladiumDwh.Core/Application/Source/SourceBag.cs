@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using PalladiumDwh.Core.Application.Common;
 using PalladiumDwh.Shared.Enum;
 
-namespace PalladiumDwh.Core.Model.Bag
+namespace PalladiumDwh.Core.Application.Source
 {
     public abstract class SourceBag<T> : ISourceBag<T>
     {

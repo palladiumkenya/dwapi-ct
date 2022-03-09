@@ -5,10 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using PalladiumDwh.Core.Application.Source;
 using PalladiumDwh.Core.Application.Stage.Repositories;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Model;
-using PalladiumDwh.Core.Model.Bag;
 using PalladiumDwh.Shared.Enum;
 
 namespace PalladiumDwh.Core.Application.Commands

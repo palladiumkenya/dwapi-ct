@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using PalladiumDwh.Shared.Enum;
+using PalladiumDwh.Core.Application.Source.Dto;
 
-namespace PalladiumDwh.Core.Model.Bag
+namespace PalladiumDwh.Core.Application.Source
 {
     public class VisitSourceBag : SourceBag<VisitSourceDto>{}
 }

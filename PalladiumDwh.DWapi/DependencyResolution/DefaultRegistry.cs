@@ -1,7 +1,7 @@
 using AutoMapper;
 using MediatR;
+using PalladiumDwh.Core.Application.MapProfiles;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.Core.Model.Profiles;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.DWapi.Helpers;
 using PalladiumDwh.Infrastructure.Data;

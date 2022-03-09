@@ -1,6 +1,6 @@
 using PalladiumDwh.Shared.Interfaces;
 
-namespace PalladiumDwh.Core.Model
+namespace PalladiumDwh.Core.Application.Source.Dto
 {
     public class ContactListingSourceDto:SourceDto, IContactListing
     {

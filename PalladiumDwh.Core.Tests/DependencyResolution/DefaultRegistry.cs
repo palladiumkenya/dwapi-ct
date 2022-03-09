@@ -1,6 +1,6 @@
 using AutoMapper;
 using MediatR;
-using PalladiumDwh.Core.Model.Profiles;
+using PalladiumDwh.Core.Application.MapProfiles;
 using PalladiumDwh.Infrastructure.Data;
 using StructureMap;
 using StructureMap.Pipeline;

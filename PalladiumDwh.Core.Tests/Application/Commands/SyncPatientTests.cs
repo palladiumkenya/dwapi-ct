@@ -4,7 +4,6 @@ using MediatR;
 using NUnit.Framework;
 using PalladiumDwh.Core.Application.Commands;
 using PalladiumDwh.Core.Model;
-using PalladiumDwh.Core.Model.Bag;
 using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Shared.Model.Extract;
 

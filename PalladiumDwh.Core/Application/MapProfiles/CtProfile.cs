@@ -1,7 +1,9 @@
 using AutoMapper;
+using PalladiumDwh.Core.Application.Source.Dto;
+using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
-namespace PalladiumDwh.Core.Model.Profiles
+namespace PalladiumDwh.Core.Application.MapProfiles
 {
    public class CtProfile : Profile
    {

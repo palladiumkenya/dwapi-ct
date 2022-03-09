@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PalladiumDwh.Core.Model.Bag;
+using PalladiumDwh.Core.Application.Source;
 using PalladiumDwh.Core.Model.Dto;
 using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Interfaces.Extracts;

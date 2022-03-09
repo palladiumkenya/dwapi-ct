@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using PalladiumDwh.Shared.Enum;
 
-namespace PalladiumDwh.Core.Model.Bag
+namespace PalladiumDwh.Core.Application.Common
 {
     public interface ISourceBag<T>
     {

@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using log4net;
+using PalladiumDwh.Core.Application.Source;
+using PalladiumDwh.Core.Application.Source.Dto;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Model;
-using PalladiumDwh.Core.Model.Bag;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model.Profile;
 

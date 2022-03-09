@@ -1,6 +1,6 @@
 using System;
 
-namespace PalladiumDwh.Core.Model
+namespace PalladiumDwh.Core.Application.Source.Dto
 {
     public abstract class SourceDto
     {
