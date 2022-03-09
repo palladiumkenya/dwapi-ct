@@ -37,8 +37,8 @@ namespace PalladiumDwh.DWapi.Tests
             _messengerScheduler = new MessengerScheduler();
             _messengerScheduler.Start();
 
-            _controller = new PatientArtController(_messagingService, _messengerScheduler);
-            
+            _controller = new PatientArtController(_messagingService, _messengerScheduler,null);
+
             TestHelpers.SetupControllerForTests(_controller, baseUrl, "PatientArt");
 
             _facility = Builder<Facility>.CreateNew().Build();

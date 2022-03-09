@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PalladiumDwh.Core.Application.Common;
+using PalladiumDwh.Core.Application.Source.Dto;
 using PalladiumDwh.Shared.Enum;
 
 namespace PalladiumDwh.Core.Application.Source
@@ -17,5 +18,9 @@ namespace PalladiumDwh.Core.Application.Source
         public Guid? FacilityId { get; set; }
         public string Tag { get; set; }
         public List<T> Extracts { get; set; } = new List<T>();
+        public override string ToString()
+        {
+            return $"{SiteCode}-{Facility} [{Extracts.Count}] {typeof(T).Name.Replace($"{nameof(SourceDto)}","")}";
+        }
     }
 }

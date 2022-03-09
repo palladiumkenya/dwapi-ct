@@ -31,6 +31,7 @@ namespace PalladiumDwh.Core.Application.MapProfiles
            CreateMap<OvcSourceDto, StageOvcExtract>();
            CreateMap<PharmacySourceDto, StagePharmacyExtract>();
            CreateMap<StatusSourceDto, StageStatusExtract>();
+           CreateMap<GbvScreeningSourceDto, StageGbvScreeningExtract>();
 
            CreateMap<StagePatientExtract, PatientExtract>();
            CreateMap<StageVisitExtract, PatientVisitExtract>().ForMember(dest => dest.PatientId,
@@ -66,6 +67,8 @@ namespace PalladiumDwh.Core.Application.MapProfiles
            CreateMap<StagePharmacyExtract, PatientPharmacyExtract>().ForMember(dest => dest.PatientId,
                opt => opt.MapFrom(src => src.CurrentPatientId));
            CreateMap<StageStatusExtract, PatientStatusExtract>().ForMember(dest => dest.PatientId,
+               opt => opt.MapFrom(src => src.CurrentPatientId));
+           CreateMap<StageGbvScreeningExtract, GbvScreeningExtract>().ForMember(dest => dest.PatientId,
                opt => opt.MapFrom(src => src.CurrentPatientId));
        }
    }

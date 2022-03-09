@@ -74,7 +74,7 @@ namespace PalladiumDwh.DWapi.Tests
 
 
 
-            _controller = new SpotController(_messagingService,_patientExtractRepository,_liveSyncService,_facilityRepository);
+            _controller = new SpotController(_messagingService,_patientExtractRepository,_liveSyncService,_facilityRepository,null);
             TestHelpers.SetupControllerForTests(_controller, baseUrl, "Spot");
 
              _manifest = new Manifest(_facilityA.Code);

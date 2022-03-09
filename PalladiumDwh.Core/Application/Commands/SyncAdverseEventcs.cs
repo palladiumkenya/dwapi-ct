@@ -64,5 +64,4 @@ namespace PalladiumDwh.Core.Application.Commands
             }
         }
     }
-
 }

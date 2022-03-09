@@ -138,6 +138,7 @@
     <Compile Include="Application\Commands\SyncDepressionScreeningTests.cs" />
     <Compile Include="Application\Commands\SyncDrugAlcoholScreeningTests.cs" />
     <Compile Include="Application\Commands\SyncEnhancedAdherenceCounsellingTests.cs" />
+    <Compile Include="Application\Commands\SyncGbvScreeningTests.cs" />
     <Compile Include="Application\Commands\SyncIptTests.cs" />
     <Compile Include="Application\Commands\SyncLaboratoryTests.cs" />
     <Compile Include="Application\Commands\SyncOtzTests.cs" />

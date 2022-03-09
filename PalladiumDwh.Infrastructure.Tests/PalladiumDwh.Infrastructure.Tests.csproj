@@ -114,6 +114,7 @@
     <Compile Include="Data\Repository\Stage\StageDepressionScreeningExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\Stage\StageDrugAlcoholScreeningExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\Stage\StageEnhancedAdherenceCounsellingExtractRepositoryTests.cs" />
+    <Compile Include="Data\Repository\Stage\StageGbvScreeningExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\Stage\StageIptExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\Stage\StageLaboratoryExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\Stage\StageOtzExtractRepositoryTests.cs" />

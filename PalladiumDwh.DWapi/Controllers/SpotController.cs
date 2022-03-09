@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
 using log4net;
+using MediatR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PalladiumDwh.Core.Exchange;
@@ -24,16 +25,18 @@ namespace PalladiumDwh.DWapi.Controllers
         private readonly ILiveSyncService _liveSyncService;
         private readonly IFacilityRepository _facilityRepository;
         private readonly JsonSerializerSettings _serializerSettings;
+        private readonly IMediator _mediator;
 
         public SpotController(IMessagingSenderService messagingService,
             IPatientExtractRepository patientExtractRepository, ILiveSyncService liveSyncService,
-            IFacilityRepository facilityRepository)
+            IFacilityRepository facilityRepository, IMediator mediator)
         {
             _messagingService = messagingService;
             _messagingService.Initialize(_gateway);
             _patientExtractRepository = patientExtractRepository;
             _liveSyncService = liveSyncService;
             _facilityRepository = facilityRepository;
+            _mediator = mediator;
             _serializerSettings = new JsonSerializerSettings()
                 {ContractResolver = new CamelCasePropertyNamesContractResolver()};
         }

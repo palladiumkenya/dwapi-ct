@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,11 +8,15 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Hangfire;
 using log4net;
+using MediatR;
+using PalladiumDwh.Core.Application.Commands;
 using PalladiumDwh.Core.Application.Source;
 using PalladiumDwh.Core.Application.Source.Dto;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Model;
+using PalladiumDwh.DWapi.Helpers;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model.Profile;
 
@@ -24,12 +29,15 @@ namespace PalladiumDwh.DWapi.Controllers
         private readonly IMessagingSenderService _messagingService;
         private readonly string _gateway = typeof(PatientARTProfile).Name.ToLower();
         private readonly ISyncService _syncService;
+        private readonly IMediator _mediator;
 
-        public PatientController(IMessagingSenderService messagingService, ISyncService syncService)
+        public PatientController(IMessagingSenderService messagingService, ISyncService syncService, IMediator mediator)
         {
             _messagingService = messagingService;
             _syncService = syncService;
+            _mediator = mediator;
         }
+
         public async Task<HttpResponseMessage> Post([FromBody] SitePatientProfile patientProfile)
         {
             if (null != patientProfile)
@@ -37,8 +45,10 @@ namespace PalladiumDwh.DWapi.Controllers
                 if (!patientProfile.IsValid())
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                        new HttpError("Invalid data,Please ensure its has Patient,Facility and atleast one (1) Extract"));
+                        new HttpError(
+                            "Invalid data,Please ensure its has Patient,Facility and atleast one (1) Extract"));
                 }
+
                 try
                 {
                     var messageRef = await _messagingService.SendAsync(patientProfile, _gateway);
@@ -50,16 +60,18 @@ namespace PalladiumDwh.DWapi.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
             }
-            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new PatientARTProfile().GetType().Name}' is null"));
+
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                new HttpError($"The expected '{new PatientARTProfile().GetType().Name}' is null"));
         }
 
         [Route("api/v3/Patient")]
-        public async Task<HttpResponseMessage> PostBatch([FromBody] PatientSourceBag patientProfile)
+        public async Task<HttpResponseMessage> PostBatch([FromBody] PatientSourceBag sourceBag)
         {
 
-            if (null != patientProfile && patientProfile.Extracts.Any())
+            if (null != sourceBag && sourceBag.Extracts.Any())
             {
-                if (patientProfile.Extracts.Any(x => !x.IsValid()))
+                if (sourceBag.Extracts.Any(x => !x.IsValid()))
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                         new HttpError(
@@ -68,16 +80,22 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
-                    // var messageRef =
-                       // await _messagingService.SendAsync(patientProfile, _gatewayBatch, patientProfile.GetType());
+                    var jobId = BatchJob.StartNew(x =>
+                    {
+                        x.Enqueue(() => Send($"{sourceBag}",new SyncPatient(sourceBag)));
+                    });
 
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
-                        new { BatchKey = new List<Guid>() { LiveGuid.NewGuid() } });
+                        new
+                        {
+                            JobId=jobId,
+                            BatchKey = new List<Guid>() {LiveGuid.NewGuid()}
+                        });
                 }
                 catch (Exception ex)
                 {
                     Log.Error(new string('*', 30));
-                    Log.Error(nameof(PatientSourceDto), ex);
+                    Log.Error(nameof(PatientSourceBag), ex);
                     Log.Error(new string('*', 30));
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
@@ -85,6 +103,12 @@ namespace PalladiumDwh.DWapi.Controllers
 
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                 new HttpError($"The expected '{new PatientLabProfile().GetType().Name}' is null"));
+        }
+
+        [DisplayName("{0}")]
+        public async Task Send(string jobName, IRequest command)
+        {
+            await _mediator.Send(command);
         }
     }
 }

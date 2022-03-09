@@ -33,7 +33,7 @@ namespace PalladiumDwh.DWapi.Tests
         {
             _messagingService = new MessagingSenderService(_queueName);
 
-            _controller = new PatientBaselinesController(_messagingService,new MessengerScheduler());
+            _controller = new PatientBaselinesController(_messagingService,new MessengerScheduler(),null);
             TestHelpers.SetupControllerForTests(_controller, baseUrl, "PatientBaselines");
 
             _facility = Builder<Facility>.CreateNew().Build();
