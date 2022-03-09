@@ -1,7 +1,9 @@
 using AutoMapper;
+using MediatR;
 using PalladiumDwh.Core.Model.Profiles;
 using PalladiumDwh.Infrastructure.Data;
 using StructureMap;
+using StructureMap.Pipeline;
 
 namespace PalladiumDwh.Core.Tests.DependencyResolution {
     public class DefaultRegistry : Registry {
@@ -15,6 +17,8 @@ namespace PalladiumDwh.Core.Tests.DependencyResolution {
                    scan.Assembly("PalladiumDwh.Core");
                    scan.Assembly("PalladiumDwh.Infrastructure");
                    scan.Assembly("PalladiumDwh.Shared.Data");
+                   scan.ConnectImplementationsToTypesClosing(typeof(IRequestHandler<,>));
+                   scan.ConnectImplementationsToTypesClosing(typeof(INotificationHandler<>));
                    scan.WithDefaultConventions();
                });
 
@@ -33,6 +37,9 @@ namespace PalladiumDwh.Core.Tests.DependencyResolution {
 
             var mapper = config.CreateMapper();
             For<IMapper>().Use(mapper);
+
+            For<IMediator>().LifecycleIs<TransientLifecycle>().Use<Mediator>();
+            For<ServiceFactory>().Use<ServiceFactory>(ctx => ctx.GetInstance);
         }
         #endregion
     }

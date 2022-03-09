@@ -41,6 +41,10 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="MediatR, Version=9.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2">
+      <HintPath>..\packages\MediatR.9.0.0\lib\net461\MediatR.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -60,6 +64,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Commands\ClearFacility.cs" />
+    <Compile Include="Application\Commands\SyncPatient.cs" />
+    <Compile Include="Application\Commands\SyncVisit.cs" />
+    <Compile Include="Application\Common\ISourceBag.cs" />
+    <Compile Include="Application\MapProfiles\CtProfile.cs" />
+    <Compile Include="Application\Source\Dto\PatientSourceDto.cs" />
+    <Compile Include="Application\Source\Dto\VisitSourceDto.cs" />
+    <Compile Include="Application\Source\PatientSourceBag.cs" />
+    <Compile Include="Application\Source\VisitSourceBag.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageAdverseEventExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageAllergiesChronicIllnessExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageArtExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageBaselineExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageContactListingExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageCovidExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageDefaulterTracingExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageDepressionScreeningExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageDrugAlcoholScreeningExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageEnhancedAdherenceCounsellingExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageIptExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageLaboratoryExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageOtzExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageOvcExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStagePatientExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStagePharmacyExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageStatusExtractRepository.cs" />
+    <Compile Include="Application\Stage\Repositories\IStageVisitExtractRepository.cs" />
+    <Compile Include="Application\Stage\StageAllergiesChronicIllnessExtract.cs" />
+    <Compile Include="Application\Stage\StageArtExtract.cs" />
+    <Compile Include="Application\Stage\StageBaselineExtract.cs" />
+    <Compile Include="Application\Stage\StageContactListingExtract.cs" />
+    <Compile Include="Application\Stage\StageCovidExtract.cs" />
+    <Compile Include="Application\Stage\StageDefaulterTracingExtract.cs" />
+    <Compile Include="Application\Stage\StageDepressionScreeningExtract.cs" />
+    <Compile Include="Application\Stage\StageDrugAlcoholScreeningExtract.cs" />
+    <Compile Include="Application\Stage\StageEnhancedAdherenceCounsellingExtract.cs" />
+    <Compile Include="Application\Stage\StageExtract.cs" />
+    <Compile Include="Application\Stage\StageIptExtract.cs" />
+    <Compile Include="Application\Stage\StageLaboratoryExtract.cs" />
+    <Compile Include="Application\Stage\StageOtzExtract.cs" />
+    <Compile Include="Application\Stage\StageOvcExtract.cs" />
+    <Compile Include="Application\Stage\StagePatientExtract.cs" />
+    <Compile Include="Application\Stage\StagePharmacyExtract.cs" />
+    <Compile Include="Application\Stage\StageStatusExtract.cs" />
+    <Compile Include="Application\Stage\StageVisitExtract.cs" />
+    <Compile Include="Application\Stage\StageAdverseEventExtract.cs" />
     <Compile Include="Exchange\DocketDto.cs" />
     <Compile Include="Exchange\HandshakeDto.cs" />
     <Compile Include="Exchange\IndicatorDto.cs" />
@@ -97,15 +148,9 @@
     <Compile Include="Interfaces\IFacilityRepository.cs" />
     <Compile Include="Interfaces\IPatientVisitRepository.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
-    <Compile Include="Interfaces\Sync\IStagePatientExtractRepository.cs" />
-    <Compile Include="Interfaces\Sync\ISyncExtract.cs" />
     <Compile Include="Model\ActionRegister.cs" />
-    <Compile Include="Model\Dto\Bag\PatientSourceBag.cs" />
-    <Compile Include="Model\Dto\ISourceBag.cs" />
-    <Compile Include="Model\Dto\PatientSourceDto.cs" />
-    <Compile Include="Model\Dto\PatientPlaceHolderDto.cs" />
-    <Compile Include="Model\MapProfiles\CtProfile.cs" />
-    <Compile Include="Model\StagePatientExtract.cs" />
+    <Compile Include="Model\Dto\FacilityCacheDto.cs" />
+    <Compile Include="Model\Dto\PatientExtractHolderDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AppServices.cs" />
     <Compile Include="Services\LiveSyncService.cs" />
@@ -113,7 +158,6 @@
     <Compile Include="Services\MessagingSenderService.cs" />
     <Compile Include="Services\MessagingService.cs" />
     <Compile Include="Services\SyncService.cs" />
-    <Compile Include="Services\Sync\SmartSyncExtracts.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PalladiumDwh.Shared\PalladiumDwh.Shared.csproj">

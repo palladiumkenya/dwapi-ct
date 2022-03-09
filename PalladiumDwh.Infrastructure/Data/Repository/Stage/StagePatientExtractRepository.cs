@@ -6,13 +6,13 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Dapper;
 using log4net;
-using PalladiumDwh.Core.Interfaces.Sync;
+using PalladiumDwh.Core.Application.Stage.Repositories;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Model.Extract;
 using Z.Dapper.Plus;
 
-namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
+namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
 {
     public class StagePatientExtractRepository : IStagePatientExtractRepository
     {
@@ -33,10 +33,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                     WHERE 
                             FacilityId = @facilityId AND
                             LiveSession != @manifestId";
-
             try
             {
-
                 // assign patientId
                 using (var connection = new SqlConnection(cons))
                 {
@@ -86,8 +84,6 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                     var pks = site.Select(x => x.PatientPID).ToList();
                     await MergeAll(manifestId, site.Key, pks);
                 }
-
-
             }
             catch (Exception e)
             {
@@ -105,8 +101,6 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                             StagePatientExtract
                     SET 
                             LiveStage= @nextlivestage 
-                    FROM 
-                            StagePatientExtract 
                     WHERE 
                             LiveSession = @manifestId AND 
                             LiveStage= @livestage AND 
@@ -199,7 +193,9 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                 //get updates
                 var updates = _context.GetConnection()
                     .Query<PatientExtract>(sqlUpdates, new {manifestId, livestage = LiveStage.Assigned});
-                _context.GetConnection().BulkUpdate(updates);
+
+                if(updates.Any())
+                    _context.GetConnection().BulkUpdate(updates);
 
             }
             catch (Exception e)
@@ -225,7 +221,9 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Sync
                 //  get new
                 var inserts = _context.GetConnection()
                     .Query<PatientExtract>(sqlNew, new {manifestId, livestage = LiveStage.Assigned});
-                _context.GetConnection().BulkInsert(inserts);
+
+                if(inserts.Any())
+                    _context.GetConnection().BulkInsert(inserts);
             }
             catch (Exception e)
             {

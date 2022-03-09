@@ -9,6 +9,8 @@ using FizzWare.NBuilder;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Shared.Enum;
+using PalladiumDwh.Shared.Interfaces.Extracts;
+using PalladiumDwh.Shared.Interfaces.Stages;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 using PalladiumDwh.Shared.Model.Profile;
@@ -170,21 +172,42 @@ namespace PalladiumDwh.Infrastructure.Tests
             context.SaveChanges();
         }
 
-        public static List<StagePatientExtract> CreateTestFacilityStagePatient(Guid facilityId,Guid session)
+        public static List<StagePatientExtract> CreateTestFacilityStagePatient(Guid facilityId,Guid manifestId)
         {
             var stages = Builder<StagePatientExtract>.CreateListOfSize(5).All()
                 .With(x => x.CurrentPatientId =null)
                 .With(x => x.LiveStage =LiveStage.Rest)
                 .With(x => x.FacilityId = facilityId)
+                .With(x => x.SiteCode =99990)
                 .With(x=>x.Voided=false)
                 .With(x=>x.Processed=false)
-                .With(x => x.LiveSession=session).Build()
+                .With(x => x.LiveSession=manifestId).Build()
                 .ToList();
 
             for (int i = 0; i < stages.Count; i++)
             {
                 stages[i].PatientPID = i+1;
                 stages[i].PatientCccNumber = $"999900000{stages[i].PatientPID}";
+            }
+
+            return stages;
+        }
+
+        public static List<T> CreateTestStage<T>(Guid facilityId,Guid manifestId) where T:IStage
+        {
+            var stages = Builder<T>.CreateListOfSize(5).All()
+                .With(x => x.CurrentPatientId =null)
+                .With(x => x.LiveStage =LiveStage.Rest)
+                .With(x => x.FacilityId = facilityId)
+                .With(x => x.SiteCode =99990)
+                .With(x=>x.Voided=false)
+                .With(x=>x.Processed=false)
+                .With(x => x.LiveSession=manifestId).Build()
+                .ToList();
+
+            for (int i = 0; i < stages.Count; i++)
+            {
+                stages[i].PatientPK = i+1;
             }
 
             return stages;
@@ -212,6 +235,29 @@ namespace PalladiumDwh.Infrastructure.Tests
             context.SaveChanges();
         }
 
+        public static void CreateTestExtract<T>(Guid facilityId) where T:class
+        {
+            CreateTestFacilityPatient(facilityId);
+
+            var visitExtracts = Builder<T>.CreateListOfSize(3).All()
+                .Build()
+                .ToList();
+
+            var context = TestInitializer.Container.GetInstance<DwapiCentralContext>();
+            var patients = context.PatientExtracts.Where(x => x.FacilityId == facilityId).Take(3).ToList();
+
+            for (int i = 0; i < visitExtracts.Count; i++)
+            {
+                ((dynamic) visitExtracts[i]).PatientId = patients[i].Id;
+                ((dynamic) visitExtracts[i]).Created = DateTime.Now.AddDays(-2).Date;
+                ((dynamic) visitExtracts[i]).Voided = false;
+                ((dynamic) visitExtracts[i]).Processed = false;
+            }
+
+            visitExtracts.ForEach(s => context.Set<T>().AddOrUpdate(s));
+            context.SaveChanges();
+        }
+
         public static void ClearDb()
         {
             var sql = @"DELETE FROM Facility;DELETE FROM FacilityManifest;TRUNCATE TABLE ActionRegister;DELETE FROM StagePatientExtract";
@@ -228,6 +274,13 @@ namespace PalladiumDwh.Infrastructure.Tests
             }
             var context = TestInitializer.Container.GetInstance<DwapiCentralContext>();
             context.Database.ExecuteSqlCommand(sql.ToString());
+        }
+
+        public static void CreateDb()
+        {
+            var context = TestInitializer.Container.GetInstance<DwapiCentralContext>();
+            context.Database.Delete();
+            context.Database.CreateIfNotExists();
         }
     }
 }

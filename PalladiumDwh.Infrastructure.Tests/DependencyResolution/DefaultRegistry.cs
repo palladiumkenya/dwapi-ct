@@ -1,3 +1,5 @@
+using AutoMapper;
+using PalladiumDwh.Core.Model.Profiles;
 using PalladiumDwh.Infrastructure.Data;
 using StructureMap;
 
@@ -23,6 +25,14 @@ namespace PalladiumDwh.Infrastructure.Tests.DependencyResolution {
             For<ILiveSyncService>().Use<LiveSyncService>()
                 .Ctor<string>("baseUrl").Is(Properties.Settings.Default.LiveSync);
             */
+
+            MapperConfiguration config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new CtProfile());
+            });
+
+            var mapper = config.CreateMapper();
+            For<IMapper>().Use(mapper);
         }
         #endregion
     }

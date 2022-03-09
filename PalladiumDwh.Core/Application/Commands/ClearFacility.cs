@@ -3,39 +3,38 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using log4net;
-using log4net.Repository.Hierarchy;
 using MediatR;
-using PalladiumDwh.Core.Interfaces.Sync;
+using PalladiumDwh.Core.Application.Stage.Repositories;
 
 namespace PalladiumDwh.Core.Application.Commands
 {
     public class ClearFacility : IRequest
     {
         public Guid FacilityId { get; }
-        public Guid SessionId { get; }
+        public Guid ManifestId { get; }
 
-        public ClearFacility(Guid facilityId, Guid sessionId)
+        public ClearFacility(Guid facilityId, Guid manifestId)
         {
             FacilityId = facilityId;
-            SessionId = sessionId;
+            ManifestId = manifestId;
         }
     }
 
-    public class ClearFacilitySessionHandler:IRequestHandler<ClearFacility>
+    public class ClearFacilityHandler:IRequestHandler<ClearFacility>
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly IStagePatientExtractRepository _patientExtractRepository;
+        private readonly IStagePatientExtractRepository _repository;
 
-        public ClearFacilitySessionHandler(IStagePatientExtractRepository patientExtractRepository)
+        public ClearFacilityHandler(IStagePatientExtractRepository repository)
         {
-            _patientExtractRepository = patientExtractRepository;
+            _repository = repository;
         }
-        
+
         public async Task<Unit> Handle(ClearFacility request, CancellationToken cancellationToken)
         {
             try
             {
-                await _patientExtractRepository.ClearSite(request.FacilityId, request.SessionId);
+                await _repository.ClearSite(request.FacilityId, request.ManifestId);
                 return Unit.Value;
             }
             catch (Exception e)

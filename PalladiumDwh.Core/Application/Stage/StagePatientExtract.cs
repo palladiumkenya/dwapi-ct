@@ -1,13 +1,17 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using PalladiumDwh.Core.Model.Bag;
+using PalladiumDwh.Core.Model.Dto;
 using PalladiumDwh.Shared.Enum;
 using PalladiumDwh.Shared.Interfaces.Extracts;
+using PalladiumDwh.Shared.Interfaces.Stages;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Core.Model
 {
-    public class StagePatientExtract:IStagePatientExtract
+    public class StagePatientExtract: IStagePatientExtract
     {
         public Guid Id { get; set; }
         public string Emr { get; set; }
@@ -54,11 +58,20 @@ namespace PalladiumDwh.Core.Model
         public Guid? CurrentPatientId  { get; set; }
         public Guid? LiveSession { get; set; }
         public LiveStage LiveStage { get; set; }
+        public int SiteCode { get; set; }
 
         public void Standardize(PatientSourceBag patientSourceBag)
         {
             LiveSession = patientSourceBag.ManifestId;
             FacilityId = patientSourceBag.FacilityId.Value;
+        }
+
+        public void Standardize(PatientSourceBag patientSourceBag, List<FacilityCacheDto> facilityCacheDtos)
+        {
+            LiveSession = patientSourceBag.ManifestId;
+
+            var fac = facilityCacheDtos.FirstOrDefault(x => x.Code == SiteCode);
+            FacilityId = null != fac ? fac.Id : patientSourceBag.FacilityId.Value;
         }
     }
 }

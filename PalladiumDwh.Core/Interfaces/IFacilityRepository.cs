@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PalladiumDwh.Core.Exchange;
+using PalladiumDwh.Core.Model.Dto;
 using PalladiumDwh.Shared.Interfaces;
 using PalladiumDwh.Shared.Model;
 
@@ -20,5 +21,6 @@ namespace PalladiumDwh.Core.Interfaces
         void Enroll(MasterFacility masterFacility,string emr,bool allowSnapshot);
         void EndSession(Guid session);
         IEnumerable<HandshakeDto> GetSessionHandshakes(Guid session);
+        List<FacilityCacheDto> ReadFacilityCache();
     }
 }

@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PalladiumDwh.Core.Model;
-using PalladiumDwh.Shared.Interfaces;
 
-namespace PalladiumDwh.Core.Interfaces.Sync
+namespace PalladiumDwh.Core.Application.Stage.Repositories
 {
     public interface IStagePatientExtractRepository
     {

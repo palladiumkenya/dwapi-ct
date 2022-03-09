@@ -42,8 +42,9 @@
       <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Dapper, Version=1.50.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.50.4\lib\net451\Dapper.dll</HintPath>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Dapper.2.0.123\lib\net461\Dapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Dapper.Contrib, Version=1.50.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.Contrib.1.50.4\lib\net451\Dapper.Contrib.dll</HintPath>
@@ -105,7 +106,6 @@
     <Compile Include="Interfaces\Extracts\IIptExtract.cs" />
     <Compile Include="Interfaces\Extracts\IOtzExtract.cs" />
     <Compile Include="Interfaces\Extracts\IOvcExtract.cs" />
-    <Compile Include="Interfaces\Extracts\IStagePatientExtract.cs" />
     <Compile Include="Interfaces\IAdverseEvent.cs" />
     <Compile Include="Interfaces\IAllergiesChronicIllness.cs" />
     <Compile Include="Interfaces\IArtNew.cs" />
@@ -154,6 +154,9 @@
     <Compile Include="Interfaces\Profiles\IDefaulterTracingProfile.cs" />
     <Compile Include="Interfaces\Profiles\IOvcProfile.cs" />
     <Compile Include="Interfaces\Profiles\IPatientAdverseEventProfile.cs" />
+    <Compile Include="Interfaces\Stages\IStage.cs" />
+    <Compile Include="Interfaces\Stages\IStagePatientExtract.cs" />
+    <Compile Include="Interfaces\Stages\IStageVisitExtract.cs" />
     <Compile Include="Model\DTO\FacilityId.cs" />
     <Compile Include="Model\DTO\FacMetric.cs" />
     <Compile Include="Model\DTO\IptExtractDTO.cs" />
@@ -253,7 +256,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

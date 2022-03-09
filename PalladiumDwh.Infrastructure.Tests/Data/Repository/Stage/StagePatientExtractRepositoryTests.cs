@@ -1,30 +1,30 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
-using PalladiumDwh.Core.Interfaces.Sync;
+using PalladiumDwh.Core.Application.Stage.Repositories;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Shared.Model.Extract;
 
-namespace PalladiumDwh.Infrastructure.Tests.Data.Repository.Sync
+namespace PalladiumDwh.Infrastructure.Tests.Data.Repository.Stage
 {
     [TestFixture]
     public class StagePatientExtractRepositoryTests
     {
         private IStagePatientExtractRepository _stagePatientExtractRepository;
-        private Guid session;
+        private Guid manifestId;
 
         [SetUp]
         public void SetUp()
         {
-            session = Guid.NewGuid();
+            manifestId = Guid.NewGuid();
             _stagePatientExtractRepository = TestInitializer.Container.GetInstance<IStagePatientExtractRepository>();
             TestHelpers.ClearDb($"{nameof(StagePatientExtract)}",$"{nameof(PatientExtract)}");
         }
         [Test]
         public void should_Clear_Site()
         {
-            _stagePatientExtractRepository.ClearSite(TestInitializer.FacilityId,session).Wait();
+            _stagePatientExtractRepository.ClearSite(TestInitializer.FacilityId,manifestId).Wait();
 
             var ctx = TestInitializer.Container.GetInstance<DwapiCentralContext>();
             Assert.False(ctx.StagePatientExtracts.ToList().Any());
@@ -33,30 +33,30 @@ namespace PalladiumDwh.Infrastructure.Tests.Data.Repository.Sync
         [Test]
         public void should_Stage_New()
         {
-            var currentSession = Guid.NewGuid();
-            var stages = TestHelpers.CreateTestFacilityStagePatient(TestInitializer.FacilityId,currentSession);
+            var currentManifestId = Guid.NewGuid();
+            var stages = TestHelpers.CreateTestFacilityStagePatient(TestInitializer.FacilityId,currentManifestId);
 
 
-            _stagePatientExtractRepository.SyncStage(stages, currentSession).Wait();
+            _stagePatientExtractRepository.SyncStage(stages, currentManifestId).Wait();
 
             var ctx = TestInitializer.Container.GetInstance<DwapiCentralContext>();
             Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.FacilityId==TestInitializer.FacilityId));
-            Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.LiveSession==currentSession));
+            Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.LiveSession==currentManifestId));
         }
 
         [Test]
         public void should_Stage_Mixed()
         {
-            var currentSession = Guid.NewGuid();
-            _stagePatientExtractRepository.ClearSite(TestInitializer.FacilityId,session).Wait();
+            var currentManifestId = Guid.NewGuid();
+            _stagePatientExtractRepository.ClearSite(TestInitializer.FacilityId,manifestId).Wait();
             TestHelpers.CreateTestFacilityPatient(TestInitializer.FacilityId);
-            var stages = TestHelpers.CreateTestFacilityStagePatient(TestInitializer.FacilityId,currentSession);
+            var stages = TestHelpers.CreateTestFacilityStagePatient(TestInitializer.FacilityId,currentManifestId);
 
-            _stagePatientExtractRepository.SyncStage(stages, currentSession).Wait();
+            _stagePatientExtractRepository.SyncStage(stages, currentManifestId).Wait();
 
             var ctx = TestInitializer.Container.GetInstance<DwapiCentralContext>();
             Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.FacilityId==TestInitializer.FacilityId));
-            Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.LiveSession==currentSession));
+            Assert.True(ctx.StagePatientExtracts.ToList().Any(x=>x.LiveSession==currentManifestId));
             Assert.True(ctx.PatientExtracts.ToList().Any(x=>x.Updated.HasValue));
         }
     }

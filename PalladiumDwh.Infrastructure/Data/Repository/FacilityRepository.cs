@@ -6,6 +6,7 @@ using Dapper;
 using Dapper.Contrib.Extensions;
 using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Core.Model.Dto;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;
@@ -246,6 +247,12 @@ select
             {
                 Id = x.Id, End = x.End, Session = x.Session, Start = x.Start
             });
+        }
+
+        public List<FacilityCacheDto> ReadFacilityCache()
+        {
+            var sql = $"SELECT DISTINCT Id,Code FROM {nameof(Facility)} Where Code>0";
+            return _context.GetConnection().Query<FacilityCacheDto>(sql).ToList();
         }
     }
 }

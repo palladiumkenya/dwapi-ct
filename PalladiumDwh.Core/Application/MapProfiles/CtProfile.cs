@@ -14,7 +14,8 @@ namespace PalladiumDwh.Core.Model.Profiles
            CreateMap<VisitSourceDto, StageVisitExtract>();
 
            CreateMap<StagePatientExtract, PatientExtract>();
-           CreateMap<StageVisitExtract, PatientVisitExtract>();
+           CreateMap<StageVisitExtract, PatientVisitExtract>()
+               .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.CurrentPatientId));
        }
    }
 }
