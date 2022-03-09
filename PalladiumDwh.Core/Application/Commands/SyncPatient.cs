@@ -41,6 +41,9 @@ namespace PalladiumDwh.Core.Application.Commands
         {
             try
             {
+
+                await _patientExtractRepository.ClearSite(request.PatientSourceBag.FacilityId.Value, request.PatientSourceBag.ManifestId.Value);
+
                 // standardize
 
                 var extracts = _mapper.Map<List<StagePatientExtract>>(request.PatientSourceBag.Extracts);

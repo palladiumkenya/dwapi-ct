@@ -41,6 +41,7 @@ namespace PalladiumDwh.Core.Application.Commands
         {
             try
             {
+                await _stageRepository.ClearSite(request.VisitSourceBag.FacilityId.Value, request.VisitSourceBag.ManifestId.Value);
                 // standardize
 
                 var extracts = _mapper.Map<List<StageVisitExtract>>(request.VisitSourceBag.Extracts);
@@ -53,9 +54,9 @@ namespace PalladiumDwh.Core.Application.Commands
                 else
                 {
                     var facs = _facilityRepository.ReadFacilityCache();
+
                     if (extracts.Any())
                         extracts.ForEach(x => x.Standardize(request.VisitSourceBag, facs));
-
                 }
 
                 //stage

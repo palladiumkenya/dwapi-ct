@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using PalladiumDwh.Core.Application.Source;
+using PalladiumDwh.Core.Model.Dto;
 using PalladiumDwh.Shared.Interfaces.Stages;
 
 namespace PalladiumDwh.Core.Model
@@ -19,5 +23,19 @@ namespace PalladiumDwh.Core.Model
         public string PHQ9_9 { get; set; }
         public string PHQ_9_rating { get; set; }
         public int? DepressionAssesmentScore { get; set; }
+
+        public  void Standardize(DepressionScreeningSourceBag sourceBag)
+        {
+            LiveSession = sourceBag.ManifestId;
+            FacilityId = sourceBag.FacilityId.Value;
+        }
+
+        public  void Standardize(DepressionScreeningSourceBag sourceBag, List<FacilityCacheDto> facilityCacheDtos)
+        {
+            LiveSession = sourceBag.ManifestId;
+
+            var fac = facilityCacheDtos.FirstOrDefault(x => x.Code == SiteCode);
+            FacilityId = null != fac ? fac.Id : sourceBag.FacilityId.Value;
+        }
     }
 }

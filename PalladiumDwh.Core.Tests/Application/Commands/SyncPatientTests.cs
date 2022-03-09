@@ -41,7 +41,6 @@ namespace PalladiumDwh.Core.Tests.Application.Commands
         public void should_Sync_Updates()
         {
             var currentManifestId = Guid.NewGuid();
-            _mediator.Send(new ClearFacility(TestInitializer.FacilityId, currentManifestId));
             TestHelpers.CreatePatientExtracts(TestInitializer.FacilityId);
             var bag = TestHelpers.GeneratePatientBag(TestInitializer.FacilityId, currentManifestId);
 

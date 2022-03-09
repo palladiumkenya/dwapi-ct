@@ -167,9 +167,69 @@ namespace PalladiumDwh.Core.Tests
             return sources;
         }
 
+        public static List<T> CreateSource<T>(int count=5,int siteCode=99990) where T:SourceDto
+        {
+            var sources = Builder<T>.CreateListOfSize(count).All()
+                .With(x => x.SiteCode =siteCode)
+                .Build()
+                .ToList();
+
+            for (int i = 0; i < sources.Count; i++)
+            {
+                sources[i].PatientPK = i+1;
+            }
+
+            return sources;
+        }
+
         public static void CreatePatientExtracts(Guid facilityId,int count=3)
         {
             var patientExtracts = Builder<PatientExtract>.CreateListOfSize(count).All()
+                .With(x => x.FacilityId = facilityId)
+                .With(x=>x.Created=DateTime.Now.AddDays(-2).Date)
+                .With(x=>x.Updated=null)
+                .With(x=>x.Voided=false)
+                .With(x=>x.Processed=false)
+                .Build()
+                .ToList();
+
+            for (int i = 0; i < patientExtracts.Count; i++)
+            {
+                patientExtracts[i].PatientPID = i+1;
+                patientExtracts[i].PatientCccNumber = $"999900000{patientExtracts[i].PatientPID}";
+            }
+
+            var context = TestInitializer.Container.GetInstance<DwapiCentralContext>();
+            patientExtracts.ForEach(s => context.PatientExtracts.AddOrUpdate(s));
+            context.SaveChanges();
+        }
+
+        public static void CreateTestExtract<T>(Guid facilityId) where T:class
+        {
+            CreateTestFacilityPatient(facilityId);
+
+            var visitExtracts = Builder<T>.CreateListOfSize(3).All()
+                .Build()
+                .ToList();
+
+            var context = TestInitializer.Container.GetInstance<DwapiCentralContext>();
+            var patients = context.PatientExtracts.Where(x => x.FacilityId == facilityId).Take(3).ToList();
+
+            for (int i = 0; i < visitExtracts.Count; i++)
+            {
+                ((dynamic) visitExtracts[i]).PatientId = patients[i].Id;
+                ((dynamic) visitExtracts[i]).Created = DateTime.Now.AddDays(-2).Date;
+                ((dynamic) visitExtracts[i]).Voided = false;
+                ((dynamic) visitExtracts[i]).Processed = false;
+            }
+
+            visitExtracts.ForEach(s => context.Set<T>().AddOrUpdate(s));
+            context.SaveChanges();
+        }
+
+        public static void CreateTestFacilityPatient(Guid facilityId)
+        {
+            var patientExtracts = Builder<PatientExtract>.CreateListOfSize(3).All()
                 .With(x => x.FacilityId = facilityId)
                 .With(x=>x.Created=DateTime.Now.AddDays(-2).Date)
                 .With(x=>x.Updated=null)
@@ -205,6 +265,20 @@ namespace PalladiumDwh.Core.Tests
                 .With(x => x.SiteCode=siteCode)
                 .With(x => x.Facility="Maun Hospital (99990)")
                 .With(x=>x.Extracts=CreateSourcePatient(count,siteCode))
+                .Build();
+
+            return bag;
+        }
+
+        public static T GenerateBag<T,D>(Guid facilityId,Guid manifestId,int count=5,int siteCode=99990)  where D:SourceDto where T:SourceBag<D>
+        {
+            var bag = Builder<T>.CreateNew()
+                .With(x => x.EmrSetup = EmrSetup.SingleFacility)
+                .With(x => x.FacilityId = facilityId)
+                .With(x => x.ManifestId = manifestId)
+                .With(x => x.SiteCode=siteCode)
+                .With(x => x.Facility="Maun Hospital (99990)")
+                .With(x=>x.Extracts=CreateSource<D>(count,siteCode))
                 .Build();
 
             return bag;

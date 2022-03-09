@@ -160,6 +160,7 @@
     <Compile Include="Interfaces\Stages\IStage.cs" />
     <Compile Include="Interfaces\Stages\IStagePatientExtract.cs" />
     <Compile Include="Interfaces\Stages\IStageVisitExtract.cs" />
+    <Compile Include="Model\DTO\FacilityCacheDto.cs" />
     <Compile Include="Model\DTO\FacilityId.cs" />
     <Compile Include="Model\DTO\FacMetric.cs" />
     <Compile Include="Model\DTO\IptExtractDTO.cs" />

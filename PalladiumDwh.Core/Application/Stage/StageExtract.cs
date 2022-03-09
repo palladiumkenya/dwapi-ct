@@ -8,7 +8,7 @@ using PalladiumDwh.Shared.Interfaces.Stages;
 
 namespace PalladiumDwh.Core.Model
 {
-    public class StageExtract:IStage
+    public abstract class StageExtract:IStage
     {
         public Guid Id { get; set; }
         public string Emr { get; set; }
@@ -21,20 +21,5 @@ namespace PalladiumDwh.Core.Model
         public Guid? CurrentPatientId { get; set; }
         public Guid? LiveSession { get; set; }
         public LiveStage LiveStage { get; set; }
-
-
-        public void Standardize(VisitSourceBag sourceBag)
-        {
-            LiveSession = sourceBag.ManifestId;
-            FacilityId = sourceBag.FacilityId.Value;
-        }
-
-        public void Standardize(VisitSourceBag sourceBag, List<FacilityCacheDto> facilityCacheDtos)
-        {
-            LiveSession = sourceBag.ManifestId;
-
-            var fac = facilityCacheDtos.FirstOrDefault(x => x.Code == SiteCode);
-            FacilityId = null != fac ? fac.Id : sourceBag.FacilityId.Value;
-        }
     }
 }

@@ -67,8 +67,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Commands\ClearFacility.cs" />
+    <Compile Include="Application\Commands\SyncAdverseEventcs.cs" />
+    <Compile Include="Application\Commands\SyncAllergiesChronicIllness.cs" />
+    <Compile Include="Application\Commands\SyncArt.cs" />
+    <Compile Include="Application\Commands\SyncBaseline.cs" />
+    <Compile Include="Application\Commands\SyncContactListing.cs" />
+    <Compile Include="Application\Commands\SyncCovid.cs" />
+    <Compile Include="Application\Commands\SyncDefaulterTracing.cs" />
+    <Compile Include="Application\Commands\SyncDepressionScreening.cs" />
+    <Compile Include="Application\Commands\SyncDrugAlcoholScreening.cs" />
+    <Compile Include="Application\Commands\SyncEnhancedAdherenceCounselling.cs" />
+    <Compile Include="Application\Commands\SyncIpt.cs" />
+    <Compile Include="Application\Commands\SyncLaboratory.cs" />
+    <Compile Include="Application\Commands\SyncOtz.cs" />
+    <Compile Include="Application\Commands\SyncOvc.cs" />
     <Compile Include="Application\Commands\SyncPatient.cs" />
+    <Compile Include="Application\Commands\SyncPharmacy.cs" />
+    <Compile Include="Application\Commands\SyncStatus.cs" />
     <Compile Include="Application\Commands\SyncVisit.cs" />
     <Compile Include="Application\Common\ISourceBag.cs" />
     <Compile Include="Application\MapProfiles\CtProfile.cs" />
@@ -186,7 +201,6 @@
     <Compile Include="Interfaces\IPatientVisitRepository.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
     <Compile Include="Model\ActionRegister.cs" />
-    <Compile Include="Model\Dto\FacilityCacheDto.cs" />
     <Compile Include="Model\Dto\PatientExtractHolderDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AppServices.cs" />

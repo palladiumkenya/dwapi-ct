@@ -128,7 +128,23 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Application\Commands\ClearFacilityTests.cs" />
+    <Compile Include="Application\Commands\SyncAdverseEventTests.cs" />
+    <Compile Include="Application\Commands\SyncAllergiesChronicIllnessTests.cs" />
+    <Compile Include="Application\Commands\SyncArtTests.cs" />
+    <Compile Include="Application\Commands\SyncBaselineTests.cs" />
+    <Compile Include="Application\Commands\SyncContactListingTests.cs" />
+    <Compile Include="Application\Commands\SyncCovidTests.cs" />
+    <Compile Include="Application\Commands\SyncDefaulterTracingTests.cs" />
+    <Compile Include="Application\Commands\SyncDepressionScreeningTests.cs" />
+    <Compile Include="Application\Commands\SyncDrugAlcoholScreeningTests.cs" />
+    <Compile Include="Application\Commands\SyncEnhancedAdherenceCounsellingTests.cs" />
+    <Compile Include="Application\Commands\SyncIptTests.cs" />
+    <Compile Include="Application\Commands\SyncLaboratoryTests.cs" />
+    <Compile Include="Application\Commands\SyncOtzTests.cs" />
+    <Compile Include="Application\Commands\SyncOvcTests.cs" />
+    <Compile Include="Application\Commands\SyncPharmacyTests.cs" />
+    <Compile Include="Application\Commands\SyncStatusTests.cs" />
+    <Compile Include="Application\Commands\SyncVisitTests.cs" />
     <Compile Include="Application\Commands\SyncPatientTests.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
