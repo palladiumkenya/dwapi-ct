@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Dapper;
 using log4net;
-using PalladiumDwh.Core.Application.Stage.Repositories;
+using PalladiumDwh.Core.Application.Extracts.Stage.Repositories;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Core.Model.Dto;
 using PalladiumDwh.Shared.Enum;

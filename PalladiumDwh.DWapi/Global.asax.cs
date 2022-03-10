@@ -7,8 +7,10 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Hangfire;
 using Hangfire.SqlServer;
+using Hangfire.StructureMap;
 using log4net;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.DWapi.Helpers;
 using PalladiumDwh.Infrastructure.Data;
 using Z.Dapper.Plus;
 
@@ -31,8 +33,11 @@ namespace PalladiumDwh.DWapi
 
             HangfireAspNet.Use(GetHangfireServers);
 
-            // Let's also create a sample background job
-            BackgroundJob.Enqueue(() => Debug.WriteLine("Hangfire running!"));
+            BatchJob.StartNew(x =>
+            {
+                x.Enqueue(() => Debug.WriteLine($"Dwapi Background Jobs Started!"));
+            });
+
 
             // CHECK if the license if valid for the default provider (SQL Server)
             try
@@ -62,7 +67,7 @@ namespace PalladiumDwh.DWapi
             {
                 Log.Error("CANNOT UPGRADE DATABASE !",e);
             }
-            
+
 
             /*
             _scheduler = StructuremapMvc.DwapiIContainer.GetInstance<IMessengerScheduler>();
@@ -80,6 +85,7 @@ namespace PalladiumDwh.DWapi
         private IEnumerable<IDisposable> GetHangfireServers()
         {
             Hangfire.GlobalConfiguration.Configuration
+                .UseStructureMapActivator(PalladiumDwh.DWapi.StructuremapMvc.DwapiIContainer)
                 .UseBatches()
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
@@ -92,7 +98,6 @@ namespace PalladiumDwh.DWapi
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true
                 });
-
             yield return new BackgroundJobServer();
         }
     }

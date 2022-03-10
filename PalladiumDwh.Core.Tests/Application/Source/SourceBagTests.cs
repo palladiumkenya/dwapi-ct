@@ -1,6 +1,6 @@
 using FizzWare.NBuilder;
 using NUnit.Framework;
-using PalladiumDwh.Core.Application.Source;
+using PalladiumDwh.Core.Application.Extracts.Source;
 
 namespace PalladiumDwh.Core.Tests.Application.Source
 {

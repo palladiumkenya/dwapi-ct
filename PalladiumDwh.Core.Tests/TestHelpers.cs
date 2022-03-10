@@ -5,8 +5,9 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using FizzWare.NBuilder;
-using PalladiumDwh.Core.Application.Source;
-using PalladiumDwh.Core.Application.Source.Dto;
+using PalladiumDwh.Core.Application.Extracts.Source;
+using PalladiumDwh.Core.Application.Extracts.Source.Dto;
+using PalladiumDwh.Core.Application.Extracts.Stage;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Shared.Enum;
@@ -282,6 +283,19 @@ namespace PalladiumDwh.Core.Tests
                 .Build();
 
             return bag;
+        }
+
+        public static Manifest GenerateManifest(int siteCode=99990)
+        {
+            var manifest = Builder<Manifest>.CreateNew()
+                .With(x => x.EmrSetup = EmrSetup.SingleFacility)
+                .With(x => x.UploadMode = UploadMode.Smart)
+                .With(x => x.SiteCode=siteCode)
+                .With(x => x.Name="Maun Hospital (99990)")
+                .With(x => x.PatientPKs=new List<int>(){1,2,3,4,5})
+                .Build();
+
+            return manifest;
         }
     }
 }

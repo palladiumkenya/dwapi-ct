@@ -11,7 +11,8 @@ using Hangfire;
 using log4net;
 using MediatR;
 using PalladiumDwh.Core.Application.Commands;
-using PalladiumDwh.Core.Application.Source;
+using PalladiumDwh.Core.Application.Extracts.Commands;
+using PalladiumDwh.Core.Application.Extracts.Source;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model.Profile;
@@ -26,40 +27,41 @@ namespace PalladiumDwh.DWapi.Controllers
         private readonly string _gatewayBatch;
         private readonly IMessengerScheduler _messengerScheduler;
         private readonly IMediator _mediator;
-        public IptController(IMessagingSenderService messagingService,IMessengerScheduler messengerScheduler)
+        public IptController(IMessagingSenderService messagingService,IMessengerScheduler messengerScheduler, IMediator mediator)
         {
             _messagingService = messagingService;
             _messengerScheduler = messengerScheduler;
+            _mediator = mediator;
             _messagingService.Initialize(_gateway);
             _gatewayBatch = $"{_gateway}.batch";
             _messagingService.Initialize(_gatewayBatch);
         }
 
-        public async Task<HttpResponseMessage> Post([FromBody] IptProfile patientProfile)
-        {
-            if (null != patientProfile)
-            {
-                if (!patientProfile.IsValid())
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                        new HttpError("Invalid data,Please ensure its has Patient,Facility and atleast one (1) Extract"));
-                }
-                try
-                {
-                    patientProfile.GeneratePatientRecord();
-                    var messageRef = await _messagingService.SendAsync(patientProfile, _gateway);
-                    return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(new string('*',30));
-                    Log.Error(nameof(IptProfile),ex);
-                    Log.Error(new string('*',30));
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-                }
-            }
-            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new IptProfile().GetType().Name}' is null"));
-        }
+        // public async Task<HttpResponseMessage> Post([FromBody] IptProfile patientProfile)
+        // {
+        //     if (null != patientProfile)
+        //     {
+        //         if (!patientProfile.IsValid())
+        //         {
+        //             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+        //                 new HttpError("Invalid data,Please ensure its has Patient,Facility and atleast one (1) Extract"));
+        //         }
+        //         try
+        //         {
+        //             patientProfile.GeneratePatientRecord();
+        //             var messageRef = await _messagingService.SendAsync(patientProfile, _gateway);
+        //             return Request.CreateResponse(HttpStatusCode.OK, $"{messageRef}");
+        //         }
+        //         catch (Exception ex)
+        //         {
+        //             Log.Error(new string('*',30));
+        //             Log.Error(nameof(IptProfile),ex);
+        //             Log.Error(new string('*',30));
+        //             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+        //         }
+        //     }
+        //     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new IptProfile().GetType().Name}' is null"));
+        // }
 
         [Route("api/v2/Ipt")]
         public async Task<HttpResponseMessage> PostBatch([FromBody] List<IptProfile> patientProfile)
@@ -94,7 +96,7 @@ namespace PalladiumDwh.DWapi.Controllers
         }
 
         [Route("api/v3/Ipt")]
-        public async Task<HttpResponseMessage> PostBatch([FromBody] IptSourceBag sourceBag)
+        public async Task<HttpResponseMessage> PostBatchNew([FromBody] IptSourceBag sourceBag)
         {
 
             if (null != sourceBag && sourceBag.Extracts.Any())
@@ -108,10 +110,19 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
-                    var jobId = BatchJob.StartNew(x =>
+                    string jobId;
+                    if (sourceBag.HasJobId)
                     {
-                        x.Enqueue(() => Send($"{sourceBag}",new SyncIpt(sourceBag)));
-                    });
+                        jobId = BatchJob.ContinueBatchWith(sourceBag.JobId,
+                            x => { x.Enqueue(() => Send($"{sourceBag}", new SyncIpt(sourceBag))); });
+                    }
+                    else
+                    {
+                        jobId = BatchJob.StartNew(x =>
+                        {
+                            x.Enqueue(() => Send($"{sourceBag}", new SyncIpt(sourceBag)));
+                        });
+                    }
 
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
                         new

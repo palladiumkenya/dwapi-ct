@@ -1,6 +1,8 @@
 using AutoMapper;
 using MediatR;
 using PalladiumDwh.Core.Application.MapProfiles;
+using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Core.Services;
 using PalladiumDwh.Infrastructure.Data;
 using StructureMap;
 using StructureMap.Pipeline;
@@ -25,10 +27,10 @@ namespace PalladiumDwh.Core.Tests.DependencyResolution {
             For<DwapiCentralContext>().Use<DwapiCentralContext>()
                 .SelectConstructor(() => new DwapiCentralContext());
 
-            /*
+
             For<ILiveSyncService>().Use<LiveSyncService>()
-                .Ctor<string>("baseUrl").Is(Properties.Settings.Default.LiveSync);
-            */
+                .Ctor<string>("baseUrl").Is("http://localhost:4777/stages");
+
 
             MapperConfiguration config = new MapperConfiguration(cfg =>
             {

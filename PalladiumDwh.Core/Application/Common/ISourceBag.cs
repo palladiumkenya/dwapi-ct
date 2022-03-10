@@ -6,6 +6,7 @@ namespace PalladiumDwh.Core.Application.Common
 {
     public interface ISourceBag<T>
     {
+        string JobId  { get; set; }
         EmrSetup EmrSetup { get; set; }
         UploadMode Mode { get; set; }
         string DwapiVersion { get; set; }

@@ -128,25 +128,30 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Application\Commands\SyncAdverseEventTests.cs" />
-    <Compile Include="Application\Commands\SyncAllergiesChronicIllnessTests.cs" />
-    <Compile Include="Application\Commands\SyncArtTests.cs" />
-    <Compile Include="Application\Commands\SyncBaselineTests.cs" />
-    <Compile Include="Application\Commands\SyncContactListingTests.cs" />
-    <Compile Include="Application\Commands\SyncCovidTests.cs" />
-    <Compile Include="Application\Commands\SyncDefaulterTracingTests.cs" />
-    <Compile Include="Application\Commands\SyncDepressionScreeningTests.cs" />
-    <Compile Include="Application\Commands\SyncDrugAlcoholScreeningTests.cs" />
-    <Compile Include="Application\Commands\SyncEnhancedAdherenceCounsellingTests.cs" />
-    <Compile Include="Application\Commands\SyncGbvScreeningTests.cs" />
-    <Compile Include="Application\Commands\SyncIptTests.cs" />
-    <Compile Include="Application\Commands\SyncLaboratoryTests.cs" />
-    <Compile Include="Application\Commands\SyncOtzTests.cs" />
-    <Compile Include="Application\Commands\SyncOvcTests.cs" />
-    <Compile Include="Application\Commands\SyncPharmacyTests.cs" />
-    <Compile Include="Application\Commands\SyncStatusTests.cs" />
-    <Compile Include="Application\Commands\SyncVisitTests.cs" />
-    <Compile Include="Application\Commands\SyncPatientTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncAdverseEventTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncAllergiesChronicIllnessTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncArtTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncBaselineTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncContactListingTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncCovidTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncDefaulterTracingTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncDepressionScreeningTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncDrugAlcoholScreeningTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncEnhancedAdherenceCounsellingTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncGbvScreeningTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncIptTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncLaboratoryTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncOtzTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncOvcTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncPatientTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncPharmacyTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncStatusTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncVisitTests.cs" />
+    <Compile Include="Application\Manifests\Commands\ClearDuplicatesTests.cs" />
+    <Compile Include="Application\Manifests\Commands\ClearManifestTests.cs" />
+    <Compile Include="Application\Manifests\Commands\SendToSpotTests.cs" />
+    <Compile Include="Application\Manifests\Commands\CreateManifestTests.cs" />
+    <Compile Include="Application\Manifests\Queries\GetValidFacilityTests.cs" />
     <Compile Include="Application\Source\SourceBagTests.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -199,6 +204,9 @@
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Application\Extracts" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

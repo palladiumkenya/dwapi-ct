@@ -11,7 +11,8 @@ using Hangfire;
 using log4net;
 using MediatR;
 using PalladiumDwh.Core.Application.Commands;
-using PalladiumDwh.Core.Application.Source;
+using PalladiumDwh.Core.Application.Extracts.Commands;
+using PalladiumDwh.Core.Application.Extracts.Source;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Model.Profile;
@@ -36,6 +37,7 @@ namespace PalladiumDwh.DWapi.Controllers
             _messagingService.Initialize(_gatewayBatch);
         }
 
+        /*
         public async Task<HttpResponseMessage> Post([FromBody] AllergiesChronicIllnessProfile patientProfile)
         {
             if (null != patientProfile)
@@ -61,6 +63,7 @@ namespace PalladiumDwh.DWapi.Controllers
             }
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new AllergiesChronicIllnessProfile().GetType().Name}' is null"));
         }
+        */
 
         [Route("api/v2/AllergiesChronicIllness")]
         public async Task<HttpResponseMessage> PostBatch([FromBody] List<AllergiesChronicIllnessProfile> patientProfile)
@@ -109,10 +112,19 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 try
                 {
-                    var jobId = BatchJob.StartNew(x =>
+                    string jobId;
+                    if (sourceBag.HasJobId)
                     {
-                        x.Enqueue(() => Send($"{sourceBag}",new SyncAllergiesChronicIllness(sourceBag)));
-                    });
+                        jobId = BatchJob.ContinueBatchWith(sourceBag.JobId,
+                            x => { x.Enqueue(() => Send($"{sourceBag}", new SyncAllergiesChronicIllness(sourceBag))); });
+                    }
+                    else
+                    {
+                        jobId = BatchJob.StartNew(x =>
+                        {
+                            x.Enqueue(() => Send($"{sourceBag}", new SyncAllergiesChronicIllness(sourceBag)));
+                        });
+                    }
 
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
                         new

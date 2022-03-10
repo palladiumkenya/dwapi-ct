@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
+using PalladiumDwh.Core.Application.Extracts.Stage;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Infrastructure.Migrations;
 using PalladiumDwh.Shared.Data;

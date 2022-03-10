@@ -1,7 +1,8 @@
 using System.Reflection;
 using AutoMapper;
 using log4net;
-using PalladiumDwh.Core.Application.Stage.Repositories;
+using PalladiumDwh.Core.Application.Extracts.Stage;
+using PalladiumDwh.Core.Application.Extracts.Stage.Repositories;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared.Model.Extract;
 

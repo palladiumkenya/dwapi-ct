@@ -1,5 +1,6 @@
 using AutoMapper;
-using PalladiumDwh.Core.Application.Source.Dto;
+using PalladiumDwh.Core.Application.Extracts.Source.Dto;
+using PalladiumDwh.Core.Application.Extracts.Stage;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared.Model.Extract;
 
