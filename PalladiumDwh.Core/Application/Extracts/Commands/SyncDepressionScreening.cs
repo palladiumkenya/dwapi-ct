@@ -45,7 +45,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.DepressionScreeningSourceBag.FacilityId.Value, request.DepressionScreeningSourceBag.ManifestId.Value);
+               // await _stageRepository.ClearSite(request.DepressionScreeningSourceBag.FacilityId.Value, request.DepressionScreeningSourceBag.ManifestId.Value);
 
                 var extracts =
                     _mapper.Map<List<StageDepressionScreeningExtract>>(request.DepressionScreeningSourceBag.Extracts);

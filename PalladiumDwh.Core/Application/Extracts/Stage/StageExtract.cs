@@ -22,6 +22,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
 
         protected virtual void CheckId()
         {
+            //Id = LiveGuid.NewGuid();
             Id = Id.IsNullOrEmpty() ? LiveGuid.NewGuid() : Id;
         }
     }

@@ -45,7 +45,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.DrugAlcoholScreeningSourceBag.FacilityId.Value, request.DrugAlcoholScreeningSourceBag.ManifestId.Value);
+                //await _stageRepository.ClearSite(request.DrugAlcoholScreeningSourceBag.FacilityId.Value, request.DrugAlcoholScreeningSourceBag.ManifestId.Value);
 
                 var extracts =
                     _mapper.Map<List<StageDrugAlcoholScreeningExtract>>(request.DrugAlcoholScreeningSourceBag.Extracts);

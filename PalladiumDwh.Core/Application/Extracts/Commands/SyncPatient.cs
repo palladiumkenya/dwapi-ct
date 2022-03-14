@@ -42,7 +42,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
             try
             {
 
-                await _patientExtractRepository.ClearSite(request.PatientSourceBag.FacilityId.Value, request.PatientSourceBag.ManifestId.Value);
+               // await _patientExtractRepository.ClearSite(request.PatientSourceBag.FacilityId.Value, request.PatientSourceBag.ManifestId.Value);
 
                 // standardize
 

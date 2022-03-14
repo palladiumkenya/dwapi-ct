@@ -25,6 +25,52 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
             _context = context;
         }
 
+        public async Task ClearSite(Guid facilityId)
+        {
+
+            var cons = _context.Database.Connection.ConnectionString;
+
+            var sql = @"
+delete  from StageAdverseEventExtract WHERE  FacilityId = @facilityId;
+delete  from StageAllergiesChronicIllnessExtract WHERE  FacilityId = @facilityId;
+delete  from StageArtExtract WHERE  FacilityId = @facilityId;
+delete  from StageBaselineExtract WHERE  FacilityId = @facilityId;
+delete  from StageContactListingExtract WHERE  FacilityId = @facilityId;
+delete  from StageCovidExtract WHERE  FacilityId = @facilityId;
+delete  from StageDefaulterTracingExtract WHERE  FacilityId = @facilityId;
+delete  from StageDepressionScreeningExtract WHERE  FacilityId = @facilityId;
+delete  from StageDrugAlcoholScreeningExtract WHERE  FacilityId = @facilityId;
+delete  from StageEnhancedAdherenceCounsellingExtract WHERE  FacilityId = @facilityId;
+delete  from StageGbvScreeningExtract WHERE  FacilityId = @facilityId;
+delete  from StageIptExtract WHERE  FacilityId = @facilityId;
+delete  from StageLaboratoryExtract WHERE  FacilityId = @facilityId;
+delete  from StageOtzExtract WHERE  FacilityId = @facilityId;
+delete  from StageOvcExtract WHERE  FacilityId = @facilityId;
+delete  from StagePatientExtract WHERE  FacilityId = @facilityId;
+delete  from StagePharmacyExtract WHERE  FacilityId = @facilityId;
+delete  from StageStatusExtract WHERE  FacilityId = @facilityId;
+delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
+";
+            try
+            {
+                using (var connection = new SqlConnection(cons))
+                {
+                    connection.Open();
+
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        await connection.ExecuteAsync($"{sql}", new {  facilityId }, transaction, 0);
+                        transaction.Commit();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                throw;
+            }
+        }
+
         public async Task ClearSite(Guid facilityId, Guid manifestId)
         {
             var cons = _context.Database.Connection.ConnectionString;

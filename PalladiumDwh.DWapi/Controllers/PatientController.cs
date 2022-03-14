@@ -90,7 +90,7 @@ namespace PalladiumDwh.DWapi.Controllers
                     {
                         jobId = BatchJob.StartNew(x =>
                         {
-                            x.Enqueue(() => Send($"{sourceBag}",new SyncPatient(sourceBag)));
+                            x.Enqueue(() => Send($"{sourceBag}", new SyncPatient(sourceBag)));
                         });
                     }
 
@@ -98,8 +98,8 @@ namespace PalladiumDwh.DWapi.Controllers
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
                         new
                         {
-                            JobId=jobId,
-                            BatchKey = new List<Guid>() {LiveGuid.NewGuid()}
+                            JobId = jobId,
+                            BatchKey = new List<Guid>() { LiveGuid.NewGuid() }
                         });
                 }
                 catch (Exception ex)
@@ -114,6 +114,8 @@ namespace PalladiumDwh.DWapi.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                 new HttpError($"The expected '{new PatientSourceBag().GetType().Name}' is null"));
         }
+
+        [AutomaticRetry(Attempts = 0)]
 
         [DisplayName("{0}")]
         public async Task Send(string jobName, IRequest command)

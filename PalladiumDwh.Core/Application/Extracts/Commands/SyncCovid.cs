@@ -43,7 +43,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.CovidSourceBag.FacilityId.Value, request.CovidSourceBag.ManifestId.Value);
+                //await _stageRepository.ClearSite(request.CovidSourceBag.FacilityId.Value, request.CovidSourceBag.ManifestId.Value);
 
                 var extracts = _mapper.Map<List<StageCovidExtract>>(request.CovidSourceBag.Extracts);
                 if (request.CovidSourceBag.EmrSetup == EmrSetup.SingleFacility)

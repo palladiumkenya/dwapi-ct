@@ -44,7 +44,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.IptSourceBag.FacilityId.Value, request.IptSourceBag.ManifestId.Value);
+               // await _stageRepository.ClearSite(request.IptSourceBag.FacilityId.Value, request.IptSourceBag.ManifestId.Value);
 
                 var extracts = _mapper.Map<List<StageIptExtract>>(request.IptSourceBag.Extracts);
                 if (request.IptSourceBag.EmrSetup == EmrSetup.SingleFacility)

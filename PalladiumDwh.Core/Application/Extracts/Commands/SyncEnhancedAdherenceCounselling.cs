@@ -46,8 +46,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.EnhancedAdherenceCounsellingSourceBag.FacilityId.Value,
-                    request.EnhancedAdherenceCounsellingSourceBag.ManifestId.Value);
+              //  await _stageRepository.ClearSite(request.EnhancedAdherenceCounsellingSourceBag.FacilityId.Value,
+              //      request.EnhancedAdherenceCounsellingSourceBag.ManifestId.Value);
 
                 var extracts =
                     _mapper.Map<List<StageEnhancedAdherenceCounsellingExtract>>(request

@@ -45,7 +45,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.AllergiesChronicIllnessSourceBag.FacilityId.Value, request.AllergiesChronicIllnessSourceBag.ManifestId.Value);
+                // await _stageRepository.ClearSite(request.AllergiesChronicIllnessSourceBag.FacilityId.Value, request.AllergiesChronicIllnessSourceBag.ManifestId.Value);
 
                 var extracts =
                     _mapper.Map<List<StageAllergiesChronicIllnessExtract>>(request.AllergiesChronicIllnessSourceBag

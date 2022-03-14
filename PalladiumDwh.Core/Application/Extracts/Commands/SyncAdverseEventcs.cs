@@ -44,8 +44,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
             try
             {
 
-                await _stageRepository.ClearSite(request.AdverseEventSourceBag.FacilityId.Value,
-                    request.AdverseEventSourceBag.ManifestId.Value);
+               // await _stageRepository.ClearSite(request.AdverseEventSourceBag.FacilityId.Value,
+                 //   request.AdverseEventSourceBag.ManifestId.Value);
 
                 var extracts = _mapper.Map<List<StageAdverseEventExtract>>(request.AdverseEventSourceBag.Extracts);
                 if (request.AdverseEventSourceBag.EmrSetup == EmrSetup.SingleFacility)

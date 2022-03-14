@@ -43,7 +43,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.OtzSourceBag.FacilityId.Value, request.OtzSourceBag.ManifestId.Value);
+              //  await _stageRepository.ClearSite(request.OtzSourceBag.FacilityId.Value, request.OtzSourceBag.ManifestId.Value);
                 var extracts = _mapper.Map<List<StageOtzExtract>>(request.OtzSourceBag.Extracts);
                 if (request.OtzSourceBag.EmrSetup == EmrSetup.SingleFacility)
                 {

@@ -44,7 +44,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
             try
             {
 
-                await _stageRepository.ClearSite(request.OvcSourceBag.FacilityId.Value, request.OvcSourceBag.ManifestId.Value);
+               // await _stageRepository.ClearSite(request.OvcSourceBag.FacilityId.Value, request.OvcSourceBag.ManifestId.Value);
                 var extracts = _mapper.Map<List<StageOvcExtract>>(request.OvcSourceBag.Extracts);
                 if (request.OvcSourceBag.EmrSetup == EmrSetup.SingleFacility)
                 {

@@ -61,6 +61,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
 
         public void Standardize(PatientSourceBag patientSourceBag)
         {
+            //Id = LiveGuid.NewGuid();
             Id = Id.IsNullOrEmpty() ? LiveGuid.NewGuid() : Id;
             LiveSession = patientSourceBag.ManifestId;
             FacilityId = patientSourceBag.FacilityId.Value;
@@ -69,6 +70,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
 
         public void Standardize(PatientSourceBag patientSourceBag, List<FacilityCacheDto> facilityCacheDtos)
         {
+            //Id = LiveGuid.NewGuid();
             Id = Id.IsNullOrEmpty() ? LiveGuid.NewGuid() : Id;
             LiveSession = patientSourceBag.ManifestId;
 

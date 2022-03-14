@@ -43,7 +43,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.DefaulterTracingSourceBag.FacilityId.Value, request.DefaulterTracingSourceBag.ManifestId.Value);
+                //await _stageRepository.ClearSite(request.DefaulterTracingSourceBag.FacilityId.Value, request.DefaulterTracingSourceBag.ManifestId.Value);
 
                 var extracts =
                     _mapper.Map<List<StageDefaulterTracingExtract>>(request.DefaulterTracingSourceBag.Extracts);

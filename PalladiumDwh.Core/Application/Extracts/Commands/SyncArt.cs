@@ -43,7 +43,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.ArtSourceBag.FacilityId.Value, request.ArtSourceBag.ManifestId.Value);
+           //     await _stageRepository.ClearSite(request.ArtSourceBag.FacilityId.Value, request.ArtSourceBag.ManifestId.Value);
 
                 var extracts = _mapper.Map<List<StageArtExtract>>(request.ArtSourceBag.Extracts);
                 if (request.ArtSourceBag.EmrSetup == EmrSetup.SingleFacility)

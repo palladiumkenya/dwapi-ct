@@ -44,7 +44,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.BaselineSourceBag.FacilityId.Value, request.BaselineSourceBag.ManifestId.Value);
+                //await _stageRepository.ClearSite(request.BaselineSourceBag.FacilityId.Value, request.BaselineSourceBag.ManifestId.Value);
 
                 var extracts = _mapper.Map<List<StageBaselineExtract>>(request.BaselineSourceBag.Extracts);
                 if (request.BaselineSourceBag.EmrSetup == EmrSetup.SingleFacility)

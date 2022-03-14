@@ -43,7 +43,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         {
             try
             {
-                await _stageRepository.ClearSite(request.ContactListingSourceBag.FacilityId.Value, request.ContactListingSourceBag.ManifestId.Value);
+                //await _stageRepository.ClearSite(request.ContactListingSourceBag.FacilityId.Value, request.ContactListingSourceBag.ManifestId.Value);
 
                 var extracts = _mapper.Map<List<StageContactListingExtract>>(request.ContactListingSourceBag.Extracts);
                 if (request.ContactListingSourceBag.EmrSetup == EmrSetup.SingleFacility)
