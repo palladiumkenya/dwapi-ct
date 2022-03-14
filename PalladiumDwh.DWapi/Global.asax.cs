@@ -98,7 +98,13 @@ namespace PalladiumDwh.DWapi
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true
                 });
-            yield return new BackgroundJobServer();
+
+            var options = new BackgroundJobServerOptions
+            { 
+                WorkerCount = Environment.ProcessorCount * 5,
+                Queues = new[] { "alpha", "beta", "default" }
+            };
+            yield return new BackgroundJobServer(options);
         }
     }
 }

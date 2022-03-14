@@ -6,7 +6,7 @@ namespace PalladiumDwh.Core.Application.Common
 {
     public interface ISourceBag<T>
     {
-        string JobId  { get; set; }
+        string JobId { get; set; }
         EmrSetup EmrSetup { get; set; }
         UploadMode Mode { get; set; }
         string DwapiVersion { get; set; }
@@ -16,6 +16,8 @@ namespace PalladiumDwh.Core.Application.Common
         Guid? SessionId { get; set; }
         Guid? FacilityId { get; set; }
         string Tag { get; set; }
+        int MinPk { get; set; }
+        int MaxPk { get; set; }
         List<T> Extracts { get; set; }
     }
 }

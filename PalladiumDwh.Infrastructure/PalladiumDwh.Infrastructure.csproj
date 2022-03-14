@@ -105,6 +105,7 @@
     <Compile Include="Data\Repository\ContactListingRepository.cs" />
     <Compile Include="Data\Repository\AllergiesChronicIllnessRepository.cs" />
     <Compile Include="Data\Repository\PatientVisitRepository.cs" />
+    <Compile Include="Data\Repository\SmartActionRegisterRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageAdverseEventExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageAllergiesChronicIllnessExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageArtExtractRepository.cs" />
@@ -201,6 +202,10 @@
     <Compile Include="Migrations\202203092018191_ExtractsStaging.designer.cs">
       <DependentUpon>202203092018191_ExtractsStaging.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203141750217_SmartRegisters.cs" />
+    <Compile Include="Migrations\202203141750217_SmartRegisters.designer.cs">
+      <DependentUpon>202203141750217_SmartRegisters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -264,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203092018191_ExtractsStaging.resx">
       <DependentUpon>202203092018191_ExtractsStaging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203141750217_SmartRegisters.resx">
+      <DependentUpon>202203141750217_SmartRegisters.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

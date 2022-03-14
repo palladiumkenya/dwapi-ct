@@ -35,14 +35,14 @@ namespace PalladiumDwh.Core.Application.Commands
     {
         protected static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IPatientExtractRepository _patientExtractRepository;
-        private readonly IActionRegisterRepository _actionRegisterRepository;
         private readonly IStagePatientExtractRepository _stagePatientExtractRepository;
+        private readonly ISmartActionRegisterRepository _smartActionRegisterRepository;
 
-        public CreateManifestHandler(IPatientExtractRepository patientExtractRepository, IActionRegisterRepository actionRegisterRepository, IStagePatientExtractRepository stagePatientExtractRepository)
+        public CreateManifestHandler(IPatientExtractRepository patientExtractRepository,  IStagePatientExtractRepository stagePatientExtractRepository, ISmartActionRegisterRepository smartActionRegisterRepository)
         {
             _patientExtractRepository = patientExtractRepository;
-            _actionRegisterRepository = actionRegisterRepository;
             _stagePatientExtractRepository = stagePatientExtractRepository;
+            _smartActionRegisterRepository = smartActionRegisterRepository;
         }
 
 
@@ -54,7 +54,7 @@ namespace PalladiumDwh.Core.Application.Commands
 
                 var facManifest = FacilityManifest.Create(request.Manifest);
                 _patientExtractRepository.SaveManifest(facManifest);
-                await _actionRegisterRepository.Clear(request.Manifest.SiteCode);
+                await _smartActionRegisterRepository.Clear(request.Manifest.SiteCode);
                 await _stagePatientExtractRepository.ClearSite(request.MasterFacility.FacilityId.Value);
 
                 return Result.Ok();

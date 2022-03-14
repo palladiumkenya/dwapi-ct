@@ -8,14 +8,14 @@
     <Setting Name="LiveSync" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://localhost:4777/stages/</Value>
     </Setting>
-    <Setting Name="Z_Dapper_Plus_LicenseName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">1755;701-ThePalladiumGroup</Value>
-    </Setting>
-    <Setting Name="Z_Dapper_Plus_LicenseKey" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">9005d618-3965-8877-97a5-7a27cbb21c8f</Value>
-    </Setting>
     <Setting Name="AllowSnapshot" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Z_Dapper_Plus_LicenseName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">1755;700-ThePalladiumGroup</Value>
+    </Setting>
+    <Setting Name="Z_Dapper_Plus_LicenseKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">218460a6-02d0-c26b-9add-e6b8d13ccbf4</Value>
     </Setting>
   </Settings>
 </SettingsFile>

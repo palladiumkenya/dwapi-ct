@@ -79,7 +79,7 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<StagePharmacyExtract> StagePharmacyExtracts { get; set; }
         public virtual DbSet<StageStatusExtract> StageStatusExtracts { get; set; }
         public virtual DbSet<StageGbvScreeningExtract> StageGbvScreeningExtracts { get; set; }
-
+        public virtual DbSet<SmartActionRegister> SmartActionRegisters { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -228,6 +228,8 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<StagePharmacyExtract>().Key(x => x.Id).Table($"{nameof(StagePharmacyExtract)}");
             DapperPlusManager.Entity<StageStatusExtract>().Key(x => x.Id).Table($"{nameof(StageStatusExtract)}");
             DapperPlusManager.Entity<StageGbvScreeningExtract>().Key(x => x.Id).Table($"{nameof(StageGbvScreeningExtract)}");
+
+            DapperPlusManager.Entity<SmartActionRegister>().Key(x => x.Id).Table($"{nameof(SmartActionRegister)}");
 
         }
 

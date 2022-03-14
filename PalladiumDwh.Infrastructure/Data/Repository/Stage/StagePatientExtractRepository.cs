@@ -31,6 +31,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
             var cons = _context.Database.Connection.ConnectionString;
 
             var sql = @"
+
 delete  from StageAdverseEventExtract WHERE  FacilityId = @facilityId;
 delete  from StageAllergiesChronicIllnessExtract WHERE  FacilityId = @facilityId;
 delete  from StageArtExtract WHERE  FacilityId = @facilityId;
@@ -50,6 +51,7 @@ delete  from StagePatientExtract WHERE  FacilityId = @facilityId;
 delete  from StagePharmacyExtract WHERE  FacilityId = @facilityId;
 delete  from StageStatusExtract WHERE  FacilityId = @facilityId;
 delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
+
 ";
             try
             {
@@ -108,29 +110,22 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                 //stage > Rest
                 _context.GetConnection().BulkInsert(extracts);
 
-                //assign > Assigned
-                var siteGroup = extracts.GroupBy(x => x.FacilityId);
-                foreach (var site in siteGroup)
-                {
-                    var pks = site.Select(x => x.PatientPID).ToList();
-                    await AssignAll(manifestId, site.Key, pks);
-                }
+                var pks = extracts.Select(x => x.Id).ToList();
 
                 //assign > Assigned
-                await AssignId(manifestId);
+                await AssignAll(manifestId, pks);
+
+                //assign > Assigned
+                await AssignId(manifestId,pks);
 
                 //assign > New
-                await CreatNew(manifestId);
+                await CreatNew(manifestId,pks);
 
                 //assign > Ups
-                await UpdateExisting(manifestId);
+                await UpdateExisting(manifestId,pks);
 
                 //assign > Merged
-                foreach (var site in siteGroup)
-                {
-                    var pks = site.Select(x => x.PatientPID).ToList();
-                    await MergeAll(manifestId, site.Key, pks);
-                }
+                await MergeAll(manifestId,  pks);
             }
             catch (Exception e)
             {
@@ -139,7 +134,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
             }
         }
 
-        private async Task AssignAll(Guid manifestId, Guid facilityId, List<int> patientPIDs)
+        private async Task AssignAll(Guid manifestId, List<Guid> ids)
         {
             var cons = _context.Database.Connection.ConnectionString;
 
@@ -147,16 +142,13 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                     UPDATE 
                             StagePatientExtract
                     SET 
-                            LiveStage= @nextlivestage 
+                            LiveStage = @nextlivestage 
                     WHERE 
                             LiveSession = @manifestId AND 
-                            LiveStage= @livestage AND 
-                            FacilityId= @facilityId AND
-                            PatientPID IN @patientPIDs";
+                            LiveStage = @livestage AND 
+                            Id IN @ids";
             try
             {
-
-                // assign patientId
                 using (var connection = new SqlConnection(cons))
                 {
                     connection.Open();
@@ -166,8 +158,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                         await connection.ExecuteAsync($"{sql}",
                             new
                             {
-                                manifestId, livestage = LiveStage.Rest, nextlivestage = LiveStage.Assigned, facilityId,
-                                patientPIDs
+                                manifestId, livestage = LiveStage.Rest, nextlivestage = LiveStage.Assigned, ids
                             }, transaction, 0);
                         transaction.Commit();
                     }
@@ -180,7 +171,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
             }
         }
 
-        private async Task AssignId(Guid manifestId)
+        private async Task AssignId(Guid manifestId,List<Guid> ids)
         {
             var cons = _context.Database.Connection.ConnectionString;
 
@@ -196,6 +187,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                     WHERE 
                             stg.LiveSession = @manifestId AND 
                             stg.LiveStage= @livestage AND 
+                            stg.Id IN @ids AND
                             stg.CurrentPatientId is Null ";
 
             try
@@ -208,7 +200,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
 
                     using (var transaction = connection.BeginTransaction())
                     {
-                        await connection.ExecuteAsync($"{sql}", new {manifestId, livestage = LiveStage.Assigned},
+                        await connection.ExecuteAsync($"{sql}", new {manifestId, livestage = LiveStage.Assigned,ids},
                             transaction, 0);
                         transaction.Commit();
                     }
@@ -221,10 +213,11 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
             }
         }
 
-        public Task UpdateExisting(Guid manifestId)
+        public Task UpdateExisting(Guid manifestId, List<Guid> ids)
         {
             var sqlUpdates = @"
-                    SELECT        CurrentPatientId Id, Emr, Project, Voided, Processed, Pkv, Occupation, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationATPMTCT, RegistrationAtTBClinic, Region, PatientSource, District, Village, ContactRelation, LastVisit, 
+                    SELECT        
+                         CurrentPatientId Id, Emr, Project, Voided, Processed, Pkv, Occupation, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationATPMTCT, RegistrationAtTBClinic, Region, PatientSource, District, Village, ContactRelation, LastVisit, 
                          MaritalStatus, EducationLevel, DateConfirmedHIVPositive, PreviousARTExposure, PreviousARTStartDate, StatusAtCCC, StatusAtPMTCT, StatusAtTBClinic, Orphan, Inschool, PatientType, PopulationType, KeyPopulationType, 
                          PatientResidentCounty, PatientResidentSubCounty, PatientResidentLocation, PatientResidentSubLocation, PatientResidentWard, PatientResidentVillage, TransferInDate, PatientPID, PatientCccNumber, FacilityId, 
                          CurrentPatientId, LiveSession, LiveStage,GETDATE() Updated
@@ -232,6 +225,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                     WHERE 
                           LiveSession = @manifestId AND 
                           LiveStage = @livestage AND
+                          Id IN @ids AND
                           CurrentPatientId IS NOT NULL";
 
             try
@@ -239,7 +233,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
 
                 //get updates
                 var updates = _context.GetConnection()
-                    .Query<PatientExtract>(sqlUpdates, new {manifestId, livestage = LiveStage.Assigned});
+                    .Query<PatientExtract>(sqlUpdates, new {manifestId, livestage = LiveStage.Assigned,ids});
 
                 if(updates.Any())
                     _context.GetConnection().BulkUpdate(updates);
@@ -254,7 +248,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
             return Task.CompletedTask;
         }
 
-        private Task CreatNew(Guid manifestId)
+        private Task CreatNew(Guid manifestId, List<Guid> ids)
         {
             var sqlNew = @"
                     SELECT 
@@ -262,12 +256,13 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                     WHERE 
                           LiveSession = @manifestId AND
                           LiveStage = @livestage AND
+                          Id IN @ids AND
                           CurrentPatientId IS NULL";
             try
             {
                 //  get new
                 var inserts = _context.GetConnection()
-                    .Query<PatientExtract>(sqlNew, new {manifestId, livestage = LiveStage.Assigned});
+                    .Query<PatientExtract>(sqlNew, new {manifestId, livestage = LiveStage.Assigned,ids});
 
                 if(inserts.Any())
                     _context.GetConnection().BulkInsert(inserts);
@@ -281,7 +276,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
             return Task.CompletedTask;
         }
 
-        private async Task MergeAll(Guid manifestId, Guid facilityId, List<int> patientPIDs)
+        private async Task MergeAll(Guid manifestId, List<Guid> ids)
         {
             var cons = _context.Database.Connection.ConnectionString;
 
@@ -294,9 +289,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                             StagePatientExtract 
                     WHERE 
                             LiveSession = @manifestId AND 
-                            LiveStage= @livestage AND 
-                            FacilityId= @facilityId AND
-                            PatientPID IN @patientPIDs";
+                            LiveStage= @livestage AND
+                            Id IN @ids";
             try
             {
 
@@ -310,8 +304,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                         await connection.ExecuteAsync($"{sql}",
                             new
                             {
-                                manifestId, livestage = LiveStage.Assigned, nextlivestage = LiveStage.Merged, facilityId,
-                                patientPIDs
+                                manifestId, livestage = LiveStage.Assigned, nextlivestage = LiveStage.Merged, ids
                             }, transaction, 0);
                         transaction.Commit();
                     }

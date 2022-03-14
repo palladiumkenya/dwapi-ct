@@ -20,10 +20,12 @@ namespace PalladiumDwh.Core.Application.Extracts.Source
         public Guid? SessionId { get; set; }
         public Guid? FacilityId { get; set; }
         public string Tag { get; set; }
+        public int MinPk { get; set; }
+        public int MaxPk { get; set; }
         public List<T> Extracts { get; set; } = new List<T>();
 
         public bool HasJobId => !string.IsNullOrWhiteSpace(JobId);
-
+        
         public virtual void SetFacility(List<FacilityCacheDto> facilityCacheDtos)
         {
             var fac = facilityCacheDtos.FirstOrDefault(x => x.Code == SiteCode);
@@ -32,7 +34,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source
 
         public override string ToString()
         {
-            return $"{SiteCode}-{Facility} [{Extracts.Count}] {typeof(T).Name.Replace($"{nameof(SourceDto)}","")}";
+            return $"{SiteCode}-{Facility} [{Extracts.Count}]-[{MinPk}-{MaxPk}] {typeof(T).Name.Replace($"{nameof(SourceDto)}","")}";
         }
     }
 }

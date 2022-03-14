@@ -12,7 +12,7 @@ namespace PalladiumDwh.DWapi.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -43,7 +43,16 @@ namespace PalladiumDwh.DWapi.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1755;701-ThePalladiumGroup")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AllowSnapshot {
+            get {
+                return ((bool)(this["AllowSnapshot"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1755;700-ThePalladiumGroup")]
         public string Z_Dapper_Plus_LicenseName {
             get {
                 return ((string)(this["Z_Dapper_Plus_LicenseName"]));
@@ -52,19 +61,10 @@ namespace PalladiumDwh.DWapi.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9005d618-3965-8877-97a5-7a27cbb21c8f")]
+        [global::System.Configuration.DefaultSettingValueAttribute("218460a6-02d0-c26b-9add-e6b8d13ccbf4")]
         public string Z_Dapper_Plus_LicenseKey {
             get {
                 return ((string)(this["Z_Dapper_Plus_LicenseKey"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AllowSnapshot {
-            get {
-                return ((bool)(this["AllowSnapshot"]));
             }
         }
     }
