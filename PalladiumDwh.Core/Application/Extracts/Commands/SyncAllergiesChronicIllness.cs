@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using PalladiumDwh.Core.Application.Extracts.Notififactions;
 using PalladiumDwh.Core.Application.Extracts.Source;
 using PalladiumDwh.Core.Application.Extracts.Stage;
 using PalladiumDwh.Core.Application.Extracts.Stage.Repositories;
@@ -31,14 +32,16 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
         private readonly IMapper _mapper;
         private readonly IStageAllergiesChronicIllnessExtractRepository _stageRepository;
         private readonly IFacilityRepository _facilityRepository;
+        private readonly IMediator _mediator;
 
         public SyncAllergiesChronicIllnessHandler(IMapper mapper,
             IStageAllergiesChronicIllnessExtractRepository stageRepository,
-            IFacilityRepository facilityRepository)
+            IFacilityRepository facilityRepository, IMediator mediator)
         {
             _mapper = mapper;
             _stageRepository = stageRepository;
             _facilityRepository = facilityRepository;
+            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(SyncAllergiesChronicIllness request, CancellationToken cancellationToken)
@@ -68,6 +71,9 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
                 }
 
                 await _stageRepository.SyncStage(extracts, request.AllergiesChronicIllnessSourceBag.ManifestId.Value);
+
+                var facIds = extracts.Select(x => x.FacilityId).Distinct().ToList();
+                await _mediator.Publish(new SyncExtractEvent(facIds), cancellationToken);
                 return Unit.Value;
             }
             catch (Exception e)

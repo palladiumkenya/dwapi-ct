@@ -88,6 +88,8 @@
     <Compile Include="Application\Extracts\Commands\SyncPharmacy.cs" />
     <Compile Include="Application\Extracts\Commands\SyncStatus.cs" />
     <Compile Include="Application\Extracts\Commands\SyncVisit.cs" />
+    <Compile Include="Application\Extracts\Notififactions\SyncMainExtractEvent.cs" />
+    <Compile Include="Application\Extracts\Notififactions\SyncExtractEvent.cs" />
     <Compile Include="Application\Extracts\Source\AdverseEventSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\AllergiesChronicIllnessSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\ArtSourceBag.cs" />

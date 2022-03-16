@@ -33,10 +33,10 @@ namespace PalladiumDwh.DWapi
 
             HangfireAspNet.Use(GetHangfireServers);
 
-            BatchJob.StartNew(x =>
-            {
-                x.Enqueue(() => Debug.WriteLine($"Dwapi Background Jobs Started!"));
-            });
+            // BatchJob.StartNew(x =>
+            // {
+            //     x.Enqueue(() => Debug.WriteLine($"Dwapi Background Jobs Started!"));
+            // });
 
 
             // CHECK if the license if valid for the default provider (SQL Server)
