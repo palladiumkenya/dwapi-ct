@@ -102,7 +102,7 @@ namespace PalladiumDwh.DWapi
             var options = new BackgroundJobServerOptions
             {
                 WorkerCount = GetWorkerCount(),
-                Queues = new[] { "alpha", "beta", "default" }
+                Queues = new[] { "alpha", "beta", "gamma","delta", "omega", "default" }
             };
             yield return new BackgroundJobServer(options);
         }
