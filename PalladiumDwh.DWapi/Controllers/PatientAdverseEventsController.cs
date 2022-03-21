@@ -150,8 +150,8 @@ namespace PalladiumDwh.DWapi.Controllers
                 new HttpError($"The expected '{new PatientLabProfile().GetType().Name}' is null"));
         }
         [Queue("beta")]
-        // [DisableConcurrentExecution(10 * 60)]
-        [AutomaticRetry(Attempts = 0)]
+        [DisableConcurrentExecution(10 * 60)]
+        [AutomaticRetry(Attempts = 3)]
         [DisplayName("{0}")]
         public async Task Send(string jobName, IRequest command)
         {

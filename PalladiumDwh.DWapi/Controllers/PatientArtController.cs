@@ -147,8 +147,8 @@ namespace PalladiumDwh.DWapi.Controllers
         }
 
         [Queue("beta")]
-        // [DisableConcurrentExecution(10 * 60)]
-        [AutomaticRetry(Attempts = 0)]
+        [DisableConcurrentExecution(10 * 60)]
+        [AutomaticRetry(Attempts = 3)]
         [DisplayName("{0}")]
         public async Task Send(string jobName, IRequest command)
         {

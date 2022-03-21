@@ -221,7 +221,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                          MaritalStatus, EducationLevel, DateConfirmedHIVPositive, PreviousARTExposure, PreviousARTStartDate, StatusAtCCC, StatusAtPMTCT, StatusAtTBClinic, Orphan, Inschool, PatientType, PopulationType, KeyPopulationType, 
                          PatientResidentCounty, PatientResidentSubCounty, PatientResidentLocation, PatientResidentSubLocation, PatientResidentWard, PatientResidentVillage, TransferInDate, PatientPID, PatientCccNumber, FacilityId, 
                          CurrentPatientId, LiveSession, LiveStage,GETDATE() Updated
-                    FROM            StagePatientExtract
+                    FROM            StagePatientExtract WITH (NOLOCK)
                     WHERE 
                           LiveSession = @manifestId AND 
                           LiveStage = @livestage AND
@@ -252,7 +252,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
         {
             var sqlNew = @"
                     SELECT 
-                           *,GETDATE() Created FROM StagePatientExtract
+                           *,GETDATE() Created FROM StagePatientExtract WITH (NOLOCK)
                     WHERE 
                           LiveSession = @manifestId AND
                           LiveStage = @livestage AND

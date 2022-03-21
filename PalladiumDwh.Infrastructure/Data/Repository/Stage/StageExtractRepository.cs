@@ -159,7 +159,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
         {
             var sqlNew = $@"
                     SELECT 
-                           DISTINCT  PatientPK PatientPID,FacilityId,GETDATE() Created FROM {_stageName}
+                           DISTINCT  PatientPK PatientPID,FacilityId,GETDATE() Created FROM {_stageName} WITH (NOLOCK)
                     WHERE 
                           LiveSession = @manifestId AND
                           LiveStage = @livestage AND
@@ -196,7 +196,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
 
             var sqlNew = $@"
                     SELECT 
-                           *,GETDATE() Created FROM {_stageName}
+                           *,GETDATE() Created FROM {_stageName} WITH (NOLOCK)
                     WHERE 
                           LiveSession = @manifestId AND 
                           LiveStage= @livestage AND 
@@ -271,7 +271,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
 
             var sqlNew = $@"
                     SELECT 
-                           *,GETDATE() Created FROM {_stageName}
+                           *,GETDATE() Created FROM {_stageName} WITH (NOLOCK)
                     WHERE 
                           LiveSession = @manifestId AND 
                           LiveStage= @livestage AND 
@@ -293,7 +293,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
                     {
                         // check register
                         if (!_context.SmartActionRegisters.AsNoTracking()
-                            .Any(x => 
+                            .Any(x =>
                                       x.ManifestId == manifestId &&
                                       x.Area==area &&
                                       x.Action==action))

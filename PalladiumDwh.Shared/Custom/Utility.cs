@@ -48,7 +48,7 @@ namespace PalladiumDwh.Shared.Custom
             yield return chunk;
         }
 
-        public static Message CreateMessage(object message,Type messageType=null)
+        public static Message CreateMessage(object message, Type messageType = null)
         {
             Message msmqMessage;
 
@@ -351,12 +351,18 @@ namespace PalladiumDwh.Shared.Custom
 
         public static bool IsSameAs(this string value, string end)
         {
-            if((null!=value)&&(null!=end))
+            if ((null != value) && (null != end))
                 return value.ToLower().Trim() == end.ToLower().Trim();
             return false;
         }
 
         public static int GenDelay() => 0; // new Random().Next(999, 1199);
+
+        public static string Truncate(this string value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value)) return value;
+            return value.Length <= maxLength ? value : value.Substring(0, maxLength);
+        }
     }
 }
 
