@@ -24,6 +24,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         {
             //Id = LiveGuid.NewGuid();
             Id = Id.IsNullOrEmpty() ? LiveGuid.NewGuid() : Id;
+            this.StandardizeExtract();
         }
     }
 }

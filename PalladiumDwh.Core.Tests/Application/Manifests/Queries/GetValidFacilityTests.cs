@@ -5,7 +5,7 @@ using MediatR;
 using NUnit.Framework;
 using PalladiumDwh.Core.Application.Manifests.Queries;
 
-namespace PalladiumDwh.Core.Tests.Application.Commands
+namespace PalladiumDwh.Core.Tests.Application.Manifests.Queries
 {
     [TestFixture]
     public class GetValidFacilityTests

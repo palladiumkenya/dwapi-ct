@@ -2,16 +2,14 @@ using System;
 using System.Linq;
 using MediatR;
 using NUnit.Framework;
-using PalladiumDwh.Core.Application.Commands;
 using PalladiumDwh.Core.Application.Extracts.Commands;
 using PalladiumDwh.Core.Application.Extracts.Source;
 using PalladiumDwh.Core.Application.Extracts.Source.Dto;
 using PalladiumDwh.Core.Application.Extracts.Stage;
-using PalladiumDwh.Core.Model;
 using PalladiumDwh.Infrastructure.Data;
 using PalladiumDwh.Shared.Model.Extract;
 
-namespace PalladiumDwh.Core.Tests.Application.Commands
+namespace PalladiumDwh.Core.Tests.Application.Extracts.Commands
 {
     [TestFixture]
     public class SyncDefaulterTracingTests

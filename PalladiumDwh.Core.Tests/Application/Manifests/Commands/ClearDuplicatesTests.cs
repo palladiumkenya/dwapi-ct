@@ -3,10 +3,9 @@ using System.Reflection;
 using log4net;
 using MediatR;
 using NUnit.Framework;
-using PalladiumDwh.Core.Application.Commands;
 using PalladiumDwh.Core.Application.Manifests.Commands;
 
-namespace PalladiumDwh.Core.Tests.Application.Commands
+namespace PalladiumDwh.Core.Tests.Application.Manifests.Commands
 {
     [TestFixture]
     public class ClearDuplicatesTests

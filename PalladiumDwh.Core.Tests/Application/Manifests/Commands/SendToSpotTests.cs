@@ -6,7 +6,7 @@ using NUnit.Framework;
 using PalladiumDwh.Core.Application.Commands;
 using PalladiumDwh.Shared.Model;
 
-namespace PalladiumDwh.Core.Tests.Application.Commands
+namespace PalladiumDwh.Core.Tests.Application.Manifests.Commands
 {
     [TestFixture]
     public class SendToSpotTests

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using FastMember;
 using FizzWare.NBuilder;
 using Newtonsoft.Json;
@@ -212,6 +213,46 @@ namespace PalladiumDwh.Shared.Tests
             DateTime? dateNull = null;
             Assert.That(result = dateNull.GetTiming(","), Is.Empty);
         }
+
+        [TestCase("",2)]
+        [TestCase("xyzz",2)]
+        public void should_Trim(string toTruncate,int len)
+        {
+            var res= toTruncate.Truncate(len);
+            Assert.True(res.Length <= len);
+            Console.WriteLine(res);
+        }
+
+        [Test]
+        public void should_Standardize_Date()
+        {
+            var fac = new TestFacility("Test Hosipital New", 20000);
+            fac.Created=DateTime.MinValue;
+            Assert.AreEqual(new DateTime(1900,1,1), fac.Created.StandardizeDate());
+            var fac2 = new TestFacility("Test Hosipital New", 20000);
+            fac2.Created = new DateTime(2, 3, 3);
+            Assert.AreEqual(new DateTime(1900, 1, 1), fac2.Created.StandardizeDate());
+        }
+
+        [Test]
+        public void should_Standardize_NullDate()
+        {
+            var fac = new TestFacility("Test Hosipital New", 20000);
+            Assert.AreEqual(new DateTime(1900, 1, 1), fac.Registered.StandardizeDate());
+            var fac2 = new TestFacility("Test Hosipital New", 20000);
+            fac2.Registered = DateTime.MinValue;
+            Assert.AreEqual(new DateTime(1900, 1, 1), fac2.Registered.StandardizeDate());
+        }
+
+        [Test]
+        public void should_Standardize_Object()
+        {
+            var fac = new TestFacility("Test Hosipital New", 20000);
+            fac.StandardizeExtract(3);
+
+            Assert.AreEqual(new DateTime(1900, 1, 1), fac.Registered.StandardizeDate());
+            Assert.AreEqual("Tes", fac.Name);
+        }
     }
 
 
@@ -219,6 +260,8 @@ namespace PalladiumDwh.Shared.Tests
     {
         public string Name { get; set; }
         public int Number { get; set; }
+        public DateTime? Registered { get; set; }
+        public DateTime Created { get; set; }=DateTime.Now;
         public TestFacility()
         {
         }

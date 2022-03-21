@@ -67,5 +67,14 @@ namespace PalladiumDwh.DWapi.Properties {
                 return ((string)(this["Z_Dapper_Plus_LicenseKey"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int WorkerCount {
+            get {
+                return ((int)(this["WorkerCount"]));
+            }
+        }
     }
 }

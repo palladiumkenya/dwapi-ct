@@ -100,8 +100,8 @@ namespace PalladiumDwh.DWapi
                 });
 
             var options = new BackgroundJobServerOptions
-            { 
-                WorkerCount = Environment.ProcessorCount * 5,
+            {
+                WorkerCount = GetWorkerCount(),
                 Queues = new[] { "alpha", "beta", "default" }
             };
             yield return new BackgroundJobServer(options);
@@ -110,6 +110,13 @@ namespace PalladiumDwh.DWapi
         public  void WriteDebug(string str)
         {
             Debug.WriteLine(str);
+        }
+
+        public int GetWorkerCount()
+        {
+            return Properties.Settings.Default.WorkerCount > 0
+                ? Properties.Settings.Default.WorkerCount
+                : Environment.ProcessorCount * 5;
         }
     }
 }

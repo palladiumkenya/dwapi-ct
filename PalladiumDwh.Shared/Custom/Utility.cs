@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Messaging;
 using System.Reflection;
 using System.Text;
@@ -137,7 +138,7 @@ namespace PalladiumDwh.Shared.Custom
         public static T Get<T>(this IDataRecord row, int ordinal)
         {
             var value = row.IsDBNull(ordinal) ? default(T) : row.GetValue(ordinal);
-            return (T) Convert.ChangeType(value, typeof(T));
+            return (T)Convert.ChangeType(value, typeof(T));
         }
 
         public static string GetColumns(List<string> columnList)
@@ -214,7 +215,7 @@ namespace PalladiumDwh.Shared.Custom
             if (count.HasValue && total.HasValue)
             {
                 decimal percentage = decimal.Divide(count.Value, total.Value) * 100;
-                dp = DProgress.Report(status, (int) percentage);
+                dp = DProgress.Report(status, (int)percentage);
             }
 
             dp.ValueObject = valueObject;
@@ -229,7 +230,7 @@ namespace PalladiumDwh.Shared.Custom
             if (count.HasValue && total.HasValue)
             {
                 decimal percentage = decimal.Divide(count.Value, total.Value) * 100;
-                dp = DProgress.Report(status, (int) percentage);
+                dp = DProgress.Report(status, (int)percentage);
             }
 
             progress.Report(dp);
@@ -238,7 +239,7 @@ namespace PalladiumDwh.Shared.Custom
         public static int GetPercentage(decimal count, decimal total)
         {
             decimal percentage = decimal.Divide(count, total) * 100;
-            return (int) percentage;
+            return (int)percentage;
         }
 
         public static string GetErrorMessage(Exception ex)
@@ -304,12 +305,12 @@ namespace PalladiumDwh.Shared.Custom
 
             if (delta < 12 * month)
             {
-                int months = Convert.ToInt32(Math.Floor((double) ts.Days / 30));
+                int months = Convert.ToInt32(Math.Floor((double)ts.Days / 30));
                 return months <= 1 ? "one month ago" : months + " months ago";
             }
             else
             {
-                int years = Convert.ToInt32(Math.Floor((double) ts.Days / 365));
+                int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
                 return years <= 1 ? "one year ago" : years + " years ago";
             }
         }
@@ -360,8 +361,68 @@ namespace PalladiumDwh.Shared.Custom
 
         public static string Truncate(this string value, int maxLength)
         {
-            if (string.IsNullOrEmpty(value)) return value;
+            if (string.IsNullOrWhiteSpace(value))
+                return value;
+
             return value.Length <= maxLength ? value : value.Substring(0, maxLength);
+        }
+
+        public static DateTime StandardizeDate(this DateTime value)
+        {
+            if (value < new DateTime(1900, 1, 1))
+                return new DateTime(1900, 1, 1);
+
+            return value;
+        }
+
+        public static DateTime StandardizeDate(this DateTime? value)
+        {
+            if (value.HasValue)
+                return value.Value.StandardizeDate();
+
+            return new DateTime(1900, 1, 1);
+        }
+
+
+        public static void StandardizeExtract(this object obj, int maxLength = 150, bool publicOnly = true)
+        {
+            Type type = obj.GetType();
+
+            BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
+
+            var properties = publicOnly
+                ? type.GetProperties(flags).Where(x =>
+                    x.PropertyType == typeof(string) ||
+                    x.PropertyType == typeof(DateTime) ||
+                    x.PropertyType == typeof(DateTime?)
+                )
+                : type.GetProperties().Where(x =>
+                    x.PropertyType == typeof(string) ||
+                    x.PropertyType == typeof(DateTime) ||
+                    x.PropertyType == typeof(DateTime?)
+                );
+
+            foreach (PropertyInfo property in properties)
+            {
+                if (property.PropertyType == typeof(string))
+                {
+                    var val = property.GetValue(obj, null);
+                    if (null != val)
+                        property.SetValue(obj, val.ToString().Truncate(maxLength));
+                }
+
+                if (property.PropertyType == typeof(DateTime))
+                {
+                    var val = (DateTime)property.GetValue(obj, null);
+                    property.SetValue(obj, val.StandardizeDate());
+                }
+
+                if (property.PropertyType == typeof(DateTime?))
+                {
+                    var val = (DateTime?)property.GetValue(obj, null);
+                    property.SetValue(obj, val.StandardizeDate());
+                }
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ using NUnit.Framework;
 using PalladiumDwh.Core.Application.Commands;
 using PalladiumDwh.Shared.Model;
 
-namespace PalladiumDwh.Core.Tests.Application.Commands
+namespace PalladiumDwh.Core.Tests.Application.Manifests.Commands
 {
     [TestFixture]
     public class CreateManifestTests
@@ -18,7 +18,7 @@ namespace PalladiumDwh.Core.Tests.Application.Commands
         [SetUp]
         public void SetUp()
         {
-            _masterFacility = new MasterFacility() {Code = 99990, Name = "Maun Hospital (99990)"};
+            _masterFacility = new MasterFacility() {Code = 99990, Name = "Maun Hospital (99990)",FacilityId = TestInitializer.FacilityId};
             _mediator = TestInitializer.Container.GetInstance<IMediator>();
         }
 
