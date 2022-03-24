@@ -24,7 +24,7 @@ namespace PalladiumDWh.DwapiService
             Log.Debug(new string('*',40));
             Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Name}");
             Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Version}");
-            Log.Debug($"Rel: 07MAR22 0047");
+            Log.Debug($"Rel: 24MAR22 0047");
             Log.Debug(new string('*', 40));
             Log.Debug("Loading DWapiService...");
 
@@ -60,17 +60,17 @@ namespace PalladiumDWh.DwapiService
             {
                 Log.Error("CANNOT UPGRADE DATABASE !", e);
             }
-#if(!DEBUG)
+//#if(!DEBUG)
              var servicesToRun = new ServiceBase[]
              {
                  new ExtractService()
              };
 
              ServiceBase.Run(servicesToRun);
-#else
-            ExtractService myServ = new ExtractService();
-            myServ.RunSvc();
-#endif
+//#else
+            //ExtractService myServ = new ExtractService();
+            //myServ.RunSvc();
+//#endif
         }
     }
 }
