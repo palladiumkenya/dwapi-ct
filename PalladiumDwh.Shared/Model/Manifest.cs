@@ -50,7 +50,7 @@ namespace PalladiumDwh.Shared.Model
             foreach (var patientPk in PatientPKs)
             {
                 count++;
-                sb.AppendLine($"SELECT '{LiveGuid.NewGuid()}' as Id,{patientPk} as PatientPID,'{facilityId}' as FacilityID {(count == total ? "" : "UNION")}");
+                sb.AppendLine($"SELECT '{Guid.NewGuid()}' as Id,{patientPk} as PatientPID,'{facilityId}' as FacilityID {(count == total ? "" : "UNION")}");
             }
 
             var sql = $@"

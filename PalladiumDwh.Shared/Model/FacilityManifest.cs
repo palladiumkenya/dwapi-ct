@@ -38,11 +38,11 @@ namespace PalladiumDwh.Shared.Model
             DateRecieved = DateTime.Now;
             if (null != id)
             {
-                Id = id.IsNullOrEmpty() ? LiveGuid.NewGuid() : id.Value;
+                Id = id.IsNullOrEmpty() ? Guid.NewGuid() : id.Value;
             }
             else
             {
-                Id = LiveGuid.NewGuid();
+                Id = Guid.NewGuid();
             }
         }
 

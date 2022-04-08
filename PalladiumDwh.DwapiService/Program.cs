@@ -24,7 +24,7 @@ namespace PalladiumDWh.DwapiService
             Log.Debug(new string('*',40));
             Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Name}");
             Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Version}");
-            Log.Debug($"Rel: 24MAR22 0047");
+            Log.Debug($"Rel: 04APR22 0818");
             Log.Debug(new string('*', 40));
             Log.Debug("Loading DWapiService...");
 

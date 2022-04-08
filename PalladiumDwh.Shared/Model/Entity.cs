@@ -27,7 +27,7 @@ namespace PalladiumDwh.Shared.Model
         }
         protected Entity()
         {
-            Id = LiveGuid.NewGuid();
+            Id = Guid.NewGuid();
         }
     }
 }
