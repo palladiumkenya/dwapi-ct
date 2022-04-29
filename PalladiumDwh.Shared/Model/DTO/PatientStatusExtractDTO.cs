@@ -20,6 +20,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string ReasonForDeath { get; set; }
         public string SpecificDeathReason { get; set; }
         public DateTime? DeathDate { get; set; }
+        public DateTime? EffectiveDiscontinuationDate { get; set; }
 
         public PatientStatusExtractDTO()
         {
@@ -47,6 +48,11 @@ namespace PalladiumDwh.Shared.Model.DTO
             TOVerified = patientStatusExtract.TOVerified;
             TOVerifiedDate = patientStatusExtract.TOVerifiedDate;
             ReEnrollmentDate = patientStatusExtract.ReEnrollmentDate;
+
+            ReasonForDeath = patientStatusExtract.ReasonForDeath;
+            SpecificDeathReason = patientStatusExtract.SpecificDeathReason;
+            DeathDate = patientStatusExtract.DeathDate;
+            EffectiveDiscontinuationDate = patientStatusExtract.EffectiveDiscontinuationDate;
         }
 
 
@@ -64,7 +70,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public PatientStatusExtract GeneratePatientStatusExtract(Guid patientId)
         {
             PatientId = patientId;
-            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project,TOVerified,TOVerifiedDate,ReEnrollmentDate);
+            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project,TOVerified,TOVerifiedDate,ReEnrollmentDate,ReasonForDeath,SpecificDeathReason,DeathDate,EffectiveDiscontinuationDate);
         }
     }
 }

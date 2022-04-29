@@ -22,6 +22,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string ReasonForDeath { get; set; }
         public string SpecificDeathReason { get; set; }
         public DateTime? DeathDate { get; set; }
+        public DateTime? EffectiveDiscontinuationDate { get; set; }
 
 
         public ClientPatientStatusExtractDTO()
