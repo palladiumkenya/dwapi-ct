@@ -206,6 +206,10 @@
     <Compile Include="Migrations\202203141750217_SmartRegisters.designer.cs">
       <DependentUpon>202203141750217_SmartRegisters.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205050545562_StaustSDateReview.cs" />
+    <Compile Include="Migrations\202205050545562_StaustSDateReview.designer.cs">
+      <DependentUpon>202205050545562_StaustSDateReview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -272,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203141750217_SmartRegisters.resx">
       <DependentUpon>202203141750217_SmartRegisters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205050545562_StaustSDateReview.resx">
+      <DependentUpon>202205050545562_StaustSDateReview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>
