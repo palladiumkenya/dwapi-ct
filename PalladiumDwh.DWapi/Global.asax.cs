@@ -35,7 +35,7 @@ namespace PalladiumDwh.DWapi
 
             BatchJob.StartNew(x =>
             {
-                x.Enqueue(() => WriteDebug("Dwapi v3.0.0.0 Background Jobs Started!"));
+                x.Enqueue(() => WriteDebug("Dwapi v3.0.0.1 Background Jobs Started!"));
             });
 
 
