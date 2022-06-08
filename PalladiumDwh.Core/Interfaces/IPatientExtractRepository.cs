@@ -1,6 +1,8 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using PalladiumDwh.Core.Model;
 using PalladiumDwh.Shared.Interfaces;
 using PalladiumDwh.Shared.Model;
 using PalladiumDwh.Shared.Model.Extract;

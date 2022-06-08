@@ -1,13 +1,20 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
+using CSharpFunctionalExtensions;
+using Hangfire;
 using log4net;
+using MediatR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using PalladiumDwh.Core.Application.Commands;
+using PalladiumDwh.Core.Application.Manifests.Commands;
+using PalladiumDwh.Core.Application.Manifests.Queries;
 using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Enum;
@@ -24,16 +31,18 @@ namespace PalladiumDwh.DWapi.Controllers
         private readonly ILiveSyncService _liveSyncService;
         private readonly IFacilityRepository _facilityRepository;
         private readonly JsonSerializerSettings _serializerSettings;
+        private readonly IMediator _mediator;
 
         public SpotController(IMessagingSenderService messagingService,
             IPatientExtractRepository patientExtractRepository, ILiveSyncService liveSyncService,
-            IFacilityRepository facilityRepository)
+            IFacilityRepository facilityRepository, IMediator mediator)
         {
             _messagingService = messagingService;
             _messagingService.Initialize(_gateway);
             _patientExtractRepository = patientExtractRepository;
             _liveSyncService = liveSyncService;
             _facilityRepository = facilityRepository;
+            _mediator = mediator;
             _serializerSettings = new JsonSerializerSettings()
                 {ContractResolver = new CamelCasePropertyNamesContractResolver()};
         }
@@ -141,6 +150,73 @@ namespace PalladiumDwh.DWapi.Controllers
 
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                 new HttpError($"The expected '{new Manifest().GetType().Name}' is null"));
+        }
+
+        [HttpPost]
+        [Route("api/v3/Spot")]
+        public async Task<HttpResponseMessage> PostManifest([FromBody] Manifest manifest)
+        {
+            MasterFacility masterFacility = null;
+
+            if (null != manifest)
+            {
+
+                #region Validate Site
+
+                masterFacility = await _mediator.Send(new GetValidFacility(manifest));
+
+                #endregion
+
+                #region Process Manifest
+
+                // job 1 Clear Manifest
+                var id1 = BatchJob.StartNew(x =>
+                {
+                    x.Enqueue(() => Send($"{manifest.Info("Clear")}", new ClearManifest(manifest)));
+                });
+                // job 2 Removed Duplicates
+                var id2 = BatchJob.ContinueBatchWith(id1, x =>
+                {
+                    {
+                        x.Enqueue(() => Send($"{manifest.Info("Dedup")}", new ClearDuplicates(manifest)));
+                    }
+                });
+                // job 3 Send to SPOT
+                var id3 = BatchJob.ContinueBatchWith(id2, x =>
+                {
+                    {
+                        x.Enqueue(() => Send($"{manifest.Info("Spot")}", new SendToSpot(manifest, masterFacility)));
+                    }
+                });
+                // job 4 Sync Manifest
+                var jobId = BatchJob.ContinueBatchWith(id3, x =>
+                {
+                    {
+                        x.Enqueue(() => Send($"{manifest.Info("Save")}",
+                            new CreateManifest(manifest, masterFacility, Properties.Settings.Default.AllowSnapshot)));
+                    }
+                });
+
+                #endregion
+
+                masterFacility.ManifestId = manifest.Id;
+                masterFacility.SessionId = manifest.Session;
+                masterFacility.JobId = jobId;
+
+                return Request.CreateResponse(HttpStatusCode.OK, masterFacility);
+            }
+
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                new HttpError($"The expected '{new Manifest().GetType().Name}' is null"));
+        }
+
+        [Queue("alpha")]
+        [DisableConcurrentExecution(10 * 60)]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
+        public async  Task Send(string jobName, IRequest<Result> command)
+        {
+            await _mediator.Send(command);
         }
     }
 }

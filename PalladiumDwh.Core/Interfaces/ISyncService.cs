@@ -27,6 +27,9 @@ namespace PalladiumDwh.Core.Interfaces
         void SyncOvc(OvcProfile ovcprofile);
         void SyncOtz(OtzProfile otzprofile);
 
+        void SyncCovid(CovidProfile covidprofile);
+        void SyncDefaulterTracing(DefaulterTracingProfile defaulterTracingProfile);
+
 
 
         void SyncArtNew(PatientARTProfile profile);
@@ -46,6 +49,9 @@ namespace PalladiumDwh.Core.Interfaces
         void SyncOvcNew(OvcProfile profile);
         void SyncOtzNew(OtzProfile profile);
 
+        void SyncCovidNew(CovidProfile profile);
+        void SyncDefaulterTracingNew(DefaulterTracingProfile profile);
+
 
         void SyncArtNew(List<PatientARTProfile> profile);
         void SyncBaselineNew(List<PatientBaselineProfile> baselineProfile);
@@ -63,6 +69,9 @@ namespace PalladiumDwh.Core.Interfaces
         void SyncDrugAlcoholScreeningNew(List<DrugAlcoholScreeningProfile> profile);
         void SyncOvcNew(List<OvcProfile> profile);
         void SyncOtzNew(List<OtzProfile> profile);
+
+        void SyncCovidNew(List<CovidProfile> profile);
+        void SyncDefaulterTracingNew(List<DefaulterTracingProfile> profile);
 
 
         Facility GetFacility(int code);

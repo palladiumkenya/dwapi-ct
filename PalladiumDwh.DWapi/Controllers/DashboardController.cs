@@ -30,7 +30,7 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 list.Add(new Queues(g, _service.GetNumberOfMessages(g), _service.GetNumberOfMessages(g,true)));
             }
-            
+
             return View(list);
         }
 
@@ -72,7 +72,10 @@ namespace PalladiumDwh.DWapi.Controllers
                 $"{queueName}.{nameof(EnhancedAdherenceCounsellingProfile).ToLower()}",
                 $"{queueName}.{nameof(DrugAlcoholScreeningProfile).ToLower()}",
                 $"{queueName}.{nameof(OvcProfile).ToLower()}",
-                $"{queueName}.{nameof(OtzProfile).ToLower()}"
+                $"{queueName}.{nameof(OtzProfile).ToLower()}",
+
+                $"{queueName}.{nameof(CovidProfile).ToLower()}",
+                $"{queueName}.{nameof(DefaulterTracingProfile).ToLower()}"
             };
 
             gateways.AddRange(baseGateways);

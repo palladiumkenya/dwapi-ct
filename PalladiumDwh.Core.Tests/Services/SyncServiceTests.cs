@@ -70,6 +70,7 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientVisitRepository = new PatientVisitRepository(_context),
                 _patientAdverseEventRepository=new PatientAdverseEventRepository(_context),
                 null,null,null,null,null,null,null,null,null,null,
+                null,null,
                 new ActionRegisterRepository(_context)
             );
 
@@ -130,7 +131,7 @@ namespace PalladiumDwh.Core.Tests.Services
                 _patientVisitRepository = new PatientVisitRepository(_context),
                 _patientAdverseEventRepository=new PatientAdverseEventRepository(_context),
                 null,null,null,null,null,null,null,null,null,
-                null,
+                null,null,null,
                 new ActionRegisterRepository(_context)
             );
 

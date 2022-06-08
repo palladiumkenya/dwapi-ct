@@ -47,6 +47,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Created { get; set; }
         public string Pkv { get; set; }
         public string Occupation { get; set; }
+        public DateTime? Updated { get; set; }
 
         public virtual ICollection<PatientArtExtract> PatientArtExtracts { get; set; }=new List<PatientArtExtract>();
         public virtual ICollection<PatientBaselinesExtract> PatientBaselinesExtracts { get; set; }=new List<PatientBaselinesExtract>();
@@ -80,6 +81,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public virtual ICollection<OtzExtract> OtzExtracts { get; set; } = new List<OtzExtract>();
         public virtual ICollection<OvcExtract> OvcExtracts { get; set; } = new List<OvcExtract>();
 
+        public virtual ICollection<CovidExtract> CovidExtracts { get; set; } = new List<CovidExtract>();
+        public virtual ICollection<DefaulterTracingExtract> DefaulterTracingExtracts { get; set; } = new List<DefaulterTracingExtract>();
 
         public PatientExtract()
         {

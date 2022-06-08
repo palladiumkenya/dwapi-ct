@@ -12,12 +12,21 @@
     public enum EmrSetup
     {
         SingleFacility,
-        MultiFacility
+        MultiFacility,
+        Community
     }
 
     public enum UploadMode
     {
         Normal,
-        Differential
+        Differential,
+        Smart
+    }
+
+    public enum LiveStage
+    {
+        Rest,
+        Assigned,
+        Merged
     }
 }

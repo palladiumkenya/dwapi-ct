@@ -7,7 +7,7 @@ using PalladiumDwh.Shared.Custom;
 namespace PalladiumDwh.Shared.Model
 {
 
-    public abstract class Entity 
+    public abstract class Entity : IEntity
     {
         [Key]
         public virtual Guid Id { get; set; }
@@ -27,7 +27,7 @@ namespace PalladiumDwh.Shared.Model
         }
         protected Entity()
         {
-            Id = LiveGuid.NewGuid();
+            Id = Guid.NewGuid();
         }
     }
 }

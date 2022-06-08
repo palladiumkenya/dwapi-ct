@@ -1,8 +1,12 @@
+using AutoMapper;
+using MediatR;
+using PalladiumDwh.Core.Application.MapProfiles;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Core.Services;
 using PalladiumDwh.DWapi.Helpers;
 using PalladiumDwh.Infrastructure.Data;
 using StructureMap;
+using StructureMap.Pipeline;
 
 namespace PalladiumDwh.DWapi.DependencyResolution
 {
@@ -18,6 +22,8 @@ namespace PalladiumDwh.DWapi.DependencyResolution
                     scan.Assembly("PalladiumDwh.Shared.Data");
                     scan.Assembly("PalladiumDwh.Core");
                     scan.Assembly("PalladiumDwh.Infrastructure");
+                    scan.ConnectImplementationsToTypesClosing(typeof(IRequestHandler<,>));
+                    scan.ConnectImplementationsToTypesClosing(typeof(INotificationHandler<>));
                     scan.WithDefaultConventions();
                     scan.With(new ControllerConvention());
                 });
@@ -33,7 +39,16 @@ namespace PalladiumDwh.DWapi.DependencyResolution
 
             For<IMessengerScheduler>().Use<MessengerScheduler>().Singleton();
 
+            MapperConfiguration config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new CtProfile());
+            });
 
+            var mapper = config.CreateMapper();
+            For<IMapper>().Use(mapper);
+
+            For<IMediator>().LifecycleIs<TransientLifecycle>().Use<Mediator>();
+            For<ServiceFactory>().Use<ServiceFactory>(ctx => ctx.GetInstance);
         }
     }
 }

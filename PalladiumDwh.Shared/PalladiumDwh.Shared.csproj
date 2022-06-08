@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CSharpFunctionalExtensions, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CSharpFunctionalExtensions.2.0.0\lib\net461\CSharpFunctionalExtensions.dll</HintPath>
     </Reference>
@@ -38,8 +42,9 @@
       <HintPath>..\packages\CsvHelper.2.16.3.0\lib\net45\CsvHelper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Dapper, Version=1.50.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.50.4\lib\net451\Dapper.dll</HintPath>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Dapper.2.0.123\lib\net461\Dapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Dapper.Contrib, Version=1.50.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.Contrib.1.50.4\lib\net451\Dapper.Contrib.dll</HintPath>
@@ -47,17 +52,20 @@
     <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a">
+      <HintPath>..\packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Messaging" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -79,6 +87,8 @@
     <Compile Include="Extentions\TypeExtentions.cs" />
     <Compile Include="Interfaces\DTOs\IAllergiesChronicIllnessExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IContactListingExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\ICovidExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IDefaulterTracingExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IDepressionScreeningExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IDrugAlcoholScreeningExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IEnhancedAdherenceCounsellingExtractDTO.cs" />
@@ -90,6 +100,8 @@
     <Compile Include="Interfaces\Extracts\IAdverseEventExtract.cs" />
     <Compile Include="Interfaces\Extracts\IAllergiesChronicIllnessExtract.cs" />
     <Compile Include="Interfaces\Extracts\IContactListingExtract.cs" />
+    <Compile Include="Interfaces\Extracts\ICovidExtract.cs" />
+    <Compile Include="Interfaces\Extracts\IDefaulterTracingExtract.cs" />
     <Compile Include="Interfaces\Extracts\IDepressionScreeningExtract.cs" />
     <Compile Include="Interfaces\Extracts\IDrugAlcoholScreeningExtract.cs" />
     <Compile Include="Interfaces\Extracts\IEnhancedAdherenceCounsellingExtract.cs" />
@@ -102,9 +114,12 @@
     <Compile Include="Interfaces\IArtNew.cs" />
     <Compile Include="Interfaces\IClearPatientRecords.cs" />
     <Compile Include="Interfaces\IContactListing.cs" />
+    <Compile Include="Interfaces\ICovid.cs" />
+    <Compile Include="Interfaces\IDefaulterTracing.cs" />
     <Compile Include="Interfaces\IDepressionScreening.cs" />
     <Compile Include="Interfaces\IDrugAlcoholScreening.cs" />
     <Compile Include="Interfaces\IEnhancedAdherenceCounselling.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IGbvScreening.cs" />
     <Compile Include="Interfaces\IIpt.cs" />
     <Compile Include="Interfaces\ILabNew.cs" />
@@ -138,12 +153,20 @@
     <Compile Include="Interfaces\Profiles\IGbvScreeningProfile.cs" />
     <Compile Include="Interfaces\Profiles\IIptProfile.cs" />
     <Compile Include="Interfaces\Profiles\IOtzProfile.cs" />
+    <Compile Include="Interfaces\Profiles\ICovidProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IDefaulterTracingProfile.cs" />
     <Compile Include="Interfaces\Profiles\IOvcProfile.cs" />
     <Compile Include="Interfaces\Profiles\IPatientAdverseEventProfile.cs" />
+    <Compile Include="Interfaces\Stages\IStage.cs" />
+    <Compile Include="Interfaces\Stages\IStagePatientExtract.cs" />
+    <Compile Include="Interfaces\Stages\IStageVisitExtract.cs" />
+    <Compile Include="Model\DTO\FacilityCacheDto.cs" />
     <Compile Include="Model\DTO\FacilityId.cs" />
     <Compile Include="Model\DTO\FacMetric.cs" />
     <Compile Include="Model\DTO\IptExtractDTO.cs" />
     <Compile Include="Model\DTO\AllergiesChronicIllnessExtractDTO.cs" />
+    <Compile Include="Model\DTO\DefaulterTracingExtractDTO.cs" />
+    <Compile Include="Model\DTO\CovidExtractDTO.cs" />
     <Compile Include="Model\DTO\OvcExtractDTO.cs" />
     <Compile Include="Model\DTO\DepressionScreeningExtractDTO.cs" />
     <Compile Include="Model\DTO\ContactListingExtractDTO.cs" />
@@ -167,6 +190,8 @@
     <Compile Include="Model\ExrtactMap.cs" />
     <Compile Include="Model\Extract\AllergiesChronicIllnessExtract.cs" />
     <Compile Include="Model\Extract\ContactListingExtract.cs" />
+    <Compile Include="Model\Extract\CovidExtract.cs" />
+    <Compile Include="Model\Extract\DefaulterTracingExtract.cs" />
     <Compile Include="Model\Extract\DepressionScreeningExtract.cs" />
     <Compile Include="Model\Extract\DrugAlcoholScreeningExtract.cs" />
     <Compile Include="Model\Extract\EnhancedAdherenceCounsellingExtract.cs" />
@@ -205,6 +230,8 @@
     <Compile Include="Interfaces\Profiles\IPatientVisitProfile.cs" />
     <Compile Include="Model\Manifest.cs" />
     <Compile Include="Model\Profile\ExtractProfile.cs" />
+    <Compile Include="Model\Profile\DefaulterTracingProfile.cs" />
+    <Compile Include="Model\Profile\CovidProfile.cs" />
     <Compile Include="Model\Profile\PatientAdverseEventProfile.cs" />
     <Compile Include="Model\Profile\PatientARTProfile.cs" />
     <Compile Include="Model\Profile\PatientBaselineProfile.cs" />
@@ -233,7 +260,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

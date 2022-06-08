@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
+using PalladiumDwh.Core.Application.Extracts.Stage;
 using PalladiumDwh.Core.Model;
 using PalladiumDwh.Infrastructure.Migrations;
 using PalladiumDwh.Shared.Data;
@@ -43,18 +44,42 @@ namespace PalladiumDwh.Infrastructure.Data
 
         public virtual DbSet<AllergiesChronicIllnessExtract> AllergiesChronicIllnessExtracts { get; set; }
 
-        public virtual DbSet<ContactListingExtract> ContactListingExtracts { get; set; } 
+        public virtual DbSet<ContactListingExtract> ContactListingExtracts { get; set; }
 
-        public virtual DbSet<DepressionScreeningExtract> DepressionScreeningExtracts { get; set; } 
+        public virtual DbSet<DepressionScreeningExtract> DepressionScreeningExtracts { get; set; }
 
-        public virtual DbSet<EnhancedAdherenceCounsellingExtract> EnhancedAdherenceCounsellingExtracts { get; set; } 
+        public virtual DbSet<EnhancedAdherenceCounsellingExtract> EnhancedAdherenceCounsellingExtracts { get; set; }
 
-        public virtual DbSet<DrugAlcoholScreeningExtract> DrugAlcoholScreeningExtracts { get; set; } 
+        public virtual DbSet<DrugAlcoholScreeningExtract> DrugAlcoholScreeningExtracts { get; set; }
 
-        public virtual DbSet<GbvScreeningExtract> GbvScreeningExtracts { get; set; } 
-        public virtual DbSet<IptExtract> IptExtracts { get; set; } 
-        public virtual DbSet<OtzExtract> OtzExtracts { get; set; } 
-        public virtual DbSet<OvcExtract> OvcExtracts { get; set; } 
+        public virtual DbSet<GbvScreeningExtract> GbvScreeningExtracts { get; set; }
+        public virtual DbSet<IptExtract> IptExtracts { get; set; }
+        public virtual DbSet<OtzExtract> OtzExtracts { get; set; }
+        public virtual DbSet<OvcExtract> OvcExtracts { get; set; }
+
+        public virtual DbSet<CovidExtract> CovidExtracts { get; set; }
+        public virtual DbSet<DefaulterTracingExtract> DefaulterTracingExtracts { get; set; }
+
+        public virtual DbSet<StagePatientExtract> StagePatientExtracts { get; set; }
+        public virtual DbSet<StageVisitExtract> StageVisitExtracts { get; set; }
+        public virtual DbSet<StageAdverseEventExtract> StageAdverseEventExtracts { get; set; }
+        public virtual DbSet<StageAllergiesChronicIllnessExtract> StageAllergiesChronicIllnessExtracts { get; set; }
+        public virtual DbSet<StageArtExtract> StageArtExtracts { get; set; }
+        public virtual DbSet<StageBaselineExtract> StageBaselineExtracts { get; set; }
+        public virtual DbSet<StageContactListingExtract> StageContactListingExtracts { get; set; }
+        public virtual DbSet<StageCovidExtract> StageCovidExtracts { get; set; }
+        public virtual DbSet<StageDefaulterTracingExtract> StageDefaulterTracingExtracts { get; set; }
+        public virtual DbSet<StageDepressionScreeningExtract> StageDepressionScreeningExtracts { get; set; }
+        public virtual DbSet<StageDrugAlcoholScreeningExtract> StageDrugAlcoholScreeningExtracts { get; set; }
+        public virtual DbSet<StageEnhancedAdherenceCounsellingExtract> StageEnhancedAdherenceCounsellingExtracts { get; set; }
+        public virtual DbSet<StageIptExtract> StageIptExtracts { get; set; }
+        public virtual DbSet<StageLaboratoryExtract> StageLaboratoryExtracts { get; set; }
+        public virtual DbSet<StageOtzExtract> StageOtzExtracts { get; set; }
+        public virtual DbSet<StageOvcExtract> StageOvcExtracts { get; set; }
+        public virtual DbSet<StagePharmacyExtract> StagePharmacyExtracts { get; set; }
+        public virtual DbSet<StageStatusExtract> StageStatusExtracts { get; set; }
+        public virtual DbSet<StageGbvScreeningExtract> StageGbvScreeningExtracts { get; set; }
+        public virtual DbSet<SmartActionRegister> SmartActionRegisters { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -138,6 +163,16 @@ namespace PalladiumDwh.Infrastructure.Data
                 .WithRequired()
                 .HasForeignKey(f => f.PatientId);
 
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.CovidExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.DefaulterTracingExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+
             DapperPlusManager.Entity<Facility>().Table("Facility").Key(x => x.Id);
             DapperPlusManager.Entity<PatientExtract>().Table("PatientExtract").Key(x => x.Id);
             DapperPlusManager.Entity<PatientArtExtract>().Table("PatientArtExtract").Key(x => x.Id);
@@ -169,6 +204,33 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<DrugAlcoholScreeningExtract>().Key(x => x.Id).Table($"DrugAlcoholScreeningExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             DapperPlusManager.Entity<OvcExtract>().Key(x => x.Id).Table($"OvcExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             DapperPlusManager.Entity<OtzExtract>().Key(x => x.Id).Table($"OtzExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<CovidExtract>().Key(x => x.Id).Table($"CovidExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<DefaulterTracingExtract>().Key(x => x.Id).Table($"DefaulterTracingExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+
+            DapperPlusManager.Entity<ActionRegister>().Key(x => x.Id).Table($"{nameof(ActionRegister)}");
+
+            DapperPlusManager.Entity<StagePatientExtract>().Key(x => x.Id).Table($"{nameof(StagePatientExtract)}");
+            DapperPlusManager.Entity<StageVisitExtract>().Key(x => x.Id).Table($"{nameof(StageVisitExtract)}");
+            DapperPlusManager.Entity<StageAdverseEventExtract>().Key(x => x.Id).Table($"{nameof(StageAdverseEventExtract)}");
+            DapperPlusManager.Entity<StageAllergiesChronicIllnessExtract>().Key(x => x.Id).Table($"{nameof(StageAllergiesChronicIllnessExtract)}");
+            DapperPlusManager.Entity<StageArtExtract>().Key(x => x.Id).Table($"{nameof(StageArtExtract)}");
+            DapperPlusManager.Entity<StageBaselineExtract>().Key(x => x.Id).Table($"{nameof(StageBaselineExtract)}");
+            DapperPlusManager.Entity<StageContactListingExtract>().Key(x => x.Id).Table($"{nameof(StageContactListingExtract)}");
+            DapperPlusManager.Entity<StageCovidExtract>().Key(x => x.Id).Table($"{nameof(StageCovidExtract)}");
+            DapperPlusManager.Entity<StageDefaulterTracingExtract>().Key(x => x.Id).Table($"{nameof(StageDefaulterTracingExtract)}");
+            DapperPlusManager.Entity<StageDepressionScreeningExtract>().Key(x => x.Id).Table($"{nameof(StageDepressionScreeningExtract)}");
+            DapperPlusManager.Entity<StageDrugAlcoholScreeningExtract>().Key(x => x.Id).Table($"{nameof(StageDrugAlcoholScreeningExtract)}");
+            DapperPlusManager.Entity<StageEnhancedAdherenceCounsellingExtract>().Key(x => x.Id).Table($"{nameof(StageEnhancedAdherenceCounsellingExtract)}");
+            DapperPlusManager.Entity<StageIptExtract>().Key(x => x.Id).Table($"{nameof(StageIptExtract)}");
+            DapperPlusManager.Entity<StageLaboratoryExtract>().Key(x => x.Id).Table($"{nameof(StageLaboratoryExtract)}");
+            DapperPlusManager.Entity<StageOtzExtract>().Key(x => x.Id).Table($"{nameof(StageOtzExtract)}");
+            DapperPlusManager.Entity<StageOvcExtract>().Key(x => x.Id).Table($"{nameof(StageOvcExtract)}");
+            DapperPlusManager.Entity<StagePharmacyExtract>().Key(x => x.Id).Table($"{nameof(StagePharmacyExtract)}");
+            DapperPlusManager.Entity<StageStatusExtract>().Key(x => x.Id).Table($"{nameof(StageStatusExtract)}");
+            DapperPlusManager.Entity<StageGbvScreeningExtract>().Key(x => x.Id).Table($"{nameof(StageGbvScreeningExtract)}");
+
+            DapperPlusManager.Entity<SmartActionRegister>().Key(x => x.Id).Table($"{nameof(SmartActionRegister)}");
+
         }
 
         public SqlConnection GetConnection()
@@ -178,7 +240,7 @@ namespace PalladiumDwh.Infrastructure.Data
 
             if (connection.State == ConnectionState.Open)
                 return connection;
- 
+
             connection.Open();
             return connection;
         }

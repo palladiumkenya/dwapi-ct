@@ -24,7 +24,7 @@ namespace PalladiumDWh.DwapiService
             Log.Debug(new string('*',40));
             Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Name}");
             Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Version}");
-            Log.Debug($"Rel: 16MAR21 1451");
+            Log.Debug($"Rel: 04APR22 0818");
             Log.Debug(new string('*', 40));
             Log.Debug("Loading DWapiService...");
 
@@ -45,9 +45,10 @@ namespace PalladiumDWh.DwapiService
                 Log.Debug(e);
                 throw;
             }
-            
+
             IOC = IoC.Initialize();
 
+            // TODO: Auto upgrade feature
             try
             {
                 Log.Debug("Upgrading DB..");
@@ -59,17 +60,17 @@ namespace PalladiumDWh.DwapiService
             {
                 Log.Error("CANNOT UPGRADE DATABASE !", e);
             }
-// #if(!DEBUG)
+//#if(!DEBUG)
              var servicesToRun = new ServiceBase[]
              {
                  new ExtractService()
              };
 
              ServiceBase.Run(servicesToRun);
-// #else
+//#else
             //ExtractService myServ = new ExtractService();
             //myServ.RunSvc();
-// #endif
+//#endif
         }
     }
 }

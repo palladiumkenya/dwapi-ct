@@ -6,6 +6,7 @@ using Dapper;
 using Dapper.Contrib.Extensions;
 using PalladiumDwh.Core.Exchange;
 using PalladiumDwh.Core.Interfaces;
+using PalladiumDwh.Core.Model.Dto;
 using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Data.Repository;
 using PalladiumDwh.Shared.Model;
@@ -135,9 +136,9 @@ select
 (select count(id) from EnhancedAdherenceCounsellingExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) EnhancedAdherenceCounsellingExtract,
 (select count(id) from DrugAlcoholScreeningExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) DrugAlcoholScreeningExtract,
 (select count(id) from OvcExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) OvcExtract,
-(select count(id) from OtzExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) OtzExtract
-
-
+(select count(id) from OtzExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) OtzExtract,
+(select count(id) from CovidExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) CovidExtract,
+(select count(id) from DefaulterTracingExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) DefaulterTracingExtract
                 ";
 
             var result = _context.GetConnection().Query<dynamic>(sql).FirstOrDefault();
@@ -164,6 +165,9 @@ select
                 stats.AddStats("OvcExtract", result.OvcExtract);
                 stats.AddStats("OtzExtract", result.OtzExtract);
 
+                stats.AddStats("CovidExtract", result.CovidExtract);
+                stats.AddStats("DefaulterTracingExtract", result.DefaulterTracingExtract);
+
                 return stats;
             }
 
@@ -181,10 +185,11 @@ select
                 facility.Emr = emr;
                 Log.Debug($"NEW FACILITY {facility}");
                 _context.GetConnection().Execute(facility.SqlInsert());
+                masterFacility.FacilityId = facility.Id;
                 return;
 
             }
-
+            masterFacility.FacilityId = toEnroll.Id;
             // Take Facility SnapShot
             if (toEnroll.EmrChanged(emr) && allowSnapshot)
             {
@@ -221,6 +226,7 @@ select
                 var facility = Facility.create(masterFacility);
                 facility.Emr = emr;
                 Log.Debug($"SNAPSHOT FROM FACILITY {facility}");
+                masterFacility.FacilityId = facility.Id;
                 _context.GetConnection().Execute(facility.SqlInsert());
             }
 
@@ -241,6 +247,12 @@ select
             {
                 Id = x.Id, End = x.End, Session = x.Session, Start = x.Start
             });
+        }
+
+        public List<FacilityCacheDto> ReadFacilityCache()
+        {
+            var sql = $"SELECT DISTINCT Id,Code FROM {nameof(Facility)} Where Code>0";
+            return _context.GetConnection().Query<FacilityCacheDto>(sql).ToList();
         }
     }
 }

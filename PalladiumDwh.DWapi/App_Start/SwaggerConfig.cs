@@ -3,6 +3,7 @@ using WebActivatorEx;
 using PalladiumDwh.DWapi;
 using Swashbuckle.Application;
 using System;
+using System.Linq;
 using System.Xml.XPath;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
@@ -18,6 +19,10 @@ namespace PalladiumDwh.DWapi
             GlobalConfiguration.Configuration
                 .EnableSwagger(c =>
                 {
+                    c.ResolveConflictingActions(descriptions =>
+                    {
+                        return descriptions.First();
+                    });
                     c.SingleApiVersion("v1", "DWapi");
                     c.PrettyPrint();
                     c.IncludeXmlComments(string.Format(@"{0}\bin\PalladiumDwh.DWapi.xml",
