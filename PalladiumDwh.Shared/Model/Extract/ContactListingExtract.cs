@@ -18,6 +18,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string CurrentlyLivingWithIndexClient { get; set; }
         public string KnowledgeOfHivStatus { get; set; }
         public string PnsApproach { get; set; }
+        public int? ContactPatientPK { get; set; }
 
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
@@ -27,7 +28,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-        public ContactListingExtract(string facilityName, int? partnerPersonId, string contactAge, string contactSex, string contactMaritalStatus, string relationshipWithPatient, string screenedForIpv, string ipvScreening, string ipvScreeningOutcome, string currentlyLivingWithIndexClient, string knowledgeOfHivStatus, string pnsApproach,
+        public ContactListingExtract(string facilityName, int? partnerPersonId, string contactAge, string contactSex, string contactMaritalStatus, string relationshipWithPatient, string screenedForIpv, string ipvScreening, string ipvScreeningOutcome, string currentlyLivingWithIndexClient, string knowledgeOfHivStatus, string pnsApproach,int? contactPatientPK,
             Guid patientId, string emr, string project)
         {
             FacilityName = facilityName;
@@ -42,6 +43,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             CurrentlyLivingWithIndexClient = currentlyLivingWithIndexClient;
             KnowledgeOfHivStatus = knowledgeOfHivStatus;
             PnsApproach = pnsApproach;
+            ContactPatientPK = contactPatientPK;
 
             PatientId = patientId;
             Emr = emr;
