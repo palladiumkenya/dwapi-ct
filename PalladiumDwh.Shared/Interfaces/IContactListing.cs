@@ -16,5 +16,6 @@ namespace PalladiumDwh.Shared.Interfaces
          string CurrentlyLivingWithIndexClient { get; set; }
          string KnowledgeOfHivStatus { get; set; }
          string PnsApproach { get; set; }
+         int? ContactPatientPK { get; set; }
     }
 }
