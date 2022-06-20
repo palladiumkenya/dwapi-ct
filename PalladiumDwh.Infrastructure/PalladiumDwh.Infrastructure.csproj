@@ -210,6 +210,10 @@
     <Compile Include="Migrations\202205050545562_StaustSDateReview.designer.cs">
       <DependentUpon>202205050545562_StaustSDateReview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206101405166_Contactpk.cs" />
+    <Compile Include="Migrations\202206101405166_Contactpk.designer.cs">
+      <DependentUpon>202206101405166_Contactpk.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -279,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202205050545562_StaustSDateReview.resx">
       <DependentUpon>202205050545562_StaustSDateReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206101405166_Contactpk.resx">
+      <DependentUpon>202206101405166_Contactpk.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

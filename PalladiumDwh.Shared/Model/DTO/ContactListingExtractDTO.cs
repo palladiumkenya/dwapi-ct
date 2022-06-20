@@ -20,6 +20,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string CurrentlyLivingWithIndexClient { get; set; }
         public string KnowledgeOfHivStatus { get; set; }
         public string PnsApproach { get; set; }
+        public int? ContactPatientPK { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
@@ -42,6 +43,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             CurrentlyLivingWithIndexClient=ContactListingExtract.CurrentlyLivingWithIndexClient;
             KnowledgeOfHivStatus=ContactListingExtract.KnowledgeOfHivStatus;
             PnsApproach=ContactListingExtract.PnsApproach;
+            ContactPatientPK=ContactListingExtract.ContactPatientPK;
 
             Emr = ContactListingExtract.Emr;
             Project = ContactListingExtract.Project;
@@ -74,6 +76,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 CurrentlyLivingWithIndexClient,
                 KnowledgeOfHivStatus,
                 PnsApproach,
+                ContactPatientPK,
                 PatientId,
                 Emr,
                 Project
