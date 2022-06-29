@@ -92,17 +92,18 @@ namespace PalladiumDwh.DWapi
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage("DWAPICentralHangfire", new SqlServerStorageOptions
                 {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.Zero,
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(10),
+                    SlidingInvisibilityTimeout = TimeSpan.FromHours(1),
+                    QueuePollInterval = TimeSpan.FromSeconds(40),
                     UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true
+                    DisableGlobalLocks = true,
                 });
 
             var options = new BackgroundJobServerOptions
             {
                 WorkerCount = GetWorkerCount(),
-                Queues = new[] { "alpha", "beta", "gamma","delta", "omega", "default" }
+                Queues = new[] { "alpha", "beta", "gamma","delta", "omega", "default" },
+                ShutdownTimeout =  TimeSpan.FromMinutes(2),
             };
             yield return new BackgroundJobServer(options);
         }

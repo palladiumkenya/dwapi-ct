@@ -57,7 +57,7 @@ namespace PalladiumDwh.DWapi.Controllers
         {
             var   response = Request.CreateResponse(HttpStatusCode.OK, new
             {
-                name="Dwapi Central - API (CT)",status="running...",version="3.0.0.2",build="10JUN221703"
+                name="Dwapi Central - API (CT)",status="running...",version="3.0.0.3",build="29JUN221117"
             });
 
             return response;
