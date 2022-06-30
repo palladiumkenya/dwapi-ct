@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-using Hangfire;
+﻿using Hangfire;
 using Hangfire.SqlServer;
 using Hangfire.StructureMap;
 using log4net;
+using Microsoft.Owin;
+using Owin;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.DWapi.Helpers;
-using PalladiumDwh.Infrastructure.Data;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using System.Web.Optimization;
+using System.Web.Routing;
 using Z.Dapper.Plus;
+
+[assembly: OwinStartup(typeof(PalladiumDwh.DWapi.Startup))]
 
 namespace PalladiumDwh.DWapi
 {
-    public class WebApiApplication : System.Web.HttpApplication
+    public class Startup
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private IMessengerScheduler _scheduler;
 
-        protected void Application_Start()
+        public void Configuration(IAppBuilder app)
         {
+
             Log.Debug("PalladiumDwh.DWapi starting...");
 
             AreaRegistration.RegisterAllAreas();
@@ -31,59 +34,6 @@ namespace PalladiumDwh.DWapi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            HangfireAspNet.Use(GetHangfireServers);
-
-            BatchJob.StartNew(x =>
-            {
-                x.Enqueue(() => WriteDebug("Dwapi v3.0.0.1 Background Jobs Started!"));
-            });
-
-
-            // CHECK if the license if valid for the default provider (SQL Server)
-            try
-            {
-                DapperPlusManager.AddLicense(Properties.Settings.Default.Z_Dapper_Plus_LicenseName, Properties.Settings.Default.Z_Dapper_Plus_LicenseKey);
-                if (!Z.Dapper.Plus.DapperPlusManager.ValidateLicense(out var licenseErrorMessage))
-                {
-                    throw new Exception(licenseErrorMessage);
-                }
-                Log.Debug("Loading DWapiService [Dapper.Plus]...OK");
-            }
-
-            catch (Exception e)
-            {
-                Log.Error("[Dapper.Plus]",e);
-                throw;
-            }
-
-            try
-            {
-                Log.Debug("Upgrading DB..");
-                //var service = StructuremapMvc.DwapiIContainer.GetInstance<IAppService>();
-                //service.UpgradeDatabase();
-                Log.Debug("DB up-to-date");
-            }
-            catch (Exception e)
-            {
-                Log.Error("CANNOT UPGRADE DATABASE !",e);
-            }
-
-
-            /*
-            _scheduler = StructuremapMvc.DwapiIContainer.GetInstance<IMessengerScheduler>();
-            _scheduler.Start();
-            */
-            Log.Debug("PalladiumDwh.DWapi started!");
-        }
-
-        protected void Application_End(object sender, EventArgs e)
-        {
-            _scheduler?.Shutdown();
-        }
-
-
-        private IEnumerable<IDisposable> GetHangfireServers()
-        {
             Hangfire.GlobalConfiguration.Configuration
                 .UseStructureMapActivator(PalladiumDwh.DWapi.StructuremapMvc.DwapiIContainer)
                 .UseBatches()
@@ -99,16 +49,61 @@ namespace PalladiumDwh.DWapi
                     DisableGlobalLocks = true,
                 });
 
+
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new MyAuthorizationFilter() }
+            });
+
             var options = new BackgroundJobServerOptions
             {
                 WorkerCount = GetWorkerCount(),
-                Queues = new[] { "alpha", "beta", "gamma","delta", "omega", "default" },
-                ShutdownTimeout =  TimeSpan.FromMinutes(2),
+                Queues = new[] { "alpha", "beta", "gamma", "delta", "omega", "default" },
+                ShutdownTimeout = TimeSpan.FromMinutes(2),
             };
-            yield return new BackgroundJobServer(options);
+
+            app.UseHangfireServer(options);
+
+            // CHECK if the license if valid for the default provider (SQL Server)
+            try
+            {
+                DapperPlusManager.AddLicense(Properties.Settings.Default.Z_Dapper_Plus_LicenseName, Properties.Settings.Default.Z_Dapper_Plus_LicenseKey);
+                if (!Z.Dapper.Plus.DapperPlusManager.ValidateLicense(out var licenseErrorMessage))
+                {
+                    throw new Exception(licenseErrorMessage);
+                }
+                Log.Debug("Loading DWapiService [Dapper.Plus]...OK");
+            }
+
+            catch (Exception e)
+            {
+                Log.Error("[Dapper.Plus]", e);
+                throw;
+            }
+
+            try
+            {
+                Log.Debug("Upgrading DB..");
+                //var service = StructuremapMvc.DwapiIContainer.GetInstance<IAppService>();
+                //service.UpgradeDatabase();
+                Log.Debug("DB up-to-date");
+            }
+            catch (Exception e)
+            {
+                Log.Error("CANNOT UPGRADE DATABASE !", e);
+            }
+
+
+            /*
+            _scheduler = StructuremapMvc.DwapiIContainer.GetInstance<IMessengerScheduler>();
+            _scheduler.Start();
+            */
+            Log.Debug("PalladiumDwh.DWapi started!");
+
+
         }
 
-        public  void WriteDebug(string str)
+        public void WriteDebug(string str)
         {
             Debug.WriteLine(str);
         }
