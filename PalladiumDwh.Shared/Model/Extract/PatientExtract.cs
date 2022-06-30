@@ -48,6 +48,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string Pkv { get; set; }
         public string Occupation { get; set; }
         public DateTime? Updated { get; set; }
+        public string NUPI { get; set; }
 
         public virtual ICollection<PatientArtExtract> PatientArtExtracts { get; set; }=new List<PatientArtExtract>();
         public virtual ICollection<PatientBaselinesExtract> PatientBaselinesExtracts { get; set; }=new List<PatientBaselinesExtract>();
@@ -92,7 +93,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public PatientExtract(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, Guid facilityId,string emr,string project,
             string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate,
-            string pkv,string occupation)
+            string pkv,string occupation, string nupi)
 
         {
             PatientPID = patientPid;
@@ -135,6 +136,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             TransferInDate = transferInDate;
             Pkv = pkv;
             Occupation = occupation;
+            NUPI = nupi;
         }
 
         public void AddPatientArtExtracts(IEnumerable<PatientArtExtract> extracts)

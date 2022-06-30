@@ -49,6 +49,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string PatientResidentWard { get; set; }
         public string PatientResidentVillage { get; set; }
         public DateTime? TransferInDate { get; set; }
+        public string NUPI { get; set; }
 
         [DoNotRead]
         public virtual ICollection<ClientPatientArtExtract> ClientPatientArtExtracts { get; set; }=new List<ClientPatientArtExtract>();

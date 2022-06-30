@@ -42,7 +42,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
             Assert.IsNotNull(emrdbtype);
             var dbConfig = new DatabaseConfig();
             dbConfig.DatabaseType = emrdbtype;
-            dbConfig.Server = @".\Koske14";
+            dbConfig.Server = @".";
             dbConfig.Password = "maun";
             dbConfig.User = "sa";
 
@@ -61,7 +61,7 @@ namespace PalladiumDwh.ClientReader.Infrastructure.Tests.Data
             Assert.IsNotNull(emrdbtype);
             var dbConfig = new DatabaseConfig();
             dbConfig.DatabaseType = emrdbtype;
-            dbConfig.Server = @".\Koske14";
+            dbConfig.Server = @".";
             dbConfig.Password = "maun";
             dbConfig.User = "sa";
 

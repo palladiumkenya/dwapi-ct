@@ -58,6 +58,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public Guid? LiveSession { get; set; }
         public LiveStage LiveStage { get; set; }
         public int SiteCode { get; set; }
+        public string NUPI { get; set; }
 
         public void Standardize(PatientSourceBag patientSourceBag)
         {
