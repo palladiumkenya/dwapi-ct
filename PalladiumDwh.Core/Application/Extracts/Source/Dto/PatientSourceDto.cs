@@ -40,6 +40,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string PatientResidentWard { get; set; }
         public string PatientResidentVillage { get; set; }
         public DateTime? TransferInDate { get; set; }
+        public string NUPI { get; set; }
 
         public override bool IsValid()
         {

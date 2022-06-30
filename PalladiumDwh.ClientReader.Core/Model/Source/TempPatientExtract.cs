@@ -43,6 +43,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public DateTime? TransferInDate { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
+        public string NUPI { get; set; }
 
         public override string ToString()
         {
