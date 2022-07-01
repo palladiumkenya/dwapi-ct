@@ -43,7 +43,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public int FacilityId { get; set; }
-
+        
         public ClientPatientExtractDTO()
         {
         }
