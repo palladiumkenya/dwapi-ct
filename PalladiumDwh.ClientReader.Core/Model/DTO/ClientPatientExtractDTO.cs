@@ -44,8 +44,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string Project { get; set; }
         public int FacilityId { get; set; }
 
-        public string NUPI { get; set; }
-
         public ClientPatientExtractDTO()
         {
         }
@@ -83,5 +81,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
 
         public string Pkv { get; set; }
         public string Occupation { get; set; }
+        public string NUPI { get; set; }
+        
     }
 }

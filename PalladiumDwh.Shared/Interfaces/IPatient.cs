@@ -37,6 +37,8 @@ namespace PalladiumDwh.Shared.Interfaces
         string PatientResidentWard { get; set; }
         string PatientResidentVillage { get; set; }
         DateTime? TransferInDate { get; set; }
+        string NUPI { get; set; }
+
     }
 }
 
