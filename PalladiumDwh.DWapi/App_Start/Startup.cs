@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-using Hangfire;
+﻿using Hangfire;
 using Hangfire.SqlServer;
 using Hangfire.StructureMap;
 using log4net;
+using Microsoft.Owin;
+using Owin;
 using PalladiumDwh.Core.Interfaces;
-using PalladiumDwh.DWapi.Helpers;
-using PalladiumDwh.Infrastructure.Data;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using System.Web.Optimization;
+using System.Web.Routing;
 using Z.Dapper.Plus;
+
+[assembly: OwinStartup(typeof(PalladiumDwh.DWapi.Startup))]
 
 namespace PalladiumDwh.DWapi
 {
-    public class WebApiApplication : System.Web.HttpApplication
+    public class Startup
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private IMessengerScheduler _scheduler;
 
-        protected void Application_Start()
+        public void Configuration(IAppBuilder app)
         {
+
             Log.Debug("PalladiumDwh.DWapi starting...");
 
             AreaRegistration.RegisterAllAreas();
@@ -31,13 +34,35 @@ namespace PalladiumDwh.DWapi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            HangfireAspNet.Use(GetHangfireServers);
+            Hangfire.GlobalConfiguration.Configuration
+                .UseStructureMapActivator(PalladiumDwh.DWapi.StructuremapMvc.DwapiIContainer)
+                .UseBatches()
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage("DWAPICentralHangfire", new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(10),
+                    SlidingInvisibilityTimeout = TimeSpan.FromHours(1),
+                    QueuePollInterval = TimeSpan.FromSeconds(40),
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true,
+                });
 
-            BatchJob.StartNew(x =>
+
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
-                x.Enqueue(() => WriteDebug("Dwapi v3.0.0.1 Background Jobs Started!"));
+                Authorization = new[] { new MyAuthorizationFilter() }
             });
 
+            var options = new BackgroundJobServerOptions
+            {
+                WorkerCount = GetWorkerCount(),
+                Queues = new[] { "alpha", "beta", "gamma", "delta", "omega", "default" },
+                ShutdownTimeout = TimeSpan.FromMinutes(2),
+            };
+
+            app.UseHangfireServer(options);
 
             // CHECK if the license if valid for the default provider (SQL Server)
             try
@@ -52,7 +77,7 @@ namespace PalladiumDwh.DWapi
 
             catch (Exception e)
             {
-                Log.Error("[Dapper.Plus]",e);
+                Log.Error("[Dapper.Plus]", e);
                 throw;
             }
 
@@ -65,7 +90,7 @@ namespace PalladiumDwh.DWapi
             }
             catch (Exception e)
             {
-                Log.Error("CANNOT UPGRADE DATABASE !",e);
+                Log.Error("CANNOT UPGRADE DATABASE !", e);
             }
 
 
@@ -74,40 +99,11 @@ namespace PalladiumDwh.DWapi
             _scheduler.Start();
             */
             Log.Debug("PalladiumDwh.DWapi started!");
+
+
         }
 
-        protected void Application_End(object sender, EventArgs e)
-        {
-            _scheduler?.Shutdown();
-        }
-
-
-        private IEnumerable<IDisposable> GetHangfireServers()
-        {
-            Hangfire.GlobalConfiguration.Configuration
-                .UseStructureMapActivator(PalladiumDwh.DWapi.StructuremapMvc.DwapiIContainer)
-                .UseBatches()
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage("DWAPICentralHangfire", new SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.Zero,
-                    UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true
-                });
-
-            var options = new BackgroundJobServerOptions
-            {
-                WorkerCount = GetWorkerCount(),
-                Queues = new[] { "alpha", "beta", "gamma","delta", "omega", "default" }
-            };
-            yield return new BackgroundJobServer(options);
-        }
-
-        public  void WriteDebug(string str)
+        public void WriteDebug(string str)
         {
             Debug.WriteLine(str);
         }

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using PalladiumDwh.Core.Application.Extracts.Stage;
@@ -20,11 +21,13 @@ namespace PalladiumDwh.Infrastructure.Data
 
         public DwapiCentralContext() : base("name=DWAPICentral")
         {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 900; // s
         }
 
         public DwapiCentralContext(DbConnection existingConnection, bool contextOwnsConnection) : base(
             existingConnection, contextOwnsConnection)
         {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 900; // s
         }
 
         public virtual DbSet<Facility> Facilities { get; set; }
@@ -195,41 +198,105 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<PatientVisitExtract>().BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             DapperPlusManager.Entity<PatientAdverseEventExtract>().BatchDelayInterval(Shared.Custom.Utility.GenDelay());
 
-            DapperPlusManager.Entity<AllergiesChronicIllnessExtract>().Key(x => x.Id).Table($"AllergiesChronicIllnessExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<IptExtract>().Key(x => x.Id).Table($"IptExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<DepressionScreeningExtract>().Key(x => x.Id).Table($"DepressionScreeningExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<ContactListingExtract>().Key(x => x.Id).Table($"ContactListingExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<GbvScreeningExtract>().Key(x => x.Id).Table($"GbvScreeningExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<EnhancedAdherenceCounsellingExtract>().Key(x => x.Id).Table($"EnhancedAdherenceCounsellingExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<DrugAlcoholScreeningExtract>().Key(x => x.Id).Table($"DrugAlcoholScreeningExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<OvcExtract>().Key(x => x.Id).Table($"OvcExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<OtzExtract>().Key(x => x.Id).Table($"OtzExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<CovidExtract>().Key(x => x.Id).Table($"CovidExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<DefaulterTracingExtract>().Key(x => x.Id).Table($"DefaulterTracingExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<AllergiesChronicIllnessExtract>().Key(x => x.Id)
+                .Table($"AllergiesChronicIllnessExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<IptExtract>().Key(x => x.Id).Table($"IptExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<DepressionScreeningExtract>().Key(x => x.Id).Table($"DepressionScreeningExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<ContactListingExtract>().Key(x => x.Id).Table($"ContactListingExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<GbvScreeningExtract>().Key(x => x.Id).Table($"GbvScreeningExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<EnhancedAdherenceCounsellingExtract>().Key(x => x.Id)
+                .Table($"EnhancedAdherenceCounsellingExtract").BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<DrugAlcoholScreeningExtract>().Key(x => x.Id).Table($"DrugAlcoholScreeningExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<OvcExtract>().Key(x => x.Id).Table($"OvcExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<OtzExtract>().Key(x => x.Id).Table($"OtzExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<CovidExtract>().Key(x => x.Id).Table($"CovidExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<DefaulterTracingExtract>().Key(x => x.Id).Table($"DefaulterTracingExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
 
             DapperPlusManager.Entity<ActionRegister>().Key(x => x.Id).Table($"{nameof(ActionRegister)}");
 
             DapperPlusManager.Entity<StagePatientExtract>().Key(x => x.Id).Table($"{nameof(StagePatientExtract)}");
             DapperPlusManager.Entity<StageVisitExtract>().Key(x => x.Id).Table($"{nameof(StageVisitExtract)}");
-            DapperPlusManager.Entity<StageAdverseEventExtract>().Key(x => x.Id).Table($"{nameof(StageAdverseEventExtract)}");
-            DapperPlusManager.Entity<StageAllergiesChronicIllnessExtract>().Key(x => x.Id).Table($"{nameof(StageAllergiesChronicIllnessExtract)}");
+            DapperPlusManager.Entity<StageAdverseEventExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageAdverseEventExtract)}");
+            DapperPlusManager.Entity<StageAllergiesChronicIllnessExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageAllergiesChronicIllnessExtract)}");
             DapperPlusManager.Entity<StageArtExtract>().Key(x => x.Id).Table($"{nameof(StageArtExtract)}");
             DapperPlusManager.Entity<StageBaselineExtract>().Key(x => x.Id).Table($"{nameof(StageBaselineExtract)}");
-            DapperPlusManager.Entity<StageContactListingExtract>().Key(x => x.Id).Table($"{nameof(StageContactListingExtract)}");
+            DapperPlusManager.Entity<StageContactListingExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageContactListingExtract)}");
             DapperPlusManager.Entity<StageCovidExtract>().Key(x => x.Id).Table($"{nameof(StageCovidExtract)}");
-            DapperPlusManager.Entity<StageDefaulterTracingExtract>().Key(x => x.Id).Table($"{nameof(StageDefaulterTracingExtract)}");
-            DapperPlusManager.Entity<StageDepressionScreeningExtract>().Key(x => x.Id).Table($"{nameof(StageDepressionScreeningExtract)}");
-            DapperPlusManager.Entity<StageDrugAlcoholScreeningExtract>().Key(x => x.Id).Table($"{nameof(StageDrugAlcoholScreeningExtract)}");
-            DapperPlusManager.Entity<StageEnhancedAdherenceCounsellingExtract>().Key(x => x.Id).Table($"{nameof(StageEnhancedAdherenceCounsellingExtract)}");
+            DapperPlusManager.Entity<StageDefaulterTracingExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageDefaulterTracingExtract)}");
+            DapperPlusManager.Entity<StageDepressionScreeningExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageDepressionScreeningExtract)}");
+            DapperPlusManager.Entity<StageDrugAlcoholScreeningExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageDrugAlcoholScreeningExtract)}");
+            DapperPlusManager.Entity<StageEnhancedAdherenceCounsellingExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageEnhancedAdherenceCounsellingExtract)}");
             DapperPlusManager.Entity<StageIptExtract>().Key(x => x.Id).Table($"{nameof(StageIptExtract)}");
-            DapperPlusManager.Entity<StageLaboratoryExtract>().Key(x => x.Id).Table($"{nameof(StageLaboratoryExtract)}");
+            DapperPlusManager.Entity<StageLaboratoryExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageLaboratoryExtract)}");
             DapperPlusManager.Entity<StageOtzExtract>().Key(x => x.Id).Table($"{nameof(StageOtzExtract)}");
             DapperPlusManager.Entity<StageOvcExtract>().Key(x => x.Id).Table($"{nameof(StageOvcExtract)}");
             DapperPlusManager.Entity<StagePharmacyExtract>().Key(x => x.Id).Table($"{nameof(StagePharmacyExtract)}");
             DapperPlusManager.Entity<StageStatusExtract>().Key(x => x.Id).Table($"{nameof(StageStatusExtract)}");
-            DapperPlusManager.Entity<StageGbvScreeningExtract>().Key(x => x.Id).Table($"{nameof(StageGbvScreeningExtract)}");
+            DapperPlusManager.Entity<StageGbvScreeningExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageGbvScreeningExtract)}");
 
             DapperPlusManager.Entity<SmartActionRegister>().Key(x => x.Id).Table($"{nameof(SmartActionRegister)}");
+
+
+            DapperPlusManager.Entity<PatientExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<PatientArtExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<PatientBaselinesExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<PatientLaboratoryExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<PatientPharmacyExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<PatientStatusExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<PatientVisitExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<PatientAdverseEventExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<ActionRegister>().BatchTimeout(900);
+            DapperPlusManager.Entity<AllergiesChronicIllnessExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<ContactListingExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<DepressionScreeningExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<EnhancedAdherenceCounsellingExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<DrugAlcoholScreeningExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<GbvScreeningExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<IptExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<OtzExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<OvcExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<CovidExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<DefaulterTracingExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StagePatientExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageVisitExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageAdverseEventExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageAllergiesChronicIllnessExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageArtExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageBaselineExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageContactListingExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageCovidExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageDefaulterTracingExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageDepressionScreeningExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageDrugAlcoholScreeningExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageEnhancedAdherenceCounsellingExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageIptExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageLaboratoryExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageOtzExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageOvcExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StagePharmacyExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageStatusExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageGbvScreeningExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<SmartActionRegister>().BatchTimeout(900);
+
+
 
         }
 
