@@ -43,8 +43,8 @@ namespace PalladiumDwh.DWapi
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage("DWAPICentralHangfire", new SqlServerStorageOptions
                 {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(20),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(20),
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(30),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(30),
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true,
