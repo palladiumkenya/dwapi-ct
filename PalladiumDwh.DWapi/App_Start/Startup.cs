@@ -8,6 +8,7 @@ using PalladiumDwh.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -36,15 +37,15 @@ namespace PalladiumDwh.DWapi
 
             Hangfire.GlobalConfiguration.Configuration
                 .UseStructureMapActivator(PalladiumDwh.DWapi.StructuremapMvc.DwapiIContainer)
-                .UseBatches()
+                .UseBatches(TimeSpan.FromDays(31))
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage("DWAPICentralHangfire", new SqlServerStorageOptions
                 {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(10),
-                    SlidingInvisibilityTimeout = TimeSpan.FromHours(1),
-                    QueuePollInterval = TimeSpan.FromSeconds(40),
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(20),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(20),
+                    QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true,
                 });
@@ -54,24 +55,20 @@ namespace PalladiumDwh.DWapi
             {
                 Authorization = new[] { new MyAuthorizationFilter() }
             });
-
-            var options = new BackgroundJobServerOptions
-            {
-                WorkerCount = GetWorkerCount(),
-                Queues = new[] { "alpha", "beta", "gamma", "delta", "omega", "default" },
-                ShutdownTimeout = TimeSpan.FromMinutes(2),
-            };
-
-            app.UseHangfireServer(options);
+          
+            var queues = new List<string> { "alpha", "beta", "gamma", "delta", "omega", "default" };
+            queues.ForEach(queue => ConfigureWorkers(app, new[] { queue }));
 
             // CHECK if the license if valid for the default provider (SQL Server)
             try
             {
-                DapperPlusManager.AddLicense(Properties.Settings.Default.Z_Dapper_Plus_LicenseName, Properties.Settings.Default.Z_Dapper_Plus_LicenseKey);
+                DapperPlusManager.AddLicense(Properties.Settings.Default.Z_Dapper_Plus_LicenseName,
+                    Properties.Settings.Default.Z_Dapper_Plus_LicenseKey);
                 if (!Z.Dapper.Plus.DapperPlusManager.ValidateLicense(out var licenseErrorMessage))
                 {
                     throw new Exception(licenseErrorMessage);
                 }
+
                 Log.Debug("Loading DWapiService [Dapper.Plus]...OK");
             }
 
@@ -103,16 +100,38 @@ namespace PalladiumDwh.DWapi
 
         }
 
-        public void WriteDebug(string str)
+        private void ConfigureWorkers(IAppBuilder app,string[] queues)
         {
-            Debug.WriteLine(str);
+
+            var hangfireQueueOptions = new BackgroundJobServerOptions
+            {
+                ServerName = $"{Environment.MachineName}:{queues[0].ToUpper()}",
+                WorkerCount = GetWorkerCount(queues[0]),
+                Queues = queues,
+                ShutdownTimeout = TimeSpan.FromMinutes(2),
+            };
+
+            app.UseHangfireServer(hangfireQueueOptions);
         }
 
-        public int GetWorkerCount()
+        private int GetWorkerCount(string queue)
         {
-            return Properties.Settings.Default.WorkerCount > 0
-                ? Properties.Settings.Default.WorkerCount
-                : Environment.ProcessorCount * 5;
+            int count = 5;
+            
+            try
+            {
+                var workerCount= Properties.Settings.Default.WorkerCount;
+                var workers = workerCount.Split(',').ToList();
+                var worker = workers.FirstOrDefault(x => x.Contains(queue));
+                if (null != worker)
+                    int.TryParse(worker.Split('-')[1], out count); 
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error reading worker count",e);
+            }
+          
+            return count;
         }
     }
 }

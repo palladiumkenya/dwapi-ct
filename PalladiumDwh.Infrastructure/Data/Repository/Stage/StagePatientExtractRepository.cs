@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
@@ -57,7 +58,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
             {
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if(connection.State!=ConnectionState.Open)
+                        connection.Open();
 
                     using (var transaction = connection.BeginTransaction())
                     {
@@ -87,7 +89,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                 // assign patientId
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if(connection.State!=ConnectionState.Open)
+                        connection.Open();
 
                     using (var transaction = connection.BeginTransaction())
                     {
@@ -151,7 +154,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
             {
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if(connection.State!=ConnectionState.Open)
+                        connection.Open();
 
                     using (var transaction = connection.BeginTransaction())
                     {
@@ -196,7 +200,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                 // assign patientId
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if(connection.State!=ConnectionState.Open)
+                        connection.Open();
 
                     using (var transaction = connection.BeginTransaction())
                     {
@@ -297,7 +302,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                 // assign patientId
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if(connection.State!=ConnectionState.Open)
+                        connection.Open();
 
                     using (var transaction = connection.BeginTransaction())
                     {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
@@ -48,7 +49,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
             {
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
                     using (var transaction = connection.BeginTransaction())
                     {
                         await connection.ExecuteAsync($"{sql}",
@@ -106,7 +108,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
             {
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
                     await connection.ExecuteAsync($"{sql}",
                         new
                         {
@@ -143,7 +146,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
             {
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
                     await connection.ExecuteAsync($"{sql}",
                         new {manifestId, livestage = LiveStage.Assigned, ids}, null, 0);
 
@@ -225,7 +229,9 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
                             {
                                 using (var connection = new SqlConnection(cons))
                                 {
-                                    connection.Open();
+                                    if (connection.State != ConnectionState.Open)
+                                        connection.Open();
+                                    
                                     await connection.ExecuteAsync($"{sqlDelete}",
                                         new
                                         {
@@ -305,7 +311,9 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
                             {
                                 using (var connection = new SqlConnection(cons))
                                 {
-                                    connection.Open();
+                                    if (connection.State != ConnectionState.Open)
+                                        connection.Open();
+                                    
                                     await connection.ExecuteAsync($"{sqlDelete}",
                                         new
                                         {
