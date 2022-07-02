@@ -70,10 +70,10 @@ namespace PalladiumDwh.DWapi.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int WorkerCount {
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public string WorkerCount {
             get {
-                return ((int)(this["WorkerCount"]));
+                return ((string)(this["WorkerCount"]));
             }
         }
     }

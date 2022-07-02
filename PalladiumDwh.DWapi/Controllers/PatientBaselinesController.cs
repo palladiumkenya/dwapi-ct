@@ -117,14 +117,14 @@ namespace PalladiumDwh.DWapi.Controllers
                     if (sourceBag.HasJobId)
                     {
                         jobId = BatchJob.ContinueBatchWith(sourceBag.JobId,
-                            x => { x.Enqueue(() => Send($"{sourceBag}", new SyncBaseline(sourceBag))); });
+                            x => { x.Enqueue(() => Send($"{sourceBag}", new SyncBaseline(sourceBag))); },$"{sourceBag}");
                     }
                     else
                     {
                          jobId = BatchJob.StartNew(x =>
                         {
                             x.Enqueue(() => Send($"{sourceBag}", new SyncBaseline(sourceBag)));
-                        });
+                        },$"{sourceBag}");
                     }
 
                     return Request.CreateResponse<dynamic>(HttpStatusCode.OK,
@@ -147,7 +147,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 new HttpError($"The expected '{new PatientLabProfile().GetType().Name}' is null"));
         }
         [Queue("beta")]
-        [DisableConcurrentExecution(10 * 60)]
+       // [DisableConcurrentExecution(10 * 60)]
         [AutomaticRetry(Attempts = 3)]
         [DisplayName("{0}")]
         public async Task Send(string jobName, IRequest command)

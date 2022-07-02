@@ -17,8 +17,8 @@
     <Setting Name="Z_Dapper_Plus_LicenseKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">218460a6-02d0-c26b-9add-e6b8d13ccbf4</Value>
     </Setting>
-    <Setting Name="WorkerCount" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">10</Value>
+    <Setting Name="WorkerCount" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">5</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -46,6 +46,7 @@ namespace PalladiumDwh.Shared.Model.DTO
 
         public string Pkv { get; set; }
         public string Occupation { get; set; }
+        public string NUPI { get; set; }
 
         public PatientExtractDTO()
         {
@@ -53,7 +54,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         }
 
         public PatientExtractDTO(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project, Guid facilityId,
-            string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate)
+            string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate, string nupi)
         {
             PatientPID = patientPid;
             PatientCccNumber = patientCccNumber;
@@ -93,6 +94,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientResidentWard = patientResidentWard;
             PatientResidentVillage = patientResidentVillage;
             TransferInDate = transferInDate;
+            NUPI = nupi;
         }
 
         public PatientExtractDTO(PatientExtract patient)
@@ -138,6 +140,7 @@ namespace PalladiumDwh.Shared.Model.DTO
 
             Occupation = patient.Occupation;
             Pkv = patient.Pkv;
+            NUPI = patient.NUPI;
         }
 
         public PatientExtract GeneratePatient(Guid facilityId)
@@ -182,7 +185,8 @@ namespace PalladiumDwh.Shared.Model.DTO
                 PatientResidentWard,
                 PatientResidentVillage,
                 TransferInDate,
-                Pkv,Occupation
+                Pkv,Occupation,
+                NUPI
             );
         }
 

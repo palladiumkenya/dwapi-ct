@@ -214,6 +214,14 @@
     <Compile Include="Migrations\202206101405166_Contactpk.designer.cs">
       <DependentUpon>202206101405166_Contactpk.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206301203473_PatientNUPI.cs" />
+    <Compile Include="Migrations\202206301203473_PatientNUPI.designer.cs">
+      <DependentUpon>202206301203473_PatientNUPI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207021948175_GeneratedStageId.cs" />
+    <Compile Include="Migrations\202207021948175_GeneratedStageId.designer.cs">
+      <DependentUpon>202207021948175_GeneratedStageId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -286,6 +294,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206101405166_Contactpk.resx">
       <DependentUpon>202206101405166_Contactpk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206301203473_PatientNUPI.resx">
+      <DependentUpon>202206301203473_PatientNUPI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207021948175_GeneratedStageId.resx">
+      <DependentUpon>202207021948175_GeneratedStageId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

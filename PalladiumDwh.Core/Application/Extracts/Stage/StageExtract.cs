@@ -6,7 +6,7 @@ using PalladiumDwh.Shared.Interfaces.Stages;
 
 namespace PalladiumDwh.Core.Application.Extracts.Stage
 {
-    public abstract class StageExtract:IStage
+    public abstract class StageExtract : IStage
     {
         public Guid Id { get; set; }
         public string Emr { get; set; }
@@ -19,11 +19,12 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public Guid? CurrentPatientId { get; set; }
         public Guid? LiveSession { get; set; }
         public LiveStage LiveStage { get; set; }
+        public DateTime? Generated { get; set; } = DateTime.Now;
 
         protected virtual void CheckId()
         {
-            //Id = LiveGuid.NewGuid();
-            Id = Id.IsNullOrEmpty() ? Guid.NewGuid() : Id;
+            Id = LiveGuid.NewGuid();
+            //Id = Id.IsNullOrEmpty() ? Guid.NewGuid() : Id;
             this.StandardizeExtract();
         }
     }

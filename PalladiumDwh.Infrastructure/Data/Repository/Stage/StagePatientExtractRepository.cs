@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
@@ -57,7 +58,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
             {
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if(connection.State!=ConnectionState.Open)
+                        connection.Open();
 
                     using (var transaction = connection.BeginTransaction())
                     {
@@ -87,7 +89,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                 // assign patientId
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if(connection.State!=ConnectionState.Open)
+                        connection.Open();
 
                     using (var transaction = connection.BeginTransaction())
                     {
@@ -151,7 +154,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
             {
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if(connection.State!=ConnectionState.Open)
+                        connection.Open();
 
                     using (var transaction = connection.BeginTransaction())
                     {
@@ -196,7 +200,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                 // assign patientId
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if(connection.State!=ConnectionState.Open)
+                        connection.Open();
 
                     using (var transaction = connection.BeginTransaction())
                     {
@@ -217,7 +222,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
         {
             var sqlUpdates = @"
                     SELECT        
-                         CurrentPatientId Id, Emr, Project, Voided, Processed, Pkv, Occupation, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationATPMTCT, RegistrationAtTBClinic, Region, PatientSource, District, Village, ContactRelation, LastVisit, 
+                         CurrentPatientId Id, Emr, Project, Voided, Processed, NUPI, Pkv, Occupation, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationATPMTCT, RegistrationAtTBClinic, Region, PatientSource, District, Village, ContactRelation, LastVisit, 
                          MaritalStatus, EducationLevel, DateConfirmedHIVPositive, PreviousARTExposure, PreviousARTStartDate, StatusAtCCC, StatusAtPMTCT, StatusAtTBClinic, Orphan, Inschool, PatientType, PopulationType, KeyPopulationType, 
                          PatientResidentCounty, PatientResidentSubCounty, PatientResidentLocation, PatientResidentSubLocation, PatientResidentWard, PatientResidentVillage, TransferInDate, PatientPID, PatientCccNumber, FacilityId, 
                          CurrentPatientId, LiveSession, LiveStage,GETDATE() Updated
@@ -297,7 +302,8 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
                 // assign patientId
                 using (var connection = new SqlConnection(cons))
                 {
-                    connection.Open();
+                    if(connection.State!=ConnectionState.Open)
+                        connection.Open();
 
                     using (var transaction = connection.BeginTransaction())
                     {

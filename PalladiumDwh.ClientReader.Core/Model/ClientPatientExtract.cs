@@ -49,6 +49,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string PatientResidentWard { get; set; }
         public string PatientResidentVillage { get; set; }
         public DateTime? TransferInDate { get; set; }
+        public string NUPI { get; set; }
 
         [DoNotRead]
         public virtual ICollection<ClientPatientArtExtract> ClientPatientArtExtracts { get; set; }=new List<ClientPatientArtExtract>();
@@ -69,7 +70,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientExtract(int patientPk, string patientId, int siteCode, string facilityName,string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project)
+        public ClientPatientExtract(int patientPk, string patientId, int siteCode, string facilityName,string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project, string nupi)
         {
             PatientPK = patientPk;
             PatientID = patientId;
@@ -97,6 +98,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             StatusAtTBClinic = statusAtTbClinic;
             Emr = emr;
             Project = project;
+            NUPI = nupi;
         }
 
         public ClientPatientExtract(TempPatientExtract extract)
@@ -127,6 +129,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             StatusAtTBClinic = extract.StatusAtTBClinic;
             Emr = extract.Emr;
             Project = extract.Project;
+            NUPI = extract.NUPI;
         }
 
 

@@ -43,7 +43,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public int FacilityId { get; set; }
-
+        
         public ClientPatientExtractDTO()
         {
         }
@@ -76,9 +76,12 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             Emr = extract.Emr;
             Project = extract.Project;
             FacilityId = extract.SiteCode; //TODO FacilityId = extract.SiteCode
+            NUPI = extract.NUPI;
         }
 
         public string Pkv { get; set; }
         public string Occupation { get; set; }
+        public string NUPI { get; set; }
+        
     }
 }
