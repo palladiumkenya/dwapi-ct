@@ -66,6 +66,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
             //Id = Id.IsNullOrEmpty() ?Guid.NewGuid() : Id;
             LiveSession = patientSourceBag.ManifestId;
             FacilityId = patientSourceBag.FacilityId.Value;
+            this.StandardizeExtract();
         }
 
 
@@ -77,6 +78,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
 
             var fac = facilityCacheDtos.FirstOrDefault(x => x.Code == SiteCode);
             FacilityId = null != fac ? fac.Id : patientSourceBag.FacilityId.Value;
+            this.StandardizeExtract();
         }
     }
 }
