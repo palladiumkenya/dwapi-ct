@@ -62,5 +62,6 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string DifferentiatedCare { get; set; }
         public string PopulationType { get; set; }
         public string KeyPopulationType { get; set; }
+        public DateTime? RefillDate { get; set; }
     }
 }

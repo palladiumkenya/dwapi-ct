@@ -66,6 +66,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string DifferentiatedCare { get; set; }
         public string PopulationType { get; set; }
         public string KeyPopulationType { get; set; }
+        public DateTime? RefillDate { get; set; }
 
         public  void Standardize(VisitSourceBag sourceBag)
         {
