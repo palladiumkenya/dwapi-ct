@@ -1,3 +1,5 @@
+using System;
+
 namespace PalladiumDwh.Shared.Interfaces
 {
     public interface IVisitNew
@@ -30,5 +32,6 @@ namespace PalladiumDwh.Shared.Interfaces
         string Abdomen {get;set;}
         string CNS {get;set;}
         string Genitourinary {get;set;}
+        DateTime? RefillDate { get; set; }
     }
 }

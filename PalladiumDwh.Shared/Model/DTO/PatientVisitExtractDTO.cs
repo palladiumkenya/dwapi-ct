@@ -69,6 +69,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Abdomen { get; set; }
         public string CNS { get; set; }
         public string Genitourinary { get; set; }
+        public DateTime? RefillDate { get; set; }
 
         public PatientVisitExtractDTO()
         {
@@ -82,7 +83,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             string secondlineRegimenChangeReason, string adherence, string adherenceCategory,
             string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr,
             string project, Guid patientId,
-            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType)
+            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, DateTime? refillDate)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -117,6 +118,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             DifferentiatedCare = differentiatedCare;
             PopulationType = populationType;
             KeyPopulationType = keyPopulationType;
+            RefillDate = refillDate;
         }
 
         public PatientVisitExtractDTO(PatientVisitExtract patientVisitExtract)
@@ -154,6 +156,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             DifferentiatedCare = patientVisitExtract.DifferentiatedCare;
             PopulationType = patientVisitExtract.PopulationType;
             KeyPopulationType = patientVisitExtract.KeyPopulationType;
+            RefillDate = patientVisitExtract.RefillDate;
         }
 
 
@@ -184,7 +187,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 VisitBy, Temp, PulseRate, RespiratoryRate, OxygenSaturation, Muac, NutritionalStatus, EverHadMenses,
                 Breastfeeding, Menopausal, NoFPReason, ProphylaxisUsed, CTXAdherence, CurrentRegimen, HCWConcern,
                 TCAReason, ClinicalNotes,
-                GeneralExamination, SystemExamination, Skin, Eyes, ENT, Chest, CVS, Abdomen, CNS, Genitourinary
+                GeneralExamination, SystemExamination, Skin, Eyes, ENT, Chest, CVS, Abdomen, CNS, Genitourinary, RefillDate
             );
         }
     }
