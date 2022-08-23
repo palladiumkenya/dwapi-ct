@@ -78,5 +78,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string Abdomen { get; set; }
         public string CNS { get; set; }
         public string Genitourinary { get; set; }
+        public DateTime? RefillDate { get; set; }
     }
 }
