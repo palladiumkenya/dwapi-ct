@@ -295,9 +295,7 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<StageStatusExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<StageGbvScreeningExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<SmartActionRegister>().BatchTimeout(900);
-
-
-
+            DapperPlusManager.MapperFactory = mapper => mapper.BatchTimeout(900);
         }
 
         public SqlConnection GetConnection()

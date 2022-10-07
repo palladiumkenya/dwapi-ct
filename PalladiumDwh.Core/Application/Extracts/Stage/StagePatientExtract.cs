@@ -62,21 +62,21 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
 
         public void Standardize(PatientSourceBag patientSourceBag)
         {
-            //Id = LiveGuid.NewGuid();
-            Id = Id.IsNullOrEmpty() ?Guid.NewGuid() : Id;
+            Id = LiveGuid.NewGuid();
             LiveSession = patientSourceBag.ManifestId;
             FacilityId = patientSourceBag.FacilityId.Value;
+            this.StandardizeExtract();
         }
 
 
         public void Standardize(PatientSourceBag patientSourceBag, List<FacilityCacheDto> facilityCacheDtos)
         {
-            //Id = LiveGuid.NewGuid();
-            Id = Id.IsNullOrEmpty() ? Guid.NewGuid() : Id;
+            Id = LiveGuid.NewGuid();
             LiveSession = patientSourceBag.ManifestId;
 
             var fac = facilityCacheDtos.FirstOrDefault(x => x.Code == SiteCode);
             FacilityId = null != fac ? fac.Id : patientSourceBag.FacilityId.Value;
+            this.StandardizeExtract();
         }
     }
 }
