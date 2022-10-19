@@ -22,6 +22,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public int? DepressionAssesmentScore { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public DepressionScreeningExtract()
         {
@@ -29,7 +31,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public DepressionScreeningExtract(string facilityName, int? visitId, DateTime? visitDate, string phq91, string phq92, string phq93, string phq94, string phq95, string phq96, string phq97, string phq98, string phq99, string phq9Rating, int? depressionAssesmentScore,
-            Guid patientId, string emr, string project)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
         {
             FacilityName = facilityName;
             VisitID = visitId;

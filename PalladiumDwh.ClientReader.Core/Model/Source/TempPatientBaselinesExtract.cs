@@ -36,5 +36,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public DateTime? m6CD4Date { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
     }
 }

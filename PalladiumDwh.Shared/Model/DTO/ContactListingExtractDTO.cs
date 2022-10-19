@@ -24,6 +24,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public ContactListingExtractDTO()
         {
@@ -48,6 +50,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = ContactListingExtract.Emr;
             Project = ContactListingExtract.Project;
             PatientId = ContactListingExtract.PatientId;
+            Date_Created=ContactListingExtract.Date_Created;
+            Date_Last_Modified=ContactListingExtract.Date_Last_Modified;
         }
 
         public IEnumerable<ContactListingExtractDTO> GenerateContactListingExtractDtOs(IEnumerable<ContactListingExtract> extracts)
@@ -79,7 +83,9 @@ namespace PalladiumDwh.Shared.Model.DTO
                 ContactPatientPK,
                 PatientId,
                 Emr,
-                Project
+                Project,
+                Date_Created,
+                Date_Last_Modified
                 );
         }
     }
