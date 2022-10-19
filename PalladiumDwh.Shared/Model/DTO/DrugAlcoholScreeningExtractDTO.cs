@@ -17,6 +17,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public DrugAlcoholScreeningExtractDTO()
         {
         }
@@ -33,6 +35,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = DrugAlcoholScreeningExtract.Emr;
             Project = DrugAlcoholScreeningExtract.Project;
             PatientId = DrugAlcoholScreeningExtract.PatientId;
+            Date_Created=DrugAlcoholScreeningExtract.Date_Created;
+            Date_Last_Modified=DrugAlcoholScreeningExtract.Date_Last_Modified;
         }
 
         public IEnumerable<DrugAlcoholScreeningExtractDTO> GenerateDrugAlcoholScreeningExtractDtOs(IEnumerable<DrugAlcoholScreeningExtract> extracts)
@@ -56,7 +60,9 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Smoking,
                 DrugUse,
                 PatientId,
-                Emr,Project
+                Emr,Project,
+                Date_Created,
+                Date_Last_Modified
                 );
         }
 

@@ -31,6 +31,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public DateTime? m12CD4Date { get; set; }
         public int? m6CD4 { get; set; }
         public DateTime? m6CD4Date { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public  void Standardize(BaselineSourceBag sourceBag)
         {

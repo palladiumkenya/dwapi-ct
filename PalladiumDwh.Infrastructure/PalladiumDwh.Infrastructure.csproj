@@ -226,6 +226,14 @@
     <Compile Include="Migrations\202208191232580_PatientVisitRefillDate.designer.cs">
       <DependentUpon>202208191232580_PatientVisitRefillDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209281343439_AddedDateModifiedAndCreated.cs" />
+    <Compile Include="Migrations\202209281343439_AddedDateModifiedAndCreated.designer.cs">
+      <DependentUpon>202209281343439_AddedDateModifiedAndCreated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209291344307_StageTablesAddedDateModified.cs" />
+    <Compile Include="Migrations\202209291344307_StageTablesAddedDateModified.designer.cs">
+      <DependentUpon>202209291344307_StageTablesAddedDateModified.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -307,6 +315,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208191232580_PatientVisitRefillDate.resx">
       <DependentUpon>202208191232580_PatientVisitRefillDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209281343439_AddedDateModifiedAndCreated.resx">
+      <DependentUpon>202209281343439_AddedDateModifiedAndCreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209291344307_StageTablesAddedDateModified.resx">
+      <DependentUpon>202209291344307_StageTablesAddedDateModified.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

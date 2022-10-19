@@ -40,6 +40,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string BoosterDoseVerified { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public CovidExtract()
         {
             Created = DateTime.Now;

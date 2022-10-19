@@ -33,6 +33,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string PreviousARTUse { get; set; }
         public string PreviousARTPurpose { get; set; }
         public DateTime? DateLastUsed { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public PatientArtExtract()
         {
@@ -40,7 +42,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public PatientArtExtract(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, Guid patientId, string emr, string project,
-        string previousARTUse,	string previousARTPurpose,	DateTime? dateLastUsed
+        string previousARTUse,	string previousARTPurpose,	DateTime? dateLastUsed, DateTime? date_Created,DateTime? date_Last_Modified
         )
         {
             DOB = dob;
@@ -72,6 +74,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             PreviousARTUse = previousARTUse;
             PreviousARTPurpose = previousARTPurpose;
             DateLastUsed = dateLastUsed;
+            Date_Created = date_Created;
+            Date_Last_Modified = date_Last_Modified;
 
         }
     }

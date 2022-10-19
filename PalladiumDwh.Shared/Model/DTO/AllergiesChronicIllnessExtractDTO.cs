@@ -29,6 +29,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public AllergiesChronicIllnessExtractDTO()
         {
         }
@@ -56,6 +58,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr=AllergiesChronicIllnessExtract.Emr;
             Project=AllergiesChronicIllnessExtract.Project;
             PatientId=AllergiesChronicIllnessExtract.PatientId;
+            Date_Created=AllergiesChronicIllnessExtract.Date_Created;
+            Date_Last_Modified=AllergiesChronicIllnessExtract.Date_Last_Modified;
+
         }
 
         public IEnumerable<AllergiesChronicIllnessExtractDTO> GenerateAllergiesChronicIllnessExtractDtOs(IEnumerable<AllergiesChronicIllnessExtract> extracts)
@@ -92,7 +97,9 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Genitourinary,
                 PatientId,
                 Emr,
-                Project
+                Project,
+                Date_Created,
+                Date_Last_Modified
             );
         }
 

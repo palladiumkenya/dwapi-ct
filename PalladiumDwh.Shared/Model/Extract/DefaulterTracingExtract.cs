@@ -19,13 +19,15 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? BookingDate { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public DefaulterTracingExtract()
         {
             Created = DateTime.Now;
         }
 
         public DefaulterTracingExtract(string facilityName, int? visitId, DateTime? visitDate, int? encounterId, string tracingType, string tracingOutcome, int? attemptNumber, string isFinalTrace, string trueStatus, string causeOfDeath, string comments, DateTime? bookingDate, Guid patientId,
-            string emr, string project)
+            string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
         {
             FacilityName = facilityName;
             VisitID = visitId;

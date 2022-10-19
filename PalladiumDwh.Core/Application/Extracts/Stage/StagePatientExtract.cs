@@ -59,6 +59,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public LiveStage LiveStage { get; set; }
         public int SiteCode { get; set; }
         public string NUPI { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public void Standardize(PatientSourceBag patientSourceBag)
         {

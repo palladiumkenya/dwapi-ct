@@ -43,6 +43,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public int FacilityId { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         
         public ClientPatientExtractDTO()
         {
@@ -77,6 +79,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             Project = extract.Project;
             FacilityId = extract.SiteCode; //TODO FacilityId = extract.SiteCode
             NUPI = extract.NUPI;
+            Date_Created = extract.Date_Created;
+            Date_Last_Modified = extract.Date_Last_Modified;
         }
 
         public string Pkv { get; set; }
