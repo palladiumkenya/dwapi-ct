@@ -53,11 +53,34 @@ namespace PalladiumDwh.DWapi
 
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
-                Authorization = new[] { new MyAuthorizationFilter() }
+                Authorization = new[] {new MyAuthorizationFilter()}
             });
-          
-            var queues = new List<string> { "alpha", "beta", "gamma", "delta", "omega", "default" };
-            queues.ForEach(queue => ConfigureWorkers(app, new[] { queue }));
+
+            var queues = new List<string>
+            {
+                "Manifest",
+                "Patient",
+                "PatientArt",
+                "PatientPharmacy",
+                "PatientVisits",
+                "PatientStatus",
+                "Covid",
+                "DefaulterTracing",
+                "PatientLabs",
+                "PatientBaselines",
+                "PatientAdverseEvents",
+                "Otz",
+                "Ovc",
+                "DepressionScreening",
+                "DrugAlcoholScreening",
+                "EnhancedAdherenceCounselling",
+                "GbvScreening",
+                "Ipt",
+                "AllergiesChronicIllness",
+                "ContactListing",
+                "default"
+            };
+            queues.ForEach(queue => ConfigureWorkers(app, new[] {queue}));
 
             // CHECK if the license if valid for the default provider (SQL Server)
             try
@@ -100,7 +123,7 @@ namespace PalladiumDwh.DWapi
 
         }
 
-        private void ConfigureWorkers(IAppBuilder app,string[] queues)
+        private void ConfigureWorkers(IAppBuilder app, string[] queues)
         {
 
             var hangfireQueueOptions = new BackgroundJobServerOptions
@@ -117,20 +140,20 @@ namespace PalladiumDwh.DWapi
         private int GetWorkerCount(string queue)
         {
             int count = 5;
-            
+
             try
             {
-                var workerCount= Properties.Settings.Default.WorkerCount;
+                var workerCount = Properties.Settings.Default.WorkerCount;
                 var workers = workerCount.Split(',').ToList();
                 var worker = workers.FirstOrDefault(x => x.Contains(queue));
                 if (null != worker)
-                    int.TryParse(worker.Split('-')[1], out count); 
+                    int.TryParse(worker.Split('-')[1], out count);
             }
             catch (Exception e)
             {
-                Log.Error("Error reading worker count",e);
+                Log.Error("Error reading worker count", e);
             }
-          
+
             return count;
         }
     }
