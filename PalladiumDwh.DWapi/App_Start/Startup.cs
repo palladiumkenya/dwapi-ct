@@ -37,14 +37,15 @@ namespace PalladiumDwh.DWapi
 
             Hangfire.GlobalConfiguration.Configuration
                 .UseStructureMapActivator(PalladiumDwh.DWapi.StructuremapMvc.DwapiIContainer)
-                .UseBatches(TimeSpan.FromDays(31))
+                .UseBatches(TimeSpan.FromDays(Properties.Settings.Default.WorkerBatchRetention))
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage("DWAPICentralHangfire", new SqlServerStorageOptions
                 {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(30),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(30),
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(Properties.Settings.Default.WorkerComandTimeout),
+                    SlidingInvisibilityTimeout =
+                        TimeSpan.FromMinutes(Properties.Settings.Default.WorkerInvisibilityTimeout),
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true,
@@ -53,34 +54,17 @@ namespace PalladiumDwh.DWapi
 
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
-                Authorization = new[] {new MyAuthorizationFilter()}
+                Authorization = new[] { new MyAuthorizationFilter() }
             });
 
             var queues = new List<string>
             {
-                "Manifest",
-                "Patient",
-                "PatientArt",
-                "PatientPharmacy",
-                "PatientVisits",
-                "PatientStatus",
-                "Covid",
-                "DefaulterTracing",
-                "PatientLabs",
-                "PatientBaselines",
-                "PatientAdverseEvents",
-                "Otz",
-                "Ovc",
-                "DepressionScreening",
-                "DrugAlcoholScreening",
-                "EnhancedAdherenceCounselling",
-                "GbvScreening",
-                "Ipt",
-                "AllergiesChronicIllness",
-                "ContactListing",
-                "default"
+                "manifest", "patient", "patientart", "patientpharmacy", "patientvisits", "patientstatus", 
+                "covid","defaultertracing", "patientlabs", "patientbaselines", "patientadverseevents", "otz", "ovc",
+                "depressionscreening", "drugalcoholscreening", "enhancedadherencecounselling", "gbvscreening", "ipt",
+                "allergieschronicillness", "contactlisting", "default"
             };
-            queues.ForEach(queue => ConfigureWorkers(app, new[] {queue}));
+            queues.ForEach(queue => ConfigureWorkers(app, new[] { queue.ToLower() }));
 
             // CHECK if the license if valid for the default provider (SQL Server)
             try
