@@ -170,24 +170,23 @@ namespace PalladiumDwh.DWapi.Controllers
                 #region Process Manifest
 
                 // job 1 Clear Manifest
-                var id1 = BatchJob.StartNew(x =>
-                {
-                    x.Enqueue(() => Send($"{manifest.Info("Clear")}", new ClearManifest(manifest)));
-                },$"{manifest.Info("Clear")}");
+                var id1 = BatchJob.StartNew(
+                    x => { x.Enqueue(() => Send($"{manifest.Info("Clear")}", new ClearManifest(manifest))); },
+                    $"{manifest.Info("Clear")}");
                 // job 2 Removed Duplicates
                 var id2 = BatchJob.ContinueBatchWith(id1, x =>
                 {
                     {
                         x.Enqueue(() => Send($"{manifest.Info("Dedup")}", new ClearDuplicates(manifest)));
                     }
-                },$"{manifest.Info("Dedup")}");
+                }, $"{manifest.Info("Dedup")}");
                 // job 3 Send to SPOT
                 var id3 = BatchJob.ContinueBatchWith(id2, x =>
                 {
                     {
                         x.Enqueue(() => Send($"{manifest.Info("Spot")}", new SendToSpot(manifest, masterFacility)));
                     }
-                },$"{manifest.Info("Spot")}");
+                }, $"{manifest.Info("Spot")}");
                 // job 4 Sync Manifest
                 var jobId = BatchJob.ContinueBatchWith(id3, x =>
                 {
@@ -195,7 +194,7 @@ namespace PalladiumDwh.DWapi.Controllers
                         x.Enqueue(() => Send($"{manifest.Info("Save")}",
                             new CreateManifest(manifest, masterFacility, Properties.Settings.Default.AllowSnapshot)));
                     }
-                },$"{manifest.Info("Save")}");
+                }, $"{manifest.Info("Save")}");
 
                 #endregion
 
@@ -210,11 +209,11 @@ namespace PalladiumDwh.DWapi.Controllers
                 new HttpError($"The expected '{new Manifest().GetType().Name}' is null"));
         }
 
-        [Queue("alpha")]
-       // [DisableConcurrentExecution(10 * 60)]
+        [Queue("manifest")]
+        // [DisableConcurrentExecution(10 * 60)]
         [AutomaticRetry(Attempts = 3)]
         [DisplayName("{0}")]
-        public async  Task Send(string jobName, IRequest<Result> command)
+        public async Task Send(string jobName, IRequest<Result> command)
         {
             await _mediator.Send(command);
         }
