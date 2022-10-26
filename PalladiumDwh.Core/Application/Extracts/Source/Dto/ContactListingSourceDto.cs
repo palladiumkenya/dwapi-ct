@@ -1,3 +1,4 @@
+using System;
 using PalladiumDwh.Shared.Interfaces;
 
 namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
@@ -17,5 +18,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string KnowledgeOfHivStatus { get; set; }
         public string PnsApproach { get; set; }
         public int? ContactPatientPK { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
     }
 }

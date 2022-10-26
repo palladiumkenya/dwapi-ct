@@ -90,6 +90,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public PatientExtract()
         {
             Created = DateTime.Now;
+            
         }
 
 

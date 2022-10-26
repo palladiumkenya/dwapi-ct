@@ -7,5 +7,7 @@ namespace PalladiumDwh.Shared.Interfaces
         string PreviousARTUse { get; set; }
         string  PreviousARTPurpose { get; set; }
         DateTime?  DateLastUsed { get; set; }
+        DateTime? Date_Created { get; set; } 
+        DateTime? Date_Last_Modified { get; set; } 
     }
 }

@@ -15,5 +15,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public DateTime? VisitDate { get; set; }
         public string AdverseEventRegimen { get; set; }
         public string AdverseEventCause { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
     }
 }

@@ -7,13 +7,13 @@ namespace PalladiumDwh.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddedDateModifiedAndCreated : IMigrationMetadata
+    public sealed partial class AddedDateCreatedAndModified : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedDateModifiedAndCreated));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedDateCreatedAndModified));
         
         string IMigrationMetadata.Id
         {
-            get { return "202209281343439_AddedDateModifiedAndCreated"; }
+            get { return "202210210835384_AddedDateCreatedAndModified"; }
         }
         
         string IMigrationMetadata.Source

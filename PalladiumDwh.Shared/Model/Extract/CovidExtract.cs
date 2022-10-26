@@ -48,7 +48,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public CovidExtract(string facilityName, int? visitId, DateTime? covid19AssessmentDate, string receivedCovid19Vaccine, DateTime? dateGivenFirstDose, string firstDoseVaccineAdministered, DateTime? dateGivenSecondDose, string secondDoseVaccineAdministered, string vaccinationStatus, string vaccineVerification, string boosterGiven, string boosterDose, DateTime? boosterDoseDate, string everCovid19Positive, DateTime? covid19TestDate, string patientStatus, string admissionStatus, string admissionUnit, string missedAppointmentDueToCovid19, string covid19PositiveSinceLasVisit, DateTime? covid19TestDateSinceLastVisit, string patientStatusSinceLastVisit, string admissionStatusSinceLastVisit, DateTime? admissionStartDate, DateTime? admissionEndDate, string admissionUnitSinceLastVisit, string supplementalOxygenReceived, string patientVentilated, string tracingFinalOutcome, string causeOfDeath,string covid19TestResult,string sequence,string boosterDoseVerified,
-            Guid patientId,string emr, string project)
+            Guid patientId,string emr, string project, DateTime? date_Created, DateTime? date_Last_Modified)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -88,6 +88,9 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+            
+            Date_Created = date_Created;
+                        Date_Last_Modified = date_Last_Modified;
         }
     }
 }

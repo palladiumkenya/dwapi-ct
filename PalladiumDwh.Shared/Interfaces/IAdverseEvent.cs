@@ -14,5 +14,7 @@ namespace PalladiumDwh.Shared.Interfaces
         DateTime? VisitDate { get; set; }
         string AdverseEventRegimen { get; set; }
         string AdverseEventCause { get; set; }
+        DateTime? Date_Created { get; set; } 
+        DateTime? Date_Last_Modified { get; set; } 
     }
 }

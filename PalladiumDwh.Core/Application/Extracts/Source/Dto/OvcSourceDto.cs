@@ -15,5 +15,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string PartnerOfferingOVCServices { get; set; }
         public string OVCExitReason { get; set; }
         public DateTime? ExitDate { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
     }
 }

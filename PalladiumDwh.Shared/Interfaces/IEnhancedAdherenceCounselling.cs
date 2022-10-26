@@ -49,5 +49,7 @@ namespace PalladiumDwh.Shared.Interfaces
   string EACHomevisit { get; set; }
   string EACAdherencePlan { get; set; }
   DateTime ? EACFollowupDate { get; set; }
+  DateTime? Date_Created { get; set; } 
+  DateTime? Date_Last_Modified { get; set; } 
     }
 }

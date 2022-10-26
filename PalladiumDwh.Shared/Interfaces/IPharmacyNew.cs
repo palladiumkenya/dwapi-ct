@@ -8,5 +8,7 @@ namespace PalladiumDwh.Shared.Interfaces
         string RegimenChangeSwitchReason { get; set; }
         string StopRegimenReason { get; set; }
         DateTime? StopRegimenDate { get; set; }
+        DateTime? Date_Created { get; set; } 
+        DateTime? Date_Last_Modified { get; set; } 
     }
 }
