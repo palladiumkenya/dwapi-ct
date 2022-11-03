@@ -21,6 +21,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public PatientAdverseEventExtractDTO()
         {
@@ -30,7 +32,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             DateTime? adverseEventEndDate, string severity, string adverseEventClinicalOutcome,
             string adverseEventActionTaken,
             bool? adverseEventIsPregnant, DateTime? visitDate, string adverseEventRegimen, string adverseEventCause,
-            string emr, string project, Guid patientId
+            string emr, string project, Guid patientId,  DateTime? date_Created,DateTime? date_Last_Modified
         )
         {
             AdverseEvent = adverseEvent;
@@ -46,6 +48,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = emr;
             Project = project;
             PatientId = patientId;
+            Date_Created=date_Created;
+            Date_Last_Modified=date_Last_Modified;
+            
         }
 
         public PatientAdverseEventExtractDTO(PatientAdverseEventExtract patientStatusExtract)
@@ -64,6 +69,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = patientStatusExtract.Emr;
             Project = patientStatusExtract.Project;
             PatientId = patientStatusExtract.PatientId;
+            Date_Created=patientStatusExtract.Date_Created;
+            Date_Last_Modified=patientStatusExtract.Date_Last_Modified;
         }
 
 
@@ -93,7 +100,9 @@ namespace PalladiumDwh.Shared.Model.DTO
                 AdverseEventIsPregnant,
                 VisitDate,
                 AdverseEventRegimen, AdverseEventCause,
-                PatientId, Emr, Project);
+                PatientId, Emr, Project,
+                Date_Created,
+                Date_Last_Modified);
         }
     }
 }

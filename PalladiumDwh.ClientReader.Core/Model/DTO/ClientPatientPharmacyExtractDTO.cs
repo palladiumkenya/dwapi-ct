@@ -22,6 +22,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public int FacilityId { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
 
         public ClientPatientPharmacyExtractDTO()

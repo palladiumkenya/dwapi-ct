@@ -37,14 +37,15 @@ namespace PalladiumDwh.DWapi
 
             Hangfire.GlobalConfiguration.Configuration
                 .UseStructureMapActivator(PalladiumDwh.DWapi.StructuremapMvc.DwapiIContainer)
-                .UseBatches(TimeSpan.FromDays(31))
+                .UseBatches(TimeSpan.FromDays(Properties.Settings.Default.WorkerBatchRetention))
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage("DWAPICentralHangfire", new SqlServerStorageOptions
                 {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(30),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(30),
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(Properties.Settings.Default.WorkerComandTimeout),
+                    SlidingInvisibilityTimeout =
+                        TimeSpan.FromMinutes(Properties.Settings.Default.WorkerInvisibilityTimeout),
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true,
@@ -55,9 +56,15 @@ namespace PalladiumDwh.DWapi
             {
                 Authorization = new[] { new MyAuthorizationFilter() }
             });
-          
-            var queues = new List<string> { "alpha", "beta", "gamma", "delta", "omega", "default" };
-            queues.ForEach(queue => ConfigureWorkers(app, new[] { queue }));
+
+            var queues = new List<string>
+            {
+                "manifest", "patient", "patientart", "patientpharmacy", "patientvisits", "patientstatus", 
+                "covid","defaultertracing", "patientlabs", "patientbaselines", "patientadverseevents", "otz", "ovc",
+                "depressionscreening", "drugalcoholscreening", "enhancedadherencecounselling", "gbvscreening", "ipt",
+                "allergieschronicillness", "contactlisting", "default"
+            };
+            queues.ForEach(queue => ConfigureWorkers(app, new[] { queue.ToLower() }));
 
             // CHECK if the license if valid for the default provider (SQL Server)
             try
@@ -100,7 +107,7 @@ namespace PalladiumDwh.DWapi
 
         }
 
-        private void ConfigureWorkers(IAppBuilder app,string[] queues)
+        private void ConfigureWorkers(IAppBuilder app, string[] queues)
         {
 
             var hangfireQueueOptions = new BackgroundJobServerOptions
@@ -117,20 +124,20 @@ namespace PalladiumDwh.DWapi
         private int GetWorkerCount(string queue)
         {
             int count = 5;
-            
+
             try
             {
-                var workerCount= Properties.Settings.Default.WorkerCount;
+                var workerCount = Properties.Settings.Default.WorkerCount;
                 var workers = workerCount.Split(',').ToList();
                 var worker = workers.FirstOrDefault(x => x.Contains(queue));
                 if (null != worker)
-                    int.TryParse(worker.Split('-')[1], out count); 
+                    int.TryParse(worker.Split('-')[1], out count);
             }
             catch (Exception e)
             {
-                Log.Error("Error reading worker count",e);
+                Log.Error("Error reading worker count", e);
             }
-          
+
             return count;
         }
     }

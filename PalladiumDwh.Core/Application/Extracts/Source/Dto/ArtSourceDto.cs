@@ -8,6 +8,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string PreviousARTUse { get; set; }
         public string PreviousARTPurpose { get; set; }
         public DateTime? DateLastUsed { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public DateTime? DOB { get; set; }
         public decimal? AgeEnrollment { get; set; }
         public decimal? AgeARTStart { get; set; }

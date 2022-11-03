@@ -25,6 +25,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public DepressionScreeningExtractDTO()
         {
         }
@@ -49,6 +51,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = DepressionScreeningExtract.Emr;
             Project = DepressionScreeningExtract.Project;
             PatientId = DepressionScreeningExtract.PatientId;
+            Date_Created=DepressionScreeningExtract.Date_Created;
+            Date_Last_Modified=DepressionScreeningExtract.Date_Last_Modified;
         }
 
 
@@ -83,7 +87,9 @@ namespace PalladiumDwh.Shared.Model.DTO
                 DepressionAssesmentScore,
                 PatientId,
                 Emr,
-                Project
+                Project,
+                Date_Created,
+                Date_Last_Modified
                 );
         }
     }

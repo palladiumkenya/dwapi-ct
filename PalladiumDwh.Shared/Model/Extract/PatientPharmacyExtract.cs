@@ -22,6 +22,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string RegimenChangeSwitchReason { get; set; }
         public string StopRegimenReason { get; set; }
         public DateTime? StopRegimenDate { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public PatientPharmacyExtract()
         {
@@ -29,7 +31,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public PatientPharmacyExtract(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, Guid patientId, string emr, string project,
-            string regimenChangedSwitched, string regimenChangeSwitchReason, string stopRegimenReason, DateTime? stopRegimenDate)
+            string regimenChangedSwitched, string regimenChangeSwitchReason, string stopRegimenReason, DateTime? stopRegimenDate, DateTime? date_Created,DateTime? date_Last_Modified)
         {
             VisitID = visitId;
             Drug = drug;
@@ -50,6 +52,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             RegimenChangeSwitchReason = regimenChangeSwitchReason;
             StopRegimenReason = stopRegimenReason;
             StopRegimenDate = stopRegimenDate;
+            Date_Created = date_Created;
+            Date_Last_Modified = date_Last_Modified;
         }
 
 

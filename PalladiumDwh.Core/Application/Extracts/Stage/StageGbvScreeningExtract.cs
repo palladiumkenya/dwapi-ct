@@ -17,6 +17,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string EmotionalIPV { get; set; }
         public string SexualIPV { get; set; }
         public string IPVRelationship { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public  void Standardize(GbvScreeningSourceBag sourceBag)
         {

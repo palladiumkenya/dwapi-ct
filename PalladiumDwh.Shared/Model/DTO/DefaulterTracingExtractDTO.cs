@@ -23,6 +23,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Comments { get; set; }
         public DateTime? BookingDate { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public DefaulterTracingExtractDTO()
         {
@@ -45,6 +47,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId =DefaulterTracingExtract.PatientId;
             Emr =DefaulterTracingExtract.Emr;
             Project =DefaulterTracingExtract.Project;
+            Date_Created=DefaulterTracingExtract.Date_Created;
+            Date_Last_Modified=DefaulterTracingExtract.Date_Last_Modified;
         }
 
         public IEnumerable<DefaulterTracingExtractDTO> GenerateDefaulterTracingExtractDtOs(IEnumerable<DefaulterTracingExtract> extracts)
@@ -73,7 +77,9 @@ namespace PalladiumDwh.Shared.Model.DTO
                 CauseOfDeath,
                 Comments,
                 BookingDate,
-                PatientId, Emr, Project
+                PatientId, Emr, Project,
+                Date_Created,
+                Date_Last_Modified
             );
         }
 

@@ -26,6 +26,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string Genitourinary { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public AllergiesChronicIllnessExtract()
         {
@@ -33,7 +35,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public AllergiesChronicIllnessExtract(string facilityName, int? visitId, DateTime? visitDate, string chronicIllness, DateTime? chronicOnsetDate, string knownAllergies, string allergyCausativeAgent, string allergicReaction, string allergySeverity, DateTime? allergyOnsetDate, string skin, string eyes, string ent, string chest, string cvs, string abdomen, string cns, string genitourinary,
-            Guid patientId, string emr, string project)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -58,6 +60,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+            Date_Created = date_Created;
+            Date_Last_Modified = date_Last_Modified;
         }
     }
 }

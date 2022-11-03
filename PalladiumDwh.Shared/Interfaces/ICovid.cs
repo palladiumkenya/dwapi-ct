@@ -38,5 +38,7 @@ namespace PalladiumDwh.Shared.Interfaces
         string COVID19TestResult { get; set; }
         string Sequence { get; set; }
         string BoosterDoseVerified { get; set; }
+        DateTime? Date_Created { get; set; } 
+        DateTime? Date_Last_Modified { get; set; } 
     }
 }

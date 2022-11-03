@@ -16,5 +16,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string Remarks { get; set; }
         public string TransitionAttritionReason { get; set; }
         public DateTime? OutcomeDate { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
     }
 }
