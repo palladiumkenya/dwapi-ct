@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using PalladiumDwh.Shared.Interfaces;
 
 namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
@@ -49,6 +50,11 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
             return SiteCode > 0 &&
                    PatientPK > 0 &&
                    !string.IsNullOrWhiteSpace(PatientID);
+        }
+
+        public static explicit operator PatientSourceDto(List<PatientSourceDto> v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

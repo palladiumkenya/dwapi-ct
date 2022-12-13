@@ -155,7 +155,7 @@ namespace PalladiumDwh.DWapi.Controllers
         [HttpPost]
         [Route("api/v3/Spot")]
         public async Task<HttpResponseMessage> PostManifest([FromBody] Manifest manifest)
-        {
+              {
             MasterFacility masterFacility = null;
 
             if (null != manifest)

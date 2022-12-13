@@ -57,7 +57,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                       WHERE {nameof(ActionRegister.PatientId)} IN @patientIds AND
                             {nameof(ActionRegister.Action)} = @action AND
                             {nameof(ActionRegister.Area)} = @area
-                        ";
+                        WITH (NOLOCK)";
 
                 var actionPatientIds =
                     connection.Query<Guid>(sqlCheck,

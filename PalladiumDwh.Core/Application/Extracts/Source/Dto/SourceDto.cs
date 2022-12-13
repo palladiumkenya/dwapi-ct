@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 
 namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
@@ -12,12 +13,17 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string Project { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Updated { get; set; }
+
+
+        
         public Guid? PatientId { get; set; }
 
-        public  virtual bool IsValid()
+        public virtual bool IsValid()
         {
             return SiteCode > 0 &&
                    PatientPK > 0;
         }
     }
+
+    
 }

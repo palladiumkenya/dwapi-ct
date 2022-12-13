@@ -114,7 +114,7 @@ namespace PalladiumDwh.DWapi.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                 new HttpError($"The expected '{new PatientSourceBag().GetType().Name}' is null"));
         }
-        [Queue("patient")]
+        [Queue("alpha")]
        // [DisableConcurrentExecution(10*60)]
         [AutomaticRetry(Attempts = 3)]
         [DisplayName("{0}")]

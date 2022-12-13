@@ -266,6 +266,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
                 Log.Error(e);
                 throw;
             }
+
         }
 
         private async Task SmartMarkRegister(Guid manifestId, List<Guid> ids)

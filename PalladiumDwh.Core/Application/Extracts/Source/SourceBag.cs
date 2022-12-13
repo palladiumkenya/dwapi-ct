@@ -10,6 +10,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source
 {
     public abstract class SourceBag<T> : ISourceBag<T>
     {
+
         public string JobId { get; set; }
         public EmrSetup EmrSetup { get; set; }
         public UploadMode Mode { get; set; }
