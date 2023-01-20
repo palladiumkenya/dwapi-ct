@@ -54,6 +54,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string EACHomevisit { get; set; }
         public string EACAdherencePlan { get; set; }
         public DateTime? EACFollowupDate { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public  void Standardize(EnhancedAdherenceCounsellingSourceBag sourceBag)
         {

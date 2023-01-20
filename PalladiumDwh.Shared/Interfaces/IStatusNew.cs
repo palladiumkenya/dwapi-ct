@@ -12,5 +12,7 @@ namespace PalladiumDwh.Shared.Interfaces
         string SpecificDeathReason { get; set; }
         DateTime? DeathDate { get; set; }
         DateTime? EffectiveDiscontinuationDate { get; set; }
+        DateTime? Date_Created { get; set; } 
+        DateTime? Date_Last_Modified { get; set; } 
     }
 }

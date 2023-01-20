@@ -19,6 +19,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public GbvScreeningExtractDTO()
         {
         }
@@ -37,6 +39,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             Emr = GbvScreeningExtract.Emr;
             Project = GbvScreeningExtract.Project;
             PatientId = GbvScreeningExtract.PatientId;
+            Date_Created=GbvScreeningExtract.Date_Created;
+            Date_Last_Modified=GbvScreeningExtract.Date_Last_Modified;
         }
 
 
@@ -64,7 +68,9 @@ namespace PalladiumDwh.Shared.Model.DTO
                 SexualIPV,
                 IPVRelationship,
                 PatientId,
-                Emr,Project);
+                Emr,Project,
+                Date_Created,
+                Date_Last_Modified);
         }
     }
 }

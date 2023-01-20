@@ -18,13 +18,15 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public int FacilityId { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
+           public DateTime? Date_Created { get; set; }
+                public DateTime? Date_Last_Modified { get; set; }
 
 
         public ClientPatientLaboratoryExtractDTO()
         {
         }
 
-        public ClientPatientLaboratoryExtractDTO(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, int patientPid, string patientCccNumber, int facilityId, string emr, string project)
+        public ClientPatientLaboratoryExtractDTO(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, int patientPid, string patientCccNumber, int facilityId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
         {
             VisitId = visitId;
             OrderedByDate = orderedByDate;
@@ -37,6 +39,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             FacilityId = facilityId;
             Emr = emr;
             Project = project;
+            Date_Created = date_Created;
+            Date_Last_Modified = date_Last_Modified;
         }
 
         public ClientPatientLaboratoryExtractDTO(ClientPatientLaboratoryExtract extract)
@@ -53,6 +57,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
 
             Emr = extract.Emr;
             Project = extract.Project;
+            Date_Created = extract.Date_Created;
+            Date_Last_Modified = extract.Date_Last_Modified;
 
 
 

@@ -145,7 +145,7 @@ namespace PalladiumDwh.DWapi.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                 new HttpError($"The expected '{new PatientLabProfile().GetType().Name}' is null"));
         }
-        [Queue("omega")]
+        [Queue("allergieschronicillness")]
        // [DisableConcurrentExecution(10 * 60)]
         [AutomaticRetry(Attempts = 3)]
         [DisplayName("{0}")]

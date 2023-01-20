@@ -34,12 +34,14 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public DateTime? LastVisit { get; set; }
         public string ExitReason { get; set; }
         public DateTime? ExitDate { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public ClientPatientArtExtractDTO()
         {
         }
 
-        public ClientPatientArtExtractDTO(int patientPid, string patientCccNumber, int facilityId, string emr, string project, DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string patientSource, string gender, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate)
+        public ClientPatientArtExtractDTO(int patientPid, string patientCccNumber, int facilityId, string emr, string project, DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string patientSource, string gender, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, DateTime? date_Created,DateTime? date_Last_Modified)
         {
             PatientPID = patientPid;
             PatientCccNumber = patientCccNumber;
@@ -68,6 +70,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             LastVisit = lastVisit;
             ExitReason = exitReason;
             ExitDate = exitDate;
+            Date_Created = date_Created;
+            Date_Last_Modified = date_Last_Modified;
         }
 
         public ClientPatientArtExtractDTO(ClientPatientArtExtract extract)
@@ -99,6 +103,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             LastVisit = extract.LastVisit;
             ExitReason = extract.ExitReason;
             ExitDate = extract.ExitDate;
+            Date_Created = extract.Date_Created;
+            Date_Last_Modified = extract.Date_Last_Modified;
 
         }
 

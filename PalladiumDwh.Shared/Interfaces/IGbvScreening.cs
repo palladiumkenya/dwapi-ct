@@ -12,5 +12,7 @@ namespace PalladiumDwh.Shared.Interfaces
          string EmotionalIPV { get; set; }
          string SexualIPV { get; set; }
          string IPVRelationship { get; set; }
+         DateTime? Date_Created { get; set; } 
+         DateTime? Date_Last_Modified { get; set; } 
     }
 }

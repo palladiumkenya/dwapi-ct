@@ -30,5 +30,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string RegimenChangeSwitchReason { get; set; }
         public string StopRegimenReason { get; set; }
         public DateTime? StopRegimenDate { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
     }
 }

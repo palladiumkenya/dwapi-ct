@@ -27,6 +27,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string Abdomen { get; set; }
         public string CNS { get; set; }
         public string Genitourinary { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public  void Standardize(AllergiesChronicIllnessSourceBag sourceBag)
         {

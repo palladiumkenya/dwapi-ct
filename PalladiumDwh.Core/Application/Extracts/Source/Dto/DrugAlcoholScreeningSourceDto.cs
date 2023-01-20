@@ -11,5 +11,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string DrinkingAlcohol { get; set; }
         public string Smoking { get; set; }
         public string DrugUse { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
     }
 }

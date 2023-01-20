@@ -9,6 +9,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string RegimenChangeSwitchReason { get; set; }
         public string StopRegimenReason { get; set; }
         public DateTime? StopRegimenDate { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public int? VisitID { get; set; }
         public string Drug { get; set; }
         public string Provider { get; set; }

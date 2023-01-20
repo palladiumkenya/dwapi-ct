@@ -9,6 +9,7 @@ using System.Text;
 using log4net;
 using Newtonsoft.Json;
 using PalladiumDwh.Shared.Model;
+using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Shared.Custom
 {
@@ -411,16 +412,26 @@ namespace PalladiumDwh.Shared.Custom
                         property.SetValue(obj, val.ToString().Truncate(maxLength));
                 }
 
+                string[] ignoreDates = {nameof(PatientStatusExtract.Date_Created),nameof(PatientStatusExtract.Date_Last_Modified) };
+
                 if (property.PropertyType == typeof(DateTime))
                 {
-                    var val = (DateTime)property.GetValue(obj, null);
-                    property.SetValue(obj, val.StandardizeDate());
+                    if (!ignoreDates.Contains(property.Name))
+                    {
+                        var val = (DateTime)property.GetValue(obj, null);
+                        property.SetValue(obj, val.StandardizeDate());
+                    }
+                    
                 }
 
                 if (property.PropertyType == typeof(DateTime?))
                 {
-                    var val = (DateTime?)property.GetValue(obj, null);
-                    property.SetValue(obj, val.StandardizeDate());
+                    if (!ignoreDates.Contains(property.Name))
+                    {
+                        var val = (DateTime?)property.GetValue(obj, null);
+                        property.SetValue(obj, val.StandardizeDate());
+                    }
+                    
                 }
             }
         }

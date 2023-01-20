@@ -67,6 +67,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string PopulationType { get; set; }
         public string KeyPopulationType { get; set; }
         public DateTime? RefillDate { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public  void Standardize(VisitSourceBag sourceBag)
         {
