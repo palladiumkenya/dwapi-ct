@@ -17,5 +17,7 @@ namespace PalladiumDwh.Shared.Interfaces
          string KnowledgeOfHivStatus { get; set; }
          string PnsApproach { get; set; }
          int? ContactPatientPK { get; set; }
+         DateTime? Date_Created { get; set; } 
+         DateTime? Date_Last_Modified { get; set; } 
     }
 }

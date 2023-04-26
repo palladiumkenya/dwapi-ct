@@ -68,12 +68,15 @@ namespace PalladiumDwh.Core.Services
         {
             MessageQueue queue;
 
+            var theLabel = queueName.Replace(@".\private$\dwapi.emr.", "")
+                .Replace("Profile", "")
+                .Replace(".", "-");
+
             if (!MessageQueue.Exists(queueName))
             {
                 Log.Debug($"Initializing MessagingService [{queueName}] ...");
                 queue = MessageQueue.Create(queueName, true);
-                if (!string.IsNullOrWhiteSpace(label))
-                    queue.Label = label;
+                if (queue.Label != theLabel) queue.Label = theLabel;
 
                 queue.SetPermissions("Everyone", MessageQueueAccessRights.FullControl, AccessControlEntryType.Allow);
                 Log.Debug($"MessagingService {queueName} Initialized!");
@@ -81,8 +84,7 @@ namespace PalladiumDwh.Core.Services
             else
             {
                 queue = new MessageQueue(queueName);
-                if (!string.IsNullOrWhiteSpace(label)&&string.IsNullOrWhiteSpace(queue.Label))
-                    queue.Label = label;
+                if (queue.Label != theLabel) queue.Label = theLabel;
             }
 
             return queue;

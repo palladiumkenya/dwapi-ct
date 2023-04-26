@@ -46,6 +46,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string Emr { get; set; }
         public string Project { get; set; }
         public string NUPI { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public virtual ICollection<TempPatientExtractErrorSummary> TempPatientExtractErrorSummaries { get; set; }=new List<TempPatientExtractErrorSummary>();
         public override string ToString()

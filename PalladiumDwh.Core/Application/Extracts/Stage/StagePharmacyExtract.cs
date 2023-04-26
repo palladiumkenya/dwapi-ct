@@ -23,6 +23,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string RegimenLine { get; set; }
         public string PeriodTaken { get; set; }
         public string ProphylaxisType { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public  void Standardize(PharmacySourceBag sourceBag)
         {

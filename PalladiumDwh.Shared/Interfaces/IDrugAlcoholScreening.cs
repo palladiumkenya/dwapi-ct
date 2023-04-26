@@ -10,5 +10,7 @@ namespace PalladiumDwh.Shared.Interfaces
          string DrinkingAlcohol { get; set; }
          string Smoking { get; set; }
          string DrugUse { get; set; }
+         DateTime? Date_Created { get; set; } 
+         DateTime? Date_Last_Modified { get; set; } 
     }
 }

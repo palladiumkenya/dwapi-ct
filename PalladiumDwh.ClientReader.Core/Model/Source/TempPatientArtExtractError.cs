@@ -44,5 +44,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string PreviousARTUse { get; set; }
         public string PreviousARTPurpose { get; set; }
         public DateTime? DateLastUsed { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
     }
 }

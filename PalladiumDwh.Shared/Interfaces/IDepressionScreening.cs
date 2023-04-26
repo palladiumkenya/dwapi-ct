@@ -19,5 +19,7 @@ namespace PalladiumDwh.Shared.Interfaces
          string PHQ9_9 { get; set; }
          string PHQ_9_rating { get; set; }
          int? DepressionAssesmentScore { get; set; }
+         DateTime? Date_Created { get; set; } 
+         DateTime? Date_Last_Modified { get; set; } 
     }
 }

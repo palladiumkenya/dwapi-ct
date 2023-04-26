@@ -26,5 +26,7 @@ namespace PalladiumDwh.Shared.Interfaces
          string IPTClientWorkUp { get; set; }
          string StartIPT { get; set; }
          string IndicationForIPT { get; set; }
+         DateTime? Date_Created { get; set; } 
+         DateTime? Date_Last_Modified { get; set; } 
     }
 }

@@ -41,6 +41,9 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string COVID19TestResult { get; set; }
         public string Sequence { get; set; }
         public string BoosterDoseVerified { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
+
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
@@ -83,6 +86,10 @@ namespace PalladiumDwh.Shared.Model.DTO
             COVID19TestResult = CovidExtract.COVID19TestResult;
             Sequence =CovidExtract.Sequence;
             BoosterDoseVerified = CovidExtract.BoosterDoseVerified;
+            Date_Created = CovidExtract.Date_Created;
+            Date_Last_Modified = CovidExtract.Date_Last_Modified;
+
+
 
             PatientId=CovidExtract.PatientId;
             Emr =CovidExtract.Emr;
@@ -135,7 +142,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             CauseOfDeath ,
             COVID19TestResult,Sequence,BoosterDoseVerified,
 
-                PatientId,Emr,Project
+                PatientId,Emr,Project,
+                Date_Created,Date_Last_Modified
                 );
         }
 

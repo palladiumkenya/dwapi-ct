@@ -20,6 +20,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public Guid? LiveSession { get; set; }
         public LiveStage LiveStage { get; set; }
         public DateTime? Generated { get; set; } = DateTime.Now;
+        public DateTime? Date_Created { get; set; } = DateTime.Now;
+        public DateTime? Date_Last_Modified { get; set; } = DateTime.Now;
 
         protected virtual void CheckId()
         {

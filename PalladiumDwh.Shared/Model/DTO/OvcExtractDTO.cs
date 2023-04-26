@@ -21,6 +21,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public Guid PatientId { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public OvcExtractDTO()
         {
         }
@@ -41,6 +43,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId=OvcExtract.PatientId;
             Emr = OvcExtract.Emr;
             Project = OvcExtract.Project;
+            Date_Created=OvcExtract.Date_Created;
+            Date_Last_Modified=OvcExtract.Date_Last_Modified;
         }
 
         public IEnumerable<OvcExtractDTO> GenerateOvcExtractDtOs(IEnumerable<OvcExtract> extracts)
@@ -67,7 +71,9 @@ namespace PalladiumDwh.Shared.Model.DTO
                 PartnerOfferingOVCServices,
                 OVCExitReason,
                 ExitDate,
-                PatientId,Emr,Project
+                PatientId,Emr,Project,
+                Date_Created,
+                Date_Last_Modified
                 );
         }
     }

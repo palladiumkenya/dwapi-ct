@@ -16,6 +16,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string IPVRelationship { get; set; }
         public Guid PatientId { get; set; }
         public DateTime? Created { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public GbvScreeningExtract()
         {
@@ -23,7 +25,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public GbvScreeningExtract(string facilityName, int? visitId, DateTime? visitDate, string ipv, string physicalIpv, string emotionalIpv, string sexualIpv, string ipvRelationship,
-            Guid patientId, string emr, string project)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -38,6 +40,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+            Date_Created = date_Created;
+            Date_Last_Modified = date_Last_Modified;
         }
     }
 }

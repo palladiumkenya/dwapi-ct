@@ -14,5 +14,7 @@ namespace PalladiumDwh.Shared.Interfaces
          string PartnerOfferingOVCServices { get; set; }
          string OVCExitReason { get; set; }
          DateTime ? ExitDate { get; set; }
+         DateTime? Date_Created { get; set; } 
+         DateTime? Date_Last_Modified { get; set; } 
     }
 }

@@ -21,12 +21,14 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string RegimenLine { get; set; }
         public string PeriodTaken { get; set; }
         public string ProphylaxisType { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public ClientPatientPharmacyExtract()
         {
         }
 
-        public ClientPatientPharmacyExtract(int patientPk, string patientId, int siteCode, int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, string emr, string project)
+        public ClientPatientPharmacyExtract(int patientPk, string patientId, int siteCode, int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
         {
             PatientPK = patientPk;
             PatientID = patientId;
@@ -43,6 +45,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             ProphylaxisType = prophylaxisType;
             Emr = emr;
             Project = project;
+            Date_Created = date_Created;
+            Date_Last_Modified = date_Last_Modified;
         }
 
         public ClientPatientPharmacyExtract(TempPatientPharmacyExtract extract)
@@ -62,6 +66,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             ProphylaxisType = extract.ProphylaxisType;
             Emr = extract.Emr;
             Project = extract.Project;
+            Date_Created = extract.Date_Created;
+            Date_Last_Modified = extract.Date_Last_Modified;
 
         }
 

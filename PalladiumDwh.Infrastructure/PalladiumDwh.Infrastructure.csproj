@@ -226,6 +226,10 @@
     <Compile Include="Migrations\202208191232580_PatientVisitRefillDate.designer.cs">
       <DependentUpon>202208191232580_PatientVisitRefillDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202210210835384_AddedDateCreatedAndModified.cs" />
+    <Compile Include="Migrations\202210210835384_AddedDateCreatedAndModified.designer.cs">
+      <DependentUpon>202210210835384_AddedDateCreatedAndModified.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -307,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208191232580_PatientVisitRefillDate.resx">
       <DependentUpon>202208191232580_PatientVisitRefillDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210210835384_AddedDateCreatedAndModified.resx">
+      <DependentUpon>202210210835384_AddedDateCreatedAndModified.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

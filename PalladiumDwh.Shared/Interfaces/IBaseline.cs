@@ -26,5 +26,7 @@ namespace PalladiumDwh.Shared.Interfaces
         DateTime? m12CD4Date { get; set; }
         int? m6CD4 { get; set; }
         DateTime? m6CD4Date { get; set; }
+        DateTime? Date_Created { get; set; } 
+        DateTime? Date_Last_Modified { get; set; } 
     }
 }

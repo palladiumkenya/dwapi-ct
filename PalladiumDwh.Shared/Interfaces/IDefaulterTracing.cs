@@ -15,5 +15,7 @@ namespace PalladiumDwh.Shared.Interfaces
         string CauseOfDeath{get;set;}
         string Comments{get;set;}
         DateTime? BookingDate{get;set;}
+        DateTime? Date_Created { get; set; } 
+        DateTime? Date_Last_Modified { get; set; } 
     }
 }

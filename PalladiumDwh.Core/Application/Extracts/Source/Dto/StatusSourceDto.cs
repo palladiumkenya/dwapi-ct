@@ -12,6 +12,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string SpecificDeathReason { get; set; }
         public DateTime? DeathDate { get; set; }
         public DateTime? EffectiveDiscontinuationDate { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public string ExitDescription { get; set; }
         public DateTime? ExitDate { get; set; }
         public string ExitReason { get; set; }

@@ -42,6 +42,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string COVID19TestResult { get; set; }
         public string Sequence { get; set; }
         public string BoosterDoseVerified { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
 
         public  void Standardize(CovidSourceBag sourceBag)
         {

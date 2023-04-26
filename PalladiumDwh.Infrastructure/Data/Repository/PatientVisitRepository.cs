@@ -95,6 +95,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                             {
                                 profile.PatientInfo.Id = p.Id;
                                 updates.Add(profile.PatientInfo);
+                                updates.ForEach(x => x.Updated = DateTime.Now);
                             }
                             else
                             {

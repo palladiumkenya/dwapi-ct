@@ -37,6 +37,8 @@ namespace PalladiumDwh.Shared.Interfaces
         string PatientResidentWard { get; set; }
         string PatientResidentVillage { get; set; }
         DateTime? TransferInDate { get; set; }
+        DateTime? Date_Created { get; set; } 
+        DateTime? Date_Last_Modified { get; set; } 
     }
 }
 
