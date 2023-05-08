@@ -65,11 +65,11 @@ namespace PalladiumDWh.DwapiService
              {
                  new ExtractService()
              };
-
+             
              ServiceBase.Run(servicesToRun);
 //#else
-            //ExtractService myServ = new ExtractService();
-            //myServ.RunSvc();
+            // ExtractService myServ = new ExtractService();
+            // myServ.RunSvc();
 //#endif
         }
     }
