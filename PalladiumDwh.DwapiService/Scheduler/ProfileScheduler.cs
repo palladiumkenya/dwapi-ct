@@ -45,7 +45,9 @@ namespace PalladiumDWh.DwapiService.Scheduler
                 typeof(SyncOtzJob),
 
                 typeof(SyncCovidJob),
-                typeof(SyncDefaulterTracingJob)
+                typeof(SyncDefaulterTracingJob),
+                typeof(SyncCervicalCancerScreeningJob)
+
             };
 
             foreach (var job in jobs)

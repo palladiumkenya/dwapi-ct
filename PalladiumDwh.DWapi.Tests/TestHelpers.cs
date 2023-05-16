@@ -60,6 +60,8 @@ namespace PalladiumDwh.DWapi.Tests
                 p.AddPatientStatusExtracts(Builder<PatientStatusExtract>.CreateListOfSize(count).Build().ToList());
                 p.AddPatientVisitExtracts(Builder<PatientVisitExtract>.CreateListOfSize(count).Build().ToList());
                 p.AddPatientAdverseEventExtracts(Builder<PatientAdverseEventExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddCervicalCancerScreeningExtracts(Builder<CervicalCancerScreeningExtract>.CreateListOfSize(count).Build().ToList());
+
 
             }
             return patients;

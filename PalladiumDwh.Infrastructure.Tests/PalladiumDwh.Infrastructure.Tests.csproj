@@ -108,6 +108,7 @@
     <Compile Include="Data\Repository\Stage\StageAllergiesChronicIllnessExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\Stage\StageArtExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\Stage\StageBaselineExtractRepositoryTests.cs" />
+    <Compile Include="Data\Repository\Stage\StageCervicalCancerScreeningExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\Stage\StageContactListingExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\Stage\StageCovidExtractRepositoryTests.cs" />
     <Compile Include="Data\Repository\Stage\StageDefaulterTracingExtractRepositoryTests.cs" />
