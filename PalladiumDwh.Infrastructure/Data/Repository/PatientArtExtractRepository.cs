@@ -108,11 +108,18 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             }
 
             if (inserts.Count > 0)
-                _context.GetConnection().BulkMerge(inserts);
-
+            {
+                var patientGroup = inserts.GroupBy(x => x.Id);
+                foreach (var group in patientGroup)
+                    _context.GetConnection().BulkMerge(group.First());
+            }
 
             if (updates.Count > 0)
-                _context.GetConnection().BulkUpdate(updates);
+            {
+                var patientGroup = updates.GroupBy(x => x.Id);
+                foreach (var group in patientGroup)
+                    _context.GetConnection().BulkUpdate(group.First());
+            }
 
             foreach (var patientVisitProfile in updatedProfiles)
             {

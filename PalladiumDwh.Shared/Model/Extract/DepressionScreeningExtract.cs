@@ -1,4 +1,5 @@
 using System;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Interfaces;
 using PalladiumDwh.Shared.Interfaces.Extracts;
 
@@ -52,6 +53,9 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+            Date_Created = date_Created;
+            Date_Last_Modified = date_Last_Modified;
+            this.StandardizeExtract();
         }
     }
 }
