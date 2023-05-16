@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Dapper.Contrib.Extensions;
+using PalladiumDwh.Shared.Custom;
 using PalladiumDwh.Shared.Interfaces.Extracts;
 
 namespace PalladiumDwh.Shared.Model.Extract
@@ -142,6 +143,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             NUPI = nupi;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
+            this.StandardizeExtract();
         }
 
         public void AddPatientArtExtracts(IEnumerable<PatientArtExtract> extracts)

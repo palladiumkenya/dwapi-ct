@@ -108,11 +108,18 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             }
 
             if (inserts.Count > 0)
-                _context.GetConnection().BulkMerge(inserts);
-
+            {
+                var patientGroup = inserts.GroupBy(x => x.Id);
+                foreach (var group in patientGroup)
+                    _context.GetConnection().BulkMerge(group.First());
+            }
 
             if (updates.Count > 0)
-                _context.GetConnection().BulkUpdate(updates);
+            {
+                var patientGroup = updates.GroupBy(x => x.Id);
+                foreach (var group in patientGroup)
+                    _context.GetConnection().BulkUpdate(group.First());
+            }
 
             foreach (var EnhancedAdherenceCounsellingProfile in updatedProfiles)
             {
@@ -138,7 +145,8 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                     .Distinct()
                     .ToList();
 
-                var patientIds = patientFacProfiles.Select(x => x.Id).ToArray();
+                // var patientIds = GetPatientIds(patientFacProfiles).ToArray();
+                var patientIds = GetPatientIds(patientFacProfiles).ToArray();
 
                 var connectionString = _context.GetConnection().ConnectionString;
 
@@ -188,6 +196,26 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             }
         }
 
+        private List<Guid> GetPatientIds(List<PatientFacilityProfile> profiles)
+        {
+            var patientIds = new List<Guid>();
+
+            foreach (var ch in profiles.GroupBy(x => x.FacilityId))
+            {
+                foreach (var prf in ch)
+                {
+                    var sqlIds = $@"
+                    select Id from PatientExtract
+                    where PatientPID in (select PatientPID from PatientExtract where Id='{prf.Id}')
+                    and FacilityId='{ch.Key}'";
+
+                    var ids = _context.GetConnection().Query<Guid>(sqlIds).ToList();
+                    patientIds.AddRange(ids);
+                }
+            }
+
+            return patientIds.Distinct().ToList();
+        }
 
     }
 }
