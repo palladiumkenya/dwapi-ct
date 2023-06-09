@@ -60,16 +60,9 @@ namespace PalladiumDwh.Shared.Model.Extract
         public virtual ICollection<PatientStatusExtract> PatientStatusExtracts { get; set; }=new List<PatientStatusExtract>();
         public virtual ICollection<PatientVisitExtract> PatientVisitExtracts { get; set; }=new List<PatientVisitExtract>();
         public virtual ICollection<PatientAdverseEventExtract> PatientAdverseEventExtracts { get; set; } = new List<PatientAdverseEventExtract>();
-
-
-        public virtual ICollection<AllergiesChronicIllnessExtract> AllergiesChronicIllnessExtracts { get; set; } =
-            new List<AllergiesChronicIllnessExtract>();
-
-        public virtual ICollection<ContactListingExtract> ContactListingExtracts { get; set; } =
-            new List<ContactListingExtract>();
-
-        public virtual ICollection<DepressionScreeningExtract> DepressionScreeningExtracts { get; set; } =
-            new List<DepressionScreeningExtract>();
+        public virtual ICollection<AllergiesChronicIllnessExtract> AllergiesChronicIllnessExtracts { get; set; } = new List<AllergiesChronicIllnessExtract>();
+        public virtual ICollection<ContactListingExtract> ContactListingExtracts { get; set; } = new List<ContactListingExtract>();
+        public virtual ICollection<DepressionScreeningExtract> DepressionScreeningExtracts { get; set; } = new List<DepressionScreeningExtract>();
 
         public virtual ICollection<EnhancedAdherenceCounsellingExtract> EnhancedAdherenceCounsellingExtracts
         {
@@ -87,6 +80,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public virtual ICollection<CovidExtract> CovidExtracts { get; set; } = new List<CovidExtract>();
         public virtual ICollection<DefaulterTracingExtract> DefaulterTracingExtracts { get; set; } = new List<DefaulterTracingExtract>();
+        public virtual ICollection<CervicalCancerScreeningExtract> CervicalCancerScreeningExtracts { get; set; } = new List<CervicalCancerScreeningExtract>();
 
         public PatientExtract()
         {
@@ -201,6 +195,15 @@ namespace PalladiumDwh.Shared.Model.Extract
             {
                 e.PatientId = Id;
                 PatientAdverseEventExtracts.Add(e);
+            }
+        }
+        
+        public void AddCervicalCancerScreeningExtracts(IEnumerable<CervicalCancerScreeningExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientId = Id;
+                CervicalCancerScreeningExtracts.Add(e);
             }
         }
 

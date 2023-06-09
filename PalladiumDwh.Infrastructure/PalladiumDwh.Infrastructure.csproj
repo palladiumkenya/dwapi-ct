@@ -85,6 +85,7 @@
     <Compile Include="Data\DwapiCentralContext.cs" />
     <Compile Include="Data\Repository\ActionRegisterRepository.cs" />
     <Compile Include="Data\Repository\AppRepository.cs" />
+    <Compile Include="Data\Repository\CervicalCancerScreeningRepository.cs" />
     <Compile Include="Data\Repository\FacilityRepository.cs" />
     <Compile Include="Data\Repository\CovidRepository.cs" />
     <Compile Include="Data\Repository\DefaulterTracingRepository.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Data\Repository\Stage\StageAllergiesChronicIllnessExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageArtExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageBaselineExtractRepository.cs" />
+    <Compile Include="Data\Repository\Stage\StageCervicalCancerScreeningExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageContactListingExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageCovidExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageDefaulterTracingExtractRepository.cs" />
@@ -230,6 +232,26 @@
     <Compile Include="Migrations\202210210835384_AddedDateCreatedAndModified.designer.cs">
       <DependentUpon>202210210835384_AddedDateCreatedAndModified.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305111948562_CervicalCancerScreeningInitial.cs" />
+    <Compile Include="Migrations\202305111948562_CervicalCancerScreeningInitial.designer.cs">
+      <DependentUpon>202305111948562_CervicalCancerScreeningInitial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305300647466_AddedZscore.cs" />
+    <Compile Include="Migrations\202305300647466_AddedZscore.designer.cs">
+      <DependentUpon>202305300647466_AddedZscore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305312014266_AddedPeadsDisclosure.cs" />
+    <Compile Include="Migrations\202305312014266_AddedPeadsDisclosure.designer.cs">
+      <DependentUpon>202305312014266_AddedPeadsDisclosure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306081622065_ChangedZscoreColumnType.cs" />
+    <Compile Include="Migrations\202306081622065_ChangedZscoreColumnType.designer.cs">
+      <DependentUpon>202306081622065_ChangedZscoreColumnType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306090726240_AddedZscoreabsolute.cs" />
+    <Compile Include="Migrations\202306090726240_AddedZscoreabsolute.designer.cs">
+      <DependentUpon>202306090726240_AddedZscoreabsolute.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -314,6 +336,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202210210835384_AddedDateCreatedAndModified.resx">
       <DependentUpon>202210210835384_AddedDateCreatedAndModified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305111948562_CervicalCancerScreeningInitial.resx">
+      <DependentUpon>202305111948562_CervicalCancerScreeningInitial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305300647466_AddedZscore.resx">
+      <DependentUpon>202305300647466_AddedZscore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305312014266_AddedPeadsDisclosure.resx">
+      <DependentUpon>202305312014266_AddedPeadsDisclosure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306081622065_ChangedZscoreColumnType.resx">
+      <DependentUpon>202306081622065_ChangedZscoreColumnType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306090726240_AddedZscoreabsolute.resx">
+      <DependentUpon>202306090726240_AddedZscoreabsolute.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>
