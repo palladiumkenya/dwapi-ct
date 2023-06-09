@@ -21,7 +21,7 @@ namespace PalladiumDWh.DwapiService
         /// </summary>
         static void Main()
         {
-            Log.Debug(new string('*',40));
+            Log.Debug(new string('*', 40));
             Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Name}");
             Log.Debug($"{Assembly.GetExecutingAssembly().GetName().Version}");
             Log.Debug($"Rel: 04APR22 0818");
@@ -31,7 +31,7 @@ namespace PalladiumDWh.DwapiService
             // CHECK if the license if valid for the default provider (SQL Server)
             try
             {
-                DapperPlusManager.AddLicense(Properties.Settings.Default.Z_Dapper_Plus_LicenseName,Properties.Settings.Default.Z_Dapper_Plus_LicenseKey);
+                DapperPlusManager.AddLicense(Properties.Settings.Default.Z_Dapper_Plus_LicenseName, Properties.Settings.Default.Z_Dapper_Plus_LicenseKey);
                 if (!Z.Dapper.Plus.DapperPlusManager.ValidateLicense(out var licenseErrorMessage))
                 {
                     throw new Exception(licenseErrorMessage);

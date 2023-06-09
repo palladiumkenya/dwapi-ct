@@ -170,6 +170,7 @@
     <Compile Include="Services\MessagingReaderServiceTests.cs" />
     <Compile Include="Services\MessagingSenderServiceTests.cs" />
     <Compile Include="Services\LiveSyncServiceTests.cs" />
+    <Compile Include="Services\SyncServiceDiffTests.cs" />
     <Compile Include="Services\SyncServiceTests.cs" />
     <Compile Include="TestHelpers.cs" />
     <Compile Include="TestInitializer.cs" />
@@ -206,9 +207,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Application\Extracts" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
