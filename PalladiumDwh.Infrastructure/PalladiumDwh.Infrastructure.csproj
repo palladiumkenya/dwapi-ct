@@ -236,6 +236,22 @@
     <Compile Include="Migrations\202305111948562_CervicalCancerScreeningInitial.designer.cs">
       <DependentUpon>202305111948562_CervicalCancerScreeningInitial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305300647466_AddedZscore.cs" />
+    <Compile Include="Migrations\202305300647466_AddedZscore.designer.cs">
+      <DependentUpon>202305300647466_AddedZscore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305312014266_AddedPeadsDisclosure.cs" />
+    <Compile Include="Migrations\202305312014266_AddedPeadsDisclosure.designer.cs">
+      <DependentUpon>202305312014266_AddedPeadsDisclosure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306081622065_ChangedZscoreColumnType.cs" />
+    <Compile Include="Migrations\202306081622065_ChangedZscoreColumnType.designer.cs">
+      <DependentUpon>202306081622065_ChangedZscoreColumnType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306090726240_AddedZscoreabsolute.cs" />
+    <Compile Include="Migrations\202306090726240_AddedZscoreabsolute.designer.cs">
+      <DependentUpon>202306090726240_AddedZscoreabsolute.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -323,6 +339,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305111948562_CervicalCancerScreeningInitial.resx">
       <DependentUpon>202305111948562_CervicalCancerScreeningInitial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305300647466_AddedZscore.resx">
+      <DependentUpon>202305300647466_AddedZscore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305312014266_AddedPeadsDisclosure.resx">
+      <DependentUpon>202305312014266_AddedPeadsDisclosure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306081622065_ChangedZscoreColumnType.resx">
+      <DependentUpon>202306081622065_ChangedZscoreColumnType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306090726240_AddedZscoreabsolute.resx">
+      <DependentUpon>202306090726240_AddedZscoreabsolute.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>
