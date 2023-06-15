@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>F:\Palladium\dwh\ndwapi\</PublishUrl>
+    <PublishUrl>C:\Users\mary.kilewe\Documents\Palladium\dwapiservice\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -127,6 +127,7 @@
       <DependentUpon>ExtractService.cs</DependentUpon>
     </Compile>
     <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="Job\SyncCervicalCancerScreeningob.cs" />
     <Compile Include="Job\SyncManifestJob.cs" />
     <Compile Include="Job\SyncDefaulterTracingJob.cs" />
     <Compile Include="Job\SyncCovidJob.cs" />

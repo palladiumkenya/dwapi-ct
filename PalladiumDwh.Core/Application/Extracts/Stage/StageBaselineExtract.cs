@@ -15,8 +15,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public DateTime? bWABDate { get; set; }
         public int? bWHO { get; set; }
         public DateTime? bWHODate { get; set; }
-        public int? eWAB { get; set; }
-        public DateTime? eWABDate { get; set; }
+        public int? eWAB { get; set; }        public DateTime? eWABDate { get; set; }
         public int? eCD4 { get; set; }
         public DateTime? eCD4Date { get; set; }
         public int? eWHO { get; set; }

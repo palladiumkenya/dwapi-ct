@@ -69,7 +69,10 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string CNS { get; set; }
         public string Genitourinary { get; set; }
         public DateTime? RefillDate { get; set; }
-        
+        public string ZScore { get; set; }
+        public int? ZScoreAbsolute { get; set; }
+        public string PaedsDisclosure { get; set; }
+
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public PatientVisitExtract()
@@ -80,7 +83,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public PatientVisitExtract(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, Guid patientId, string emr, string project,
             string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType,
             string visitBy, decimal? temp, int? pulseRate, int? respiratoryRate, decimal? oxygenSaturation, int? muac, string nutritionalStatus, string everHadMenses, string breastfeeding, string menopausal, string noFpReason, string prophylaxisUsed, string ctxAdherence, string currentRegimen, string hcwConcern, string tcaReason, string clinicalNotes,
-            string generalExamination,	string systemExamination,	string skin,	string eyes,	string ent,	string chest,	string cvs,	string abdomen,	string cns,	string genitourinary, DateTime? refillDate, DateTime? date_Created,DateTime? date_Last_Modified)
+            string generalExamination,	string systemExamination,	string skin,	string eyes,	string ent,	string chest,	string cvs,	string abdomen,	string cns,	string genitourinary, DateTime? refillDate, string zScore ,  int? zScoreAbsolute ,string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -146,6 +149,9 @@ namespace PalladiumDwh.Shared.Model.Extract
             CNS=cns;
             Genitourinary=genitourinary;
             RefillDate = refillDate;
+            ZScore = zScore;
+            ZScoreAbsolute = zScoreAbsolute;
+            PaedsDisclosure = paedsDisclosure;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
             this.StandardizeExtract();

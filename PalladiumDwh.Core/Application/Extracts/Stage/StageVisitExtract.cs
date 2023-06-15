@@ -67,6 +67,10 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string PopulationType { get; set; }
         public string KeyPopulationType { get; set; }
         public DateTime? RefillDate { get; set; }
+        public string ZScore { get; set; }
+        public int? ZScoreAbsolute { get; set; }
+        public string PaedsDisclosure { get; set; }
+
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
 

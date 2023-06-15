@@ -86,6 +86,7 @@
     <Compile Include="Enum\CargoType.cs" />
     <Compile Include="Extentions\TypeExtentions.cs" />
     <Compile Include="Interfaces\DTOs\IAllergiesChronicIllnessExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\ICervicalCancerScreeningExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IContactListingExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\ICovidExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IDefaulterTracingExtractDTO.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Interfaces\DTOs\IOvcExtractDTO.cs" />
     <Compile Include="Interfaces\Extracts\IAdverseEventExtract.cs" />
     <Compile Include="Interfaces\Extracts\IAllergiesChronicIllnessExtract.cs" />
+    <Compile Include="Interfaces\Extracts\ICervicalCancerScreeningExtract.cs" />
     <Compile Include="Interfaces\Extracts\IContactListingExtract.cs" />
     <Compile Include="Interfaces\Extracts\ICovidExtract.cs" />
     <Compile Include="Interfaces\Extracts\IDefaulterTracingExtract.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Interfaces\IAdverseEvent.cs" />
     <Compile Include="Interfaces\IAllergiesChronicIllness.cs" />
     <Compile Include="Interfaces\IArtNew.cs" />
+    <Compile Include="Interfaces\ICervicalCancerScreening.cs" />
     <Compile Include="Interfaces\IClearPatientRecords.cs" />
     <Compile Include="Interfaces\IContactListing.cs" />
     <Compile Include="Interfaces\ICovid.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="Interfaces\IStatusNew.cs" />
     <Compile Include="Interfaces\IVisitNew.cs" />
     <Compile Include="Interfaces\Profiles\IAllergiesChronicIllnessProfile.cs" />
+    <Compile Include="Interfaces\Profiles\ICervicalCancerScreeningProfile.cs" />
     <Compile Include="Interfaces\Profiles\IContactListingProfile.cs" />
     <Compile Include="Interfaces\Profiles\IDepressionScreeningProfile.cs" />
     <Compile Include="Interfaces\Profiles\IDrugAlcoholScreeningProfile.cs" />
@@ -160,6 +164,7 @@
     <Compile Include="Interfaces\Stages\IStage.cs" />
     <Compile Include="Interfaces\Stages\IStagePatientExtract.cs" />
     <Compile Include="Interfaces\Stages\IStageVisitExtract.cs" />
+    <Compile Include="Model\DTO\CervicalCancerScreeningExtractDTO.cs" />
     <Compile Include="Model\DTO\FacilityCacheDto.cs" />
     <Compile Include="Model\DTO\FacilityId.cs" />
     <Compile Include="Model\DTO\FacMetric.cs" />
@@ -189,6 +194,7 @@
     <Compile Include="Model\DTO\PatientVisitExtractDTO.cs" />
     <Compile Include="Model\ExrtactMap.cs" />
     <Compile Include="Model\Extract\AllergiesChronicIllnessExtract.cs" />
+    <Compile Include="Model\Extract\CervicalCancerScreeningExtract.cs" />
     <Compile Include="Model\Extract\ContactListingExtract.cs" />
     <Compile Include="Model\Extract\CovidExtract.cs" />
     <Compile Include="Model\Extract\DefaulterTracingExtract.cs" />
@@ -229,6 +235,7 @@
     <Compile Include="Interfaces\Profiles\IPatientStatusProfile.cs" />
     <Compile Include="Interfaces\Profiles\IPatientVisitProfile.cs" />
     <Compile Include="Model\Manifest.cs" />
+    <Compile Include="Model\Profile\CervicalCancerScreeningProfile.cs" />
     <Compile Include="Model\Profile\ExtractProfile.cs" />
     <Compile Include="Model\Profile\DefaulterTracingProfile.cs" />
     <Compile Include="Model\Profile\CovidProfile.cs" />

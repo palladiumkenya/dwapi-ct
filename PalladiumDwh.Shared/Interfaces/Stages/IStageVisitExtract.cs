@@ -20,5 +20,7 @@ namespace PalladiumDwh.Shared.Interfaces.Stages
     public interface IStagePharmacyExtract : IStage, IPharmacy{}
     public interface IStageStatusExtract : IStage, IStatus{}
     public interface IStageGbvScreeningExtract : IStage, IGbvScreening{}
+    public interface IStageCervicalCancerScreeningExtract : IStage, ICervicalCancerScreening{}
+
 
 }

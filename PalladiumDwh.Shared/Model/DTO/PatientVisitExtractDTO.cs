@@ -70,6 +70,10 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string CNS { get; set; }
         public string Genitourinary { get; set; }
         public DateTime? RefillDate { get; set; }
+        public string ZScore { get; set; }
+        public int? ZScoreAbsolute { get; set; }
+        public string PaedsDisclosure { get; set; }
+
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
 
@@ -85,7 +89,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             string secondlineRegimenChangeReason, string adherence, string adherenceCategory,
             string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr,
             string project, Guid patientId,
-            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, DateTime? refillDate, DateTime? date_Created,DateTime? date_Last_Modified)
+            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, DateTime? refillDate, string zScore , int? zScoreAbsolute, string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -121,6 +125,10 @@ namespace PalladiumDwh.Shared.Model.DTO
             PopulationType = populationType;
             KeyPopulationType = keyPopulationType;
             RefillDate = refillDate;
+            ZScore = zScore;
+            ZScoreAbsolute = zScoreAbsolute;
+            PaedsDisclosure = paedsDisclosure;
+
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
         }
@@ -161,6 +169,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             PopulationType = patientVisitExtract.PopulationType;
             KeyPopulationType = patientVisitExtract.KeyPopulationType;
             RefillDate = patientVisitExtract.RefillDate;
+            ZScore = patientVisitExtract.ZScore;
+            ZScoreAbsolute = patientVisitExtract.ZScoreAbsolute;
+            PaedsDisclosure = patientVisitExtract.PaedsDisclosure;
             Date_Created=patientVisitExtract.Date_Created;
             Date_Last_Modified=patientVisitExtract.Date_Last_Modified;
         }
@@ -193,7 +204,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 VisitBy, Temp, PulseRate, RespiratoryRate, OxygenSaturation, Muac, NutritionalStatus, EverHadMenses,
                 Breastfeeding, Menopausal, NoFPReason, ProphylaxisUsed, CTXAdherence, CurrentRegimen, HCWConcern,
                 TCAReason, ClinicalNotes,
-                GeneralExamination, SystemExamination, Skin, Eyes, ENT, Chest, CVS, Abdomen, CNS, Genitourinary, RefillDate,Date_Created, Date_Last_Modified
+                GeneralExamination, SystemExamination, Skin, Eyes, ENT, Chest, CVS, Abdomen, CNS, Genitourinary, RefillDate,ZScore,ZScoreAbsolute,PaedsDisclosure,Date_Created, Date_Last_Modified
             );
         }
     }
