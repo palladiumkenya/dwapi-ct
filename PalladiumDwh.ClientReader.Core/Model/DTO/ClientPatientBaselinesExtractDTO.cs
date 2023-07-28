@@ -36,13 +36,15 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string Project { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string PatientUUID { get; set; }
+
         
 
         public ClientPatientBaselinesExtractDTO()
         {
         }
 
-        public ClientPatientBaselinesExtractDTO(int patientPid, string patientCccNumber, int facilityId, int? bCd4, DateTime? bCd4Date, int? bWab, DateTime? bWabDate, int? bWho, DateTime? bWhoDate, int? eWab, DateTime? eWabDate, int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? lastWab, DateTime? lastWabDate, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
+        public ClientPatientBaselinesExtractDTO(int patientPid, string patientCccNumber, int facilityId, int? bCd4, DateTime? bCd4Date, int? bWab, DateTime? bWabDate, int? bWho, DateTime? bWhoDate, int? eWab, DateTime? eWabDate, int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? lastWab, DateTime? lastWabDate, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
         {
             PatientPID = patientPid;
             PatientCccNumber = patientCccNumber;
@@ -73,6 +75,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             Project = project;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
+            PatientUUID = patientUUID;
         }
 
 
@@ -107,6 +110,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             Project = extract.Project;
             Date_Created = extract.Date_Created;
             Date_Last_Modified = extract.Date_Last_Modified;
+            PatientUUID = extract.PatientUUID;
 
         }
 

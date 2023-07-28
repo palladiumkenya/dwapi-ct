@@ -252,6 +252,10 @@
     <Compile Include="Migrations\202306090726240_AddedZscoreabsolute.designer.cs">
       <DependentUpon>202306090726240_AddedZscoreabsolute.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202307281255174_PtientUUID.cs" />
+    <Compile Include="Migrations\202307281255174_PtientUUID.designer.cs">
+      <DependentUpon>202307281255174_PtientUUID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -351,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202306090726240_AddedZscoreabsolute.resx">
       <DependentUpon>202306090726240_AddedZscoreabsolute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307281255174_PtientUUID.resx">
+      <DependentUpon>202307281255174_PtientUUID.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

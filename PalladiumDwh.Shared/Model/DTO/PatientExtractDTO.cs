@@ -49,6 +49,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string NUPI { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string PatientUUID { get; set; }
+
 
         public PatientExtractDTO()
         {
@@ -56,7 +58,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         }
 
         public PatientExtractDTO(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project, Guid facilityId,
-            string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate, string nupi, DateTime? date_Created,DateTime? date_Last_Modified)
+            string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate, string nupi, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
         {
             PatientPID = patientPid;
             PatientCccNumber = patientCccNumber;
@@ -99,6 +101,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             NUPI = nupi;
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
+            PatientUUID=patientUUID;
+
         }
 
         public PatientExtractDTO(PatientExtract patient)
@@ -147,6 +151,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             NUPI = patient.NUPI;
             Date_Created=patient.Date_Created;
             Date_Last_Modified=patient.Date_Last_Modified;
+            PatientUUID=patient.PatientUUID;
+
         }
 
         public PatientExtract GeneratePatient(Guid facilityId)
@@ -192,7 +198,9 @@ namespace PalladiumDwh.Shared.Model.DTO
                 PatientResidentVillage,
                 TransferInDate,
                 Pkv,Occupation,
-                NUPI, Date_Created, Date_Last_Modified
+                NUPI, Date_Created, 
+                Date_Last_Modified,
+                PatientUUID
             );
         }
 

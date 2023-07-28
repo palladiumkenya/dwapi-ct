@@ -26,5 +26,7 @@ namespace PalladiumDwh.Shared.Interfaces
         DateTime? LastVisit { get; set; }
         string ExitReason { get; set; }
         DateTime? ExitDate { get; set; }
+        string PatientUUID { get; set; }
+
     }
 }

@@ -15,5 +15,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string IPVRelationship { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string PatientUUID { get; set; }
+
     }
 }
