@@ -76,5 +76,6 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
 
         public DateTime? DateSampleTaken { get; set; }
         public string SampleType { get; set; }
+        public string Reason { get; set; }
     }
 }

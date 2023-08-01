@@ -11,6 +11,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
     {
         public DateTime? DateSampleTaken { get; set; }
         public string SampleType { get; set; }
+        public string Reason { get; set; }
         public int? VisitId { get; set; }
         public DateTime? OrderedByDate { get; set; }
         public DateTime? ReportedByDate { get; set; }

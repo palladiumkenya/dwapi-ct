@@ -19,6 +19,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public Guid PatientId { get; set; }
         public DateTime? DateSampleTaken { get; set; }
         public string SampleType { get; set; }
+        public string Reason { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
 
@@ -54,6 +55,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             Project = patientLaboratoryExtract.Project;
             PatientId = patientLaboratoryExtract.PatientId;
             DateSampleTaken = patientLaboratoryExtract.DateSampleTaken;
+            Reason = patientLaboratoryExtract.Reason;
             SampleType = patientLaboratoryExtract.SampleType;
             Date_Created=patientLaboratoryExtract.Date_Created;
             Date_Last_Modified=patientLaboratoryExtract.Date_Last_Modified;
@@ -73,7 +75,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public PatientLaboratoryExtract GeneratePatientLaboratoryExtract(Guid patientId)
         {
             PatientId = patientId;
-            return new PatientLaboratoryExtract(VisitId, OrderedByDate, ReportedByDate, TestName,EnrollmentTest, TestResult, PatientId, Emr, Project,DateSampleTaken,SampleType, Date_Created, Date_Last_Modified);
+            return new PatientLaboratoryExtract(VisitId, OrderedByDate, ReportedByDate, TestName,EnrollmentTest, TestResult, PatientId, Emr, Project,DateSampleTaken,SampleType, Reason,Date_Created, Date_Last_Modified);
         }
 
 
