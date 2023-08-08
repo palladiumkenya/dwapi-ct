@@ -22,12 +22,14 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string Reason { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string PatientUUID { get; set; }
+
 
         public PatientLaboratoryExtractDTO()
         {
         }
 
-        public PatientLaboratoryExtractDTO(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified)
+        public PatientLaboratoryExtractDTO(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
         {
             VisitId = visitId;
             OrderedByDate = orderedByDate;
@@ -40,6 +42,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
+            PatientUUID=patientUUID;
+
         }
 
 
@@ -59,6 +63,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             SampleType = patientLaboratoryExtract.SampleType;
             Date_Created=patientLaboratoryExtract.Date_Created;
             Date_Last_Modified=patientLaboratoryExtract.Date_Last_Modified;
+            PatientUUID=patientLaboratoryExtract.PatientUUID;
+
         }
 
 
@@ -75,7 +81,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public PatientLaboratoryExtract GeneratePatientLaboratoryExtract(Guid patientId)
         {
             PatientId = patientId;
-            return new PatientLaboratoryExtract(VisitId, OrderedByDate, ReportedByDate, TestName,EnrollmentTest, TestResult, PatientId, Emr, Project,DateSampleTaken,SampleType, Reason,Date_Created, Date_Last_Modified);
+            return new PatientLaboratoryExtract(VisitId, OrderedByDate, ReportedByDate, TestName,EnrollmentTest, TestResult, PatientId, Emr, Project,DateSampleTaken,SampleType, Reason, Date_Created, Date_Last_Modified,PatientUUID);
         }
 
 

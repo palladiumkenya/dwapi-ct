@@ -35,6 +35,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public Guid PatientId { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string PatientUUID { get; set; }
+
         public IptExtractDTO()
         {
         }
@@ -69,6 +71,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = IptExtract.PatientId;
             Date_Created=IptExtract.Date_Created;
             Date_Last_Modified=IptExtract.Date_Last_Modified;
+            PatientUUID=IptExtract.PatientUUID;
+
         }
 
 
@@ -112,7 +116,8 @@ namespace PalladiumDwh.Shared.Model.DTO
                 PatientId,
                 Emr,Project,
                 Date_Created,
-                Date_Last_Modified
+                Date_Last_Modified,
+                PatientUUID
                 );
         }
 

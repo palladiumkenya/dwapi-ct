@@ -256,6 +256,10 @@
     <Compile Include="Migrations\202307311244410_AddReasonToLabs.designer.cs">
       <DependentUpon>202307311244410_AddReasonToLabs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202308021344099_PatientUUID.cs" />
+    <Compile Include="Migrations\202308021344099_PatientUUID.designer.cs">
+      <DependentUpon>202308021344099_PatientUUID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -358,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202307311244410_AddReasonToLabs.resx">
       <DependentUpon>202307311244410_AddReasonToLabs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308021344099_PatientUUID.resx">
+      <DependentUpon>202308021344099_PatientUUID.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

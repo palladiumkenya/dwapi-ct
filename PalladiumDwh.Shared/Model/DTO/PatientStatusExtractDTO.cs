@@ -23,12 +23,14 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? EffectiveDiscontinuationDate { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string PatientUUID { get; set; }
+
 
         public PatientStatusExtractDTO()
         {
         }
 
-        public PatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified)
+        public PatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
         {
             ExitDescription = exitDescription;
             ExitDate = exitDate;
@@ -38,6 +40,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
+            Date_Last_Modified=date_Last_Modified;
+            PatientUUID = patientUUID;
+
         }
 
         public PatientStatusExtractDTO(PatientStatusExtract patientStatusExtract)
@@ -59,6 +64,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             EffectiveDiscontinuationDate = patientStatusExtract.EffectiveDiscontinuationDate;
             Date_Created=patientStatusExtract.Date_Created;
             Date_Last_Modified=patientStatusExtract.Date_Last_Modified;
+            PatientUUID=patientStatusExtract.PatientUUID;
+
         }
 
 
@@ -76,7 +83,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public PatientStatusExtract GeneratePatientStatusExtract(Guid patientId)
         {
             PatientId = patientId;
-            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project,TOVerified,TOVerifiedDate,ReEnrollmentDate,ReasonForDeath,SpecificDeathReason,DeathDate,EffectiveDiscontinuationDate, Date_Created, Date_Last_Modified);
+            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project,TOVerified,TOVerifiedDate,ReEnrollmentDate,ReasonForDeath,SpecificDeathReason,DeathDate,EffectiveDiscontinuationDate, Date_Created, Date_Last_Modified,PatientUUID);
         }
     }
 }

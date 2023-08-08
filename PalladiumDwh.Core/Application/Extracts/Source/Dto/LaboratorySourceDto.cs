@@ -16,5 +16,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string TestName { get; set; }
         public int? EnrollmentTest { get; set; }
         public string TestResult { get; set; }
+        public string PatientUUID { get; set; }
+
     }
 }

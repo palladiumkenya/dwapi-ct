@@ -31,6 +31,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public Guid PatientId { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string PatientUUID { get; set; }
+
         public AllergiesChronicIllnessExtractDTO()
         {
         }
@@ -60,6 +62,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId=AllergiesChronicIllnessExtract.PatientId;
             Date_Created=AllergiesChronicIllnessExtract.Date_Created;
             Date_Last_Modified=AllergiesChronicIllnessExtract.Date_Last_Modified;
+            PatientUUID=AllergiesChronicIllnessExtract.PatientUUID;
+
 
         }
 
@@ -99,7 +103,8 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Emr,
                 Project,
                 Date_Created,
-                Date_Last_Modified
+                Date_Last_Modified,
+                PatientUUID
             );
         }
 

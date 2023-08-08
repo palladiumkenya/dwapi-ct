@@ -25,13 +25,15 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public DateTime? EffectiveDiscontinuationDate { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string PatientUUID { get; set; }
+
 
 
         public ClientPatientStatusExtractDTO()
         {
         }
 
-        public ClientPatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, int patientPid, string patientCccNumber, int facilityId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
+        public ClientPatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, int patientPid, string patientCccNumber, int facilityId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
         {
             ExitDescription = exitDescription;
             ExitDate = exitDate;
@@ -43,6 +45,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             Project = project;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
+            PatientUUID = patientUUID;
+
         }
 
         public ClientPatientStatusExtractDTO(ClientPatientStatusExtract extract)
@@ -57,6 +61,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             Project = extract.Project;
             Date_Created = extract.Date_Created;
             Date_Last_Modified = extract.Date_Last_Modified;
+            PatientUUID = extract.PatientUUID;
+
         }
 
 
