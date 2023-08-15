@@ -47,7 +47,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientVisitExtract(int patientPk, string patientId, int siteCode, int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr, string project,string patientUUID)
+        public ClientPatientVisitExtract(int patientPk, string patientId, int siteCode, int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr, string project,string PatientUUID)
         {
             PatientPK = patientPk;
             PatientID = patientId;
@@ -80,7 +80,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             NextAppointmentDate = nextAppointmentDate;
             Emr = emr;
             Project = project;
-            PatientUUID = patientUUID;
+            PatientUUID = PatientUUID;
 
         }
 

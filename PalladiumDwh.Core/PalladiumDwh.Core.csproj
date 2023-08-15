@@ -81,6 +81,7 @@
     <Compile Include="Application\Extracts\Commands\SyncDrugAlcoholScreening.cs" />
     <Compile Include="Application\Extracts\Commands\SyncEnhancedAdherenceCounselling.cs" />
     <Compile Include="Application\Extracts\Commands\SyncGbvScreening.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncIITRiskScores.cs" />
     <Compile Include="Application\Extracts\Commands\SyncIpt.cs" />
     <Compile Include="Application\Extracts\Commands\SyncLaboratory.cs" />
     <Compile Include="Application\Extracts\Commands\SyncOtz.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Application\Extracts\Source\Dto\DrugAlcoholScreeningSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\EnhancedAdherenceCounsellingSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\GbvScreeningSourceDto.cs" />
+    <Compile Include="Application\Extracts\Source\Dto\IITRiskScoresSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\IptSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\LaboratorySourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\OtzSourceDto.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Application\Extracts\Source\Dto\VisitSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\EnhancedAdherenceCounsellingSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\GbvScreeningSourceBag.cs" />
+    <Compile Include="Application\Extracts\Source\IITRiskScoresSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\IptSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\LaboratorySourceBag.cs" />
     <Compile Include="Application\Extracts\Source\OtzSourceBag.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="Application\Extracts\Stage\Repositories\IStageEnhancedAdherenceCounsellingExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageGbvScreeningExtractRepository.cs" />
+    <Compile Include="Application\Extracts\Stage\Repositories\IStageIITRiskScoresExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageIptExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageLaboratoryExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageOtzExtractRepository.cs" />
@@ -167,6 +171,7 @@
     <Compile Include="Application\Extracts\Stage\StageEnhancedAdherenceCounsellingExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageGbvScreeningExtract.cs" />
+    <Compile Include="Application\Extracts\Stage\StageIITRiskScoresExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageIptExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageLaboratoryExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageOtzExtract.cs" />
@@ -192,6 +197,7 @@
     <Compile Include="Interfaces\IAppRepository.cs" />
     <Compile Include="Interfaces\IAppService.cs" />
     <Compile Include="Interfaces\ICervicalCancerScreeningRepository.cs" />
+    <Compile Include="Interfaces\IiitRiskScoresRepository.cs" />
     <Compile Include="Interfaces\ILiveSyncService.cs" />
     <Compile Include="Interfaces\IMessagingReaderService.cs" />
     <Compile Include="Interfaces\IMessagingSenderService.cs" />

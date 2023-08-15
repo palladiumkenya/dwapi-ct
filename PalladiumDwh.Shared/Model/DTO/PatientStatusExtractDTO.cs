@@ -30,7 +30,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public PatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
+        public PatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string PatientUUID)
         {
             ExitDescription = exitDescription;
             ExitDate = exitDate;
@@ -41,7 +41,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
             Date_Last_Modified=date_Last_Modified;
-            PatientUUID = patientUUID;
+            PatientUUID = PatientUUID;
 
         }
 

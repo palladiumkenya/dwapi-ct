@@ -29,7 +29,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public OvcExtract(string facilityName, int? visitId, DateTime? visitDate, DateTime? ovcEnrollmentDate, string relationshipToClient, string enrolledinCpims, string cpimsUniqueIdentifier, string partnerOfferingOvcServices, string ovcExitReason, DateTime? exitDate,
-            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string patientUUID)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string PatientUUID)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -41,7 +41,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             PartnerOfferingOVCServices = partnerOfferingOvcServices;
             OVCExitReason = ovcExitReason;
             ExitDate = exitDate;
-            PatientUUID = patientUUID;
+            PatientUUID = PatientUUID;
 
             PatientId = patientId;
             Emr = emr;

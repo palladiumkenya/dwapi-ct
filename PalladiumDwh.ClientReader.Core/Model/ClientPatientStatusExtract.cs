@@ -30,7 +30,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientStatusExtract(int patientPk, string patientId, int siteCode, string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string patientUUID)
+        public ClientPatientStatusExtract(int patientPk, string patientId, int siteCode, string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string PatientUUID)
         {
             PatientPK = patientPk;
             PatientID = patientId;
@@ -42,7 +42,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = project;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
-            PatientUUID = patientUUID;
+            PatientUUID = PatientUUID;
 
         }
 

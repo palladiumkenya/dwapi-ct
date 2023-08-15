@@ -29,7 +29,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public DefaulterTracingExtract(string facilityName, int? visitId, DateTime? visitDate, int? encounterId, string tracingType, string tracingOutcome, int? attemptNumber, string isFinalTrace, string trueStatus, string causeOfDeath, string comments, DateTime? bookingDate, Guid patientId,
-            string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
+            string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string PatientUUID)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -43,7 +43,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             CauseOfDeath = causeOfDeath;
             Comments = comments;
             BookingDate = bookingDate;
-            PatientUUID = patientUUID;
+            PatientUUID = PatientUUID;
             
             PatientId = patientId;
             Emr = emr;

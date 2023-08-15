@@ -42,7 +42,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {           
         }
 
-        public ClientPatientBaselinesExtract(int patientPk, string patientId, int siteCode, int? bCd4, DateTime? bCd4Date, int? bWab, DateTime? bWabDate, int? bWho, DateTime? bWhoDate, int? eWab, DateTime? eWabDate, int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? lastWab, DateTime? lastWabDate, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string patientUUID )
+        public ClientPatientBaselinesExtract(int patientPk, string patientId, int siteCode, int? bCd4, DateTime? bCd4Date, int? bWab, DateTime? bWabDate, int? bWho, DateTime? bWhoDate, int? eWab, DateTime? eWabDate, int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? lastWab, DateTime? lastWabDate, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string PatientUUID )
         {
             PatientPK = patientPk;
             PatientID = patientId;
@@ -73,7 +73,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = project;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
-            PatientUUID = patientUUID;
+            PatientUUID = PatientUUID;
         }
 
         public ClientPatientBaselinesExtract(TempPatientBaselinesExtract extract)

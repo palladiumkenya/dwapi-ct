@@ -34,7 +34,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public PatientPharmacyExtractDTO(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
+        public PatientPharmacyExtractDTO(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string PatientUUID)
         {
             VisitID = visitId;
             Drug = drug;
@@ -51,7 +51,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
-            PatientUUID=patientUUID;
+            PatientUUID=PatientUUID;
 
         }
 

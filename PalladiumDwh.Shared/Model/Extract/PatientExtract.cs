@@ -83,6 +83,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public virtual ICollection<CovidExtract> CovidExtracts { get; set; } = new List<CovidExtract>();
         public virtual ICollection<DefaulterTracingExtract> DefaulterTracingExtracts { get; set; } = new List<DefaulterTracingExtract>();
         public virtual ICollection<CervicalCancerScreeningExtract> CervicalCancerScreeningExtracts { get; set; } = new List<CervicalCancerScreeningExtract>();
+        public virtual ICollection<IITRiskScoresExtract> IITRiskScoresExtracts { get; set; } = new List<IITRiskScoresExtract>();
 
         public PatientExtract()
         {
@@ -93,7 +94,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public PatientExtract(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, Guid facilityId,string emr,string project,
             string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate,
-            string pkv,string occupation, string nupi, DateTime? date_Created,DateTime? date_Last_Modified,string patientUUID)
+            string pkv,string occupation, string nupi, DateTime? date_Created,DateTime? date_Last_Modified,string PatientUUID)
 
         {
             PatientPID = patientPid;
@@ -139,7 +140,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             NUPI = nupi;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
-            PatientUUID = patientUUID;
+            PatientUUID = PatientUUID;
 
             this.StandardizeExtract();
         }
@@ -208,6 +209,15 @@ namespace PalladiumDwh.Shared.Model.Extract
             {
                 e.PatientId = Id;
                 CervicalCancerScreeningExtracts.Add(e);
+            }
+        }
+        
+        public void AddIITRiskScoresExtracts(IEnumerable<IITRiskScoresExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientId = Id;
+                IITRiskScoresExtracts.Add(e);
             }
         }
 

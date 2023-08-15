@@ -29,7 +29,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         {
         }
 
-        public PatientLaboratoryExtractDTO(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
+        public PatientLaboratoryExtractDTO(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string PatientUUID)
         {
             VisitId = visitId;
             OrderedByDate = orderedByDate;
@@ -42,7 +42,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
-            PatientUUID=patientUUID;
+            PatientUUID=PatientUUID;
 
         }
 

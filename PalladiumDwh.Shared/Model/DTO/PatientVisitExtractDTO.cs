@@ -91,7 +91,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             string secondlineRegimenChangeReason, string adherence, string adherenceCategory,
             string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr,
             string project, Guid patientId,
-            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, DateTime? refillDate, string zScore , int? zScoreAbsolute, string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
+            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, DateTime? refillDate, string zScore , int? zScoreAbsolute, string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified, string PatientUUID)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -133,7 +133,7 @@ namespace PalladiumDwh.Shared.Model.DTO
 
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
-            PatientUUID=patientUUID;
+            PatientUUID=PatientUUID;
 
         }
 

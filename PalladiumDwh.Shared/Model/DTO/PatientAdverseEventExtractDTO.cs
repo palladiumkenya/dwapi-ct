@@ -34,7 +34,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             DateTime? adverseEventEndDate, string severity, string adverseEventClinicalOutcome,
             string adverseEventActionTaken,
             bool? adverseEventIsPregnant, DateTime? visitDate, string adverseEventRegimen, string adverseEventCause,
-            string emr, string project, Guid patientId,  DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID
+            string emr, string project, Guid patientId,  DateTime? date_Created,DateTime? date_Last_Modified, string PatientUUID
         )
         {
             AdverseEvent = adverseEvent;
@@ -52,7 +52,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
-            PatientUUID=patientUUID;
+            PatientUUID=PatientUUID;
 
             
         }

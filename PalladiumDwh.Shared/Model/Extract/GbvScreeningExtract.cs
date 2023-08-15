@@ -28,7 +28,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public GbvScreeningExtract(string facilityName, int? visitId, DateTime? visitDate, string ipv, string physicalIpv, string emotionalIpv, string sexualIpv, string ipvRelationship,
-            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string patientUUID)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string PatientUUID)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -38,7 +38,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             EmotionalIPV = emotionalIpv;
             SexualIPV = sexualIpv;
             IPVRelationship = ipvRelationship;
-            PatientUUID = patientUUID;
+            PatientUUID = PatientUUID;
 
             PatientId = patientId;
             Emr = emr;

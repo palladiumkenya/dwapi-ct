@@ -89,6 +89,7 @@
     <Compile Include="Data\Repository\FacilityRepository.cs" />
     <Compile Include="Data\Repository\CovidRepository.cs" />
     <Compile Include="Data\Repository\DefaulterTracingRepository.cs" />
+    <Compile Include="Data\Repository\IIITRiskScoresRepository.cs" />
     <Compile Include="Data\Repository\PatientAdverseEventRepository.cs" />
     <Compile Include="Data\Repository\PatientArtExtractRepository.cs" />
     <Compile Include="Data\Repository\PatientBaseLinesRepository.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Data\Repository\Stage\StageEnhancedAdherenceCounsellingExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageGbvScreeningExtractRepository.cs" />
+    <Compile Include="Data\Repository\Stage\StageIIITRiskScoresExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageIptExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageLaboratoryExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageOtzExtractRepository.cs" />
@@ -260,6 +262,10 @@
     <Compile Include="Migrations\202308021344099_PatientUUID.designer.cs">
       <DependentUpon>202308021344099_PatientUUID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202308090608443_IITRiskScores.cs" />
+    <Compile Include="Migrations\202308090608443_IITRiskScores.designer.cs">
+      <DependentUpon>202308090608443_IITRiskScores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -365,6 +371,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202308021344099_PatientUUID.resx">
       <DependentUpon>202308021344099_PatientUUID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308090608443_IITRiskScores.resx">
+      <DependentUpon>202308090608443_IITRiskScores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

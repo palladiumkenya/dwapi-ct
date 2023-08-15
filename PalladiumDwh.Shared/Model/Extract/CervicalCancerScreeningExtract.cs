@@ -31,7 +31,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public CervicalCancerScreeningExtract(string facilityName, int? visitId, DateTime? visitDate, string visitType, string screeningMethod, string treatmentToday, string referredOut, DateTime? nextAppointmentDate, string screeningType, string screeningResult, string postTreatmentComplicationCause,
-            string otherPostTreatmentComplication, string referralReason, Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string patientUUID)
+            string otherPostTreatmentComplication, string referralReason, Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string PatientUUID)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -47,7 +47,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             PostTreatmentComplicationCause = postTreatmentComplicationCause;
             OtherPostTreatmentComplication = otherPostTreatmentComplication;
             ReferralReason = referralReason;
-            PatientUUID = patientUUID;
+            PatientUUID = PatientUUID;
             
             PatientId = patientId;
             Emr = emr;
