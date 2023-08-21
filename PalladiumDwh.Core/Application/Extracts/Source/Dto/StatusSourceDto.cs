@@ -17,7 +17,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string ExitDescription { get; set; }
         public DateTime? ExitDate { get; set; }
         public string ExitReason { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
     }
 }

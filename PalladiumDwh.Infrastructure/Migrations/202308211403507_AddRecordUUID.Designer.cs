@@ -7,13 +7,13 @@ namespace PalladiumDwh.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class PatientUUID : IMigrationMetadata
+    public sealed partial class AddRecordUUID : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(PatientUUID));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddRecordUUID));
         
         string IMigrationMetadata.Id
         {
-            get { return "202308021344099_PatientUUID"; }
+            get { return "202308211403507_AddRecordUUID"; }
         }
         
         string IMigrationMetadata.Source

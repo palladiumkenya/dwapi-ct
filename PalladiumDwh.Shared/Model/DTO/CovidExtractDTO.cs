@@ -43,7 +43,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string BoosterDoseVerified { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
 
         public string Emr { get; set; }
@@ -90,7 +90,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             BoosterDoseVerified = CovidExtract.BoosterDoseVerified;
             Date_Created = CovidExtract.Date_Created;
             Date_Last_Modified = CovidExtract.Date_Last_Modified;
-            PatientUUID = CovidExtract.PatientUUID;
+            RecordUUID = CovidExtract.RecordUUID;
 
             PatientId=CovidExtract.PatientId;
             Emr =CovidExtract.Emr;
@@ -146,7 +146,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Project,
                 Date_Created,
                 Date_Last_Modified,
-                PatientUUID
+                RecordUUID
                 );
         }
 

@@ -26,7 +26,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public Guid PatientId { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
         
         public CervicalCancerScreeningExtractDTO()
@@ -55,7 +55,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId=CervicalCancerScreeningExtract.PatientId;
             Date_Created=CervicalCancerScreeningExtract.Date_Created;
             Date_Last_Modified=CervicalCancerScreeningExtract.Date_Last_Modified;
-            PatientUUID=CervicalCancerScreeningExtract.PatientUUID;
+            RecordUUID=CervicalCancerScreeningExtract.RecordUUID;
 
 
         }
@@ -92,7 +92,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Project,
                 Date_Created,
                 Date_Last_Modified,
-                PatientUUID
+                RecordUUID
             );
         }
 

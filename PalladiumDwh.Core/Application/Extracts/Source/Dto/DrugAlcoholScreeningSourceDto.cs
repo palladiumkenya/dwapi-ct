@@ -13,7 +13,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string DrugUse { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
     }
 }

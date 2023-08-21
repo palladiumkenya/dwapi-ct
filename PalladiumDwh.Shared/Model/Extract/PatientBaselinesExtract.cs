@@ -32,7 +32,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Created { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
 
         public PatientBaselinesExtract()
@@ -42,7 +42,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         
 
-        public PatientBaselinesExtract(int? bCd4, DateTime? bCd4Date, int? bWab, DateTime? bWabDate, int? bWho, DateTime? bWhoDate, int? eWab, DateTime? eWabDate, int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? lastWab, DateTime? lastWabDate, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string PatientUUID)
+        public PatientBaselinesExtract(int? bCd4, DateTime? bCd4Date, int? bWab, DateTime? bWabDate, int? bWho, DateTime? bWhoDate, int? eWab, DateTime? eWabDate, int? eCd4, DateTime? eCd4Date, int? eWho, DateTime? eWhoDate, int? lastWho, DateTime? lastWhoDate, int? lastCd4, DateTime? lastCd4Date, int? lastWab, DateTime? lastWabDate, int? m12Cd4, DateTime? m12Cd4Date, int? m6Cd4, DateTime? m6Cd4Date, Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID)
         {
             bCD4 = bCd4;
             bCD4Date = bCd4Date;
@@ -66,7 +66,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             m12CD4Date = m12Cd4Date;
             m6CD4 = m6Cd4;
             m6CD4Date = m6Cd4Date;
-            PatientUUID = PatientUUID;
+            RecordUUID = recordUUID;
 
             PatientId = patientId;
             Emr = emr;

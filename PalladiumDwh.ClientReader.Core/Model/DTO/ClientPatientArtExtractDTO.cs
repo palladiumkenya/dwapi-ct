@@ -36,14 +36,14 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public DateTime? ExitDate { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
 
         public ClientPatientArtExtractDTO()
         {
         }
 
-        public ClientPatientArtExtractDTO(int patientPid, string patientCccNumber, int facilityId, string emr, string project, DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string patientSource, string gender, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, DateTime? date_Created,DateTime? date_Last_Modified, string PatientUUID)
+        public ClientPatientArtExtractDTO(int patientPid, string patientCccNumber, int facilityId, string emr, string project, DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string patientSource, string gender, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID)
         {
             PatientPID = patientPid;
             PatientCccNumber = patientCccNumber;
@@ -74,7 +74,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             ExitDate = exitDate;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
-            PatientUUID = PatientUUID;
+            RecordUUID = recordUUID;
         }
 
         public ClientPatientArtExtractDTO(ClientPatientArtExtract extract)
@@ -108,7 +108,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             ExitDate = extract.ExitDate;
             Date_Created = extract.Date_Created;
             Date_Last_Modified = extract.Date_Last_Modified;
-            PatientUUID = extract.PatientUUID;
+            RecordUUID = extract.RecordUUID;
 
         }
 

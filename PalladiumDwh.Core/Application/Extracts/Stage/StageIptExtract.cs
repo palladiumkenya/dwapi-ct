@@ -33,7 +33,10 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string IndicationForIPT { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
+        public DateTime? TPTInitiationDate { get; set; }
+        public string IPTDiscontinuation { get; set; }
+        public DateTime? DateOfDiscontinuation { get; set; }
 
 
         public  void Standardize(IptSourceBag sourceBag)

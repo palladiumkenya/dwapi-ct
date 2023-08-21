@@ -82,7 +82,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             NUPI = extract.NUPI;
             Date_Created = extract.Date_Created;
             Date_Last_Modified = extract.Date_Last_Modified;
-            PatientUUID = extract.PatientUUID;
+            RecordUUID = extract.RecordUUID;
 
         }
 
@@ -91,7 +91,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string NUPI { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
         
     }

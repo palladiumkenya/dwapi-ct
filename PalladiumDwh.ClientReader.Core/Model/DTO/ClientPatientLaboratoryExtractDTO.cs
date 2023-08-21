@@ -20,7 +20,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string Project { get; set; }
            public DateTime? Date_Created { get; set; }
                 public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
 
 

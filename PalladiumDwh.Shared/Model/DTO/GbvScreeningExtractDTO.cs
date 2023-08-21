@@ -21,7 +21,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public Guid PatientId { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
         public GbvScreeningExtractDTO()
         {
@@ -43,7 +43,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = GbvScreeningExtract.PatientId;
             Date_Created=GbvScreeningExtract.Date_Created;
             Date_Last_Modified=GbvScreeningExtract.Date_Last_Modified;
-            PatientUUID=GbvScreeningExtract.PatientUUID;
+            RecordUUID=GbvScreeningExtract.RecordUUID;
 
         }
 
@@ -75,7 +75,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Emr,Project,
                 Date_Created,
                 Date_Last_Modified,
-                PatientUUID
+                RecordUUID
                 );
         }
     }

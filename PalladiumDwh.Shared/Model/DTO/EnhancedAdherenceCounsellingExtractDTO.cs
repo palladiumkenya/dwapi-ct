@@ -58,7 +58,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public Guid PatientId { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
         public EnhancedAdherenceCounsellingExtractDTO()
         {
@@ -117,7 +117,7 @@ Emr = EnhancedAdherenceCounsellingExtract.Emr;
             PatientId = EnhancedAdherenceCounsellingExtract.PatientId;
             Date_Created=EnhancedAdherenceCounsellingExtract.Date_Created;
             Date_Last_Modified=EnhancedAdherenceCounsellingExtract.Date_Last_Modified;
-            PatientUUID=EnhancedAdherenceCounsellingExtract.PatientUUID;
+            RecordUUID=EnhancedAdherenceCounsellingExtract.RecordUUID;
 
         }
 
@@ -186,7 +186,7 @@ Emr = EnhancedAdherenceCounsellingExtract.Emr;
                 Emr,Project,
                 Date_Created,
                 Date_Last_Modified,
-                PatientUUID
+                RecordUUID
                 );
         }
 

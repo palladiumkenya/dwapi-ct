@@ -19,7 +19,7 @@ namespace PalladiumDwh.Shared.Interfaces
         string ReferralReason { get; set; }
         DateTime? Date_Created { get; set; }
         DateTime? Date_Last_Modified { get; set; }
-        string PatientUUID { get; set; }
+        string RecordUUID { get; set; }
 
     }
 }

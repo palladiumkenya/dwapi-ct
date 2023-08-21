@@ -35,7 +35,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public DateTime? ExitDate { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
 
         public ClientPatientArtExtract()
@@ -47,7 +47,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen,
             DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate,
             string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider,
-            DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string PatientUUID)
+            DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID)
         {
             PatientPK = patientPk;
             PatientID = patientId;
@@ -78,7 +78,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = project;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
-            PatientUUID = PatientUUID;
+            RecordUUID = recordUUID;
         }
 
         public ClientPatientArtExtract(TempPatientArtExtract extract)
@@ -112,7 +112,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = extract.Project;
             Date_Created = extract.Date_Created;
             Date_Last_Modified = extract.Date_Last_Modified;
-            PatientUUID = extract.PatientUUID;
+            RecordUUID = extract.RecordUUID;
 
         }
 

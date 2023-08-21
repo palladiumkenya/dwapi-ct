@@ -26,7 +26,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public Guid PatientId { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
 
         public ContactListingExtractDTO()
@@ -54,7 +54,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = ContactListingExtract.PatientId;
             Date_Created=ContactListingExtract.Date_Created;
             Date_Last_Modified=ContactListingExtract.Date_Last_Modified;
-            PatientUUID=ContactListingExtract.PatientUUID;
+            RecordUUID=ContactListingExtract.RecordUUID;
 
         }
 
@@ -90,7 +90,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Project,
                 Date_Created,
                 Date_Last_Modified,
-                PatientUUID
+                RecordUUID
                 );
         }
     }

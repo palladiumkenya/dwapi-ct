@@ -57,7 +57,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Created { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
 
         public EnhancedAdherenceCounsellingExtract()
@@ -66,7 +66,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public EnhancedAdherenceCounsellingExtract(string facilityName, int? visitId, DateTime? visitDate, int? sessionNumber, DateTime? dateOfFirstSession, int? pillCountAdherence, string mmas41, string mmas42, string mmas43, string mmas44, string mmsa81, string mmsa82, string mmsa83, string mmsa84, string mmsaScore, string eacRecievedVl, string eacvl, string eacvlConcerns, string eacvlThoughts, string eacWayForward, string eacCognitiveBarrier, string eacBehaviouralBarrier1, string eacBehaviouralBarrier2, string eacBehaviouralBarrier3, string eacBehaviouralBarrier4, string eacBehaviouralBarrier5, string eacEmotionalBarriers1, string eacEmotionalBarriers2, string eacEconBarrier1, string eacEconBarrier2, string eacEconBarrier3, string eacEconBarrier4, string eacEconBarrier5, string eacEconBarrier6, string eacEconBarrier7, string eacEconBarrier8, string eacReviewImprovement, string eacReviewMissedDoses, string eacReviewStrategy, string eacReferral, string eacReferralApp, string eacReferralExperience, string eacHomevisit, string eacAdherencePlan, DateTime? eacFollowupDate,
-            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string PatientUUID)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -113,7 +113,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             EACHomevisit = eacHomevisit;
             EACAdherencePlan = eacAdherencePlan;
             EACFollowupDate = eacFollowupDate;
-            PatientUUID = PatientUUID;
+            RecordUUID = recordUUID;
 
             PatientId = patientId;
             Emr = emr;

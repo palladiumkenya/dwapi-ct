@@ -42,7 +42,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public int FacilityId { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
 
 
@@ -50,7 +50,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         {
         }
 
-        public ClientPatientVisitExtractDTO(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, int patientPid, string patientCccNumber, int facilityId, string emr, string project, string PatientUUID)
+        public ClientPatientVisitExtractDTO(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, int patientPid, string patientCccNumber, int facilityId, string emr, string project, string recordUUID)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -83,7 +83,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             FacilityId = facilityId;
             Emr = emr;
             Project = project;
-            PatientUUID = PatientUUID;
+            RecordUUID = recordUUID;
         }
 
         public ClientPatientVisitExtractDTO(ClientPatientVisitExtract extract)
@@ -120,7 +120,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
 
             Emr = extract.Emr;
             Project = extract.Project;
-            PatientUUID = extract.PatientUUID;
+            RecordUUID = extract.RecordUUID;
 
 
         }

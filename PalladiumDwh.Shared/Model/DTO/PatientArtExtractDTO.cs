@@ -39,14 +39,14 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? DateLastUsed { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
 
         public PatientArtExtractDTO()
         {
         }
 
-        public PatientArtExtractDTO(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string PatientUUID)
+        public PatientArtExtractDTO(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID)
         {
             DOB = dob;
             AgeEnrollment = ageEnrollment;
@@ -75,7 +75,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
-            PatientUUID=PatientUUID;
+            RecordUUID=recordUUID;
 
         }
 
@@ -107,7 +107,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientArtExtract.PatientId;
             Date_Created=patientArtExtract.Date_Created;
             Date_Last_Modified=patientArtExtract.Date_Last_Modified;
-            PatientUUID=patientArtExtract.PatientUUID;
+            RecordUUID=patientArtExtract.RecordUUID;
 
         }
 
@@ -128,7 +128,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 AgeEnrollment, AgeARTStart, AgeLastVisit, RegistrationDate,Gender, PatientSource, StartARTDate,PreviousARTStartDate,
                 PreviousARTRegimen, StartARTAtThisFacility,StartRegimen, StartRegimenLine, LastARTDate, LastRegimen,
                 LastRegimenLine, Duration, ExpectedReturn,Provider,LastVisit, ExitReason, ExitDate, PatientId,Emr, Project,
-                PreviousARTUse,PreviousARTPurpose,DateLastUsed, Date_Created, Date_Last_Modified,PatientUUID
+                PreviousARTUse,PreviousARTPurpose,DateLastUsed, Date_Created, Date_Last_Modified,RecordUUID
                 );
         }
     }

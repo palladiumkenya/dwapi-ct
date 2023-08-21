@@ -52,7 +52,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string NUPI { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
-        public string PatientUUID { get; set; }
+        public string RecordUUID { get; set; }
 
 
         [DoNotRead]
@@ -74,7 +74,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
         {
         }
 
-        public ClientPatientExtract(int patientPk, string patientId, int siteCode, string facilityName,string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project, string nupi, DateTime? date_Created,DateTime? date_Last_Modified,string PatientUUID)
+        public ClientPatientExtract(int patientPk, string patientId, int siteCode, string facilityName,string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, string emr, string project, string nupi, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID)
         {
             PatientPK = patientPk;
             PatientID = patientId;
@@ -105,7 +105,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             NUPI = nupi;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
-            PatientUUID = PatientUUID;
+            RecordUUID = recordUUID;
         }
 
         public ClientPatientExtract(TempPatientExtract extract)
@@ -139,7 +139,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             NUPI = extract.NUPI;
             Date_Created = extract.Date_Created;
             Date_Last_Modified = extract.Date_Last_Modified;
-            PatientUUID = extract.PatientUUID;
+            RecordUUID = extract.RecordUUID;
         }
 
 

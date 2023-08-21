@@ -10,7 +10,7 @@ namespace PalladiumDwh.Shared.Interfaces
         DateTime? StopRegimenDate { get; set; }
         DateTime? Date_Created { get; set; } 
         DateTime? Date_Last_Modified { get; set; } 
-        string PatientUUID { get; set; }
+        string RecordUUID { get; set; }
 
     }
 }
