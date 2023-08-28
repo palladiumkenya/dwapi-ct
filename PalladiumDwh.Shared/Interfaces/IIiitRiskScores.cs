@@ -7,7 +7,7 @@ namespace PalladiumDwh.Shared.Interfaces
         string FacilityName { get; set; }
         string SourceSysUUID { get; set; }
 
-        decimal? RiskScore  { get; set; }
+        string RiskScore  { get; set; }
         string RiskFactors  { get; set; }
         string RiskDescription  { get; set; }
         DateTime? RiskEvaluationDate  { get; set; }

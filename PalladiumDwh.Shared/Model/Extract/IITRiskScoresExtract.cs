@@ -12,7 +12,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public string SourceSysUUID { get; set; }
 
-        public decimal? RiskScore  { get; set; }
+        public string RiskScore  { get; set; }
         public string RiskFactors  { get; set; }
         public string RiskDescription  { get; set; }
         public DateTime? RiskEvaluationDate  { get; set; }
@@ -25,7 +25,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-        public IITRiskScoresExtract(string facilityName,  Guid patientId, string emr, string project,  string sourceSysUUID, decimal? riskScore , string riskFactors , string riskDescription , DateTime? riskEvaluationDate ,DateTime? date_Created,DateTime? date_Last_Modified)
+        public IITRiskScoresExtract(string facilityName,  Guid patientId, string emr, string project,  string sourceSysUUID, string riskScore , string riskFactors , string riskDescription , DateTime? riskEvaluationDate ,DateTime? date_Created,DateTime? date_Last_Modified)
         {
             FacilityName = facilityName;
             SourceSysUUID = sourceSysUUID;

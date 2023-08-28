@@ -412,7 +412,8 @@ namespace PalladiumDwh.Shared.Custom
                         property.SetValue(obj, val.ToString().Truncate(maxLength));
                 }
 
-                string[] ignoreDates = {nameof(PatientStatusExtract.Date_Created),nameof(PatientStatusExtract.Date_Last_Modified) };
+                string[] ignoreDates = {nameof(PatientStatusExtract.Date_Created),nameof(PatientStatusExtract.Date_Last_Modified), 
+                    nameof(IptExtract.TPTInitiationDate),nameof(IptExtract.DateOfDiscontinuation)};
 
                 if (property.PropertyType == typeof(DateTime))
                 {

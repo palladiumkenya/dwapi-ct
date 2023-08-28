@@ -266,6 +266,10 @@
     <Compile Include="Migrations\202308211403507_AddRecordUUID.designer.cs">
       <DependentUpon>202308211403507_AddRecordUUID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202308251344434_UpdatedIITriskscores.cs" />
+    <Compile Include="Migrations\202308251344434_UpdatedIITriskscores.designer.cs">
+      <DependentUpon>202308251344434_UpdatedIITriskscores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -374,6 +378,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202308211403507_AddRecordUUID.resx">
       <DependentUpon>202308211403507_AddRecordUUID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308251344434_UpdatedIITriskscores.resx">
+      <DependentUpon>202308251344434_UpdatedIITriskscores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

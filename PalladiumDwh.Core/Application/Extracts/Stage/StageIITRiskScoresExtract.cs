@@ -12,7 +12,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string FacilityName { get; set; }
         public string SourceSysUUID { get; set; }
 
-        public decimal? RiskScore  { get; set; }
+        public string RiskScore  { get; set; }
         public string RiskFactors  { get; set; }
         public string RiskDescription  { get; set; }
         public DateTime? RiskEvaluationDate  { get; set; }
