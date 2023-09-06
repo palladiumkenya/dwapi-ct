@@ -94,6 +94,7 @@
     <Compile Include="Interfaces\DTOs\IDrugAlcoholScreeningExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IEnhancedAdherenceCounsellingExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IGbvScreeningExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IiitRiskScoresExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IIptExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IOtzExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IPatientAdverseEventExtractDTO.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Interfaces\Extracts\IDrugAlcoholScreeningExtract.cs" />
     <Compile Include="Interfaces\Extracts\IEnhancedAdherenceCounsellingExtract.cs" />
     <Compile Include="Interfaces\Extracts\IGbvScreeningExtract.cs" />
+    <Compile Include="Interfaces\Extracts\IiitRiskScoresExtract.cs" />
     <Compile Include="Interfaces\Extracts\IIptExtract.cs" />
     <Compile Include="Interfaces\Extracts\IOtzExtract.cs" />
     <Compile Include="Interfaces\Extracts\IOvcExtract.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Interfaces\IEnhancedAdherenceCounselling.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IGbvScreening.cs" />
+    <Compile Include="Interfaces\IIiitRiskScores.cs" />
     <Compile Include="Interfaces\IIpt.cs" />
     <Compile Include="Interfaces\ILabNew.cs" />
     <Compile Include="Interfaces\IOtz.cs" />
@@ -155,6 +158,7 @@
     <Compile Include="Interfaces\Profiles\IDrugAlcoholScreeningProfile.cs" />
     <Compile Include="Interfaces\Profiles\IEnhancedAdherenceCounsellingProfile.cs" />
     <Compile Include="Interfaces\Profiles\IGbvScreeningProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IiitRiskScoresProfile.cs" />
     <Compile Include="Interfaces\Profiles\IIptProfile.cs" />
     <Compile Include="Interfaces\Profiles\IOtzProfile.cs" />
     <Compile Include="Interfaces\Profiles\ICovidProfile.cs" />
@@ -168,6 +172,7 @@
     <Compile Include="Model\DTO\FacilityCacheDto.cs" />
     <Compile Include="Model\DTO\FacilityId.cs" />
     <Compile Include="Model\DTO\FacMetric.cs" />
+    <Compile Include="Model\DTO\IITRiskScoresExtractDTO.cs" />
     <Compile Include="Model\DTO\IptExtractDTO.cs" />
     <Compile Include="Model\DTO\AllergiesChronicIllnessExtractDTO.cs" />
     <Compile Include="Model\DTO\DefaulterTracingExtractDTO.cs" />
@@ -202,6 +207,7 @@
     <Compile Include="Model\Extract\DrugAlcoholScreeningExtract.cs" />
     <Compile Include="Model\Extract\EnhancedAdherenceCounsellingExtract.cs" />
     <Compile Include="Model\Extract\GbvScreeningExtract.cs" />
+    <Compile Include="Model\Extract\IITRiskScoresExtract.cs" />
     <Compile Include="Model\Extract\IptExtract.cs" />
     <Compile Include="Model\Extract\OtzExtract.cs" />
     <Compile Include="Model\Extract\OvcExtract.cs" />
@@ -239,6 +245,7 @@
     <Compile Include="Model\Profile\ExtractProfile.cs" />
     <Compile Include="Model\Profile\DefaulterTracingProfile.cs" />
     <Compile Include="Model\Profile\CovidProfile.cs" />
+    <Compile Include="Model\Profile\IITRiskScoresProfile.cs" />
     <Compile Include="Model\Profile\PatientAdverseEventProfile.cs" />
     <Compile Include="Model\Profile\PatientARTProfile.cs" />
     <Compile Include="Model\Profile\PatientBaselineProfile.cs" />

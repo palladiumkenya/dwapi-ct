@@ -62,6 +62,7 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<CovidExtract> CovidExtracts { get; set; }
         public virtual DbSet<DefaulterTracingExtract> DefaulterTracingExtracts { get; set; }
         public virtual DbSet<CervicalCancerScreeningExtract> CervicalCancerScreeningExtracts { get; set; }
+        public virtual DbSet<IITRiskScoresExtract> IITRiskScoresExtracts { get; set; }
 
 
         public virtual DbSet<StagePatientExtract> StagePatientExtracts { get; set; }
@@ -84,6 +85,7 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<StageStatusExtract> StageStatusExtracts { get; set; }
         public virtual DbSet<StageGbvScreeningExtract> StageGbvScreeningExtracts { get; set; }
         public virtual DbSet<StageCervicalCancerScreeningExtract> StageCervicalCancerScreeningExtracts { get; set; }
+        public virtual DbSet<StageIITRiskScoresExtract> StageIITRiskScoresExtracts { get; set; }
 
         public virtual DbSet<SmartActionRegister> SmartActionRegisters { get; set; }
 
@@ -183,6 +185,10 @@ namespace PalladiumDwh.Infrastructure.Data
                 .HasMany(c => c.CervicalCancerScreeningExtracts)
                 .WithRequired()
                 .HasForeignKey(f => f.PatientId);
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.IITRiskScoresExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
 
             DapperPlusManager.Entity<Facility>().Table("Facility").Key(x => x.Id);
             DapperPlusManager.Entity<PatientExtract>().Table("PatientExtract").Key(x => x.Id);
@@ -230,7 +236,9 @@ namespace PalladiumDwh.Infrastructure.Data
                 .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             DapperPlusManager.Entity<CervicalCancerScreeningExtract>().Key(x => x.Id).Table($"CervicalCancerScreeningExtract")
                 .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-
+            DapperPlusManager.Entity<IITRiskScoresExtract>().Key(x => x.Id).Table($"IITRiskScoresExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            
             DapperPlusManager.Entity<ActionRegister>().Key(x => x.Id).Table($"{nameof(ActionRegister)}");
 
             DapperPlusManager.Entity<StagePatientExtract>().Key(x => x.Id).Table($"{nameof(StagePatientExtract)}");
@@ -263,6 +271,8 @@ namespace PalladiumDwh.Infrastructure.Data
                 .Table($"{nameof(StageGbvScreeningExtract)}");
             DapperPlusManager.Entity<StageCervicalCancerScreeningExtract>().Key(x => x.Id)
                 .Table($"{nameof(StageCervicalCancerScreeningExtract)}");
+            DapperPlusManager.Entity<StageIITRiskScoresExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageIITRiskScoresExtract)}");
             
             DapperPlusManager.Entity<SmartActionRegister>().Key(x => x.Id).Table($"{nameof(SmartActionRegister)}");
 
@@ -288,6 +298,7 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<CovidExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<DefaulterTracingExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<CervicalCancerScreeningExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<IITRiskScoresExtract>().BatchTimeout(900);
 
             DapperPlusManager.Entity<StagePatientExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<StageVisitExtract>().BatchTimeout(900);
@@ -309,6 +320,7 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<StageStatusExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<StageGbvScreeningExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<StageCervicalCancerScreeningExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageIITRiskScoresExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<SmartActionRegister>().BatchTimeout(900);
             DapperPlusManager.MapperFactory = mapper => mapper.BatchTimeout(900);
         }

@@ -23,6 +23,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string ProphylaxisType { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+
 
         public ClientPatientPharmacyExtract()
         {
@@ -47,6 +49,7 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = project;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
+            
         }
 
         public ClientPatientPharmacyExtract(TempPatientPharmacyExtract extract)

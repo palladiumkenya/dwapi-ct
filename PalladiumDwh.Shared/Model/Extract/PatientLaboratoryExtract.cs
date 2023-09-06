@@ -16,8 +16,11 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Created { get; set; }
         public DateTime? DateSampleTaken { get; set; }
         public string SampleType { get; set; }
+        public string Reason { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+
 
         public PatientLaboratoryExtract()
         {
@@ -25,7 +28,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public PatientLaboratoryExtract(int? visitId, DateTime? orderedByDate, DateTime? reportedByDate, string testName, int? enrollmentTest, string testResult, Guid patientId, string emr, string project,
-            DateTime? dateSampleTaken,string sampleType, DateTime? date_Created,DateTime? date_Last_Modified
+            DateTime? dateSampleTaken,string sampleType, string reason ,DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID
             )
         {
             VisitId = visitId;
@@ -38,9 +41,12 @@ namespace PalladiumDwh.Shared.Model.Extract
             Emr = emr;
             Project = project;
             Created = DateTime.Now;
+            RecordUUID = recordUUID;
+
 
             DateSampleTaken = dateSampleTaken;
             SampleType = sampleType;
+            Reason = reason;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
             this.StandardizeExtract();

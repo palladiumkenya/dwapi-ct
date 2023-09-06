@@ -10,5 +10,7 @@ namespace PalladiumDwh.Shared.Interfaces
         string TestName { get; set; }
         int? EnrollmentTest { get; set; }
         string TestResult { get; set; }
+        string RecordUUID { get; set; }
+
     }
 }

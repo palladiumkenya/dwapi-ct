@@ -89,6 +89,7 @@
     <Compile Include="Data\Repository\FacilityRepository.cs" />
     <Compile Include="Data\Repository\CovidRepository.cs" />
     <Compile Include="Data\Repository\DefaulterTracingRepository.cs" />
+    <Compile Include="Data\Repository\IIITRiskScoresRepository.cs" />
     <Compile Include="Data\Repository\PatientAdverseEventRepository.cs" />
     <Compile Include="Data\Repository\PatientArtExtractRepository.cs" />
     <Compile Include="Data\Repository\PatientBaseLinesRepository.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Data\Repository\Stage\StageEnhancedAdherenceCounsellingExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageGbvScreeningExtractRepository.cs" />
+    <Compile Include="Data\Repository\Stage\StageIIITRiskScoresExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageIptExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageLaboratoryExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageOtzExtractRepository.cs" />
@@ -252,6 +254,22 @@
     <Compile Include="Migrations\202306090726240_AddedZscoreabsolute.designer.cs">
       <DependentUpon>202306090726240_AddedZscoreabsolute.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202307311244410_AddReasonToLabs.cs" />
+    <Compile Include="Migrations\202307311244410_AddReasonToLabs.designer.cs">
+      <DependentUpon>202307311244410_AddReasonToLabs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308090608443_IITRiskScores.cs" />
+    <Compile Include="Migrations\202308090608443_IITRiskScores.Designer.cs">
+      <DependentUpon>202308090608443_IITRiskScores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308211403507_AddRecordUUID.cs" />
+    <Compile Include="Migrations\202308211403507_AddRecordUUID.designer.cs">
+      <DependentUpon>202308211403507_AddRecordUUID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308251344434_UpdatedIITriskscores.cs" />
+    <Compile Include="Migrations\202308251344434_UpdatedIITriskscores.designer.cs">
+      <DependentUpon>202308251344434_UpdatedIITriskscores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -351,6 +369,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202306090726240_AddedZscoreabsolute.resx">
       <DependentUpon>202306090726240_AddedZscoreabsolute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307311244410_AddReasonToLabs.resx">
+      <DependentUpon>202307311244410_AddReasonToLabs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308090608443_IITRiskScores.resx">
+      <DependentUpon>202308090608443_IITRiskScores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308211403507_AddRecordUUID.resx">
+      <DependentUpon>202308211403507_AddRecordUUID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308251344434_UpdatedIITriskscores.resx">
+      <DependentUpon>202308251344434_UpdatedIITriskscores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

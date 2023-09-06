@@ -53,6 +53,7 @@ namespace PalladiumDwh.Core.Tests
                 p.AddPatientVisitExtracts(Builder<PatientVisitExtract>.CreateListOfSize(count).Build().ToList());
                 p.AddPatientAdverseEventExtracts(Builder<PatientAdverseEventExtract>.CreateListOfSize(count).Build().ToList());
                 p.AddCervicalCancerScreeningExtracts(Builder<CervicalCancerScreeningExtract>.CreateListOfSize(count).Build().ToList());
+                p.AddIITRiskScoresExtracts(Builder<IITRiskScoresExtract>.CreateListOfSize(count).Build().ToList());
 
 
             }

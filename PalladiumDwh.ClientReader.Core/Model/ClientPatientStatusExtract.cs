@@ -23,12 +23,14 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public DateTime? EffectiveDiscontinuationDate { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+
 
         public ClientPatientStatusExtract()
         {
         }
 
-        public ClientPatientStatusExtract(int patientPk, string patientId, int siteCode, string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
+        public ClientPatientStatusExtract(int patientPk, string patientId, int siteCode, string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID)
         {
             PatientPK = patientPk;
             PatientID = patientId;
@@ -40,6 +42,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = project;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
+            RecordUUID = recordUUID;
+
         }
 
         public ClientPatientStatusExtract(TempPatientStatusExtract extract)
@@ -54,6 +58,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             Project = extract.Project;
             Date_Created = extract.Date_Created;
             Date_Last_Modified = extract.Date_Last_Modified;
+            RecordUUID = extract.RecordUUID;
+
         }
 
 

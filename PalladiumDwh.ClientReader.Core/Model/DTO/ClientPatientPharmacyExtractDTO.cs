@@ -24,13 +24,15 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string Project { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+
 
 
         public ClientPatientPharmacyExtractDTO()
         {
         }
 
-        public ClientPatientPharmacyExtractDTO(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, int patientPid, string patientCccNumber, int facilityId, string emr, string project)
+        public ClientPatientPharmacyExtractDTO(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, int patientPid, string patientCccNumber, int facilityId, string emr, string project, string recordUUID)
         {
             VisitID = visitId;
             Drug = drug;
@@ -47,6 +49,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             FacilityId = facilityId;
             Emr = emr;
             Project = project;
+            RecordUUID = recordUUID;
+
         }
 
         public ClientPatientPharmacyExtractDTO(ClientPatientPharmacyExtract extract)
@@ -67,6 +71,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
 
             Emr = extract.Emr;
             Project = extract.Project;
+            RecordUUID = extract.RecordUUID;
+
 
         }
 

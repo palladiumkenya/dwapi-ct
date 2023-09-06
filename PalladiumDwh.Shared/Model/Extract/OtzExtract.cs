@@ -22,6 +22,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Created { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+
 
         public OtzExtract()
         {
@@ -29,7 +31,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public OtzExtract(string facilityName, int? visitId, DateTime? visitDate, DateTime? otzEnrollmentDate, string transferInStatus, string modulesPreviouslyCovered, string modulesCompletedToday, string supportGroupInvolvement, string remarks, string transitionAttritionReason, DateTime? outcomeDate,
-            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -42,6 +44,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             Remarks = remarks;
             TransitionAttritionReason = transitionAttritionReason;
             OutcomeDate = outcomeDate;
+            RecordUUID = recordUUID;
 
             PatientId = patientId;
             Emr = emr;

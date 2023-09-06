@@ -58,6 +58,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public Guid PatientId { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+
         public EnhancedAdherenceCounsellingExtractDTO()
         {
         }
@@ -110,12 +112,13 @@ EACHomevisit=EnhancedAdherenceCounsellingExtract.EACHomevisit;
 EACAdherencePlan=EnhancedAdherenceCounsellingExtract.EACAdherencePlan;
 EACFollowupDate=EnhancedAdherenceCounsellingExtract.EACFollowupDate;
 
-
-            Emr = EnhancedAdherenceCounsellingExtract.Emr;
+Emr = EnhancedAdherenceCounsellingExtract.Emr;
             Project = EnhancedAdherenceCounsellingExtract.Project;
             PatientId = EnhancedAdherenceCounsellingExtract.PatientId;
             Date_Created=EnhancedAdherenceCounsellingExtract.Date_Created;
             Date_Last_Modified=EnhancedAdherenceCounsellingExtract.Date_Last_Modified;
+            RecordUUID=EnhancedAdherenceCounsellingExtract.RecordUUID;
+
         }
 
 
@@ -182,7 +185,8 @@ EACFollowupDate=EnhancedAdherenceCounsellingExtract.EACFollowupDate;
                 PatientId,
                 Emr,Project,
                 Date_Created,
-                Date_Last_Modified
+                Date_Last_Modified,
+                RecordUUID
                 );
         }
 

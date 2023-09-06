@@ -23,6 +23,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Created { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
 
         public CervicalCancerScreeningExtract()
         {
@@ -30,7 +31,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public CervicalCancerScreeningExtract(string facilityName, int? visitId, DateTime? visitDate, string visitType, string screeningMethod, string treatmentToday, string referredOut, DateTime? nextAppointmentDate, string screeningType, string screeningResult, string postTreatmentComplicationCause,
-            string otherPostTreatmentComplication, string referralReason, Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
+            string otherPostTreatmentComplication, string referralReason, Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -46,7 +47,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             PostTreatmentComplicationCause = postTreatmentComplicationCause;
             OtherPostTreatmentComplication = otherPostTreatmentComplication;
             ReferralReason = referralReason;
-
+            RecordUUID = recordUUID;
+            
             PatientId = patientId;
             Emr = emr;
             Project = project;

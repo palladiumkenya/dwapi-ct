@@ -20,6 +20,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? EffectiveDiscontinuationDate { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+
 
         public PatientStatusExtract()
         {
@@ -31,7 +33,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public PatientStatusExtract(string exitDescription, DateTime? exitDate, string exitReason, Guid patientId,
             string emr, string project,
             string toVerified, DateTime? toVerifiedDate, DateTime? reEnrollmentDate, string reasonForDeath,
-            string specificDeathReason, DateTime? deathDate, DateTime? effectiveDiscontinuationDate, DateTime? date_Created,DateTime? date_Last_Modified)
+            string specificDeathReason, DateTime? deathDate, DateTime? effectiveDiscontinuationDate, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID)
         {
             ExitDescription = exitDescription;
             ExitDate = exitDate;
@@ -44,6 +46,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             TOVerified = toVerified;
             TOVerifiedDate = toVerifiedDate;
             ReEnrollmentDate = reEnrollmentDate;
+            RecordUUID = recordUUID;
             
             ReasonForDeath = reasonForDeath;
             SpecificDeathReason =specificDeathReason;

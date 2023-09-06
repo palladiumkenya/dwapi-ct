@@ -7,6 +7,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
     {
         public DateTime? DateSampleTaken { get; set; }
         public string SampleType { get; set; }
+        public string Reason { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public int? VisitId { get; set; }
@@ -15,5 +16,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string TestName { get; set; }
         public int? EnrollmentTest { get; set; }
         public string TestResult { get; set; }
+        public string RecordUUID { get; set; }
+
     }
 }

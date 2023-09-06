@@ -40,6 +40,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string Project { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+
 
         public virtual ICollection<TempPatientBaselinesExtractErrorSummary> TempPatientBaselinesExtractErrorSummaries { get; set; } = new List<TempPatientBaselinesExtractErrorSummary>();
     }
