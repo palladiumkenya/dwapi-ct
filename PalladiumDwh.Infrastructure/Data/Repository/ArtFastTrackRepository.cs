@@ -14,10 +14,10 @@ using Z.Dapper.Plus;
 namespace PalladiumDwh.Infrastructure.Data.Repository
 {
 
-    public class CervicalCancerScreeningRepository : GenericRepository<CervicalCancerScreeningExtract>, ICervicalCancerScreeningRepository
+    public class ArtFastTrackRepository : GenericRepository<ArtFastTrackExtract>, IArtFastTrackRepository
     {
         private readonly DwapiCentralContext _context;
-        public CervicalCancerScreeningRepository(DwapiCentralContext context) : base(context)
+        public ArtFastTrackRepository(DwapiCentralContext context) : base(context)
         {
             _context = context;
         }
@@ -25,7 +25,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
         {
             DeleteBy(x => x.PatientId == patientId);
         }
-        public void Sync(Guid patientId, IEnumerable<CervicalCancerScreeningExtract> extracts)
+        public void Sync(Guid patientId, IEnumerable<ArtFastTrackExtract> extracts)
         {
             Clear(patientId);
             Insert(extracts);
@@ -34,30 +34,30 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
     public void ClearNew(Guid patientId)
       {
-        string sql = "DELETE FROM CervicalCancerScreeningExtract WHERE PatientId = @PatientId";
+        string sql = "DELETE FROM ArtFastTrackExtract WHERE PatientId = @PatientId";
         _context.GetConnection().Execute(sql, new { PatientId = patientId });
       }
 
-      public void SyncNew(Guid patientId, IEnumerable<CervicalCancerScreeningExtract> extracts)
+      public void SyncNew(Guid patientId, IEnumerable<ArtFastTrackExtract> extracts)
       {
         ClearNew(patientId);
         _context.GetConnection().BulkInsert(extracts);
       }
 
 
-        public void SyncNewPatients(IEnumerable<CervicalCancerScreeningProfile> profiles, IFacilityRepository facilityRepository,
+        public void SyncNewPatients(IEnumerable<ArtFastTrackProfile> profiles, IFacilityRepository facilityRepository,
             List<Guid> facIds, IActionRegisterRepository actionRegisterRepository)
         {
             var updates = new List<PatientExtract>();
             var inserts = new List<PatientExtract>();
-            var updatedProfiles = new List<CervicalCancerScreeningProfile>();
+            var updatedProfiles = new List<ArtFastTrackProfile>();
 
             //  get facilities from profiles
             var facilities = profiles.Select(x => x.FacilityInfo).ToList().Distinct();
 
             foreach (var facility in facilities)
             {
-                var facilityUpdatedProfiles = new List<CervicalCancerScreeningProfile>();
+                var facilityUpdatedProfiles = new List<ArtFastTrackProfile>();
                 //sync facility
                 var facilityId = facilityRepository.SyncNew(facility);
 
@@ -120,9 +120,9 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
                     _context.GetConnection().BulkUpdate(group.First());
             }
 
-            foreach (var CervicalCancerScreeningProfile in updatedProfiles)
+            foreach (var ArtFastTrackProfile in updatedProfiles)
             {
-                CervicalCancerScreeningProfile.GenerateRecords(CervicalCancerScreeningProfile.PatientInfo.Id);
+                ArtFastTrackProfile.GenerateRecords(ArtFastTrackProfile.PatientInfo.Id);
             }
 
             SyncNew(updatedProfiles,actionRegisterRepository);
@@ -150,12 +150,12 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
             return patientIds.Distinct().ToList();
         }
         
-        public void SyncNew(List<CervicalCancerScreeningProfile> profiles, IActionRegisterRepository actionRegisterRepository)
+        public void SyncNew(List<ArtFastTrackProfile> profiles, IActionRegisterRepository actionRegisterRepository)
         {
 
-            var extracts = new List<CervicalCancerScreeningExtract>();
+            var extracts = new List<ArtFastTrackExtract>();
             var action = "DELETE";
-            var area = $"{nameof(CervicalCancerScreeningExtract)}";
+            var area = $"{nameof(ArtFastTrackExtract)}";
 
             if (profiles.Any())
             {
@@ -173,7 +173,7 @@ namespace PalladiumDwh.Infrastructure.Data.Repository
 
                 // clear patient data not in register
 
-                var sql = $@"  DELETE FROM {nameof(CervicalCancerScreeningExtract)} 
+                var sql = $@"  DELETE FROM {nameof(ArtFastTrackExtract)} 
                                     WHERE  PatientId IN @patientId AND
                                     PatientId NOT In (        
                                         SELECT DISTINCT PatientId FROM {nameof(ActionRegister)}

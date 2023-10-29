@@ -82,8 +82,9 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public virtual ICollection<CovidExtract> CovidExtracts { get; set; } = new List<CovidExtract>();
         public virtual ICollection<DefaulterTracingExtract> DefaulterTracingExtracts { get; set; } = new List<DefaulterTracingExtract>();
-        public virtual ICollection<CervicalCancerScreeningExtract> CervicalCancerScreeningExtracts { get; set; } = new List<CervicalCancerScreeningExtract>();
+        public virtual ICollection<CancerScreeningExtract> CancerScreeningExtracts { get; set; } = new List<CancerScreeningExtract>();
         public virtual ICollection<IITRiskScoresExtract> IITRiskScoresExtracts { get; set; } = new List<IITRiskScoresExtract>();
+        public virtual ICollection<ArtFastTrackExtract> ArtFastTrackExtracts { get; set; } = new List<ArtFastTrackExtract>();
 
         public PatientExtract()
         {
@@ -202,12 +203,12 @@ namespace PalladiumDwh.Shared.Model.Extract
             }
         }
         
-        public void AddCervicalCancerScreeningExtracts(IEnumerable<CervicalCancerScreeningExtract> extracts)
+        public void AddCancerScreeningExtracts(IEnumerable<CancerScreeningExtract> extracts)
         {
             foreach (var e in extracts)
             {
                 e.PatientId = Id;
-                CervicalCancerScreeningExtracts.Add(e);
+                CancerScreeningExtracts.Add(e);
             }
         }
         
@@ -217,6 +218,15 @@ namespace PalladiumDwh.Shared.Model.Extract
             {
                 e.PatientId = Id;
                 IITRiskScoresExtracts.Add(e);
+            }
+        }
+        
+        public void AddArtFastTrackExtracts(IEnumerable<ArtFastTrackExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientId = Id;
+                ArtFastTrackExtracts.Add(e);
             }
         }
 

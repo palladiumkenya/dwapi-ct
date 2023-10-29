@@ -2,7 +2,7 @@ using System;
 
 namespace PalladiumDwh.Shared.Interfaces.Extracts
 {
-    public interface ICervicalCancerScreeningExtract : IExtract,ICervicalCancerScreening
+    public interface IArtFastTrackExtract : IExtract,IArtFastTrack
     {
         Guid PatientId { get; set; }
     }

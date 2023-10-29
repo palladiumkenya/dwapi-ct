@@ -8,15 +8,15 @@ using PalladiumDwh.Shared.Model.Extract;
 
 namespace PalladiumDwh.Infrastructure.Data.Repository.Stage
 {
-    public class StageCervicalCancerScreeningExtractRepository :
-        StageExtractRepository<StageCervicalCancerScreeningExtract, CervicalCancerScreeningExtract>, IStageCervicalCancerScreeningExtractRepository
+    public class StageArtFastTrackExtractRepository :
+        StageExtractRepository<StageArtFastTrackExtract, ArtFastTrackExtract>, IStageArtFastTrackExtractRepository
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly DwapiCentralContext _context;
         private readonly IMapper _mapper;
 
-        public StageCervicalCancerScreeningExtractRepository(DwapiCentralContext context, IMapper mapper,
-            string stageName = nameof(StageCervicalCancerScreeningExtract), string extractName = nameof(CervicalCancerScreeningExtract))
+        public StageArtFastTrackExtractRepository(DwapiCentralContext context, IMapper mapper,
+            string stageName = nameof(StageArtFastTrackExtract), string extractName = nameof(ArtFastTrackExtract))
             : base(context, mapper, stageName, extractName)
         {
 

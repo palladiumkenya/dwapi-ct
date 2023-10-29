@@ -17,25 +17,25 @@ using PalladiumDwh.Shared.Extentions;
 namespace PalladiumDwh.Core.Application.Extracts.Commands
 {
 
-    public class SyncCervicalCancerScreening : IRequest
+    public class SyncCancerScreening : IRequest
     {
-        public CervicalCancerScreeningSourceBag CervicalCancerScreeningSourceBag { get; }
+        public CancerScreeningSourceBag CancerScreeningSourceBag { get; }
 
-        public SyncCervicalCancerScreening(CervicalCancerScreeningSourceBag cervicalCancerScreeningSourceBag)
+        public SyncCancerScreening(CancerScreeningSourceBag cervicalCancerScreeningSourceBag)
         {
-            CervicalCancerScreeningSourceBag = cervicalCancerScreeningSourceBag;
+            CancerScreeningSourceBag = cervicalCancerScreeningSourceBag;
         }
     }
 
-    public class SyncCervicalCancerScreeningHandler : IRequestHandler<SyncCervicalCancerScreening>
+    public class SyncCancerScreeningHandler : IRequestHandler<SyncCancerScreening>
     {
         private readonly IMapper _mapper;
-        private readonly IStageCervicalCancerScreeningExtractRepository _stageRepository;
+        private readonly IStageCancerScreeningExtractRepository _stageRepository;
         private readonly IFacilityRepository _facilityRepository;
         private readonly IMediator _mediator;
 
-        public SyncCervicalCancerScreeningHandler(IMapper mapper,
-            IStageCervicalCancerScreeningExtractRepository stageRepository,
+        public SyncCancerScreeningHandler(IMapper mapper,
+            IStageCancerScreeningExtractRepository stageRepository,
             IFacilityRepository facilityRepository, IMediator mediator)
         {
             _mapper = mapper;
@@ -44,33 +44,33 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
             _mediator = mediator;
         }
 
-        public async Task<Unit> Handle(SyncCervicalCancerScreening request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(SyncCancerScreening request, CancellationToken cancellationToken)
         {
             try
             {
-                // await _stageRepository.ClearSite(request.CervicalCancerScreeningSourceBag.FacilityId.Value, request.CervicalCancerScreeningSourceBag.ManifestId.Value);
+                // await _stageRepository.ClearSite(request.CancerScreeningSourceBag.FacilityId.Value, request.CancerScreeningSourceBag.ManifestId.Value);
 
                 var extracts =
-                    _mapper.Map<List<StageCervicalCancerScreeningExtract>>(request.CervicalCancerScreeningSourceBag
+                    _mapper.Map<List<StageCancerScreeningExtract>>(request.CancerScreeningSourceBag
                         .Extracts);
-                if (request.CervicalCancerScreeningSourceBag.EmrSetup == EmrSetup.SingleFacility)
+                if (request.CancerScreeningSourceBag.EmrSetup == EmrSetup.SingleFacility)
                 {
-                    if (request.CervicalCancerScreeningSourceBag.FacilityId.IsNullOrEmpty())
+                    if (request.CancerScreeningSourceBag.FacilityId.IsNullOrEmpty())
                     {
                         var facs = _facilityRepository.ReadFacilityCache();
-                        request.CervicalCancerScreeningSourceBag.SetFacility(facs);
+                        request.CancerScreeningSourceBag.SetFacility(facs);
                     }
 
-                    if (extracts.Any()) extracts.ForEach(x => x.Standardize(request.CervicalCancerScreeningSourceBag));
+                    if (extracts.Any()) extracts.ForEach(x => x.Standardize(request.CancerScreeningSourceBag));
                 }
                 else
                 {
                     var facs = _facilityRepository.ReadFacilityCache();
                     if (extracts.Any())
-                        extracts.ForEach(x => x.Standardize(request.CervicalCancerScreeningSourceBag, facs));
+                        extracts.ForEach(x => x.Standardize(request.CancerScreeningSourceBag, facs));
                 }
 
-                await _stageRepository.SyncStage(extracts, request.CervicalCancerScreeningSourceBag.ManifestId.Value);
+                await _stageRepository.SyncStage(extracts, request.CancerScreeningSourceBag.ManifestId.Value);
 
                 var facIds = extracts.Select(x => x.FacilityId).Distinct().ToList();
                 await _mediator.Publish(new SyncExtractEvent(facIds), cancellationToken);

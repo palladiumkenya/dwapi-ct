@@ -61,8 +61,9 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<OvcExtract> OvcExtracts { get; set; }
         public virtual DbSet<CovidExtract> CovidExtracts { get; set; }
         public virtual DbSet<DefaulterTracingExtract> DefaulterTracingExtracts { get; set; }
-        public virtual DbSet<CervicalCancerScreeningExtract> CervicalCancerScreeningExtracts { get; set; }
+        public virtual DbSet<CancerScreeningExtract> CancerScreeningExtracts { get; set; }
         public virtual DbSet<IITRiskScoresExtract> IITRiskScoresExtracts { get; set; }
+        public virtual DbSet<ArtFastTrackExtract> ArtFastTrackExtracts { get; set; }
 
 
         public virtual DbSet<StagePatientExtract> StagePatientExtracts { get; set; }
@@ -84,8 +85,9 @@ namespace PalladiumDwh.Infrastructure.Data
         public virtual DbSet<StagePharmacyExtract> StagePharmacyExtracts { get; set; }
         public virtual DbSet<StageStatusExtract> StageStatusExtracts { get; set; }
         public virtual DbSet<StageGbvScreeningExtract> StageGbvScreeningExtracts { get; set; }
-        public virtual DbSet<StageCervicalCancerScreeningExtract> StageCervicalCancerScreeningExtracts { get; set; }
+        public virtual DbSet<StageCancerScreeningExtract> StageCancerScreeningExtracts { get; set; }
         public virtual DbSet<StageIITRiskScoresExtract> StageIITRiskScoresExtracts { get; set; }
+        public virtual DbSet<StageArtFastTrackExtract> StageArtFastTrackExtracts { get; set; }
 
         public virtual DbSet<SmartActionRegister> SmartActionRegisters { get; set; }
 
@@ -182,14 +184,18 @@ namespace PalladiumDwh.Infrastructure.Data
                 .HasForeignKey(f => f.PatientId);
             
             modelBuilder.Entity<PatientExtract>()
-                .HasMany(c => c.CervicalCancerScreeningExtracts)
+                .HasMany(c => c.CancerScreeningExtracts)
                 .WithRequired()
                 .HasForeignKey(f => f.PatientId);
             modelBuilder.Entity<PatientExtract>()
                 .HasMany(c => c.IITRiskScoresExtracts)
                 .WithRequired()
                 .HasForeignKey(f => f.PatientId);
-
+            modelBuilder.Entity<PatientExtract>()
+                .HasMany(c => c.ArtFastTrackExtracts)
+                .WithRequired()
+                .HasForeignKey(f => f.PatientId);
+            
             DapperPlusManager.Entity<Facility>().Table("Facility").Key(x => x.Id);
             DapperPlusManager.Entity<PatientExtract>().Table("PatientExtract").Key(x => x.Id);
             DapperPlusManager.Entity<PatientArtExtract>().Table("PatientArtExtract").Key(x => x.Id);
@@ -234,9 +240,11 @@ namespace PalladiumDwh.Infrastructure.Data
                 .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             DapperPlusManager.Entity<DefaulterTracingExtract>().Key(x => x.Id).Table($"DefaulterTracingExtract")
                 .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
-            DapperPlusManager.Entity<CervicalCancerScreeningExtract>().Key(x => x.Id).Table($"CervicalCancerScreeningExtract")
+            DapperPlusManager.Entity<CancerScreeningExtract>().Key(x => x.Id).Table($"CancerScreeningExtract")
                 .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             DapperPlusManager.Entity<IITRiskScoresExtract>().Key(x => x.Id).Table($"IITRiskScoresExtract")
+                .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
+            DapperPlusManager.Entity<ArtFastTrackExtract>().Key(x => x.Id).Table($"ArtFastTrackExtract")
                 .BatchDelayInterval(Shared.Custom.Utility.GenDelay());
             
             DapperPlusManager.Entity<ActionRegister>().Key(x => x.Id).Table($"{nameof(ActionRegister)}");
@@ -269,10 +277,12 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<StageStatusExtract>().Key(x => x.Id).Table($"{nameof(StageStatusExtract)}");
             DapperPlusManager.Entity<StageGbvScreeningExtract>().Key(x => x.Id)
                 .Table($"{nameof(StageGbvScreeningExtract)}");
-            DapperPlusManager.Entity<StageCervicalCancerScreeningExtract>().Key(x => x.Id)
-                .Table($"{nameof(StageCervicalCancerScreeningExtract)}");
+            DapperPlusManager.Entity<StageCancerScreeningExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageCancerScreeningExtract)}");
             DapperPlusManager.Entity<StageIITRiskScoresExtract>().Key(x => x.Id)
                 .Table($"{nameof(StageIITRiskScoresExtract)}");
+            DapperPlusManager.Entity<StageArtFastTrackExtract>().Key(x => x.Id)
+                .Table($"{nameof(StageArtFastTrackExtract)}");
             
             DapperPlusManager.Entity<SmartActionRegister>().Key(x => x.Id).Table($"{nameof(SmartActionRegister)}");
 
@@ -297,8 +307,9 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<OvcExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<CovidExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<DefaulterTracingExtract>().BatchTimeout(900);
-            DapperPlusManager.Entity<CervicalCancerScreeningExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<CancerScreeningExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<IITRiskScoresExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<ArtFastTrackExtract>().BatchTimeout(900);
 
             DapperPlusManager.Entity<StagePatientExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<StageVisitExtract>().BatchTimeout(900);
@@ -319,8 +330,10 @@ namespace PalladiumDwh.Infrastructure.Data
             DapperPlusManager.Entity<StagePharmacyExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<StageStatusExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<StageGbvScreeningExtract>().BatchTimeout(900);
-            DapperPlusManager.Entity<StageCervicalCancerScreeningExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageCancerScreeningExtract>().BatchTimeout(900);
             DapperPlusManager.Entity<StageIITRiskScoresExtract>().BatchTimeout(900);
+            DapperPlusManager.Entity<StageArtFastTrackExtract>().BatchTimeout(900);
+
             DapperPlusManager.Entity<SmartActionRegister>().BatchTimeout(900);
             DapperPlusManager.MapperFactory = mapper => mapper.BatchTimeout(900);
         }

@@ -8,13 +8,13 @@ using Quartz;
 namespace PalladiumDWh.DwapiService.Job
 {
     [DisallowConcurrentExecution]
-    public class SyncCervicalCancerScreeningJob : IJob
+    public class SyncArtFastTrackJob : IJob
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public void Execute(IJobExecutionContext context)
         {
-            var profile = typeof(CervicalCancerScreeningProfile).Name;
+            var profile = typeof(ArtFastTrackProfile).Name;
             var profileBatch = $"{profile}.batch";
             try
             {

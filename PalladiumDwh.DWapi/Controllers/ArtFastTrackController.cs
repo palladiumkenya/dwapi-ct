@@ -19,15 +19,15 @@ using PalladiumDwh.Shared.Model.Profile;
 
 namespace PalladiumDwh.DWapi.Controllers
 {
-    public class CervicalCancerScreeningController : ApiController
+    public class ArtFastTrackController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IMessagingSenderService _messagingService;
-        private readonly string _gateway = typeof(CervicalCancerScreeningProfile).Name.ToLower();
+        private readonly string _gateway = typeof(ArtFastTrackProfile).Name.ToLower();
         private readonly string _gatewayBatch;
         private readonly IMessengerScheduler _messengerScheduler;
         private readonly IMediator _mediator;
-        public CervicalCancerScreeningController(IMessagingSenderService messagingService,IMessengerScheduler messengerScheduler, IMediator mediator)
+        public ArtFastTrackController(IMessagingSenderService messagingService,IMessengerScheduler messengerScheduler, IMediator mediator)
         {
             _messagingService = messagingService;
             _messengerScheduler = messengerScheduler;
@@ -38,7 +38,7 @@ namespace PalladiumDwh.DWapi.Controllers
         }
 
         /*
-        public async Task<HttpResponseMessage> Post([FromBody] CervicalCancerScreeningProfile patientProfile)
+        public async Task<HttpResponseMessage> Post([FromBody] ArtFastTrackProfile patientProfile)
         {
             if (null != patientProfile)
             {
@@ -56,17 +56,17 @@ namespace PalladiumDwh.DWapi.Controllers
                 catch (Exception ex)
                 {
                     Log.Error(new string('*',30));
-                    Log.Error(nameof(CervicalCancerScreeningProfile),ex);
+                    Log.Error(nameof(ArtFastTrackProfile),ex);
                     Log.Error(new string('*',30));
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
             }
-            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new CervicalCancerScreeningProfile().GetType().Name}' is null"));
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, new HttpError($"The expected '{new ArtFastTrackProfile().GetType().Name}' is null"));
         }
         */
 
-        [Route("api/v2/CervicalCancerScreening")]
-        public async Task<HttpResponseMessage> PostBatch([FromBody] List<CervicalCancerScreeningProfile> patientProfile)
+        [Route("api/v2/ArtFastTrack")]
+        public async Task<HttpResponseMessage> PostBatch([FromBody] List<ArtFastTrackProfile> patientProfile)
         {
             if (null != patientProfile && patientProfile.Any())
             {
@@ -87,18 +87,18 @@ namespace PalladiumDwh.DWapi.Controllers
                 catch (Exception ex)
                 {
                     Log.Error(new string('*',30));
-                    Log.Error(nameof(CervicalCancerScreeningProfile),ex);
+                    Log.Error(nameof(ArtFastTrackProfile),ex);
                     Log.Error(new string('*',30));
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
             }
 
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                new HttpError($"The expected '{new CervicalCancerScreeningProfile().GetType().Name}' is null"));
+                new HttpError($"The expected '{new ArtFastTrackProfile().GetType().Name}' is null"));
         }
 
-        [Route("api/v3/CervicalCancerScreening")]
-        public async Task<HttpResponseMessage> PostBatchNew([FromBody] CervicalCancerScreeningSourceBag sourceBag)
+        [Route("api/v3/ArtFastTrack")]
+        public async Task<HttpResponseMessage> PostBatchNew([FromBody] ArtFastTrackSourceBag sourceBag)
         {
 
             if (null != sourceBag && sourceBag.Extracts.Any())
@@ -116,13 +116,13 @@ namespace PalladiumDwh.DWapi.Controllers
                     if (sourceBag.HasJobId)
                     {
                         jobId = BatchJob.ContinueBatchWith(sourceBag.JobId,
-                            x => { x.Enqueue(() => Send($"{sourceBag}", new SyncCervicalCancerScreening(sourceBag))); },$"{sourceBag}");
+                            x => { x.Enqueue(() => Send($"{sourceBag}", new SyncArtFastTrack(sourceBag))); },$"{sourceBag}");
                     }
                     else
                     {
                         jobId = BatchJob.StartNew(x =>
                         {
-                            x.Enqueue(() => Send($"{sourceBag}", new SyncCervicalCancerScreening(sourceBag)));
+                            x.Enqueue(() => Send($"{sourceBag}", new SyncArtFastTrack(sourceBag)));
                         },$"{sourceBag}");
                     }
 
@@ -136,7 +136,7 @@ namespace PalladiumDwh.DWapi.Controllers
                 catch (Exception ex)
                 {
                     Log.Error(new string('*', 30));
-                    Log.Error(nameof(CervicalCancerScreeningSourceBag), ex);
+                    Log.Error(nameof(ArtFastTrackSourceBag), ex);
                     Log.Error(new string('*', 30));
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
                 }
@@ -145,7 +145,7 @@ namespace PalladiumDwh.DWapi.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                 new HttpError($"The expected '{new PatientLabProfile().GetType().Name}' is null"));
         }
-        [Queue("cervicalcancerscreening")]
+        [Queue("allergieschronicillness")]
        // [DisableConcurrentExecution(10 * 60)]
         [AutomaticRetry(Attempts = 3)]
         [DisplayName("{0}")]

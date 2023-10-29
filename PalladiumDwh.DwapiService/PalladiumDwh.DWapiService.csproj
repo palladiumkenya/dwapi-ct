@@ -127,7 +127,8 @@
       <DependentUpon>ExtractService.cs</DependentUpon>
     </Compile>
     <Compile Include="DependencyResolution\IoC.cs" />
-    <Compile Include="Job\SyncCervicalCancerScreeningob.cs" />
+    <Compile Include="Job\SyncArtFastTrackJob.cs" />
+    <Compile Include="Job\SyncCancerScreeningob.cs" />
     <Compile Include="Job\SyncIIITRiskScoresJob.cs" />
     <Compile Include="Job\SyncManifestJob.cs" />
     <Compile Include="Job\SyncDefaulterTracingJob.cs" />
