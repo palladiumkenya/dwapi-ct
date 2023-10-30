@@ -31,7 +31,6 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string ReferredToClinic  { get; set; }
         public DateTime?  ReturnVisitDate  { get; set; }
         public string RecordUUID { get; set; }
-        public bool? Voided { get; set; }
         public DateTime? Date_Created  { get; set; }
         public DateTime? Date_Last_Modified  { get; set; }
         public DateTime? Created  { get; set; }
@@ -45,7 +44,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public ArtFastTrackExtract(string facilityName, string artRefillModel,DateTime?  visitDate,string ctxDispensed,string dapsoneDispensed,string condomsDistributed,string oralContraceptivesDispensed,string missedDoses,string fatigue,string cough,string fever,string rash,string nauseaOrVomiting,
             string genitalSoreOrDischarge,string diarrhea,string otherSymptoms,string pregnancyStatus,string fpStatus,string fpMethod,string reasonNotOnFP,string referredToClinic,DateTime?  returnVisitDate,
-            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,bool? voided, string recordUUID)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID)
         {
             FacilityName = facilityName;
             ARTRefillModel  = artRefillModel ;
@@ -70,7 +69,6 @@ namespace PalladiumDwh.Shared.Model.Extract
             ReferredToClinic  = referredToClinic ;
             ReturnVisitDate          = returnVisitDate         ;
             RecordUUID = recordUUID;
-            Voided = voided;
             Date_Created  = date_Created ;
             Date_Last_Modified  = date_Last_Modified ;
 

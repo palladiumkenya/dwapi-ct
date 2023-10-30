@@ -272,6 +272,10 @@
     <Compile Include="Migrations\202308251344434_UpdatedIITriskscores.designer.cs">
       <DependentUpon>202308251344434_UpdatedIITriskscores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310291419474_AddedArtFastTrackAndCancerScreening.cs" />
+    <Compile Include="Migrations\202310291419474_AddedArtFastTrackAndCancerScreening.designer.cs">
+      <DependentUpon>202310291419474_AddedArtFastTrackAndCancerScreening.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -383,6 +387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202308251344434_UpdatedIITriskscores.resx">
       <DependentUpon>202308251344434_UpdatedIITriskscores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310291419474_AddedArtFastTrackAndCancerScreening.resx">
+      <DependentUpon>202310291419474_AddedArtFastTrackAndCancerScreening.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

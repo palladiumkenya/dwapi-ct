@@ -44,11 +44,11 @@ namespace PalladiumDwh.Core.Application.Manifests.Queries
                 
                 JObject DwapiVersionSending = JObject.Parse(manifest.FacMetrics.Select(o => o.Metric).Where(x => x.Contains("CareTreatment")).ToList()[0]);
                 
-                if (DwapiVersionSending["Version"].ToString() != "3.1.1.2")
-                {
-                    throw new Exception($" ====> You're using DWAPI Version [{DwapiVersionSending["Version"]}]. Older Versions of DWAPI are not allowed to send to NDWH. Upgrade to the latest version");
-                
-                }
+                // if (DwapiVersionSending["Version"].ToString() != "3.1.1.2")
+                // {
+                //     throw new Exception($" ====> You're using DWAPI Version [{DwapiVersionSending["Version"]}]. Older Versions of DWAPI are not allowed to send to NDWH. Upgrade to the latest version");
+                //
+                // }
 
                var masterFacility = await _patientExtractRepository.VerifyFacility(manifest.SiteCode);
                 if (null == masterFacility)

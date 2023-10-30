@@ -35,6 +35,7 @@ namespace PalladiumDwh.Core.Application.MapProfiles
            CreateMap<GbvScreeningSourceDto, StageGbvScreeningExtract>();
            CreateMap<CancerScreeningSourceDto, StageCancerScreeningExtract>();
            CreateMap<IITRiskScoresSourceDto, StageIITRiskScoresExtract>();
+           CreateMap<ArtFastTrackSourceDto, StageArtFastTrackExtract>();
 
            CreateMap<StagePatientExtract, PatientExtract>();
            CreateMap<StageVisitExtract, PatientVisitExtract>().ForMember(dest => dest.PatientId,

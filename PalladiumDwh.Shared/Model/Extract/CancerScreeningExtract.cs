@@ -73,7 +73,6 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string Referred { get; set; }
         public string ReasonForReferral { get; set; }
         public string RecordUUID { get; set; }
-        public bool? Voided { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public DateTime? Created { get; set; }
@@ -104,7 +103,7 @@ namespace PalladiumDwh.Shared.Model.Extract
                 DateTime? dateTissueDiagnosis, string reasonNotDone, DateTime? followUpDate, string referred,
                 string reasonForReferral,
                 Guid patientId, string emr, string project, DateTime? date_Created, DateTime? date_Last_Modified,
-                string recordUUID, bool? voided)
+                string recordUUID)
         // public CancerScreeningExtract(string facilityName, int? visitId, DateTime? visitDate, string visitType, string smokesCigarette, int? numberYearsSmoked, int? numberCigarettesPerDay, string nextAppointmentDate, string screeningType, string postTreatmentComplicationCause, string otherPostTreatmentComplication, string previousCaTreatment, string symptomsCa, string cancerType, string fecalOccultBloodTest, string treatmentOccultBlood, string takesAlcohol, 
         //     string treatmentColonoscopy, string familyHistoryOfCa, string treatmentRetinoblastoma, string retinoblastomaGene, string treatmentEUA, string dre, string treatmentDRE, string colonoscopy, string treatmentPSA, string visualExamination, string treatmentVE, string cytology, string treatmentCytology, string imaging, string treatmentImaging, string biopsy, string treatmentBiopsy, string hpvScreeningResult, string treatmentHPV, string viaScreeningResult, 
         //     string OtherFormTobacco, string viaVILIScreeningResult, string viaTreatmentOptions, string papSmearScreeningResult, string treatmentPapSmear, string referalOrdered, string colposcopy, string treatmentColposcopy, string biopsyCINIIandAbove, string viaVILIScreeningResult, string biopsyNotAvailable, string cbe, string treatmentCBE, string ultrasound, string treatmentUltraSound, string ifTissueDiagnosis, DateTime? dateTissueDiagnosis, string biopsyCINIIandBelow, DateTime? followUpDate, 
@@ -179,7 +178,6 @@ namespace PalladiumDwh.Shared.Model.Extract
             FollowUpDate = followUpDate;
             Referred = referred;
             ReasonForReferral = reasonForReferral;
-            Voided = voided;
             
             PatientId = patientId;
             Emr = emr;

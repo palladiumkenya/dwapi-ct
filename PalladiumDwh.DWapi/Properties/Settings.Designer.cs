@@ -69,7 +69,7 @@ namespace PalladiumDwh.DWapi.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"Manifest-10,Patient-10,PatientArt-5,PatientPharmacy-5,PatientVisits-20,PatientStatus-5,Covid-5,DefaulterTracing-1,PatientLabs-5,PatientBaselines-1,PatientAdverseEvents-1,Otz-5,Ovc-5,DepressionScreening-1,DrugAlcoholScreening-1,EnhancedAdherenceCounselling-1,GbvScreening-1,Ipt-1,AllergiesChronicIllness-1,ContactListing-1,CancerScreening-1,IITRiskScores-1,default-1")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"Manifest-10,Patient-10,PatientArt-5,PatientPharmacy-5,PatientVisits-20,PatientStatus-5,Covid-5,DefaulterTracing-1,PatientLabs-5,PatientBaselines-1,PatientAdverseEvents-1,Otz-5,Ovc-5,DepressionScreening-1,DrugAlcoholScreening-1,EnhancedAdherenceCounselling-1,GbvScreening-1,Ipt-1,AllergiesChronicIllness-1,ContactListing-1,CancerScreening-1,IITRiskScores-1,ArtFastTrack-1,default-1")]
         public string WorkerCount {
             get {
                 return ((string)(this["WorkerCount"]));

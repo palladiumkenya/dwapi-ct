@@ -21,9 +21,9 @@ namespace PalladiumDwh.Core.Application.Extracts.Commands
     {
         public CancerScreeningSourceBag CancerScreeningSourceBag { get; }
 
-        public SyncCancerScreening(CancerScreeningSourceBag cervicalCancerScreeningSourceBag)
+        public SyncCancerScreening(CancerScreeningSourceBag cancerScreeningSourceBag)
         {
-            CancerScreeningSourceBag = cervicalCancerScreeningSourceBag;
+            CancerScreeningSourceBag = cancerScreeningSourceBag;
         }
     }
 
