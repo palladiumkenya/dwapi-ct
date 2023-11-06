@@ -251,6 +251,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ArtFastTrackController.cs" />
     <Compile Include="Controllers\CancerScreeningController.cs" />
+    <Compile Include="Controllers\CervicalCancerScreeningController.cs" />
     <Compile Include="Controllers\IITRiskScoresController.cs" />
     <Compile Include="MyAuthorizationFilter.cs" />
     <Compile Include="Controllers\DashboardController.cs" />

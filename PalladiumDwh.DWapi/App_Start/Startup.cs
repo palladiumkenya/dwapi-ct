@@ -62,7 +62,7 @@ namespace PalladiumDwh.DWapi
                 "manifest", "patient", "patientart", "patientpharmacy", "patientvisits", "patientstatus", 
                 "covid","defaultertracing", "patientlabs", "patientbaselines", "patientadverseevents", "otz", "ovc",
                 "depressionscreening", "drugalcoholscreening", "enhancedadherencecounselling", "gbvscreening", "ipt",
-                "allergieschronicillness", "contactlisting", "default", "cancerscreening", "iitriskscores"
+                "allergieschronicillness", "contactlisting", "default", "cancerscreening", "iitriskscores","cervicalcancerscreening"
             };
             queues.ForEach(queue => ConfigureWorkers(app, new[] { queue.ToLower() }));
 

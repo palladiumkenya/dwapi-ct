@@ -88,6 +88,7 @@
     <Compile Include="Interfaces\DTOs\IAllergiesChronicIllnessExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IArtFastTrackExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\ICancerScreeningExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\ICervicalCancerScreeningExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IContactListingExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\ICovidExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IDefaulterTracingExtractDTO.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Interfaces\Extracts\IAllergiesChronicIllnessExtract.cs" />
     <Compile Include="Interfaces\Extracts\IArtFastTrackExtract.cs" />
     <Compile Include="Interfaces\Extracts\ICancerScreeningExtract.cs" />
+    <Compile Include="Interfaces\Extracts\ICervicalCancerScreeningExtract.cs" />
     <Compile Include="Interfaces\Extracts\IContactListingExtract.cs" />
     <Compile Include="Interfaces\Extracts\ICovidExtract.cs" />
     <Compile Include="Interfaces\Extracts\IDefaulterTracingExtract.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Interfaces\IArtFastTrack.cs" />
     <Compile Include="Interfaces\IArtNew.cs" />
     <Compile Include="Interfaces\ICancerScreening.cs" />
+    <Compile Include="Interfaces\ICervicalCancerScreening.cs" />
     <Compile Include="Interfaces\IClearPatientRecords.cs" />
     <Compile Include="Interfaces\IContactListing.cs" />
     <Compile Include="Interfaces\ICovid.cs" />
@@ -157,6 +160,7 @@
     <Compile Include="Interfaces\Profiles\IAllergiesChronicIllnessProfile.cs" />
     <Compile Include="Interfaces\Profiles\IArtFastTrackProfileProfile.cs" />
     <Compile Include="Interfaces\Profiles\ICancerScreeningProfile.cs" />
+    <Compile Include="Interfaces\Profiles\ICervicalCancerScreeningProfile.cs" />
     <Compile Include="Interfaces\Profiles\IContactListingProfile.cs" />
     <Compile Include="Interfaces\Profiles\IDepressionScreeningProfile.cs" />
     <Compile Include="Interfaces\Profiles\IDrugAlcoholScreeningProfile.cs" />
@@ -174,6 +178,7 @@
     <Compile Include="Interfaces\Stages\IStageVisitExtract.cs" />
     <Compile Include="Model\DTO\ArtFastTrackExtractDTO.cs" />
     <Compile Include="Model\DTO\CancerScreeningExtractDTO.cs" />
+    <Compile Include="Model\DTO\CervicalCancerScreeningExtractDTO.cs" />
     <Compile Include="Model\DTO\FacilityCacheDto.cs" />
     <Compile Include="Model\DTO\FacilityId.cs" />
     <Compile Include="Model\DTO\FacMetric.cs" />
@@ -206,6 +211,7 @@
     <Compile Include="Model\Extract\AllergiesChronicIllnessExtract.cs" />
     <Compile Include="Model\Extract\ArtFastTrackExtract.cs" />
     <Compile Include="Model\Extract\CancerScreeningExtract.cs" />
+    <Compile Include="Model\Extract\CervicalCancerScreeningExtract.cs" />
     <Compile Include="Model\Extract\ContactListingExtract.cs" />
     <Compile Include="Model\Extract\CovidExtract.cs" />
     <Compile Include="Model\Extract\DefaulterTracingExtract.cs" />
@@ -249,6 +255,7 @@
     <Compile Include="Model\Manifest.cs" />
     <Compile Include="Model\Profile\ArtFastTrackProfile.cs" />
     <Compile Include="Model\Profile\CancerScreeningProfile.cs" />
+    <Compile Include="Model\Profile\CervicalCancerScreeningProfile.cs" />
     <Compile Include="Model\Profile\ExtractProfile.cs" />
     <Compile Include="Model\Profile\DefaulterTracingProfile.cs" />
     <Compile Include="Model\Profile\CovidProfile.cs" />

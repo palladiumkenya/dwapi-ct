@@ -18,7 +18,7 @@
       <Value Profile="(Default)">218460a6-02d0-c26b-9add-e6b8d13ccbf4</Value>
     </Setting>
     <Setting Name="WorkerCount" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Manifest-10,Patient-10,PatientArt-5,PatientPharmacy-5,PatientVisits-20,PatientStatus-5,Covid-5,DefaulterTracing-1,PatientLabs-5,PatientBaselines-1,PatientAdverseEvents-1,Otz-5,Ovc-5,DepressionScreening-1,DrugAlcoholScreening-1,EnhancedAdherenceCounselling-1,GbvScreening-1,Ipt-1,AllergiesChronicIllness-1,ContactListing-1,CancerScreening-1,IITRiskScores-1,ArtFastTrack-1,default-1</Value>
+      <Value Profile="(Default)">Manifest-10,Patient-10,PatientArt-5,PatientPharmacy-5,PatientVisits-20,PatientStatus-5,Covid-5,DefaulterTracing-1,PatientLabs-5,PatientBaselines-1,PatientAdverseEvents-1,Otz-5,Ovc-5,DepressionScreening-1,DrugAlcoholScreening-1,EnhancedAdherenceCounselling-1,GbvScreening-1,Ipt-1,AllergiesChronicIllness-1,ContactListing-1,CancerScreening-1,IITRiskScores-1,ArtFastTrack-1,CervicalCancerScreening-1,default-1</Value>
     </Setting>
     <Setting Name="WorkerComandTimeout" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">30</Value>
