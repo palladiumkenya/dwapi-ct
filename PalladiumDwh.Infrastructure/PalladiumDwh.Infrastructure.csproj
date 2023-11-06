@@ -87,6 +87,7 @@
     <Compile Include="Data\Repository\AppRepository.cs" />
     <Compile Include="Data\Repository\ArtFastTrackRepository.cs" />
     <Compile Include="Data\Repository\CancerScreeningRepository.cs" />
+    <Compile Include="Data\Repository\CervicalCancerScreeningRepository.cs" />
     <Compile Include="Data\Repository\FacilityRepository.cs" />
     <Compile Include="Data\Repository\CovidRepository.cs" />
     <Compile Include="Data\Repository\DefaulterTracingRepository.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Data\Repository\Stage\StageArtFastTrackExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageBaselineExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageCancerScreeningExtractRepository.cs" />
+    <Compile Include="Data\Repository\Stage\StageCervicalCancerScreeningExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageContactListingExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageCovidExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageDefaulterTracingExtractRepository.cs" />
