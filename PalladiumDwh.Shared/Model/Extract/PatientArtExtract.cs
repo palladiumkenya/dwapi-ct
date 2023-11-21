@@ -37,6 +37,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
 
 
         public PatientArtExtract()
@@ -45,7 +46,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public PatientArtExtract(DateTime? dob, decimal? ageEnrollment, decimal? ageArtStart, decimal? ageLastVisit, DateTime? registrationDate, string gender, string patientSource, DateTime? startArtDate, DateTime? previousArtStartDate, string previousArtRegimen, DateTime? startArtAtThisFacility, string startRegimen, string startRegimenLine, DateTime? lastArtDate, string lastRegimen, string lastRegimenLine, decimal? duration, DateTime? expectedReturn, string provider, DateTime? lastVisit, string exitReason, DateTime? exitDate, Guid patientId, string emr, string project,
-        string previousARTUse,	string previousARTPurpose,	DateTime? dateLastUsed, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID
+        string previousARTUse,	string previousARTPurpose,	DateTime? dateLastUsed, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID,bool voided
         )
         {
             DOB = dob;
@@ -71,7 +72,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             ExitReason = exitReason;
             ExitDate = exitDate;
             PatientId = patientId;
-            RecordUUID = recordUUID;
+RecordUUID = recordUUID;
+            Voided = voided;
 
             Emr = emr;
             Project = project;

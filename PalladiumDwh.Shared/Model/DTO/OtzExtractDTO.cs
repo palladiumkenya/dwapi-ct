@@ -25,6 +25,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
 
         public OtzExtractDTO()
         {
@@ -50,6 +51,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             Date_Created=OtzExtract.Date_Created;
             Date_Last_Modified=OtzExtract.Date_Last_Modified;
             RecordUUID=OtzExtract.RecordUUID;
+            Voided=OtzExtract.Voided;
 
         }
 
@@ -84,7 +86,8 @@ namespace PalladiumDwh.Shared.Model.DTO
                 PatientId,Emr,Project,
                 Date_Created,
                 Date_Last_Modified,
-                RecordUUID
+                RecordUUID,
+                Voided
                 );
         }
     }

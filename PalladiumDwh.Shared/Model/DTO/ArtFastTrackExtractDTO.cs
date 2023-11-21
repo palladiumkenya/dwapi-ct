@@ -32,6 +32,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string ReferredToClinic  { get; set; }
         public DateTime?  ReturnVisitDate  { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         
@@ -120,7 +121,8 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Project,
                 Date_Created,
                 Date_Last_Modified,
-                RecordUUID
+                RecordUUID,
+                Voided
             );
         }
 

@@ -29,6 +29,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string Emr { get; set; }
         public string Project { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
 
 
         public virtual ICollection<TempPatientPharmacyExtractErrorSummary> TempPatientPharmacyExtractErrorSummaries { get; set; } = new List<TempPatientPharmacyExtractErrorSummary>();

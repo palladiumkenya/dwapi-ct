@@ -24,13 +24,14 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
 
 
         public PatientStatusExtractDTO()
         {
         }
 
-        public PatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID)
+        public PatientStatusExtractDTO(string exitDescription, DateTime? exitDate, string exitReason, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID, bool voided)
         {
             ExitDescription = exitDescription;
             ExitDate = exitDate;
@@ -41,7 +42,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
             Date_Last_Modified=date_Last_Modified;
-            RecordUUID = recordUUID;
+RecordUUID = recordUUID;
+            Voided = voided;
 
         }
 
@@ -83,7 +85,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public PatientStatusExtract GeneratePatientStatusExtract(Guid patientId)
         {
             PatientId = patientId;
-            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project,TOVerified,TOVerifiedDate,ReEnrollmentDate,ReasonForDeath,SpecificDeathReason,DeathDate,EffectiveDiscontinuationDate, Date_Created, Date_Last_Modified,RecordUUID);
+            return new PatientStatusExtract(ExitDescription, ExitDate, ExitReason, PatientId, Emr, Project,TOVerified,TOVerifiedDate,ReEnrollmentDate,ReasonForDeath,SpecificDeathReason,DeathDate,EffectiveDiscontinuationDate, Date_Created, Date_Last_Modified,RecordUUID,
+                Voided);
         }
     }
 }

@@ -22,6 +22,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string PeriodTaken { get; set; }
         public string ProphylaxisType { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
 
     }
 }

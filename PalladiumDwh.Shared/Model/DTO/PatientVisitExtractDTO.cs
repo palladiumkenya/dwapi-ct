@@ -77,6 +77,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
+
 
 
         public PatientVisitExtractDTO()
@@ -91,7 +93,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             string secondlineRegimenChangeReason, string adherence, string adherenceCategory,
             string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr,
             string project, Guid patientId,
-            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, DateTime? refillDate, string zScore , int? zScoreAbsolute, string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID)
+            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, DateTime? refillDate, string zScore , int? zScoreAbsolute, string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID, bool voided)
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -134,6 +136,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
             RecordUUID=recordUUID;
+            Voided=voided;
 
         }
 
@@ -179,6 +182,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             Date_Created=patientVisitExtract.Date_Created;
             Date_Last_Modified=patientVisitExtract.Date_Last_Modified;
             RecordUUID=patientVisitExtract.RecordUUID;
+            Voided=patientVisitExtract.Voided;
 
         }
 
@@ -211,7 +215,8 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Breastfeeding, Menopausal, NoFPReason, ProphylaxisUsed, CTXAdherence, CurrentRegimen, HCWConcern,
                 TCAReason, ClinicalNotes,
                 GeneralExamination, SystemExamination, Skin, Eyes, ENT, Chest, CVS, Abdomen, CNS, Genitourinary, RefillDate,ZScore,ZScoreAbsolute,PaedsDisclosure,Date_Created, Date_Last_Modified,
-                RecordUUID
+                RecordUUID,
+                Voided
             );
         }
     }
