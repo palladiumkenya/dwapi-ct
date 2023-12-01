@@ -85,6 +85,8 @@
     <Compile Include="Data\DwapiCentralContext.cs" />
     <Compile Include="Data\Repository\ActionRegisterRepository.cs" />
     <Compile Include="Data\Repository\AppRepository.cs" />
+    <Compile Include="Data\Repository\ArtFastTrackRepository.cs" />
+    <Compile Include="Data\Repository\CancerScreeningRepository.cs" />
     <Compile Include="Data\Repository\CervicalCancerScreeningRepository.cs" />
     <Compile Include="Data\Repository\FacilityRepository.cs" />
     <Compile Include="Data\Repository\CovidRepository.cs" />
@@ -111,7 +113,9 @@
     <Compile Include="Data\Repository\Stage\StageAdverseEventExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageAllergiesChronicIllnessExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageArtExtractRepository.cs" />
+    <Compile Include="Data\Repository\Stage\StageArtFastTrackExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageBaselineExtractRepository.cs" />
+    <Compile Include="Data\Repository\Stage\StageCancerScreeningExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageCervicalCancerScreeningExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageContactListingExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageCovidExtractRepository.cs" />
@@ -270,6 +274,14 @@
     <Compile Include="Migrations\202308251344434_UpdatedIITriskscores.designer.cs">
       <DependentUpon>202308251344434_UpdatedIITriskscores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310291419474_AddedArtFastTrackAndCancerScreening.cs" />
+    <Compile Include="Migrations\202310291419474_AddedArtFastTrackAndCancerScreening.designer.cs">
+      <DependentUpon>202310291419474_AddedArtFastTrackAndCancerScreening.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311061228415_UpdateCervicalCancer.cs" />
+    <Compile Include="Migrations\202311061228415_UpdateCervicalCancer.designer.cs">
+      <DependentUpon>202311061228415_UpdateCervicalCancer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -381,6 +393,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202308251344434_UpdatedIITriskscores.resx">
       <DependentUpon>202308251344434_UpdatedIITriskscores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310291419474_AddedArtFastTrackAndCancerScreening.resx">
+      <DependentUpon>202310291419474_AddedArtFastTrackAndCancerScreening.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311061228415_UpdateCervicalCancer.resx">
+      <DependentUpon>202311061228415_UpdateCervicalCancer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

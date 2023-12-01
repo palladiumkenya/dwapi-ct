@@ -36,6 +36,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
         public DateTime? TPTInitiationDate { get; set; }
         public string IPTDiscontinuation { get; set; }
         public DateTime? DateOfDiscontinuation { get; set; }
@@ -79,6 +80,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             Date_Created=IptExtract.Date_Created;
             Date_Last_Modified=IptExtract.Date_Last_Modified;
             RecordUUID=IptExtract.RecordUUID;
+            Voided=IptExtract.Voided;
 
         }
 
@@ -125,6 +127,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Date_Created,
                 Date_Last_Modified,
                 RecordUUID,
+                Voided,
                 TPTInitiationDate,
                 IPTDiscontinuation,
                 DateOfDiscontinuation

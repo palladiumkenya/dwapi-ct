@@ -33,8 +33,10 @@ namespace PalladiumDwh.Core.Application.MapProfiles
            CreateMap<PharmacySourceDto, StagePharmacyExtract>();
            CreateMap<StatusSourceDto, StageStatusExtract>();
            CreateMap<GbvScreeningSourceDto, StageGbvScreeningExtract>();
-           CreateMap<CervicalCancerScreeningSourceDto, StageCervicalCancerScreeningExtract>();
+           CreateMap<CancerScreeningSourceDto, StageCancerScreeningExtract>();
            CreateMap<IITRiskScoresSourceDto, StageIITRiskScoresExtract>();
+           CreateMap<ArtFastTrackSourceDto, StageArtFastTrackExtract>();
+           CreateMap<CervicalCancerScreeningSourceDto, StageCervicalCancerScreeningExtract>();
 
            CreateMap<StagePatientExtract, PatientExtract>();
            CreateMap<StageVisitExtract, PatientVisitExtract>().ForMember(dest => dest.PatientId,
@@ -73,9 +75,13 @@ namespace PalladiumDwh.Core.Application.MapProfiles
                opt => opt.MapFrom(src => src.CurrentPatientId));
            CreateMap<StageGbvScreeningExtract, GbvScreeningExtract>().ForMember(dest => dest.PatientId,
                opt => opt.MapFrom(src => src.CurrentPatientId));
-           CreateMap<StageCervicalCancerScreeningExtract, CervicalCancerScreeningExtract>().ForMember(dest => dest.PatientId,
+           CreateMap<StageCancerScreeningExtract, CancerScreeningExtract>().ForMember(dest => dest.PatientId,
                opt => opt.MapFrom(src => src.CurrentPatientId));
            CreateMap<StageIITRiskScoresExtract, IITRiskScoresExtract>().ForMember(dest => dest.PatientId,
+               opt => opt.MapFrom(src => src.CurrentPatientId));
+           CreateMap<StageArtFastTrackExtract, ArtFastTrackExtract>().ForMember(dest => dest.PatientId,
+               opt => opt.MapFrom(src => src.CurrentPatientId));
+           CreateMap<StageCervicalCancerScreeningExtract, CervicalCancerScreeningExtract>().ForMember(dest => dest.PatientId,
                opt => opt.MapFrom(src => src.CurrentPatientId));
 
        }

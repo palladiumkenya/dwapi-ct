@@ -44,6 +44,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
 
         public CovidExtract()
         {
@@ -51,7 +52,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public CovidExtract(string facilityName, int? visitId, DateTime? covid19AssessmentDate, string receivedCovid19Vaccine, DateTime? dateGivenFirstDose, string firstDoseVaccineAdministered, DateTime? dateGivenSecondDose, string secondDoseVaccineAdministered, string vaccinationStatus, string vaccineVerification, string boosterGiven, string boosterDose, DateTime? boosterDoseDate, string everCovid19Positive, DateTime? covid19TestDate, string patientStatus, string admissionStatus, string admissionUnit, string missedAppointmentDueToCovid19, string covid19PositiveSinceLasVisit, DateTime? covid19TestDateSinceLastVisit, string patientStatusSinceLastVisit, string admissionStatusSinceLastVisit, DateTime? admissionStartDate, DateTime? admissionEndDate, string admissionUnitSinceLastVisit, string supplementalOxygenReceived, string patientVentilated, string tracingFinalOutcome, string causeOfDeath,string covid19TestResult,string sequence,string boosterDoseVerified,
-            Guid patientId,string emr, string project, DateTime? date_Created, DateTime? date_Last_Modified, string recordUUID)
+            Guid patientId,string emr, string project, DateTime? date_Created, DateTime? date_Last_Modified, string recordUUID, bool voided)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -86,7 +87,8 @@ namespace PalladiumDwh.Shared.Model.Extract
             COVID19TestResult = covid19TestResult;
             Sequence = sequence;
             BoosterDoseVerified = boosterDoseVerified;
-            RecordUUID = recordUUID;
+RecordUUID = recordUUID;
+            Voided = voided;
 
             PatientId = patientId;
             Emr = emr;

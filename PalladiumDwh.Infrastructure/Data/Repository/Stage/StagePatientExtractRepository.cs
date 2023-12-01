@@ -52,7 +52,10 @@ delete  from StagePatientExtract WHERE  FacilityId = @facilityId;
 delete  from StagePharmacyExtract WHERE  FacilityId = @facilityId;
 delete  from StageStatusExtract WHERE  FacilityId = @facilityId;
 delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
+delete  from StageCancerScreeningExtract WHERE  FacilityId = @facilityId;
 delete  from StageCervicalCancerScreeningExtract WHERE  FacilityId = @facilityId;
+delete  from StageArtFastTrackExtract WHERE  FacilityId = @facilityId;
+delete  from StageIITRiskScoreExtract WHERE  FacilityId = @facilityId;
 
 ";
             try

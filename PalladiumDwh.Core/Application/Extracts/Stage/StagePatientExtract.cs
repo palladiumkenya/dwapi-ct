@@ -15,7 +15,6 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public Guid Id { get; set; }
         public string Emr { get; set; }
         public string Project { get; set; }
-        public bool Voided { get; set; }
         public bool Processed { get; set; }
         public string Pkv { get; set; }
         public string Occupation { get; set; }
@@ -62,6 +61,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
 
 
         public void Standardize(PatientSourceBag patientSourceBag)

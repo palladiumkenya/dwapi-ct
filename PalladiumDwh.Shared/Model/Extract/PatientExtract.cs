@@ -53,6 +53,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
 
 
         public virtual ICollection<PatientArtExtract> PatientArtExtracts { get; set; }=new List<PatientArtExtract>();
@@ -82,8 +83,10 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public virtual ICollection<CovidExtract> CovidExtracts { get; set; } = new List<CovidExtract>();
         public virtual ICollection<DefaulterTracingExtract> DefaulterTracingExtracts { get; set; } = new List<DefaulterTracingExtract>();
-        public virtual ICollection<CervicalCancerScreeningExtract> CervicalCancerScreeningExtracts { get; set; } = new List<CervicalCancerScreeningExtract>();
+        public virtual ICollection<CancerScreeningExtract> CancerScreeningExtracts { get; set; } = new List<CancerScreeningExtract>();
         public virtual ICollection<IITRiskScoresExtract> IITRiskScoresExtracts { get; set; } = new List<IITRiskScoresExtract>();
+        public virtual ICollection<ArtFastTrackExtract> ArtFastTrackExtracts { get; set; } = new List<ArtFastTrackExtract>();
+        public virtual ICollection<CervicalCancerScreeningExtract> CervicalCancerScreeningExtracts { get; set; } = new List<CervicalCancerScreeningExtract>();
 
         public PatientExtract()
         {
@@ -94,7 +97,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public PatientExtract(int patientPid, string patientCccNumber, string gender, DateTime? dob, DateTime? registrationDate, DateTime? registrationAtCcc, DateTime? registrationAtpmtct, DateTime? registrationAtTbClinic, string patientSource, string region, string district, string village, string contactRelation, DateTime? lastVisit, string maritalStatus, string educationLevel, DateTime? dateConfirmedHivPositive, string previousArtExposure, DateTime? previousArtStartDate, string statusAtCcc, string statusAtPmtct, string statusAtTbClinic, Guid facilityId,string emr,string project,
             string orphan, string inschool, string patientType, string populationType, string keyPopulationType, string patientResidentCounty, string patientResidentSubCounty, string patientResidentLocation, string patientResidentSubLocation, string patientResidentWard, string patientResidentVillage, DateTime? transferInDate,
-            string pkv,string occupation, string nupi, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID)
+            string pkv,string occupation, string nupi, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID, bool voided)
         {
             PatientPID = patientPid;
             PatientCccNumber = patientCccNumber;
@@ -140,6 +143,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
             RecordUUID = recordUUID;
+            Voided = voided;
 
             this.StandardizeExtract();
         }
@@ -202,12 +206,12 @@ namespace PalladiumDwh.Shared.Model.Extract
             }
         }
         
-        public void AddCervicalCancerScreeningExtracts(IEnumerable<CervicalCancerScreeningExtract> extracts)
+        public void AddCancerScreeningExtracts(IEnumerable<CancerScreeningExtract> extracts)
         {
             foreach (var e in extracts)
             {
                 e.PatientId = Id;
-                CervicalCancerScreeningExtracts.Add(e);
+                CancerScreeningExtracts.Add(e);
             }
         }
         
@@ -217,6 +221,24 @@ namespace PalladiumDwh.Shared.Model.Extract
             {
                 e.PatientId = Id;
                 IITRiskScoresExtracts.Add(e);
+            }
+        }
+        
+        public void AddArtFastTrackExtracts(IEnumerable<ArtFastTrackExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientId = Id;
+                ArtFastTrackExtracts.Add(e);
+            }
+        }
+        
+        public void AddCervicalCancerScreeningExtracts(IEnumerable<CervicalCancerScreeningExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientId = Id;
+                CervicalCancerScreeningExtracts.Add(e);
             }
         }
 

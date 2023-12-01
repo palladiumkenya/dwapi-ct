@@ -12,7 +12,7 @@ using PalladiumDwh.Shared.Model.Extract;
 namespace PalladiumDwh.Core.Tests.Application.Extracts.Commands
 {
     [TestFixture]
-    public class SyncCervicalCancerScreeningTests
+    public class SyncCancerScreeningTests
     {
         private Guid manifestId;
         private IMediator _mediator;
@@ -22,37 +22,37 @@ namespace PalladiumDwh.Core.Tests.Application.Extracts.Commands
         {
             _mediator = TestInitializer.Container.GetInstance<IMediator>();
             manifestId = Guid.NewGuid();
-            TestHelpers.ClearDb($"{nameof(StageCervicalCancerScreeningExtract)}",
-                $"{nameof(CervicalCancerScreeningExtract)}");
+            TestHelpers.ClearDb($"{nameof(StageCancerScreeningExtract)}",
+                $"{nameof(CancerScreeningExtract)}");
         }
 
         [Test]
         public void should_Sync_New()
         {
             var currentManifestId = Guid.NewGuid();
-            var bag = TestHelpers.GenerateBag<CervicalCancerScreeningSourceBag, CervicalCancerScreeningSourceDto>(
+            var bag = TestHelpers.GenerateBag<CancerScreeningSourceBag, CancerScreeningSourceDto>(
                 TestInitializer.FacilityId, currentManifestId);
-            _mediator.Send(new SyncCervicalCancerScreening(bag)).Wait();
+            _mediator.Send(new SyncCancerScreening(bag)).Wait();
             var ctx = TestInitializer.Container.GetInstance<DwapiCentralContext>();
-            Assert.True(ctx.StageCervicalCancerScreeningExtracts.ToList()
+            Assert.True(ctx.StageCancerScreeningExtracts.ToList()
                 .Any(x => x.FacilityId == TestInitializer.FacilityId));
-            Assert.True(ctx.StageCervicalCancerScreeningExtracts.ToList().Any(x => x.LiveSession == currentManifestId));
-            Assert.True(ctx.CervicalCancerScreeningExtracts.Any());
+            Assert.True(ctx.StageCancerScreeningExtracts.ToList().Any(x => x.LiveSession == currentManifestId));
+            Assert.True(ctx.CancerScreeningExtracts.Any());
         }
 
         [Test]
         public void should_Sync_Updates()
         {
             var currentManifestId = Guid.NewGuid();
-            TestHelpers.CreateTestExtract<CervicalCancerScreeningExtract>(TestInitializer.FacilityId);
-            var bag = TestHelpers.GenerateBag<CervicalCancerScreeningSourceBag, CervicalCancerScreeningSourceDto>(
+            TestHelpers.CreateTestExtract<CancerScreeningExtract>(TestInitializer.FacilityId);
+            var bag = TestHelpers.GenerateBag<CancerScreeningSourceBag, CancerScreeningSourceDto>(
                 TestInitializer.FacilityId, currentManifestId);
-            _mediator.Send(new SyncCervicalCancerScreening(bag)).Wait();
+            _mediator.Send(new SyncCancerScreening(bag)).Wait();
             var ctx = TestInitializer.Container.GetInstance<DwapiCentralContext>();
-            Assert.True(ctx.StageCervicalCancerScreeningExtracts.ToList()
+            Assert.True(ctx.StageCancerScreeningExtracts.ToList()
                 .Any(x => x.FacilityId == TestInitializer.FacilityId));
-            Assert.True(ctx.StageCervicalCancerScreeningExtracts.ToList().Any(x => x.LiveSession == currentManifestId));
-            Assert.True(ctx.CervicalCancerScreeningExtracts.Any());
+            Assert.True(ctx.StageCancerScreeningExtracts.ToList().Any(x => x.LiveSession == currentManifestId));
+            Assert.True(ctx.CancerScreeningExtracts.Any());
         }
     }
 }

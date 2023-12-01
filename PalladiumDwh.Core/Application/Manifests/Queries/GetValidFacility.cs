@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using log4net;
 using MediatR;
+using Newtonsoft.Json.Linq;
 using PalladiumDwh.Core.Interfaces;
 using PalladiumDwh.Shared.Model;
 
@@ -39,6 +41,14 @@ namespace PalladiumDwh.Core.Application.Manifests.Queries
             try
             {
                 manifest.Validate();
+                
+                JObject DwapiVersionSending = JObject.Parse(manifest.FacMetrics.Select(o => o.Metric).Where(x => x.Contains("CareTreatment")).ToList()[0]);
+                
+                // if (DwapiVersionSending["Version"].ToString() != "3.1.1.2")
+                // {
+                //     throw new Exception($" ====> You're using DWAPI Version [{DwapiVersionSending["Version"]}]. Older Versions of DWAPI are not allowed to send to NDWH. Upgrade to the latest version");
+                //
+                // }
 
                var masterFacility = await _patientExtractRepository.VerifyFacility(manifest.SiteCode);
                 if (null == masterFacility)
