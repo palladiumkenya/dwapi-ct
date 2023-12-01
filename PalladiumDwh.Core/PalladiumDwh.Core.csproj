@@ -72,7 +72,10 @@
     <Compile Include="Application\Extracts\Commands\SyncAdverseEventcs.cs" />
     <Compile Include="Application\Extracts\Commands\SyncAllergiesChronicIllness.cs" />
     <Compile Include="Application\Extracts\Commands\SyncArt.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncArtFastTrack.cs" />
     <Compile Include="Application\Extracts\Commands\SyncBaseline.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncCancerScreening.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncCervicalCancerScreening.cs" />
     <Compile Include="Application\Extracts\Commands\SyncContactListing.cs" />
     <Compile Include="Application\Extracts\Commands\SyncCovid.cs" />
     <Compile Include="Application\Extracts\Commands\SyncDefaulterTracing.cs" />
@@ -80,6 +83,7 @@
     <Compile Include="Application\Extracts\Commands\SyncDrugAlcoholScreening.cs" />
     <Compile Include="Application\Extracts\Commands\SyncEnhancedAdherenceCounselling.cs" />
     <Compile Include="Application\Extracts\Commands\SyncGbvScreening.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncIITRiskScores.cs" />
     <Compile Include="Application\Extracts\Commands\SyncIpt.cs" />
     <Compile Include="Application\Extracts\Commands\SyncLaboratory.cs" />
     <Compile Include="Application\Extracts\Commands\SyncOtz.cs" />
@@ -92,8 +96,11 @@
     <Compile Include="Application\Extracts\Notififactions\SyncExtractEvent.cs" />
     <Compile Include="Application\Extracts\Source\AdverseEventSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\AllergiesChronicIllnessSourceBag.cs" />
+    <Compile Include="Application\Extracts\Source\ArtFastTrackSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\ArtSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\BaselineSourceBag.cs" />
+    <Compile Include="Application\Extracts\Source\CancerScreeningSourceBag.cs" />
+    <Compile Include="Application\Extracts\Source\CervicalCancerScreeningsSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\ContactListingSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\CovidSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\DefaulterTracingSourceBag.cs" />
@@ -101,8 +108,11 @@
     <Compile Include="Application\Extracts\Source\DrugAlcoholScreeningSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\Dto\AdverseEventSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\AllergiesChronicIllnessSourceDto.cs" />
+    <Compile Include="Application\Extracts\Source\Dto\ArtFastTrackSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\ArtSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\BaselineSourceDto.cs" />
+    <Compile Include="Application\Extracts\Source\Dto\CancerScreeningSourceDto.cs" />
+    <Compile Include="Application\Extracts\Source\Dto\CervicalCancerScreeningsSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\ContactListingSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\CovidSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\DefaulterTracingSourceDto.cs" />
@@ -110,6 +120,7 @@
     <Compile Include="Application\Extracts\Source\Dto\DrugAlcoholScreeningSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\EnhancedAdherenceCounsellingSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\GbvScreeningSourceDto.cs" />
+    <Compile Include="Application\Extracts\Source\Dto\IITRiskScoresSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\IptSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\LaboratorySourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\OtzSourceDto.cs" />
@@ -121,6 +132,7 @@
     <Compile Include="Application\Extracts\Source\Dto\VisitSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\EnhancedAdherenceCounsellingSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\GbvScreeningSourceBag.cs" />
+    <Compile Include="Application\Extracts\Source\IITRiskScoresSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\IptSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\LaboratorySourceBag.cs" />
     <Compile Include="Application\Extracts\Source\OtzSourceBag.cs" />
@@ -133,7 +145,10 @@
     <Compile Include="Application\Extracts\Stage\Repositories\IStageAdverseEventExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageAllergiesChronicIllnessExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageArtExtractRepository.cs" />
+    <Compile Include="Application\Extracts\Stage\Repositories\IStageArtFastTrackExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageBaselineExtractRepository.cs" />
+    <Compile Include="Application\Extracts\Stage\Repositories\IStageCancerScreeningExtractRepository.cs" />
+    <Compile Include="Application\Extracts\Stage\Repositories\IStageCervicalCancerScreeningExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageContactListingExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageCovidExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageDefaulterTracingExtractRepository.cs" />
@@ -142,6 +157,7 @@
     <Compile Include="Application\Extracts\Stage\Repositories\IStageEnhancedAdherenceCounsellingExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageGbvScreeningExtractRepository.cs" />
+    <Compile Include="Application\Extracts\Stage\Repositories\IStageIITRiskScoresExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageIptExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageLaboratoryExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageOtzExtractRepository.cs" />
@@ -153,7 +169,10 @@
     <Compile Include="Application\Extracts\Stage\StageAdverseEventExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageAllergiesChronicIllnessExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageArtExtract.cs" />
+    <Compile Include="Application\Extracts\Stage\StageArtFastTrackExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageBaselineExtract.cs" />
+    <Compile Include="Application\Extracts\Stage\StageCancerScreeningExtract.cs" />
+    <Compile Include="Application\Extracts\Stage\StageCervicalCancerScreeningExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageContactListingExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageCovidExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageDefaulterTracingExtract.cs" />
@@ -162,6 +181,7 @@
     <Compile Include="Application\Extracts\Stage\StageEnhancedAdherenceCounsellingExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageGbvScreeningExtract.cs" />
+    <Compile Include="Application\Extracts\Stage\StageIITRiskScoresExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageIptExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageLaboratoryExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageOtzExtract.cs" />
@@ -186,6 +206,10 @@
     <Compile Include="Interfaces\IActionRegisterRepository.cs" />
     <Compile Include="Interfaces\IAppRepository.cs" />
     <Compile Include="Interfaces\IAppService.cs" />
+    <Compile Include="Interfaces\IArtFastTrackRepository.cs" />
+    <Compile Include="Interfaces\ICancerScreeningRepository.cs" />
+    <Compile Include="Interfaces\ICervicalCancerScreeningRepository.cs" />
+    <Compile Include="Interfaces\IiitRiskScoresRepository.cs" />
     <Compile Include="Interfaces\ILiveSyncService.cs" />
     <Compile Include="Interfaces\IMessagingReaderService.cs" />
     <Compile Include="Interfaces\IMessagingSenderService.cs" />

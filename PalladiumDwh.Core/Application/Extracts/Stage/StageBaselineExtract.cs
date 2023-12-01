@@ -15,8 +15,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public DateTime? bWABDate { get; set; }
         public int? bWHO { get; set; }
         public DateTime? bWHODate { get; set; }
-        public int? eWAB { get; set; }
-        public DateTime? eWABDate { get; set; }
+        public int? eWAB { get; set; }        public DateTime? eWABDate { get; set; }
         public int? eCD4 { get; set; }
         public DateTime? eCD4Date { get; set; }
         public int? eWHO { get; set; }
@@ -33,6 +32,9 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public DateTime? m6CD4Date { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
+
 
         public  void Standardize(BaselineSourceBag sourceBag)
         {

@@ -33,6 +33,12 @@ namespace PalladiumDwh.Shared.Interfaces
         string CNS {get;set;}
         string Genitourinary {get;set;}
         DateTime? RefillDate { get; set; }
+        string ZScore { get; set; }
+        int? ZScoreAbsolute { get; set; }
+        string PaedsDisclosure { get; set; }
+        string RecordUUID { get; set; }
+
+
         DateTime? Date_Created { get; set; } 
         DateTime? Date_Last_Modified { get; set; } 
     }

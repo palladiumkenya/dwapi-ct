@@ -17,5 +17,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public string ExitDescription { get; set; }
         public DateTime? ExitDate { get; set; }
         public string ExitReason { get; set; }
+        public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
+
     }
 }

@@ -21,13 +21,16 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Created { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
+
         public DefaulterTracingExtract()
         {
             Created = DateTime.Now;
         }
 
         public DefaulterTracingExtract(string facilityName, int? visitId, DateTime? visitDate, int? encounterId, string tracingType, string tracingOutcome, int? attemptNumber, string isFinalTrace, string trueStatus, string causeOfDeath, string comments, DateTime? bookingDate, Guid patientId,
-            string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
+            string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID, bool voided)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -41,7 +44,9 @@ namespace PalladiumDwh.Shared.Model.Extract
             CauseOfDeath = causeOfDeath;
             Comments = comments;
             BookingDate = bookingDate;
-
+RecordUUID = recordUUID;
+            Voided = voided;
+            
             PatientId = patientId;
             Emr = emr;
             Project = project;

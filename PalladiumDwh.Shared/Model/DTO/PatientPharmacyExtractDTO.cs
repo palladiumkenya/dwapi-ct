@@ -27,12 +27,15 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? StopRegimenDate { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
+
 
         public PatientPharmacyExtractDTO()
         {
         }
 
-        public PatientPharmacyExtractDTO(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified)
+        public PatientPharmacyExtractDTO(int? visitId, string drug, string provider, DateTime? dispenseDate, decimal? duration, DateTime? expectedReturn, string treatmentType, string regimenLine, string periodTaken, string prophylaxisType, string emr, string project, Guid patientId, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID, bool voided)
         {
             VisitID = visitId;
             Drug = drug;
@@ -49,6 +52,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
+            RecordUUID=recordUUID;
+
         }
 
         public PatientPharmacyExtractDTO(PatientPharmacyExtract patientPharmacyExtract)
@@ -74,6 +79,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             StopRegimenDate = patientPharmacyExtract.StopRegimenDate;
             Date_Created=patientPharmacyExtract.Date_Created;
             Date_Last_Modified=patientPharmacyExtract.Date_Last_Modified;
+            RecordUUID=patientPharmacyExtract.RecordUUID;
+
         }
 
         public IEnumerable<PatientPharmacyExtractDTO> GeneratePatientPharmacyExtractDtOs(IEnumerable<PatientPharmacyExtract> extracts)
@@ -90,7 +97,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             PatientId = patientId;
             return new PatientPharmacyExtract(VisitID, Drug,Provider, DispenseDate, Duration, ExpectedReturn, TreatmentType,
                 RegimenLine,
-                PeriodTaken, ProphylaxisType, PatientId,Emr, Project,RegimenChangedSwitched,RegimenChangeSwitchReason,StopRegimenReason,StopRegimenDate, Date_Created, Date_Last_Modified);
+                PeriodTaken, ProphylaxisType, PatientId,Emr, Project,RegimenChangedSwitched,RegimenChangeSwitchReason,StopRegimenReason,StopRegimenDate, Date_Created, Date_Last_Modified,RecordUUID,
+                Voided);
         }
 
 

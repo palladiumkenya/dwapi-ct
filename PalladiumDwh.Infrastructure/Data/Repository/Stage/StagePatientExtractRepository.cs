@@ -52,6 +52,10 @@ delete  from StagePatientExtract WHERE  FacilityId = @facilityId;
 delete  from StagePharmacyExtract WHERE  FacilityId = @facilityId;
 delete  from StageStatusExtract WHERE  FacilityId = @facilityId;
 delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
+delete  from StageCancerScreeningExtract WHERE  FacilityId = @facilityId;
+delete  from StageCervicalCancerScreeningExtract WHERE  FacilityId = @facilityId;
+delete  from StageArtFastTrackExtract WHERE  FacilityId = @facilityId;
+delete  from StageIITRiskScoreExtract WHERE  FacilityId = @facilityId;
 
 ";
             try
@@ -222,7 +226,7 @@ delete  from StageVisitExtract WHERE  FacilityId = @facilityId;
         {
             var sqlUpdates = @"
                     SELECT        
-                         CurrentPatientId Id, Emr, Project, Voided, Processed, NUPI, Pkv, Occupation, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationATPMTCT, RegistrationAtTBClinic, Region, PatientSource, District, Village, ContactRelation, LastVisit, 
+                         CurrentPatientId Id, Emr, Project, Voided, Processed, NUPI, RecordUUID, Date_Created, Date_Last_Modified, Pkv, Occupation, Gender, DOB, RegistrationDate, RegistrationAtCCC, RegistrationATPMTCT, RegistrationAtTBClinic, Region, PatientSource, District, Village, ContactRelation, LastVisit, 
                          MaritalStatus, EducationLevel, DateConfirmedHIVPositive, PreviousARTExposure, PreviousARTStartDate, StatusAtCCC, StatusAtPMTCT, StatusAtTBClinic, Orphan, Inschool, PatientType, PopulationType, KeyPopulationType, 
                          PatientResidentCounty, PatientResidentSubCounty, PatientResidentLocation, PatientResidentSubLocation, PatientResidentWard, PatientResidentVillage, TransferInDate, PatientPID, PatientCccNumber, FacilityId, 
                          CurrentPatientId, LiveSession, LiveStage,GETDATE() Updated

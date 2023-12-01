@@ -26,9 +26,13 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public string TestResult { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
+
 
         public virtual ICollection<TempPatientLaboratoryExtractErrorSummary> TempPatientLaboratoryExtractErrorSummaries { get; set; } = new List<TempPatientLaboratoryExtractErrorSummary>();
         public DateTime? DateSampleTaken { get; set; }
         public string SampleType { get; set; }
+        public string Reason { get; set; }
     }
 }

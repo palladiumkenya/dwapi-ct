@@ -17,6 +17,9 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Created { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
+
 
         public DrugAlcoholScreeningExtract()
         {
@@ -24,7 +27,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public DrugAlcoholScreeningExtract(string facilityName, int? visitId, DateTime? visitDate, string drinkingAlcohol, string smoking, string drugUse,
-            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID, bool voided)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -32,7 +35,9 @@ namespace PalladiumDwh.Shared.Model.Extract
             DrinkingAlcohol = drinkingAlcohol;
             Smoking = smoking;
             DrugUse = drugUse;
-
+RecordUUID = recordUUID;
+            Voided = voided;
+            
             PatientId = patientId;
             Emr = emr;
             Project = project;

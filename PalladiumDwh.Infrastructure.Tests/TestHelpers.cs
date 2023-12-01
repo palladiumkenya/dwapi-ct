@@ -140,6 +140,48 @@ namespace PalladiumDwh.Infrastructure.Tests
 
             return patients;
         }
+        
+        public static IEnumerable<PatientExtract> GetTestCancerScreeningData(Facility facility, int patientCount,
+            int visitCount = 2)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+                var visits = Builder<CancerScreeningExtract>.CreateListOfSize(visitCount).Build().ToList();
+                p.AddCancerScreeningExtracts(visits);
+            }
+
+            return patients;
+        }
+        
+        public static IEnumerable<PatientExtract> GetTestIITRiskScoresData(Facility facility, int patientCount,
+            int visitCount = 2)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+                var visits = Builder<IITRiskScoresExtract>.CreateListOfSize(visitCount).Build().ToList();
+                p.AddIITRiskScoresExtracts(visits);
+            }
+
+            return patients;
+        }
+        
+        public static IEnumerable<PatientExtract> GetTestArtFastTrackData(Facility facility, int patientCount,
+            int visitCount = 2)
+        {
+            var patients = Builder<PatientExtract>.CreateListOfSize(patientCount).Build().ToList();
+            foreach (var p in patients)
+            {
+                p.FacilityId = facility.Id;
+                var visits = Builder<ArtFastTrackExtract>.CreateListOfSize(visitCount).Build().ToList();
+                p.AddArtFastTrackExtracts(visits);
+            }
+
+            return patients;
+        }
 
 
         public static void AddNew(List<PatientVisitProfile> visitProfiles, int i)

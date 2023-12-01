@@ -25,6 +25,9 @@ namespace PalladiumDwh.Shared.Model.DTO
         public Guid PatientId { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
+
 
         public DefaulterTracingExtractDTO()
         {
@@ -49,6 +52,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             Project =DefaulterTracingExtract.Project;
             Date_Created=DefaulterTracingExtract.Date_Created;
             Date_Last_Modified=DefaulterTracingExtract.Date_Last_Modified;
+            RecordUUID=DefaulterTracingExtract.RecordUUID;
+
         }
 
         public IEnumerable<DefaulterTracingExtractDTO> GenerateDefaulterTracingExtractDtOs(IEnumerable<DefaulterTracingExtract> extracts)
@@ -79,7 +84,10 @@ namespace PalladiumDwh.Shared.Model.DTO
                 BookingDate,
                 PatientId, Emr, Project,
                 Date_Created,
-                Date_Last_Modified
+                Date_Last_Modified,
+                RecordUUID,
+                Voided
+                
             );
         }
 

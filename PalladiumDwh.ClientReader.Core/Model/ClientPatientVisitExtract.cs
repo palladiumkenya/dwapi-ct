@@ -42,11 +42,12 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string PopulationType { get; set; }
         public string KeyPopulationType { get; set; }
 
+
         public ClientPatientVisitExtract()
         {
         }
 
-        public ClientPatientVisitExtract(int patientPk, string patientId, int siteCode, int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr, string project)
+        public ClientPatientVisitExtract(int patientPk, string patientId, int siteCode, int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr, string project,string recordUUID)
         {
             PatientPK = patientPk;
             PatientID = patientId;
@@ -79,6 +80,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             NextAppointmentDate = nextAppointmentDate;
             Emr = emr;
             Project = project;
+            RecordUUID = recordUUID;
+
         }
 
         public ClientPatientVisitExtract(TempPatientVisitExtract extract)
@@ -114,6 +117,8 @@ namespace PalladiumDwh.ClientReader.Core.Model
             NextAppointmentDate = extract.NextAppointmentDate;
             Emr = extract.Emr;
             Project = extract.Project;
+            RecordUUID = extract.RecordUUID;
+
         }
 
         public string VisitBy { get; set; }
@@ -144,6 +149,11 @@ namespace PalladiumDwh.ClientReader.Core.Model
         public string CNS { get; set; }
         public string Genitourinary { get; set; }
         public DateTime? RefillDate { get; set; }
+        public string ZScore { get; set; }
+        public int? ZScoreAbsolute { get; set; }
+        public string PaedsDisclosure { get; set; }
+        public string RecordUUID { get; set; }
+
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
     }

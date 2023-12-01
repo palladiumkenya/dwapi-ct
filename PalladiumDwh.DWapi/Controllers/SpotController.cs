@@ -11,6 +11,7 @@ using Hangfire;
 using log4net;
 using MediatR;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using PalladiumDwh.Core.Application.Commands;
 using PalladiumDwh.Core.Application.Manifests.Commands;
@@ -200,8 +201,8 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 masterFacility.ManifestId = manifest.Id;
                 masterFacility.SessionId = manifest.Session;
-                masterFacility.JobId = jobId;
-
+                masterFacility.JobId = jobId; 
+                
                 return Request.CreateResponse(HttpStatusCode.OK, masterFacility);
             }
 

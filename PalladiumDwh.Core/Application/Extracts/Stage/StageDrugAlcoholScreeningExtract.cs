@@ -17,6 +17,9 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string DrugUse { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+        public bool Voided { get; set; }
+
 
         public  void Standardize(DrugAlcoholScreeningSourceBag sourceBag)
         {

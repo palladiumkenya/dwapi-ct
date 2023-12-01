@@ -132,6 +132,7 @@
     <Compile Include="Application\Extracts\Commands\SyncAllergiesChronicIllnessTests.cs" />
     <Compile Include="Application\Extracts\Commands\SyncArtTests.cs" />
     <Compile Include="Application\Extracts\Commands\SyncBaselineTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncCancerScreeningTests.cs" />
     <Compile Include="Application\Extracts\Commands\SyncContactListingTests.cs" />
     <Compile Include="Application\Extracts\Commands\SyncCovidTests.cs" />
     <Compile Include="Application\Extracts\Commands\SyncDefaulterTracingTests.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Application\Extracts\Commands\SyncDrugAlcoholScreeningTests.cs" />
     <Compile Include="Application\Extracts\Commands\SyncEnhancedAdherenceCounsellingTests.cs" />
     <Compile Include="Application\Extracts\Commands\SyncGbvScreeningTests.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncIITRiskScoresTests.cs" />
     <Compile Include="Application\Extracts\Commands\SyncIptTests.cs" />
     <Compile Include="Application\Extracts\Commands\SyncLaboratoryTests.cs" />
     <Compile Include="Application\Extracts\Commands\SyncOtzTests.cs" />

@@ -14,6 +14,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public DateTime? RegistrationAtCCC { get; set; }
         public DateTime? RegistrationATPMTCT { get; set; }
         public DateTime? RegistrationAtTBClinic { get; set; }
+
         public string PatientSource { get; set; }
         public string Region { get; set; }
         public string District { get; set; }
@@ -43,6 +44,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string Emr { get; set; }
         public string Project { get; set; }
         public int FacilityId { get; set; }
+
         
         
         public ClientPatientExtractDTO()
@@ -80,6 +82,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             NUPI = extract.NUPI;
             Date_Created = extract.Date_Created;
             Date_Last_Modified = extract.Date_Last_Modified;
+            RecordUUID = extract.RecordUUID;
+
         }
 
         public string Pkv { get; set; }
@@ -87,6 +91,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public string NUPI { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
+        public string RecordUUID { get; set; }
+
         
     }
 }
