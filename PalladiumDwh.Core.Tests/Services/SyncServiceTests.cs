@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using FizzWare.NBuilder;
 using NUnit.Framework;
 using PalladiumDwh.Core.Interfaces;
@@ -41,7 +42,7 @@ namespace PalladiumDwh.Core.Tests.Services
         [SetUp]
         public void SetUp()
         {
-            _dbcontext = new DwapiCentralContext();
+            _dbcontext = TestInitializer.Container.GetInstance<DwapiCentralContext>(); 
             _facilityA =new Facility(999999,"FTest","E1","P1");
             _dbcontext.Database.ExecuteSqlCommand($@"DELETE FROM [Facility] where Code={_facilityA.Code}");
             TestHelpers.CreateTestData(_dbcontext, new List<Facility> { _facilityA });
@@ -55,7 +56,7 @@ namespace PalladiumDwh.Core.Tests.Services
             TestHelpers.CreateTestData(_dbcontext, _patients);
 
 
-            _context = new DwapiCentralContext(Effort.DbConnectionFactory.CreateTransient(), true);
+            _context = _dbcontext; // new DwapiCentralContext(Effort.DbConnectionFactory.CreateTransient(), true);
             _facilities = TestHelpers.GetTestData<Facility>(5).ToList();
             TestHelpers.CreateTestData(_context, _facilities);
 
@@ -223,6 +224,7 @@ namespace PalladiumDwh.Core.Tests.Services
             Assert.IsNotNull(savedPatient);
             Assert.IsTrue(savedPatient.PatientVisitExtracts.Count > 0);
         }
+
         [Test]
         public void should_SyncAdeversEvents()
         {
@@ -238,7 +240,7 @@ namespace PalladiumDwh.Core.Tests.Services
         [TearDown]
         public void TearDown()
         {
-            _dbcontext = new DwapiCentralContext();
+          //   _dbcontext = new DwapiCentralContext();
             _dbcontext.Database.ExecuteSqlCommand($@"DELETE FROM [Facility] where Code={_facilityA.Code}");
         }
 
