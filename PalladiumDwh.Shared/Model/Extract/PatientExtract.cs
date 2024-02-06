@@ -87,6 +87,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public virtual ICollection<IITRiskScoresExtract> IITRiskScoresExtracts { get; set; } = new List<IITRiskScoresExtract>();
         public virtual ICollection<ArtFastTrackExtract> ArtFastTrackExtracts { get; set; } = new List<ArtFastTrackExtract>();
         public virtual ICollection<CervicalCancerScreeningExtract> CervicalCancerScreeningExtracts { get; set; } = new List<CervicalCancerScreeningExtract>();
+        public virtual ICollection<RelationshipsExtract> RelationshipsExtracts { get; set; } = new List<RelationshipsExtract>();
 
         public PatientExtract()
         {
@@ -239,6 +240,15 @@ namespace PalladiumDwh.Shared.Model.Extract
             {
                 e.PatientId = Id;
                 CervicalCancerScreeningExtracts.Add(e);
+            }
+        }
+        
+        public void AddRelationshipsExtracts(IEnumerable<RelationshipsExtract> extracts)
+        {
+            foreach (var e in extracts)
+            {
+                e.PatientId = Id;
+                RelationshipsExtracts.Add(e);
             }
         }
 

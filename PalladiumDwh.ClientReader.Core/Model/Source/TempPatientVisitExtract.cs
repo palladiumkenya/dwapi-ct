@@ -79,6 +79,7 @@ namespace PalladiumDwh.ClientReader.Core.Model.Source
         public int? ZScoreAbsolute { get; set; }
         public string PaedsDisclosure { get; set; }
         public string RecordUUID { get; set; }
+        public string WHOStagingOI  { get; set; }
 
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }

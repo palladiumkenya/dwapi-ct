@@ -253,6 +253,7 @@
     <Compile Include="Controllers\CancerScreeningController.cs" />
     <Compile Include="Controllers\CervicalCancerScreeningController.cs" />
     <Compile Include="Controllers\IITRiskScoresController.cs" />
+    <Compile Include="Controllers\RelationshipsController.cs" />
     <Compile Include="MyAuthorizationFilter.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FacilitiesController.cs" />

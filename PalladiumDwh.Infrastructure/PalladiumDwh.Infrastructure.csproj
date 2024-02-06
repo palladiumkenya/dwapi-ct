@@ -109,6 +109,7 @@
     <Compile Include="Data\Repository\ContactListingRepository.cs" />
     <Compile Include="Data\Repository\AllergiesChronicIllnessRepository.cs" />
     <Compile Include="Data\Repository\PatientVisitRepository.cs" />
+    <Compile Include="Data\Repository\RelationshipsRepository.cs" />
     <Compile Include="Data\Repository\SmartActionRegisterRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageAdverseEventExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageAllergiesChronicIllnessExtractRepository.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Data\Repository\Stage\StageOvcExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StagePatientExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StagePharmacyExtractRepository.cs" />
+    <Compile Include="Data\Repository\Stage\StageRelationshipsExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageStatusExtractRepository.cs" />
     <Compile Include="Data\Repository\Stage\StageVisitExtractRepository.cs" />
     <Compile Include="Migrations\201705251225248_CentralInitial.cs" />

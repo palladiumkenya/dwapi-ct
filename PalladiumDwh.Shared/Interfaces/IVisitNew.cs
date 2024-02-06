@@ -37,6 +37,8 @@ namespace PalladiumDwh.Shared.Interfaces
         int? ZScoreAbsolute { get; set; }
         string PaedsDisclosure { get; set; }
         string RecordUUID { get; set; }
+        string WHOStagingOI  { get; set; }
+
 
 
         DateTime? Date_Created { get; set; } 
