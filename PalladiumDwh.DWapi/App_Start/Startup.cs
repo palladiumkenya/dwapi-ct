@@ -62,7 +62,7 @@ namespace PalladiumDwh.DWapi
                 "manifest", "patient", "patientart", "patientpharmacy", "patientvisits", "patientstatus", 
                 "covid","defaultertracing", "patientlabs", "patientbaselines", "patientadverseevents", "otz", "ovc",
                 "depressionscreening", "drugalcoholscreening", "enhancedadherencecounselling", "gbvscreening", "ipt",
-                "allergieschronicillness", "contactlisting", "default", "cancerscreening", "iitriskscores","cervicalcancerscreening"
+                "allergieschronicillness", "contactlisting", "default", "cancerscreening", "iitriskscores","cervicalcancerscreening","artfasttrack"
             };
             queues.ForEach(queue => ConfigureWorkers(app, new[] { queue.ToLower() }));
 
@@ -129,7 +129,7 @@ namespace PalladiumDwh.DWapi
             {
                 var workerCount = Properties.Settings.Default.WorkerCount;
                 var workers = workerCount.Split(',').ToList();
-                var worker = workers.FirstOrDefault(x => x.Contains(queue));
+                var worker = workers.FirstOrDefault(x => x.ToLower().Contains(queue.ToLower()));
                 if (null != worker)
                     int.TryParse(worker.Split('-')[1], out count);
             }
