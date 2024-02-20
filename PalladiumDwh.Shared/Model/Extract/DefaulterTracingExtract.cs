@@ -23,6 +23,9 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
         public bool Voided { get; set; }
+        public DateTime? DatePromisedToCome { get; set; }
+        public string ReasonForMissedAppointment { get; set; }
+        public DateTime? DateOfMissedAppointment { get; set; }
 
         public DefaulterTracingExtract()
         {
@@ -30,7 +33,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public DefaulterTracingExtract(string facilityName, int? visitId, DateTime? visitDate, int? encounterId, string tracingType, string tracingOutcome, int? attemptNumber, string isFinalTrace, string trueStatus, string causeOfDeath, string comments, DateTime? bookingDate, Guid patientId,
-            string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID, bool voided)
+            string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID, bool voided, DateTime? datePromisedToCome,string reasonForMissedAppointment, DateTime? dateOfMissedAppointment)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -44,8 +47,11 @@ namespace PalladiumDwh.Shared.Model.Extract
             CauseOfDeath = causeOfDeath;
             Comments = comments;
             BookingDate = bookingDate;
-RecordUUID = recordUUID;
+            RecordUUID = recordUUID;
             Voided = voided;
+            DatePromisedToCome = datePromisedToCome;
+            ReasonForMissedAppointment = reasonForMissedAppointment;
+            DateOfMissedAppointment = dateOfMissedAppointment;
             
             PatientId = patientId;
             Emr = emr;

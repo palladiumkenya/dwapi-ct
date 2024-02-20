@@ -56,6 +56,7 @@ delete  from StageCancerScreeningExtract WHERE  FacilityId = @facilityId;
 delete  from StageCervicalCancerScreeningExtract WHERE  FacilityId = @facilityId;
 delete  from StageArtFastTrackExtract WHERE  FacilityId = @facilityId;
 delete  from StageIITRiskScoreExtract WHERE  FacilityId = @facilityId;
+delete  from StageRelationshipsExtract WHERE  FacilityId = @facilityId;
 
 ";
             try

@@ -18,6 +18,9 @@ namespace PalladiumDwh.Shared.Interfaces
         DateTime? Date_Created { get; set; } 
         DateTime? Date_Last_Modified { get; set; } 
         string RecordUUID { get; set; }
+        DateTime? DatePromisedToCome { get; set; }
+        string ReasonForMissedAppointment { get; set; }
+        DateTime? DateOfMissedAppointment { get; set; }
 
     }
 }

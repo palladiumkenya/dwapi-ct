@@ -284,6 +284,10 @@
     <Compile Include="Migrations\202311061228415_UpdateCervicalCancer.designer.cs">
       <DependentUpon>202311061228415_UpdateCervicalCancer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402060828381_Ct_Relationship_Added.cs" />
+    <Compile Include="Migrations\202402060828381_Ct_Relationship_Added.designer.cs">
+      <DependentUpon>202402060828381_Ct_Relationship_Added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -401,6 +405,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311061228415_UpdateCervicalCancer.resx">
       <DependentUpon>202311061228415_UpdateCervicalCancer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402060828381_Ct_Relationship_Added.resx">
+      <DependentUpon>202402060828381_Ct_Relationship_Added.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

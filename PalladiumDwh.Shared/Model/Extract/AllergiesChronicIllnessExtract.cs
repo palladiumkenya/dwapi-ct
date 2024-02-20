@@ -32,6 +32,7 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public string RecordUUID { get; set; }
         public bool Voided { get; set; }
+        public string Controlled { get; set; }
 
         public AllergiesChronicIllnessExtract()
         {
@@ -39,7 +40,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public AllergiesChronicIllnessExtract(string facilityName, int? visitId, DateTime? visitDate, string chronicIllness, DateTime? chronicOnsetDate, string knownAllergies, string allergyCausativeAgent, string allergicReaction, string allergySeverity, DateTime? allergyOnsetDate, string skin, string eyes, string ent, string chest, string cvs, string abdomen, string cns, string genitourinary,
-            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID,bool voided)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID,bool voided, string controlled)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -61,6 +62,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             Genitourinary = genitourinary;
 RecordUUID = recordUUID;
             Voided = voided;
+            Controlled = controlled;
             
             PatientId = patientId;
             Emr = emr;

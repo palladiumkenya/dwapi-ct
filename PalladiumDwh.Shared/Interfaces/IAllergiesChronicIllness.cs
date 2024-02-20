@@ -25,6 +25,7 @@ namespace PalladiumDwh.Shared.Interfaces
         DateTime? Date_Created { get; set; } 
         DateTime? Date_Last_Modified { get; set; } 
         string RecordUUID { get; set; }
+        string Controlled { get; set; }
 
     }
 }

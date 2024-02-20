@@ -35,6 +35,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             StartDate  = RelationshipsExtract.StartDate ;
             EndDate  = RelationshipsExtract.EndDate ;
             RecordUUID=RelationshipsExtract.RecordUUID;
+            Voided=RelationshipsExtract.Voided;
 
             Emr=RelationshipsExtract.Emr;
             Project=RelationshipsExtract.Project;
