@@ -288,6 +288,10 @@
     <Compile Include="Migrations\202402060828381_Ct_Relationship_Added.designer.cs">
       <DependentUpon>202402060828381_Ct_Relationship_Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402200653267_AddedDefaulterTracingVariables.cs" />
+    <Compile Include="Migrations\202402200653267_AddedDefaulterTracingVariables.designer.cs">
+      <DependentUpon>202402200653267_AddedDefaulterTracingVariables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -408,6 +412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402060828381_Ct_Relationship_Added.resx">
       <DependentUpon>202402060828381_Ct_Relationship_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402200653267_AddedDefaulterTracingVariables.resx">
+      <DependentUpon>202402200653267_AddedDefaulterTracingVariables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

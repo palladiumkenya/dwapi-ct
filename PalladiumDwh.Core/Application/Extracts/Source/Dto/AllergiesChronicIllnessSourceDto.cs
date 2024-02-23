@@ -9,7 +9,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public int? VisitID { get; set; }
         public DateTime? VisitDate { get; set; }
         public string ChronicIllness { get; set; }
-        public DateTime? ChronicOnsetDate { get; set; }
+        public string ChronicOnsetDate { get; set; }
         public string knownAllergies { get; set; }
         public string AllergyCausativeAgent { get; set; }
         public string AllergicReaction { get; set; }
