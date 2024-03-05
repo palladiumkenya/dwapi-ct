@@ -413,7 +413,8 @@ namespace PalladiumDwh.Shared.Custom
                 }
 
                 string[] ignoreDates = {nameof(PatientStatusExtract.Date_Created),nameof(PatientStatusExtract.Date_Last_Modified), 
-                    nameof(IptExtract.TPTInitiationDate),nameof(IptExtract.DateOfDiscontinuation)};
+                    nameof(IptExtract.TPTInitiationDate),nameof(IptExtract.DateOfDiscontinuation), 
+                    nameof(DefaulterTracingExtract.DatePromisedToCome), nameof(DefaulterTracingExtract.DateOfMissedAppointment)};
 
                 if (property.PropertyType == typeof(DateTime))
                 {
