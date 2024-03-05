@@ -12,7 +12,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public int? VisitID { get; set; }
         public DateTime? VisitDate { get; set; }
         public string ChronicIllness { get; set; }
-        public DateTime? ChronicOnsetDate { get; set; }
+        public string ChronicOnsetDate { get; set; }
         public string knownAllergies { get; set; }
         public string AllergyCausativeAgent { get; set; }
         public string AllergicReaction { get; set; }
@@ -33,6 +33,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
         public bool Voided { get; set; }
+        public string Controlled { get; set; }
 
         public AllergiesChronicIllnessExtractDTO()
         {
@@ -64,6 +65,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             Date_Created=AllergiesChronicIllnessExtract.Date_Created;
             Date_Last_Modified=AllergiesChronicIllnessExtract.Date_Last_Modified;
             RecordUUID=AllergiesChronicIllnessExtract.RecordUUID;
+            Controlled=AllergiesChronicIllnessExtract.Controlled;
 
 
         }
@@ -106,7 +108,8 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Date_Created,
                 Date_Last_Modified,
                 RecordUUID,
-                Voided
+                Voided,
+                Controlled
             );
         }
 

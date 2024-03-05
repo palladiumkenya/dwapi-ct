@@ -101,6 +101,7 @@
     <Compile Include="Interfaces\DTOs\IOtzExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IPatientAdverseEventExtractDTO.cs" />
     <Compile Include="Interfaces\DTOs\IOvcExtractDTO.cs" />
+    <Compile Include="Interfaces\DTOs\IRelationshipsExtractDTO.cs" />
     <Compile Include="Interfaces\Extracts\IAdverseEventExtract.cs" />
     <Compile Include="Interfaces\Extracts\IAllergiesChronicIllnessExtract.cs" />
     <Compile Include="Interfaces\Extracts\IArtFastTrackExtract.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Interfaces\Extracts\IIptExtract.cs" />
     <Compile Include="Interfaces\Extracts\IOtzExtract.cs" />
     <Compile Include="Interfaces\Extracts\IOvcExtract.cs" />
+    <Compile Include="Interfaces\Extracts\IRelationshipsExtract.cs" />
     <Compile Include="Interfaces\IAdverseEvent.cs" />
     <Compile Include="Interfaces\IAllergiesChronicIllness.cs" />
     <Compile Include="Interfaces\IArtFastTrack.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Interfaces\IArt.cs" />
     <Compile Include="Interfaces\ILaboratory.cs" />
     <Compile Include="Interfaces\IPatientNew.cs" />
+    <Compile Include="Interfaces\IRelationships.cs" />
     <Compile Include="Interfaces\IVisit.cs" />
     <Compile Include="Interfaces\IPharmacy.cs" />
     <Compile Include="Interfaces\IPharmacyNew.cs" />
@@ -173,6 +176,7 @@
     <Compile Include="Interfaces\Profiles\IDefaulterTracingProfile.cs" />
     <Compile Include="Interfaces\Profiles\IOvcProfile.cs" />
     <Compile Include="Interfaces\Profiles\IPatientAdverseEventProfile.cs" />
+    <Compile Include="Interfaces\Profiles\IRelationshipsProfile.cs" />
     <Compile Include="Interfaces\Stages\IStage.cs" />
     <Compile Include="Interfaces\Stages\IStagePatientExtract.cs" />
     <Compile Include="Interfaces\Stages\IStageVisitExtract.cs" />
@@ -198,6 +202,7 @@
     <Compile Include="Model\DTO\PatientFacilityId.cs" />
     <Compile Include="Model\DTO\PatientFacilityProfile.cs" />
     <Compile Include="Model\DTO\OtzExtractDTO.cs" />
+    <Compile Include="Model\DTO\RelationshipsExtractDTO.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\DTO\FacilityDTO.cs" />
     <Compile Include="Model\DTO\PatientArtExtractDTO.cs" />
@@ -224,6 +229,7 @@
     <Compile Include="Model\Extract\OtzExtract.cs" />
     <Compile Include="Model\Extract\OvcExtract.cs" />
     <Compile Include="Model\Extract\PatientAdverseEventExtract.cs" />
+    <Compile Include="Model\Extract\RelationshipsExtract.cs" />
     <Compile Include="Model\FacilityManifest.cs" />
     <Compile Include="Model\FacilityManifestCargo.cs" />
     <Compile Include="Model\MasterFacility.cs" />
@@ -274,6 +280,7 @@
     <Compile Include="Model\Profile\OvcProfile.cs" />
     <Compile Include="Model\Profile\DrugAlcoholScreeningProfile.cs" />
     <Compile Include="Model\Profile\ContactListingProfile.cs" />
+    <Compile Include="Model\Profile\RelationshipsProfile.cs" />
     <Compile Include="Model\Profile\SitePatientProfile.cs" />
     <Compile Include="Model\Profile\PatientProfile.cs" />
     <Compile Include="Model\Profile\PatientStatusProfile.cs" />

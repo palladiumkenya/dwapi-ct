@@ -25,6 +25,9 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
         public bool Voided { get; set; }
+        public DateTime? DatePromisedToCome { get; set; }
+        public string ReasonForMissedAppointment { get; set; }
+        public DateTime? DateOfMissedAppointment { get; set; }
 
 
         public  void Standardize(DefaulterTracingSourceBag sourceBag)

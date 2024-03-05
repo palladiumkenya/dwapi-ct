@@ -73,6 +73,7 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string ZScore { get; set; }
         public int? ZScoreAbsolute { get; set; }
         public string PaedsDisclosure { get; set; }
+        public string WHOStagingOI  { get; set; }
 
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
@@ -93,7 +94,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             string secondlineRegimenChangeReason, string adherence, string adherenceCategory,
             string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr,
             string project, Guid patientId,
-            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, DateTime? refillDate, string zScore , int? zScoreAbsolute, string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID, bool voided)
+            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, DateTime? refillDate, string zScore , int? zScoreAbsolute, string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID, bool voided, string whoStagingOI 
+        )
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -132,6 +134,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             ZScore = zScore;
             ZScoreAbsolute = zScoreAbsolute;
             PaedsDisclosure = paedsDisclosure;
+            WHOStagingOI = whoStagingOI;
 
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
@@ -183,6 +186,7 @@ namespace PalladiumDwh.Shared.Model.DTO
             Date_Last_Modified=patientVisitExtract.Date_Last_Modified;
             RecordUUID=patientVisitExtract.RecordUUID;
             Voided=patientVisitExtract.Voided;
+            WHOStagingOI = patientVisitExtract.WHOStagingOI;
 
         }
 
@@ -216,7 +220,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 TCAReason, ClinicalNotes,
                 GeneralExamination, SystemExamination, Skin, Eyes, ENT, Chest, CVS, Abdomen, CNS, Genitourinary, RefillDate,ZScore,ZScoreAbsolute,PaedsDisclosure,Date_Created, Date_Last_Modified,
                 RecordUUID,
-                Voided
+                Voided, WHOStagingOI
             );
         }
     }

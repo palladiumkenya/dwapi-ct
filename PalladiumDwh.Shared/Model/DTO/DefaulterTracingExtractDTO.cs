@@ -27,6 +27,9 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
         public bool Voided { get; set; }
+        public DateTime? DatePromisedToCome { get; set; }
+        public string ReasonForMissedAppointment { get; set; }
+        public DateTime? DateOfMissedAppointment { get; set; }
 
 
         public DefaulterTracingExtractDTO()
@@ -53,6 +56,11 @@ namespace PalladiumDwh.Shared.Model.DTO
             Date_Created=DefaulterTracingExtract.Date_Created;
             Date_Last_Modified=DefaulterTracingExtract.Date_Last_Modified;
             RecordUUID=DefaulterTracingExtract.RecordUUID;
+            
+            DatePromisedToCome=DefaulterTracingExtract.DatePromisedToCome;
+            ReasonForMissedAppointment=DefaulterTracingExtract.ReasonForMissedAppointment;
+            DateOfMissedAppointment=DefaulterTracingExtract.DateOfMissedAppointment;
+
 
         }
 
@@ -86,7 +94,10 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Date_Created,
                 Date_Last_Modified,
                 RecordUUID,
-                Voided
+                Voided,
+                DatePromisedToCome,
+                ReasonForMissedAppointment,
+                DateOfMissedAppointment
                 
             );
         }

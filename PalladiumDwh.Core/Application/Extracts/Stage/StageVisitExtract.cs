@@ -72,6 +72,7 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public string PaedsDisclosure { get; set; }
         public string RecordUUID { get; set; }
         public bool Voided { get; set; }
+        public string WHOStagingOI  { get; set; }
 
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }

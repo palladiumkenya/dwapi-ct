@@ -24,6 +24,6 @@ namespace PalladiumDwh.Shared.Interfaces.Stages
     public interface IStageIITRiskScoresExtract : IStage, IIITRiskScores{}
     public interface IStageArtFastTrackExtract : IStage, IArtFastTrack{}
     public interface IStageCervicalCancerScreeningExtract : IStage, ICervicalCancerScreening{}
-
+    public interface IStageRelationshipsExtract : IStage, IRelationships{}
 
 }

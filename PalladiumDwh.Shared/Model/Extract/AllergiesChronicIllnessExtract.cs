@@ -11,7 +11,7 @@ namespace PalladiumDwh.Shared.Model.Extract
         public int? VisitID { get; set; }
         public DateTime? VisitDate { get; set; }
         public string ChronicIllness { get; set; }
-        public DateTime? ChronicOnsetDate { get; set; }
+        public string ChronicOnsetDate { get; set; }
         public string knownAllergies { get; set; }
         public string AllergyCausativeAgent { get; set; }
         public string AllergicReaction { get; set; }
@@ -32,14 +32,15 @@ namespace PalladiumDwh.Shared.Model.Extract
 
         public string RecordUUID { get; set; }
         public bool Voided { get; set; }
+        public string Controlled { get; set; }
 
         public AllergiesChronicIllnessExtract()
         {
             Created = DateTime.Now;
         }
 
-        public AllergiesChronicIllnessExtract(string facilityName, int? visitId, DateTime? visitDate, string chronicIllness, DateTime? chronicOnsetDate, string knownAllergies, string allergyCausativeAgent, string allergicReaction, string allergySeverity, DateTime? allergyOnsetDate, string skin, string eyes, string ent, string chest, string cvs, string abdomen, string cns, string genitourinary,
-            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID,bool voided)
+        public AllergiesChronicIllnessExtract(string facilityName, int? visitId, DateTime? visitDate, string chronicIllness, string chronicOnsetDate, string knownAllergies, string allergyCausativeAgent, string allergicReaction, string allergySeverity, DateTime? allergyOnsetDate, string skin, string eyes, string ent, string chest, string cvs, string abdomen, string cns, string genitourinary,
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID,bool voided, string controlled)
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -61,6 +62,7 @@ namespace PalladiumDwh.Shared.Model.Extract
             Genitourinary = genitourinary;
 RecordUUID = recordUUID;
             Voided = voided;
+            Controlled = controlled;
             
             PatientId = patientId;
             Emr = emr;

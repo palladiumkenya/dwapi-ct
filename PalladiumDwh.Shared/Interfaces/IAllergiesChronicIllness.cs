@@ -8,7 +8,7 @@ namespace PalladiumDwh.Shared.Interfaces
         int? VisitID { get; set; }
         DateTime? VisitDate { get; set; }
         string ChronicIllness { get; set; }
-        DateTime? ChronicOnsetDate { get; set; }
+        string ChronicOnsetDate { get; set; }
         string knownAllergies { get; set; }
         string AllergyCausativeAgent { get; set; }
         string AllergicReaction { get; set; }
@@ -25,6 +25,7 @@ namespace PalladiumDwh.Shared.Interfaces
         DateTime? Date_Created { get; set; } 
         DateTime? Date_Last_Modified { get; set; } 
         string RecordUUID { get; set; }
+        string Controlled { get; set; }
 
     }
 }

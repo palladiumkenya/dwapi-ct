@@ -90,6 +90,7 @@
     <Compile Include="Application\Extracts\Commands\SyncOvc.cs" />
     <Compile Include="Application\Extracts\Commands\SyncPatient.cs" />
     <Compile Include="Application\Extracts\Commands\SyncPharmacy.cs" />
+    <Compile Include="Application\Extracts\Commands\SyncRelationships.cs" />
     <Compile Include="Application\Extracts\Commands\SyncStatus.cs" />
     <Compile Include="Application\Extracts\Commands\SyncVisit.cs" />
     <Compile Include="Application\Extracts\Notififactions\SyncMainExtractEvent.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Application\Extracts\Source\Dto\OvcSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\PatientSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\PharmacySourceDto.cs" />
+    <Compile Include="Application\Extracts\Source\Dto\RelationshipsSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\SourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\StatusSourceDto.cs" />
     <Compile Include="Application\Extracts\Source\Dto\VisitSourceDto.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Application\Extracts\Source\OvcSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\PatientSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\PharmacySourceBag.cs" />
+    <Compile Include="Application\Extracts\Source\RelationshipsSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\SourceBag.cs" />
     <Compile Include="Application\Extracts\Source\StatusSourceBag.cs" />
     <Compile Include="Application\Extracts\Source\VisitSourceBag.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="Application\Extracts\Stage\Repositories\IStageOvcExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStagePatientExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStagePharmacyExtractRepository.cs" />
+    <Compile Include="Application\Extracts\Stage\Repositories\IStageRelationshipsExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageStatusExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\Repositories\IStageVisitExtractRepository.cs" />
     <Compile Include="Application\Extracts\Stage\StageAdverseEventExtract.cs" />
@@ -188,6 +192,7 @@
     <Compile Include="Application\Extracts\Stage\StageOvcExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StagePatientExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StagePharmacyExtract.cs" />
+    <Compile Include="Application\Extracts\Stage\StageRelationshipsExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageStatusExtract.cs" />
     <Compile Include="Application\Extracts\Stage\StageVisitExtract.cs" />
     <Compile Include="Application\Manifests\Commands\ClearDuplicates.cs" />
@@ -236,6 +241,7 @@
     <Compile Include="Interfaces\IPatientStatusRepository.cs" />
     <Compile Include="Interfaces\IFacilityRepository.cs" />
     <Compile Include="Interfaces\IPatientVisitRepository.cs" />
+    <Compile Include="Interfaces\IRelationshipsRepository.cs" />
     <Compile Include="Interfaces\ISmartActionRegisterRepository.cs" />
     <Compile Include="Interfaces\ISyncService.cs" />
     <Compile Include="Model\ActionRegister.cs" />

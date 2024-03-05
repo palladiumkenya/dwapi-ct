@@ -144,6 +144,7 @@
     <Compile Include="Job\SyncIptJob.cs" />
     <Compile Include="Job\SyncAllergiesChronicIllnessJob.cs" />
     <Compile Include="Job\SyncEnhancedAdherenceCounsellingJob.cs" />
+    <Compile Include="Job\SyncRelationshipsJob.cs" />
     <Compile Include="Scheduler\ProfileScheduler.cs" />
     <Compile Include="Job\SyncPatientLabJob.cs" />
     <Compile Include="Job\SyncPatientPharmacyJob.cs" />
