@@ -152,6 +152,18 @@ namespace PalladiumDwh.DWapi.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                 new HttpError($"The expected '{new Manifest().GetType().Name}' is null"));
         }
+        
+         [HttpGet]
+        [Route("api/v3/Spot/DwapiVersions")]
+        public async Task<HttpResponseMessage> DwapiVersions()
+        {
+            JObject property = new JObject();
+            property["CuttoffVer"] = Properties.Settings.Default.DwapiVersionCuttoff;
+            property["LatestVersion"] =Properties.Settings.Default.CurrentLatestVersion;
+            return Request.CreateResponse(HttpStatusCode.OK,property);
+
+        }
+
 
         [HttpPost]
         [Route("api/v3/Spot")]
@@ -164,7 +176,10 @@ namespace PalladiumDwh.DWapi.Controllers
 
                 #region Validate Site
 
-                masterFacility = await _mediator.Send(new GetValidFacility(manifest));
+                // masterFacility = await _mediator.Send( new GetValidFacility(manifest));
+
+                masterFacility = await _mediator.Send( new GetValidFacilityDwapiVersion(manifest, 
+                    Properties.Settings.Default.DwapiVersionCuttoff, Properties.Settings.Default.CurrentLatestVersion));
 
                 #endregion
 

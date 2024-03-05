@@ -102,5 +102,23 @@ namespace PalladiumDwh.DWapi.Properties {
                 return ((int)(this["WorkerBatchRetention"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3123")]
+        public int CurrentLatestVersion {
+            get {
+                return ((int)(this["CurrentLatestVersion"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3120")]
+        public int DwapiVersionCuttoff {
+            get {
+                return ((int)(this["DwapiVersionCuttoff"]));
+            }
+        }
     }
 }

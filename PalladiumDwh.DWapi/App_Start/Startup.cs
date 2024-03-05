@@ -23,6 +23,8 @@ namespace PalladiumDwh.DWapi
     public class Startup
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        // private static readonly int DwapiVersionCuttoff = Properties.Settings.Default.DwapiVersionCuttoff;
+        // private static readonly int CurrentLatestVersion = Properties.Settings.Default.CurrentLatestVersion;
 
         public void Configuration(IAppBuilder app)
         {
