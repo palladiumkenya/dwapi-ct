@@ -200,6 +200,7 @@
     <Compile Include="Application\Manifests\Commands\SendToSpot.cs" />
     <Compile Include="Application\Manifests\Commands\CreateManifest.cs" />
     <Compile Include="Application\Manifests\Queries\GetValidFacility.cs" />
+    <Compile Include="Application\Manifests\Queries\GetValidFacilityDwapiVersion.cs" />
     <Compile Include="Application\MapProfiles\CtProfile.cs" />
     <Compile Include="Exchange\DocketDto.cs" />
     <Compile Include="Exchange\HandshakeDto.cs" />

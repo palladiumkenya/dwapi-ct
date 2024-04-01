@@ -292,6 +292,10 @@
     <Compile Include="Migrations\202402200653267_AddedDefaulterTracingVariables.designer.cs">
       <DependentUpon>202402200653267_AddedDefaulterTracingVariables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402230554335_ChangedChronicOnsetDateToString.cs" />
+    <Compile Include="Migrations\202402230554335_ChangedChronicOnsetDateToString.designer.cs">
+      <DependentUpon>202402230554335_ChangedChronicOnsetDateToString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202403220653259_AddPersonBPatientPkToRelationships.cs" />
     <Compile Include="Migrations\202403220653259_AddPersonBPatientPkToRelationships.designer.cs">
       <DependentUpon>202403220653259_AddPersonBPatientPkToRelationships.cs</DependentUpon>
@@ -419,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402200653267_AddedDefaulterTracingVariables.resx">
       <DependentUpon>202402200653267_AddedDefaulterTracingVariables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402230554335_ChangedChronicOnsetDateToString.resx">
+      <DependentUpon>202402230554335_ChangedChronicOnsetDateToString.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202403220653259_AddPersonBPatientPkToRelationships.resx">
       <DependentUpon>202403220653259_AddPersonBPatientPkToRelationships.cs</DependentUpon>
