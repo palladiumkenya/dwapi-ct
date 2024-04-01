@@ -10,6 +10,9 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string FacilityName { get; set; }
 
         public string RelationshipToPatient { get; set; }
+        public int PersonAPatientPk { get; set; }
+        public int PersonBPatientPk { get; set; }
+        public string PatientRelationshipToOther { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string RecordUUID { get; set; }
@@ -25,11 +28,14 @@ namespace PalladiumDwh.Shared.Model.Extract
             Created = DateTime.Now;
         }
 
-        public RelationshipsExtract(string facilityName, string relationshipToPatient,DateTime?  startDate,DateTime?  endDate,
+        public RelationshipsExtract(string facilityName, string relationshipToPatient,int personAPatientPk,int personBPatientPk,  string patientRelationshipToOther,DateTime?  startDate,DateTime?  endDate,
             Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID,bool voided)
         {
             FacilityName = facilityName;
             RelationshipToPatient  = relationshipToPatient ;
+            PersonAPatientPk = personAPatientPk;
+            PersonBPatientPk = personBPatientPk;
+            PatientRelationshipToOther = patientRelationshipToOther ;
             StartDate  = startDate ;
             EndDate  = endDate ;
             

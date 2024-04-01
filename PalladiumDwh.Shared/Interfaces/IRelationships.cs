@@ -6,6 +6,9 @@ namespace PalladiumDwh.Shared.Interfaces
     {
         string FacilityName { get; set; }
         string RelationshipToPatient { get; set; }
+        int PersonAPatientPk { get; set; }
+        int PersonBPatientPk { get; set; }
+        string PatientRelationshipToOther { get; set; }
         DateTime? StartDate { get; set; }
         DateTime? EndDate { get; set; }
         string RecordUUID { get; set; }
