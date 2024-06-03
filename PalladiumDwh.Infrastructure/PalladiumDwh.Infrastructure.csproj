@@ -300,6 +300,10 @@
     <Compile Include="Migrations\202403220653259_AddPersonBPatientPkToRelationships.designer.cs">
       <DependentUpon>202403220653259_AddPersonBPatientPkToRelationships.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202406031444074_IPTandVisitsMissingVariables.cs" />
+    <Compile Include="Migrations\202406031444074_IPTandVisitsMissingVariables.designer.cs">
+      <DependentUpon>202406031444074_IPTandVisitsMissingVariables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\LiveSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -429,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202403220653259_AddPersonBPatientPkToRelationships.resx">
       <DependentUpon>202403220653259_AddPersonBPatientPkToRelationships.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406031444074_IPTandVisitsMissingVariables.resx">
+      <DependentUpon>202406031444074_IPTandVisitsMissingVariables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Seed\MasterFacility.csv" />
   </ItemGroup>

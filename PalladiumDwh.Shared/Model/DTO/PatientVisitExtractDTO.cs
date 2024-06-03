@@ -74,7 +74,8 @@ namespace PalladiumDwh.Shared.Model.DTO
         public int? ZScoreAbsolute { get; set; }
         public string PaedsDisclosure { get; set; }
         public string WHOStagingOI  { get; set; }
-
+        public string WantsToGetPregnant { get; set; }
+        public string AppointmentReminderWillingness { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public string RecordUUID { get; set; }
@@ -94,7 +95,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             string secondlineRegimenChangeReason, string adherence, string adherenceCategory,
             string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, string emr,
             string project, Guid patientId,
-            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, DateTime? refillDate, string zScore , int? zScoreAbsolute, string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified, string recordUUID, bool voided, string whoStagingOI 
+            string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType, 
+            DateTime? refillDate, string zScore , int? zScoreAbsolute, string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified, 
+            string recordUUID, bool voided, string whoStagingOI, string wantsToGetPregnant ,string appointmentReminderWillingness 
         )
         {
             VisitId = visitId;
@@ -135,7 +138,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             ZScoreAbsolute = zScoreAbsolute;
             PaedsDisclosure = paedsDisclosure;
             WHOStagingOI = whoStagingOI;
-
+            WantsToGetPregnant= wantsToGetPregnant;
+            AppointmentReminderWillingness= appointmentReminderWillingness;
+            
             Date_Created=date_Created;
             Date_Last_Modified=date_Last_Modified;
             RecordUUID=recordUUID;
@@ -187,6 +192,8 @@ namespace PalladiumDwh.Shared.Model.DTO
             RecordUUID=patientVisitExtract.RecordUUID;
             Voided=patientVisitExtract.Voided;
             WHOStagingOI = patientVisitExtract.WHOStagingOI;
+            WantsToGetPregnant= patientVisitExtract.WantsToGetPregnant;
+            AppointmentReminderWillingness= patientVisitExtract.AppointmentReminderWillingness;
 
         }
 
@@ -219,8 +226,7 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Breastfeeding, Menopausal, NoFPReason, ProphylaxisUsed, CTXAdherence, CurrentRegimen, HCWConcern,
                 TCAReason, ClinicalNotes,
                 GeneralExamination, SystemExamination, Skin, Eyes, ENT, Chest, CVS, Abdomen, CNS, Genitourinary, RefillDate,ZScore,ZScoreAbsolute,PaedsDisclosure,Date_Created, Date_Last_Modified,
-                RecordUUID,
-                Voided, WHOStagingOI
+                RecordUUID, Voided, WHOStagingOI, WantsToGetPregnant, AppointmentReminderWillingness
             );
         }
     }

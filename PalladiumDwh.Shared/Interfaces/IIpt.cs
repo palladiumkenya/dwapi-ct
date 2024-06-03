@@ -32,6 +32,10 @@ namespace PalladiumDwh.Shared.Interfaces
          DateTime? TPTInitiationDate { get; set; }
          string IPTDiscontinuation { get; set; }
          DateTime? DateOfDiscontinuation { get; set; }
+         string Hepatoxicity { get; set; }
+         string PeripheralNeuropathy { get; set; }
+         string Rash { get; set; }
+         string Adherence { get; set; }
 
     }
 }

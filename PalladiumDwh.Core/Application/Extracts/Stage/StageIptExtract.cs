@@ -38,6 +38,10 @@ namespace PalladiumDwh.Core.Application.Extracts.Stage
         public DateTime? TPTInitiationDate { get; set; }
         public string IPTDiscontinuation { get; set; }
         public DateTime? DateOfDiscontinuation { get; set; }
+        public string Hepatoxicity { get; set; }
+        public string PeripheralNeuropathy { get; set; }
+        public string Rash { get; set; }
+        public string Adherence { get; set; }
 
 
         public  void Standardize(IptSourceBag sourceBag)

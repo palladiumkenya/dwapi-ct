@@ -38,8 +38,8 @@ namespace PalladiumDwh.Shared.Interfaces
         string PaedsDisclosure { get; set; }
         string RecordUUID { get; set; }
         string WHOStagingOI  { get; set; }
-
-
+        string WantsToGetPregnant { get; set; }
+        string AppointmentReminderWillingness { get; set; }
 
         DateTime? Date_Created { get; set; } 
         DateTime? Date_Last_Modified { get; set; } 

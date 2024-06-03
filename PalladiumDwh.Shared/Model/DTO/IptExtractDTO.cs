@@ -40,6 +40,10 @@ namespace PalladiumDwh.Shared.Model.DTO
         public DateTime? TPTInitiationDate { get; set; }
         public string IPTDiscontinuation { get; set; }
         public DateTime? DateOfDiscontinuation { get; set; }
+        public string Hepatoxicity { get; set; }
+        public string PeripheralNeuropathy { get; set; }
+        public string Rash { get; set; }
+        public string Adherence { get; set; }
 
         public IptExtractDTO()
         {
@@ -72,7 +76,10 @@ namespace PalladiumDwh.Shared.Model.DTO
             TPTInitiationDate=IptExtract.TPTInitiationDate;
             IPTDiscontinuation=IptExtract.IPTDiscontinuation;
             DateOfDiscontinuation=IptExtract.DateOfDiscontinuation;
-
+            Hepatoxicity= IptExtract.Hepatoxicity;
+            PeripheralNeuropathy= IptExtract.PeripheralNeuropathy;
+            Rash= IptExtract.Rash;
+            Adherence = IptExtract.Adherence;
 
             Emr = IptExtract.Emr;
             Project = IptExtract.Project;
@@ -130,7 +137,11 @@ namespace PalladiumDwh.Shared.Model.DTO
                 Voided,
                 TPTInitiationDate,
                 IPTDiscontinuation,
-                DateOfDiscontinuation
+                DateOfDiscontinuation,
+                Hepatoxicity,
+                PeripheralNeuropathy,
+                Rash,
+                Adherence 
                 );
         }
 
