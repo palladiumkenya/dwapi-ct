@@ -138,7 +138,13 @@ select
 (select count(id) from OvcExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) OvcExtract,
 (select count(id) from OtzExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) OtzExtract,
 (select count(id) from CovidExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) CovidExtract,
-(select count(id) from DefaulterTracingExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) DefaulterTracingExtract
+(select count(id) from DefaulterTracingExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) DefaulterTracingExtract,
+
+(select count(id) from CancerScreeningExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) CancerScreeningExtract,
+(select count(id) from IITRiskScoresExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) IITRiskScoresExtract,
+(select count(id) from ArtFastTrackExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) ArtFastTrackExtract,
+(select count(id) from RelationshipsExtract where PatientId in (select Id from PatientExtract where facilityid='{facilityId}')) RelationshipsExtract
+
                 ";
 
             var result = _context.GetConnection().Query<dynamic>(sql).FirstOrDefault();
@@ -167,6 +173,11 @@ select
 
                 stats.AddStats("CovidExtract", result.CovidExtract);
                 stats.AddStats("DefaulterTracingExtract", result.DefaulterTracingExtract);
+
+                stats.AddStats("CancerScreeningExtract", result.CancerScreeningExtract);
+                stats.AddStats("IITRiskScoresExtract", result.IITRiskScoresExtract);
+                stats.AddStats("ArtFastTrackExtract", result.ArtFastTrackExtract);
+                stats.AddStats("RelationshipsExtract", result.RelationshipsExtract);
 
                 return stats;
             }
