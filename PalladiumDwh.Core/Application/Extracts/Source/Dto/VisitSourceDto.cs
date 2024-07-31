@@ -67,6 +67,8 @@ namespace PalladiumDwh.Core.Application.Extracts.Source.Dto
         public int? ZScoreAbsolute { get; set; }
         public string PaedsDisclosure { get; set; }
         public string WHOStagingOI  { get; set; }
+        public string WantsToGetPregnant { get; set; }
+        public string AppointmentReminderWillingness { get; set; }
 
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }

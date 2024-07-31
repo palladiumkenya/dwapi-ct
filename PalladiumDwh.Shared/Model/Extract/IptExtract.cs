@@ -38,6 +38,10 @@ namespace PalladiumDwh.Shared.Model.Extract
         public DateTime? TPTInitiationDate { get; set; }
         public string IPTDiscontinuation { get; set; }
         public DateTime? DateOfDiscontinuation { get; set; }
+        public string Hepatoxicity { get; set; }
+        public string PeripheralNeuropathy { get; set; }
+        public string Rash { get; set; }
+        public string Adherence { get; set; }
 
         public IptExtract()
         {
@@ -45,7 +49,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         }
 
         public IptExtract(string facilityName, int? visitId, DateTime? visitDate, string onTbDrugs, string onIpt, string everOnIpt, string cough, string fever, string noticeableWeightLoss, string nightSweats, string lethargy, string icfActionTaken, string testResult, string tbClinicalDiagnosis, string contactsInvited, string evaluatedForIpt, string startAntiTBs, DateTime? tbRxStartDate, string tbScreening, string iptClientWorkUp, string startIpt, string indicationForIpt,
-            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID,bool voided, DateTime? iptInitiationDate,string iptDiscontinuation,DateTime? dateOfDiscontinuation)
+            Guid patientId, string emr, string project, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID,bool voided, DateTime? iptInitiationDate,string iptDiscontinuation,DateTime? dateOfDiscontinuation,
+            string hepatoxicity,string peripheralNeuropathy,string rash,string adherence )
         {
             FacilityName = facilityName;
             VisitID = visitId;
@@ -74,7 +79,11 @@ RecordUUID = recordUUID;
             TPTInitiationDate=iptInitiationDate;
             IPTDiscontinuation=iptDiscontinuation;
             DateOfDiscontinuation=dateOfDiscontinuation;
-
+            Hepatoxicity= hepatoxicity;
+            PeripheralNeuropathy= peripheralNeuropathy;
+            Rash= rash;
+            Adherence = adherence;
+            
             PatientId = patientId;
             Emr = emr;
             Project = project;

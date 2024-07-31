@@ -78,8 +78,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public string RecordUUID { get; set; }
         public bool Voided { get; set; }
         public string WHOStagingOI  { get; set; }
-
-
+        public string WantsToGetPregnant { get; set; }
+        public string AppointmentReminderWillingness { get; set; }
         
         public PatientVisitExtract()
         {
@@ -89,7 +89,8 @@ namespace PalladiumDwh.Shared.Model.Extract
         public PatientVisitExtract(int? visitId, DateTime? visitDate, string service, string visitType, int? whoStage, string wabStage, string pregnant, DateTime? lmp, DateTime? edd, decimal? height, decimal? weight, string bp, string oi, DateTime? oiDate, DateTime? substitutionFirstlineRegimenDate, string substitutionFirstlineRegimenReason, DateTime? substitutionSecondlineRegimenDate, string substitutionSecondlineRegimenReason, DateTime? secondlineRegimenChangeDate, string secondlineRegimenChangeReason, string adherence, string adherenceCategory, string familyPlanningMethod, string pwP, decimal? gestationAge, DateTime? nextAppointmentDate, Guid patientId, string emr, string project,
             string stabilityAssessment, string differentiatedCare, string populationType, string keyPopulationType,
             string visitBy, decimal? temp, int? pulseRate, int? respiratoryRate, decimal? oxygenSaturation, int? muac, string nutritionalStatus, string everHadMenses, string breastfeeding, string menopausal, string noFpReason, string prophylaxisUsed, string ctxAdherence, string currentRegimen, string hcwConcern, string tcaReason, string clinicalNotes,
-            string generalExamination,	string systemExamination,	string skin,	string eyes,	string ent,	string chest,	string cvs,	string abdomen,	string cns,	string genitourinary, DateTime? refillDate, string zScore ,  int? zScoreAbsolute ,string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID, bool voided, string whoStagingOI )
+            string generalExamination,	string systemExamination,	string skin,	string eyes,	string ent,	string chest,	string cvs,	string abdomen,	string cns,	string genitourinary, DateTime? refillDate, string zScore ,  int? zScoreAbsolute ,string paedsDisclosure, DateTime? date_Created,DateTime? date_Last_Modified,string recordUUID, bool voided, string whoStagingOI,
+            string wantsToGetPregnant ,string appointmentReminderWillingness )
         {
             VisitId = visitId;
             VisitDate = visitDate;
@@ -164,6 +165,8 @@ RecordUUID = recordUUID;
             Date_Created = date_Created;
             Date_Last_Modified = date_Last_Modified;
             WHOStagingOI = whoStagingOI;
+            WantsToGetPregnant= wantsToGetPregnant;
+            AppointmentReminderWillingness= appointmentReminderWillingness;
             this.StandardizeExtract();
         }
     }

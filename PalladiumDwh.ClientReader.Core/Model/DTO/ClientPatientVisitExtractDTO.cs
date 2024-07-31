@@ -117,7 +117,9 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
             PwP = extract.PwP;
             GestationAge = extract.GestationAge;
             NextAppointmentDate = extract.NextAppointmentDate;
-
+            WHOStagingOI = extract.WHOStagingOI;
+            WantsToGetPregnant= extract.WantsToGetPregnant;
+            AppointmentReminderWillingness= extract.AppointmentReminderWillingness;
             Emr = extract.Emr;
             Project = extract.Project;
             RecordUUID = extract.RecordUUID;
@@ -169,7 +171,8 @@ namespace PalladiumDwh.ClientReader.Core.Model.DTO
         public int? ZScoreAbsolute { get; set; }
         public string PaedsDisclosure { get; set; }
         public string WHOStagingOI  { get; set; }
-
+        public string WantsToGetPregnant { get; set; }
+        public string AppointmentReminderWillingness { get; set; }
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
     }

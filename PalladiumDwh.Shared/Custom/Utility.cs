@@ -6,6 +6,7 @@ using System.Linq;
 using System.Messaging;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using log4net;
 using Newtonsoft.Json;
 using PalladiumDwh.Shared.Model;
@@ -407,17 +408,27 @@ namespace PalladiumDwh.Shared.Custom
             {
                 if (property.PropertyType == typeof(string))
                 {
+                    // Regex.Replace(s3.Trim(), @"\t|\n|\r", "")
                     var val = property.GetValue(obj, null);
                     if (null != val)
-                        property.SetValue(obj, val.ToString().Truncate(maxLength));
+                        property.SetValue(obj, Regex.Replace(val.ToString().Truncate(maxLength).Trim(), @"\t|\n|\r", ""));
                 }
 
                 string[] ignoreDates = {nameof(PatientStatusExtract.Date_Created),nameof(PatientStatusExtract.Date_Last_Modified), 
                     nameof(IptExtract.TPTInitiationDate),nameof(IptExtract.DateOfDiscontinuation), 
                     nameof(DefaulterTracingExtract.DatePromisedToCome), nameof(DefaulterTracingExtract.DateOfMissedAppointment)};
-
+          
                 if (property.PropertyType == typeof(DateTime))
                 {
+                    var dateVal = property.GetValue(obj, null);
+                    if (null!=dateVal)
+                    {
+                        if (DateTime.Parse(dateVal.ToString()).Year < 1750)
+                        {
+                            property.SetValue(obj, new DateTime(1900, 1, 1));
+                        }
+                    }
+                    
                     if (!ignoreDates.Contains(property.Name))
                     {
                         var val = (DateTime)property.GetValue(obj, null);
@@ -428,6 +439,15 @@ namespace PalladiumDwh.Shared.Custom
 
                 if (property.PropertyType == typeof(DateTime?))
                 {
+                    var dateVal = property.GetValue(obj, null);
+                    if (null!=dateVal)
+                    {
+                        if (DateTime.Parse(dateVal.ToString()).Year < 1750)
+                        {
+                            property.SetValue(obj, new DateTime(1900, 1, 1));
+                        }
+                    }
+
                     if (!ignoreDates.Contains(property.Name))
                     {
                         var val = (DateTime?)property.GetValue(obj, null);

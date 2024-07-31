@@ -11,6 +11,9 @@ namespace PalladiumDwh.Shared.Model.DTO
         public string FacilityName { get; set; }
 
         public string RelationshipToPatient { get; set; }
+        public int PersonAPatientPk { get; set; }
+        public int PersonBPatientPk { get; set; }
+        public string PatientRelationshipToOther { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string RecordUUID { get; set; }
@@ -32,6 +35,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             FacilityName=RelationshipsExtract.FacilityName;
             FacilityName = RelationshipsExtract.FacilityName;
             RelationshipToPatient  = RelationshipsExtract.RelationshipToPatient ;
+            PersonAPatientPk = RelationshipsExtract.PersonAPatientPk;
+            PersonBPatientPk = RelationshipsExtract.PersonBPatientPk;
+            PatientRelationshipToOther = RelationshipsExtract.PatientRelationshipToOther;
             StartDate  = RelationshipsExtract.StartDate ;
             EndDate  = RelationshipsExtract.EndDate ;
             RecordUUID=RelationshipsExtract.RecordUUID;
@@ -61,6 +67,9 @@ namespace PalladiumDwh.Shared.Model.DTO
             return new RelationshipsExtract(
                 FacilityName,
                 RelationshipToPatient,
+                PersonAPatientPk,
+                PersonBPatientPk,
+                PatientRelationshipToOther,
                 StartDate,
                 EndDate,
                 PatientId,
